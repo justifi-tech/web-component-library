@@ -16,6 +16,8 @@ import {
   ComponentErrorCodes,
   ComponentErrorSeverity,
 } from '../../../../api';
+import { PlaidService } from '../../../../api/services/plaid.service';
+import plaidLogoSvg from '../../../../assets/plaid-icon.svg';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step-core',
@@ -27,6 +29,12 @@ export class BusinessBankAccountFormStepCore {
   @State() existingDocuments: any = [];
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @State() isLoading: boolean = false;
+  @State() isPlaidAuthenticating: boolean = false;
+  @State() plaidPublicToken: string | null = null;
+  @State() plaidLinkToken: string | null = null;
+  @State() plaidLink: any = null;
+  @State() plaidError: string | null = null;
+  @State() accountId: string = '';
   
   @Prop() businessId: string;
   @Prop() getBusiness: Function;
@@ -34,12 +42,18 @@ export class BusinessBankAccountFormStepCore {
   @Prop() postDocumentRecord: Function;
   @Prop() allowOptionalFields?: boolean;
   @Prop() country: CountryCode;
+  @Prop() authToken: string;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   // internal loading event
   @Event() formLoading: EventEmitter<boolean>;
+
+  private scriptRef: HTMLScriptElement;
+  private plaidService = new PlaidService();
+  private abortController: AbortController | null = null;
+  private timeoutId: NodeJS.Timeout | null = null;
 
   @Watch('isLoading')
   watchHandler(newValue: boolean) {
@@ -71,6 +85,33 @@ export class BusinessBankAccountFormStepCore {
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
+  }
+
+  componentDidRender() {
+    if (this.scriptRef) {
+      this.scriptRef.onload = () => {
+        if (this.authToken && !this.existingBankAccount) {
+          this.initializePlaidLink();
+        }
+      };
+      this.scriptRef.onerror = () => {
+        this.plaidError = 'Unable to load Plaid. Please refresh the page and try again.';
+        this.errorEvent.emit({
+          message: this.plaidError,
+          errorCode: ComponentErrorCodes.POST_ERROR,
+          severity: ComponentErrorSeverity.ERROR
+        });
+      };
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+    if (this.abortController) {
+      this.abortController.abort();
+    }
   }
 
   initializeFormController = () => {
@@ -116,6 +157,7 @@ export class BusinessBankAccountFormStepCore {
           this.bankAccount.business_id = this.businessId;
         }
         this.existingDocuments = response.data.documents;
+        this.accountId = response.data.platform_account_id;
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -127,6 +169,10 @@ export class BusinessBankAccountFormStepCore {
       final: () => {
         this.initializeFormController();
         this.isLoading = false;
+        // Initialize Plaid after data is loaded, if no existing bank account
+        if (this.authToken && !this.existingBankAccount) {
+          this.loadPlaidScript();
+        }
       }
     });
   }
@@ -277,6 +323,266 @@ export class BusinessBankAccountFormStepCore {
     }
   }
 
+  loadPlaidScript = () => {
+    // Check if script is already loaded
+    if (typeof (window as any).Plaid !== 'undefined') {
+      this.initializePlaidLink();
+      return;
+    }
+
+    // Create and append script if not exists
+    const existingScript = document.querySelector('script[src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"]');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
+      script.async = true;
+      script.onload = () => {
+        if (this.authToken && !this.existingBankAccount) {
+          this.initializePlaidLink();
+        }
+      };
+      script.onerror = () => {
+        this.plaidError = 'Unable to load Plaid. Please refresh the page and try again.';
+        this.errorEvent.emit({
+          message: this.plaidError,
+          errorCode: ComponentErrorCodes.POST_ERROR,
+          severity: ComponentErrorSeverity.ERROR
+        });
+      };
+      document.head.appendChild(script);
+      this.scriptRef = script;
+    } else {
+      // Script already exists, wait for it to load
+      if (typeof (window as any).Plaid !== 'undefined') {
+        this.initializePlaidLink();
+      } else {
+        (existingScript as HTMLScriptElement).onload = () => {
+          this.initializePlaidLink();
+        };
+      }
+    }
+  }
+
+  initializePlaidLink = async () => {
+    try {
+      if (typeof (window as any).Plaid === 'undefined') {
+        this.plaidError = 'Plaid SDK not loaded. Please refresh the page and try again.';
+        this.errorEvent.emit({
+          message: this.plaidError,
+          errorCode: ComponentErrorCodes.POST_ERROR,
+          severity: ComponentErrorSeverity.ERROR
+        });
+        return;
+      }
+
+      await this.getLinkToken();
+
+      if (!this.plaidLinkToken) {
+        return;
+      }
+
+      const Plaid = (window as any).Plaid;
+      this.plaidLink = Plaid.create({
+        token: this.plaidLinkToken,
+        onSuccess: this.handlePlaidSuccess,
+        onExit: this.handlePlaidExit,
+        onEvent: this.handlePlaidEvent,
+        onLoad: this.handlePlaidLoad,
+      });
+    } catch (error) {
+      this.plaidError = 'Unable to initialize bank connection. Please try again.';
+      this.errorEvent.emit({
+        message: this.plaidError,
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error
+      });
+    }
+  }
+
+  getLinkToken = async () => {
+    try {
+      if (!this.authToken) {
+        this.plaidError = 'Missing authentication. Please refresh the page and try again.';
+        this.errorEvent.emit({
+          message: this.plaidError,
+          errorCode: ComponentErrorCodes.MISSING_PROPS,
+          severity: ComponentErrorSeverity.ERROR
+        });
+        return;
+      }
+
+      const accountId = this.accountId || this.businessId;
+      
+      // Create abort controller for timeout handling
+      this.abortController = new AbortController();
+
+      // Set timeout for the request
+      this.timeoutId = setTimeout(() => {
+        this.abortController?.abort();
+      }, 30000); // 30 second timeout
+
+      // For business forms, we use businessId as checkoutId equivalent
+      const response = await this.plaidService.getLinkToken(
+        this.authToken,
+        accountId,
+        this.businessId, // Using businessId as checkoutId for business forms
+        this.abortController.signal
+      );
+
+      // Clear timeout
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
+      }
+
+      if (response.error) {
+        const errorMessage = typeof response.error === 'string'
+          ? response.error
+          : response.error.message || 'Failed to get link token';
+        throw new Error(errorMessage);
+      }
+
+      this.plaidLinkToken = response.data.link_token;
+      this.plaidError = null;
+    } catch (error) {
+      // Clear timeout
+      if (this.timeoutId) {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
+      }
+
+      if (error.name === 'AbortError') {
+        this.plaidError = 'Request timed out. Please try again.';
+      } else {
+        this.plaidError = error.message || 'Failed to connect to bank service. Please try again.';
+      }
+      
+      this.errorEvent.emit({
+        message: this.plaidError,
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error
+      });
+    }
+  }
+
+  openPlaidLink = () => {
+    if (this.plaidLink && this.plaidLinkToken) {
+      this.isPlaidAuthenticating = true;
+      this.plaidError = null;
+      this.plaidLink.open();
+    }
+  }
+
+  handlePlaidSuccess = async (publicToken: string, _metadata: any) => {
+    this.plaidPublicToken = publicToken;
+    this.isPlaidAuthenticating = false;
+    this.plaidError = null;
+
+    try {
+      // Exchange public token for bank account details
+      const accountId = this.accountId || this.businessId;
+      const response = await this.plaidService.tokenizeBankAccount(
+        this.authToken,
+        accountId,
+        publicToken
+      );
+
+      if (response.error) {
+        const errorMessage = typeof response.error === 'string'
+          ? response.error
+          : response.error.message || 'Failed to retrieve bank account details';
+        throw new Error(errorMessage);
+      }
+
+      // Extract bank account data from response
+      const bankAccountData = response.data?.bank_account || response.data;
+      
+      if (bankAccountData) {
+        // Populate form with Plaid data
+        const plaidFormData: any = {};
+        
+        if (bankAccountData.account_owner_name) {
+          plaidFormData.account_owner_name = bankAccountData.account_owner_name;
+        }
+        if (bankAccountData.bank_name) {
+          plaidFormData.bank_name = bankAccountData.bank_name;
+        }
+        if (bankAccountData.account_type) {
+          plaidFormData.account_type = bankAccountData.account_type;
+        }
+        if (bankAccountData.routing_number) {
+          plaidFormData.routing_number = bankAccountData.routing_number;
+        }
+        // Note: Account number is typically not returned for security, but last 4 digits might be
+        if (bankAccountData.acct_last_four || bankAccountData.account_number_last4) {
+          plaidFormData.acct_last_four = bankAccountData.acct_last_four || bankAccountData.account_number_last4;
+        }
+
+        // Update form controller with Plaid data
+        const currentValues = this.formController.values.getValue();
+        this.formController.setValues({
+          ...currentValues,
+          ...plaidFormData
+        });
+
+        // Update bankAccount state
+        this.bankAccount = {
+          ...this.bankAccount,
+          ...plaidFormData
+        };
+      }
+    } catch (error) {
+      this.plaidError = error.message || 'Failed to retrieve bank account details. Please try again.';
+      this.errorEvent.emit({
+        message: this.plaidError,
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+        data: error
+      });
+    }
+  }
+
+  handlePlaidExit = (err: any, _metadata: any) => {
+    this.isPlaidAuthenticating = false;
+
+    if (err) {
+      this.plaidError = err.error_message || 'Bank connection failed. Please try again.';
+      this.errorEvent.emit({
+        message: this.plaidError,
+        errorCode: ComponentErrorCodes.POST_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+        data: err
+      });
+    }
+  }
+
+  handlePlaidEvent = (eventName: string, metadata: any) => {
+    switch (eventName) {
+      case 'OPEN':
+        this.isPlaidAuthenticating = true;
+        break;
+      case 'CLOSE':
+        this.isPlaidAuthenticating = false;
+        break;
+      case 'ERROR':
+        this.plaidError = metadata.error_message || 'An error occurred during bank connection.';
+        this.errorEvent.emit({
+          message: this.plaidError,
+          errorCode: ComponentErrorCodes.POST_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+          data: metadata
+        });
+        this.isPlaidAuthenticating = false;
+        break;
+    }
+  }
+
+  handlePlaidLoad = () => {
+    // Plaid Link loaded successfully
+  }
+
   render() {
     const bankAccountDefaultValue = this.formController.getInitialValues();
 
@@ -292,6 +598,58 @@ export class BusinessBankAccountFormStepCore {
             <form-control-tooltip helpText="This direct deposit account is the designated bank account where incoming funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />
+          {!this.existingBankAccount && this.authToken && (
+            <div class="mb-3">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (this.plaidLink && this.plaidLinkToken) {
+                    this.openPlaidLink();
+                  } else if (!this.plaidLinkToken) {
+                    // Try to initialize if not already done
+                    this.loadPlaidScript();
+                  }
+                }}
+                disabled={this.isPlaidAuthenticating || !this.plaidLink || !this.plaidLinkToken}
+              >
+                {this.isPlaidAuthenticating ? (
+                  'Connecting...'
+                ) : (
+                  <span>
+                    Connect with Plaid
+                    <img
+                      src={plaidLogoSvg}
+                      alt="Plaid"
+                      style={{
+                        display: 'inline',
+                        width: '20px',
+                        height: '20px',
+                        marginLeft: '5px',
+                        verticalAlign: 'middle',
+                      }}
+                    />
+                  </span>
+                )}
+              </button>
+              {this.plaidPublicToken && (
+                <div class="text-success mt-2">
+                  <small>✓ Bank account connected successfully</small>
+                </div>
+              )}
+              {this.plaidError && (
+                <div class="text-danger mt-2">
+                  <small>{this.plaidError} dasd</small>
+                </div>
+              )}
+              {this.plaidLinkToken && !this.plaidPublicToken && !this.plaidError && (
+                <div class="text-muted mt-2">
+                  <small>Click to connect your bank account</small>
+                </div>
+              )}
+            </div>
+          )}
           {this.country === CountryCode.CAN ? (
             <bank-account-form-inputs-canada
               defaultValue={bankAccountDefaultValue}

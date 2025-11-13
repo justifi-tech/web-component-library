@@ -65,6 +65,7 @@ export class BusinessBankAccountFormStep {
     return (
       <justifi-business-bank-account-form-step-core
         businessId={this.businessId}
+        authToken={this.authToken}
         getBusiness={this.getBusiness}
         postBankAccount={this.postBankAccount}
         postDocumentRecord={this.postDocumentRecord}
