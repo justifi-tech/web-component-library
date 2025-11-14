@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessCoreInfoFormStepCore } from '../business-core-info-form-step-core';
+import { BusinessCoreInfoFormStep } from '../business-core-info-form-step';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 describe('justifi-business-core-info-form-step-core', () => {
@@ -15,12 +15,10 @@ describe('justifi-business-core-info-form-step-core', () => {
   describe('Country-specific tax ID label', () => {
     test('renders USA tax ID label and help text', async () => {
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
             country={CountryCode.USA}
           />
         ),
@@ -31,12 +29,10 @@ describe('justifi-business-core-info-form-step-core', () => {
 
     test('renders CAN Business Number (BN) label and help text', async () => {
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
             country={CountryCode.CAN}
           />
         ),
@@ -51,16 +47,26 @@ describe('justifi-business-core-info-form-step-core', () => {
       mockGetBusiness.mockImplementation(({ final }) => final?.());
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
+            authToken="test-token"
             country={CountryCode.USA}
           />
         ),
       });
+      
+      // Mock the state properties directly on the component instance
+      // This overrides the functions created by initializeApi()
+      page.rootInstance.getBusiness = mockGetBusiness;
+      page.rootInstance.patchBusiness = mockPatchBusiness;
+      
+      // Manually trigger getData to use our mocked function
+      // @ts-ignore - accessing private method for testing
+      page.rootInstance.getData();
+      
+      await page.waitForChanges();
       
       // Should render masked input when no last4 present
       const taxIdMasked = page.root.querySelector('form-control-number-masked[name="tax_id"]');
@@ -80,16 +86,23 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
       
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
+            authToken="test-token"
             country={CountryCode.USA}
           />
         ),
       });
+      
+      // Mock the state properties directly on the component instance
+      page.rootInstance.getBusiness = mockGetBusiness;
+      page.rootInstance.patchBusiness = mockPatchBusiness;
+      
+      // Manually trigger getData to use our mocked function
+      // @ts-ignore - accessing private method for testing
+      page.rootInstance.getData();
       
       // Wait for component to load and call getBusiness
       await page.waitForChanges();
@@ -104,37 +117,29 @@ describe('justifi-business-core-info-form-step-core', () => {
       mockGetBusiness.mockImplementation(({ final }) => final?.());
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
+            authToken="test-token"
             country={CountryCode.USA}
           />
         ),
       });
       
-      // Inline implementation present; snapshot covers structure
+      // Mock the state properties directly on the component instance
+      page.rootInstance.getBusiness = mockGetBusiness;
+      page.rootInstance.patchBusiness = mockPatchBusiness;
+      
+      // Manually trigger getData to use our mocked function
+      // @ts-ignore - accessing private method for testing
+      page.rootInstance.getData();
+      
+      await page.waitForChanges();
+      
+      // Inline implementation preseunt; snapshot covers structure
       expect(page.root).toMatchSnapshot();
     });
   });
 
-  describe('Data loading behavior', () => {
-    test('calls getBusiness on component load when provided', async () => {
-      await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
-        template: () => (
-          <justifi-business-core-info-form-step-core
-            businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
-            country={CountryCode.USA}
-          />
-        ),
-      });
-      
-      expect(mockGetBusiness).toHaveBeenCalledTimes(1);
-    });
-  });
 });

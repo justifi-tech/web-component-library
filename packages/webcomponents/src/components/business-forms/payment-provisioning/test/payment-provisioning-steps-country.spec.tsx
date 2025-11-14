@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessCoreInfoFormStepCore } from '../business-core-info/business-core-info-form-step-core';
-import { LegalAddressFormStepCore } from '../legal-address-form/legal-address-form-step-core';
+import { BusinessCoreInfoFormStep } from '../business-core-info/business-core-info-form-step';
+import { LegalAddressFormStep } from '../legal-address-form/legal-address-form-step';
 import { BusinessRepresentativeFormStepCore } from '../business-representative/business-representative-form-step-core';
 import { BusinessOwnersFormStepCore } from '../business-owners/business-owners-form-step-core';
 import { BusinessBankAccountFormStepCore } from '../bank-account/business-bank-account-form-step-core';
@@ -22,7 +22,7 @@ describe('Payment Provisioning step components country differences', () => {
   describe('Business Core Info step snapshots', () => {
     test('renders USA tax ID label and help text', async () => {
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step-core
             {...baseProps}
@@ -36,7 +36,7 @@ describe('Payment Provisioning step components country differences', () => {
 
     test('renders CAN Business Number (BN) label and help text', async () => {
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step-core
             {...baseProps}
@@ -52,7 +52,7 @@ describe('Payment Provisioning step components country differences', () => {
   describe('Legal Address step snapshots', () => {
     test('renders USA State and Zip Code labels', async () => {
       const page = await newSpecPage({
-        components: [LegalAddressFormStepCore],
+        components: [LegalAddressFormStep],
         template: () => (
           <justifi-legal-address-form-step-core
             {...baseProps}
@@ -66,7 +66,7 @@ describe('Payment Provisioning step components country differences', () => {
 
     test('renders CAN Province and Postal Code labels', async () => {
       const page = await newSpecPage({
-        components: [LegalAddressFormStepCore],
+        components: [LegalAddressFormStep],
         template: () => (
           <justifi-legal-address-form-step-core
             {...baseProps}

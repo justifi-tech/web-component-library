@@ -2,17 +2,25 @@ import { Component, Method, Prop, State, h, Event, EventEmitter, Watch } from '@
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { ComponentErrorEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { CountryCode } from '../../../../utils/country-codes';
+import { addressSchemaByCountry } from '../../schemas/business-address-schema';
+import { FormController } from '../../../../ui-components/form/form';
+import { Address, IAddress } from '../../../../api/Business';
+import { heading2 } from '../../../../styles/parts';
+import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
+import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-legal-address-form-step'
 })
 export class LegalAddressFormStep {
-  coreComponent: HTMLJustifiLegalAddressFormStepCoreElement;
-
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
+  @State() formController: FormController;
+  @State() errors: any = {};
+  @State() legal_address: IAddress = {};
+  @State() isLoading: boolean = false;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -26,14 +34,31 @@ export class LegalAddressFormStep {
   }
 
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'complete-form-step-event', bubbles: true })
+    stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event() formLoading: EventEmitter<boolean>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    this.coreComponent.validateAndSubmit({ onSuccess });
+    this.formController.validateAndSubmit(() => this.sendData(onSuccess));
+  }
+
+  get patchPayload() {
+    let formValues = new Address(this.formController.values.getValue()).payload;
+    return { legal_address: formValues };
   }
 
   componentWillLoad() {
     this.initializeApi();
+    const schemaFactory = addressSchemaByCountry[this.country];
+    this.formController = new FormController(schemaFactory(this.allowOptionalFields));
+    this.getData();
+  }
+
+  componentDidLoad() {
+    this.formController.errors.subscribe(errors => {
+      this.errors = { ...errors };
+    });
   }
 
   private initializeApi() {
@@ -57,15 +82,86 @@ export class LegalAddressFormStep {
     }
   }
 
+  private getData = () => {
+    if (!this.getBusiness) return;
+
+    this.formLoading.emit(true);
+    this.isLoading = true;
+    this.getBusiness({
+      onSuccess: (response) => {
+        const business = response.data || {};
+        const address = new Address(business.legal_address || {});
+        this.legal_address = { ...address, country: this.country };
+        this.formController.setInitialValues({ ...this.legal_address });
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      },
+      final: () => {
+        this.formLoading.emit(false);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  private sendData = (onSuccess: () => void) => {
+    let submittedData;
+    this.formLoading.emit(true);
+    this.patchBusiness({
+      payload: this.patchPayload,
+      onSuccess: (response) => {
+        submittedData = response;
+        onSuccess();
+      },
+      onError: ({ error, code, severity }) => {
+        submittedData = error;
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      },
+      final: () => {
+        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.legalAddress });
+        this.formLoading.emit(false)
+      }
+    });
+  }
+
+  inputHandler = (name: string, value: string) => {
+    this.formController.setValues({
+      ...this.formController.values.getValue(),
+      [name]: value,
+    });
+  }
+
   render() {
+    const legalAddressDefaultValue = this.formController?.getInitialValues();
+
+    if (this.isLoading) {
+      return <PaymentProvisioningLoading />;
+    }
+
     return (
-      <justifi-legal-address-form-step-core
-        getBusiness={this.getBusiness}
-        patchBusiness={this.patchBusiness}
-        allowOptionalFields={this.allowOptionalFields}
-        country={this.country}
-        ref={el => this.coreComponent = el}
-      />
+      <form>
+        <fieldset>
+          <div class="d-flex align-items-center gap-2">
+            <legend class="mb-0" part={heading2}>Legal Address of your Business</legend>
+            <form-control-tooltip helpText="No PO Boxes." />
+          </div>
+          <hr class="mt-2" />
+          <justifi-form-address-fields
+            country={this.country}
+            errors={this.errors}
+            defaultValues={legalAddressDefaultValue}
+            inputHandler={this.inputHandler}
+          />
+        </fieldset>
+      </form>
     );
   }
 }

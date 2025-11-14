@@ -10,10 +10,9 @@
 | Property              | Attribute               | Description | Type                                 | Default     |
 | --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
 | `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`                             | `undefined` |
 | `businessId`          | `business-id`           |             | `string`                             | `undefined` |
 | `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
-| `getBusiness`         | --                      |             | `Function`                           | `undefined` |
-| `patchBusiness`       | --                      |             | `Function`                           | `undefined` |
 
 
 ## Events
@@ -48,7 +47,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-business-core-info-form-step](.)
+ - [justifi-payment-provisioning-form-steps](..)
 
 ### Depends on
 
@@ -60,17 +59,17 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-core-info-form-step-core --> form-control-text
-  justifi-business-core-info-form-step-core --> form-control-select
-  justifi-business-core-info-form-step-core --> form-control-date
-  justifi-business-core-info-form-step-core --> form-control-number-masked
+  justifi-business-core-info-form-step --> form-control-text
+  justifi-business-core-info-form-step --> form-control-select
+  justifi-business-core-info-form-step --> form-control-date
+  justifi-business-core-info-form-step --> form-control-number-masked
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
   form-control-date --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
-  justifi-business-core-info-form-step --> justifi-business-core-info-form-step-core
-  style justifi-business-core-info-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-provisioning-form-steps --> justifi-business-core-info-form-step
+  style justifi-business-core-info-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
