@@ -60,8 +60,8 @@ graph TD;
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
   justifi-additional-questions-form-step-core --> form-control-tooltip
   justifi-additional-questions-form-step-core --> form-control-monetary-provisioning
-  justifi-additional-questions-form-step-core --> form-control-select
   justifi-additional-questions-form-step-core --> form-control-text
+  justifi-additional-questions-form-step-core --> form-control-select
   justifi-business-representative-form-step --> justifi-business-representative-form-step-core
   justifi-business-representative-form-step-core --> justifi-business-representative-form-inputs
   justifi-business-representative-form-inputs --> form-control-tooltip
