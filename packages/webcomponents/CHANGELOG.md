@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.4.3
+
+### Patch Changes
+
+- 5c8afbd: Fix autoscroll on the Checkout component (UFC)
+
 ## 6.4.2
 
 ### Patch Changes
