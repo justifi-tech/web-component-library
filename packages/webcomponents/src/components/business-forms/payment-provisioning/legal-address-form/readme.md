@@ -45,10 +45,6 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-### Used by
-
- - [justifi-legal-address-form-step](.)
-
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
@@ -64,7 +60,6 @@ graph TD;
   justifi-form-address-fields --> form-control-select
   form-control-text --> form-control-tooltip
   form-control-select --> form-control-tooltip
-  justifi-legal-address-form-step --> justifi-legal-address-form-step-core
   style justifi-legal-address-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

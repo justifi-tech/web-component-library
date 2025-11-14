@@ -46,10 +46,6 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-### Used by
-
- - [justifi-business-core-info-form-step](.)
-
 ### Depends on
 
 - [form-control-text](../../../../ui-components/form)
@@ -69,7 +65,6 @@ graph TD;
   form-control-select --> form-control-tooltip
   form-control-date --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
-  justifi-business-core-info-form-step --> justifi-business-core-info-form-step-core
   style justifi-business-core-info-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
