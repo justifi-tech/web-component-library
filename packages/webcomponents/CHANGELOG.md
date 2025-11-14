@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.4.2
+
+### Patch Changes
+
+- 89f026c: Fix forward ref to Internal Tokenize Payment
+
 ## 6.4.1
 
 ### Patch Changes
