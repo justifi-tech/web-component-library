@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessCoreInfoFormStepCore } from '../business-core-info-form-step-core';
+import { BusinessCoreInfoFormStep } from '../business-core-info-form-step';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 describe('justifi-business-core-info-form-step-core', () => {
@@ -15,12 +15,10 @@ describe('justifi-business-core-info-form-step-core', () => {
   describe('Country-specific tax ID label', () => {
     test('renders USA tax ID label and help text', async () => {
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
             country={CountryCode.USA}
           />
         ),
@@ -31,12 +29,10 @@ describe('justifi-business-core-info-form-step-core', () => {
 
     test('renders CAN Business Number (BN) label and help text', async () => {
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
             country={CountryCode.CAN}
           />
         ),
@@ -51,12 +47,10 @@ describe('justifi-business-core-info-form-step-core', () => {
       mockGetBusiness.mockImplementation(({ final }) => final?.());
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
             country={CountryCode.USA}
           />
         ),
@@ -80,12 +74,10 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
       
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
             country={CountryCode.USA}
           />
         ),
@@ -104,37 +96,18 @@ describe('justifi-business-core-info-form-step-core', () => {
       mockGetBusiness.mockImplementation(({ final }) => final?.());
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step-core
+          <justifi-business-core-info-form-step
             businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
             country={CountryCode.USA}
           />
         ),
       });
       
-      // Inline implementation present; snapshot covers structure
+      // Inline implementation preseunt; snapshot covers structure
       expect(page.root).toMatchSnapshot();
     });
   });
 
-  describe('Data loading behavior', () => {
-    test('calls getBusiness on component load when provided', async () => {
-      await newSpecPage({
-        components: [BusinessCoreInfoFormStepCore],
-        template: () => (
-          <justifi-business-core-info-form-step-core
-            businessId="biz_123"
-            getBusiness={mockGetBusiness}
-            patchBusiness={mockPatchBusiness}
-            country={CountryCode.USA}
-          />
-        ),
-      });
-      
-      expect(mockGetBusiness).toHaveBeenCalledTimes(1);
-    });
-  });
 });

@@ -27,7 +27,6 @@
  - [justifi-business-owners-form-step-core](../../../../components/business-forms/payment-provisioning/business-owners)
  - [justifi-business-representative-form-inputs](../../../../components/business-forms/payment-provisioning/business-representative)
  - [justifi-legal-address-form-step](../../../../components/business-forms/payment-provisioning/legal-address-form)
- - [justifi-legal-address-form-step-core](../../../../components/business-forms/payment-provisioning/legal-address-form)
  - [terminal-quantity-selector](../../../../components/order-terminals/terminal-quantity-selector)
 
 ### Depends on
@@ -49,7 +48,6 @@ graph TD;
   justifi-business-owners-form-step-core --> form-control-tooltip
   justifi-business-representative-form-inputs --> form-control-tooltip
   justifi-legal-address-form-step --> form-control-tooltip
-  justifi-legal-address-form-step-core --> form-control-tooltip
   terminal-quantity-selector --> form-control-tooltip
   style form-control-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
