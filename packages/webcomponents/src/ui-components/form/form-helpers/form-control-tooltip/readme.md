@@ -22,6 +22,7 @@
  - [form-control-number-masked](../..)
  - [form-control-select](../..)
  - [form-control-text](../..)
+ - [justifi-additional-questions-form-step](../../../../components/business-forms/payment-provisioning/additional-questions)
  - [justifi-additional-questions-form-step-core](../../../../components/business-forms/payment-provisioning/additional-questions)
  - [justifi-business-bank-account-form-step-core](../../../../components/business-forms/payment-provisioning/bank-account)
  - [justifi-business-owners-form-step-core](../../../../components/business-forms/payment-provisioning/business-owners)
@@ -43,6 +44,7 @@ graph TD;
   form-control-number-masked --> form-control-tooltip
   form-control-select --> form-control-tooltip
   form-control-text --> form-control-tooltip
+  justifi-additional-questions-form-step --> form-control-tooltip
   justifi-additional-questions-form-step-core --> form-control-tooltip
   justifi-business-bank-account-form-step-core --> form-control-tooltip
   justifi-business-owners-form-step-core --> form-control-tooltip
