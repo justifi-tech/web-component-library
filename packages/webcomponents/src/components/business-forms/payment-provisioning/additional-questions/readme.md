@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type       | Default     |
-| --------------------- | ----------------------- | ----------- | ---------- | ----------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`  | `undefined` |
-| `getBusiness`         | --                      |             | `Function` | `undefined` |
-| `patchBusiness`       | --                      |             | `Function` | `undefined` |
+| Property              | Attribute               | Description | Type      | Default     |
+| --------------------- | ----------------------- | ----------- | --------- | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean` | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`  | `undefined` |
+| `businessId`          | `business-id`           |             | `string`  | `undefined` |
 
 
 ## Events
@@ -44,6 +44,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [justifi-payment-provisioning-form-steps](..)
+
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
@@ -54,14 +58,15 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions-form-step-core --> form-control-tooltip
-  justifi-additional-questions-form-step-core --> form-control-monetary-provisioning
-  justifi-additional-questions-form-step-core --> form-control-select
-  justifi-additional-questions-form-step-core --> form-control-text
+  justifi-additional-questions-form-step --> form-control-tooltip
+  justifi-additional-questions-form-step --> form-control-monetary-provisioning
+  justifi-additional-questions-form-step --> form-control-select
+  justifi-additional-questions-form-step --> form-control-text
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
   form-control-text --> form-control-tooltip
-  style justifi-additional-questions-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-provisioning-form-steps --> justifi-additional-questions-form-step
+  style justifi-additional-questions-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
