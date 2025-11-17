@@ -44,10 +44,6 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-### Used by
-
- - [justifi-additional-questions-form-step](.)
-
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)

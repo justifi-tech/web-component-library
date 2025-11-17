@@ -197,7 +197,10 @@ ${codeExampleHead(
     auth-token="authToken"
     checkout-id="cho_123"
   >
-    ${getSlotContentExample1()}
+    ${getSlotContentExample1().replace(
+      /<div class="payment-method-card\s+dark"[^>]*data-payment-method="apple"[^>]*>\s*<div class="payment-method-text">Apple Pay<\/div>\s*<\/div>/,
+      '<justifi-apple-pay></justifi-apple-pay>'
+    )}
   </justifi-modular-checkout>
 </body>
 

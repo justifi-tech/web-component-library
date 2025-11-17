@@ -42,19 +42,17 @@ graph TD;
   justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-bank-account-form-step
   justifi-payment-provisioning-form-steps --> justifi-business-terms-conditions-form-step
-  justifi-business-core-info-form-step --> justifi-business-core-info-form-step-core
-  justifi-business-core-info-form-step-core --> form-control-text
-  justifi-business-core-info-form-step-core --> form-control-select
-  justifi-business-core-info-form-step-core --> form-control-date
-  justifi-business-core-info-form-step-core --> form-control-number-masked
+  justifi-business-core-info-form-step --> form-control-text
+  justifi-business-core-info-form-step --> form-control-select
+  justifi-business-core-info-form-step --> form-control-date
+  justifi-business-core-info-form-step --> form-control-number-masked
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
   form-control-date --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
-  justifi-legal-address-form-step --> justifi-legal-address-form-step-core
-  justifi-legal-address-form-step-core --> form-control-tooltip
-  justifi-legal-address-form-step-core --> justifi-form-address-fields
+  justifi-legal-address-form-step --> form-control-tooltip
+  justifi-legal-address-form-step --> justifi-form-address-fields
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select
   justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
