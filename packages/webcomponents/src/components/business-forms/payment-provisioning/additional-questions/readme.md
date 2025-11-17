@@ -44,10 +44,6 @@ Type: `Promise<void>`
 
 ## Dependencies
 
-### Used by
-
- - [justifi-additional-questions-form-step](.)
-
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
@@ -65,7 +61,6 @@ graph TD;
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
   form-control-text --> form-control-tooltip
-  justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
   style justifi-additional-questions-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
