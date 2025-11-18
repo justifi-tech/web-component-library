@@ -117,19 +117,119 @@ exports[`Payment Provisioning step components country differences Bank Account s
 `;
 
 exports[`Payment Provisioning step components country differences Business Core Info step snapshots renders CAN Business Number (BN) label and help text 1`] = `
-<justifi-business-core-info-form-step-core
-  authtoken="token"
-  businessid="biz_123"
-  country="CAN"
-/>
+<justifi-business-core-info-form-step>
+  <div class="gap-5 row">
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+  </div>
+</justifi-business-core-info-form-step>
 `;
 
 exports[`Payment Provisioning step components country differences Business Core Info step snapshots renders USA tax ID label and help text 1`] = `
-<justifi-business-core-info-form-step-core
-  authtoken="token"
-  businessid="biz_123"
-  country="USA"
-/>
+<justifi-business-core-info-form-step>
+  <div class="gap-5 row">
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+  </div>
+</justifi-business-core-info-form-step>
 `;
 
 exports[`Payment Provisioning step components country differences Form Address Fields component snapshots renders CAN address fields with Province/Postal Code labels 1`] = `
@@ -185,15 +285,65 @@ exports[`Payment Provisioning step components country differences Legal Address 
 `;
 
 exports[`Payment Provisioning step components country differences Legal Address step snapshots renders USA State and Zip Code labels 1`] = `
-<justifi-legal-address-form-step-core
-  authtoken="token"
-  businessid="biz_123"
-  country="USA"
-/>
+<justifi-legal-address-form-step>
+  <div class="gap-5 row">
+    <div class="col-12">
+      <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+    <div class="gap-3 row">
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 25%;"></div>
+      </div>
+      <div class="col-12">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 50%;"></div>
+      </div>
+      <div class="col-12 d-flex gap-3">
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 65%;"></div>
+        <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 35%;"></div>
+      </div>
+    </div>
+  </div>
+</justifi-legal-address-form-step>
 `;
 
 exports[`Payment Provisioning step components country differences Owners step snapshots renders CAN SIN labels in owner forms 1`] = `
-<justifi-business-owners-form-step-core>
+<justifi-business-owners-form-step>
   <div class="gap-5 row">
     <div class="col-12">
       <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
@@ -247,11 +397,11 @@ exports[`Payment Provisioning step components country differences Owners step sn
       </div>
     </div>
   </div>
-</justifi-business-owners-form-step-core>
+</justifi-business-owners-form-step>
 `;
 
 exports[`Payment Provisioning step components country differences Owners step snapshots renders USA SSN labels in owner forms 1`] = `
-<justifi-business-owners-form-step-core>
+<justifi-business-owners-form-step>
   <div class="gap-5 row">
     <div class="col-12">
       <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
@@ -305,7 +455,7 @@ exports[`Payment Provisioning step components country differences Owners step sn
       </div>
     </div>
   </div>
-</justifi-business-owners-form-step-core>
+</justifi-business-owners-form-step>
 `;
 
 exports[`Payment Provisioning step components country differences Representative step snapshots renders CAN SIN labels and help text 1`] = `
