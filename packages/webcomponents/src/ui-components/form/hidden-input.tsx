@@ -11,6 +11,19 @@ export class HiddenInput {
   @State() isFocused: boolean = false;
   @State() errorText: string = '';
 
+  private focusWithoutPageScroll(input: HTMLInputElement) {
+    if (!input) return;
+    try {
+      // Use preventScroll where supported
+      (input as any).focus({ preventScroll: true });
+    } catch (_e) {
+      // Fallback for older browsers
+      const { scrollX, scrollY } = window;
+      input.focus();
+      window.scrollTo(scrollX, scrollY);
+    }
+  }
+
   async componentDidLoad() {
     const fontStyles = await this.getBaseFontStyles();
     iframeInputStylesSet('fontStyles', fontStyles);
@@ -43,7 +56,7 @@ export class HiddenInput {
 
   private async getFocusedStyles() {
     return new Promise((resolve, _reject) => {
-      this.hiddenInput.focus();
+      this.focusWithoutPageScroll(this.hiddenInput);
       setTimeout(() => {
         this.hiddenInput.blur();
         let computedStyles = getComputedStyle(this.hiddenInput);
@@ -57,7 +70,7 @@ export class HiddenInput {
 
   private async getFocusedAndInvalidStyles() {
     return new Promise((resolve, _reject) => {
-      this.hiddenInput.focus();
+      this.focusWithoutPageScroll(this.hiddenInput);
       this.errorText = 'Error';
 
       setTimeout(() => {
