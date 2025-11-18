@@ -1,0 +1,11 @@
+<svg width="400" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tokenize payment method">
+  <rect width="400" height="220" fill="#0B1F41" rx="16" />
+  <rect x="24" y="24" width="352" height="72" fill="#122B57" rx="12" />
+  <rect x="24" y="108" width="352" height="72" fill="#122B57" rx="12" />
+  <text x="40" y="60" font-size="16" font-family="'Inter',sans-serif" fill="#E6EEF8">Cardholder name</text>
+  <text x="40" y="94" font-size="24" font-weight="600" font-family="'Inter',sans-serif" fill="#FFFFFF">Avery Client</text>
+  <text x="40" y="144" font-size="16" font-family="'Inter',sans-serif" fill="#E6EEF8">Card number</text>
+  <text x="40" y="178" font-size="24" font-weight="600" font-family="'Inter',sans-serif" fill="#FFFFFF">4242 4242 4242 4242</text>
+  <rect x="132" y="184" width="136" height="32" rx="8" fill="#2BC4A2" />
+  <text x="148" y="205" font-size="16" font-weight="600" font-family="'Inter',sans-serif" fill="#0B1F41">Tokenize</text>
+</svg>

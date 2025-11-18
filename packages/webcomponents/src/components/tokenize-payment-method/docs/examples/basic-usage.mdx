@@ -1,0 +1,17 @@
+---
+title: Basic Usage Example
+description: Embed the tokenizer with dumb data for integration testing.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+
+This example mirrors the Storybook story but removes tooling-specific wrappers so it can be copy/pasted into the public docs site. Replace the `auth-token` and `account-id` with real values when testing against the API.
+
+<CodeBlock language="html">{
+`<justifi-tokenize-payment-method
+  account-id="acc_demo"
+  auth-token="wct_demo"
+  payment-method-group-id="pmg_default"
+  save-payment-method-label="Save for future checkouts"
+></justifi-tokenize-payment-method>`
+}</CodeBlock>
