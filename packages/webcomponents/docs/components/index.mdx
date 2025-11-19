@@ -1,0 +1,27 @@
+---
+id: components/index
+title: Component Catalog
+description: Reference for every JustiFi web component including props, events, CSS parts, and usage patterns.
+sidebar_position: 3
+---
+
+Browse individual component pages for deep dives on props, events, slot contracts, `::part` selectors, and integration caveats.
+
+## How component docs are structured
+
+Every page follows the same scaffolding:
+
+1. **Overview** – when to use the component.
+2. **Usage** – minimal markup plus contextual variants.
+3. **Props & Events** – rendered via `<PropsTable>` for consistency.
+4. **Theming & Parts** – CSS custom properties and enumerated `::part` selectors (via `<PartsTable>`).
+5. **Accessibility** – focus management, aria attributes, localization guidance.
+6. **Static Examples** – non-interactive snippets that mirror Storybook stories.
+
+## Authoring checklist
+
+- Duplicate `../templates/component-template.mdx` and adjust the frontmatter ID + sidebar position.
+- Keep prose declarative and actionable—no conversational filler.
+- Include at least one `<UsageSnippet>`, `<PropsTable>`, and `<PartsTable>` block.
+- Reference shared guides when overlapping content would otherwise drift.
+- Document `::part` styling hooks plus any CSS variables the component exposes.

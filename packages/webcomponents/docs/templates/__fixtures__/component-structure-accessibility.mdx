@@ -1,0 +1,42 @@
+---
+id: fixtures/component-accessibility
+title: <justifi-component-accessibility>
+description: Fixture doc focusing on accessibility reminders.
+sidebar_position: 997
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../components/helpers';
+
+## Overview
+
+Fixture ensuring every doc dedicates space to WCAG conformance details.
+
+## Usage
+
+<UsageSnippet title="Accessible usage" code={`<justifi-component-accessibility aria-label="Fixture" />`} language="html" />
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    { name: 'aria-label', type: 'string', required: false, description: 'Fixture accessibility prop' },
+  ]}
+/>
+
+## Theming & Layout
+
+
+<PartsTable
+  parts={[
+    { name: 'focus-ring', description: 'Fixture part for focus styling.' },
+  ]}
+/>
+
+## Accessibility
+
+- Document how focus is handled within hosted iframes.
+- Mention localization + validation messaging.
+
+## Static examples
+
+<UsageSnippet title="Error state" code={`<justifi-component-accessibility state="error" />`} language="html" />

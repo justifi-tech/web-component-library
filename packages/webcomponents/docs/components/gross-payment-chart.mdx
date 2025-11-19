@@ -1,0 +1,96 @@
+---
+id: components/gross-payment-chart
+title: <justifi-gross-payment-chart>
+description: Visualizes gross payment volume over time with tooltips and range selection.
+sidebar_position: 43
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from './helpers';
+
+## Overview
+
+`<justifi-gross-payment-chart>` provides a lightweight chart that plots payment volume over time. Use it on dashboards to highlight trends without standing up bespoke charting infrastructure.
+
+## Usage
+
+<UsageSnippet
+  title="Chart monthly volume"
+  code={`<justifi-gross-payment-chart
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  interval="month"
+  range="12m"
+/>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Determines which payments to graph.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `read:payments` scope.',
+    },
+    {
+      name: 'interval',
+      type: '"day" | "week" | "month"',
+      defaultValue: 'day',
+      description: 'Bucket size for data points.',
+    },
+    {
+      name: 'range',
+      type: 'string',
+      defaultValue: '30d',
+      description: 'Total timeframe (e.g., `7d`, `3m`, `12m`).',
+    },
+  ]}
+/>
+
+### Events
+
+- `point-hover`: Emits when a user hovers/focuses a data point; includes amount and date.
+
+### Public methods
+
+1. `refresh()` – Re-fetch chart data (useful when filters change).
+
+## Theming & Layout
+
+- Customize colors via CSS properties such as `--justifi-chart-line-color`, `--justifi-chart-fill-color`, and `--justifi-chart-axis-color`.
+- Provide a minimum width of 320px; the chart is responsive and scales up to fill its container.
+
+<PartsTable
+  parts={[
+    { name: 'chart', description: 'SVG/Canvas container for the line chart.' },
+    { name: 'tooltip', description: 'Floating tooltip bubble when hovering/focusing a point.' },
+  ]}
+/>
+
+## Accessibility
+
+- Data points become focusable elements so keyboard users can inspect values with arrow keys.
+- Tooltips use `aria-live="polite"` to announce the current amount and date.
+- Provide descriptive `aria-label` text summarizing the selected interval/range.
+
+## Static examples
+
+<UsageSnippet
+  title="Toggle ranges"
+  code={`const chart = document.querySelector('justifi-gross-payment-chart');
+
+document.querySelector('#range').addEventListener('change', (event) => {
+  chart.setAttribute('range', event.target.value);
+  chart.refresh();
+});`}
+  language="js"
+/>
+

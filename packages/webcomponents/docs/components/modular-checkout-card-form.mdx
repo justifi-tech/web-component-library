@@ -1,0 +1,109 @@
+---
+id: components/modular-checkout-card-form
+title: <justifi-modular-checkout-card-form>
+description: Card entry sub-component for Modular Checkout layouts with shared validation and token orchestration.
+sidebar_position: 2
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from './helpers';
+
+## Overview
+
+`<justifi-modular-checkout-card-form>` plugs into `<justifi-modular-checkout>` to collect cardholder data with unified error handling and parent-managed submission. Use it when you need a multi-step checkout composed of modular sections.
+
+## Usage
+
+<UsageSnippet
+  title="Card form inside modular checkout"
+  description="Slots into the `payment-methods` area and inherits auth + account context from the parent checkout."
+  code={`<justifi-modular-checkout
+  auth-token="wct_abc123"
+  account-id="acc_123"
+  checkout-id="chk_987"
+>
+  <justifi-modular-checkout-card-form />
+  <justifi-modular-checkout-summary slot="summary" />
+</justifi-modular-checkout>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'payment-method-group-id',
+      type: 'string',
+      description:
+        'Matches the group configured in the parent checkout to toggle allowed rails.',
+    },
+    {
+      name: 'show-save-payment-method',
+      type: 'boolean',
+      defaultValue: 'true',
+      description:
+        'Displays a checkbox that surfaces the modular checkout save-preference state.',
+    },
+    {
+      name: 'card-brand-icons',
+      type: '"auto" | "none"',
+      defaultValue: 'auto',
+      description: 'Controls whether brand icons display above inputs.',
+    },
+    {
+      name: 'locale',
+      type: 'string',
+      defaultValue: 'en-US',
+      description: 'Overrides localized labels if needed.',
+    },
+  ]}
+/>
+
+### Events
+
+All submit and error events bubble through the parent `<justifi-modular-checkout>`, so no additional listeners are required on the card form.
+
+### Public methods
+
+- `focus()` – moves focus to the iframe representing the current active field (useful for custom UX flows).
+
+## Theming & Layout
+
+- Apply surface and border styling through CSS custom properties such as `--justifi-card-form-surface`, `--justifi-card-form-border-radius`, and `--justifi-card-form-spacing`.
+- When embedded inside cards, wrap the host element in your layout container and scope typography overrides via the parts listed below.
+- Keep the form width between 320px and 560px to maintain hosted-field readability.
+
+<PartsTable
+  parts={[
+    { name: 'card-form', description: 'Applies padding, border, or background to the card entry surface.' },
+    { name: 'field-group', description: 'Wraps hosted fields so you can control spacing between rows.' },
+    { name: 'save-checkbox', description: 'Targets the persistent payment method opt-in checkbox.' },
+  ]}
+/>
+
+- Use the `card-form` CSS part (`::part(card-form)`) to apply box shadows or wrapper padding.
+- On mobile (less than 480px) the form stacks inputs vertically; on tablet/desktop it aligns expiration + CVC horizontally.
+
+## Accessibility
+
+- Inherits focus ring + aria messaging from hosted fields.
+- All labels remain visible even when placeholders show truncated text for longer locales.
+- Error summaries propagate to the parent checkout so the review step can surface inline issues.
+
+## Static examples
+
+<UsageSnippet
+  title="Card form with disabled save option"
+  code={`<justifi-modular-checkout-card-form
+  show-save-payment-method="false"
+/>`}
+  language="html"
+/>
+
+<UsageSnippet
+  title="Force brand icons off"
+  code={`<justifi-modular-checkout-card-form
+  card-brand-icons="none"
+/>`}
+  language="html"
+/>

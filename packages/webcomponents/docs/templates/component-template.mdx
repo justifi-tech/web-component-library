@@ -1,0 +1,55 @@
+---
+id: component-template
+title: [Replace with component name]
+description: [Describe the component's purpose]
+sidebar_position: [#]
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../components/helpers';
+
+## Overview
+
+Explain when integrators should reach for this component, note prerequisites (tokens, auth), and remind readers about minimum viewport width.
+
+## Usage
+
+<UsageSnippet
+  title="Minimal Usage"
+  description="Reference auth token + account ID requirements up front."
+  code={`<justifi-example-component attr="value" />`}
+  language="html"
+/>
+
+Call out orchestration tips, localization nuances, and where `::part` selectors will appear in host DOM.
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    { name: 'example', type: 'string', required: true, description: 'Document the most important prop first.', defaultValue: '—' },
+  ]}
+/>
+
+Document emitted events and public methods after the table if needed.
+
+## Theming & Layout
+
+Call out the CSS custom properties that affect surfaces, typography, and spacing. When applicable, note default values inline using backticks (e.g., ``--justifi-form-surface`` defaults to `#ffffff`).
+
+<PartsTable
+  parts={[
+    { name: 'container', description: 'Outer wrapper for spacing, borders, and surface color.' },
+  ]}
+/>
+
+Discuss CSS parts, slots, responsive behavior (min width 320px), and embedding constraints. Explicitly mention how host apps should handle focus outlines for accessibility.
+
+## Accessibility
+
+- Note focus order expectations and how to manage keyboard traps.
+- Mention aria attributes or live region usage.
+- Provide guidance for keyboard-only flows and screen readers.
+
+## Static examples
+
+Provide additional `<UsageSnippet />` blocks or plain code fences for advanced scenarios (e.g., multi-step flows, part styling examples).

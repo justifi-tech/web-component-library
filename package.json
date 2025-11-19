@@ -35,6 +35,7 @@
     "test:watch": "pnpm --filter @justifi/webcomponents test:watch",
     "test:file": "turbo run test:file",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "docs:lint": "node packages/webcomponents/docs/scripts/check-structure.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build --filter=@repo/docs^... && changeset publish"

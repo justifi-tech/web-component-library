@@ -1,0 +1,89 @@
+---
+id: components/modular-checkout-summary
+title: <justifi-modular-checkout-summary>
+description: Order summary block that lists line items, totals, and ancillary disclosures.
+sidebar_position: 27
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from './helpers';
+
+## Overview
+
+`<justifi-modular-checkout-summary>` shows customers exactly what they are paying for: line items, fees, taxes, and totals. Use it inside Modular Checkout’s `summary` slot or embed it near any payment CTA where you need readable totals.
+
+## Usage
+
+<UsageSnippet
+  title="Summary alongside payment forms"
+  code={`<justifi-modular-checkout
+  account-id="acc_123"
+  auth-token="wct_checkout"
+  checkout-id="chk_456"
+>
+  <justifi-modular-checkout-card-form slot="payment-methods" />
+  <justifi-modular-checkout-summary slot="summary" show-disclosures />
+</justifi-modular-checkout>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'checkout-id',
+      type: 'string',
+      required: true,
+      description: 'Determines the line items and totals to display.',
+    },
+    {
+      name: 'show-disclosures',
+      type: 'boolean',
+      defaultValue: 'false',
+      description: 'Displays compliance copy (e.g., insurance terms, surcharges).',
+    },
+    {
+      name: 'show-line-item-icons',
+      type: 'boolean',
+      defaultValue: 'true',
+      description: 'Hide icons when you want an ultra-minimal summary.',
+    },
+  ]}
+/>
+
+### Events
+
+No custom events; summary listens to the parent checkout for updates automatically.
+
+### Public methods
+
+1. `refresh()` – Fetch updated totals (useful if you change the checkout server-side).
+
+## Theming & Layout
+
+- Use CSS vars like `--justifi-summary-surface`, `--justifi-summary-border-radius`, and `--justifi-summary-spacing` to match your brand.
+- Keep widths between 280px and 360px when stacking next to payment forms; on mobile it stretches to full width and reorders above the CTA for clarity.
+
+<PartsTable
+  parts={[
+    { name: 'line-item', description: 'Individual row for items, fees, and taxes.' },
+    { name: 'total', description: 'Highlights grand totals with bolder typography.' },
+    { name: 'disclosure', description: 'Optional area for additional copy.' },
+  ]}
+/>
+
+## Accessibility
+
+- Renders totals using `<dl>` semantics for screen-reader clarity.
+- Disclosures use `aria-live="polite"` when toggled so customers are notified of new requirements.
+
+## Static examples
+
+<UsageSnippet
+  title="Custom refresh"
+  code={`const summary = document.querySelector('justifi-modular-checkout-summary');
+
+document.querySelector('#recalculate').onclick = () => summary.refresh();`}
+  language="js"
+/>
+

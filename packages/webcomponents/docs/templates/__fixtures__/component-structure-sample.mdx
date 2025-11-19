@@ -1,0 +1,41 @@
+---
+id: fixtures/component-sample
+title: <justifi-component-sample>
+description: Fixture doc used to verify required sections and helpers.
+sidebar_position: 999
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../components/helpers';
+
+## Overview
+
+Fixture doc describing how to keep parity with Storybook entries.
+
+## Usage
+
+<UsageSnippet title="Sample" code={`<justifi-component-sample />`} language="html" />
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    { name: 'sample-prop', type: 'string', required: false, description: 'Sample prop for fixture docs.' },
+  ]}
+/>
+
+## Theming & Layout
+
+
+<PartsTable
+  parts={[
+    { name: 'container', description: 'Fixture part for verifying ::part docs.' },
+  ]}
+/>
+
+## Accessibility
+
+- This fixture reminds authors to document aria contracts and focus management.
+
+## Static examples
+
+<UsageSnippet title="Another example" code={`<justifi-component-sample mode="fixture" />`} language="html" />

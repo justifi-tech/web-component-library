@@ -1,0 +1,42 @@
+---
+id: fixtures/component-themed
+title: <justifi-component-themed>
+description: Fixture doc verifying theming + ::part reminders.
+sidebar_position: 998
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../components/helpers';
+
+## Overview
+
+Another fixture ensuring the lint script can scan multiple files.
+
+## Usage
+
+<UsageSnippet title="Fixture usage" code={`<justifi-component-themed variant="demo" />`} language="html" />
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    { name: 'variant', type: '"demo" | "real"', required: false, defaultValue: 'demo', description: 'Fixture variant flag' },
+  ]}
+/>
+
+## Theming & Layout
+
+
+<PartsTable
+  parts={[
+    { name: 'header', description: 'Fixture header region for ::part docs.', target: 'Top section' },
+    { name: 'body', description: 'Fixture body region for ::part docs.', target: 'Content wrapper' },
+  ]}
+/>
+
+## Accessibility
+
+- Provide fixture text that mentions screen-reader labels and error slots.
+
+## Static examples
+
+<UsageSnippet title="Focus example" description="Fixture verifying focus order" code={`<justifi-component-themed focus-mode />`} language="html" />
