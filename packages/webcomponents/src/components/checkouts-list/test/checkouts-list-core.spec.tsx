@@ -166,6 +166,55 @@ describe('checkouts-list-core', () => {
       })
     );
   });
+
+  it('displays Apple Pay payment mode correctly in the UI', async () => {
+    const mockCheckoutsService = {
+      fetchCheckouts: jest.fn().mockResolvedValue(mockCheckoutsListResponse),
+    };
+
+    const getCheckouts = makeGetCheckouts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockCheckoutsService,
+    });
+
+    const mockSubAccountsService = {
+      fetchSubAccounts: jest.fn().mockResolvedValue(mockSubAccountsResponse),
+    };
+
+    const getSubAccounts = makeGetSubAccounts({
+      accountId: 'mock_id',
+      authToken: '123',
+      service: mockSubAccountsService,
+    });
+
+    const page = await newSpecPage({
+      components: components,
+      template: () => (
+        <checkouts-list-core
+          getCheckouts={getCheckouts}
+          getSubAccounts={getSubAccounts}
+          columns={defaultColumnsKeys}
+        />
+      ),
+    });
+
+    await page.waitForChanges();
+
+    // The last checkout in the mock data has apple_pay payment mode
+    const applePayCheckout = page.rootInstance.checkouts.find(
+      (checkout) => checkout.id === 'cho_5e6f7g8h9i0j1a2b3c4d'
+    );
+    expect(applePayCheckout).toBeDefined();
+    expect(applePayCheckout.payment_mode).toBe('Apple Pay');
+
+    // Verify Apple Pay is displayed in the UI
+    const paymentModeCells = page.root.querySelectorAll('td');
+    const applePayCell = Array.from(paymentModeCells).find(
+      (cell) => cell.textContent === 'Apple Pay'
+    );
+    expect(applePayCell).toBeTruthy();
+  });
 });
 
 describe('checkouts-list-core pagination', () => {
