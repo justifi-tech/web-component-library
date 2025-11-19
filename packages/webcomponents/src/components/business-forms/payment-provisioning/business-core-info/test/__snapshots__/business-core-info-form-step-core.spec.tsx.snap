@@ -21,7 +21,7 @@ exports[`justifi-business-core-info-form-step-core Country-specific tax ID label
           <form-control-select label="Business Classification" name="classification"></form-control-select>
         </div>
         <div class="col-12 col-md-4">
-          <form-control-date label="Date of Incorporation" name="date_of_incorporation"></form-control-date>
+          <form-control-date label="Date of Registration" name="date_of_incorporation"></form-control-date>
         </div>
         <div class="col-12 col-md-6">
           <form-control-text helptext="Describe what you sell" label="Industry" name="industry"></form-control-text>
@@ -65,7 +65,7 @@ exports[`justifi-business-core-info-form-step-core Country-specific tax ID label
           <form-control-select label="Business Classification" name="classification"></form-control-select>
         </div>
         <div class="col-12 col-md-4">
-          <form-control-date label="Date of Incorporation" name="date_of_incorporation"></form-control-date>
+          <form-control-date label="Date of Registration" name="date_of_incorporation"></form-control-date>
         </div>
         <div class="col-12 col-md-6">
           <form-control-text helptext="Describe what you sell" label="Industry" name="industry"></form-control-text>
@@ -109,7 +109,7 @@ exports[`justifi-business-core-info-form-step-core Form component behavior uses 
           <form-control-select label="Business Classification" name="classification"></form-control-select>
         </div>
         <div class="col-12 col-md-4">
-          <form-control-date label="Date of Incorporation" name="date_of_incorporation"></form-control-date>
+          <form-control-date label="Date of Registration" name="date_of_incorporation"></form-control-date>
         </div>
         <div class="col-12 col-md-6">
           <form-control-text helptext="Describe what you sell" label="Industry" name="industry"></form-control-text>
