@@ -1,0 +1,95 @@
+---
+id: components/insurance
+title: <justifi-insurance>
+description: Reusable insurance upsell card for onboarding or checkout flows outside Modular Checkout.
+sidebar_position: 21
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from './helpers';
+
+## Overview
+
+`<justifi-insurance>` promotes insurance products (e.g., season interruption coverage) anywhere in your experience. It exposes CTA hooks so you can launch deeper flows or simply capture consent.
+
+## Usage
+
+<UsageSnippet
+  title="Inline upsell"
+  code={`<justifi-insurance
+  policy-id="season_interrupt"
+  premium="9.99"
+  coverage-summary="Protect revenue when weather forces closures."
+  default-selected
+/>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'policy-id',
+      type: 'string',
+      required: true,
+      description: 'Insurance product to display.',
+    },
+    {
+      name: 'premium',
+      type: 'string',
+      required: true,
+      description: 'Cost presented to the user (formatted as currency).',
+    },
+    {
+      name: 'coverage-summary',
+      type: 'string',
+      description: 'Short text describing the coverage.',
+    },
+    {
+      name: 'learn-more-url',
+      type: 'string',
+      description: 'Optional link to the full policy.',
+    },
+    {
+      name: 'default-selected',
+      type: 'boolean',
+      defaultValue: 'false',
+      description: 'Pre-checks the opt-in control.',
+    },
+  ]}
+/>
+
+### Events
+
+- `selection-changed`: Emits `{ selected: boolean }` whenever customers toggle the opt-in.
+
+### Public methods
+
+1. `select()` / `deselect()` – Toggle the opt-in programmatically.
+
+## Theming & Layout
+
+- Customize using CSS props like `--justifi-insurance-surface`, `--justifi-insurance-border`, and `--justifi-insurance-spacing`.
+- The card works well between 280px and 420px wide; on mobile it should span the full width with comfortable padding.
+
+<PartsTable
+  parts={[
+    { name: 'card', description: 'Outer wrapper for the upsell copy.' },
+    { name: 'cta', description: 'Optional link/button for additional info.' },
+  ]}
+/>
+
+## Accessibility
+
+- Checkbox inputs ship with native labels and `aria-describedby` text describing coverage.
+- Premiums include screen-reader-only text clarifying the billing cadence.
+
+## Static examples
+
+<UsageSnippet
+  title="Programmatic opt-in"
+  code={`const insurance = document.querySelector('justifi-insurance');
+
+document.querySelector('#add-insurance').onclick = () => insurance.select();`}
+  language="js"
+/>

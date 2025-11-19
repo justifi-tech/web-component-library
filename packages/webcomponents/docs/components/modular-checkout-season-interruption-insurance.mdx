@@ -1,0 +1,90 @@
+---
+id: components/modular-checkout-season-interruption-insurance
+title: <justifi-season-interruption-insurance>
+description: Optional insurance add-on rail that pairs with Modular Checkout summaries.
+sidebar_position: 25
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from './helpers';
+
+## Overview
+
+`<justifi-season-interruption-insurance>` offers insurance upsells within Modular Checkout. It displays coverage highlights, premium amounts, and collects opt-in consent before continuing payment.
+
+## Usage
+
+<UsageSnippet
+  title="Attach insurance upsell"
+  code={`<justifi-modular-checkout
+  account-id="acc_123"
+  auth-token="wct_checkout"
+  checkout-id="chk_456"
+>
+  <justifi-season-interruption-insurance slot="addons" />
+  <justifi-modular-checkout-card-form slot="payment-methods" />
+  <justifi-modular-checkout-summary slot="summary" />
+</justifi-modular-checkout>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'premium-amount',
+      type: 'string',
+      required: true,
+      description: 'Display amount for the insurance add-on.',
+    },
+    {
+      name: 'coverage-summary',
+      type: 'string',
+      description: 'Short description of what’s covered; defaults to copy provided by JustiFi.',
+    },
+    {
+      name: 'default-selected',
+      type: 'boolean',
+      defaultValue: 'false',
+      description: 'Pre-check the opt-in box to encourage adoption (confirm compliance before enabling).',
+    },
+  ]}
+/>
+
+### Events
+
+- `selection-changed`: Emits whenever customers toggle the opt-in checkbox.
+
+### Public methods
+
+1. `select()` / `deselect()` – Programmatically toggle the add-on.
+
+## Theming & Layout
+
+- Use CSS vars like `--justifi-addon-surface` and `--justifi-addon-border` to align with your brand.
+- The component fits best in a column that is 320–480px wide; keep copy concise to avoid overflow.
+
+<PartsTable
+  parts={[
+    { name: 'card', description: 'Outer card containing the insurance copy + checkbox.' },
+    { name: 'cta', description: 'Optional button or link to view full policy terms.' },
+  ]}
+/>
+
+## Accessibility
+
+- Checkbox uses a native `<label>` for high click targets and includes `aria-describedby` pointing to coverage text.
+- Premium amounts are read aloud alongside the coverage summary so the upsell is clear.
+
+## Static examples
+
+<UsageSnippet
+  title="Ensure opt-in is set"
+  code={`const insurance = document.querySelector('justifi-season-interruption-insurance');
+
+if (!insurance.selected) {
+  insurance.select();
+}`}
+  language="js"
+/>
+

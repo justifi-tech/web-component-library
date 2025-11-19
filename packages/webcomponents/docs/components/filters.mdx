@@ -1,0 +1,98 @@
+---
+id: components/filters
+title: <justifi-filters>
+description: Companion filter bar for reporting components such as payments, payouts, and checkouts.
+sidebar_position: 18
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from './helpers';
+
+## Overview
+
+`<justifi-filters>` emits structured filter payloads that you can feed into `<justifi-payments-list>`, `<justifi-checkouts-list>`, or any other reporting table. It renders dropdowns, chips, and date pickers that mirror Storybook’s experience.
+
+## Usage
+
+<UsageSnippet
+  title="Attach to payments list"
+  code={`<justifi-filters
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  target="payments"
+  presets='{"status":"succeeded"}'
+></justifi-filters>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Ensures filter requests are scoped to the correct account.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `read` permissions for the target dataset.',
+    },
+    {
+      name: 'target',
+      type: '"payments" | "payouts" | "checkouts"',
+      required: true,
+      description: 'Determines which preset filter controls render.',
+    },
+    {
+      name: 'presets',
+      type: 'Record<string, unknown> | string',
+      description: 'Optional JSON for initial filter values.',
+    },
+    {
+      name: 'collapsed',
+      type: 'boolean',
+      defaultValue: 'false',
+      description: 'Render filters in a collapsible drawer on mobile.',
+    },
+  ]}
+/>
+
+### Events
+
+- `filters-changed`: Emits whenever a user updates a control; payload includes normalized filter values.
+
+### Public methods
+
+1. `clear()` – Reset to default state.
+2. `apply(values)` – Programmatically update filters (useful for deep links).
+
+## Theming & Layout
+
+- Set CSS vars such as `--justifi-filters-surface`, `--justifi-filters-border`, and `--justifi-filters-spacing` to align with surrounding cards.
+- At widths below 640px the component collapses filters into an accordion; ensure there’s enough padding for comfortable tap targets.
+
+<PartsTable
+  parts={[
+    { name: 'container', description: 'Outer wrapper for the filter bar.' },
+    { name: 'group', description: 'Grouping container for related filters.' },
+    { name: 'chip-list', description: 'Active filter chips area.' },
+  ]}
+/>
+
+## Accessibility
+
+- Filter controls rely on native inputs, so keyboard navigation and focus ordering follow standard HTML expectations.
+- Active filter chips expose `aria-label` text for removal actions.
+
+## Static examples
+
+<UsageSnippet
+  title="Clear filters"
+  code={`const filters = document.querySelector('justifi-filters');
+
+document.querySelector('#clear').onclick = () => filters.clear();`}
+  language="js"
+/>
