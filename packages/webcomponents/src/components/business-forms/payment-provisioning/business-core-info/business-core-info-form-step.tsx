@@ -191,7 +191,7 @@ export class BusinessCoreInfoFormStep {
             <div class="col-12 col-md-4">
               <form-control-date
                 name="date_of_incorporation"
-                label="Date of Incorporation"
+                label="Date of Registration"
                 defaultValue={coreInfoDefaultValue.date_of_incorporation}
                 errorText={this.errors.date_of_incorporation}
                 inputHandler={this.inputHandler}
