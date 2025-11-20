@@ -200,6 +200,7 @@ export enum ICheckoutPaymentMode {
 export enum ICheckoutPaymentModeParam {
   bnpl = 'bnpl',
   ecom = 'ecom',
+  apple_pay = 'apple_pay',
 }
 
 export enum ICheckoutStatus {

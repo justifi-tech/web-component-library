@@ -44,6 +44,7 @@ export class CheckoutsListFilters {
       { label: 'All', value: '' },
       { label: 'E-commerce', value: ICheckoutPaymentModeParam.ecom },
       { label: 'BNPL', value: ICheckoutPaymentModeParam.bnpl },
+      { label: 'Apple Pay', value: ICheckoutPaymentModeParam.apple_pay },
     ]
   }
 
