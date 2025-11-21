@@ -1,0 +1,21 @@
+{
+  "name": "@repo/docs-consumer",
+  "private": true,
+  "scripts": {
+    "build": "docusaurus build",
+    "start": "docusaurus start --host 0.0.0.0 --port 4321 --no-open",
+    "serve": "docusaurus serve --host 0.0.0.0 --port 4321"
+  },
+  "dependencies": {
+    "@justifi/webcomponents": "workspace:*",
+    "@docusaurus/core": "^3.4.0",
+    "@docusaurus/preset-classic": "^3.4.0",
+    "@mdx-js/react": "^3.0.1",
+    "clsx": "^2.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
