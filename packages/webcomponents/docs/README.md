@@ -55,13 +55,11 @@ import TokenizePaymentMethod from '@justifi/webcomponents/docs/components/tokeni
 
 ## Linting & verification
 
-A lightweight structural check lives in `scripts/check-structure.mjs`. Run it with:
+Run both lint suites before publishing:
 
-```
-pnpm docs:lint --files "packages/webcomponents/docs/components/tokenize-payment-method.mdx"
-```
-
-This command verifies that required frontmatter keys and section headings exist. Task Group 2 will expand this into a full ESLint + `eslint-plugin-mdx` pipeline.
+1. `pnpm --filter @justifi/webcomponents docs:lint` – ESLint + `eslint-plugin-mdx` across every doc.
+2. `pnpm docs:lint -- --files "packages/webcomponents/docs/components/tokenize-payment-method.mdx"` – Structural check for required frontmatter + section headers (pass `--files` with a comma-separated list as needed).
+3. `pnpm docs:verify` – Node-based verification that the package exports (`@justifi/webcomponents/docs/sidebar` and representative MDX files) resolve correctly.
 
 ## Static examples
 
