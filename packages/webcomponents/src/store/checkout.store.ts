@@ -12,6 +12,7 @@ interface IInitialState {
   billingFormFields: BillingFormFields;
   bnplEnabled: boolean;
   applePayEnabled: boolean;
+  googlePayEnabled: boolean;
   insuranceEnabled: boolean;
   bnplProviderApiVersion: string;
   bnplProviderCheckoutUrl: string;
@@ -61,6 +62,7 @@ const initialState: IInitialState = {
   },
   bnplEnabled: false,
   applePayEnabled: false,
+  googlePayEnabled: false,
   insuranceEnabled: false,
   bnplProviderApiVersion: '',
   bnplProviderCheckoutUrl: '',
@@ -131,6 +133,10 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
 
   if (checkoutStore.applePayEnabled) {
     methods.push(PAYMENT_METHODS.APPLE_PAY);
+  }
+
+  if (checkoutStore.googlePayEnabled) {
+    methods.push(PAYMENT_METHODS.GOOGLE_PAY);
   }
 
   if (
