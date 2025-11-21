@@ -95,5 +95,31 @@ describe('makeGetCheckouts', () => {
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
+  it('should correctly parse apple_pay payment_mode from completions', async () => {
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    // Mock response already includes an Apple Pay checkout (cho_5e6f7g8h9i0j1a2b3c4d)
+    mockServiceInstance.fetchCheckouts.mockResolvedValue(
+      mockResponse as IApiResponseCollection<ICheckout[]>
+    );
+
+    const getCheckoutsList = makeGetCheckouts({
+      accountId: mockId,
+      authToken: mockAuthToken,
+      service: mockServiceInstance,
+    });
+    await getCheckoutsList({ params: mockParams, onSuccess, onError });
+
+    expect(onSuccess).toHaveBeenCalled();
+    const checkouts = onSuccess.mock.calls[0][0].checkouts;
+    const applePayCheckout = checkouts.find(
+      (checkout) => checkout.id === 'cho_5e6f7g8h9i0j1a2b3c4d'
+    );
+    expect(applePayCheckout).toBeInstanceOf(Checkout);
+    expect(applePayCheckout.payment_mode).toBe('Apple Pay');
+    expect(onError).not.toHaveBeenCalled();
+  });
+
   // Add more tests as needed for edge cases and different scenarios
 });
