@@ -52,8 +52,8 @@ Type: `Promise<void>`
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
 - [form-control-monetary-provisioning](..)
-- [form-control-select](../../../../ui-components/form)
 - [form-control-text](../../../../ui-components/form)
+- [form-control-select](../../../../ui-components/form)
 
 ### Graph
 ```mermaid
@@ -63,7 +63,6 @@ graph TD;
   justifi-additional-questions-form-step --> form-control-select
   justifi-additional-questions-form-step --> form-control-text
   form-control-tooltip --> custom-popper
-  form-control-select --> form-control-tooltip
   form-control-text --> form-control-tooltip
   justifi-payment-provisioning-form-steps --> justifi-additional-questions-form-step
   style justifi-additional-questions-form-step fill:#f9f,stroke:#333,stroke-width:4px
