@@ -227,11 +227,23 @@ export class ModularCheckout {
   }
 
   private handleApplePayCompleted = (event: CustomEvent) => {
-    const { success, token, paymentMethodId, error } = event.detail;
+    const { success, token, paymentMethodId, billingContact, shippingContact, error } = event.detail;
 
     if (success && token) {
       checkoutStore.paymentToken = paymentMethodId;
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.APPLE_PAY };
+
+      // Log contact information if captured (for debugging/verification)
+      if (billingContact || shippingContact) {
+        console.log('Apple Pay contact information captured:', {
+          billingContact,
+          shippingContact,
+        });
+      }
+
+      // Note: Contact information is available in event.detail for parent components to use
+      // Future enhancement: Could store in checkoutStore if needed
+
       this.submitCheckout();
     } else {
       console.error("Apple Pay completed but failed:", error);

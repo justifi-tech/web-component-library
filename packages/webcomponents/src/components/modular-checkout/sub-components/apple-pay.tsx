@@ -16,6 +16,8 @@ import {
   ApplePayHelpers,
   IApplePayToken,
   ApplePayMerchantCapability,
+  ApplePayContactField,
+  IApplePayContact,
 } from "../../../api/ApplePay";
 import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
@@ -39,6 +41,9 @@ export class ApplePay {
   @Prop() showSkeleton: boolean = true;
   @Prop() width: string = "100%";
   @Prop() height: string = "48px";
+  @Prop() requiredBillingContactFields?: ApplePayContactField[];
+  @Prop() requiredShippingContactFields?: ApplePayContactField[];
+  @Prop() shippingType?: 'shipping' | 'delivery' | 'storePickup' | 'servicePickup';
 
   @State() isLoading: boolean = true;
   @State() isProcessing: boolean = false;
@@ -52,6 +57,8 @@ export class ApplePay {
     success: boolean;
     token?: IApplePayToken;
     paymentMethodId?: string;
+    billingContact?: IApplePayContact;
+    shippingContact?: IApplePayContact;
     error?: any;
   }>;
   @Event() applePayCancelled: EventEmitter<void>;
@@ -162,6 +169,13 @@ export class ApplePay {
           checkoutStore.paymentDescription,
           checkoutStore.paymentAmount
         ),
+        ...(this.requiredBillingContactFields && {
+          requiredBillingContactFields: this.requiredBillingContactFields
+        }),
+        ...(this.requiredShippingContactFields && {
+          requiredShippingContactFields: this.requiredShippingContactFields
+        }),
+        ...(this.shippingType && { shippingType: this.shippingType }),
       };
 
       const result = await this.applePayService.startPaymentSession(
@@ -175,6 +189,8 @@ export class ApplePay {
           success: true,
           token: result.token,
           paymentMethodId: result.paymentMethodId,
+          billingContact: result.billingContact,
+          shippingContact: result.shippingContact,
         });
       } else {
         this.applePayCompleted.emit({
