@@ -186,8 +186,8 @@ export class BusinessBankAccountFormStep {
   
       // Refresh bank account data after successful save
       if (this.isAddingNewBankAccount) {
-        await this.refreshBankAccountData();
         this.isAddingNewBankAccount = false;
+        await this.refreshBankAccountData();
       }
   
       onSuccess();
@@ -230,6 +230,7 @@ export class BusinessBankAccountFormStep {
 
   private async refreshBankAccountData(): Promise<void> {
     return new Promise((resolve) => {
+      this.isLoading = true;
       this.getBusiness({
         onSuccess: (response) => {
           if (response.data.bank_accounts.length > 0) {
@@ -249,6 +250,7 @@ export class BusinessBankAccountFormStep {
           });
         },
         final: () => {
+          this.isLoading = false;
           resolve();
         }
       });
