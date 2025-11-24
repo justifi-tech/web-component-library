@@ -6,8 +6,9 @@ import { CountryCode } from '../../../../utils/country-codes';
 import { bankAccountSchemaByCountry } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStep } from '../../utils';
-import { heading2 } from '../../../../styles/parts';
+import { heading2, buttonSecondary } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
+import { Button } from '../../../../ui-components';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step'
@@ -19,6 +20,7 @@ export class BusinessBankAccountFormStep {
   @State() existingDocuments: any = [];
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @State() isLoading: boolean = false;
+  @State() isAddingNewBankAccount: boolean = false;
   @State() getBusiness: Function;
   @State() postBankAccount: Function;
   @State() postDocumentRecord: Function;
@@ -46,8 +48,8 @@ export class BusinessBankAccountFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    if (this.existingBankAccount) {
-      // If a bank account already exists, skip bank account posting; proceed directly to document upload
+    if (this.existingBankAccount && !this.isAddingNewBankAccount) {
+      // If a bank account already exists and we're not adding a new one, skip bank account posting; proceed directly to document upload
       this.sendData(onSuccess);
     } else {
       // If bank account is new, validate form inputs (bank account fields), then proceed
@@ -100,7 +102,12 @@ export class BusinessBankAccountFormStep {
 
   initializeFormController = () => {
     this.formController = new FormController(this.getSchema());
-    this.formController.setInitialValues({ ...this.bankAccount });
+    if (this.isAddingNewBankAccount) {
+      // Clear form when adding a new bank account
+      this.formController.setInitialValues({ business_id: this.businessId });
+    } else {
+      this.formController.setInitialValues({ ...this.bankAccount });
+    }
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
@@ -130,12 +137,19 @@ export class BusinessBankAccountFormStep {
     return !!this.bankAccount?.id;
   }
 
+  get showReadOnlyView() {
+    return this.existingBankAccount && !this.isAddingNewBankAccount;
+  }
+
   private getData = () => {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
         if (response.data.bank_accounts.length > 0) {
-          this.bankAccount = new BankAccount(response.data.bank_accounts[0]);
+          // Get the latest bank account (last in array)
+          const bankAccounts = response.data.bank_accounts;
+          const latestBankAccount = bankAccounts[bankAccounts.length - 1];
+          this.bankAccount = new BankAccount(latestBankAccount);
         } else {
           this.bankAccount = new BankAccount({});
           this.bankAccount.business_id = this.businessId;
@@ -158,8 +172,8 @@ export class BusinessBankAccountFormStep {
 
   private async sendData(onSuccess: () => void) {
     try {
-      //  Post bank account data if the form is not disabled
-      const bankAccountPosted = !this.existingBankAccount ? await this.postBankAccountData() : true;
+      // Post bank account data if we're adding a new bank account
+      const bankAccountPosted = this.isAddingNewBankAccount ? await this.postBankAccountData() : true;
       if (!bankAccountPosted) {
         return;
       }
@@ -168,6 +182,12 @@ export class BusinessBankAccountFormStep {
       const documentsUploaded = await this.postBusinessDocuments();
       if (!documentsUploaded) {
         return;
+      }
+  
+      // Refresh bank account data after successful save
+      if (this.isAddingNewBankAccount) {
+        await this.refreshBankAccountData();
+        this.isAddingNewBankAccount = false;
       }
   
       onSuccess();
@@ -204,6 +224,53 @@ export class BusinessBankAccountFormStep {
           this.isLoading = false;
           resolve(success);
         }
+      });
+    });
+  }
+
+  private async refreshBankAccountData(): Promise<void> {
+    return new Promise((resolve) => {
+      this.getBusiness({
+        onSuccess: (response) => {
+          if (response.data.bank_accounts.length > 0) {
+            // Get the latest bank account (last in array)
+            const bankAccounts = response.data.bank_accounts;
+            const latestBankAccount = bankAccounts[bankAccounts.length - 1];
+            this.bankAccount = new BankAccount(latestBankAccount);
+          }
+          this.existingDocuments = response.data.documents;
+          this.initializeFormController();
+        },
+        onError: ({ error, code, severity }) => {
+          this.errorEvent.emit({
+            message: error,
+            errorCode: code,
+            severity: severity
+          });
+        },
+        final: () => {
+          resolve();
+        }
+      });
+    });
+  }
+
+  handleChangeBankAccount = () => {
+    this.isAddingNewBankAccount = true;
+    this.documentData = new EntityDocumentStorage();
+    this.initializeFormController();
+  }
+
+  handleCancel = () => {
+    this.isAddingNewBankAccount = false;
+    this.documentData = new EntityDocumentStorage();
+    this.initializeFormController();
+  }
+
+  handleSaveBankAccount = async () => {
+    this.formController.validateAndSubmit(() => {
+      this.sendData(() => {
+        // Success callback - form will refresh automatically
       });
     });
   }
@@ -322,15 +389,52 @@ export class BusinessBankAccountFormStep {
               defaultValue={bankAccountDefaultValue}
               errors={this.errors}
               inputHandler={this.inputHandler}
-              formDisabled={this.existingBankAccount}
+              formDisabled={this.showReadOnlyView}
             />
           ) : (
             <bank-account-form-inputs
               defaultValue={bankAccountDefaultValue}
               errors={this.errors}
               inputHandler={this.inputHandler}
-              formDisabled={this.existingBankAccount}
+              formDisabled={this.showReadOnlyView}
             />
+          )}
+          {this.showReadOnlyView && (
+            <div class="mt-3">
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={this.handleChangeBankAccount}
+                disabled={this.isLoading}
+                part={buttonSecondary}
+              >
+                Change Bank Account
+              </Button>
+            </div>
+          )}
+          {(!this.existingBankAccount || this.isAddingNewBankAccount) && (
+            <div class="mt-3 d-flex gap-2">
+              {this.isAddingNewBankAccount && (
+                <Button
+                  variant="secondary"
+                  type="button"
+                  onClick={this.handleCancel}
+                  disabled={this.isLoading}
+                  part={buttonSecondary}
+                >
+                  Cancel
+                </Button>
+              )}
+              <Button
+                variant="primary"
+                type="button"
+                onClick={this.handleSaveBankAccount}
+                disabled={this.isLoading}
+                isLoading={this.isLoading}
+              >
+                Save Bank Account
+              </Button>
+            </div>
           )}
         </fieldset>
         <fieldset class="mt-4">

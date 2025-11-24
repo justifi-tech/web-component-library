@@ -75,12 +75,11 @@ graph TD;
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
   owner-form-inputs --> justifi-identity-address-form
-  justifi-business-bank-account-form-step --> justifi-business-bank-account-form-step-core
-  justifi-business-bank-account-form-step-core --> form-control-tooltip
-  justifi-business-bank-account-form-step-core --> bank-account-form-inputs-canada
-  justifi-business-bank-account-form-step-core --> bank-account-form-inputs
-  justifi-business-bank-account-form-step-core --> business-documents-on-file
-  justifi-business-bank-account-form-step-core --> bank-account-document-form-inputs
+  justifi-business-bank-account-form-step --> form-control-tooltip
+  justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
+  justifi-business-bank-account-form-step --> bank-account-form-inputs
+  justifi-business-bank-account-form-step --> business-documents-on-file
+  justifi-business-bank-account-form-step --> bank-account-document-form-inputs
   bank-account-form-inputs-canada --> bank-account-read-only-value
   bank-account-form-inputs-canada --> form-control-text
   bank-account-form-inputs-canada --> form-control-select
