@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const specifiers = [
   "@justifi/webcomponents/docs/sidebar",
-  "@justifi/webcomponents/docs/components/helpers",
+  "@justifi/webcomponents/docs/helpers",
 ];
 
 let hasError = false;

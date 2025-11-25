@@ -14,8 +14,8 @@
     },
     "./docs/*": "./docs/*",
     "./docs/sidebar": "./docs/sidebar.ts",
-    "./docs/components/helpers": "./docs/components/helpers/index.ts",
-    "./docs/components/helpers/*": "./docs/components/helpers/*.tsx",
+    "./docs/helpers": "./docs/helpers/index.ts",
+    "./docs/helpers/*": "./docs/helpers/*.tsx",
     "./dist/module/*": "./dist/module/*.js",
     "./dist/docs.json": "./dist/docs.json",
     "./package.json": "./package.json"

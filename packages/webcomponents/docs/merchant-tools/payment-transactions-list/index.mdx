@@ -1,0 +1,99 @@
+---
+id: merchant-tools/payment-transactions-list/index
+title: Payment Transactions List
+description: Transaction-level ledger for payments, grouped by status and funding state.
+sidebar_position: 32
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+`<justifi-payment-transactions-list>` exposes the granular events tied to each payment—captures, adjustments, refunds, and disputes. Finance teams can use it to reconcile ledger entries or export data for accounting.
+
+## Usage
+
+<UsageSnippet
+  title="Transaction history"
+  description="Filter by payment or customer when embedding the ledger."
+  code={`<justifi-payment-transactions-list
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  filters='{"payment_id":"pay_456"}'
+/>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Determines which transactions a user can view.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `read:payments` scope.',
+    },
+    {
+      name: 'filters',
+      type: 'string | Record<string, unknown>',
+      description:
+        'JSON string or object specifying filter criteria (payment_id, status, date range).',
+    },
+    {
+      name: 'enable-export',
+      type: 'boolean',
+      defaultValue: 'false',
+      description: 'Adds export controls when true.',
+    },
+  ]}
+/>
+
+### Events
+
+- `filter-changed`: emits whenever the internal filter UI updates.
+- `error-event`: surfaces API or token failures.
+
+### Public methods
+
+1. `refresh()` – Re-run the ledger query.
+
+## Theming & Layout
+
+- Share the same CSS variables as other reporting tables: `--justifi-table-header-bg`, `--justifi-table-border-color`, and `--justifi-table-row-hover-bg`.
+- Provide at least 960px of width for the amount, status, and created-at columns; the component scrolls responsively when narrower.
+
+<PartsTable
+  parts={[
+    { name: 'table', description: 'Base table structure for ledger rows.' },
+    {
+      name: 'status-badge',
+      description: 'Badge for captured/refunded/pending states.',
+    },
+    { name: 'toolbar', description: 'Houses export and filter actions.' },
+  ]}
+/>
+
+## Accessibility
+
+- Amounts include visually hidden labels that describe currency and sign.
+- Status badges expose descriptive `aria-label` text.
+- Keyboard navigation matches the behavior of `<justifi-payments-list>`, with arrow-key row traversal and sticky headers.
+
+## Static examples
+
+<UsageSnippet
+  title="Listening for filter changes"
+  code={`const ledger = document.querySelector('justifi-payment-transactions-list');
+
+ledger.addEventListener('filter-changed', (event) => {
+console.log('Filters now', event.detail);
+});`}
+language="js"
+/>

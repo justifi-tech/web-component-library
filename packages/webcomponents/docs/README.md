@@ -6,21 +6,25 @@ This directory packages Docusaurus-compatible MDX content that ships with `@just
 
 ```
 packages/webcomponents/docs/
-├── overview/        # Product-level framing and release notes
-├── guides/          # How-to walkthroughs (installation, tokens, theming, QA)
-├── components/      # Per-component MDX plus helper React components
-│   ├── helpers/     # `<PropsTable />`, `<UsageSnippet />`, `<PartsTable />`
-├── reference/       # Sidebar manifest + supporting assets
-├── templates/       # Authoring blueprints + fixtures for linting
-├── scripts/         # Lightweight authoring checks (structure + lint helpers)
-└── README.md        # This file
+├── introduction/         # Global overview + getting started
+├── changelog/            # Release references
+├── frameworks/           # Framework integrations (index + Angular/React/Vue 3)
+├── modular-checkout/     # Modular Checkout hub + examples + sub-components
+├── payment-facilitation/ # Checkout, tokenization, disputes, refunds
+├── entities/             # Onboarding + underwriting components
+├── merchant-tools/       # Operational dashboards and charts
+├── helpers/              # `<PropsTable />`, `<UsageSnippet />`, `<PartsTable />`
+├── reference/            # Sidebar manifest + supporting assets
+├── templates/            # Authoring blueprints + fixtures for linting
+├── scripts/              # Lightweight authoring checks (structure + lint helpers)
+└── README.md             # This file
 ```
 
 ## Authoring workflow
 
 1. Duplicate the appropriate template from `templates/` and move it into the correct folder.
 2. Update frontmatter (`id`, `title`, `description`, `sidebar_position`). IDs must stay unique across the docs bundle. Cross-check the `agent-os/specs/2025-11-18-web-components-docs-structure/artifacts/storybook-parity-matrix.md` file to confirm the new doc satisfies parity requirements.
-3. Use helper components from `components/helpers` for structured content:
+3. Use helper components from `helpers/` for structured content:
    - `PropsTable` for props/events/methods
    - `UsageSnippet` for static code blocks with captions
    - `PartsTable` for enumerating `::part` selectors and styling hooks
@@ -39,7 +43,11 @@ export default docsSidebar;
 ```ts
 // mdx-components.tsx
 import React from 'react';
-import { PropsTable, UsageSnippet, PartsTable } from '@justifi/webcomponents/docs/components/helpers';
+import {
+  PropsTable,
+  UsageSnippet,
+  PartsTable,
+} from '@justifi/webcomponents/docs/helpers';
 
 export default {
   PropsTable,
@@ -50,7 +58,7 @@ export default {
 
 ```tsx
 // Example MDX page import
-import TokenizePaymentMethod from '@justifi/webcomponents/docs/components/tokenize-payment-method.mdx';
+import TokenizePaymentMethod from '@justifi/webcomponents/docs/payment-facilitation/tokenize-payment-method/index.mdx';
 ```
 
 ## Linting & verification
@@ -58,7 +66,7 @@ import TokenizePaymentMethod from '@justifi/webcomponents/docs/components/tokeni
 Run both lint suites before publishing:
 
 1. `pnpm --filter @justifi/webcomponents docs:lint` – ESLint + `eslint-plugin-mdx` across every doc.
-2. `pnpm docs:lint -- --files "packages/webcomponents/docs/components/tokenize-payment-method.mdx"` – Structural check for required frontmatter + section headers (pass `--files` with a comma-separated list as needed).
+2. `pnpm docs:lint -- --files "packages/webcomponents/docs/payment-facilitation/tokenize-payment-method/index.mdx"` – Structural check for required frontmatter + section headers (pass `--files` with a comma-separated list as needed).
 3. `pnpm docs:verify` – Node-based verification that the package exports (`@justifi/webcomponents/docs/sidebar` and representative MDX files) resolve correctly.
 
 ## Static examples

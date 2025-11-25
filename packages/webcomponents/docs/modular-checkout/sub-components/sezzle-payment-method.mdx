@@ -1,0 +1,93 @@
+---
+id: modular-checkout/sub-components/sezzle-payment-method
+title: Sezzle Payment Method
+description: Sezzle BNPL rail for Modular Checkout, including disclosure copy and redirect handling.
+sidebar_position: 24
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+`<justifi-sezzle-payment-method>` surfaces Sezzle as a Buy Now, Pay Later option alongside cards and bank payments. It handles eligibility checks, displays required disclosures, and redirects customers to Sezzle for authorization before returning to the checkout flow.
+
+## Usage
+
+<UsageSnippet
+  title="Add Sezzle to the rail list"
+  code={`<justifi-modular-checkout
+  account-id="acc_123"
+  auth-token="wct_checkout"
+  checkout-id="chk_456"
+>
+  <justifi-sezzle-payment-method slot="payment-methods" />
+  <justifi-modular-checkout-summary slot="summary" />
+</justifi-modular-checkout>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'merchant-id',
+      type: 'string',
+      required: true,
+      description:
+        'Sezzle merchant identifier configured in your JustiFi account.',
+    },
+    {
+      name: 'terms-url',
+      type: 'string',
+      description: 'Overrides the default Sezzle terms link.',
+    },
+    {
+      name: 'locale',
+      type: 'string',
+      defaultValue: 'en-US',
+      description: 'Controls copy for disclosures.',
+    },
+  ]}
+/>
+
+### Events
+
+- `sezzle-redirect`: Fires before redirecting the customer to Sezzle.
+- `sezzle-returned`: Emits when the customer comes back to the checkout with approval data.
+- `error`: Surfaces issues retrieving Sezzle offers or redirect URLs.
+
+### Public methods
+
+1. `begin()` – Trigger Sezzle flow programmatically (useful for custom list UI).
+
+## Theming & Layout
+
+- Respect Sezzle’s branding by keeping the provided colors and logos intact. Surrounding padding can be customized with CSS props like `--justifi-rail-spacing`.
+- Provide at least 320px of width for the disclosure copy to avoid wrapping mid-word.
+
+<PartsTable
+  parts={[
+    {
+      name: 'button',
+      description: 'Primary rail button containing Sezzle branding.',
+    },
+    { name: 'disclosure', description: 'Legal copy area beneath the button.' },
+  ]}
+/>
+
+## Accessibility
+
+- Buttons include descriptive `aria-label` text specifying Sezzle as the selected payment method.
+- Disclosures use `<small>` text with accessible contrast ratios and link semantics.
+- Focus returns to the component after the customer finishes the Sezzle redirect to keep context.
+
+## Static examples
+
+<UsageSnippet
+  title="Track redirects"
+  code={`const sezzle = document.querySelector('justifi-sezzle-payment-method');
+
+sezzle.addEventListener('sezzle-redirect', () => analytics.track('sezzle_redirect_started'));`}
+language="js"
+/>
