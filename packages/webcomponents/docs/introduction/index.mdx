@@ -1,27 +1,34 @@
 ---
 id: introduction/index
 title: Introduction
-description: Orientation for the JustiFi Web Component Library docs bundle.
+description: Introduction to the JustiFi Web Component Library.
 sidebar_position: 1
 ---
 
-Welcome to the portable documentation bundle that ships with `@justifi/webcomponents`. Import these MDX files into any Docusaurus site to expose the same guidance we publish internally alongside Storybook.
+# Introduction to JustiFi Web Component Library
+
+Welcome to the JustiFi Web Component Library. These components can be used as HTML Web Components or as React components.
 
 ## Usage
 
-### Load the library with a script tag
+### HTML Web Components
+
+The simplest way to use the Web Components is to include the following script within your HTML. This loads all the components into the browser's custom component registry.
 
 ```html
-<head>
-  <script
-    async
-    type="module"
-    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"
-  ></script>
-</head>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"
+></script>
 ```
 
-### Install via npm or pnpm
+Then, you can use the custom elements as normal `HTML` tags.
+
+```html
+<justifi-checkout auth-token="token" checkout-id="chk_123"></justifi-checkout>
+```
+
+It can also be installed as a package with `npm` or `pnpm`:
 
 ```bash
 npm install --save @justifi/webcomponents
@@ -29,31 +36,33 @@ npm install --save @justifi/webcomponents
 pnpm add @justifi/webcomponents
 ```
 
-Then import the module for the component you need:
+and import the component module using ES modules.
 
 ```javascript
 import '@justifi/webcomponents/dist/module/justifi-checkout.js';
 ```
 
-Once registered, render the custom element like any other HTML tag:
+## Styling
 
-```html
-<justifi-checkout auth-token="token" checkout-id="chk_123"></justifi-checkout>
-```
+### How Parts Stack for Efficient Global Styling
 
-## Styling primer
+Parts are designed hierarchically to let you apply global styles like `color` or `font-family` universally, while components inherit these settings without repetitive targeting.
 
-These components expose a layered set of CSS `::part` selectors so you can theme them globally or per component.
+### Core Parts and Inheritance
 
-### How parts stack
+1. **Base Parts**: `color`, `font-family`, and `background-color` define foundational styles.
 
-1. **Base parts** such as `color`, `font-family`, and `background-color` define global primitives.
-2. **Higher-level parts** like `text`, `input`, `button`, and `label` inherit from the base layer so typography and color cascade everywhere.
-3. **Component-specific parts** (for example `button-primary` or `summary-card`) sit on top for precise overrides.
+   - These propagate into higher-level parts like `text`, `button`, and `input`.
 
-### Global styling examples
+2. **Higher-Level Parts**:
+   - **`text`**: Combines `color` and `font-family` for typography.
+   - **`input`, `button`, `label`**: Inherit `text`, ensuring consistent styles across components.
 
-Apply a universal font:
+### Global Styling in Action
+
+#### Universal Font
+
+Set the font for all components using `font-family`:
 
 ```css
 ::part(font-family) {
@@ -61,7 +70,9 @@ Apply a universal font:
 }
 ```
 
-Centralize text color:
+#### Universal Text Color
+
+Set the text color once via `color`:
 
 ```css
 ::part(color) {
@@ -69,21 +80,39 @@ Centralize text color:
 }
 ```
 
-### Component-specific overrides
+These apply to all components that rely on `text`, including buttons, inputs, and headings.
+
+### Component-Specific Overrides
+
+After defining global styles, customize specific components using their higher-level parts:
+
+#### Buttons
 
 ```css
-justifi-checkout::part(button-primary) {
+::part(button-primary) {
   background-color: #0d3b66;
-  color: #fff;
-}
-
-justifi-business-form::part(section-header) {
-  text-transform: none;
-  font-weight: 600;
+  color: #fff; /* Overrides `color` */
 }
 ```
 
-For the full matrix of exposed parts review `packages/webcomponents/src/styles/parts.ts` in this package.
+#### Input States
+
+```css
+::part(input-focused) {
+  border-color: #0d3b66;
+  background-color: #f0f8ff;
+}
+```
+
+To view the full list of available parts for styling, consult the source file [here](https://github.com/justifi-tech/web-component-library/blob/main/packages/webcomponents/src/styles/parts.ts).
+
+### Best Practices
+
+1. **Style Base Parts First**: Focus on `color` and `font-family` for global consistency.
+2. **Override as Needed**: Use component-specific parts (e.g., `button-primary`) sparingly for deviations.
+3. **Inspect and Leverage Stacking**: Ensure you understand how parts like `text` layer to avoid redundant styles.
+
+This hierarchy ensures maintainable, reusable styles across all components with minimal effort.
 
 ## Accessibility + localization
 
@@ -91,6 +120,9 @@ For the full matrix of exposed parts review `packages/webcomponents/src/styles/p
 - Error summaries focus the first invalid field and announce through `role="alert"`.
 - Locale-aware helpers format currency, addresses, and phone numbers when you pass `locale`.
 
-## Reporting issues
+## Report Issues
 
-Found a bug or a missing prop description? Open an issue at [github.com/justifi-tech/web-component-library](https://github.com/justifi-tech/web-component-library/issues) and include reproduction steps or screenshots. This docs bundle ships with every release, so fixes here publish alongside new component versions.
+For bugs and issues, please:
+
+1. Go to our [GitHub Issues](https://github.com/justifi-tech/web-component-library/issues).
+2. Click "New Issue" and describe the problem.
