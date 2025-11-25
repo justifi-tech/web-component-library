@@ -6,6 +6,20 @@
   "main": "dist/index.cjs.js",
   "module": "dist/module/index.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/module/index.js"
+    },
+    "./docs/*": "./docs/*",
+    "./docs/sidebar": "./docs/sidebar.ts",
+    "./docs/helpers": "./docs/helpers/index.ts",
+    "./docs/helpers/*": "./docs/helpers/*.tsx",
+    "./dist/module/*": "./dist/module/*.js",
+    "./dist/docs.json": "./dist/docs.json",
+    "./package.json": "./package.json"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/justifi-tech/web-component-library.git"
@@ -15,7 +29,8 @@
     "registry": "https://registry.npmjs.org"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "docs/"
   ],
   "scripts": {
     "build": "stencil build --docs",
@@ -25,7 +40,9 @@
     "generate": "stencil generate",
     "test": "TZ=utc stencil test --spec",
     "test:watch": "TZ=utc stencil test --spec --watchAll",
-    "test:file": "stencil test --spec --watch --"
+    "test:file": "stencil test --spec --watch --",
+    "docs:lint": "eslint --ext .md,.mdx --config docs/.eslintrc.cjs docs",
+    "docs:verify": "node docs/scripts/verify-sidebar.mjs && node docs/scripts/verify-mdx.mjs"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

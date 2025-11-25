@@ -1,0 +1,115 @@
+---
+id: entities/payment-provisioning/index
+title: Payment Provisioning
+description: Embed-ready workflow for collecting payout bank info and provisioning merchants for funding.
+sidebar_position: 12
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+`<justifi-payment-provisioning>` coordinates the data collection necessary to provision merchants for disbursements—bank accounts, ownership attestations, and compliance acknowledgements. Use it after onboarding to finalize payout readiness without exposing raw APIs.
+
+## Usage
+
+<UsageSnippet
+  title="Provisioning follow-up step"
+  description="Surface the component inside your dashboard when a merchant still needs to add payout banking."
+  code={`<justifi-payment-provisioning
+  account-id="acc_123"
+  auth-token="wct_provisioning"
+  business-id="biz_456"
+  on-success-text="Payout method saved"
+/>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Platform account or sub-account context for provisioning.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description:
+        'Token with `write:provisioning` scope to securely store payout details.',
+    },
+    {
+      name: 'business-id',
+      type: 'string',
+      required: true,
+      description: 'Business whose payout method is being added.',
+    },
+    {
+      name: 'on-success-text',
+      type: 'string',
+      description:
+        'Overrides the confirmation copy once the payout account is linked.',
+    },
+    {
+      name: 'disable-ach',
+      type: 'boolean',
+      defaultValue: 'false',
+      description:
+        'Hide ACH specific fields when you only support push-to-card or other rails.',
+    },
+  ]}
+/>
+
+### Events
+
+- `submitted`: Fires when payout information is collected and saved; payload includes the provisioning status.
+- `error-event`: Provides `code`/`message` details when token scopes or API calls fail.
+
+### Public methods
+
+1. `submit()` – Trigger provisioning if you render external controls.
+2. `focus()` – Move focus to the first interactive element (helpful after displaying a banner).
+
+## Theming & Layout
+
+- Apply layout tweaks using CSS custom properties such as `--justifi-form-surface`, `--justifi-form-spacing`, and `--justifi-form-border-color`.
+- The component is optimized for widths between 360px and 640px; on tablets it expands but keeps the CTA pinned to the bottom.
+
+<PartsTable
+  parts={[
+    {
+      name: 'banner',
+      description: 'Notification area for success and error messaging.',
+    },
+    {
+      name: 'section',
+      description:
+        'Wraps each provisioning category (Legal, Payout, Agreements).',
+    },
+    {
+      name: 'cta',
+      description: 'Primary action button at the end of the form.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Focus order respects the section layout; the CTA receives focus after a successful save to confirm completion.
+- Inline validation uses `aria-live="assertive"` and associates hints with the offending field.
+- Agreement checkboxes expose `aria-describedby` so screen readers hear the entire disclosure text.
+
+## Static examples
+
+<UsageSnippet
+  title="External submission"
+  description="Hide the internal CTA and trigger provisioning from a custom footer."
+  code={`const provisioning = document.querySelector('justifi-payment-provisioning');
+
+document.querySelector('#complete-provisioning').onclick = () => provisioning.submit();`}
+language="js"
+/>

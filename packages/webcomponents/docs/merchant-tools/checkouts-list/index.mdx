@@ -1,0 +1,111 @@
+---
+id: merchant-tools/checkouts-list/index
+title: Checkouts List
+description: Paginated reporting table for monitoring active and past checkouts.
+sidebar_position: 26
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+`<justifi-checkouts-list>` exposes a sortable table of checkout attempts so operations teams can research payment intent history. Pair it with `<justifi-checkouts-list-filters>` to let users slice data by status, amount, or created date.
+
+## Usage
+
+<UsageSnippet
+  title="Basic list with filters"
+  code={`<justifi-checkouts-list-filters></justifi-checkouts-list-filters>
+<justifi-checkouts-list
+  account-id="acc_123"
+  auth-token="wct_reportingToken"
+/>`}
+  language="html"
+/>
+
+### Custom columns
+
+Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,status`) to match the data points your operators expect.
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Platform or sub-account whose checkouts should appear.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `read:checkouts` scope.',
+    },
+    {
+      name: 'columns',
+      type: 'string',
+      defaultValue:
+        'created_at,payment_amount,payment_description,payment_mode,status',
+      description: 'Controls which table columns render and their order.',
+    },
+  ]}
+/>
+
+### Events
+
+- `click-event`: Emitted when a row or control is clicked. `event.detail.name` indicates the source.
+- `error-event`: Fires when the list cannot load data due to network/auth issues.
+
+### Methods
+
+1. `refresh()` – Re-fetches data. Combine with filter changes for dynamic searches.
+2. `exportCSV()` – (Coming soon) Provide your own download button and call this method for exports.
+
+## Theming & Layout
+
+- Adjust table chrome with CSS custom properties like `--justifi-table-header-bg`, `--justifi-table-border-color`, and status-specific colors (`--justifi-status-pill-success`, `--justifi-status-pill-warning`).
+- Wrap the component in a responsive container; below 960px the table enables horizontal scrolling, so keep surrounding padding generous.
+
+<PartsTable
+  parts={[
+    {
+      name: 'toolbar',
+      description:
+        'Wraps the action bar above the table (search, filters, export button).',
+    },
+    {
+      name: 'table',
+      description:
+        'Applies to the `<table>` element for typography and borders.',
+    },
+    {
+      name: 'status-pill',
+      description: 'Inline badge for statuses such as Pending or Completed.',
+    },
+  ]}
+/>
+
+- When viewport width drops below 960px, the table enables horizontal scrolling and keeps the primary column sticky.
+- Filters component emits custom events; ensure both components share the same container so spacing stays consistent.
+
+## Accessibility
+
+- Table headers use `<th scope="col">` and rows use `<tr role="row">` for assistive tech.
+- Status badges include `aria-label` text describing the underlying state (e.g., “Completed checkout”).
+- Keyboard users can navigate rows via arrow keys; focus indicators adhere to the default outline tokens.
+
+## Static examples
+
+<UsageSnippet
+  title="Listening for row clicks"
+  code={`const list = document.querySelector('justifi-checkouts-list');
+
+list.addEventListener('click-event', (event) => {
+if (event.detail.name === 'row') {
+router.navigate('/checkouts/' + event.detail.checkout_id);
+}
+});`}
+language="js"
+/>
