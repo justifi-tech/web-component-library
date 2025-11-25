@@ -1,6 +1,6 @@
 ---
-id: components/dispute-management
-title: "&lt;justifi-dispute-management&gt;"
+id: payment-facilitation/dispute-management
+title: Dispute Management
 description: Operator console for reviewing and responding to card disputes.
 sidebar_position: 34
 ---
@@ -71,9 +71,19 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'header', description: 'Top banner with dispute amount + due date.' },
-    { name: 'timeline', description: 'Event list showing evidence submission and status changes.' },
-    { name: 'attachments', description: 'Grid/list of uploaded evidence so you can style borders and spacing.' },
+    {
+      name: 'header',
+      description: 'Top banner with dispute amount + due date.',
+    },
+    {
+      name: 'timeline',
+      description: 'Event list showing evidence submission and status changes.',
+    },
+    {
+      name: 'attachments',
+      description:
+        'Grid/list of uploaded evidence so you can style borders and spacing.',
+    },
   ]}
 />
 
@@ -90,8 +100,7 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const disputes = document.querySelector('justifi-dispute-management');
 
 disputes.addEventListener('evidence-uploaded', ({ detail }) => {
-  toast.success('Uploaded ' + detail.file_name);
+toast.success('Uploaded ' + detail.file_name);
 });`}
-  language="js"
+language="js"
 />
-

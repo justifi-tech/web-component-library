@@ -1,6 +1,6 @@
 ---
-id: components/tokenize-payment-method
-title: "&lt;justifi-tokenize-payment-method&gt;"
+id: payment-facilitation/tokenize-payment-method
+title: Tokenize Payment Method
 description: Secure standalone card/bank tokenization form with built-in validation and iframe isolation.
 sidebar_position: 1
 ---
@@ -37,35 +37,41 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
       name: 'account-id',
       type: 'string',
       required: true,
-      description: 'Platform account that will own the resulting payment method.',
+      description:
+        'Platform account that will own the resulting payment method.',
     },
     {
       name: 'auth-token',
       type: 'string',
       required: true,
-      description: 'Short-lived Web Component Token with `write:tokenize:account_id` scope.',
+      description:
+        'Short-lived Web Component Token with `write:tokenize:account_id` scope.',
     },
     {
       name: 'payment-method-group-id',
       type: 'string',
-      description: 'Optional grouping identifier that lets you preselect payment rails in Modular Checkout.',
+      description:
+        'Optional grouping identifier that lets you preselect payment rails in Modular Checkout.',
     },
     {
       name: 'hide-submit-button',
       type: 'boolean',
       defaultValue: 'false',
-      description: 'Hides the internal CTA when hosting app handles submission.',
+      description:
+        'Hides the internal CTA when hosting app handles submission.',
     },
     {
       name: 'save-payment-method-label',
       type: 'string',
-      description: 'Overrides the checkbox label when allowing customers to store a card.',
+      description:
+        'Overrides the checkbox label when allowing customers to store a card.',
     },
     {
       name: 'locale',
       type: 'string',
       defaultValue: 'en-US',
-      description: 'Controls localization of labels, placeholders, and currency formatting.',
+      description:
+        'Controls localization of labels, placeholders, and currency formatting.',
     },
     {
       name: 'theme',
@@ -93,9 +99,20 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
 
 <PartsTable
   parts={[
-    { name: 'form', description: 'Wraps all hosted fields so you can add padding, background, or borders.' },
-    { name: 'submit', description: 'Targets the internal CTA if `hide-submit-button` is false.' },
-    { name: 'field-label', description: 'Applies typography overrides to each hosted-field label wrapper.' },
+    {
+      name: 'form',
+      description:
+        'Wraps all hosted fields so you can add padding, background, or borders.',
+    },
+    {
+      name: 'submit',
+      description: 'Targets the internal CTA if `hide-submit-button` is false.',
+    },
+    {
+      name: 'field-label',
+      description:
+        'Applies typography overrides to each hosted-field label wrapper.',
+    },
   ]}
 />
 
@@ -121,20 +138,19 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
 
 <button onclick="window.tokenizer.tokenizePaymentMethod()">
   Submit Payment
-</button>`}
-  language="html"
-/>
+</button>
+`} language="html" />
 
 <UsageSnippet
   title="Prefill billing info"
   code={`const tokenizer = document.querySelector('justifi-tokenize-payment-method');
 
 tokenizer.fillBillingForm({
-  name: 'Leslie Knope',
-  address_line1: '123 Main St',
-  address_city: 'Pawnee',
-  address_state: 'IN',
-  address_postal_code: '47998',
+name: 'Leslie Knope',
+address_line1: '123 Main St',
+address_city: 'Pawnee',
+address_state: 'IN',
+address_postal_code: '47998',
 });`}
-  language="js"
+language="js"
 />

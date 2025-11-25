@@ -1,6 +1,6 @@
 ---
-id: components/checkout
-title: "&lt;justifi-checkout&gt;"
+id: payment-facilitation/checkout
+title: Unified Fintech Checkout™
 description: Unified Fintech Checkout™ component that orchestrates payment capture, verification, and confirmation states.
 sidebar_position: 20
 ---
@@ -33,7 +33,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'account-id',
       type: 'string',
       required: true,
-      description: 'Owning platform account; determines branding + permissions.',
+      description:
+        'Owning platform account; determines branding + permissions.',
     },
     {
       name: 'auth-token',
@@ -45,13 +46,15 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'checkout-id',
       type: 'string',
       required: true,
-      description: 'Server-generated checkout session controlling line items and totals.',
+      description:
+        'Server-generated checkout session controlling line items and totals.',
     },
     {
       name: 'require-save-payment-method',
       type: 'boolean',
       defaultValue: 'false',
-      description: 'When true, forces customers to save the payment method for future use.',
+      description:
+        'When true, forces customers to save the payment method for future use.',
     },
     {
       name: 'locale',
@@ -80,8 +83,15 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'order-summary', description: 'Container around the line items and totals; style backgrounds and typography here.' },
-    { name: 'payment-methods', description: 'Wraps the payment method selector and hosted forms.' },
+    {
+      name: 'order-summary',
+      description:
+        'Container around the line items and totals; style backgrounds and typography here.',
+    },
+    {
+      name: 'payment-methods',
+      description: 'Wraps the payment method selector and hosted forms.',
+    },
     { name: 'cta', description: 'Primary button that submits the checkout.' },
   ]}
 />
@@ -100,8 +110,7 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const checkout = document.querySelector('justifi-checkout');
 
 checkout.addEventListener('completed', (event) => {
-  analytics.track('checkout_completed', event.detail);
+analytics.track('checkout_completed', event.detail);
 });`}
-  language="js"
+language="js"
 />
-

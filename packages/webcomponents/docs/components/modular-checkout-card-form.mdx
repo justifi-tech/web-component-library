@@ -1,6 +1,6 @@
 ---
-id: components/modular-checkout-card-form
-title: "&lt;justifi-modular-checkout-card-form&gt;"
+id: modular-checkout/modular-checkout-card-form
+title: Card Form
 description: Card entry sub-component for Modular Checkout layouts with shared validation and token orchestration.
 sidebar_position: 2
 ---
@@ -75,9 +75,20 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
 
 <PartsTable
   parts={[
-    { name: 'card-form', description: 'Applies padding, border, or background to the card entry surface.' },
-    { name: 'field-group', description: 'Wraps hosted fields so you can control spacing between rows.' },
-    { name: 'save-checkbox', description: 'Targets the persistent payment method opt-in checkbox.' },
+    {
+      name: 'card-form',
+      description:
+        'Applies padding, border, or background to the card entry surface.',
+    },
+    {
+      name: 'field-group',
+      description:
+        'Wraps hosted fields so you can control spacing between rows.',
+    },
+    {
+      name: 'save-checkbox',
+      description: 'Targets the persistent payment method opt-in checkbox.',
+    },
   ]}
 />
 

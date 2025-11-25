@@ -1,6 +1,6 @@
 ---
-id: components/business-form
-title: "&lt;justifi-business-form&gt;"
+id: entities/business-form
+title: Business Form
 description: Guided workflow for collecting representative, ownership, and compliance data during onboarding.
 sidebar_position: 11
 ---
@@ -39,7 +39,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'auth-token',
       type: 'string',
       required: true,
-      description: 'Short-lived onboarding token; must include `write:onboarding` scope.',
+      description:
+        'Short-lived onboarding token; must include `write:onboarding` scope.',
     },
     {
       name: 'business-id',
@@ -79,9 +80,21 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'stepper', description: 'Wrapper around the progress indicator when `show-progress` is enabled.' },
-    { name: 'section', description: 'Applies to individual form sections for spacing + typography overrides.' },
-    { name: 'cta', description: 'Targets the primary continue/submit button at the end of a step.' },
+    {
+      name: 'stepper',
+      description:
+        'Wrapper around the progress indicator when `show-progress` is enabled.',
+    },
+    {
+      name: 'section',
+      description:
+        'Applies to individual form sections for spacing + typography overrides.',
+    },
+    {
+      name: 'cta',
+      description:
+        'Targets the primary continue/submit button at the end of a step.',
+    },
   ]}
 />
 
@@ -100,5 +113,5 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 document.querySelector('#next').addEventListener('click', () => form.next());
 document.querySelector('#prev').addEventListener('click', () => form.previous());`}
-  language="js"
+language="js"
 />

@@ -1,6 +1,6 @@
 ---
-id: components/payment-method-options
-title: "&lt;justifi-payment-method-options&gt;"
+id: merchant-tools/payment-method-options
+title: Payment Method Options
 description: Render-only component that lists available payment rails and lets customers switch between them.
 sidebar_position: 25
 ---
@@ -52,7 +52,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'disabled',
       type: 'boolean',
       defaultValue: 'false',
-      description: 'Prevent users from switching rails (e.g., while submitting).',
+      description:
+        'Prevent users from switching rails (e.g., while submitting).',
     },
   ]}
 />
@@ -72,9 +73,18 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'option', description: 'Individual rail container (card/tab/list row).' },
-    { name: 'option-label', description: 'Typography target for the option label.' },
-    { name: 'option-description', description: 'Secondary text area for additional guidance.' },
+    {
+      name: 'option',
+      description: 'Individual rail container (card/tab/list row).',
+    },
+    {
+      name: 'option-label',
+      description: 'Typography target for the option label.',
+    },
+    {
+      name: 'option-description',
+      description: 'Secondary text area for additional guidance.',
+    },
   ]}
 />
 
@@ -90,5 +100,5 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const options = document.querySelector('justifi-payment-method-options');
 
 document.querySelector('#select-ach').onclick = () => options.select('ach');`}
-  language="js"
+language="js"
 />

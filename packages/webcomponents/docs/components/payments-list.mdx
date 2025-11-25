@@ -1,6 +1,6 @@
 ---
-id: components/payments-list
-title: "&lt;justifi-payments-list&gt;"
+id: merchant-tools/payments-list
+title: Payments List
 description: Paginated table of payments with filtering, export, and quick actions for ops teams.
 sidebar_position: 31
 ---
@@ -49,8 +49,10 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
     {
       name: 'columns',
       type: 'string',
-      defaultValue: 'created_at,customer_name,payment_amount,payment_description,status',
-      description: 'Comma-delimited list that controls which columns render and their order.',
+      defaultValue:
+        'created_at,customer_name,payment_amount,payment_description,status',
+      description:
+        'Comma-delimited list that controls which columns render and their order.',
     },
     {
       name: 'page-size',
@@ -84,9 +86,18 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'toolbar', description: 'Container for search, export, and batch actions.' },
-    { name: 'table', description: 'Main table shell; override typography and spacing here.' },
-    { name: 'status-pill', description: 'Styling target for status badges (Paid, Pending, Failed).' },
+    {
+      name: 'toolbar',
+      description: 'Container for search, export, and batch actions.',
+    },
+    {
+      name: 'table',
+      description: 'Main table shell; override typography and spacing here.',
+    },
+    {
+      name: 'status-pill',
+      description: 'Styling target for status badges (Paid, Pending, Failed).',
+    },
   ]}
 />
 
@@ -103,10 +114,9 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const list = document.querySelector('justifi-payments-list');
 
 list.addEventListener('click-event', (event) => {
-  if (event.detail.name === 'row') {
-    router.push('/payments/' + event.detail.payment_id);
-  }
+if (event.detail.name === 'row') {
+router.push('/payments/' + event.detail.payment_id);
+}
 });`}
-  language="js"
+language="js"
 />
-

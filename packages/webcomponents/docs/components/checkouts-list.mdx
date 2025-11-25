@@ -1,6 +1,6 @@
 ---
-id: components/checkouts-list
-title: "&lt;justifi-checkouts-list&gt;"
+id: merchant-tools/checkouts-list
+title: Checkouts List
 description: Paginated reporting table for monitoring active and past checkouts.
 sidebar_position: 26
 ---
@@ -46,7 +46,8 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
     {
       name: 'columns',
       type: 'string',
-      defaultValue: 'created_at,payment_amount,payment_description,payment_mode,status',
+      defaultValue:
+        'created_at,payment_amount,payment_description,payment_mode,status',
       description: 'Controls which table columns render and their order.',
     },
   ]}
@@ -69,9 +70,20 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 
 <PartsTable
   parts={[
-    { name: 'toolbar', description: 'Wraps the action bar above the table (search, filters, export button).' },
-    { name: 'table', description: 'Applies to the `<table>` element for typography and borders.' },
-    { name: 'status-pill', description: 'Inline badge for statuses such as Pending or Completed.' },
+    {
+      name: 'toolbar',
+      description:
+        'Wraps the action bar above the table (search, filters, export button).',
+    },
+    {
+      name: 'table',
+      description:
+        'Applies to the `<table>` element for typography and borders.',
+    },
+    {
+      name: 'status-pill',
+      description: 'Inline badge for statuses such as Pending or Completed.',
+    },
   ]}
 />
 
@@ -91,9 +103,9 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
   code={`const list = document.querySelector('justifi-checkouts-list');
 
 list.addEventListener('click-event', (event) => {
-  if (event.detail.name === 'row') {
-    router.navigate('/checkouts/' + event.detail.checkout_id);
-  }
+if (event.detail.name === 'row') {
+router.navigate('/checkouts/' + event.detail.checkout_id);
+}
 });`}
-  language="js"
+language="js"
 />

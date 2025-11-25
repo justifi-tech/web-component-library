@@ -1,6 +1,6 @@
 ---
-id: components/modular-checkout
-title: "&lt;justifi-modular-checkout&gt;"
+id: modular-checkout/modular-checkout
+title: Modular Checkout
 description: Layout manager that composes payment, summary, and confirmation subcomponents into a cohesive flow.
 sidebar_position: 21
 ---
@@ -40,13 +40,15 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'auth-token',
       type: 'string',
       required: true,
-      description: 'Token with scopes for reading checkout data and tokenizing payment methods.',
+      description:
+        'Token with scopes for reading checkout data and tokenizing payment methods.',
     },
     {
       name: 'checkout-id',
       type: 'string',
       required: true,
-      description: 'Server-side checkout object controlling totals and allowed rails.',
+      description:
+        'Server-side checkout object controlling totals and allowed rails.',
     },
     {
       name: 'submit-label',
@@ -82,9 +84,18 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'shell', description: 'Outer wrapper that surrounds the full modular checkout.' },
-    { name: 'payment-methods', description: 'Region that houses card/bank/alternative rails.' },
-    { name: 'summary', description: 'Order summary slot, typically on the right on desktop.' },
+    {
+      name: 'shell',
+      description: 'Outer wrapper that surrounds the full modular checkout.',
+    },
+    {
+      name: 'payment-methods',
+      description: 'Region that houses card/bank/alternative rails.',
+    },
+    {
+      name: 'summary',
+      description: 'Order summary slot, typically on the right on desktop.',
+    },
     { name: 'cta', description: 'Primary submit button container.' },
   ]}
 />
@@ -102,6 +113,5 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const modCheckout = document.querySelector('justifi-modular-checkout');
 
 document.querySelector('#submit-order').addEventListener('click', () => modCheckout.submit());`}
-  language="js"
+language="js"
 />
-

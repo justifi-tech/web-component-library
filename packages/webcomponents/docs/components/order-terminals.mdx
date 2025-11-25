@@ -1,6 +1,6 @@
 ---
-id: components/order-terminals
-title: "&lt;justifi-order-terminals&gt;"
+id: merchant-tools/order-terminals
+title: Order Terminals
 description: Guided purchasing flow for ordering in-person terminals and accessories.
 sidebar_position: 50
 ---
@@ -42,7 +42,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
     {
       name: 'shipping-contact',
       type: 'string',
-      description: 'Optional saved contact ID; when omitted the component collects address info inline.',
+      description:
+        'Optional saved contact ID; when omitted the component collects address info inline.',
     },
     {
       name: 'allowed-products',
@@ -68,7 +69,11 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'product-card', description: 'Individual device card for styling images, borders, and CTA button.' },
+    {
+      name: 'product-card',
+      description:
+        'Individual device card for styling images, borders, and CTA button.',
+    },
     { name: 'summary', description: 'Order summary + shipping step.' },
     { name: 'cta', description: 'Place order button.' },
   ]}
@@ -90,4 +95,3 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 />`}
   language="html"
 />
-

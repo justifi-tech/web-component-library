@@ -1,6 +1,6 @@
 ---
-id: components/payout-transactions-list
-title: "&lt;justifi-payout-transactions-list&gt;"
+id: merchant-tools/payout-transactions-list
+title: Payout Transactions List
 description: Ledger of transactions contributing to a payout, with filtering and export support.
 sidebar_position: 42
 ---
@@ -70,7 +70,10 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 <PartsTable
   parts={[
     { name: 'table', description: 'Ledger table for payout transactions.' },
-    { name: 'status-pill', description: 'Badge to highlight transaction status.' },
+    {
+      name: 'status-pill',
+      description: 'Badge to highlight transaction status.',
+    },
   ]}
 />
 
@@ -86,8 +89,7 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const payoutLedger = document.querySelector('justifi-payout-transactions-list');
 
 payoutLedger.addEventListener('click-event', ({ detail }) => {
-  router.push('/payments/' + detail.transaction_id);
+router.push('/payments/' + detail.transaction_id);
 });`}
-  language="js"
+language="js"
 />
-

@@ -1,6 +1,6 @@
 ---
-id: components/terminals-list
-title: "&lt;justifi-terminals-list&gt;"
+id: merchant-tools/terminals-list
+title: Terminals List
 description: Inventory table showing active, inactive, and assigned terminals in the field.
 sidebar_position: 52
 ---
@@ -42,7 +42,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
     {
       name: 'filters',
       type: 'string | Record<string, unknown>',
-      description: 'Optional JSON to preset status, location, or software filters.',
+      description:
+        'Optional JSON to preset status, location, or software filters.',
     },
     {
       name: 'columns',
@@ -69,7 +70,10 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'status-pill', description: 'Badge for Online/Offline/Needs Attention states.' },
+    {
+      name: 'status-pill',
+      description: 'Badge for Online/Offline/Needs Attention states.',
+    },
     { name: 'table', description: 'Main data table container.' },
     { name: 'toolbar', description: 'Region for search/filter controls.' },
   ]}
@@ -87,8 +91,7 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const terminals = document.querySelector('justifi-terminals-list');
 
 terminals.addEventListener('click-event', ({ detail }) => {
-  router.push('/terminals/' + detail.terminal_id);
+router.push('/terminals/' + detail.terminal_id);
 });`}
-  language="js"
+language="js"
 />
-

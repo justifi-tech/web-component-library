@@ -1,6 +1,6 @@
 ---
-id: components/terminal-orders-list
-title: "&lt;justifi-terminal-orders-list&gt;"
+id: merchant-tools/terminal-orders-list
+title: Terminal Orders List
 description: Reporting table of hardware orders with fulfillment status and tracking info.
 sidebar_position: 51
 ---
@@ -63,7 +63,10 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 <PartsTable
   parts={[
     { name: 'table', description: 'Main order list.' },
-    { name: 'status-pill', description: 'Badge for Fulfilled/Pending/Cancelled states.' },
+    {
+      name: 'status-pill',
+      description: 'Badge for Fulfilled/Pending/Cancelled states.',
+    },
   ]}
 />
 
@@ -79,8 +82,7 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const orders = document.querySelector('justifi-terminal-orders-list');
 
 orders.addEventListener('click-event', ({ detail }) => {
-  if (detail.name === 'row') router.push('/terminals/orders/' + detail.order_id);
+if (detail.name === 'row') router.push('/terminals/orders/' + detail.order_id);
 });`}
-  language="js"
+language="js"
 />
-

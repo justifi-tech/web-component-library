@@ -1,6 +1,6 @@
 ---
-id: components/modular-checkout-saved-payment-methods
-title: "&lt;justifi-saved-payment-methods&gt;"
+id: modular-checkout/modular-checkout-saved-payment-methods
+title: Saved Payment Methods
 description: Saved payment selector for Modular Checkout that handles defaulting, deletion, and fallback to new entries.
 sidebar_position: 26
 ---
@@ -47,7 +47,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'show-add-new',
       type: 'boolean',
       defaultValue: 'true',
-      description: 'Displays a control that reveals the card/bank forms when no method is selected.',
+      description:
+        'Displays a control that reveals the card/bank forms when no method is selected.',
     },
   ]}
 />
@@ -69,8 +70,15 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 <PartsTable
   parts={[
     { name: 'list', description: 'Wrapper for the saved payment chips.' },
-    { name: 'chip', description: 'Individual payment method chip; adjust border radius or spacing.' },
-    { name: 'delete-button', description: 'Trash icon/button for removing saved methods.' },
+    {
+      name: 'chip',
+      description:
+        'Individual payment method chip; adjust border radius or spacing.',
+    },
+    {
+      name: 'delete-button',
+      description: 'Trash icon/button for removing saved methods.',
+    },
   ]}
 />
 
@@ -86,8 +94,7 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const saved = document.querySelector('justifi-saved-payment-methods');
 
 saved.addEventListener('selection-changed', ({ detail }) => {
-  if (!detail.payment_method_token) saved.clearSelection();
+if (!detail.payment_method_token) saved.clearSelection();
 });`}
-  language="js"
+language="js"
 />
-

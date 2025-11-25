@@ -1,6 +1,6 @@
 ---
-id: components/gross-payment-chart
-title: "&lt;justifi-gross-payment-chart&gt;"
+id: merchant-tools/gross-payment-chart
+title: Gross Payment Chart
 description: Visualizes gross payment volume over time with tooltips and range selection.
 sidebar_position: 43
 ---
@@ -71,7 +71,10 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 <PartsTable
   parts={[
     { name: 'chart', description: 'SVG/Canvas container for the line chart.' },
-    { name: 'tooltip', description: 'Floating tooltip bubble when hovering/focusing a point.' },
+    {
+      name: 'tooltip',
+      description: 'Floating tooltip bubble when hovering/focusing a point.',
+    },
   ]}
 />
 
@@ -88,9 +91,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const chart = document.querySelector('justifi-gross-payment-chart');
 
 document.querySelector('#range').addEventListener('change', (event) => {
-  chart.setAttribute('range', event.target.value);
-  chart.refresh();
+chart.setAttribute('range', event.target.value);
+chart.refresh();
 });`}
-  language="js"
+language="js"
 />
-

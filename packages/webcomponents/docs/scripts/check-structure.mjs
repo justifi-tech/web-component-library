@@ -2,7 +2,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const REQUIRED_FRONTMATTER_KEYS = ['id', 'title', 'description', 'sidebar_position'];
+const REQUIRED_FRONTMATTER_KEYS = [
+  'id',
+  'title',
+  'description',
+  'sidebar_position',
+];
 const REQUIRED_SECTIONS = [
   '## Overview',
   '## Usage',
@@ -29,7 +34,9 @@ if (filesFlagIndex !== -1) {
 }
 
 if (!files.length) {
-  const fixturesDir = path.resolve('packages/webcomponents/docs/templates/__fixtures__');
+  const fixturesDir = path.resolve(
+    'packages/webcomponents/docs/templates/__fixtures__'
+  );
   files = fs
     .readdirSync(fixturesDir)
     .filter((file) => file.endsWith('.mdx'))
@@ -60,7 +67,9 @@ files.forEach((filePath) => {
     .map((line) => line.trim())
     .filter(Boolean);
 
-  const frontmatterKeys = frontmatterLines.map((line) => line.split(':')[0].trim());
+  const frontmatterKeys = frontmatterLines.map((line) =>
+    line.split(':')[0].trim()
+  );
 
   REQUIRED_FRONTMATTER_KEYS.forEach((key) => {
     if (!frontmatterKeys.includes(key)) {
@@ -69,10 +78,14 @@ files.forEach((filePath) => {
     }
   });
 
-  const missingSections = REQUIRED_SECTIONS.filter((section) => !content.includes(section));
+  const missingSections = REQUIRED_SECTIONS.filter(
+    (section) => !content.includes(section)
+  );
 
   if (missingSections.length) {
-    console.error(`✖ Missing required sections in ${filePath}: ${missingSections.join(', ')}`);
+    console.error(
+      `✖ Missing required sections in ${filePath}: ${missingSections.join(', ')}`
+    );
     hasErrors = true;
   } else {
     console.log(`✔ ${filePath} passed structure checks.`);

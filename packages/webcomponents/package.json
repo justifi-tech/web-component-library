@@ -15,7 +15,10 @@
     "./docs/*": "./docs/*",
     "./docs/sidebar": "./docs/sidebar.ts",
     "./docs/components/helpers": "./docs/components/helpers/index.ts",
-    "./docs/components/helpers/*": "./docs/components/helpers/*.ts"
+    "./docs/components/helpers/*": "./docs/components/helpers/*.tsx",
+    "./dist/module/*": "./dist/module/*.js",
+    "./dist/docs.json": "./dist/docs.json",
+    "./package.json": "./package.json"
   },
   "repository": {
     "type": "git",

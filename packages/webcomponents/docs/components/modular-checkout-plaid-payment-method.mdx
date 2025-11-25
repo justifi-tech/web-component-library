@@ -1,6 +1,6 @@
 ---
-id: components/modular-checkout-plaid-payment-method
-title: "&lt;justifi-plaid-payment-method&gt;"
+id: modular-checkout/modular-checkout-plaid-payment-method
+title: Plaid Payment Method
 description: Plaid-powered ACH rail for Modular Checkout with hosted Link flow.
 sidebar_position: 23
 ---
@@ -34,7 +34,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'link-token',
       type: 'string',
       required: true,
-      description: 'Server-generated Plaid link token scoped to the current customer.',
+      description:
+        'Server-generated Plaid link token scoped to the current customer.',
     },
     {
       name: 'locale',
@@ -69,8 +70,15 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'button', description: 'Launch button; style to match the rest of your rails.' },
-    { name: 'status', description: 'Displays connection status or error copy after Link closes.' },
+    {
+      name: 'button',
+      description: 'Launch button; style to match the rest of your rails.',
+    },
+    {
+      name: 'status',
+      description:
+        'Displays connection status or error copy after Link closes.',
+    },
   ]}
 />
 
@@ -86,8 +94,7 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const plaidRail = document.querySelector('justifi-plaid-payment-method');
 
 plaidRail.addEventListener('plaid-success', ({ detail }) => {
-  console.log('Bank linked: ', detail.institution.name);
+console.log('Bank linked: ', detail.institution.name);
 });`}
-  language="js"
+language="js"
 />
-

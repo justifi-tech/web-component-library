@@ -1,6 +1,6 @@
 ---
-id: components/refund-payment
-title: "&lt;justifi-refund-payment&gt;"
+id: payment-facilitation/refund-payment
+title: Refund Payment
 description: Guided UI for issuing full or partial refunds with reason codes and audit trails.
 sidebar_position: 33
 ---
@@ -32,7 +32,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'account-id',
       type: 'string',
       required: true,
-      description: 'Ensures refunds are scoped to the correct platform account.',
+      description:
+        'Ensures refunds are scoped to the correct platform account.',
     },
     {
       name: 'auth-token',
@@ -49,7 +50,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
     {
       name: 'max-amount',
       type: 'string | number',
-      description: 'Upper limit for partial refunds (defaults to remaining amount).',
+      description:
+        'Upper limit for partial refunds (defaults to remaining amount).',
     },
     {
       name: 'default-reason',
@@ -78,7 +80,11 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   parts={[
     { name: 'header', description: 'Title + payment summary section.' },
     { name: 'form', description: 'Wraps the amount + reason inputs.' },
-    { name: 'cta', description: 'Refund confirmation button; align with your destructive color palette.' },
+    {
+      name: 'cta',
+      description:
+        'Refund confirmation button; align with your destructive color palette.',
+    },
   ]}
 />
 
@@ -95,6 +101,5 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const component = document.querySelector('justifi-refund-payment');
 
 document.querySelector('#confirm-refund').onclick = () => component.submit();`}
-  language="js"
+language="js"
 />
-

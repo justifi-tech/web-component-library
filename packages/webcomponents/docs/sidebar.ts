@@ -6,7 +6,12 @@
 export type SidebarItem =
   | { type: 'doc'; id: string }
   | { type: 'link'; label: string; href: string }
-  | { type: 'category'; label: string; items: SidebarItem[]; collapsed?: boolean };
+  | {
+      type: 'category';
+      label: string;
+      items: SidebarItem[];
+      collapsed?: boolean;
+    };
 
 export interface DocsSidebarConfig {
   docs: SidebarItem[];
@@ -39,11 +44,11 @@ export const docsSidebar: DocsSidebarConfig = {
           type: 'category',
           label: 'Payments',
           collapsed: true,
-          items: [{ type: 'doc', id: 'components/checkout' }],
+          items: [{ type: 'doc', id: 'payment-facilitation/checkout' }],
         },
-        { type: 'doc', id: 'components/tokenize-payment-method' },
-        { type: 'doc', id: 'components/refund-payment' },
-        { type: 'doc', id: 'components/dispute-management' },
+        { type: 'doc', id: 'payment-facilitation/tokenize-payment-method' },
+        { type: 'doc', id: 'payment-facilitation/refund-payment' },
+        { type: 'doc', id: 'payment-facilitation/dispute-management' },
       ],
     },
     {
@@ -51,9 +56,9 @@ export const docsSidebar: DocsSidebarConfig = {
       label: 'Entities',
       collapsed: false,
       items: [
-        { type: 'doc', id: 'components/business-details' },
-        { type: 'doc', id: 'components/business-form' },
-        { type: 'doc', id: 'components/payment-provisioning' },
+        { type: 'doc', id: 'entities/business-details' },
+        { type: 'doc', id: 'entities/business-form' },
+        { type: 'doc', id: 'entities/payment-provisioning' },
       ],
     },
     {
@@ -61,17 +66,17 @@ export const docsSidebar: DocsSidebarConfig = {
       label: 'Merchant Tools',
       collapsed: false,
       items: [
-        { type: 'doc', id: 'components/checkouts-list' },
-        { type: 'doc', id: 'components/payments-list' },
-        { type: 'doc', id: 'components/payment-details' },
-        { type: 'doc', id: 'components/payment-transactions-list' },
-        { type: 'doc', id: 'components/payouts-list' },
-        { type: 'doc', id: 'components/payout-details' },
-        { type: 'doc', id: 'components/payout-transactions-list' },
-        { type: 'doc', id: 'components/gross-payment-chart' },
-        { type: 'doc', id: 'components/order-terminals' },
-        { type: 'doc', id: 'components/terminal-orders-list' },
-        { type: 'doc', id: 'components/terminals-list' },
+        { type: 'doc', id: 'merchant-tools/checkouts-list' },
+        { type: 'doc', id: 'merchant-tools/payments-list' },
+        { type: 'doc', id: 'merchant-tools/payment-details' },
+        { type: 'doc', id: 'merchant-tools/payment-transactions-list' },
+        { type: 'doc', id: 'merchant-tools/payouts-list' },
+        { type: 'doc', id: 'merchant-tools/payout-details' },
+        { type: 'doc', id: 'merchant-tools/payout-transactions-list' },
+        { type: 'doc', id: 'merchant-tools/gross-payment-chart' },
+        { type: 'doc', id: 'merchant-tools/order-terminals' },
+        { type: 'doc', id: 'merchant-tools/terminal-orders-list' },
+        { type: 'doc', id: 'merchant-tools/terminals-list' },
       ],
     },
     {
@@ -79,20 +84,35 @@ export const docsSidebar: DocsSidebarConfig = {
       label: 'Modular Checkout',
       collapsed: false,
       items: [
-        { type: 'doc', id: 'components/modular-checkout' },
+        { type: 'doc', id: 'modular-checkout/modular-checkout' },
         {
           type: 'category',
           label: 'Sub-components',
           collapsed: true,
           items: [
-            { type: 'doc', id: 'components/modular-checkout-card-form' },
-            { type: 'doc', id: 'components/modular-checkout-bank-account-form' },
-            { type: 'doc', id: 'components/modular-checkout-plaid-payment-method' },
-            { type: 'doc', id: 'components/modular-checkout-sezzle-payment-method' },
-            { type: 'doc', id: 'components/modular-checkout-season-interruption-insurance' },
-            { type: 'doc', id: 'components/modular-checkout-saved-payment-methods' },
-            { type: 'doc', id: 'components/modular-checkout-apple-pay' },
-            { type: 'doc', id: 'components/modular-checkout-summary' },
+            { type: 'doc', id: 'modular-checkout/modular-checkout-card-form' },
+            {
+              type: 'doc',
+              id: 'modular-checkout/modular-checkout-bank-account-form',
+            },
+            {
+              type: 'doc',
+              id: 'modular-checkout/modular-checkout-plaid-payment-method',
+            },
+            {
+              type: 'doc',
+              id: 'modular-checkout/modular-checkout-sezzle-payment-method',
+            },
+            {
+              type: 'doc',
+              id: 'modular-checkout/modular-checkout-season-interruption-insurance',
+            },
+            {
+              type: 'doc',
+              id: 'modular-checkout/modular-checkout-saved-payment-methods',
+            },
+            { type: 'doc', id: 'modular-checkout/modular-checkout-apple-pay' },
+            { type: 'doc', id: 'modular-checkout/modular-checkout-summary' },
           ],
         },
         {

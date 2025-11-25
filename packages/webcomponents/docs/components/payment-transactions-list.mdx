@@ -1,6 +1,6 @@
 ---
-id: components/payment-transactions-list
-title: "&lt;justifi-payment-transactions-list&gt;"
+id: merchant-tools/payment-transactions-list
+title: Payment Transactions List
 description: Transaction-level ledger for payments, grouped by status and funding state.
 sidebar_position: 32
 ---
@@ -43,7 +43,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
     {
       name: 'filters',
       type: 'string | Record<string, unknown>',
-      description: 'JSON string or object specifying filter criteria (payment_id, status, date range).',
+      description:
+        'JSON string or object specifying filter criteria (payment_id, status, date range).',
     },
     {
       name: 'enable-export',
@@ -71,7 +72,10 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 <PartsTable
   parts={[
     { name: 'table', description: 'Base table structure for ledger rows.' },
-    { name: 'status-badge', description: 'Badge for captured/refunded/pending states.' },
+    {
+      name: 'status-badge',
+      description: 'Badge for captured/refunded/pending states.',
+    },
     { name: 'toolbar', description: 'Houses export and filter actions.' },
   ]}
 />
@@ -89,8 +93,7 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const ledger = document.querySelector('justifi-payment-transactions-list');
 
 ledger.addEventListener('filter-changed', (event) => {
-  console.log('Filters now', event.detail);
+console.log('Filters now', event.detail);
 });`}
-  language="js"
+language="js"
 />
-

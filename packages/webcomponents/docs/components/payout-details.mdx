@@ -1,6 +1,6 @@
 ---
-id: components/payout-details
-title: "&lt;justifi-payout-details&gt;"
+id: merchant-tools/payout-details
+title: Payout Details
 description: Drill-down view for a single payout, including ledger items and bank destination info.
 sidebar_position: 41
 ---
@@ -69,9 +69,19 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'summary', description: 'Top section containing amount, status, and destination info.' },
-    { name: 'ledger', description: 'Table of constituent payments and adjustments.' },
-    { name: 'timeline', description: 'List of status changes (Created, In Transit, Paid).' },
+    {
+      name: 'summary',
+      description:
+        'Top section containing amount, status, and destination info.',
+    },
+    {
+      name: 'ledger',
+      description: 'Table of constituent payments and adjustments.',
+    },
+    {
+      name: 'timeline',
+      description: 'List of status changes (Created, In Transit, Paid).',
+    },
   ]}
 />
 
@@ -87,6 +97,5 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const payout = document.querySelector('justifi-payout-details');
 
 setInterval(() => payout.refresh(), 60_000);`}
-  language="js"
+language="js"
 />
-

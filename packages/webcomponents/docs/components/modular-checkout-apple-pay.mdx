@@ -1,6 +1,6 @@
 ---
-id: components/modular-checkout-apple-pay
-title: "&lt;justifi-apple-pay&gt;"
+id: modular-checkout/modular-checkout-apple-pay
+title: Apple Pay
 description: Apple Pay rail for Modular Checkout that exposes wallet buttons and handles tokenization.
 sidebar_position: 22
 ---
@@ -46,7 +46,8 @@ Use `<justifi-apple-pay>` when you want to offer Apple Pay directly inside Modul
       name: 'locale',
       type: 'string',
       defaultValue: 'en-US',
-      description: 'Controls the region on the underlying `ApplePaySession` request.',
+      description:
+        'Controls the region on the underlying `ApplePaySession` request.',
     },
   ]}
 />
@@ -67,7 +68,11 @@ Use `<justifi-apple-pay>` when you want to offer Apple Pay directly inside Modul
 
 <PartsTable
   parts={[
-    { name: 'button', description: 'Wrapper around the native Apple Pay button for margin/padding tweaks.' },
+    {
+      name: 'button',
+      description:
+        'Wrapper around the native Apple Pay button for margin/padding tweaks.',
+    },
   ]}
 />
 
@@ -83,6 +88,5 @@ Use `<justifi-apple-pay>` when you want to offer Apple Pay directly inside Modul
   code={`const applePay = document.querySelector('justifi-apple-pay');
 
 document.querySelector('#apple-pay-launch').onclick = () => applePay.begin();`}
-  language="js"
+language="js"
 />
-

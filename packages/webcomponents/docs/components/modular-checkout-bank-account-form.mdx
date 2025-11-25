@@ -1,6 +1,6 @@
 ---
-id: components/modular-checkout-bank-account-form
-title: "&lt;justifi-bank-account-form&gt;"
+id: modular-checkout/modular-checkout-bank-account-form
+title: Bank Account Form
 description: Bank account rail for Modular Checkout that tokenizes ACH details with hosted inputs.
 sidebar_position: 28
 ---
@@ -34,7 +34,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
     {
       name: 'payment-method-group-id',
       type: 'string',
-      description: 'Match the parent checkout’s group when you want to toggle which rails appear.',
+      description:
+        'Match the parent checkout’s group when you want to toggle which rails appear.',
     },
     {
       name: 'show-account-type',
@@ -66,8 +67,14 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'form', description: 'Outer wrapper for hosted account/routing fields.' },
-    { name: 'field-label', description: 'Targets label typography for each field.' },
+    {
+      name: 'form',
+      description: 'Outer wrapper for hosted account/routing fields.',
+    },
+    {
+      name: 'field-label',
+      description: 'Targets label typography for each field.',
+    },
   ]}
 />
 
@@ -84,5 +91,5 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const bankForm = document.querySelector('justifi-bank-account-form');
 
 document.querySelector('#focus-bank').onclick = () => bankForm.focus();`}
-  language="js"
+language="js"
 />

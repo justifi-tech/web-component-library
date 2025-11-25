@@ -1,6 +1,6 @@
 ---
-id: components/payment-provisioning
-title: "&lt;justifi-payment-provisioning&gt;"
+id: entities/payment-provisioning
+title: Payment Provisioning
 description: Embed-ready workflow for collecting payout bank info and provisioning merchants for funding.
 sidebar_position: 12
 ---
@@ -39,7 +39,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'auth-token',
       type: 'string',
       required: true,
-      description: 'Token with `write:provisioning` scope to securely store payout details.',
+      description:
+        'Token with `write:provisioning` scope to securely store payout details.',
     },
     {
       name: 'business-id',
@@ -50,13 +51,15 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
     {
       name: 'on-success-text',
       type: 'string',
-      description: 'Overrides the confirmation copy once the payout account is linked.',
+      description:
+        'Overrides the confirmation copy once the payout account is linked.',
     },
     {
       name: 'disable-ach',
       type: 'boolean',
       defaultValue: 'false',
-      description: 'Hide ACH specific fields when you only support push-to-card or other rails.',
+      description:
+        'Hide ACH specific fields when you only support push-to-card or other rails.',
     },
   ]}
 />
@@ -78,9 +81,19 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
 
 <PartsTable
   parts={[
-    { name: 'banner', description: 'Notification area for success and error messaging.' },
-    { name: 'section', description: 'Wraps each provisioning category (Legal, Payout, Agreements).' },
-    { name: 'cta', description: 'Primary action button at the end of the form.' },
+    {
+      name: 'banner',
+      description: 'Notification area for success and error messaging.',
+    },
+    {
+      name: 'section',
+      description:
+        'Wraps each provisioning category (Legal, Payout, Agreements).',
+    },
+    {
+      name: 'cta',
+      description: 'Primary action button at the end of the form.',
+    },
   ]}
 />
 
@@ -98,5 +111,5 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
   code={`const provisioning = document.querySelector('justifi-payment-provisioning');
 
 document.querySelector('#complete-provisioning').onclick = () => provisioning.submit();`}
-  language="js"
+language="js"
 />

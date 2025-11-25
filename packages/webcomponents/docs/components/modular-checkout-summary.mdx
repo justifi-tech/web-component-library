@@ -1,6 +1,6 @@
 ---
-id: components/modular-checkout-summary
-title: "&lt;justifi-modular-checkout-summary&gt;"
+id: modular-checkout/modular-checkout-summary
+title: Modular Checkout Summary
 description: Order summary block that lists line items, totals, and ancillary disclosures.
 sidebar_position: 27
 ---
@@ -40,7 +40,8 @@ import { PropsTable, UsageSnippet, PartsTable } from './helpers';
       name: 'show-disclosures',
       type: 'boolean',
       defaultValue: 'false',
-      description: 'Displays compliance copy (e.g., insurance terms, surcharges).',
+      description:
+        'Displays compliance copy (e.g., insurance terms, surcharges).',
     },
     {
       name: 'show-line-item-icons',
@@ -66,8 +67,14 @@ No custom events; summary listens to the parent checkout for updates automatical
 
 <PartsTable
   parts={[
-    { name: 'line-item', description: 'Individual row for items, fees, and taxes.' },
-    { name: 'total', description: 'Highlights grand totals with bolder typography.' },
+    {
+      name: 'line-item',
+      description: 'Individual row for items, fees, and taxes.',
+    },
+    {
+      name: 'total',
+      description: 'Highlights grand totals with bolder typography.',
+    },
     { name: 'disclosure', description: 'Optional area for additional copy.' },
   ]}
 />
@@ -84,6 +91,5 @@ No custom events; summary listens to the parent checkout for updates automatical
   code={`const summary = document.querySelector('justifi-modular-checkout-summary');
 
 document.querySelector('#recalculate').onclick = () => summary.refresh();`}
-  language="js"
+language="js"
 />
-
