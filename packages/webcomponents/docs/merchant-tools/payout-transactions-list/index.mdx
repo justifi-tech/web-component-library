@@ -1,0 +1,95 @@
+---
+id: merchant-tools/payout-transactions-list/index
+title: Payout Transactions List
+description: Ledger of transactions contributing to a payout, with filtering and export support.
+sidebar_position: 42
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+`<justifi-payout-transactions-list>` lists every transaction (payments, refunds, adjustments) that rolled into a specific payout. Finance teams use it to reconcile expected vs. actual funding.
+
+## Usage
+
+<UsageSnippet
+  title="Scope to a payout"
+  code={`<justifi-payout-transactions-list
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  payout-id="po_456"
+/>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Authorization context.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `read:payouts` scope.',
+    },
+    {
+      name: 'payout-id',
+      type: 'string',
+      required: true,
+      description: 'Payout whose transactions should be displayed.',
+    },
+    {
+      name: 'columns',
+      type: 'string',
+      defaultValue: 'type,amount,source,status',
+      description: 'Column ordering and selection.',
+    },
+  ]}
+/>
+
+### Events
+
+- `click-event`: row selection event that surfaces `transaction_id`.
+
+### Public methods
+
+1. `refresh()` – Reloads the ledger.
+
+## Theming & Layout
+
+- Shares CSS props with other ledgers/table components.
+- Provide at least 960px width or allow horizontal scrolling.
+
+<PartsTable
+  parts={[
+    { name: 'table', description: 'Ledger table for payout transactions.' },
+    {
+      name: 'status-pill',
+      description: 'Badge to highlight transaction status.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Table caption summarizes the payout and number of constituent transactions.
+- Keyboard navigation mirrors other tables (arrow keys + sticky headers).
+
+## Static examples
+
+<UsageSnippet
+  title="Open payment details"
+  code={`const payoutLedger = document.querySelector('justifi-payout-transactions-list');
+
+payoutLedger.addEventListener('click-event', ({ detail }) => {
+router.push('/payments/' + detail.transaction_id);
+});`}
+language="js"
+/>

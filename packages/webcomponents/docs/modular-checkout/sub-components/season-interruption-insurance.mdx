@@ -1,0 +1,172 @@
+---
+id: modular-checkout/sub-components/season-interruption-insurance
+title: Season Interruption Insurance
+description: Optional insurance add-on rail that pairs with Modular Checkout summaries.
+sidebar_position: 25
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+`<justifi-season-interruption-insurance>` fetches an insurance quote for the active checkout and renders an accept/decline pair of radio inputs. It uses the same identity and policy data the checkout already collected and fires updates whenever the customer changes their selection.
+
+## Usage
+
+<UsageSnippet
+  title="Attach insurance upsell"
+  code={`<justifi-modular-checkout
+  account-id="acc_123"
+  auth-token="wct_checkout"
+  checkout-id="chk_456"
+>
+  <justifi-season-interruption-insurance
+    slot="addons"
+    primary-identity-first-name="Jamie"
+    primary-identity-last-name="Rivera"
+    primary-identity-email-address="jamie@example.com"
+    primary-identity-state="MN"
+    primary-identity-postal-code="55401"
+    primary-identity-country="US"
+    policy-attributes-insurable-amount="250000"
+    policy-attributes-start-date="2024-12-01"
+    policy-attributes-end-date="2025-03-31"
+  />
+  <justifi-modular-checkout-card-form slot="payment-methods" />
+  <justifi-modular-checkout-summary slot="summary" />
+</justifi-modular-checkout>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'auth-token',
+      type: 'string',
+      description:
+        'JWT used to call the insurance service. Optional when the checkout store already contains an auth token.',
+    },
+    {
+      name: 'checkout-id',
+      type: 'string',
+      description:
+        'Checkout identifier passed to the quote endpoint. Optional when running inside `<justifi-modular-checkout>` where it is pulled from the shared store.',
+    },
+    {
+      name: 'primary-identity-first-name',
+      type: 'string',
+      required: true,
+      description: 'First name of the person purchasing the coverage.',
+    },
+    {
+      name: 'primary-identity-last-name',
+      type: 'string',
+      required: true,
+      description: 'Last name of the person purchasing the coverage.',
+    },
+    {
+      name: 'primary-identity-email-address',
+      type: 'string',
+      required: true,
+      description: 'Email address used in the quote payload.',
+    },
+    {
+      name: 'primary-identity-state',
+      type: 'string',
+      required: true,
+      description: '2-letter state or province for the insured person.',
+    },
+    {
+      name: 'primary-identity-postal-code',
+      type: 'string',
+      required: true,
+      description: 'Postal or ZIP code for the insured person.',
+    },
+    {
+      name: 'primary-identity-country',
+      type: 'string',
+      required: true,
+      description: 'ISO 3166-1 alpha-2 country code for the insured person.',
+    },
+    {
+      name: 'policy-attributes-insurable-amount',
+      type: 'number',
+      required: true,
+      description: 'Amount (in cents) that should be covered by the policy.',
+    },
+    {
+      name: 'policy-attributes-start-date',
+      type: 'string',
+      description: 'ISO 8601 start date for the coverage period.',
+    },
+    {
+      name: 'policy-attributes-end-date',
+      type: 'string',
+      description: 'ISO 8601 end date for the coverage period.',
+    },
+    {
+      name: 'covered-identity-first-name',
+      type: 'string',
+      description:
+        'First name of the person whose season is being covered (if different from the purchaser).',
+    },
+    {
+      name: 'covered-identity-last-name',
+      type: 'string',
+      description: 'Last name of the covered person.',
+    },
+  ]}
+/>
+
+### Events
+
+- `insurance-updated`: Fires after the component successfully toggles coverage via the insurance API.
+- `error-event`: Emits a `ComponentErrorEvent` if required props are missing or an API call fails.
+
+### Public methods
+
+1. `validate()` – Returns `{ isValid: boolean }` indicating whether the customer selected accept or decline. Uses the shared insurance validation helpers.
+
+## Theming & Layout
+
+- The host inherits the same typography tokens as other Modular Checkout rails via `StyledHost`, so it naturally matches surrounding content.
+- Use the exposed parts to restyle copy or validation messaging without affecting the radios themselves.
+
+<PartsTable
+  parts={[
+    {
+      name: 'text',
+      description:
+        'General copy, product description, and legal disclaimer text.',
+    },
+    {
+      name: 'text-danger',
+      description: 'Validation feedback underneath the radio group.',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Both radio buttons render with native `<label>` wrappers for generous click targets and screen-reader friendly names.
+- The accept label injects the formatted premium so assistive tech hears the price alongside the action being taken.
+
+## Static examples
+
+<UsageSnippet
+  title="Validate selection before submission"
+  code={`const insurance = document.querySelector('justifi-season-interruption-insurance');
+
+const { isValid } = await insurance.validate();
+
+if (!isValid) {
+// surface inline validation by leaving the radio group untouched
+return;
+}
+
+// continue to submit the checkout
+`}
+language="js"
+/>
