@@ -13,7 +13,6 @@
       "import": "./dist/module/index.js"
     },
     "./docs/*": "./docs/*",
-    "./docs/sidebar": "./docs/sidebar.ts",
     "./docs/helpers": "./docs/helpers/index.ts",
     "./docs/helpers/*": "./docs/helpers/*.tsx",
     "./dist/module/*": "./dist/module/*.js",
