@@ -90,12 +90,6 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 - When viewport width drops below 960px, the table enables horizontal scrolling and keeps the primary column sticky.
 - Filters component emits custom events; ensure both components share the same container so spacing stays consistent.
 
-## Accessibility
-
-- Table headers use `<th scope="col">` and rows use `<tr role="row">` for assistive tech.
-- Status badges include `aria-label` text describing the underlying state (e.g., “Completed checkout”).
-- Keyboard users can navigate rows via arrow keys; focus indicators adhere to the default outline tokens.
-
 ## Static examples
 
 <UsageSnippet

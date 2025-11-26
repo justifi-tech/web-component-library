@@ -118,12 +118,6 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
 
 - Slots are not exposed (all inputs are encapsulated in PCI iframes), so styling relies on CSS variables and `::part` hooks for wrapper elements.
 
-## Accessibility
-
-- Built-in labels and `aria-describedby` attributes map to each hosted-field input.
-- Focus is trapped inside the iframe while typing and returned to the parent document afterward.
-- Errors are announced via `role="status"` containers with concise, localized copy.
-
 ## Static examples
 
 <UsageSnippet
