@@ -10,9 +10,9 @@
 | Property              | Attribute               | Description | Type                                 | Default     |
 | --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
 | `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`                             | `undefined` |
+| `businessId`          | `business-id`           |             | `string`                             | `undefined` |
 | `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
-| `getBusiness`         | --                      |             | `Function`                           | `undefined` |
-| `patchBusiness`       | --                      |             | `Function`                           | `undefined` |
 
 
 ## Events
@@ -45,6 +45,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [justifi-payment-provisioning-form-steps](..)
+
 ### Depends on
 
 - [justifi-business-representative-form-inputs](.)
@@ -55,6 +59,7 @@ graph TD;
   justifi-business-representative-form-step --> justifi-business-representative-form-inputs
   justifi-business-representative-form-inputs --> form-control-tooltip
   justifi-business-representative-form-inputs --> form-control-text
+  justifi-business-representative-form-inputs --> form-control-checkbox
   justifi-business-representative-form-inputs --> form-control-number-masked
   justifi-business-representative-form-inputs --> form-control-date
   justifi-business-representative-form-inputs --> justifi-identity-address-form
@@ -66,6 +71,7 @@ graph TD;
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
+  justifi-payment-provisioning-form-steps --> justifi-business-representative-form-step
   style justifi-business-representative-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
