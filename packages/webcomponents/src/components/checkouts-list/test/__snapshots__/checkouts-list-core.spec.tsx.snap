@@ -203,7 +203,7 @@ exports[`checkouts-list-core renders properly with fetched data 1`] = `
             Donut Shop Size M T Shirt - Website Order
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
-            E-commerce
+            Apple Pay
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-secondary" part="badge font-family badge-secondary" title="The checkout has been attempted">

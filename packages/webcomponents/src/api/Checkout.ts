@@ -195,12 +195,14 @@ export enum ICheckoutPaymentMode {
   card = 'Card',
   bank_account = 'Bank Account',
   card_present = 'Card Present',
+  apple_pay = 'Apple Pay',
   unknown = '',
 }
 
 export enum ICheckoutPaymentModeParam {
   bnpl = 'bnpl',
   ecom = 'ecom',
+  apple_pay = 'apple_pay',
 }
 
 export enum ICheckoutStatus {
