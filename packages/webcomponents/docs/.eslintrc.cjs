@@ -1,5 +1,4 @@
 module.exports = {
-  root: true,
   settings: {
     'mdx/remark': {
       plugins: ['remark-frontmatter'],
