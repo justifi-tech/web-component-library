@@ -23,7 +23,6 @@
  - [form-control-select](../..)
  - [form-control-text](../..)
  - [justifi-additional-questions-form-step](../../../../components/business-forms/payment-provisioning/additional-questions)
- - [justifi-business-bank-account-form-step](../../../../components/business-forms/payment-provisioning/bank-account)
  - [justifi-business-owners-form-step](../../../../components/business-forms/payment-provisioning/business-owners)
  - [justifi-business-representative-form-inputs](../../../../components/business-forms/payment-provisioning/business-representative)
  - [justifi-legal-address-form-step](../../../../components/business-forms/payment-provisioning/legal-address-form)

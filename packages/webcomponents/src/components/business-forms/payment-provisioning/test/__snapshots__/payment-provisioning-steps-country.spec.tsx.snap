@@ -459,7 +459,7 @@ exports[`Payment Provisioning step components country differences Owners step sn
 `;
 
 exports[`Payment Provisioning step components country differences Representative step snapshots renders CAN SIN labels and help text 1`] = `
-<justifi-business-representative-form-step-core authtoken="token" businessid="biz_123">
+<justifi-business-representative-form-step>
   <div class="gap-5 row">
     <div class="col-12">
       <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
@@ -513,11 +513,11 @@ exports[`Payment Provisioning step components country differences Representative
       </div>
     </div>
   </div>
-</justifi-business-representative-form-step-core>
+</justifi-business-representative-form-step>
 `;
 
 exports[`Payment Provisioning step components country differences Representative step snapshots renders USA SSN labels and help text 1`] = `
-<justifi-business-representative-form-step-core authtoken="token" businessid="biz_123">
+<justifi-business-representative-form-step>
   <div class="gap-5 row">
     <div class="col-12">
       <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
@@ -571,5 +571,5 @@ exports[`Payment Provisioning step components country differences Representative
       </div>
     </div>
   </div>
-</justifi-business-representative-form-step-core>
+</justifi-business-representative-form-step>
 `;
