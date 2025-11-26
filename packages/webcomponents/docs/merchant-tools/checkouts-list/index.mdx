@@ -65,9 +65,6 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 
 ## Theming & Layout
 
-- Adjust table chrome with CSS custom properties like `--justifi-table-header-bg`, `--justifi-table-border-color`, and status-specific colors (`--justifi-status-pill-success`, `--justifi-status-pill-warning`).
-- Wrap the component in a responsive container; below 960px the table enables horizontal scrolling, so keep surrounding padding generous.
-
 <PartsTable
   parts={[
     {
@@ -87,7 +84,6 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
   ]}
 />
 
-- When viewport width drops below 960px, the table enables horizontal scrolling and keeps the primary column sticky.
 - Filters component emits custom events; ensure both components share the same container so spacing stays consistent.
 
 ## Static examples

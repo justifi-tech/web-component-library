@@ -77,9 +77,7 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
 
 ## Theming & Layout
 
-- Apply surface and border styling through CSS custom properties such as `--justifi-card-form-surface`, `--justifi-card-form-border-radius`, and `--justifi-card-form-spacing`.
 - When embedded inside cards, wrap the host element in your layout container and scope typography overrides via the parts listed below.
-- Keep the form width between 320px and 560px to maintain hosted-field readability.
 
 <PartsTable
   parts={[
@@ -101,7 +99,6 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
 />
 
 - Use the `card-form` CSS part (`::part(card-form)`) to apply box shadows or wrapper padding.
-- On mobile (less than 480px) the form stacks inputs vertically; on tablet/desktop it aligns expiration + CVC horizontally.
 
 ## Static examples
 
