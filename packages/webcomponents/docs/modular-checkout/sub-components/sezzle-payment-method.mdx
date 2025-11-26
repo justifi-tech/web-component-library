@@ -9,7 +9,13 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Overview
 
-`<justifi-sezzle-payment-method>` surfaces Sezzle as a Buy Now, Pay Later option alongside cards and bank payments. It handles eligibility checks, displays required disclosures, and redirects customers to Sezzle for authorization before returning to the checkout flow.
+Renders a radio input for selecting the Sezzle payment method, if BNPL (Buy Now Pay Later) is enabled for the sub account.
+
+This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
+
+**Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
+
+This component exposes **no public methods or properties** and is not intended for standalone use.
 
 ## Usage
 

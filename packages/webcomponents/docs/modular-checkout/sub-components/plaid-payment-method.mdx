@@ -9,7 +9,13 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Overview
 
-`<justifi-plaid-payment-method>` launches Plaid Link from inside Modular Checkout so customers can connect bank accounts instantly. The component handles link token generation, success/error events, and shares the resulting bank token with the parent checkout.
+Renders a radio input for selecting the Plaid bank account payment method, and orchestrates the Plaid Link flow to securely connect a bank account when selected.
+
+This component is designed to be used within the `justifi-modular-checkout` and does not accept props directly. It relies on the shared state and context managed by `justifi-modular-checkout` (auth token, account ID, and checkout ID). Saving a new payment method is controlled via the `justifi-save-new-payment-method` checkbox when a payment method group is available.
+
+It exposes no public properties for configuration, but does emit Plaid-specific events for error handling and recovery.
+
+> Note: This component renders nothing and logs a console warning when bank account verification is not enabled for the checkout (`payment_settings.bank_account_verification !== true`).
 
 ## Usage
 

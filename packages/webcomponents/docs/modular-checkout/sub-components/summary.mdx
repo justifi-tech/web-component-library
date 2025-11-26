@@ -9,7 +9,13 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Overview
 
-`<justifi-modular-checkout-summary>` shows customers exactly what they are paying for: line items, fees, taxes, and totals. Use it inside Modular Checkout’s `summary` slot or embed it near any payment CTA where you need readable totals.
+Renders a summary of checkout details consisting of the checkout description and amount passed in the [create checkout API request](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) as part of a checkout flow.
+
+This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
+
+**Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
+
+This component exposes **no public methods or properties** and is not intended for standalone use.
 
 ## Usage
 
