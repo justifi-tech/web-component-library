@@ -52,9 +52,10 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-representative-form-step --> justifi-business-representative-form-inputs
+  justifi-business-representative-form-step-core --> justifi-business-representative-form-inputs
   justifi-business-representative-form-inputs --> form-control-tooltip
   justifi-business-representative-form-inputs --> form-control-text
+  justifi-business-representative-form-inputs --> form-control-checkbox
   justifi-business-representative-form-inputs --> form-control-number-masked
   justifi-business-representative-form-inputs --> form-control-date
   justifi-business-representative-form-inputs --> justifi-identity-address-form
@@ -66,7 +67,7 @@ graph TD;
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
-  style justifi-business-representative-form-step fill:#f9f,stroke:#333,stroke-width:4px
+  style justifi-business-representative-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
