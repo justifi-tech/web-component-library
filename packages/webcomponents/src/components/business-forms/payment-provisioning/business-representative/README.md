@@ -67,7 +67,7 @@ graph TD;
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
-  style justifi-business-representative-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
+  style justifi-business-representative-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
