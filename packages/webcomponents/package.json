@@ -40,7 +40,7 @@
     "test": "TZ=utc stencil test --spec",
     "test:watch": "TZ=utc stencil test --spec --watchAll",
     "test:file": "stencil test --spec --watch --",
-    "docs:lint": "eslint --ext .md,.mdx --config packages/webcomponents/docs/.eslintrc.cjs docs"
+    "docs:lint": "eslint --ext .md,.mdx --config docs/.eslintrc.cjs docs"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
