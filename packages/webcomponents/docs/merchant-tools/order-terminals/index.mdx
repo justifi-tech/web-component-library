@@ -1,0 +1,97 @@
+---
+id: merchant-tools/order-terminals/index
+title: Order Terminals
+description: Guided purchasing flow for ordering in-person terminals and accessories.
+sidebar_position: 50
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+`<justifi-order-terminals>` streamlines the hardware ordering process by surfacing compatible devices, subscription pricing, shipping info, and confirmation states. Use it in consoles where merchants manage their in-person experiences.
+
+## Usage
+
+<UsageSnippet
+  title="Order a reader"
+  code={`<justifi-order-terminals
+  account-id="acc_123"
+  auth-token="wct_terminals"
+  shipping-contact="contact_456"
+/>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Merchant placing the order.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `write:terminals` scope.',
+    },
+    {
+      name: 'shipping-contact',
+      type: 'string',
+      description:
+        'Optional saved contact ID; when omitted the component collects address info inline.',
+    },
+    {
+      name: 'allowed-products',
+      type: 'string',
+      description: 'Comma-separated SKU list to limit which devices appear.',
+    },
+  ]}
+/>
+
+### Events
+
+- `submitted`: Fires when an order is placed; includes order ID and device list.
+- `error-event`: Emits network or validation errors.
+
+### Public methods
+
+1. `submit()` – Trigger the order (useful if you host CTAs externally).
+
+## Theming & Layout
+
+- Customize card surfaces with `--justifi-card-surface` and `--justifi-card-border`.
+- Each device card is 320px wide; on desktop the component displays a grid, while on mobile it stacks vertically.
+
+<PartsTable
+  parts={[
+    {
+      name: 'product-card',
+      description:
+        'Individual device card for styling images, borders, and CTA button.',
+    },
+    { name: 'summary', description: 'Order summary + shipping step.' },
+    { name: 'cta', description: 'Place order button.' },
+  ]}
+/>
+
+## Accessibility
+
+- Product cards behave like checkboxes with `aria-checked` so assistive tech understands which devices are selected.
+- Confirmation view announces with `role="status"` to confirm success.
+
+## Static examples
+
+<UsageSnippet
+  title="Restrict SKUs"
+  code={`<justifi-order-terminals
+  account-id="acc_123"
+  auth-token="wct_terminals"
+  allowed-products="WISEPAD_3,WISEPOS_E"
+/>`}
+  language="html"
+/>
