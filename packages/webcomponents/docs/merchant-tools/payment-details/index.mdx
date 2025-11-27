@@ -16,11 +16,50 @@ Component to display detailed information about a specific payment.
 <UsageSnippet
   title="Payment drill-down"
   description="Load by passing the payment identifier and the account context."
-  code={`<justifi-payment-details
-  account-id="acc_123"
-  auth-token="wct_reporting"
-  payment-id="pay_456"
-/>`}
+  code={`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-payment-details</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"></script>
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+</head>
+
+<body>
+  <justifi-payment-details 
+    payment-id="py_123" 
+    auth-token="authToken"
+  />
+</body>
+
+<script>
+  (function () {
+    const paymentDetails = document.querySelector('justifi-payment-details');
+
+    paymentDetails.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
+</script>
+
+</html>`}
   language="html"
 />
 

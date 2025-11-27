@@ -17,12 +17,49 @@ Component to render detailed information about a business. You will need to firs
 <UsageSnippet
   title="Business intake step"
   description="Pass the account context plus the business you want to edit."
-  code={`<justifi-business-details
-  account-id="acc_123"
-  auth-token="wct_onboardingToken"
-  business-id="biz_456"
-  locale="en-US"
-/>`}
+  code={`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-business-details</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"></script>
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+</head>
+
+<body>
+  <justifi-business-details
+    business-id="biz_123"
+    auth-token="authToken"
+  />
+</body>
+
+<script>
+  (function () {
+    const businessDetails = document.querySelector('justifi-business-details');
+
+    businessDetails.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
+</script>
+</html>`}
   language="html"
 />
 

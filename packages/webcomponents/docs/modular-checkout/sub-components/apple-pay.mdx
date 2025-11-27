@@ -15,14 +15,34 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 <UsageSnippet
   title="Add Apple Pay as a rail"
-  code={`<justifi-modular-checkout
-  account-id="acc_123"
-  auth-token="wct_checkout"
-  checkout-id="chk_456"
->
-  <justifi-apple-pay slot="payment-methods" />
-  <justifi-modular-checkout-summary slot="summary" />
-</justifi-modular-checkout>`}
+  code={`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-apple-pay</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"></script>
+  <style>
+      /** These are the available parts for styling the component. */
+      ::part(button) {
+        // button styles
+      }
+    </style>
+</head>
+
+<body>
+  <justifi-modular-checkout
+    auth-token="authToken"
+    checkout-id="ch_123"  
+  >
+    <justifi-apple-pay slot="payment-methods" />
+    <justifi-modular-checkout-summary slot="summary" />
+  </justifi-modular-checkout>
+</body>
+</html>`}
   language="html"
 />
 

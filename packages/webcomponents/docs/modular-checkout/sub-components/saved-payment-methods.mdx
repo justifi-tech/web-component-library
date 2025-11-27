@@ -23,15 +23,80 @@ This component exposes **no public methods or properties** and is not intended f
 
 <UsageSnippet
   title="Place saved methods above the card form"
-  code={`<justifi-modular-checkout
-  account-id="acc_123"
-  auth-token="wct_checkout"
-  checkout-id="chk_456"
->
-  <justifi-saved-payment-methods slot="payment-methods" />
-  <justifi-modular-checkout-card-form slot="payment-methods" />
-  <justifi-modular-checkout-summary slot="summary" />
-</justifi-modular-checkout>`}
+  code={`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-saved-payment-methods</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"></script>
+  <style>
+      /** These are the available parts for styling the component. */
+      ::part(text) {
+        // text styles
+      }
+
+      ::part(text-danger) {
+        // text danger styles
+      }
+      
+      ::part(label) { 
+        // label styles
+      }
+
+      ::part(input-radio) {
+        // input radio styles
+      }
+
+      ::part(input-radio-focused) {
+        // input radio focused styles
+      }
+
+      ::part(input-radio-checked) {
+        // input radio checked styles
+      }
+
+      ::part(input-radio-checked-focused) {
+        // input radio checked focused styles
+      }
+
+      ::part(input-radio-invalid) {
+        // input radio invalid styles
+      }
+    </style>
+</head>
+
+<body>
+  <justifi-modular-checkout
+    auth-token="authToken"
+    checkout-id="ch_123"  
+  >
+    <justifi-saved-payment-methods />
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function() {
+    const checkoutWrapper = document.querySelector('justifi-modular-checkout');
+    const submitButton = document.querySelector('#submit-button');
+
+    submitButton.addEventListener('click', () => {
+      checkoutWrapper.submitCheckout();
+    });
+
+    checkoutWrapper.addEventListener('error-event', (event) => {
+      console.error(event.detail);
+    });
+
+    document.addEventListener('submit-event', (event) => {
+      console.log('Checkout completed successfully!', event.detail);
+    });
+  })();
+</script>
+</html>`}
   language="html"
 />
 
