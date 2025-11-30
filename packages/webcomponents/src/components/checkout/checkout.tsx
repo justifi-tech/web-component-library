@@ -18,6 +18,7 @@ export class Checkout {
   tokenizePaymentMethodRef?: HTMLInternalTokenizePaymentMethodElement;
   plaidPaymentMethodRef?: HTMLJustifiPlaidPaymentMethodElement;
   sezzlePaymentMethodRef?: HTMLJustifiSezzlePaymentMethodElement;
+  googlePayRef?: HTMLJustifiGooglePayElement;
   @State() availablePaymentMethods: PAYMENT_METHODS[] = [];
   @State() checkout: ICheckout;
   @State() complete: Function;
@@ -143,12 +144,17 @@ export class Checkout {
               <div class="d-flex flex-column">
                 <section>
                   <div>
-                    <justifi-saved-payment-methods />
                     {this.availablePaymentMethods.includes(PAYMENT_METHODS.APPLE_PAY) && (
                       <div class="mb-3">
                         <justifi-apple-pay />
                       </div>
                     )}
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.GOOGLE_PAY) && (
+                      <div class="mb-3">
+                        <justifi-google-pay ref={(el) => (this.googlePayRef = el)} />
+                      </div>
+                    )}
+                    <justifi-saved-payment-methods />
                     {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
                       <justifi-radio-list-item
                         name="paymentMethodType"

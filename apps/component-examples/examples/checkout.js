@@ -1,13 +1,14 @@
 require('dotenv').config({ path: '../../.env' });
 const express = require('express');
 const { API_PATHS } = require('../utils/api-paths');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
 const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
 const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
 const subAccountId = process.env.SUB_ACCOUNT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -55,7 +56,6 @@ async function makeCheckout(token) {
       body: JSON.stringify({
         amount: 1799,
         description: 'One Chocolate Donut',
-        payment_method_group_id: paymentMethodGroupId,
         origin_url: `localhost:${port}`,
       }),
     });
@@ -176,6 +176,13 @@ app.get('/', async (req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+const options = {
+  key: fs.readFileSync('../../local_cert/client-key.pem'),
+  cert: fs.readFileSync('../../local_cert/client-cert.pem')
+};
+
+https.createServer(options, app).listen(443);
+
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// });

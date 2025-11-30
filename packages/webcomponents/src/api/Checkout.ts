@@ -78,6 +78,7 @@ export interface ICheckout {
     insurance_payments?: boolean;
     bank_account_verification?: boolean;
     apple_payments?: boolean;
+    google_payments?: boolean;
   };
   bnpl?: IBnpl;
   total_amount: number;
@@ -111,6 +112,7 @@ export class Checkout implements ICheckout {
     insurance_payments?: boolean;
     bank_account_verification?: boolean;
     apple_payments?: boolean;
+    google_payments?: boolean;
   };
   bnpl?: IBnpl;
   total_amount: number;
