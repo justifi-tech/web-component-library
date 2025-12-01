@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.5.0
+
+### Minor Changes
+
+- c2f52d9: Add "Apple Pay" filter to `justifi-checkouts-list-filters` and "Apple Pay" payment mode labeling to `justifi-checkouts-list`
+
 ## 6.4.3
 
 ### Patch Changes
