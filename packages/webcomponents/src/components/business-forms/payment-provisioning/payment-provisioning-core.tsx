@@ -105,7 +105,7 @@ export class PaymentProvisioningCore {
   }
 
   get formDisabled() {
-    return this.loading || this.businessProvisioned;
+    return this.loading;
   }
 
   get totalSteps() {
