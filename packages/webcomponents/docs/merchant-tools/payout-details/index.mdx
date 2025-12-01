@@ -1,0 +1,96 @@
+---
+id: merchant-tools/payout-details/index
+title: Payout Details
+description: Drill-down view for a single payout, including ledger items and bank destination info.
+sidebar_position: 41
+---
+
+import { PropsTable, UsageSnippet, PartsTable, PayoutDetailsExample } from '../../helpers';
+
+## Overview
+
+Component to display detailed information about a specific payout.
+
+## Usage
+
+<UsageSnippet
+  title="Inspect payout"
+  code={`<justifi-payout-details
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  payout-id="po_456"
+/>`}
+  language="html"
+/>
+
+## Live Example
+
+<PayoutDetailsExample />
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Scope the payout to a platform or merchant.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `read:payouts` scope.',
+    },
+    {
+      name: 'payout-id',
+      type: 'string',
+      required: true,
+      description: 'Identifier for the payout you want to view.',
+    },
+    {
+      name: 'show-ledger',
+      type: 'boolean',
+      defaultValue: 'true',
+      description: 'Hide the ledger table when you only need summary data.',
+    },
+  ]}
+/>
+
+### Events
+
+- `error-event`: Emits when payout data cannot be loaded.
+
+### Public methods
+
+1. `refresh()` – Reload payout data after remediation steps.
+
+## Theming & Layout
+
+<PartsTable
+  parts={[
+    {
+      name: 'font-family',
+      description: 'Controls the font family for the component.',
+    },
+    {
+      name: 'color',
+      description: 'Controls the text color.',
+    },
+    {
+      name: 'background-color',
+      description: 'Controls the background color.',
+    },
+  ]}
+/>
+
+## Static examples
+
+<UsageSnippet
+  title="Auto-refresh"
+  code={`const payout = document.querySelector('justifi-payout-details');
+
+setInterval(() => payout.refresh(), 60_000);`}
+language="js"
+/>

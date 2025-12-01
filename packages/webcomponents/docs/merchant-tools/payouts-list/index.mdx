@@ -1,0 +1,108 @@
+---
+id: merchant-tools/payouts-list/index
+title: Payouts List
+description: Reporting table for outbound payouts including status, destination, and expected arrival.
+sidebar_position: 40
+---
+
+import { PropsTable, UsageSnippet, PartsTable, PayoutsListExample } from '../../helpers';
+
+## Overview
+
+Component to render a formated list of payouts for the requested account.
+
+## Usage
+
+<UsageSnippet
+  title="Payouts table"
+  code={`<justifi-payouts-list
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  columns="created_at,amount,destination,status"
+/>`}
+  language="html"
+/>
+
+## Live Example
+
+<PayoutsListExample />
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Filters payouts to the merchant or platform account.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `read:payouts` scope.',
+    },
+    {
+      name: 'columns',
+      type: 'string',
+      defaultValue: 'created_at,amount,destination,status,expected_arrival',
+      description: 'Comma-separated list controlling table columns.',
+    },
+    {
+      name: 'timezone',
+      type: 'string',
+      defaultValue: 'UTC',
+      description: 'Controls formatting for timestamps.',
+    },
+  ]}
+/>
+
+### Events
+
+- `click-event`: Fires when a row is clicked; `detail.payout_id` indicates which payout to drill into.
+
+### Public methods
+
+1. `refresh()` – Reload the payouts query.
+
+## Theming & Layout
+
+<PartsTable
+  parts={[
+    {
+      name: 'font-family',
+      description: 'Controls the font family for the component.',
+    },
+    {
+      name: 'color',
+      description: 'Controls the text color.',
+    },
+    {
+      name: 'background-color',
+      description: 'Controls the background color.',
+    },
+    {
+      name: 'button',
+      description: 'Button styles.',
+    },
+    {
+      name: 'button-disabled',
+      description: 'Disabled button styles.',
+    },
+  ]}
+/>
+
+## Static examples
+
+<UsageSnippet
+  title="Navigate to payout details"
+  code={`const payouts = document.querySelector('justifi-payouts-list');
+
+payouts.addEventListener('click-event', (event) => {
+if (event.detail.name === 'row') {
+router.push('/payouts/' + event.detail.payout_id);
+}
+});`}
+language="js"
+/>
