@@ -1,0 +1,108 @@
+---
+id: payment-facilitation/dispute-management/index
+title: Dispute Management
+description: Operator console for reviewing and responding to card disputes.
+sidebar_position: 34
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+Component to render notification of disputed payments and allow platform to respond to dispute via form submission.
+
+## Usage
+
+<UsageSnippet
+  title="Open a dispute detail view"
+  code={`<justifi-dispute-management
+  account-id="acc_123"
+  auth-token="wct_disputes"
+  dispute-id="dp_456"
+/>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Authorizes access to disputes for a platform or merchant.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `write:disputes` scope.',
+    },
+    {
+      name: 'dispute-id',
+      type: 'string',
+      required: true,
+      description: 'Specific dispute to review/respond to.',
+    },
+    {
+      name: 'read-only',
+      type: 'boolean',
+      defaultValue: 'false',
+      description: 'Disable response actions when true.',
+    },
+  ]}
+/>
+
+### Events
+
+- `evidence-uploaded`: Fires when users add files or notes.
+- `status-changed`: Indicates dispute submission or withdrawal.
+- `error-event`: Captures upload or API issues.
+
+### Public methods
+
+1. `refresh()` – Reload in-progress disputes to reflect new deadlines or statuses.
+
+## Theming & Layout
+
+<PartsTable
+  parts={[
+    {
+      name: 'font-family',
+      description: 'Controls the font family for the component.',
+    },
+    {
+      name: 'color',
+      description: 'Controls the text color.',
+    },
+    {
+      name: 'background-color',
+      description: 'Controls the background color.',
+    },
+    {
+      name: 'button',
+      description: 'Button styles.',
+    },
+    {
+      name: 'button-secondary',
+      description: 'Secondary button styles.',
+    },
+    {
+      name: 'button-disabled',
+      description: 'Disabled button styles.',
+    },
+  ]}
+/>
+
+## Static examples
+
+<UsageSnippet
+  title="Listening for evidence uploads"
+  code={`const disputes = document.querySelector('justifi-dispute-management');
+
+disputes.addEventListener('evidence-uploaded', ({ detail }) => {
+toast.success('Uploaded ' + detail.file_name);
+});`}
+language="js"
+/>

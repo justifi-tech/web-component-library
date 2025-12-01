@@ -1,0 +1,95 @@
+---
+id: merchant-tools/terminal-orders-list/index
+title: Terminal Orders List
+description: Reporting table of hardware orders with fulfillment status and tracking info.
+sidebar_position: 51
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+Component to render a formated list of terminal device orders for the requested account.
+
+## Usage
+
+<UsageSnippet
+  title="Orders table"
+  code={`<justifi-terminal-orders-list
+  account-id="acc_123"
+  auth-token="wct_terminals"
+/>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'account-id',
+      type: 'string',
+      required: true,
+      description: 'Restricts orders to a merchant/platform.',
+    },
+    {
+      name: 'auth-token',
+      type: 'string',
+      required: true,
+      description: 'Token with `read:terminals` scope.',
+    },
+    {
+      name: 'columns',
+      type: 'string',
+      defaultValue: 'created_at,order_number,items,status,tracking_number',
+      description: 'Customize visible columns.',
+    },
+  ]}
+/>
+
+### Events
+
+- `click-event`: Surfaces the order ID for navigation.
+
+### Public methods
+
+1. `refresh()` – Reload order data.
+
+## Theming & Layout
+
+<PartsTable
+  parts={[
+    {
+      name: 'font-family',
+      description: 'Controls the font family for the component.',
+    },
+    {
+      name: 'color',
+      description: 'Controls the text color.',
+    },
+    {
+      name: 'background-color',
+      description: 'Controls the background color.',
+    },
+    {
+      name: 'button',
+      description: 'Button styles.',
+    },
+    {
+      name: 'button-disabled',
+      description: 'Disabled button styles.',
+    },
+  ]}
+/>
+
+## Static examples
+
+<UsageSnippet
+  title="Navigate to order details"
+  code={`const orders = document.querySelector('justifi-terminal-orders-list');
+
+orders.addEventListener('click-event', ({ detail }) => {
+if (detail.name === 'row') router.push('/terminals/orders/' + detail.order_id);
+});`}
+language="js"
+/>

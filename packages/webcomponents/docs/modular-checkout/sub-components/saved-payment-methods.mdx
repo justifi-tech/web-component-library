@@ -1,0 +1,187 @@
+---
+id: modular-checkout/sub-components/saved-payment-methods
+title: Saved Payment Methods
+description: Saved payment selector for Modular Checkout that handles defaulting, deletion, and fallback to new entries.
+sidebar_position: 26
+---
+
+import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+
+## Overview
+
+Renders a radio input list of saved payment methods as part of a checkout flow.
+
+> Note: This sub component will only display saved payment methods if a `payment_method_group_id` with associated payment methods was passed to the [create checkout](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) API request.
+
+This component is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on shared state passed through the Stencil Store, managed by the wrapper component.
+
+**Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
+
+This component exposes **no public methods or properties** and is not intended for standalone use.
+
+## Usage
+
+<UsageSnippet
+  title="Place saved methods above the card form"
+  code={`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-saved-payment-methods</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"></script>
+  <style>
+      /** These are the available parts for styling the component. */
+      ::part(text) {
+        // text styles
+      }
+
+      ::part(text-danger) {
+        // text danger styles
+      }
+      
+      ::part(label) { 
+        // label styles
+      }
+
+      ::part(input-radio) {
+        // input radio styles
+      }
+
+      ::part(input-radio-focused) {
+        // input radio focused styles
+      }
+
+      ::part(input-radio-checked) {
+        // input radio checked styles
+      }
+
+      ::part(input-radio-checked-focused) {
+        // input radio checked focused styles
+      }
+
+      ::part(input-radio-invalid) {
+        // input radio invalid styles
+      }
+    </style>
+</head>
+
+<body>
+  <justifi-modular-checkout
+    auth-token="authToken"
+    checkout-id="ch_123"  
+  >
+    <justifi-saved-payment-methods />
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function() {
+    const checkoutWrapper = document.querySelector('justifi-modular-checkout');
+    const submitButton = document.querySelector('#submit-button');
+
+    submitButton.addEventListener('click', () => {
+      checkoutWrapper.submitCheckout();
+    });
+
+    checkoutWrapper.addEventListener('error-event', (event) => {
+      console.error(event.detail);
+    });
+
+    document.addEventListener('submit-event', (event) => {
+      console.log('Checkout completed successfully!', event.detail);
+    });
+  })();
+</script>
+</html>`}
+  language="html"
+/>
+
+## Props, Events & Methods
+
+<PropsTable
+  rows={[
+    {
+      name: 'customer-id',
+      type: 'string',
+      required: true,
+      description: 'Identifies which saved methods to fetch.',
+    },
+    {
+      name: 'allow-delete',
+      type: 'boolean',
+      defaultValue: 'true',
+      description: 'Shows the delete button for each saved method.',
+    },
+    {
+      name: 'show-add-new',
+      type: 'boolean',
+      defaultValue: 'true',
+      description:
+        'Displays a control that reveals the card/bank forms when no method is selected.',
+    },
+  ]}
+/>
+
+### Events
+
+- `selection-changed`: Emits when customers choose a different saved method.
+- `delete-requested`: Fires when someone clicks delete on a saved method (confirm server-side permissions).
+
+### Public methods
+
+1. `clearSelection()` – Deselect saved methods so the new card/bank forms reappear.
+
+## Theming & Layout
+
+<PartsTable
+  parts={[
+    {
+      name: 'text',
+      description: 'Text styles.',
+    },
+    {
+      name: 'text-danger',
+      description: 'Danger/error text styles.',
+    },
+    {
+      name: 'label',
+      description: 'Label styles.',
+    },
+    {
+      name: 'input-radio',
+      description: 'Radio input styles.',
+    },
+    {
+      name: 'input-radio-focused',
+      description: 'Radio input styles when focused.',
+    },
+    {
+      name: 'input-radio-checked',
+      description: 'Radio input styles when checked.',
+    },
+    {
+      name: 'input-radio-checked-focused',
+      description: 'Radio input styles when checked and focused.',
+    },
+    {
+      name: 'input-radio-invalid',
+      description: 'Radio input styles when invalid.',
+    },
+  ]}
+/>
+
+## Static examples
+
+<UsageSnippet
+  title="Fallback flow"
+  code={`const saved = document.querySelector('justifi-saved-payment-methods');
+
+saved.addEventListener('selection-changed', ({ detail }) => {
+if (!detail.payment_method_token) saved.clearSelection();
+});`}
+language="js"
+/>
