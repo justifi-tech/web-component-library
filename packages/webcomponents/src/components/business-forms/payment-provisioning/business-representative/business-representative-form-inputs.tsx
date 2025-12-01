@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
 import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues } from '../../utils/input-handlers';
 import { PHONE_MASKS, IDENTITY_MASKS } from '../../../../utils/form-input-masks';
@@ -15,6 +15,25 @@ export class RepresentativeFormInputs {
   @Prop() formController: FormController;
   @Prop() country: CountryCode;
   @State() isEditingIdentification: boolean = false;
+  @State() isOwnerChecked: boolean = false;
+
+  componentWillLoad() {
+    this.syncIsOwnerCheckedFromDefault();
+  }
+
+  @Watch('representativeDefaultValue')
+  handleRepresentativeDefaultValueChange() {
+    this.syncIsOwnerCheckedFromDefault();
+  }
+
+  private syncIsOwnerCheckedFromDefault() {
+    this.isOwnerChecked = Boolean(this.representativeDefaultValue?.is_owner);
+  }
+
+  private handleOwnerCheckboxInput = (name: string, value: boolean) => {
+    this.isOwnerChecked = value;
+    this.inputHandler(name, value.toString());
+  };
 
   inputHandler = (name: string, value: string) => {
     updateFormValues(this.formController, { [name]: value });
@@ -54,6 +73,14 @@ export class RepresentativeFormInputs {
                 errorText={this.errors.title}
                 inputHandler={this.inputHandler}
                 helpText="Role at your business, e.g. President, CEO, Treasurer."
+              />
+            </div>
+            <div class="col-12">
+              <form-control-checkbox
+                name="is_owner"
+                label="Is owner"
+                checked={this.isOwnerChecked}
+                inputHandler={this.handleOwnerCheckboxInput}
               />
             </div>
             <div class="col-12 col-md-6">
