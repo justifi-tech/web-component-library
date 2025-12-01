@@ -55,13 +55,11 @@ graph TD;
   justifi-legal-address-form-step --> justifi-form-address-fields
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select
-  justifi-additional-questions-form-step --> justifi-additional-questions-form-step-core
-  justifi-additional-questions-form-step-core --> form-control-tooltip
-  justifi-additional-questions-form-step-core --> form-control-monetary-provisioning
-  justifi-additional-questions-form-step-core --> form-control-text
-  justifi-additional-questions-form-step-core --> form-control-select
-  justifi-business-representative-form-step --> justifi-business-representative-form-step-core
-  justifi-business-representative-form-step-core --> justifi-business-representative-form-inputs
+  justifi-additional-questions-form-step --> form-control-tooltip
+  justifi-additional-questions-form-step --> form-control-monetary-provisioning
+  justifi-additional-questions-form-step --> form-control-select
+  justifi-additional-questions-form-step --> form-control-text
+  justifi-business-representative-form-step --> justifi-business-representative-form-inputs
   justifi-business-representative-form-inputs --> form-control-tooltip
   justifi-business-representative-form-inputs --> form-control-text
   justifi-business-representative-form-inputs --> form-control-number-masked
@@ -76,12 +74,11 @@ graph TD;
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
   owner-form-inputs --> justifi-identity-address-form
-  justifi-business-bank-account-form-step --> justifi-business-bank-account-form-step-core
-  justifi-business-bank-account-form-step-core --> form-control-tooltip
-  justifi-business-bank-account-form-step-core --> bank-account-form-inputs-canada
-  justifi-business-bank-account-form-step-core --> bank-account-form-inputs
-  justifi-business-bank-account-form-step-core --> business-documents-on-file
-  justifi-business-bank-account-form-step-core --> bank-account-document-form-inputs
+  justifi-business-bank-account-form-step --> form-control-tooltip
+  justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
+  justifi-business-bank-account-form-step --> bank-account-form-inputs
+  justifi-business-bank-account-form-step --> business-documents-on-file
+  justifi-business-bank-account-form-step --> bank-account-document-form-inputs
   bank-account-form-inputs-canada --> bank-account-read-only-value
   bank-account-form-inputs-canada --> form-control-text
   bank-account-form-inputs-canada --> form-control-select

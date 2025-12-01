@@ -13,8 +13,6 @@
 | `authToken`           | `auth-token`            |             | `string`                             | `undefined` |
 | `businessId`          | `business-id`           |             | `string`                             | `undefined` |
 | `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
-| `getBusiness`         | --                      |             | `Function`                           | `undefined` |
-| `patchBusiness`       | --                      |             | `Function`                           | `undefined` |
 
 
 ## Events
@@ -48,6 +46,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [justifi-payment-provisioning-form-steps](..)
+
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
@@ -56,8 +58,8 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-owners-form-step-core --> form-control-tooltip
-  justifi-business-owners-form-step-core --> justifi-owner-form
+  justifi-business-owners-form-step --> form-control-tooltip
+  justifi-business-owners-form-step --> justifi-owner-form
   form-control-tooltip --> custom-popper
   justifi-owner-form --> owner-form-core
   owner-form-core --> owner-form-inputs
@@ -72,7 +74,8 @@ graph TD;
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
-  style justifi-business-owners-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
+  style justifi-business-owners-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
