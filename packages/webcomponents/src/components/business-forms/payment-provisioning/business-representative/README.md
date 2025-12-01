@@ -10,9 +10,9 @@
 | Property              | Attribute               | Description | Type                                 | Default     |
 | --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
 | `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`                             | `undefined` |
+| `businessId`          | `business-id`           |             | `string`                             | `undefined` |
 | `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
-| `getBusiness`         | --                      |             | `Function`                           | `undefined` |
-| `patchBusiness`       | --                      |             | `Function`                           | `undefined` |
 
 
 ## Events
@@ -45,6 +45,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [justifi-payment-provisioning-form-steps](..)
+
 ### Depends on
 
 - [justifi-business-representative-form-inputs](.)
@@ -66,6 +70,7 @@ graph TD;
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
+  justifi-payment-provisioning-form-steps --> justifi-business-representative-form-step
   style justifi-business-representative-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
