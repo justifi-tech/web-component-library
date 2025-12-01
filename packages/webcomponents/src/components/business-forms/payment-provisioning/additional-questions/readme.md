@@ -60,10 +60,11 @@ Type: `Promise<void>`
 graph TD;
   justifi-additional-questions-form-step --> form-control-tooltip
   justifi-additional-questions-form-step --> form-control-monetary-provisioning
-  justifi-additional-questions-form-step --> form-control-select
   justifi-additional-questions-form-step --> form-control-text
+  justifi-additional-questions-form-step --> form-control-select
   form-control-tooltip --> custom-popper
   form-control-text --> form-control-tooltip
+  form-control-select --> form-control-tooltip
   justifi-payment-provisioning-form-steps --> justifi-additional-questions-form-step
   style justifi-additional-questions-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
