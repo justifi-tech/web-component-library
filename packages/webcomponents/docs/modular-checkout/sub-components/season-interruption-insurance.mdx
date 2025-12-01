@@ -6,6 +6,7 @@ sidebar_position: 25
 ---
 
 import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -23,8 +24,8 @@ Component to render a formated list of season interruption insurance for the req
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
   <title>justifi-season-interruption-insurance</title>
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
   <style>
       ::part(font-family) { 
         font-family: georgia;   

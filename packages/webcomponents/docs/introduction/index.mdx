@@ -5,6 +5,8 @@ description: Introduction to the JustiFi Web Component Library.
 sidebar_position: 1
 ---
 
+import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+
 # Introduction to JustiFi Web Component Library
 
 Welcome to the JustiFi Web Component Library. These components can be used as HTML Web Components or as React components.
@@ -15,12 +17,13 @@ Welcome to the JustiFi Web Component Library. These components can be used as HT
 
 The simplest way to use the Web Components is to include the following script within your HTML. This loads all the components into the browser's custom component registry.
 
-```html
-<script
+<pre>
+  <code className="language-html">{`<script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"
-></script>
-```
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>`}</code>
+
+</pre>
 
 Then, you can use the custom elements as normal `HTML` tags.
 

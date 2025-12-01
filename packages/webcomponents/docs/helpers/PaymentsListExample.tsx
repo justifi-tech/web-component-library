@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentExample } from './ComponentExample';
 import mockPaymentsSuccess from './mockData/mockPaymentsSuccess.json';
+import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 export const PaymentsListExample: React.FC = () => {
   // Match API endpoint pattern: /v1/account/{accountId}/payments
@@ -10,7 +11,7 @@ export const PaymentsListExample: React.FC = () => {
     <ComponentExample
       componentName="Payments List"
       componentTag="justifi-payments-list"
-      scriptUrl="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"
+      scriptUrl={`https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js`}
       mockData={mockPaymentsSuccess}
       mockEndpoints={[
         {
