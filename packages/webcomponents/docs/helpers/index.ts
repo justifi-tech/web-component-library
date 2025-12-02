@@ -1,6 +1,6 @@
 export { PropsTable } from './PropsTable';
 export { PartsTable } from './PartsTable';
-export { ComponentExample } from './ComponentExample';
+export { registerComponentExample } from './ComponentExample';
 export { BusinessDetailsExample } from './BusinessDetailsExample';
 export { BusinessFormExample } from './BusinessFormExample';
 export { PaymentDetailsExample } from './PaymentDetailsExample';

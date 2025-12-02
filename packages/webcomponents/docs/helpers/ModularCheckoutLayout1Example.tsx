@@ -1,4 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { getReact } from './ComponentExample';
+
+// Get React dynamically (available in MDX context)
+const React = getReact();
+const { useEffect, useRef, useState } = React;
 
 // Global script loading state (shared across all component instances)
 const globalScriptState: Record<string, { loaded: boolean; loading: boolean; error: string | null }> = {};
@@ -249,7 +253,7 @@ const styles = `
 }
 `;
 
-export const ModularCheckoutLayout1Example: React.FC = () => {
+export const ModularCheckoutLayout1Example = () => {
   const scriptUrl = 'https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js';
   const [scriptLoaded, setScriptLoaded] = useState(globalScriptState[scriptUrl]?.loaded || false);
   const [scriptError, setScriptError] = useState<string | null>(globalScriptState[scriptUrl]?.error || null);

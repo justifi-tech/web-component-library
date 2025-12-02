@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface PartsTableRow {
   name: string;
   description: string;
@@ -11,33 +9,43 @@ interface PartsTableProps {
   caption?: string;
 }
 
-export const PartsTable: React.FC<PartsTableProps> = ({ parts, caption }) => {
+import { getReact } from './ComponentExample';
+
+export const PartsTable = ({ parts, caption }: PartsTableProps) => {
   if (!parts?.length) {
     return null;
   }
 
-  return (
-    <table className="docs-parts-table">
-      {caption ? <caption>{caption}</caption> : null}
-      <thead>
-        <tr>
-          <th scope="col">Part</th>
-          <th scope="col">Description</th>
-          <th scope="col">DOM target</th>
-        </tr>
-      </thead>
-      <tbody>
-        {parts.map((part) => (
-          <tr key={part.name}>
-            <td>
-              <code>::part({part.name})</code>
-            </td>
-            <td>{part.description}</td>
-            <td>{part.target ?? '—'}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+  const React = getReact();
+
+  return React.createElement(
+    'table',
+    { className: 'docs-parts-table' },
+    caption ? React.createElement('caption', null, caption) : null,
+    React.createElement(
+      'thead',
+      null,
+      React.createElement(
+        'tr',
+        null,
+        React.createElement('th', { scope: 'col' }, 'Part'),
+        React.createElement('th', { scope: 'col' }, 'Description'),
+        React.createElement('th', { scope: 'col' }, 'DOM target')
+      )
+    ),
+    React.createElement(
+      'tbody',
+      null,
+      parts.map((part) =>
+        React.createElement(
+          'tr',
+          { key: part.name },
+          React.createElement('td', null, React.createElement('code', null, `::part(${part.name})`)),
+          React.createElement('td', null, part.description),
+          React.createElement('td', null, part.target ?? '—')
+        )
+      )
+    )
   );
 };
 

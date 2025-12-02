@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface PropsTableRow {
   name: string;
   type: string;
@@ -13,39 +11,51 @@ interface PropsTableProps {
   caption?: string;
 }
 
-export const PropsTable: React.FC<PropsTableProps> = ({ rows, caption }) => {
+import { getReact } from './ComponentExample';
+
+export const PropsTable = ({ rows, caption }: PropsTableProps) => {
   if (!rows?.length) {
     return null;
   }
 
-  return (
-    <table className="docs-props-table">
-      {caption ? <caption>{caption}</caption> : null}
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Type</th>
-          <th scope="col">Required</th>
-          <th scope="col">Default</th>
-          <th scope="col">Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row) => (
-          <tr key={row.name}>
-            <td>
-              <code>{row.name}</code>
-            </td>
-            <td>
-              <code>{row.type}</code>
-            </td>
-            <td>{row.required ? 'Yes' : 'No'}</td>
-            <td>{row.defaultValue ? <code>{row.defaultValue}</code> : '—'}</td>
-            <td>{row.description}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+  const React = getReact();
+
+  return React.createElement(
+    'table',
+    { className: 'docs-props-table' },
+    caption ? React.createElement('caption', null, caption) : null,
+    React.createElement(
+      'thead',
+      null,
+      React.createElement(
+        'tr',
+        null,
+        React.createElement('th', { scope: 'col' }, 'Name'),
+        React.createElement('th', { scope: 'col' }, 'Type'),
+        React.createElement('th', { scope: 'col' }, 'Required'),
+        React.createElement('th', { scope: 'col' }, 'Default'),
+        React.createElement('th', { scope: 'col' }, 'Description')
+      )
+    ),
+    React.createElement(
+      'tbody',
+      null,
+      rows.map((row) =>
+        React.createElement(
+          'tr',
+          { key: row.name },
+          React.createElement('td', null, React.createElement('code', null, row.name)),
+          React.createElement('td', null, React.createElement('code', null, row.type)),
+          React.createElement('td', null, row.required ? 'Yes' : 'No'),
+          React.createElement(
+            'td',
+            null,
+            row.defaultValue ? React.createElement('code', null, row.defaultValue) : '—'
+          ),
+          React.createElement('td', null, row.description)
+        )
+      )
+    )
   );
 };
 
