@@ -20,7 +20,7 @@ export class BusinessBankAccountFormStep {
   @State() existingDocuments: any = [];
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @State() isLoading: boolean = false;
-  @State() isAddingNewBankAccount: boolean = false;
+  @State() isAddingNewBankAccount: boolean = true;
   @State() getBusiness: Function;
   @State() postBankAccount: Function;
   @State() postDocumentRecord: Function;
@@ -150,6 +150,7 @@ export class BusinessBankAccountFormStep {
           const bankAccounts = response.data.bank_accounts;
           const latestBankAccount = bankAccounts[bankAccounts.length - 1];
           this.bankAccount = new BankAccount(latestBankAccount);
+          this.isAddingNewBankAccount = false;
         } else {
           this.bankAccount = new BankAccount({});
           this.bankAccount.business_id = this.businessId;
