@@ -10,9 +10,9 @@
 | Property              | Attribute               | Description | Type                                 | Default     |
 | --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
 | `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`                             | `undefined` |
+| `businessId`          | `business-id`           |             | `string`                             | `undefined` |
 | `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
-| `getBusiness`         | --                      |             | `Function`                           | `undefined` |
-| `patchBusiness`       | --                      |             | `Function`                           | `undefined` |
 
 
 ## Events
@@ -47,7 +47,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-legal-address-form-step](.)
+ - [justifi-payment-provisioning-form-steps](..)
 
 ### Depends on
 
@@ -57,15 +57,15 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-legal-address-form-step-core --> form-control-tooltip
-  justifi-legal-address-form-step-core --> justifi-form-address-fields
+  justifi-legal-address-form-step --> form-control-tooltip
+  justifi-legal-address-form-step --> justifi-form-address-fields
   form-control-tooltip --> custom-popper
   justifi-form-address-fields --> form-control-text
   justifi-form-address-fields --> form-control-select
   form-control-text --> form-control-tooltip
   form-control-select --> form-control-tooltip
-  justifi-legal-address-form-step --> justifi-legal-address-form-step-core
-  style justifi-legal-address-form-step-core fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-payment-provisioning-form-steps --> justifi-legal-address-form-step
+  style justifi-legal-address-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

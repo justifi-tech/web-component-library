@@ -1,5 +1,5 @@
 import { Component, h, Host, Prop } from '@stencil/core';
-import { formatDate, formatTimeSeconds, snakeCaseToHumanReadable } from '../../../../utils/utils';
+import { formatDate, formatTime, snakeCaseToHumanReadable } from '../../../../utils/utils';
 import { card, heading2, table, tableCell, tableHeadCell } from '../../../../styles/parts';
 import { Skeleton } from '../../../../ui-components';
 
@@ -43,7 +43,7 @@ export class BusinessDocumentsOnFile {
                           <td part={tableCell} >{document.file_name}</td>
                           <td part={tableCell} >{document.file_type}</td>
                           <td part={tableCell} >{snakeCaseToHumanReadable(document.document_type)}</td>
-                          <td part={tableCell} >{`${formatDate(document.created_at)} - ${formatTimeSeconds(document.created_at)}`}</td>
+                          <td part={tableCell} >{`${formatDate(document.created_at)} - ${formatTime(document.created_at)}`}</td>
                         </tr>
                       );
                     })}
