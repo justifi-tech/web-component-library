@@ -2,19 +2,1199 @@
 id: modular-checkout/complete-examples/index
 title: Modular Checkout Complete Examples
 sidebar_label: Complete Examples
-description: Storybook-driven layouts that demonstrate real-world checkout flows.
+description: Production-ready layout patterns that demonstrate real-world checkout flows.
 ---
 
-Reference these Storybook stories when you need production-ready layout
-patterns or want to hand designers a live sandbox.
+import {
+  UsageSnippet,
+  ModularCheckoutLayout1Example,
+  ModularCheckoutLayout2Example,
+  ModularCheckoutLayout3Example,
+} from '../../helpers';
 
-- [Layout 1](https://storybook.justifi.ai/?path=/docs/modular-checkout-complete-examples-layout-1--docs):
-  responsive two-column layout with summary pinned on desktop.
-- [Layout 2](https://storybook.justifi.ai/?path=/docs/modular-checkout-complete-examples-layout-2--docs):
-  hero-style payment rail picker plus collapsible summaries.
-- [Layout 3](https://storybook.justifi.ai/?path=/docs/modular-checkout-complete-examples-layout-3--docs):
-  condensed layout optimized for embedded partner portals.
+These complete examples demonstrate production-ready layout patterns for integrating the modular checkout component into your application. Each example includes both the rendered preview and the full code implementation.
+
+## Layout 1
+
+Responsive two-column layout with summary pinned on desktop.
+
+<ModularCheckoutLayout1Example />
+
+<UsageSnippet
+  title="Layout 1: Responsive two-column layout"
+  code={`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-modular-checkout</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.js"></script>
+  <style>
+    /* ExampleOne Styles */
+    .donation-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: sans-serif;
+      color: #333;
+    }
+
+    .donation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #666;
+    }
+
+    .payment-form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background-color: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-method-selection {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .payment-method-card {
+      flex: 1;
+      border: 2px solid #007bff;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .payment-method-card.dark {
+      background-color: #333;
+    }
+
+    .payment-method-card.dark .payment-method-text {
+      color: white;
+      font-weight: 600;
+    }
+
+    .payment-method-card.selected {
+      border: 2px solid #007bff;
+    }
+
+    .payment-method-card:not(.selected) {
+      border: 1px solid #e0e0e0;
+    }
+
+    .payment-method-text {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .card-form-container {
+      margin-bottom: 20px;
+    }
+
+    .bank-account-form-container {
+      margin-bottom: 20px;
+    }
+
+    .country-zip-container {
+      display: flex;
+      gap: 15px;
+    }
+
+    .country-field {
+      flex: 1;
+    }
+
+    .zip-field {
+      flex: 1;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.475rem 0.75rem;
+      padding-right: 2.5rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 1rem;
+      background-color: white;
+      color: #333;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      font-family: inherit;
+      line-height: 1.5;
+      outline: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1em;
+    }
+
+    .form-select::-ms-expand {
+      display: none;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 15px;
+      background-color: #28a745;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <justifi-modular-checkout
+    auth-token="authToken"
+    checkout-id="cho_123"
+  >
+    <div class="donation-container">
+      <div class="donation-header">
+        <span>Donation Total</span>
+        <span>$10.00</span>
+      </div>
+
+      <div class="payment-form-container">
+        <div class="payment-method-selection">
+          <div class="payment-method-card selected" data-payment-method="card">
+            <div class="payment-method-text">Card</div>
+          </div>
+          <div class="payment-method-card" data-payment-method="bank">
+            <div class="payment-method-text">Bank account</div>
+          </div>
+          <justifi-apple-pay></justifi-apple-pay>
+        </div>
+
+        <div class="card-form-container" data-form-type="card">
+          <justifi-card-form></justifi-card-form>
+        </div>
+
+        <div class="bank-account-form-container" data-form-type="bank" style="display: none;">
+          <justifi-bank-account-form></justifi-bank-account-form>
+        </div>
+
+        <div class="country-zip-container">
+          <div class="country-field">
+            <label class="form-label">Country</label>
+            <select class="form-select">
+              <option>United States</option>
+              <option>Canada</option>
+            </select>
+          </div>
+          <div class="zip-field">
+            <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-button">
+        <span>Donate Now</span>
+      </button>
+    </div>
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function() {
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
+    const submitButton = document.querySelector('.submit-button');
+    
+    const container = document.querySelector('.donation-container');
+    if (container) {
+      const paymentMethodCards = container.querySelectorAll('.payment-method-card');
+      const cardFormContainer = container.querySelector('[data-form-type="card"]');
+      const bankFormContainer = container.querySelector('[data-form-type="bank"]');
+      
+      paymentMethodCards.forEach((card) => {
+        card.addEventListener('click', () => {
+          const paymentMethod = card.getAttribute('data-payment-method');
+          
+          if (paymentMethod === 'apple') {
+            return;
+          }
+          
+          paymentMethodCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          
+          if (paymentMethod === 'card') {
+            cardFormContainer?.setAttribute('style', 'display: block;');
+            bankFormContainer?.setAttribute('style', 'display: none;');
+          } else if (paymentMethod === 'bank') {
+            cardFormContainer?.setAttribute('style', 'display: none;');
+            bankFormContainer?.setAttribute('style', 'display: block;');
+          }
+        });
+      });
+    }
+    
+    submitButton.addEventListener('click', async () => {
+      await modularCheckout.submitCheckout();
+    });
+
+    modularCheckout.addEventListener('submit-event', (event) => {
+      console.log('Checkout completed successfully!', event.detail);
+    });
+
+    modularCheckout.addEventListener('error-event', (event) => {
+      console.error('Checkout error:', event.detail);
+    });
+
+    modularCheckout.addEventListener('checkout-changed', (event) => {
+      console.log('Checkout changed:', event.detail);
+    });
+  })();
+</script>
+
+</html>`}
+  language="html"
+/>
+
+## Layout 2
+
+Hero-style payment rail picker plus collapsible summaries.
+
+<ModularCheckoutLayout2Example />
+
+<UsageSnippet
+  title="Layout 2: Hero-style payment rail picker"
+  code={`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-modular-checkout</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.js"></script>
+  <style>
+    .checkout-page {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    .checkout-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .checkout-brand {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .checkout-brand-primary {
+      color: #2d5a27;
+    }
+
+    .checkout-brand-secondary {
+      color: #4a7c59;
+    }
+
+    .checkout-nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .checkout-nav-link {
+      text-decoration: none;
+      color: #000000;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .checkout-cart-icon {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .checkout-cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #000000;
+      color: #ffffff;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .checkout-main {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      gap: 40px;
+    }
+
+    .checkout-left-column {
+      flex: 2;
+    }
+
+    .checkout-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #000000;
+    }
+
+    .checkout-divider {
+      margin: 30px 0;
+      border: none;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .checkout-section {
+      margin-bottom: 30px;
+    }
+
+    .checkout-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .checkout-section-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    .checkout-edit-link {
+      color: #2d5a27;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .checkout-shipping-info {
+      line-height: 1.6;
+      color: #000000;
+    }
+
+    .checkout-shipping-arrival {
+      font-weight: bold;
+    }
+
+    .checkout-or-divider {
+      text-align: center;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .checkout-or-line {
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      background-color: #e0e0e0;
+      width: 30%;
+    }
+
+    .checkout-or-line.left {
+      left: 15%;
+    }
+
+    .checkout-or-line.right {
+      right: 15%;
+    }
+
+    .checkout-or-text {
+      background-color: #ffffff;
+      padding: 0 15px;
+      color: #666666;
+      font-size: 14px;
+    }
+
+    .checkout-form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .checkout-submit-button {
+      width: 100%;
+      background-color: #2d5a27;
+      border: none;
+      padding: 15px;
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .checkout-terms {
+      font-size: 12px;
+      color: #666666;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .checkout-terms-link {
+      color: #2d5a27;
+      text-decoration: none;
+    }
+
+    .checkout-right-column {
+      flex: 1;
+    }
+
+    .checkout-cart-container {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 20px;
+      background-color: #ffffff;
+    }
+
+    .checkout-cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .checkout-cart-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    .checkout-summary {
+      margin-bottom: 20px;
+    }
+
+    .checkout-summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .checkout-summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      font-size: 16px;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    .checkout-items-section {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 15px;
+    }
+
+    .checkout-items-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: #666666;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .checkout-items-header-qty {
+      text-align: center;
+    }
+
+    .checkout-items-header-price {
+      text-align: right;
+    }
+
+    .checkout-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .checkout-item-name {
+      font-weight: 500;
+      color: #000000;
+    }
+
+    .checkout-item-description {
+      font-size: 12px;
+      color: #666666;
+      margin-top: 2px;
+    }
+
+    .checkout-item-qty {
+      text-align: center;
+      color: #000000;
+    }
+
+    .checkout-item-price {
+      text-align: right;
+      color: #000000;
+    }
+  </style>
+</head>
+
+<body>
+  <justifi-modular-checkout
+    auth-token="authToken"
+    checkout-id="cho_123"
+  >
+    <div class="checkout-page">
+      <div class="checkout-header">
+        <div class="checkout-brand">
+          <span class="checkout-brand-primary">JustiFi</span>
+          <span class="checkout-brand-secondary">BREW</span>
+        </div>
+        <div class="checkout-nav">
+          <a href="#" class="checkout-nav-link">SHOP</a>
+          <a href="#" class="checkout-nav-link">LEARN</a>
+          <div class="checkout-cart-icon">
+            🛒
+            <div class="checkout-cart-badge">1</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-main">
+        <div class="checkout-left-column">
+          <h1 class="checkout-title">Checkout</h1>
+          
+          <hr class="checkout-divider" />
+          
+          <div class="checkout-section">
+            <div class="checkout-section-header">
+              <h2 class="checkout-section-title">Shipping</h2>
+              <a href="#" class="checkout-edit-link">Edit</a>
+            </div>
+            <div class="checkout-shipping-info">
+              <div>John Doe</div>
+              <div>123 Main St, Anytown, USA</div>
+              <div>Standard Shipping: Free</div>
+              <div class="checkout-shipping-arrival">Arrive Thursday, October 31st</div>
+            </div>
+          </div>
+
+          <hr class="checkout-divider" />
+
+          <div class="checkout-section">
+            <h2 class="checkout-section-title">Payment Method</h2>
+            
+            <justifi-apple-pay></justifi-apple-pay>
+            
+            <div class="checkout-or-divider">
+              <div class="checkout-or-line left"></div>
+              <span class="checkout-or-text">or</span>
+              <div class="checkout-or-line right"></div>
+            </div>
+
+            <div class="checkout-form-container">
+              <justifi-card-form></justifi-card-form>
+              <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
+            </div>
+
+            <button class="checkout-submit-button" id="submit-button">
+              PLACE ORDER
+            </button>
+            
+            <div class="checkout-terms">
+              By clicking Place Order you agree to the <a href="#" class="checkout-terms-link">Terms & Conditions.</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-right-column">
+          <div class="checkout-cart-container">
+            <div class="checkout-cart-header">
+              <h2 class="checkout-cart-title">Shopping Cart</h2>
+              <a href="#" class="checkout-edit-link">Edit</a>
+            </div>
+            
+            <div class="checkout-summary">
+              <div class="checkout-summary-row">
+                <span>Subtotal</span>
+                <span>$38.00</span>
+              </div>
+              <div class="checkout-summary-row">
+                <span>Shipping Fee</span>
+                <span>Free</span>
+              </div>
+              <div class="checkout-summary-row">
+                <span>Tax</span>
+                <span>$4.00</span>
+              </div>
+              <div class="checkout-summary-total">
+                <span>Order Total</span>
+                <span>$42.00</span>
+              </div>
+            </div>
+            
+            <div class="checkout-items-section">
+              <div class="checkout-items-header">
+                <span>ITEM</span>
+                <span class="checkout-items-header-qty">QTY</span>
+                <span class="checkout-items-header-price">PRICE</span>
+              </div>
+              <div class="checkout-item">
+                <div>
+                  <div class="checkout-item-name">Drip Coffee Funnel</div>
+                  <div class="checkout-item-description">8 cups / 64 ounces</div>
+                </div>
+                <div class="checkout-item-qty">1</div>
+                <div class="checkout-item-price">$38.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function() {
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
+    const submitButton = document.querySelector('#submit-button');
+    
+    submitButton.addEventListener('click', async () => {
+      await modularCheckout.submitCheckout();
+    });
+
+    modularCheckout.addEventListener('submit-event', (event) => {
+      console.log('Checkout completed successfully!', event.detail);
+    });
+
+    modularCheckout.addEventListener('error-event', (event) => {
+      console.error('Checkout error:', event.detail);
+    });
+
+    modularCheckout.addEventListener('checkout-changed', (event) => {
+      console.log('Checkout changed:', event.detail);
+    });
+  })();
+</script>
+
+</html>`}
+  language="html"
+/>
+
+## Layout 3
+
+Condensed layout optimized for embedded partner portals.
+
+<ModularCheckoutLayout3Example />
+
+<UsageSnippet
+  title="Layout 3: Condensed layout for embedded portals"
+  code={`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-modular-checkout</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.js"></script>
+  <style>
+    .checkout-container * {
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .checkout-container {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    .checkout-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: white;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .checkout-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .checkout-back-arrow {
+      font-size: 20px;
+    }
+
+    .checkout-brand-name {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .checkout-main-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      gap: 40px;
+    }
+
+    .checkout-order-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      flex: 0 0 45%;
+      padding: 15px;
+    }
+
+    .checkout-pay-header {
+      margin-bottom: 30px;
+    }
+
+    .checkout-pay-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 10px 0;
+    }
+
+    .checkout-pay-amount {
+      font-size: 32px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .checkout-product-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .checkout-product-image {
+      width: 60px;
+      height: 80px;
+      background-color: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .checkout-product-details {
+      flex: 1;
+    }
+
+    .checkout-product-name {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .checkout-product-description {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .checkout-product-price {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .checkout-summary-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .checkout-summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .checkout-summary-row.tax {
+      align-items: center;
+    }
+
+    .checkout-tax-info {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .checkout-tax-icon {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .checkout-tax-placeholder {
+      color: #666;
+    }
+
+    .checkout-summary-row.total {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      padding-top: 10px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .checkout-footer {
+      margin-top: auto;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .checkout-powered-by {
+      margin-bottom: 10px;
+    }
+
+    .checkout-justifi-text {
+      font-weight: 600;
+    }
+
+    .checkout-footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .checkout-footer-link {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .checkout-form-field justifi-card-form {
+      margin-bottom: 15px;
+    }
+
+    .checkout-payment-form {
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 50%;
+      background-color: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .checkout-form-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 30px 0;
+    }
+
+    .checkout-form-field:not(:first-of-type) {
+      margin-bottom: 25px;
+    }
+
+    .checkout-form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .checkout-form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: white;
+    }
+
+    .checkout-form-select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: white;
+      color: #333;
+    }
+
+    .checkout-manual-link {
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .checkout-pay-button {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .checkout-pay-button:hover {
+      background-color: #0056b3;
+    }
+
+    .checkout-checkbox-container {
+      margin-bottom: 45px;
+    }
+
+    ::part(font-family) {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    ::part(color) {
+      color: #333;
+    }
+
+    ::part(background-color) {
+      background-color: white;
+    }
+
+    ::part(input) {
+      border-color: #e0e0e0;
+      border-width: 1px;
+      border-radius: 6px;
+      border-style: solid;
+      box-shadow: none;
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 1.5;
+      padding: 12px 15px;
+      background-color: white;
+    }
+
+    ::part(input-focused) {
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+    }
+
+    ::part(input-invalid) {
+      border-color: #dc3545;
+      box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+    }
+
+    ::part(label) {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    ::part(button) {
+      padding: 12px 15px;
+      font-size: 14px;
+      box-shadow: none;
+      border-radius: 6px;
+      line-height: 1.5;
+      text-transform: none;
+    }
+
+    ::part(button-primary) {
+      color: #ffffff;
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    ::part(button-primary):hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+  <justifi-modular-checkout
+    auth-token="authToken"
+    checkout-id="cho_123"
+  >
+    <div class="checkout-container">
+      <div class="checkout-header">
+        <div class="checkout-brand">
+          <span class="checkout-back-arrow">←</span>
+          <span class="checkout-brand-name">JustiFi Store</span>
+        </div>
+      </div>
+
+      <div class="checkout-main-container">
+        <div class="checkout-order-summary">
+          <div class="checkout-pay-header">
+            <h1 class="checkout-pay-title">Pay JustiFi Store</h1>
+            <div class="checkout-pay-amount">$39.99</div>
+          </div>
+
+          <div class="checkout-product-item">
+            <div class="checkout-product-image">📚</div>
+            <div class="checkout-product-details">
+              <div class="checkout-product-name">Fintech Deployhandbook Test</div>
+              <div class="checkout-product-description">How to deploy Fintech app...</div>
+            </div>
+            <div class="checkout-product-price">$39.99</div>
+          </div>
+
+          <div class="checkout-summary-breakdown">
+            <div class="checkout-summary-row">
+              <span>Subtotal</span>
+              <span>$39.99</span>
+            </div>
+            <div class="checkout-summary-row tax">
+              <div class="checkout-tax-info">
+                <span>Tax</span>
+                <span class="checkout-tax-icon">ⓘ</span>
+              </div>
+              <span class="checkout-tax-placeholder">Enter address to calculate</span>
+            </div>
+            <div class="checkout-summary-row total">
+              <span>Total due</span>
+              <span>$39.99</span>
+            </div>
+          </div>
+
+          <div class="checkout-footer">
+            <div class="checkout-powered-by">
+              Powered by <span class="checkout-justifi-text">JustiFi</span>
+            </div>
+            <div class="checkout-footer-links">
+              <a href="#" class="checkout-footer-link">Terms</a>
+              <a href="#" class="checkout-footer-link">Privacy</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-payment-form">
+          <h2 class="checkout-form-title">Pay with card</h2>
+
+          <div class="checkout-form-field">
+            <label class="checkout-form-label">Email</label>
+            <input type="email" placeholder="Enter your email" class="checkout-form-input" />
+          </div>
+
+          <div class="checkout-form-field">
+            <justifi-card-form></justifi-card-form>
+            <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
+          </div>
+
+          <div class="checkout-form-field">
+            <label class="checkout-form-label">Name on card</label>
+            <input type="text" placeholder="Enter cardholder name" class="checkout-form-input" />
+          </div>
+
+          <div class="checkout-form-field">
+            <label class="checkout-form-label">Billing address</label>
+            <div style="margin-bottom: 45px;">
+              <select class="checkout-form-select">
+                <option>United States</option>
+                <option>Canada</option>
+              </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+              <input type="text" placeholder="Address" class="checkout-form-input" />
+            </div>
+            <a href="#" class="checkout-manual-link">Enter address manually</a>
+          </div>
+
+          <div class="checkout-checkbox-container">
+            <justifi-save-new-payment-method label="Save this for next time"></justifi-save-new-payment-method>
+          </div>
+
+          <button class="checkout-pay-button" id="submit-button">
+            Pay
+          </button>
+        </div>
+      </div>
+    </div>
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function() {
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
+    const submitButton = document.querySelector('#submit-button');
+
+    modularCheckout.preCompleteHook = (state, resolve, reject) => {
+      resolve(state);
+    };
+
+    submitButton.addEventListener('click', async () => {
+      await modularCheckout.submitCheckout();
+    });
+
+    modularCheckout.addEventListener('submit-event', (event) => {
+      console.log('Checkout completed successfully!', event.detail);
+    });
+
+    modularCheckout.addEventListener('error-event', (event) => {
+      console.error('Checkout error:', event.detail);
+    });
+
+    modularCheckout.addEventListener('checkout-changed', (event) => {
+      console.log('Checkout changed:', event.detail);
+    });
+  })();
+</script>
+
+</html>`}
+  language="html"
+/>
 
 > These examples map 1:1 with production code, so you can inspect the DOM,
-> props, and CSS custom properties without digging through story sources.
-
+> props, and CSS custom properties directly in the documentation.

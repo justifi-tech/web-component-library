@@ -20,3 +20,6 @@ export { DisputeManagementExample } from './DisputeManagementExample';
 export { CheckoutExample } from './CheckoutExample';
 export { CheckoutsListExample } from './CheckoutsListExample';
 export { TerminalsListExample } from './TerminalsListExample';
+export { ModularCheckoutLayout1Example } from './ModularCheckoutLayout1Example';
+export { ModularCheckoutLayout2Example } from './ModularCheckoutLayout2Example';
+export { ModularCheckoutLayout3Example } from './ModularCheckoutLayout3Example';
