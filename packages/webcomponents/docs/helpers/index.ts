@@ -11,5 +11,8 @@ export { PaymentTransactionsListExample } from './PaymentTransactionsListExample
 export { PayoutsListExample } from './PayoutsListExample';
 export { PayoutDetailsExample } from './PayoutDetailsExample';
 export { PayoutTransactionsListExample } from './PayoutTransactionsListExample';
+export { GrossPaymentChartExample } from './GrossPaymentChartExample';
+export { OrderTerminalsExample } from './OrderTerminalsExample';
+export { TerminalOrdersListExample } from './TerminalOrdersListExample';
 export { CheckoutsListExample } from './CheckoutsListExample';
 export { TerminalsListExample } from './TerminalsListExample';
