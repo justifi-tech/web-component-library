@@ -173,15 +173,3 @@ This component exposes **no public methods or properties** and is not intended f
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Fallback flow"
-  code={`const saved = document.querySelector('justifi-saved-payment-methods');
-
-saved.addEventListener('selection-changed', ({ detail }) => {
-if (!detail.payment_method_token) saved.clearSelection();
-});`}
-language="js"
-/>

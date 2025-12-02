@@ -93,15 +93,3 @@ Component to render a formated list of terminals for the requested account.
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Open device detail"
-  code={`const terminals = document.querySelector('justifi-terminals-list');
-
-terminals.addEventListener('click-event', ({ detail }) => {
-router.push('/terminals/' + detail.terminal_id);
-});`}
-language="js"
-/>

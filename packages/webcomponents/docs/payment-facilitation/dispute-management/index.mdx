@@ -103,15 +103,3 @@ Component to render notification of disputed payments and allow platform to resp
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Listening for evidence uploads"
-  code={`const disputes = document.querySelector('justifi-dispute-management');
-
-disputes.addEventListener('evidence-uploaded', ({ detail }) => {
-toast.success('Uploaded ' + detail.file_name);
-});`}
-language="js"
-/>

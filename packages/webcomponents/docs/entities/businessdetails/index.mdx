@@ -6,7 +6,12 @@ description: Collect and review business profile information with inline validat
 sidebar_position: 10
 ---
 
-import { PropsTable, UsageSnippet, PartsTable, BusinessDetailsExample } from '../../helpers';
+import {
+  PropsTable,
+  UsageSnippet,
+  PartsTable,
+  BusinessDetailsExample,
+} from '../../helpers';
 
 ## Overview
 
@@ -25,8 +30,16 @@ Component to render detailed information about a business. You will need to firs
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
   <title>justifi-business-details</title>
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"></script>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"
+></script>
+
   <style>
       ::part(font-family) {
         font-family: georgia;   
@@ -40,13 +53,11 @@ Component to render detailed information about a business. You will need to firs
         background-color: transparent;
       }
     </style>
+
 </head>
 
 <body>
-  <justifi-business-details
-    business-id="biz_123"
-    auth-token="authToken"
-  />
+  <justifi-business-details business-id="biz_123" auth-token="authToken" />
 </body>
 
 <script>
@@ -59,6 +70,7 @@ Component to render detailed information about a business. You will need to firs
     });
   })();
 </script>
+
 </html>`}
   language="html"
 />
@@ -133,18 +145,4 @@ Component to render detailed information about a business. You will need to firs
       description: 'Controls the background color.',
     },
   ]}
-/>
-
-## Static examples
-
-<UsageSnippet
-  title="Read-only review mode"
-  description="Render the component in a confirmation screen without editing enabled."
-  code={`<justifi-business-details
-  account-id="acc_123"
-  auth-token="wct_readOnlyToken"
-  business-id="biz_456"
-  readonly
-/>`}
-  language="html"
 />

@@ -209,21 +209,3 @@ Component to render a formated list of season interruption insurance for the req
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Validate selection before submission"
-  code={`const insurance = document.querySelector('justifi-season-interruption-insurance');
-
-const { isValid } = await insurance.validate();
-
-if (!isValid) {
-// surface inline validation by leaving the radio group untouched
-return;
-}
-
-// continue to submit the checkout
-`}
-language="js"
-/>

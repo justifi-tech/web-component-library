@@ -109,17 +109,3 @@ Component to render a formated list of payments for the requested account.
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Reacting to row clicks"
-  code={`const list = document.querySelector('justifi-payments-list');
-
-list.addEventListener('click-event', (event) => {
-if (event.detail.name === 'row') {
-router.push('/payments/' + event.detail.payment_id);
-}
-});`}
-language="js"
-/>

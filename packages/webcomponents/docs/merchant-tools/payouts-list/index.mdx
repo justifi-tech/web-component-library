@@ -92,17 +92,3 @@ Component to render a formated list of payouts for the requested account.
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Navigate to payout details"
-  code={`const payouts = document.querySelector('justifi-payouts-list');
-
-payouts.addEventListener('click-event', (event) => {
-if (event.detail.name === 'row') {
-router.push('/payouts/' + event.detail.payout_id);
-}
-});`}
-language="js"
-/>

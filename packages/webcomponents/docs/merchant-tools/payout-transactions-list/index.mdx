@@ -89,15 +89,3 @@ Component to display a list of payout transactions for a specific payout.
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Open payment details"
-  code={`const payoutLedger = document.querySelector('justifi-payout-transactions-list');
-
-payoutLedger.addEventListener('click-event', ({ detail }) => {
-router.push('/payments/' + detail.transaction_id);
-});`}
-language="js"
-/>

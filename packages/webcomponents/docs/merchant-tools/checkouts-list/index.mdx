@@ -95,17 +95,3 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 />
 
 - Filters component emits custom events; ensure both components share the same container so spacing stays consistent.
-
-## Static examples
-
-<UsageSnippet
-  title="Listening for row clicks"
-  code={`const list = document.querySelector('justifi-checkouts-list');
-
-list.addEventListener('click-event', (event) => {
-if (event.detail.name === 'row') {
-router.navigate('/checkouts/' + event.detail.checkout_id);
-}
-});`}
-language="js"
-/>

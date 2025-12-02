@@ -83,16 +83,3 @@ Component to render chart displaying last 30 days of gross payment data.
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Toggle ranges"
-  code={`const chart = document.querySelector('justifi-gross-payment-chart');
-
-document.querySelector('#range').addEventListener('change', (event) => {
-chart.setAttribute('range', event.target.value);
-chart.refresh();
-});`}
-language="js"
-/>

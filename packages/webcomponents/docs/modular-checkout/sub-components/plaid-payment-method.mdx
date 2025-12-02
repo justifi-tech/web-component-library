@@ -171,15 +171,3 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Listening for success"
-  code={`const plaidRail = document.querySelector('justifi-plaid-payment-method');
-
-plaidRail.addEventListener('plaid-success', ({ detail }) => {
-console.log('Bank linked: ', detail.institution.name);
-});`}
-language="js"
-/>

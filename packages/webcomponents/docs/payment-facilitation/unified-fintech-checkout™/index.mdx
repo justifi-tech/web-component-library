@@ -155,16 +155,3 @@ import {
     },
   ]}
 />
-
-## Static examples
-
-<UsageSnippet
-  title="Listen for completion"
-  description="Trigger downstream logic when checkout completes."
-  code={`const checkout = document.querySelector('justifi-checkout');
-
-checkout.addEventListener('completed', (event) => {
-analytics.track('checkout_completed', event.detail);
-});`}
-language="js"
-/>
