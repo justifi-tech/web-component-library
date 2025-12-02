@@ -5,7 +5,12 @@ description: Transaction-level ledger for payments, grouped by status and fundin
 sidebar_position: 32
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import {
+  PropsTable,
+  UsageSnippet,
+  PartsTable,
+  PaymentTransactionsListExample,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -17,22 +22,25 @@ Component to display a list of payment transactions for a specific payment.
   title="Transaction history"
   description="Filter by payment or customer when embedding the ledger."
   code={`<justifi-payment-transactions-list
-  account-id="acc_123"
+  payment-id="py_1A2B3C4D5E6F7G8H9I0J"
   auth-token="wct_reporting"
-  filters='{"payment_id":"pay_456"}'
 />`}
   language="html"
 />
+
+## Live Example
+
+<PaymentTransactionsListExample />
 
 ## Props, Events & Methods
 
 <PropsTable
   rows={[
     {
-      name: 'account-id',
+      name: 'payment-id',
       type: 'string',
       required: true,
-      description: 'Determines which transactions a user can view.',
+      description: 'The payment ID to fetch transactions for.',
     },
     {
       name: 'auth-token',
@@ -41,28 +49,21 @@ Component to display a list of payment transactions for a specific payment.
       description: 'Token with `read:payments` scope.',
     },
     {
-      name: 'filters',
-      type: 'string | Record<string, unknown>',
-      description:
-        'JSON string or object specifying filter criteria (payment_id, status, date range).',
-    },
-    {
-      name: 'enable-export',
-      type: 'boolean',
-      defaultValue: 'false',
-      description: 'Adds export controls when true.',
+      name: 'columns',
+      type: 'string',
+      description: 'Comma-separated list of column keys to display.',
     },
   ]}
 />
 
 ### Events
 
-- `filter-changed`: emits whenever the internal filter UI updates.
-- `error-event`: surfaces API or token failures.
+- `click-event`: Fires when a transaction row is clicked.
+- `error-event`: Surfaces API or token failures.
 
 ### Public methods
 
-1. `refresh()` – Re-run the ledger query.
+None.
 
 ## Theming & Layout
 
@@ -86,11 +87,11 @@ Component to display a list of payment transactions for a specific payment.
 ## Static examples
 
 <UsageSnippet
-  title="Listening for filter changes"
-  code={`const ledger = document.querySelector('justifi-payment-transactions-list');
+  title="Listening for click events"
+  code={`const transactionsList = document.querySelector('justifi-payment-transactions-list');
 
-ledger.addEventListener('filter-changed', (event) => {
-console.log('Filters now', event.detail);
+transactionsList.addEventListener('click-event', (event) => {
+console.log('Transaction clicked', event.detail);
 });`}
 language="js"
 />

@@ -6,7 +6,12 @@ description: Guided workflow for collecting representative, ownership, and compl
 sidebar_position: 11
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import {
+  PropsTable,
+  UsageSnippet,
+  PartsTable,
+  BusinessFormExample,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -25,8 +30,16 @@ Component to render a business onboarding form. You will need to first create a 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
   <title>justifi-business-form</title>
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"></script>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"
+></script>
+
   <style>
       ::part(font-family) {
         font-family: georgia;   
@@ -100,13 +113,11 @@ Component to render a business onboarding form. You will need to first create a 
         color: #fff;
       }
     </style>
+
 </head>
 
 <body>
-  <justifi-business-form
-    business-id="biz_123"
-    auth-token="authToken"
-  />
+  <justifi-business-form business-id="biz_123" auth-token="authToken" />
 </body>
 
 <script>
@@ -133,6 +144,10 @@ Component to render a business onboarding form. You will need to first create a 
 </html>`}
   language="html"
 />
+
+## Live Example
+
+<BusinessFormExample />
 
 ## Props, Events & Methods
 
