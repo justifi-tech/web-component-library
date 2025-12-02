@@ -13,6 +13,7 @@ interface ComponentExampleProps {
     response: any;
   }>;
   componentProps?: Record<string, string | boolean>;
+  styles?: string;
   children?: React.ReactNode;
 }
 
@@ -23,6 +24,7 @@ export const ComponentExample: React.FC<ComponentExampleProps> = ({
   mockData,
   mockEndpoints,
   componentProps = {},
+  styles,
   children,
 }) => {
   const [scriptLoaded, setScriptLoaded] = useState(globalScriptState[scriptUrl]?.loaded || false);
@@ -37,7 +39,7 @@ export const ComponentExample: React.FC<ComponentExampleProps> = ({
     // Create mock fetch
     const mockFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
       const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
-      
+
       // Check if this is an API call we should mock
       for (const endpoint of mockEndpoints) {
         if (endpoint.pattern.test(url)) {
@@ -80,13 +82,13 @@ export const ComponentExample: React.FC<ComponentExampleProps> = ({
       script.type = 'module';
       script.src = scriptUrl;
       script.async = true;
-      
+
       script.onload = () => {
         scriptState.loaded = true;
         scriptState.loading = false;
         setScriptLoaded(true);
       };
-      
+
       script.onerror = () => {
         const error = `Failed to load script: ${scriptUrl}`;
         scriptState.error = error;
@@ -125,10 +127,17 @@ export const ComponentExample: React.FC<ComponentExampleProps> = ({
     if (scriptLoaded && containerRef.current) {
       // Clear container
       containerRef.current.innerHTML = '';
-      
+
+      // Inject styles if provided
+      if (styles) {
+        const styleElement = document.createElement('style');
+        styleElement.textContent = styles;
+        containerRef.current.appendChild(styleElement);
+      }
+
       // Create web component element
       const element = document.createElement(componentTag);
-      
+
       // Set props
       Object.entries(componentProps).forEach(([key, value]) => {
         if (typeof value === 'boolean') {
@@ -140,9 +149,13 @@ export const ComponentExample: React.FC<ComponentExampleProps> = ({
         }
       });
 
-      containerRef.current.appendChild(element);
+      // wrap the element in a div with the class component-example-children
+      const wrapper = document.createElement('div');
+      wrapper.className = 'component-example-children';
+      wrapper.appendChild(element);
+      containerRef.current.appendChild(wrapper);
     }
-  }, [scriptLoaded, componentTag, componentProps]);
+  }, [scriptLoaded, componentTag, componentProps, styles]);
 
   if (scriptError) {
     return (

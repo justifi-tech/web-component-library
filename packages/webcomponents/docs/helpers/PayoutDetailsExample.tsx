@@ -23,6 +23,11 @@ export const PayoutDetailsExample: React.FC = () => {
         'auth-token': 'mock-token',
         'account-id': 'acc_5Et9iXrSSAZR2KSouQGAWi',
       }}
+      styles={`
+        .component-example-children {
+          background-color: white;
+        }
+      `}
     />
   );
 };

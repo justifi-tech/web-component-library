@@ -23,6 +23,11 @@ export const BusinessDetailsExample: React.FC = () => {
         'auth-token': 'mock-token',
         'account-id': 'acc_xyz',
       }}
+      styles={`
+        .component-example-children {
+          background-color: white;
+        }
+      `}
     />
   );
 };
