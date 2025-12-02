@@ -24,22 +24,38 @@ export class GooglePayService implements IGooglePayService {
    * Initialize Google Pay configuration
    */
   public initialize(googlePayConfig: IGooglePayConfig): void {
+    console.log('[GooglePayService] initialize: Starting initialization', {
+      config: googlePayConfig,
+    });
+
     this.googlePayConfig = new GooglePayConfig(googlePayConfig);
+    console.log('[GooglePayService] initialize: Config object created', {
+      isValid: this.googlePayConfig.isValid,
+      environment: this.googlePayConfig.environment,
+      merchantId: this.googlePayConfig.merchantId,
+    });
 
     if (!this.googlePayConfig.isValid) {
+      console.error('[GooglePayService] initialize: Invalid configuration');
       throw new Error('Invalid Google Pay configuration provided');
     }
 
     // Create Google Pay client
+    console.log('[GooglePayService] initialize: Creating Google Pay client', {
+      environment: this.googlePayConfig.environment,
+    });
     this.googlePayClient = GooglePayHelpers.createGooglePayClient(
       this.googlePayConfig.environment
     );
 
     if (!this.googlePayClient) {
+      console.error('[GooglePayService] initialize: Failed to create client');
       throw new Error('Failed to create Google Pay client');
     }
 
-    // No debug logs
+    console.log('[GooglePayService] initialize: Client created successfully', {
+      hasClient: !!this.googlePayClient,
+    });
   }
 
   /**
@@ -51,6 +67,12 @@ export class GooglePayService implements IGooglePayService {
     payload: IGooglePayTokenProcessRequest
   ): Promise<{ success: boolean; data: IGooglePayTokenResponse }> {
     const endpoint = PROCESS_TOKEN_ENDPOINT;
+    console.log('[GooglePayService] processPayment: Starting', {
+      endpoint,
+      hasAuthToken: !!authToken,
+      accountId,
+      payload,
+    });
 
     try {
       const result: IGooglePayTokenResponse = await this.api.post({
@@ -62,11 +84,21 @@ export class GooglePayService implements IGooglePayService {
         },
       });
 
+      console.log('[GooglePayService] processPayment: API response received', {
+        hasId: !!result.id,
+        hasToken: !!result.data?.token,
+        result,
+      });
+
+      const success = result.id && !!result.data.token;
+      console.log('[GooglePayService] processPayment: Result', { success });
+
       return {
-        success: result.id && !!result.data.token,
+        success,
         data: result,
       };
-    } catch (_error) {
+    } catch (error) {
+      console.error('[GooglePayService] processPayment: API error', error);
       throw new Error('Google Pay payment processing failed');
     }
   }
@@ -75,23 +107,47 @@ export class GooglePayService implements IGooglePayService {
    * Check if Google Pay is available on this device/browser
    */
   public isAvailable(): boolean {
-    return GooglePayHelpers.isGooglePaySupported() && !!this.googlePayClient;
+    const isSupported = GooglePayHelpers.isGooglePaySupported();
+    const hasClient = !!this.googlePayClient;
+    const result = isSupported && hasClient;
+    console.log('[GooglePayService] isAvailable:', {
+      isSupported,
+      hasClient,
+      result,
+    });
+    return result;
   }
 
   /**
    * Check if the user can make payments with Google Pay
    */
   public async canMakePayments(): Promise<boolean> {
+    console.log('[GooglePayService] canMakePayments: Checking', {
+      hasClient: !!this.googlePayClient,
+      hasConfig: !!this.googlePayConfig,
+    });
+
     if (!this.googlePayClient || !this.googlePayConfig) {
+      console.warn(
+        '[GooglePayService] canMakePayments: Missing client or config'
+      );
       return false;
     }
 
     try {
       const baseRequest = GooglePayHelpers.createBasePaymentDataRequest();
+      console.log('[GooglePayService] canMakePayments: Calling isReadyToPay', {
+        baseRequest,
+      });
       const response = await this.googlePayClient.isReadyToPay(baseRequest);
+      console.log('[GooglePayService] canMakePayments: Response received', {
+        result: response.result,
+        response,
+      });
 
       return response.result;
-    } catch (_error) {
+    } catch (error) {
+      console.error('[GooglePayService] canMakePayments: Error', error);
       return false;
     }
   }
@@ -109,34 +165,79 @@ export class GooglePayService implements IGooglePayService {
     paymentMethodId?: string;
     error?: IGooglePayError;
   }> {
+    console.log('[GooglePayService] startPaymentSession: Starting', {
+      hasConfig: !!this.googlePayConfig,
+      hasClient: !!this.googlePayClient,
+      hasAuthToken: !!authToken,
+      accountId,
+      paymentDataRequest,
+    });
+
     if (!this.googlePayConfig || !this.googlePayClient) {
+      console.error('[GooglePayService] startPaymentSession: Not initialized');
       throw new Error('Google Pay not initialized. Call initialize() first.');
     }
 
     if (!this.isAvailable()) {
+      console.error('[GooglePayService] startPaymentSession: Not available');
       throw new Error('Google Pay is not available on this device/browser');
     }
 
     const request = new GooglePayPaymentDataRequest(paymentDataRequest);
+    console.log(
+      '[GooglePayService] startPaymentSession: Request object created',
+      {
+        isValid: request.isValid,
+        request,
+      }
+    );
 
     if (!request.isValid) {
+      console.error('[GooglePayService] startPaymentSession: Invalid request');
       throw new Error('Invalid payment data request provided');
     }
 
     try {
+      console.log(
+        '[GooglePayService] startPaymentSession: Loading payment data...'
+      );
       const paymentData = await this.googlePayClient.loadPaymentData(request);
+      console.log(
+        '[GooglePayService] startPaymentSession: Payment data loaded',
+        {
+          hasPaymentData: !!paymentData,
+          paymentMethodData: paymentData?.paymentMethodData,
+        }
+      );
 
       // Build top-level snake_case fields from Google Pay tokenizationData
       const tokenizationData = (paymentData as any)?.paymentMethodData
         ?.tokenizationData;
+      console.log(
+        '[GooglePayService] startPaymentSession: Extracted tokenization data',
+        {
+          hasTokenizationData: !!tokenizationData,
+          tokenizationData,
+        }
+      );
+
       const tokenObj = ((): any => {
         if (
           tokenizationData?.token &&
           typeof tokenizationData.token === 'string'
         ) {
           try {
-            return JSON.parse(tokenizationData.token);
+            const parsed = JSON.parse(tokenizationData.token);
+            console.log(
+              '[GooglePayService] startPaymentSession: Parsed token',
+              parsed
+            );
+            return parsed;
           } catch (_e) {
+            console.warn(
+              '[GooglePayService] startPaymentSession: Failed to parse token, using raw',
+              _e
+            );
             return tokenizationData;
           }
         }
@@ -154,20 +255,46 @@ export class GooglePayService implements IGooglePayService {
           : undefined,
         signedMessage: tokenObj?.signedMessage,
       };
+      console.log(
+        '[GooglePayService] startPaymentSession: Token process request created',
+        {
+          hasProtocolVersion: !!tokenProcessRequest.protocolVersion,
+          hasSignature: !!tokenProcessRequest.signature,
+          hasSignedMessage: !!tokenProcessRequest.signedMessage,
+          hasIntermediateSigningKey:
+            !!tokenProcessRequest.intermediateSigningKey,
+        }
+      );
 
+      console.log(
+        '[GooglePayService] startPaymentSession: Processing payment...'
+      );
       const paymentResult = await this.processPayment(
         authToken,
         accountId,
         tokenProcessRequest
       );
+      console.log(
+        '[GooglePayService] startPaymentSession: Payment processed',
+        paymentResult
+      );
 
       if (paymentResult.success) {
+        console.log(
+          '[GooglePayService] startPaymentSession: Payment successful',
+          {
+            paymentMethodId: paymentResult.data.id,
+          }
+        );
         return {
           success: true,
           paymentData: paymentData,
           paymentMethodId: paymentResult.data.id,
         };
       } else {
+        console.error(
+          '[GooglePayService] startPaymentSession: Payment processing failed'
+        );
         return {
           success: false,
           error: {
@@ -177,11 +304,25 @@ export class GooglePayService implements IGooglePayService {
         };
       }
     } catch (error) {
+      console.error(
+        '[GooglePayService] startPaymentSession: Exception caught',
+        error
+      );
       // Handle different types of errors
       if (error && typeof error === 'object' && 'statusCode' in error) {
         const googlePayError = error as any;
+        console.log(
+          '[GooglePayService] startPaymentSession: Google Pay error',
+          {
+            statusCode: googlePayError.statusCode,
+            statusMessage: googlePayError.statusMessage,
+          }
+        );
         switch (googlePayError.statusCode) {
           case 'CANCELED':
+            console.log(
+              '[GooglePayService] startPaymentSession: User cancelled'
+            );
             return {
               success: false,
               error: {
@@ -190,6 +331,9 @@ export class GooglePayService implements IGooglePayService {
               },
             };
           case 'DEVELOPER_ERROR':
+            console.error(
+              '[GooglePayService] startPaymentSession: Developer error'
+            );
             return {
               success: false,
               error: {
@@ -198,6 +342,12 @@ export class GooglePayService implements IGooglePayService {
               },
             };
           default:
+            console.error(
+              '[GooglePayService] startPaymentSession: Unknown error',
+              {
+                statusCode: googlePayError.statusCode,
+              }
+            );
             return {
               success: false,
               error: {
@@ -209,6 +359,10 @@ export class GooglePayService implements IGooglePayService {
         }
       }
 
+      console.error(
+        '[GooglePayService] startPaymentSession: Generic error',
+        error
+      );
       return {
         success: false,
         error: {
@@ -255,19 +409,37 @@ export class GooglePayService implements IGooglePayService {
   public prefetchPaymentData(
     paymentDataRequest: IGooglePayPaymentDataRequest
   ): void {
+    console.log('[GooglePayService] prefetchPaymentData: Starting', {
+      hasClient: !!this.googlePayClient,
+      paymentDataRequest,
+    });
+
     if (!this.googlePayClient) {
+      console.warn(
+        '[GooglePayService] prefetchPaymentData: No client available'
+      );
       return;
     }
 
     const request = new GooglePayPaymentDataRequest(paymentDataRequest);
+    console.log('[GooglePayService] prefetchPaymentData: Request created', {
+      isValid: request.isValid,
+    });
 
     if (!request.isValid) {
+      console.warn('[GooglePayService] prefetchPaymentData: Invalid request');
       return;
     }
 
     try {
+      console.log(
+        '[GooglePayService] prefetchPaymentData: Calling prefetchPaymentData'
+      );
       this.googlePayClient.prefetchPaymentData(request);
-    } catch (_error) {}
+      console.log('[GooglePayService] prefetchPaymentData: Prefetch complete');
+    } catch (error) {
+      console.error('[GooglePayService] prefetchPaymentData: Error', error);
+    }
   }
 
   /**
@@ -278,8 +450,20 @@ export class GooglePayService implements IGooglePayService {
     label: string,
     countryCode: string = 'US',
     currencyCode: string = 'USD',
-    merchantName: string
+    merchantName: string,
+    merchantId: string
   ): IGooglePayPaymentDataRequest {
+    console.log(
+      '[GooglePayService] createPaymentDataRequest: Creating request',
+      {
+        amount,
+        label,
+        countryCode,
+        currencyCode,
+        merchantName,
+      }
+    );
+
     const request: IGooglePayPaymentDataRequest = {
       apiVersion: 2,
       apiVersionMinor: 0,
@@ -292,11 +476,21 @@ export class GooglePayService implements IGooglePayService {
         totalPriceLabel: label,
       },
       merchantInfo: {
+        merchantId,
         merchantName,
       },
     };
 
-    // No debug logs
+    console.log(
+      '[GooglePayService] createPaymentDataRequest: Request created',
+      {
+        apiVersion: request.apiVersion,
+        apiVersionMinor: request.apiVersionMinor,
+        transactionInfo: request.transactionInfo,
+        merchantInfo: request.merchantInfo,
+        allowedPaymentMethodsCount: request.allowedPaymentMethods?.length,
+      }
+    );
 
     return request;
   }

@@ -281,12 +281,21 @@ export class GooglePayHelpers {
    * Check if Google Pay is supported in the current environment
    */
   static isGooglePaySupported(): boolean {
-    return (
-      typeof window !== 'undefined' &&
-      'google' in window &&
-      'payments' in (window as any).google &&
-      'api' in (window as any).google.payments
-    );
+    const hasWindow = typeof window !== 'undefined';
+    const hasGoogle = hasWindow && 'google' in window;
+    const hasPayments = hasGoogle && 'payments' in (window as any).google;
+    const hasApi = hasPayments && 'api' in (window as any).google.payments;
+    const result = hasWindow && hasGoogle && hasPayments && hasApi;
+    
+    console.log('[GooglePayHelpers] isGooglePaySupported:', {
+      hasWindow,
+      hasGoogle,
+      hasPayments,
+      hasApi,
+      result,
+    });
+    
+    return result;
   }
 
   /**
@@ -295,18 +304,34 @@ export class GooglePayHelpers {
   static createGooglePayClient(
     environment: GooglePayEnvironment
   ): IGooglePayClient | null {
+    console.log('[GooglePayHelpers] createGooglePayClient: Starting', {
+      environment,
+    });
+
     if (!this.isGooglePaySupported()) {
+      console.warn('[GooglePayHelpers] createGooglePayClient: Google Pay not supported');
       return null;
     }
 
     try {
-      return new (window as any).google.payments.api.PaymentsClient({
-        environment:
-          environment === GooglePayEnvironment.PRODUCTION
-            ? 'PRODUCTION'
-            : 'TEST',
+      const envString = environment === GooglePayEnvironment.PRODUCTION
+        ? 'PRODUCTION'
+        : 'TEST';
+      console.log('[GooglePayHelpers] createGooglePayClient: Creating PaymentsClient', {
+        environment: envString,
       });
-    } catch (_error) {
+      
+      const client = new (window as any).google.payments.api.PaymentsClient({
+        environment: envString,
+      });
+      
+      console.log('[GooglePayHelpers] createGooglePayClient: Client created successfully', {
+        hasClient: !!client,
+      });
+      
+      return client;
+    } catch (error) {
+      console.error('[GooglePayHelpers] createGooglePayClient: Error creating client', error);
       return null;
     }
   }
@@ -397,11 +422,19 @@ export class GooglePayHelpers {
     apiVersionMinor: number;
     allowedPaymentMethods: IGooglePayPaymentMethodData[];
   } {
+    console.log('[GooglePayHelpers] createBasePaymentDataRequest: Creating base request', {
+      accountId: checkoutStore.accountId,
+    });
     const base: any = {
       apiVersion: 2,
       apiVersionMinor: 0,
       allowedPaymentMethods: [this.createPaymentMethodData()],
     };
+    console.log('[GooglePayHelpers] createBasePaymentDataRequest: Base request created', {
+      apiVersion: base.apiVersion,
+      apiVersionMinor: base.apiVersionMinor,
+      allowedPaymentMethodsCount: base.allowedPaymentMethods?.length,
+    });
 
     // For development and broader availability of the button, do not require an existing card
     // This allows isReadyToPay to return true on supported browsers even without a saved payment method
