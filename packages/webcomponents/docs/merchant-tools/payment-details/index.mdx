@@ -5,7 +5,7 @@ description: Detailed view for a single payment, including customer data, timeli
 sidebar_position: 30
 ---
 
-import { PropsTable, UsageSnippet, PartsTable, PaymentDetailsExample } from '../../helpers';
+import { PropsTable, PartsTable, PaymentDetailsExample } from '../../helpers';
 
 ## Overview
 
@@ -13,10 +13,12 @@ Component to display detailed information about a specific payment.
 
 ## Usage
 
-<UsageSnippet
-  title="Payment drill-down"
-  description="Load by passing the payment identifier and the account context."
-  code={`<!DOCTYPE html>
+### Payment drill-down
+
+Load by passing the payment identifier and the account context.
+
+```html
+<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -59,9 +61,8 @@ Component to display detailed information about a specific payment.
   })();
 </script>
 
-</html>`}
-  language="html"
-/>
+</html>
+```
 
 ## Live Example
 

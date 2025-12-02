@@ -6,12 +6,7 @@ description: Collect and review business profile information with inline validat
 sidebar_position: 10
 ---
 
-import {
-  PropsTable,
-  UsageSnippet,
-  PartsTable,
-  BusinessDetailsExample,
-} from '../../helpers';
+import { PropsTable, PartsTable, BusinessDetailsExample } from '../../helpers';
 
 ## Overview
 
@@ -19,32 +14,36 @@ Component to render detailed information about a business. You will need to firs
 
 ## Usage
 
-<UsageSnippet
-  title="Business intake step"
-  description="Pass the account context plus the business you want to edit."
-  code={`<!DOCTYPE html>
+### Business intake step
+
+Pass the account context plus the business you want to edit.
+
+```html
+<!DOCTYPE html>
 <html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>justifi-business-details</title>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-  <title>justifi-business-details</title>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"
+    ></script>
 
-<script
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.esm.js"
-></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"
+    ></script>
 
-<script
-  nomodule
-  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@6.5.0/dist/webcomponents/webcomponents.js"
-></script>
-
-  <style>
+    <style>
       ::part(font-family) {
-        font-family: georgia;   
+        font-family: georgia;
       }
-        
+
       ::part(color) {
         color: darkslategray;
       }
@@ -53,27 +52,26 @@ Component to render detailed information about a business. You will need to firs
         background-color: transparent;
       }
     </style>
+  </head>
 
-</head>
+  <body>
+    <justifi-business-details business-id="biz_123" auth-token="authToken" />
+  </body>
 
-<body>
-  <justifi-business-details business-id="biz_123" auth-token="authToken" />
-</body>
+  <script>
+    (function () {
+      const businessDetails = document.querySelector(
+        'justifi-business-details'
+      );
 
-<script>
-  (function () {
-    const businessDetails = document.querySelector('justifi-business-details');
-
-    businessDetails.addEventListener('error-event', (event) => {
-      // here is where you would handle the error
-      console.error('error-event', event.detail);
-    });
-  })();
-</script>
-
-</html>`}
-  language="html"
-/>
+      businessDetails.addEventListener('error-event', (event) => {
+        // here is where you would handle the error
+        console.error('error-event', event.detail);
+      });
+    })();
+  </script>
+</html>
+```
 
 ## Live Example
 

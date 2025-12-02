@@ -5,7 +5,7 @@ description: Plaid-powered ACH rail for Modular Checkout with hosted Link flow.
 sidebar_position: 23
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -19,9 +19,10 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 
 ## Usage
 
-<UsageSnippet
-  title="Enable Plaid inside Modular Checkout"
-  code={`<!DOCTYPE html>
+### Enable Plaid inside Modular Checkout
+
+```html
+<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -89,9 +90,8 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
     });
   })();
 </script>
-</html>`}
-  language="html"
-/>
+</html>
+```
 
 ## Props, Events & Methods
 

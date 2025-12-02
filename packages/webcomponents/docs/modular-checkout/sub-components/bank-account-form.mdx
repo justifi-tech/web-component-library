@@ -5,7 +5,7 @@ description: Bank account rail for Modular Checkout that tokenizes ACH details w
 sidebar_position: 28
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -21,10 +21,12 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Usage
 
-<UsageSnippet
-  title="Bank rail inside Modular Checkout"
-  description="Drop the component into the `payment-methods` slot."
-  code={`<!DOCTYPE html>
+### Bank rail inside Modular Checkout
+
+Drop the component into the `payment-methods` slot.
+
+```html
+<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -92,9 +94,8 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
-</html>`}
-  language="html"
-/>
+</html>
+```
 
 ## Props, Events & Methods
 

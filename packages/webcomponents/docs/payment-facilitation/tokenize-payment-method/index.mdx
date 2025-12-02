@@ -7,7 +7,6 @@ sidebar_position: 1
 
 import {
   PropsTable,
-  UsageSnippet,
   PartsTable,
   TokenizePaymentMethodExample,
 } from '@justifi/webcomponents/docs/helpers';
@@ -18,10 +17,12 @@ Component to render an entire form including a switch to use a credit card or ba
 
 ## Usage
 
-<UsageSnippet
-  title="Standalone card tokenization"
-  description="Drop-in usage when you want the component to render its own submit button."
-  code={`<!DOCTYPE html>
+### Standalone card tokenization
+
+Drop-in usage when you want the component to render its own submit button.
+
+```html
+<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -203,9 +204,8 @@ Component to render an entire form including a switch to use a credit card or ba
 
   </script>
 
-</html>`}
-  language="html"
-/>
+</html>
+```
 
 ### Modular checkout orchestration
 

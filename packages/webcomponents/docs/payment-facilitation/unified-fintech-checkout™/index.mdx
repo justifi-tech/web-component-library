@@ -7,7 +7,6 @@ sidebar_position: 20
 
 import {
   PropsTable,
-  UsageSnippet,
   PartsTable,
   CheckoutExample,
 } from '@justifi/webcomponents/docs/helpers';
@@ -18,17 +17,18 @@ import {
 
 ## Usage
 
-<UsageSnippet
-  title="One-line checkout"
-  description="Pass identifiers for the checkout session plus your auth context."
-  code={`<justifi-checkout
+### One-line checkout
+
+Pass identifiers for the checkout session plus your auth context.
+
+```html
+<justifi-checkout
   account-id="acc_123"
   auth-token="wct_checkout"
   checkout-id="chk_456"
   locale="en-US"
-/>`}
-  language="html"
 />
+```
 
 ## Live Example
 
