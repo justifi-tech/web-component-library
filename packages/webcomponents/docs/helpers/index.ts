@@ -1,12 +1,4 @@
 export { PropsTable } from './PropsTable';
 export { UsageSnippet } from './UsageSnippet';
 export { PartsTable } from './PartsTable';
-export { ComponentExample } from './ComponentExample';
-export { BusinessDetailsExample } from './BusinessDetailsExample';
-export { PaymentDetailsExample } from './PaymentDetailsExample';
-export { PaymentsListExample } from './PaymentsListExample';
-export { PayoutsListExample } from './PayoutsListExample';
-export { PayoutDetailsExample } from './PayoutDetailsExample';
-export { CheckoutsListExample } from './CheckoutsListExample';
-export { TerminalsListExample } from './TerminalsListExample';
 export { getWebcomponentsVersion } from './version';
