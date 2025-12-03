@@ -25,33 +25,35 @@ Component to display detailed information about a specific payout.
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Scope the payout to a platform or merchant.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `read:payouts` scope.',
-    },
-    {
-      name: 'payout-id',
-      type: 'string',
-      required: true,
-      description: 'Identifier for the payout you want to view.',
-    },
-    {
-      name: 'show-ledger',
-      type: 'boolean',
-      defaultValue: 'true',
-      description: 'Hide the ledger table when you only need summary data.',
-    },
-  ]}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Scope the payout to a platform or merchant.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payouts` scope.',
+      },
+      {
+        name: 'payout-id',
+        type: 'string',
+        required: true,
+        description: 'Identifier for the payout you want to view.',
+      },
+      {
+        name: 'show-ledger',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Hide the ledger table when you only need summary data.',
+      },
+    ]),
+  }}
 />
 
 ### Events
@@ -64,21 +66,23 @@ Component to display detailed information about a specific payout.
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-  ]}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+    ]),
+  }}
 />
 
 ## Static examples

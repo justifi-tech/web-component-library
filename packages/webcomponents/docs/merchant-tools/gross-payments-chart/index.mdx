@@ -26,8 +26,7 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -52,8 +51,7 @@ Component to render chart displaying last 30 days of gross payment data.
       defaultValue: '30d',
       description: 'Total timeframe (e.g., `7d`, `3m`, `12m`).',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -65,15 +63,13 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     { name: 'chart', description: 'SVG/Canvas container for the line chart.' },
     {
       name: 'tooltip',
       description: 'Floating tooltip bubble when hovering/focusing a point.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

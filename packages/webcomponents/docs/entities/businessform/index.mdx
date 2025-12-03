@@ -137,8 +137,7 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -169,8 +168,7 @@ Component to render a business onboarding form. You will need to first create a 
       type: 'string',
       description: 'Optional phone number displayed inside support callouts.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -185,8 +183,7 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -231,8 +228,7 @@ Component to render a business onboarding form. You will need to first create a 
       name: 'tooltip-inner',
       description: 'Tooltip inner content styles.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

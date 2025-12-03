@@ -101,27 +101,29 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
-    {
-      name: 'merchant-id',
-      type: 'string',
-      required: true,
-      description:
-        'Sezzle merchant identifier configured in your JustiFi account.',
-    },
-    {
-      name: 'terms-url',
-      type: 'string',
-      description: 'Overrides the default Sezzle terms link.',
-    },
-    {
-      name: 'locale',
-      type: 'string',
-      defaultValue: 'en-US',
-      description: 'Controls copy for disclosures.',
-    },
-  ]}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'merchant-id',
+        type: 'string',
+        required: true,
+        description:
+          'Sezzle merchant identifier configured in your JustiFi account.',
+      },
+      {
+        name: 'terms-url',
+        type: 'string',
+        description: 'Overrides the default Sezzle terms link.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description: 'Controls copy for disclosures.',
+      },
+    ]),
+  }}
 />
 
 ### Events
@@ -138,41 +140,43 @@ This component exposes **no public methods or properties** and is not intended f
 
 - Respect Sezzle's branding by keeping the provided colors and logos intact.
 
-<PartsTable
-  parts={[
-    {
-      name: 'text',
-      description: 'Text styles.',
-    },
-    {
-      name: 'text-danger',
-      description: 'Danger/error text styles.',
-    },
-    {
-      name: 'label',
-      description: 'Label styles.',
-    },
-    {
-      name: 'input-radio',
-      description: 'Radio input styles.',
-    },
-    {
-      name: 'input-radio-focused',
-      description: 'Radio input styles when focused.',
-    },
-    {
-      name: 'input-radio-checked',
-      description: 'Radio input styles when checked.',
-    },
-    {
-      name: 'input-radio-checked-focused',
-      description: 'Radio input styles when checked and focused.',
-    },
-    {
-      name: 'input-radio-invalid',
-      description: 'Radio input styles when invalid.',
-    },
-  ]}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'text',
+        description: 'Text styles.',
+      },
+      {
+        name: 'text-danger',
+        description: 'Danger/error text styles.',
+      },
+      {
+        name: 'label',
+        description: 'Label styles.',
+      },
+      {
+        name: 'input-radio',
+        description: 'Radio input styles.',
+      },
+      {
+        name: 'input-radio-focused',
+        description: 'Radio input styles when focused.',
+      },
+      {
+        name: 'input-radio-checked',
+        description: 'Radio input styles when checked.',
+      },
+      {
+        name: 'input-radio-checked-focused',
+        description: 'Radio input styles when checked and focused.',
+      },
+      {
+        name: 'input-radio-invalid',
+        description: 'Radio input styles when invalid.',
+      },
+    ]),
+  }}
 />
 
 ## Static examples

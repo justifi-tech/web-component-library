@@ -29,8 +29,7 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'options',
       type: 'Array<{ id: string; label: string; description?: string; icon?: string }>',
@@ -55,8 +54,7 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
       description:
         'Prevent users from switching rails (e.g., while submitting).',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -68,8 +66,7 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'option',
       description: 'Individual rail container (card/tab/list row).',
@@ -82,8 +79,7 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
       name: 'option-description',
       description: 'Secondary text area for additional guidance.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

@@ -137,8 +137,7 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -169,8 +168,7 @@ Component to render a form for partially or fully refunding a payment based on a
       type: 'string',
       description: 'Preselects a refund reason code.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -184,8 +182,7 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -226,8 +223,7 @@ Component to render a form for partially or fully refunding a payment based on a
       name: 'button-primary',
       description: 'Primary button styles.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

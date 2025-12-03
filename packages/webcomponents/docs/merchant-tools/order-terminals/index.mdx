@@ -25,8 +25,7 @@ Component to render a form for terminal order requests.
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -50,8 +49,7 @@ Component to render a form for terminal order requests.
       type: 'string',
       description: 'Comma-separated SKU list to limit which devices appear.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -64,8 +62,7 @@ Component to render a form for terminal order requests.
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -78,8 +75,7 @@ Component to render a form for terminal order requests.
       name: 'background-color',
       description: 'Controls the background color.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

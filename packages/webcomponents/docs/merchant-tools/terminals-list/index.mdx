@@ -25,8 +25,7 @@ Component to render a formated list of terminals for the requested account.
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -51,8 +50,7 @@ Component to render a formated list of terminals for the requested account.
       defaultValue: 'name,status,location,last_check_in',
       description: 'Customize visible columns.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -65,8 +63,7 @@ Component to render a formated list of terminals for the requested account.
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -87,8 +84,7 @@ Component to render a formated list of terminals for the requested account.
       name: 'button-disabled',
       description: 'Disabled button styles.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

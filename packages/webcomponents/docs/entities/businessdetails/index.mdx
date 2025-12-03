@@ -73,41 +73,44 @@ Component to render detailed information about a business. You will need to firs
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description:
-        'Owning platform account; used for authorization and data scoping.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Short-lived token with `write:onboarding` scope.',
-    },
-    {
-      name: 'business-id',
-      type: 'string',
-      required: true,
-      description: 'Existing business to hydrate; omit for brand-new entities.',
-    },
-    {
-      name: 'locale',
-      type: 'string',
-      defaultValue: 'en-US',
-      description:
-        'Controls localization of labels, address formatting, and validation hints.',
-    },
-    {
-      name: 'readonly',
-      type: 'boolean',
-      defaultValue: 'false',
-      description: 'Displays the form as read-only for audit surfaces.',
-    },
-  ]}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description:
+          'Owning platform account; used for authorization and data scoping.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Short-lived token with `write:onboarding` scope.',
+      },
+      {
+        name: 'business-id',
+        type: 'string',
+        required: true,
+        description:
+          'Existing business to hydrate; omit for brand-new entities.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description:
+          'Controls localization of labels, address formatting, and validation hints.',
+      },
+      {
+        name: 'readonly',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Displays the form as read-only for audit surfaces.',
+      },
+    ]),
+  }}
 />
 
 ### Events
@@ -122,21 +125,23 @@ Component to render detailed information about a business. You will need to firs
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-  ]}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+    ]),
+  }}
 />
 
 ## Static examples

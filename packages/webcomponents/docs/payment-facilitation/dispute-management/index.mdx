@@ -25,8 +25,7 @@ Component to render notification of disputed payments and allow platform to resp
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -51,8 +50,7 @@ Component to render notification of disputed payments and allow platform to resp
       defaultValue: 'false',
       description: 'Disable response actions when true.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -66,8 +64,7 @@ Component to render notification of disputed payments and allow platform to resp
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -92,8 +89,7 @@ Component to render notification of disputed payments and allow platform to resp
       name: 'button-disabled',
       description: 'Disabled button styles.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

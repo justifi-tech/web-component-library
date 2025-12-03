@@ -72,8 +72,7 @@ Component to display detailed information about a specific payment.
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -98,8 +97,7 @@ Component to display detailed information about a specific payment.
       defaultValue: 'true',
       description: 'Hide when you only need a read-only audit surface.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -112,8 +110,7 @@ Component to display detailed information about a specific payment.
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -126,8 +123,7 @@ Component to display detailed information about a specific payment.
       name: 'background-color',
       description: 'Controls the background color.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

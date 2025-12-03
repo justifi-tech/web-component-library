@@ -26,8 +26,7 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -52,8 +51,7 @@ Component to display a list of payment transactions for a specific payment.
       defaultValue: 'false',
       description: 'Adds export controls when true.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -66,8 +64,7 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -80,8 +77,7 @@ Component to display a list of payment transactions for a specific payment.
       name: 'background-color',
       description: 'Controls the background color.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

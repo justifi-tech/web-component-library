@@ -27,8 +27,7 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -61,8 +60,7 @@ Component to render a business onboarding form, segmented into multiple steps. Y
       description:
         'Hide ACH specific fields when you only support push-to-card or other rails.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -76,8 +74,7 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -122,8 +119,7 @@ Component to render a business onboarding form, segmented into multiple steps. Y
       name: 'tooltip-inner',
       description: 'Tooltip inner content styles.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

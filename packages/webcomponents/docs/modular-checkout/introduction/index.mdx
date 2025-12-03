@@ -29,8 +29,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -63,8 +62,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
       defaultValue: 'en-US',
       description: 'Controls currency format + copy.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -81,8 +79,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 - Slots expose `::part(summary)` and `::part(payment-methods)` so you can adjust spacing for each region.
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'shell',
       description: 'Outer wrapper that surrounds the full modular checkout.',
@@ -96,8 +93,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
       description: 'Order summary slot, typically on the right on desktop.',
     },
     { name: 'cta', description: 'Primary submit button container.' },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

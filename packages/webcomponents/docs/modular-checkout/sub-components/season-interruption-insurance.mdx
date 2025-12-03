@@ -84,8 +84,7 @@ Component to render a formated list of season interruption insurance for the req
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'auth-token',
       type: 'string',
@@ -161,8 +160,7 @@ Component to render a formated list of season interruption insurance for the req
       type: 'string',
       description: 'Last name of the covered person.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -178,8 +176,7 @@ Component to render a formated list of season interruption insurance for the req
 - The host inherits the same typography tokens as other Modular Checkout rails via `StyledHost`, so it naturally matches surrounding content.
 - Use the exposed parts to restyle copy or validation messaging without affecting the radios themselves.
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -208,8 +205,7 @@ Component to render a formated list of season interruption insurance for the req
       name: 'input-radio-checked-focused',
       description: 'Radio input styles when checked and focused.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

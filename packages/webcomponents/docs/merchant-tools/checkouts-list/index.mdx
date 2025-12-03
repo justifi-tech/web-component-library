@@ -29,28 +29,30 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Platform or sub-account whose checkouts should appear.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `read:checkouts` scope.',
-    },
-    {
-      name: 'columns',
-      type: 'string',
-      defaultValue:
-        'created_at,payment_amount,payment_description,payment_mode,status',
-      description: 'Controls which table columns render and their order.',
-    },
-  ]}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Platform or sub-account whose checkouts should appear.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:checkouts` scope.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue:
+          'created_at,payment_amount,payment_description,payment_mode,status',
+        description: 'Controls which table columns render and their order.',
+      },
+    ]),
+  }}
 />
 
 ### Events
@@ -65,29 +67,31 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-    {
-      name: 'button',
-      description: 'Button styles.',
-    },
-    {
-      name: 'button-disabled',
-      description: 'Disabled button styles.',
-    },
-  ]}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+    ]),
+  }}
 />
 
 - Filters component emits custom events; ensure both components share the same container so spacing stays consistent.

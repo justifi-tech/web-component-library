@@ -24,8 +24,7 @@ Component to render a formated list of terminal device orders for the requested 
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -44,8 +43,7 @@ Component to render a formated list of terminal device orders for the requested 
       defaultValue: 'created_at,order_number,items,status,tracking_number',
       description: 'Customize visible columns.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -57,8 +55,7 @@ Component to render a formated list of terminal device orders for the requested 
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -79,8 +76,7 @@ Component to render a formated list of terminal device orders for the requested 
       name: 'button-disabled',
       description: 'Disabled button styles.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

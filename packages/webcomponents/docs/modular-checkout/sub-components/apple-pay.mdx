@@ -49,13 +49,12 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'button-style',
       type: '"black" | "white" | "white-outline"',
       defaultValue: 'black',
-      description: 'Matches Apple’s Human Interface Guidelines.',
+      description: 'Matches Apple\'s Human Interface Guidelines.',
     },
     {
       name: 'button-type',
@@ -70,8 +69,7 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
       description:
         'Controls the region on the underlying `ApplePaySession` request.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -86,15 +84,13 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 - Styling is intentionally limited to keep Apple compliance.
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'button',
       description:
         'Wrapper around the native Apple Pay button for margin/padding tweaks.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

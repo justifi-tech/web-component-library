@@ -99,8 +99,7 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'payment-method-group-id',
       type: 'string',
@@ -126,8 +125,7 @@ This component exposes **no public methods or properties** and is not intended f
       defaultValue: 'en-US',
       description: 'Overrides localized labels if needed.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -141,8 +139,7 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
 
 - When embedded inside cards, wrap the host element in your layout container and scope typography overrides via the parts listed below.
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'skeleton',
       description: 'Skeleton loading state styles.',
@@ -167,8 +164,7 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
       name: 'input',
       description: 'Input field styles.',
     },
-  ]}
-/>
+  ]) }} />
 
 - Use the `card-form` CSS part (`::part(card-form)`) to apply box shadows or wrapper padding.
 

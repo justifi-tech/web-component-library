@@ -64,8 +64,7 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'checkout-id',
       type: 'string',
@@ -85,8 +84,7 @@ This component exposes **no public methods or properties** and is not intended f
       defaultValue: 'true',
       description: 'Hide icons when you want an ultra-minimal summary.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -98,14 +96,12 @@ No custom events; summary listens to the parent checkout for updates automatical
 
 ## Theming & Layout
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'text',
       description: 'Text styles for the summary component.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 

@@ -209,8 +209,7 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'account-id',
       type: 'string',
@@ -256,8 +255,7 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
       type: 'string',
       description: 'Name of a predefined theme exported by JustiFi (optional).',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -273,8 +271,7 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
 
 - Hosted fields remain inside PCI-safe iframes, so styling focuses on the outer wrapper plus the `::part` hooks listed below.
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'font-family',
       description: 'Controls the font family for the component.',
@@ -339,8 +336,7 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
       name: 'radio-list-item',
       description: 'Radio list item styles.',
     },
-  ]}
-/>
+  ]) }} />
 
 - Slots are not exposed (all inputs are encapsulated in PCI iframes), so styling relies on CSS variables and `::part` hooks for wrapper elements.
 

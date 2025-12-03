@@ -96,8 +96,7 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 
 ## Props, Events & Methods
 
-<PropsTable
-  rows={[
+<div dangerouslySetInnerHTML={{ __html: PropsTable([
     {
       name: 'link-token',
       type: 'string',
@@ -117,8 +116,7 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
       defaultValue: 'dark',
       description: 'Controls Plaid Link UI theme.',
     },
-  ]}
-/>
+  ]) }} />
 
 ### Events
 
@@ -136,8 +134,7 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 - Styling is limited to the wrapper since Plaid controls the Link modal.
 - Provide fallback instructions for devices where Plaid is unavailable.
 
-<PartsTable
-  parts={[
+<div dangerouslySetInnerHTML={{ __html: PartsTable([
     {
       name: 'text',
       description: 'Text styles.',
@@ -170,8 +167,7 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
       name: 'input-radio-invalid',
       description: 'Radio input styles when invalid.',
     },
-  ]}
-/>
+  ]) }} />
 
 ## Static examples
 
