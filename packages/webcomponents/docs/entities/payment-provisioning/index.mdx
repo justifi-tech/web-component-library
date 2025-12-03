@@ -7,7 +7,6 @@ sidebar_position: 12
 
 import {
   PropsTable,
-  UsageSnippet,
   PartsTable,
   PaymentProvisioningExample,
 } from '@justifi/webcomponents/docs/helpers';
@@ -18,17 +17,14 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Usage
 
-<UsageSnippet
-  title="Provisioning follow-up step"
-  description="Surface the component inside your dashboard when a merchant still needs to add payout banking."
-  code={`<justifi-payment-provisioning
+```html
+<justifi-payment-provisioning
   account-id="acc_123"
   auth-token="wct_provisioning"
   business-id="biz_456"
   on-success-text="Payout method saved"
-/>`}
-  language="html"
 />
+```
 
 ## Live Example
 

@@ -5,7 +5,7 @@ description: Card entry sub-component for Modular Checkout layouts with shared v
 sidebar_position: 2
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -21,10 +21,12 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Usage
 
-<UsageSnippet
-  title="Card form inside modular checkout"
-  description="Slots into the `payment-methods` area and inherits auth + account context from the parent checkout."
-  code={`<!DOCTYPE html>
+### Card form inside modular checkout
+
+Slots into the `payment-methods` area and inherits auth + account context from the parent checkout.
+
+```html
+<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -92,9 +94,8 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
-</html>`}
-  language="html"
-/>
+</html>
+```
 
 ## Props, Events & Methods
 

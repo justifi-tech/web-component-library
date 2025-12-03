@@ -7,7 +7,6 @@ sidebar_position: 32
 
 import {
   PropsTable,
-  UsageSnippet,
   PartsTable,
   PaymentTransactionsListExample,
 } from '@justifi/webcomponents/docs/helpers';
@@ -18,15 +17,16 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Usage
 
-<UsageSnippet
-  title="Transaction history"
-  description="Filter by payment or customer when embedding the ledger."
-  code={`<justifi-payment-transactions-list
+### Transaction history
+
+Filter by payment or customer when embedding the ledger.
+
+```html
+<justifi-payment-transactions-list
   payment-id="py_1A2B3C4D5E6F7G8H9I0J"
   auth-token="wct_reporting"
-/>`}
-  language="html"
 />
+```
 
 ## Live Example
 

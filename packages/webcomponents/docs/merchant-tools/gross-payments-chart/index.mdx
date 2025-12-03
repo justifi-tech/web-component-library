@@ -7,7 +7,6 @@ sidebar_position: 43
 
 import {
   PropsTable,
-  UsageSnippet,
   PartsTable,
   GrossPaymentChartExample,
 } from '@justifi/webcomponents/docs/helpers';
@@ -18,16 +17,16 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ## Usage
 
-<UsageSnippet
-  title="Chart monthly volume"
-  code={`<justifi-gross-payment-chart
+### Chart monthly volume
+
+```html
+<justifi-gross-payment-chart
   account-id="acc_123"
   auth-token="wct_reporting"
   interval="month"
   range="12m"
-/>`}
-  language="html"
 />
+```
 
 ## Live Example
 

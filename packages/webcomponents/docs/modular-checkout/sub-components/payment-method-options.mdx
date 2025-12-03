@@ -5,7 +5,7 @@ description: Render-only component that lists available payment rails and lets c
 sidebar_position: 25
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,19 +13,20 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Usage
 
-<UsageSnippet
-  title="Standalone selector"
-  description="Let customers choose a rail before revealing underlying components."
-  code={`<justifi-payment-method-options
+### Standalone selector
+
+Let customers choose a rail before revealing underlying components.
+
+```html
+<justifi-payment-method-options
   selected="card"
   options='[
     {"id":"card","label":"Credit or debit card"},
     {"id":"ach","label":"Bank account"},
     {"id":"wallet","label":"Digital wallet"}
   ]'
-></justifi-payment-method-options>`}
-  language="html"
-/>
+></justifi-payment-method-options>
+```
 
 ## Props, Events & Methods
 

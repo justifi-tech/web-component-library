@@ -5,7 +5,7 @@ description: Paginated table of payments with filtering, export, and quick actio
 sidebar_position: 31
 ---
 
-import { PropsTable, UsageSnippet, PartsTable, PaymentsListExample } from '../../helpers';
+import { PropsTable, PartsTable, PaymentsListExample } from '../../helpers';
 
 ## Overview
 
@@ -13,9 +13,10 @@ Component to render a formated list of payments for the requested account.
 
 ## Usage
 
-<UsageSnippet
-  title="Payments list with filters"
-  code={`<div class="payments-report">
+### Payments list with filters
+
+```html
+<div class="payments-report">
   <justifi-filters
     account-id="acc_123"
     auth-token="wct_reporting"
@@ -26,9 +27,8 @@ Component to render a formated list of payments for the requested account.
     auth-token="wct_reporting"
     columns="created_at,customer_name,payment_amount,status"
   ></justifi-payments-list>
-</div>`}
-  language="html"
-/>
+</div>
+```
 
 ## Live Example
 
