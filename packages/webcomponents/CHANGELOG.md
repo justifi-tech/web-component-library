@@ -4,7 +4,8 @@
 
 ### Minor Changes
 
-- 7235e5d: - Add additional bank accounts to the business.
+- 7235e5d: - Payment Provisioning Enhancements.
+  - Add additional bank accounts to the business.
   - Remove core components from components steps.
   - Change label text to Date of Registration.
   - Remove fields from Additional Questions page.
