@@ -66,6 +66,7 @@ graph TD;
   owner-form-inputs --> form-control-text
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
+  owner-form-inputs --> form-control-number
   owner-form-inputs --> justifi-identity-address-form
   form-control-text --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip

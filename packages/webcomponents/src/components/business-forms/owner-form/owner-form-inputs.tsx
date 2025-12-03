@@ -121,6 +121,15 @@ export class BusinessOwnerFormInputs {
             </div>
           )}
         </div>
+        <div class="col-12 col-md-4">
+          <form-control-number
+            name="ownership_percentage"
+            label="% of Ownership"
+            defaultValue={this.ownerDefaultValue.ownership_percentage}
+            errorText={this.errors.ownership_percentage}
+            inputHandler={this.inputHandler}
+          />
+        </div>
         <div class="col-12">
           <justifi-identity-address-form
             errors={this.errors.address}

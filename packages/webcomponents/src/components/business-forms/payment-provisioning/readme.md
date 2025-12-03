@@ -73,6 +73,7 @@ graph TD;
   owner-form-inputs --> form-control-text
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
+  owner-form-inputs --> form-control-number
   owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> form-control-tooltip
   justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
