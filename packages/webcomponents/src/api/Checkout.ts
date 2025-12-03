@@ -232,6 +232,9 @@ export type ILoadedEventResponse = {
 export interface CheckoutsQueryParams {
   status?: ICheckoutStatus;
   payment_mode?: ICheckoutPaymentMode;
+  checkout_id?: string;
+  created_after?: string;
+  created_before?: string;
 }
 
 export type CardBrand =
