@@ -5,20 +5,20 @@ description: Registering and using JustiFi web components inside Angular project
 sidebar_position: 2
 ---
 
+import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+
 Angular can render the JustiFi custom elements once you load the library and allow custom schemas.
 
 ## Usage
 
 ### Load the bundle
 
-```html
-<head>
+<pre><code className="language-html">{`<head>
   <script
     type="module"
-    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"
+    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
   ></script>
-</head>
-```
+</head>`}</code></pre>
 
 Or install locally:
 

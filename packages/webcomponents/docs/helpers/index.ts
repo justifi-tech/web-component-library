@@ -9,3 +9,4 @@ export { PayoutsListExample } from './PayoutsListExample';
 export { PayoutDetailsExample } from './PayoutDetailsExample';
 export { CheckoutsListExample } from './CheckoutsListExample';
 export { TerminalsListExample } from './TerminalsListExample';
+export { getWebcomponentsVersion } from './version';

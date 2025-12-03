@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentExample } from './ComponentExample';
 import mockBusinessDetails from './mockData/mockBusinessDetails.json';
+import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 export const BusinessDetailsExample: React.FC = () => {
   // Match API endpoint pattern: any origin + /v1/entities/business/{businessId}
@@ -10,7 +11,7 @@ export const BusinessDetailsExample: React.FC = () => {
     <ComponentExample
       componentName="Business Details"
       componentTag="justifi-business-details"
-      scriptUrl="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"
+      scriptUrl={`https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js`}
       mockData={mockBusinessDetails}
       mockEndpoints={[
         {

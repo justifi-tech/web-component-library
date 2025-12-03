@@ -5,20 +5,20 @@ description: Consume the JustiFi web components inside modern Vue applications.
 sidebar_position: 3
 ---
 
+import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+
 Vue treats the JustiFi custom elements like native HTML tags. Load the script, import what you need, and wire up refs/events.
 
 ## Integration steps
 
 ### Load the components
 
-```html
-<head>
+<pre><code className="language-html">{`<head>
   <script
     type="module"
-    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@latest/dist/webcomponents/webcomponents.esm.js"
+    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
   ></script>
-</head>
-```
+</head>`}</code></pre>
 
 Or install locally and import the desired module:
 
