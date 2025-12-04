@@ -15,10 +15,6 @@ Component to render detailed information about a business. You will need to firs
 
 ## Usage
 
-### Business intake step
-
-Pass the account context plus the business you want to edit.
-
 <pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -149,9 +145,11 @@ Pass the account context plus the business you want to edit.
 
 Render the component in a confirmation screen without editing enabled.
 
-<pre><code className="language-html">{`<justifi-business-details
+<pre>
+  <code className="language-html">{`<justifi-business-details
   account-id="acc_123"
   auth-token="wct_readOnlyToken"
   business-id="biz_456"
   readonly
-/>`}</code></pre>
+/>`}</code>
+</pre>

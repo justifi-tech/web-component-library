@@ -13,16 +13,14 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Usage
 
-### Provisioning follow-up step
-
-Surface the component inside your dashboard when a merchant still needs to add payout banking.
-
-<pre><code className="language-html">{`<justifi-payment-provisioning
+<pre>
+  <code className="language-html">{`<justifi-payment-provisioning
   account-id="acc_123"
   auth-token="wct_provisioning"
   business-id="biz_456"
   on-success-text="Payout method saved"
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
@@ -126,6 +124,8 @@ Surface the component inside your dashboard when a merchant still needs to add p
 
 Hide the internal CTA and trigger provisioning from a custom footer.
 
-<pre><code className="language-js">{`const provisioning = document.querySelector('justifi-payment-provisioning');
+<pre>
+  <code className="language-js">{`const provisioning = document.querySelector('justifi-payment-provisioning');
 
-document.querySelector('#complete-provisioning').onclick = () => provisioning.submit();`}</code></pre>
+document.querySelector('#complete-provisioning').onclick = () => provisioning.submit();`}</code>
+</pre>

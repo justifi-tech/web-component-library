@@ -18,6 +18,7 @@ Angular can render the JustiFi custom elements once you load the library and all
     type="module"
     src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
   ></script>
+
 </head>`}</code></pre>
 
 Or install locally:
@@ -87,7 +88,8 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements AfterViewInit {
-  @ViewChild('checkoutForm') checkoutForm!: ElementRef<HTMLJustifiCheckoutElement>;
+  @ViewChild('checkoutForm')
+  checkoutForm!: ElementRef<HTMLJustifiCheckoutElement>;
 
   ngAfterViewInit() {
     // Safe place to call component methods
@@ -108,4 +110,3 @@ export class AppComponent implements AfterViewInit {
 ```
 
 > `HTMLJustifiCheckoutElement` is available from `@justifi/webcomponents/dist/components` if you want stronger typing.
-

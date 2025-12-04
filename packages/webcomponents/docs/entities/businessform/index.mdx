@@ -15,10 +15,6 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Usage
 
-### Representative onboarding
-
-Mount the component with context about which business you are editing.
-
 <pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -28,7 +24,12 @@ Mount the component with context about which business you are editing.
   <title>justifi-business-form</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
   <style>
       ::part(font-family) {
         font-family: georgia;   
@@ -102,13 +103,11 @@ Mount the component with context about which business you are editing.
         color: #fff;
       }
     </style>
+
 </head>
 
 <body>
-  <justifi-business-form
-    business-id="biz_123"
-    auth-token="authToken"
-  />
+  <justifi-business-form business-id="biz_123" auth-token="authToken" />
 </body>
 
 <script>
@@ -235,7 +234,9 @@ Mount the component with context about which business you are editing.
 
 Use the public methods to orchestrate a bespoke progress UI.
 
-<pre><code className="language-js">{`const form = document.querySelector('justifi-business-form');
+<pre>
+  <code className="language-js">{`const form = document.querySelector('justifi-business-form');
 
 document.querySelector('#next').addEventListener('click', () => form.next());
-document.querySelector('#prev').addEventListener('click', () => form.previous());`}</code></pre>
+document.querySelector('#prev').addEventListener('click', () => form.previous());`}</code>
+</pre>
