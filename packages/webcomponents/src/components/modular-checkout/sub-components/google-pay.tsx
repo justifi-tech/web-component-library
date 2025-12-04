@@ -53,10 +53,6 @@ export class GooglePay {
   @Watch("merchantId")
   @Watch("environment")
   watchConfigChange() {
-    console.log('[GooglePay] watchConfigChange: Configuration changed', {
-      merchantId: this.merchantId,
-      environment: this.environment,
-    });
     this.initializeGooglePay();
   }
 
@@ -73,34 +69,21 @@ export class GooglePay {
   @Event() googlePayStarted: EventEmitter<void>;
 
   componentWillLoad() {
-    console.log('[GooglePay] componentWillLoad: Initializing GooglePayService');
     this.googlePayService = new GooglePayService();
-    console.log('[GooglePay] componentWillLoad: GooglePayService created', {
-      service: this.googlePayService,
-    });
   }
 
   componentDidLoad() {
-    console.log('[GooglePay] componentDidLoad: Setting up store subscriptions', {
-      checkoutLoaded: checkoutStore.checkoutLoaded,
-      paymentAmount: checkoutStore.paymentAmount,
-      paymentCurrency: checkoutStore.paymentCurrency,
-      paymentDescription: checkoutStore.paymentDescription,
-    });
     const unsub = onChange("paymentAmount", () => {
-      console.log('[GooglePay] paymentAmount changed:', checkoutStore.paymentAmount);
       this.prefetchPaymentData();
     });
     if (typeof unsub === 'function') this.unsubscribes.push(unsub);
 
     const unsubCurrency = onChange("paymentCurrency", () => {
-      console.log('[GooglePay] paymentCurrency changed:', checkoutStore.paymentCurrency);
       this.prefetchPaymentData();
     });
     if (typeof unsubCurrency === 'function') this.unsubscribes.push(unsubCurrency);
 
     const unsubDesc = onChange("paymentDescription", () => {
-      console.log('[GooglePay] paymentDescription changed:', checkoutStore.paymentDescription);
       this.prefetchPaymentData();
     });
     if (typeof unsubDesc === 'function') this.unsubscribes.push(unsubDesc);
@@ -158,35 +141,20 @@ export class GooglePay {
    */
   @Method()
   async prefetchPaymentData(): Promise<void> {
-    console.log('[GooglePay] prefetchPaymentData: Called', {
-      isAvailable: this.isAvailable,
-      canMakePayments: this.canMakePayments,
-    });
     if (!this.isAvailable || !this.canMakePayments) {
-      console.warn('[GooglePay] prefetchPaymentData: Skipped - not available or cannot make payments');
       return;
     }
 
     const paymentDataRequest = this.createPaymentDataRequest();
-    console.log('[GooglePay] prefetchPaymentData: Prefetching', { paymentDataRequest });
     this.googlePayService.prefetchPaymentData(paymentDataRequest);
-    console.log('[GooglePay] prefetchPaymentData: Prefetch complete');
   }
 
   private async initializeGooglePay() {
-    console.log('[GooglePay] initializeGooglePay: Starting initialization');
     try {
       this.isLoading = true;
       this.error = null;
 
-      console.log('[GooglePay] initializeGooglePay: Checking payment amount', {
-        paymentAmount: checkoutStore.paymentAmount,
-        paymentCurrency: checkoutStore.paymentCurrency,
-        paymentDescription: checkoutStore.paymentDescription,
-      });
-
       if (!checkoutStore.paymentAmount) {
-        console.error('[GooglePay] initializeGooglePay: Missing payment amount');
         this.error = "Missing required Google Pay configuration";
         this.isLoading = false;
         return;
@@ -201,114 +169,62 @@ export class GooglePay {
         buttonSizeMode: this.buttonSizeMode,
       };
 
-      console.log('[GooglePay] initializeGooglePay: Config created', googlePayConfig);
       this.googlePayService.initialize(googlePayConfig);
-      console.log('[GooglePay] initializeGooglePay: Service initialized');
 
       this.isAvailable = this.googlePayService.isAvailable();
-      console.log('[GooglePay] initializeGooglePay: Availability check', {
-        isAvailable: this.isAvailable,
-      });
 
       if (!this.isAvailable) {
-        console.warn('[GooglePay] initializeGooglePay: Google Pay not available on device');
         this.error = "Google Pay is not supported on this device";
         this.isLoading = false;
         return;
       }
 
-      console.log('[GooglePay] initializeGooglePay: Checking canMakePayments...');
       this.canMakePayments = await this.googlePayService.canMakePayments();
-      console.log('[GooglePay] initializeGooglePay: canMakePayments result', {
-        canMakePayments: this.canMakePayments,
-      });
 
       if (!this.canMakePayments) {
-        console.warn('[GooglePay] initializeGooglePay: Cannot make payments');
         this.error = "Google Pay is not available for payments";
         this.isLoading = false;
         return;
       }
 
       const paymentDataRequest = this.createPaymentDataRequest();
-      console.log('[GooglePay] initializeGooglePay: Prefetching payment data', {
-        paymentDataRequest,
-      });
       this.googlePayService.prefetchPaymentData(paymentDataRequest);
-      console.log('[GooglePay] initializeGooglePay: Initialization complete');
     } catch (error) {
-      console.error('[GooglePay] initializeGooglePay: Error during initialization', error);
       this.error =
         error instanceof Error
           ? error.message
           : "Failed to initialize Google Pay";
     } finally {
       this.isLoading = false;
-      console.log('[GooglePay] initializeGooglePay: Final state', {
-        isLoading: this.isLoading,
-        isAvailable: this.isAvailable,
-        canMakePayments: this.canMakePayments,
-        error: this.error,
-      });
     }
   }
 
   private createPaymentDataRequest(): IGooglePayPaymentDataRequest {
-    const request = GooglePayService.createPaymentDataRequest(
+    return GooglePayService.createPaymentDataRequest(
       checkoutStore.paymentAmount,
       checkoutStore.paymentDescription,
       this.countryCode,
       checkoutStore.paymentCurrency,
       this.merchantName,
-      this.merchantId,
     );
-    console.log('[GooglePay] createPaymentDataRequest: Created request', {
-      amount: checkoutStore.paymentAmount,
-      currency: checkoutStore.paymentCurrency,
-      description: checkoutStore.paymentDescription,
-      countryCode: this.countryCode,
-      merchantName: this.merchantName,
-      request,
-    });
-    return request;
   }
 
   private handleGooglePayClick = async () => {
-    console.log('[GooglePay] handleGooglePayClick: Button clicked', {
-      isProcessing: this.isProcessing,
-      disabled: this.disabled,
-      isAvailable: this.isAvailable,
-      canMakePayments: this.canMakePayments,
-    });
-
     if (
       this.isProcessing ||
       this.disabled ||
       !this.isAvailable ||
       !this.canMakePayments
     ) {
-      console.warn('[GooglePay] handleGooglePayClick: Payment blocked', {
-        reason: this.isProcessing ? 'isProcessing' :
-          this.disabled ? 'disabled' :
-            !this.isAvailable ? 'notAvailable' :
-              !this.canMakePayments ? 'cannotMakePayments' : 'unknown',
-      });
       return;
     }
 
     try {
-      console.log('[GooglePay] handleGooglePayClick: Starting payment session');
       this.isProcessing = true;
       this.error = null;
       this.googlePayStarted.emit();
-      console.log('[GooglePay] handleGooglePayClick: googlePayStarted event emitted');
 
       const paymentDataRequest = this.createPaymentDataRequest();
-      console.log('[GooglePay] handleGooglePayClick: Starting payment session with service', {
-        hasAuthToken: !!checkoutStore.authToken,
-        accountId: checkoutStore.accountId,
-      });
-
       const result =
         await this.googlePayService.startPaymentSession(
           paymentDataRequest,
@@ -316,36 +232,25 @@ export class GooglePay {
           checkoutStore.accountId
         );
 
-      console.log('[GooglePay] handleGooglePayClick: Payment session result', result);
-
       if (result.success) {
-        console.log('[GooglePay] handleGooglePayClick: Payment successful', {
-          paymentMethodId: result.paymentMethodId,
-          hasPaymentData: !!result.paymentData,
-        });
         this.googlePayCompleted.emit({
           success: true,
           paymentData: result.paymentData,
           paymentMethodId: result.paymentMethodId,
         });
       } else {
-        console.error('[GooglePay] handleGooglePayClick: Payment failed', {
-          error: result.error,
-        });
         this.googlePayCompleted.emit({
           success: false,
           error: result.error,
         });
 
         if (result.error?.code === "USER_CANCELLED") {
-          console.log('[GooglePay] handleGooglePayClick: User cancelled payment');
           this.googlePayCancelled.emit();
         } else {
           // Error will be conveyed via googlePayCompleted with success:false
         }
       }
     } catch (error) {
-      console.error('[GooglePay] handleGooglePayClick: Exception during payment', error);
       const errorMessage =
         error instanceof Error ? error.message : "Payment failed";
       this.error = errorMessage;
@@ -355,10 +260,6 @@ export class GooglePay {
       });
     } finally {
       this.isProcessing = false;
-      console.log('[GooglePay] handleGooglePayClick: Payment flow complete', {
-        isProcessing: this.isProcessing,
-        error: this.error,
-      });
     }
   };
 
@@ -379,11 +280,7 @@ export class GooglePay {
             async
             src='https://pay.google.com/gp/p/js/pay.js'
             onLoad={() => {
-              console.log('[GooglePay] Script loaded: Google Pay JS library loaded successfully');
               this.initializeGooglePay();
-            }}
-            onError={(e) => {
-              console.error('[GooglePay] Script error: Failed to load Google Pay JS library', e);
             }}
           ></script>
         )}
