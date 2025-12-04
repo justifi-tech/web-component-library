@@ -5,7 +5,7 @@ description: Transaction-level ledger for payments, grouped by status and fundin
 sidebar_position: 32
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,16 +13,11 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Usage
 
-<UsageSnippet
-  title="Transaction history"
-  description="Filter by payment or customer when embedding the ledger."
-  code={`<justifi-payment-transactions-list
+<pre><code className="language-html">{`<justifi-payment-transactions-list
   account-id="acc_123"
   auth-token="wct_reporting"
   filters='{"payment_id":"pay_456"}'
-/>`}
-  language="html"
-/>
+/>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -81,12 +76,10 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Static examples
 
-<UsageSnippet
-  title="Listening for filter changes"
-  code={`const ledger = document.querySelector('justifi-payment-transactions-list');
+### Listening for filter changes
+
+<pre><code className="language-js">{`const ledger = document.querySelector('justifi-payment-transactions-list');
 
 ledger.addEventListener('filter-changed', (event) => {
 console.log('Filters now', event.detail);
-});`}
-language="js"
-/>
+});`}</code></pre>

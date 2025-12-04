@@ -5,7 +5,7 @@ description: Render-only component that lists available payment rails and lets c
 sidebar_position: 25
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,19 +13,14 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Usage
 
-<UsageSnippet
-  title="Standalone selector"
-  description="Let customers choose a rail before revealing underlying components."
-  code={`<justifi-payment-method-options
+<pre><code className="language-html">{`<justifi-payment-method-options
   selected="card"
   options='[
     {"id":"card","label":"Credit or debit card"},
     {"id":"ach","label":"Bank account"},
     {"id":"wallet","label":"Digital wallet"}
   ]'
-></justifi-payment-method-options>`}
-  language="html"
-/>
+></justifi-payment-method-options>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -83,10 +78,8 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Static examples
 
-<UsageSnippet
-  title="Programmatic selection"
-  code={`const options = document.querySelector('justifi-payment-method-options');
+### Programmatic selection
 
-document.querySelector('#select-ach').onclick = () => options.select('ach');`}
-language="js"
-/>
+<pre><code className="language-js">{`const options = document.querySelector('justifi-payment-method-options');
+
+document.querySelector('#select-ach').onclick = () => options.select('ach');`}</code></pre>

@@ -5,7 +5,7 @@ description: Bank account rail for Modular Checkout that tokenizes ACH details w
 sidebar_position: 28
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -22,10 +22,7 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Usage
 
-<UsageSnippet
-  title="Bank rail inside Modular Checkout"
-  description="Drop the component into the `payment-methods` slot."
-  code={`<!DOCTYPE html>
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -93,9 +90,7 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -159,11 +154,10 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Static examples
 
-<UsageSnippet
-  title="Auto-focus fields"
-  description="Tie custom UI to the public `focus()` method."
-  code={`const bankForm = document.querySelector('justifi-bank-account-form');
+### Auto-focus fields
 
-document.querySelector('#focus-bank').onclick = () => bankForm.focus();`}
-language="js"
-/>
+Tie custom UI to the public `focus()` method.
+
+<pre><code className="language-js">{`const bankForm = document.querySelector('justifi-bank-account-form');
+
+document.querySelector('#focus-bank').onclick = () => bankForm.focus();`}</code></pre>

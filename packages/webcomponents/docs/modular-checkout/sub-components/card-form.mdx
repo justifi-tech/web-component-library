@@ -5,7 +5,7 @@ description: Card entry sub-component for Modular Checkout layouts with shared v
 sidebar_position: 2
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -22,10 +22,7 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Usage
 
-<UsageSnippet
-  title="Card form inside modular checkout"
-  description="Slots into the `payment-methods` area and inherits auth + account context from the parent checkout."
-  code={`<!DOCTYPE html>
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -93,9 +90,7 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -170,18 +165,14 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
 
 ## Static examples
 
-<UsageSnippet
-  title="Card form with disabled save option"
-  code={`<justifi-modular-checkout-card-form
-  show-save-payment-method="false"
-/>`}
-  language="html"
-/>
+### Card form with disabled save option
 
-<UsageSnippet
-  title="Force brand icons off"
-  code={`<justifi-modular-checkout-card-form
+<pre><code className="language-html">{`<justifi-modular-checkout-card-form
+  show-save-payment-method="false"
+/>`}</code></pre>
+
+### Force brand icons off
+
+<pre><code className="language-html">{`<justifi-modular-checkout-card-form
   card-brand-icons="none"
-/>`}
-  language="html"
-/>
+/>`}</code></pre>

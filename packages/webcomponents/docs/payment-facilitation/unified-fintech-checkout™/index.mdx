@@ -5,7 +5,7 @@ description: Unified Fintech Checkout™ component that orchestrates payment cap
 sidebar_position: 20
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,17 +13,14 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Usage
 
-<UsageSnippet
-  title="One-line checkout"
-  description="Pass identifiers for the checkout session plus your auth context."
-  code={`<justifi-checkout
+<pre>
+  <code className="language-html">{`<justifi-checkout
   account-id="acc_123"
   auth-token="wct_checkout"
   checkout-id="chk_456"
   locale="en-US"
-/>`}
-  language="html"
-/>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
@@ -154,13 +151,14 @@ import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
 
 ## Static examples
 
-<UsageSnippet
-  title="Listen for completion"
-  description="Trigger downstream logic when checkout completes."
-  code={`const checkout = document.querySelector('justifi-checkout');
+### Listen for completion
+
+Trigger downstream logic when checkout completes.
+
+<pre>
+  <code className="language-js">{`const checkout = document.querySelector('justifi-checkout');
 
 checkout.addEventListener('completed', (event) => {
 analytics.track('checkout_completed', event.detail);
-});`}
-language="js"
-/>
+});`}</code>
+</pre>

@@ -5,7 +5,7 @@ description: Visualizes gross payment volume over time with tooltips and range s
 sidebar_position: 43
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,16 +13,14 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ## Usage
 
-<UsageSnippet
-  title="Chart monthly volume"
-  code={`<justifi-gross-payment-chart
+### Chart monthly volume
+
+<pre><code className="language-html">{`<justifi-gross-payment-chart
   account-id="acc_123"
   auth-token="wct_reporting"
   interval="month"
   range="12m"
-/>`}
-  language="html"
-/>
+/>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -73,13 +71,11 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ## Static examples
 
-<UsageSnippet
-  title="Toggle ranges"
-  code={`const chart = document.querySelector('justifi-gross-payment-chart');
+### Toggle ranges
+
+<pre><code className="language-js">{`const chart = document.querySelector('justifi-gross-payment-chart');
 
 document.querySelector('#range').addEventListener('change', (event) => {
 chart.setAttribute('range', event.target.value);
 chart.refresh();
-});`}
-language="js"
-/>
+});`}</code></pre>

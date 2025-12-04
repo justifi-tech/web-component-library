@@ -5,7 +5,7 @@ description: Apple Pay rail for Modular Checkout that exposes wallet buttons and
 sidebar_position: 22
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -14,9 +14,7 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 ## Usage
 
-<UsageSnippet
-  title="Add Apple Pay as a rail"
-  code={`<!DOCTYPE html>
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -43,9 +41,7 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
     <justifi-modular-checkout-summary slot="summary" />
   </justifi-modular-checkout>
 </body>
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -94,10 +90,8 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 ## Static examples
 
-<UsageSnippet
-  title="Custom launch button"
-  code={`const applePay = document.querySelector('justifi-apple-pay');
+### Custom launch button
 
-document.querySelector('#apple-pay-launch').onclick = () => applePay.begin();`}
-language="js"
-/>
+<pre><code className="language-js">{`const applePay = document.querySelector('justifi-apple-pay');
+
+document.querySelector('#apple-pay-launch').onclick = () => applePay.begin();`}</code></pre>

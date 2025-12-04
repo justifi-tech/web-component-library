@@ -5,7 +5,7 @@ description: Embed-ready workflow for collecting payout bank info and provisioni
 sidebar_position: 12
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,17 +13,14 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Usage
 
-<UsageSnippet
-  title="Provisioning follow-up step"
-  description="Surface the component inside your dashboard when a merchant still needs to add payout banking."
-  code={`<justifi-payment-provisioning
+<pre>
+  <code className="language-html">{`<justifi-payment-provisioning
   account-id="acc_123"
   auth-token="wct_provisioning"
   business-id="biz_456"
   on-success-text="Payout method saved"
-/>`}
-  language="html"
-/>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
@@ -123,11 +120,12 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Static examples
 
-<UsageSnippet
-  title="External submission"
-  description="Hide the internal CTA and trigger provisioning from a custom footer."
-  code={`const provisioning = document.querySelector('justifi-payment-provisioning');
+### External submission
 
-document.querySelector('#complete-provisioning').onclick = () => provisioning.submit();`}
-language="js"
-/>
+Hide the internal CTA and trigger provisioning from a custom footer.
+
+<pre>
+  <code className="language-js">{`const provisioning = document.querySelector('justifi-payment-provisioning');
+
+document.querySelector('#complete-provisioning').onclick = () => provisioning.submit();`}</code>
+</pre>

@@ -5,7 +5,7 @@ description: Saved payment selector for Modular Checkout that handles defaulting
 sidebar_position: 26
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -22,9 +22,7 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Usage
 
-<UsageSnippet
-  title="Place saved methods above the card form"
-  code={`<!DOCTYPE html>
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -97,9 +95,7 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -173,12 +169,10 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Static examples
 
-<UsageSnippet
-  title="Fallback flow"
-  code={`const saved = document.querySelector('justifi-saved-payment-methods');
+### Fallback flow
+
+<pre><code className="language-js">{`const saved = document.querySelector('justifi-saved-payment-methods');
 
 saved.addEventListener('selection-changed', ({ detail }) => {
 if (!detail.payment_method_token) saved.clearSelection();
-});`}
-language="js"
-/>
+});`}</code></pre>

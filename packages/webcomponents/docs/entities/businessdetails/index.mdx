@@ -6,7 +6,7 @@ description: Collect and review business profile information with inline validat
 sidebar_position: 10
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -15,10 +15,7 @@ Component to render detailed information about a business. You will need to firs
 
 ## Usage
 
-<UsageSnippet
-  title="Business intake step"
-  description="Pass the account context plus the business you want to edit."
-  code={`<!DOCTYPE html>
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -67,9 +64,7 @@ Component to render detailed information about a business. You will need to firs
   })();
 </script>
 
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -146,14 +141,15 @@ Component to render detailed information about a business. You will need to firs
 
 ## Static examples
 
-<UsageSnippet
-  title="Read-only review mode"
-  description="Render the component in a confirmation screen without editing enabled."
-  code={`<justifi-business-details
+### Read-only review mode
+
+Render the component in a confirmation screen without editing enabled.
+
+<pre>
+  <code className="language-html">{`<justifi-business-details
   account-id="acc_123"
   auth-token="wct_readOnlyToken"
   business-id="biz_456"
   readonly
-/>`}
-  language="html"
-/>
+/>`}</code>
+</pre>

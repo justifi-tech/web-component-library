@@ -5,7 +5,7 @@ description: Ledger of transactions contributing to a payout, with filtering and
 sidebar_position: 42
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,15 +13,11 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Usage
 
-<UsageSnippet
-  title="Scope to a payout"
-  code={`<justifi-payout-transactions-list
+<pre><code className="language-html">{`<justifi-payout-transactions-list
   account-id="acc_123"
   auth-token="wct_reporting"
   payout-id="po_456"
-/>`}
-  language="html"
-/>
+/>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -79,12 +75,10 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Static examples
 
-<UsageSnippet
-  title="Open payment details"
-  code={`const payoutLedger = document.querySelector('justifi-payout-transactions-list');
+### Open payment details
+
+<pre><code className="language-js">{`const payoutLedger = document.querySelector('justifi-payout-transactions-list');
 
 payoutLedger.addEventListener('click-event', ({ detail }) => {
 router.push('/payments/' + detail.transaction_id);
-});`}
-language="js"
-/>
+});`}</code></pre>
