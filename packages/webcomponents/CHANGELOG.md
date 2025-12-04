@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.7.0
+
+### Minor Changes
+
+- d11330c: Add Checkout ID, Created Before, and Created After filters to checkouts list filter component
+
 ## 6.6.0
 
 ### Minor Changes
