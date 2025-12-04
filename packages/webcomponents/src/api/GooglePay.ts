@@ -351,7 +351,7 @@ export class GooglePayHelpers {
    * Get default allowed authentication methods
    */
   static getDefaultAuthMethods(): string[] {
-    return ['PAN_ONLY', 'CRYPTOGRAM_3DS'];
+    return ['CRYPTOGRAM_3DS', 'PAN_ONLY'];
   }
 
   /**
