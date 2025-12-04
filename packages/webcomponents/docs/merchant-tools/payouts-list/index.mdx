@@ -5,7 +5,7 @@ description: Reporting table for outbound payouts including status, destination,
 sidebar_position: 40
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,15 +13,13 @@ Component to render a formated list of payouts for the requested account.
 
 ## Usage
 
-<UsageSnippet
-  title="Payouts table"
-  code={`<justifi-payouts-list
+### Payouts table
+
+<pre><code className="language-html">{`<justifi-payouts-list
   account-id="acc_123"
   auth-token="wct_reporting"
   columns="created_at,amount,destination,status"
-/>`}
-  language="html"
-/>
+/>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -87,14 +85,12 @@ Component to render a formated list of payouts for the requested account.
 
 ## Static examples
 
-<UsageSnippet
-  title="Navigate to payout details"
-  code={`const payouts = document.querySelector('justifi-payouts-list');
+### Navigate to payout details
+
+<pre><code className="language-js">{`const payouts = document.querySelector('justifi-payouts-list');
 
 payouts.addEventListener('click-event', (event) => {
 if (event.detail.name === 'row') {
 router.push('/payouts/' + event.detail.payout_id);
 }
-});`}
-language="js"
-/>
+});`}</code></pre>

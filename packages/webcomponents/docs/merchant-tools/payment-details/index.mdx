@@ -5,7 +5,7 @@ description: Detailed view for a single payment, including customer data, timeli
 sidebar_position: 30
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -14,10 +14,11 @@ Component to display detailed information about a specific payment.
 
 ## Usage
 
-<UsageSnippet
-  title="Payment drill-down"
-  description="Load by passing the payment identifier and the account context."
-  code={`<!DOCTYPE html>
+### Payment drill-down
+
+Load by passing the payment identifier and the account context.
+
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -66,9 +67,7 @@ Component to display detailed information about a specific payment.
   })();
 </script>
 
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -127,12 +126,10 @@ Component to display detailed information about a specific payment.
 
 ## Static examples
 
-<UsageSnippet
-  title="Hook into refund events"
-  code={`const details = document.querySelector('justifi-payment-details');
+### Hook into refund events
+
+<pre><code className="language-js">{`const details = document.querySelector('justifi-payment-details');
 
 details.addEventListener('refund-requested', ({ detail }) => {
 console.log('Starting refund flow for payment', detail.payment_id);
-});`}
-language="js"
-/>
+});`}</code></pre>

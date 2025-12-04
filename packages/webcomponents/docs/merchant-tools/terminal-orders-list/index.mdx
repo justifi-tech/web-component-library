@@ -5,7 +5,7 @@ description: Reporting table of hardware orders with fulfillment status and trac
 sidebar_position: 51
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,14 +13,12 @@ Component to render a formated list of terminal device orders for the requested 
 
 ## Usage
 
-<UsageSnippet
-  title="Orders table"
-  code={`<justifi-terminal-orders-list
+### Orders table
+
+<pre><code className="language-html">{`<justifi-terminal-orders-list
   account-id="acc_123"
   auth-token="wct_terminals"
-/>`}
-  language="html"
-/>
+/>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -80,12 +78,10 @@ Component to render a formated list of terminal device orders for the requested 
 
 ## Static examples
 
-<UsageSnippet
-  title="Navigate to order details"
-  code={`const orders = document.querySelector('justifi-terminal-orders-list');
+### Navigate to order details
+
+<pre><code className="language-js">{`const orders = document.querySelector('justifi-terminal-orders-list');
 
 orders.addEventListener('click-event', ({ detail }) => {
 if (detail.name === 'row') router.push('/terminals/orders/' + detail.order_id);
-});`}
-language="js"
-/>
+});`}</code></pre>

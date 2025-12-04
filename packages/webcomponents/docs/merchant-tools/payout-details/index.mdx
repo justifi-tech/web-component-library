@@ -5,7 +5,7 @@ description: Drill-down view for a single payout, including ledger items and ban
 sidebar_position: 41
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 
 ## Overview
 
@@ -13,15 +13,13 @@ Component to display detailed information about a specific payout.
 
 ## Usage
 
-<UsageSnippet
-  title="Inspect payout"
-  code={`<justifi-payout-details
+### Inspect payout
+
+<pre><code className="language-html">{`<justifi-payout-details
   account-id="acc_123"
   auth-token="wct_reporting"
   payout-id="po_456"
-/>`}
-  language="html"
-/>
+/>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -87,10 +85,8 @@ Component to display detailed information about a specific payout.
 
 ## Static examples
 
-<UsageSnippet
-  title="Auto-refresh"
-  code={`const payout = document.querySelector('justifi-payout-details');
+### Auto-refresh
 
-setInterval(() => payout.refresh(), 60_000);`}
-language="js"
-/>
+<pre><code className="language-js">{`const payout = document.querySelector('justifi-payout-details');
+
+setInterval(() => payout.refresh(), 60_000);`}</code></pre>

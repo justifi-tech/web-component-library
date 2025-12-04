@@ -5,7 +5,7 @@ description: Guided UI for issuing full or partial refunds with reason codes and
 sidebar_position: 33
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -14,9 +14,9 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ## Usage
 
-<UsageSnippet
-  title="Refund modal"
-  code={`<!DOCTYPE html>
+### Refund modal
+
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -131,9 +131,7 @@ Component to render a form for partially or fully refunding a payment based on a
     });
   })();
 </script>
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -227,10 +225,8 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ## Static examples
 
-<UsageSnippet
-  title="Programmatic refunds"
-  code={`const component = document.querySelector('justifi-refund-payment');
+### Programmatic refunds
 
-document.querySelector('#confirm-refund').onclick = () => component.submit();`}
-language="js"
-/>
+<pre><code className="language-js">{`const component = document.querySelector('justifi-refund-payment');
+
+document.querySelector('#confirm-refund').onclick = () => component.submit();`}</code></pre>

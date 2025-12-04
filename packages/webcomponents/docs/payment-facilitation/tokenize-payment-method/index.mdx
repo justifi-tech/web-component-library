@@ -5,7 +5,7 @@ description: Secure standalone card/bank tokenization form with built-in validat
 sidebar_position: 1
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -14,10 +14,11 @@ Component to render an entire form including a switch to use a credit card or ba
 
 ## Usage
 
-<UsageSnippet
-  title="Standalone card tokenization"
-  description="Drop-in usage when you want the component to render its own submit button."
-  code={`<!DOCTYPE html>
+### Standalone card tokenization
+
+Drop-in usage when you want the component to render its own submit button.
+
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -199,9 +200,7 @@ Component to render an entire form including a switch to use a credit card or ba
 
   </script>
 
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ### Modular checkout orchestration
 
@@ -342,10 +341,11 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
 
 ## Static examples
 
-<UsageSnippet
-  title="External submission control"
-  description="Hide the internal CTA and trigger tokenization manually (e.g., to combine with a review step)."
-  code={`<justifi-tokenize-payment-method
+### External submission control
+
+Hide the internal CTA and trigger tokenization manually (e.g., to combine with a review step).
+
+<pre><code className="language-html">{`<justifi-tokenize-payment-method
   account-id="acc_123"
   auth-token="wct_abc123"
   hide-submit-button
@@ -355,11 +355,11 @@ When nested inside `<justifi-modular-checkout>`, the component detects the paren
 <button onclick="window.tokenizer.tokenizePaymentMethod()">
   Submit Payment
 </button>
-`} language="html" />
+`}</code></pre>
 
-<UsageSnippet
-  title="Prefill billing info"
-  code={`const tokenizer = document.querySelector('justifi-tokenize-payment-method');
+### Prefill billing info
+
+<pre><code className="language-js">{`const tokenizer = document.querySelector('justifi-tokenize-payment-method');
 
 tokenizer.fillBillingForm({
 name: 'Leslie Knope',
@@ -367,6 +367,4 @@ address_line1: '123 Main St',
 address_city: 'Pawnee',
 address_state: 'IN',
 address_postal_code: '47998',
-});`}
-language="js"
-/>
+});`}</code></pre>

@@ -5,7 +5,7 @@ description: Optional insurance add-on rail that pairs with Modular Checkout sum
 sidebar_position: 25
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -14,9 +14,9 @@ Component to render a formated list of season interruption insurance for the req
 
 ## Usage
 
-<UsageSnippet
-  title="Attach insurance upsell"
-  code={`<!DOCTYPE html>
+### Attach insurance upsell
+
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -78,9 +78,7 @@ Component to render a formated list of season interruption insurance for the req
   />
 </body>
 
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -209,9 +207,9 @@ Component to render a formated list of season interruption insurance for the req
 
 ## Static examples
 
-<UsageSnippet
-  title="Validate selection before submission"
-  code={`const insurance = document.querySelector('justifi-season-interruption-insurance');
+### Validate selection before submission
+
+<pre><code className="language-js">{`const insurance = document.querySelector('justifi-season-interruption-insurance');
 
 const { isValid } = await insurance.validate();
 
@@ -221,6 +219,4 @@ return;
 }
 
 // continue to submit the checkout
-`}
-language="js"
-/>
+`}</code></pre>

@@ -6,7 +6,7 @@ description: Guided workflow for collecting representative, ownership, and compl
 sidebar_position: 11
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -15,10 +15,11 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Usage
 
-<UsageSnippet
-  title="Representative onboarding"
-  description="Mount the component with context about which business you are editing."
-  code={`<!DOCTYPE html>
+### Representative onboarding
+
+Mount the component with context about which business you are editing.
+
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -131,9 +132,7 @@ Component to render a business onboarding form. You will need to first create a 
   })();
 </script>
 
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -232,12 +231,11 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Static examples
 
-<UsageSnippet
-  title="Custom navigation controls"
-  description="Use the public methods to orchestrate a bespoke progress UI."
-  code={`const form = document.querySelector('justifi-business-form');
+### Custom navigation controls
+
+Use the public methods to orchestrate a bespoke progress UI.
+
+<pre><code className="language-js">{`const form = document.querySelector('justifi-business-form');
 
 document.querySelector('#next').addEventListener('click', () => form.next());
-document.querySelector('#prev').addEventListener('click', () => form.previous());`}
-language="js"
-/>
+document.querySelector('#prev').addEventListener('click', () => form.previous());`}</code></pre>

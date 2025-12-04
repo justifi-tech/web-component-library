@@ -5,7 +5,7 @@ description: Order summary block that lists line items, totals, and ancillary di
 sidebar_position: 27
 ---
 
-import { PropsTable, UsageSnippet, PartsTable } from '../../helpers';
+import { PropsTable, PartsTable } from '../../helpers';
 import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
@@ -20,9 +20,9 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Usage
 
-<UsageSnippet
-  title="Summary alongside payment forms"
-  code={`<!DOCTYPE html>
+### Summary alongside payment forms
+
+<pre><code className="language-html">{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -58,9 +58,7 @@ This component exposes **no public methods or properties** and is not intended f
     <justifi-checkout-summary />
   </justifi-modular-checkout>
 </body>
-</html>`}
-  language="html"
-/>
+</html>`}</code></pre>
 
 ## Props, Events & Methods
 
@@ -105,10 +103,8 @@ No custom events; summary listens to the parent checkout for updates automatical
 
 ## Static examples
 
-<UsageSnippet
-  title="Custom refresh"
-  code={`const summary = document.querySelector('justifi-modular-checkout-summary');
+### Custom refresh
 
-document.querySelector('#recalculate').onclick = () => summary.refresh();`}
-language="js"
-/>
+<pre><code className="language-js">{`const summary = document.querySelector('justifi-modular-checkout-summary');
+
+document.querySelector('#recalculate').onclick = () => summary.refresh();`}</code></pre>
