@@ -19,6 +19,7 @@ import mockTerminals from '../../../../mockData/mockTerminalsListSuccess.json';
 import mockTerminalOrders from '../../../../mockData/mockTerminalOrdersListSuccess.json';
 import mockSubAccounts from '../../../../mockData/mockSubAccountsListSuccess.json';
 import mockDispute from '../../../../mockData/mockDisputeResponse.json';
+import mockDisputePastDue from '../../../../mockData/mockDisputePastDueResponse.json';
 import mockNPMVersion from '../../../../mockData/mockNPMVersion.json';
 import mockOrderModels from '../../../../mockData/mockOrderModelsSuccess.json';
 import mockPaymentTransactions from '../../../../mockData/mockPaymentTransactionsSuccess.json';
@@ -223,8 +224,14 @@ export const setUpMocks = () => {
       this.get(API_PATHS.CHECKOUTS_LIST, () => mockCheckoutsList);
 
       // Dispute
-      this.get(API_PATHS.DISPUTE, () => mockDispute);
-      this.post(API_PATHS.DISPUTE_RESPONSE, () => mockDispute);
+      this.get(API_PATHS.DISPUTE, (_schema, request) => {
+        const id = request.params.id;
+        return id.includes('pastdue') ? mockDisputePastDue : mockDispute;
+      });
+      this.post(API_PATHS.DISPUTE_RESPONSE, (_schema, request) => {
+        const id = request.params.id;
+        return id.includes('pastdue') ? mockDisputePastDue : mockDispute;
+      });
 
       // SubAccounts
       this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
