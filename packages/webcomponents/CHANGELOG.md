@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.7.1
+
+### Patch Changes
+
+- 0c34ce6: Include merchant ID in google pay requests
+
 ## 6.7.0
 
 ### Minor Changes
