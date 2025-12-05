@@ -24,40 +24,45 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Platform account or sub-account context for provisioning.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description:
-        'Token with `write:provisioning` scope to securely store payout details.',
-    },
-    {
-      name: 'business-id',
-      type: 'string',
-      required: true,
-      description: 'Business whose payout method is being added.',
-    },
-    {
-      name: 'on-success-text',
-      type: 'string',
-      description:
-        'Overrides the confirmation copy once the payout account is linked.',
-    },
-    {
-      name: 'disable-ach',
-      type: 'boolean',
-      defaultValue: 'false',
-      description:
-        'Hide ACH specific fields when you only support push-to-card or other rails.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description:
+          'Platform account or sub-account context for provisioning.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description:
+          'Token with `write:provisioning` scope to securely store payout details.',
+      },
+      {
+        name: 'business-id',
+        type: 'string',
+        required: true,
+        description: 'Business whose payout method is being added.',
+      },
+      {
+        name: 'on-success-text',
+        type: 'string',
+        description:
+          'Overrides the confirmation copy once the payout account is linked.',
+      },
+      {
+        name: 'disable-ach',
+        type: 'boolean',
+        defaultValue: 'false',
+        description:
+          'Hide ACH specific fields when you only support push-to-card or other rails.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -71,61 +76,53 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-    {
-      name: 'input',
-      description: 'Input field styles.',
-    },
-    {
-      name: 'input-focused',
-      description: 'Input styles when focused.',
-    },
-    {
-      name: 'input-invalid',
-      description: 'Input styles when invalid.',
-    },
-    {
-      name: 'input-invalid-and-focused',
-      description: 'Input styles when invalid and focused.',
-    },
-    {
-      name: 'button',
-      description: 'Button styles.',
-    },
-    {
-      name: 'button-primary',
-      description: 'Primary button styles.',
-    },
-    {
-      name: 'button-disabled',
-      description: 'Disabled button styles.',
-    },
-    {
-      name: 'tooltip-inner',
-      description: 'Tooltip inner content styles.',
-    },
-  ]) }} />
-
-## Static examples
-
-### External submission
-
-Hide the internal CTA and trigger provisioning from a custom footer.
-
-<pre>
-  <code className="language-js">{`const provisioning = document.querySelector('justifi-payment-provisioning');
-
-document.querySelector('#complete-provisioning').onclick = () => provisioning.submit();`}</code>
-</pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'input',
+        description: 'Input field styles.',
+      },
+      {
+        name: 'input-focused',
+        description: 'Input styles when focused.',
+      },
+      {
+        name: 'input-invalid',
+        description: 'Input styles when invalid.',
+      },
+      {
+        name: 'input-invalid-and-focused',
+        description: 'Input styles when invalid and focused.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-primary',
+        description: 'Primary button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+      {
+        name: 'tooltip-inner',
+        description: 'Tooltip inner content styles.',
+      },
+    ]),
+  }}
+/>

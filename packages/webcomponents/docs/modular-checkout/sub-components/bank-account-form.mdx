@@ -5,7 +5,11 @@ description: Bank account rail for Modular Checkout that tokenizes ACH details w
 sidebar_position: 28
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -30,44 +34,46 @@ This component exposes **no public methods or properties** and is not intended f
   <title>justifi-bank-account-form</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
-  <style>
-      /** These are the available parts for styling the component. */
-      ::part(skeleton) {
-        // skeleton styles
-      }
-        
-      ::part(label) {
-        // label styles
-      }
 
-      ::part(input-invalid-and-focused) {
-        // input invalid and focused styles
-      }
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
 
-      ::part(input-invalid) {
-        // input invalid styles
-      }
+<style>
+  /** These are the available parts for styling the component. */
+  ::part(skeleton){' '}
+  {
+    // skeleton styles
+  }
+  ::part(label){' '}
+  {
+    // label styles
+  }
+  ::part(input-invalid-and-focused){' '}
+  {
+    // input invalid and focused styles
+  }
+  ::part(input-invalid){' '}
+  {
+    // input invalid styles
+  }
+  ::part(input-focused){' '}
+  {
+    // input focused styles
+  }
+  ::part(input){' '}
+  {
+    // input styles
+  }
+</style>
 
-      ::part(input-focused) {
-        // input focused styles
-      }
-
-      ::part(input) {
-        // input styles
-      }
-    </style>
 </head>
 
 <body>
-  <justifi-modular-checkout
-    auth-token="authToken"
-    checkout-id="ch_123"  
-  >
+  <justifi-modular-checkout auth-token="authToken" checkout-id="ch_123">
     <justifi-bank-account-form />
-    <button id="submit-button">
-      Submit Checkout
-    </button>
+    <button id="submit-button">Submit Checkout</button>
   </justifi-modular-checkout>
 </body>
 
@@ -89,30 +95,35 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
+
 </html>`}</code></pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'payment-method-group-id',
-      type: 'string',
-      description:
-        'Match the parent checkout\'s group when you want to toggle which rails appear.',
-    },
-    {
-      name: 'show-account-type',
-      type: 'boolean',
-      defaultValue: 'true',
-      description: 'Hide when you only accept checking accounts.',
-    },
-    {
-      name: 'locale',
-      type: 'string',
-      defaultValue: 'en-US',
-      description: 'Controls labels + validation messages.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'payment-method-group-id',
+        type: 'string',
+        description:
+          "Match the parent checkout's group when you want to toggle which rails appear.",
+      },
+      {
+        name: 'show-account-type',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Hide when you only accept checking accounts.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description: 'Controls labels + validation messages.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -124,39 +135,33 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'skeleton',
-      description: 'Skeleton loading state styles.',
-    },
-    {
-      name: 'label',
-      description: 'Label styles.',
-    },
-    {
-      name: 'input-invalid-and-focused',
-      description: 'Input styles when invalid and focused.',
-    },
-    {
-      name: 'input-invalid',
-      description: 'Input styles when invalid.',
-    },
-    {
-      name: 'input-focused',
-      description: 'Input styles when focused.',
-    },
-    {
-      name: 'input',
-      description: 'Input field styles.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Auto-focus fields
-
-Tie custom UI to the public `focus()` method.
-
-<pre><code className="language-js">{`const bankForm = document.querySelector('justifi-bank-account-form');
-
-document.querySelector('#focus-bank').onclick = () => bankForm.focus();`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'skeleton',
+        description: 'Skeleton loading state styles.',
+      },
+      {
+        name: 'label',
+        description: 'Label styles.',
+      },
+      {
+        name: 'input-invalid-and-focused',
+        description: 'Input styles when invalid and focused.',
+      },
+      {
+        name: 'input-invalid',
+        description: 'Input styles when invalid.',
+      },
+      {
+        name: 'input-focused',
+        description: 'Input styles when focused.',
+      },
+      {
+        name: 'input',
+        description: 'Input field styles.',
+      },
+    ]),
+  }}
+/>

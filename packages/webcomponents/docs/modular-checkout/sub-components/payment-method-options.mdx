@@ -13,43 +13,49 @@ import { PropsTable, PartsTable } from '@justifi/webcomponents/docs/helpers';
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-payment-method-options
+<pre>
+  <code className="language-html">{`<justifi-payment-method-options
   selected="card"
   options='[
     {"id":"card","label":"Credit or debit card"},
     {"id":"ach","label":"Bank account"},
     {"id":"wallet","label":"Digital wallet"}
   ]'
-></justifi-payment-method-options>`}</code></pre>
+></justifi-payment-method-options>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'options',
-      type: 'Array<{ id: string; label: string; description?: string; icon?: string }>',
-      required: true,
-      description: 'List of payment rails to display.',
-    },
-    {
-      name: 'selected',
-      type: 'string',
-      description: 'Currently selected option ID.',
-    },
-    {
-      name: 'display-style',
-      type: '"list" | "tabs" | "cards"',
-      defaultValue: 'list',
-      description: 'Controls the visual layout.',
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      defaultValue: 'false',
-      description:
-        'Prevent users from switching rails (e.g., while submitting).',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'options',
+        type: 'Array<{ id: string; label: string; description?: string; icon?: string }>',
+        required: true,
+        description: 'List of payment rails to display.',
+      },
+      {
+        name: 'selected',
+        type: 'string',
+        description: 'Currently selected option ID.',
+      },
+      {
+        name: 'display-style',
+        type: '"list" | "tabs" | "cards"',
+        defaultValue: 'list',
+        description: 'Controls the visual layout.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        defaultValue: 'false',
+        description:
+          'Prevent users from switching rails (e.g., while submitting).',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -61,25 +67,21 @@ import { PropsTable, PartsTable } from '@justifi/webcomponents/docs/helpers';
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'option',
-      description: 'Individual rail container (card/tab/list row).',
-    },
-    {
-      name: 'option-label',
-      description: 'Typography target for the option label.',
-    },
-    {
-      name: 'option-description',
-      description: 'Secondary text area for additional guidance.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Programmatic selection
-
-<pre><code className="language-js">{`const options = document.querySelector('justifi-payment-method-options');
-
-document.querySelector('#select-ach').onclick = () => options.select('ach');`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'option',
+        description: 'Individual rail container (card/tab/list row).',
+      },
+      {
+        name: 'option-label',
+        description: 'Typography target for the option label.',
+      },
+      {
+        name: 'option-description',
+        description: 'Secondary text area for additional guidance.',
+      },
+    ]),
+  }}
+/>

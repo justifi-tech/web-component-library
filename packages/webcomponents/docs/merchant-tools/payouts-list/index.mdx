@@ -13,40 +13,46 @@ Component to render a formated list of payouts for the requested account.
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-payouts-list
+<pre>
+  <code className="language-html">{`<justifi-payouts-list
   account-id="acc_123"
   auth-token="wct_reporting"
   columns="created_at,amount,destination,status"
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Filters payouts to the merchant or platform account.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `read:payouts` scope.',
-    },
-    {
-      name: 'columns',
-      type: 'string',
-      defaultValue: 'created_at,amount,destination,status,expected_arrival',
-      description: 'Comma-separated list controlling table columns.',
-    },
-    {
-      name: 'timezone',
-      type: 'string',
-      defaultValue: 'UTC',
-      description: 'Controls formatting for timestamps.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Filters payouts to the merchant or platform account.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payouts` scope.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue: 'created_at,amount,destination,status,expected_arrival',
+        description: 'Comma-separated list controlling table columns.',
+      },
+      {
+        name: 'timezone',
+        type: 'string',
+        defaultValue: 'UTC',
+        description: 'Controls formatting for timestamps.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -58,37 +64,29 @@ Component to render a formated list of payouts for the requested account.
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-    {
-      name: 'button',
-      description: 'Button styles.',
-    },
-    {
-      name: 'button-disabled',
-      description: 'Disabled button styles.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Navigate to payout details
-
-<pre><code className="language-js">{`const payouts = document.querySelector('justifi-payouts-list');
-
-payouts.addEventListener('click-event', (event) => {
-if (event.detail.name === 'row') {
-router.push('/payouts/' + event.detail.payout_id);
-}
-});`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+    ]),
+  }}
+/>

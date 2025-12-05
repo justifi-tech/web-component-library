@@ -5,7 +5,11 @@ description: Secure standalone card/bank tokenization form with built-in validat
 sidebar_position: 1
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -22,7 +26,12 @@ Component to render an entire form including a switch to use a credit card or ba
   <title>justifi-tokenize-payment-method</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
   <style>
     ::part(font-family) {
       font-family: georgia;
@@ -125,16 +134,17 @@ Component to render an entire form including a switch to use a credit card or ba
       cursor: pointer;
     }
     </style>
+
 </head>
 
-  <body>
-    <justifi-tokenize-payment-method
-      account-id="acc_123"
-      auth-token="authToken"
-      payment-method-group-id="pmg_123"
-      submit-button-text="Tokenize Payment Method"
-    />
-  </body>
+<body>
+  <justifi-tokenize-payment-method
+    account-id="acc_123"
+    auth-token="authToken"
+    payment-method-group-id="pmg_123"
+    submit-button-text="Tokenize Payment Method"
+  />
+</body>
 
   <script>
     const justifiTokenizePaymentMethod = document.querySelector("justifi-tokenize-payment-method");
@@ -199,53 +209,58 @@ Component to render an entire form including a switch to use a credit card or ba
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description:
-        'Platform account that will own the resulting payment method.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description:
-        'Short-lived Web Component Token with `write:tokenize:account_id` scope.',
-    },
-    {
-      name: 'payment-method-group-id',
-      type: 'string',
-      description:
-        'Optional grouping identifier that lets you preselect payment rails in Modular Checkout.',
-    },
-    {
-      name: 'hide-submit-button',
-      type: 'boolean',
-      defaultValue: 'false',
-      description:
-        'Hides the internal CTA when hosting app handles submission.',
-    },
-    {
-      name: 'save-payment-method-label',
-      type: 'string',
-      description:
-        'Overrides the checkbox label when allowing customers to store a card.',
-    },
-    {
-      name: 'locale',
-      type: 'string',
-      defaultValue: 'en-US',
-      description:
-        'Controls localization of labels, placeholders, and currency formatting.',
-    },
-    {
-      name: 'theme',
-      type: 'string',
-      description: 'Name of a predefined theme exported by JustiFi (optional).',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description:
+          'Platform account that will own the resulting payment method.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description:
+          'Short-lived Web Component Token with `write:tokenize:account_id` scope.',
+      },
+      {
+        name: 'payment-method-group-id',
+        type: 'string',
+        description:
+          'Optional grouping identifier that lets you preselect payment rails in Modular Checkout.',
+      },
+      {
+        name: 'hide-submit-button',
+        type: 'boolean',
+        defaultValue: 'false',
+        description:
+          'Hides the internal CTA when hosting app handles submission.',
+      },
+      {
+        name: 'save-payment-method-label',
+        type: 'string',
+        description:
+          'Overrides the checkbox label when allowing customers to store a card.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description:
+          'Controls localization of labels, placeholders, and currency formatting.',
+      },
+      {
+        name: 'theme',
+        type: 'string',
+        description:
+          'Name of a predefined theme exported by JustiFi (optional).',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -261,101 +276,75 @@ Component to render an entire form including a switch to use a credit card or ba
 
 - Hosted fields remain inside PCI-safe iframes, so styling focuses on the outer wrapper plus the `::part` hooks listed below.
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-    {
-      name: 'button',
-      description: 'Button styles.',
-    },
-    {
-      name: 'button-disabled',
-      description: 'Disabled button styles.',
-    },
-    {
-      name: 'input',
-      description: 'Input field styles.',
-    },
-    {
-      name: 'input-focused',
-      description: 'Input styles when focused.',
-    },
-    {
-      name: 'input-invalid',
-      description: 'Input styles when invalid.',
-    },
-    {
-      name: 'input-invalid-and-focused',
-      description: 'Input styles when invalid and focused.',
-    },
-    {
-      name: 'input-radio',
-      description: 'Radio input styles.',
-    },
-    {
-      name: 'input-checkbox',
-      description: 'Checkbox input styles.',
-    },
-    {
-      name: 'input-checkbox-checked',
-      description: 'Checkbox input styles when checked.',
-    },
-    {
-      name: 'input-checkbox-checked-focused',
-      description: 'Checkbox input styles when checked and focused.',
-    },
-    {
-      name: 'input-checkbox-focused',
-      description: 'Checkbox input styles when focused.',
-    },
-    {
-      name: 'button-primary',
-      description: 'Primary button styles.',
-    },
-    {
-      name: 'radio-list-item',
-      description: 'Radio list item styles.',
-    },
-  ]) }} />
-
-- Slots are not exposed (all inputs are encapsulated in PCI iframes), so styling relies on CSS variables and `::part` hooks for wrapper elements.
-
-## Static examples
-
-### External submission control
-
-Hide the internal CTA and trigger tokenization manually (e.g., to combine with a review step).
-
-<pre><code className="language-html">{`<justifi-tokenize-payment-method
-  account-id="acc_123"
-  auth-token="wct_abc123"
-  hide-submit-button
-  ref={el => (window.tokenizer = el)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+      {
+        name: 'input',
+        description: 'Input field styles.',
+      },
+      {
+        name: 'input-focused',
+        description: 'Input styles when focused.',
+      },
+      {
+        name: 'input-invalid',
+        description: 'Input styles when invalid.',
+      },
+      {
+        name: 'input-invalid-and-focused',
+        description: 'Input styles when invalid and focused.',
+      },
+      {
+        name: 'input-radio',
+        description: 'Radio input styles.',
+      },
+      {
+        name: 'input-checkbox',
+        description: 'Checkbox input styles.',
+      },
+      {
+        name: 'input-checkbox-checked',
+        description: 'Checkbox input styles when checked.',
+      },
+      {
+        name: 'input-checkbox-checked-focused',
+        description: 'Checkbox input styles when checked and focused.',
+      },
+      {
+        name: 'input-checkbox-focused',
+        description: 'Checkbox input styles when focused.',
+      },
+      {
+        name: 'button-primary',
+        description: 'Primary button styles.',
+      },
+      {
+        name: 'radio-list-item',
+        description: 'Radio list item styles.',
+      },
+    ]),
+  }}
 />
 
-<button onclick="window.tokenizer.tokenizePaymentMethod()">
-  Submit Payment
-</button>
-`}</code></pre>
-
-### Prefill billing info
-
-<pre><code className="language-js">{`const tokenizer = document.querySelector('justifi-tokenize-payment-method');
-
-tokenizer.fillBillingForm({
-name: 'Leslie Knope',
-address_line1: '123 Main St',
-address_city: 'Pawnee',
-address_state: 'IN',
-address_postal_code: '47998',
-});`}</code></pre>
+- Slots are not exposed (all inputs are encapsulated in PCI iframes), so styling relies on CSS variables and `::part` hooks for wrapper elements.

@@ -15,41 +15,47 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ### Chart monthly volume
 
-<pre><code className="language-html">{`<justifi-gross-payment-chart
+<pre>
+  <code className="language-html">{`<justifi-gross-payment-chart
   account-id="acc_123"
   auth-token="wct_reporting"
   interval="month"
   range="12m"
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Determines which payments to graph.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `read:payments` scope.',
-    },
-    {
-      name: 'interval',
-      type: '"day" | "week" | "month"',
-      defaultValue: 'day',
-      description: 'Bucket size for data points.',
-    },
-    {
-      name: 'range',
-      type: 'string',
-      defaultValue: '30d',
-      description: 'Total timeframe (e.g., `7d`, `3m`, `12m`).',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Determines which payments to graph.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payments` scope.',
+      },
+      {
+        name: 'interval',
+        type: '"day" | "week" | "month"',
+        defaultValue: 'day',
+        description: 'Bucket size for data points.',
+      },
+      {
+        name: 'range',
+        type: 'string',
+        defaultValue: '30d',
+        description: 'Total timeframe (e.g., `7d`, `3m`, `12m`).',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -61,21 +67,17 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    { name: 'chart', description: 'SVG/Canvas container for the line chart.' },
-    {
-      name: 'tooltip',
-      description: 'Floating tooltip bubble when hovering/focusing a point.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Toggle ranges
-
-<pre><code className="language-js">{`const chart = document.querySelector('justifi-gross-payment-chart');
-
-document.querySelector('#range').addEventListener('change', (event) => {
-chart.setAttribute('range', event.target.value);
-chart.refresh();
-});`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'chart',
+        description: 'SVG/Canvas container for the line chart.',
+      },
+      {
+        name: 'tooltip',
+        description: 'Floating tooltip bubble when hovering/focusing a point.',
+      },
+    ]),
+  }}
+/>

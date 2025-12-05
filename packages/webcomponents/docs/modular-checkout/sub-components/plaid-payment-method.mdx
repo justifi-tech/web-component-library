@@ -5,7 +5,11 @@ description: Plaid-powered ACH rail for Modular Checkout with hosted Link flow.
 sidebar_position: 23
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -28,48 +32,28 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
   <title>justifi-plaid-payment-method</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
-  <style>
-      /** These are the available parts for styling the component. */
-      ::part(text) {
-        /* text styles */
-      }
 
-      ::part(text-danger) {
-        /* text danger styles */
-      }
-      
-      ::part(label) {
-        /* label styles */
-      }
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
 
-      ::part(input-radio) {
-        /* input radio styles */
-      }
+<style>
+  /** These are the available parts for styling the component. */ ::part(text){' '}
+  {/* text styles */}
+  ::part(text-danger) {/* text danger styles */}
+  ::part(label) {/* label styles */}
+  ::part(input-radio) {/* input radio styles */}
+  ::part(input-radio-focused) {/* input radio focused styles */}
+  ::part(input-radio-checked) {/* input radio checked styles */}
+  ::part(input-radio-checked-focused) {/* input radio checked focused styles */}
+  ::part(input-radio-invalid) {/* input radio invalid styles */}
+</style>
 
-      ::part(input-radio-focused) {
-        /* input radio focused styles */
-      }
-
-      ::part(input-radio-checked) {
-        /* input radio checked styles */
-      }
-
-      ::part(input-radio-checked-focused) {
-        /* input radio checked focused styles */
-      }
-
-      ::part(input-radio-invalid) {
-        /* input radio invalid styles */
-      }
-    </style>
 </head>
 
 <body>
-  <justifi-modular-checkout
-    auth-token="authToken"
-    checkout-id="ch_123"  
-  >
+  <justifi-modular-checkout auth-token="authToken" checkout-id="ch_123">
     <justifi-plaid-payment-method />
   </justifi-modular-checkout>
 </body>
@@ -87,31 +71,36 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
     });
   })();
 </script>
+
 </html>`}</code></pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'link-token',
-      type: 'string',
-      required: true,
-      description:
-        'Server-generated Plaid link token scoped to the current customer.',
-    },
-    {
-      name: 'locale',
-      type: 'string',
-      defaultValue: 'en-US',
-      description: 'Pass through to Plaid for language + formatting.',
-    },
-    {
-      name: 'theme',
-      type: '"dark" | "light"',
-      defaultValue: 'dark',
-      description: 'Controls Plaid Link UI theme.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'link-token',
+        type: 'string',
+        required: true,
+        description:
+          'Server-generated Plaid link token scoped to the current customer.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description: 'Pass through to Plaid for language + formatting.',
+      },
+      {
+        name: 'theme',
+        type: '"dark" | "light"',
+        defaultValue: 'dark',
+        description: 'Controls Plaid Link UI theme.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -129,47 +118,41 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 - Styling is limited to the wrapper since Plaid controls the Link modal.
 - Provide fallback instructions for devices where Plaid is unavailable.
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'text',
-      description: 'Text styles.',
-    },
-    {
-      name: 'text-danger',
-      description: 'Danger/error text styles.',
-    },
-    {
-      name: 'label',
-      description: 'Label styles.',
-    },
-    {
-      name: 'input-radio',
-      description: 'Radio input styles.',
-    },
-    {
-      name: 'input-radio-focused',
-      description: 'Radio input styles when focused.',
-    },
-    {
-      name: 'input-radio-checked',
-      description: 'Radio input styles when checked.',
-    },
-    {
-      name: 'input-radio-checked-focused',
-      description: 'Radio input styles when checked and focused.',
-    },
-    {
-      name: 'input-radio-invalid',
-      description: 'Radio input styles when invalid.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Listening for success
-
-<pre><code className="language-js">{`const plaidRail = document.querySelector('justifi-plaid-payment-method');
-
-plaidRail.addEventListener('plaid-success', ({ detail }) => {
-console.log('Bank linked: ', detail.institution.name);
-});`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'text',
+        description: 'Text styles.',
+      },
+      {
+        name: 'text-danger',
+        description: 'Danger/error text styles.',
+      },
+      {
+        name: 'label',
+        description: 'Label styles.',
+      },
+      {
+        name: 'input-radio',
+        description: 'Radio input styles.',
+      },
+      {
+        name: 'input-radio-focused',
+        description: 'Radio input styles when focused.',
+      },
+      {
+        name: 'input-radio-checked',
+        description: 'Radio input styles when checked.',
+      },
+      {
+        name: 'input-radio-checked-focused',
+        description: 'Radio input styles when checked and focused.',
+      },
+      {
+        name: 'input-radio-invalid',
+        description: 'Radio input styles when invalid.',
+      },
+    ]),
+  }}
+/>

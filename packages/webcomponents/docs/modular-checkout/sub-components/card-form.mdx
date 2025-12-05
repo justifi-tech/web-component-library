@@ -5,7 +5,11 @@ description: Card entry sub-component for Modular Checkout layouts with shared v
 sidebar_position: 2
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -30,44 +34,46 @@ This component exposes **no public methods or properties** and is not intended f
   <title>justifi-card-form</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
-  <style>
-      /** These are the available parts for styling the component. */
-      ::part(skeleton) {
-        // skeleton styles
-      }
-        
-      ::part(label) {
-        // label styles
-      }
 
-      ::part(input-invalid-and-focused) {
-        // input invalid and focused styles
-      }
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
 
-      ::part(input-invalid) {
-        // input invalid styles
-      }
+<style>
+  /** These are the available parts for styling the component. */
+  ::part(skeleton){' '}
+  {
+    // skeleton styles
+  }
+  ::part(label){' '}
+  {
+    // label styles
+  }
+  ::part(input-invalid-and-focused){' '}
+  {
+    // input invalid and focused styles
+  }
+  ::part(input-invalid){' '}
+  {
+    // input invalid styles
+  }
+  ::part(input-focused){' '}
+  {
+    // input focused styles
+  }
+  ::part(input){' '}
+  {
+    // input styles
+  }
+</style>
 
-      ::part(input-focused) {
-        // input focused styles
-      }
-
-      ::part(input) {
-        // input styles
-      }
-    </style>
 </head>
 
 <body>
-  <justifi-modular-checkout
-    auth-token="authToken"
-    checkout-id="ch_123"  
-  >
+  <justifi-modular-checkout auth-token="authToken" checkout-id="ch_123">
     <justifi-card-form />
-    <button id="submit-button">
-      Submit Checkout
-    </button>
+    <button id="submit-button">Submit Checkout</button>
   </justifi-modular-checkout>
 </body>
 
@@ -89,37 +95,42 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
+
 </html>`}</code></pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'payment-method-group-id',
-      type: 'string',
-      description:
-        'Matches the group configured in the parent checkout to toggle allowed rails.',
-    },
-    {
-      name: 'show-save-payment-method',
-      type: 'boolean',
-      defaultValue: 'true',
-      description:
-        'Displays a checkbox that surfaces the modular checkout save-preference state.',
-    },
-    {
-      name: 'card-brand-icons',
-      type: '"auto" | "none"',
-      defaultValue: 'auto',
-      description: 'Controls whether brand icons display above inputs.',
-    },
-    {
-      name: 'locale',
-      type: 'string',
-      defaultValue: 'en-US',
-      description: 'Overrides localized labels if needed.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'payment-method-group-id',
+        type: 'string',
+        description:
+          'Matches the group configured in the parent checkout to toggle allowed rails.',
+      },
+      {
+        name: 'show-save-payment-method',
+        type: 'boolean',
+        defaultValue: 'true',
+        description:
+          'Displays a checkbox that surfaces the modular checkout save-preference state.',
+      },
+      {
+        name: 'card-brand-icons',
+        type: '"auto" | "none"',
+        defaultValue: 'auto',
+        description: 'Controls whether brand icons display above inputs.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description: 'Overrides localized labels if needed.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -133,45 +144,35 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
 
 - When embedded inside cards, wrap the host element in your layout container and scope typography overrides via the parts listed below.
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'skeleton',
-      description: 'Skeleton loading state styles.',
-    },
-    {
-      name: 'label',
-      description: 'Label styles.',
-    },
-    {
-      name: 'input-invalid-and-focused',
-      description: 'Input styles when invalid and focused.',
-    },
-    {
-      name: 'input-invalid',
-      description: 'Input styles when invalid.',
-    },
-    {
-      name: 'input-focused',
-      description: 'Input styles when focused.',
-    },
-    {
-      name: 'input',
-      description: 'Input field styles.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'skeleton',
+        description: 'Skeleton loading state styles.',
+      },
+      {
+        name: 'label',
+        description: 'Label styles.',
+      },
+      {
+        name: 'input-invalid-and-focused',
+        description: 'Input styles when invalid and focused.',
+      },
+      {
+        name: 'input-invalid',
+        description: 'Input styles when invalid.',
+      },
+      {
+        name: 'input-focused',
+        description: 'Input styles when focused.',
+      },
+      {
+        name: 'input',
+        description: 'Input field styles.',
+      },
+    ]),
+  }}
+/>
 
 - Use the `card-form` CSS part (`::part(card-form)`) to apply box shadows or wrapper padding.
-
-## Static examples
-
-### Card form with disabled save option
-
-<pre><code className="language-html">{`<justifi-modular-checkout-card-form
-  show-save-payment-method="false"
-/>`}</code></pre>
-
-### Force brand icons off
-
-<pre><code className="language-html">{`<justifi-modular-checkout-card-form
-  card-brand-icons="none"
-/>`}</code></pre>

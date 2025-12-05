@@ -13,40 +13,46 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-payment-transactions-list
+<pre>
+  <code className="language-html">{`<justifi-payment-transactions-list
   account-id="acc_123"
   auth-token="wct_reporting"
   filters='{"payment_id":"pay_456"}'
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Determines which transactions a user can view.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `read:payments` scope.',
-    },
-    {
-      name: 'filters',
-      type: 'string | Record<string, unknown>',
-      description:
-        'JSON string or object specifying filter criteria (payment_id, status, date range).',
-    },
-    {
-      name: 'enable-export',
-      type: 'boolean',
-      defaultValue: 'false',
-      description: 'Adds export controls when true.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Determines which transactions a user can view.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payments` scope.',
+      },
+      {
+        name: 'filters',
+        type: 'string | Record<string, unknown>',
+        description:
+          'JSON string or object specifying filter criteria (payment_id, status, date range).',
+      },
+      {
+        name: 'enable-export',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Adds export controls when true.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -59,27 +65,21 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Listening for filter changes
-
-<pre><code className="language-js">{`const ledger = document.querySelector('justifi-payment-transactions-list');
-
-ledger.addEventListener('filter-changed', (event) => {
-console.log('Filters now', event.detail);
-});`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+    ]),
+  }}
+/>

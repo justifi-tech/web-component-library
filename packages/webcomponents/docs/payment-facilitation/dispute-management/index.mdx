@@ -13,40 +13,47 @@ Component to render notification of disputed payments and allow platform to resp
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-dispute-management
+<pre>
+  <code className="language-html">{`<justifi-dispute-management
   account-id="acc_123"
   auth-token="wct_disputes"
   dispute-id="dp_456"
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Authorizes access to disputes for a platform or merchant.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `write:disputes` scope.',
-    },
-    {
-      name: 'dispute-id',
-      type: 'string',
-      required: true,
-      description: 'Specific dispute to review/respond to.',
-    },
-    {
-      name: 'read-only',
-      type: 'boolean',
-      defaultValue: 'false',
-      description: 'Disable response actions when true.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description:
+          'Authorizes access to disputes for a platform or merchant.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `write:disputes` scope.',
+      },
+      {
+        name: 'dispute-id',
+        type: 'string',
+        required: true,
+        description: 'Specific dispute to review/respond to.',
+      },
+      {
+        name: 'read-only',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Disable response actions when true.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -60,39 +67,33 @@ Component to render notification of disputed payments and allow platform to resp
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-    {
-      name: 'button',
-      description: 'Button styles.',
-    },
-    {
-      name: 'button-secondary',
-      description: 'Secondary button styles.',
-    },
-    {
-      name: 'button-disabled',
-      description: 'Disabled button styles.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Listening for evidence uploads
-
-<pre><code className="language-js">{`const disputes = document.querySelector('justifi-dispute-management');
-
-disputes.addEventListener('evidence-uploaded', ({ detail }) => {
-toast.success('Uploaded ' + detail.file_name);
-});`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-secondary',
+        description: 'Secondary button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+    ]),
+  }}
+/>

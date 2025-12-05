@@ -13,40 +13,46 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-payout-transactions-list
+<pre>
+  <code className="language-html">{`<justifi-payout-transactions-list
   account-id="acc_123"
   auth-token="wct_reporting"
   payout-id="po_456"
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Authorization context.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `read:payouts` scope.',
-    },
-    {
-      name: 'payout-id',
-      type: 'string',
-      required: true,
-      description: 'Payout whose transactions should be displayed.',
-    },
-    {
-      name: 'columns',
-      type: 'string',
-      defaultValue: 'type,amount,source,status',
-      description: 'Column ordering and selection.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Authorization context.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payouts` scope.',
+      },
+      {
+        name: 'payout-id',
+        type: 'string',
+        required: true,
+        description: 'Payout whose transactions should be displayed.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue: 'type,amount,source,status',
+        description: 'Column ordering and selection.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -58,27 +64,21 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Open payment details
-
-<pre><code className="language-js">{`const payoutLedger = document.querySelector('justifi-payout-transactions-list');
-
-payoutLedger.addEventListener('click-event', ({ detail }) => {
-router.push('/payments/' + detail.transaction_id);
-});`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+    ]),
+  }}
+/>

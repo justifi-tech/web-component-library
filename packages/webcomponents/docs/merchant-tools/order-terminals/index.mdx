@@ -13,39 +13,45 @@ Component to render a form for terminal order requests.
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-order-terminals
+<pre>
+  <code className="language-html">{`<justifi-order-terminals
   account-id="acc_123"
   auth-token="wct_terminals"
   shipping-contact="contact_456"
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Merchant placing the order.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `write:terminals` scope.',
-    },
-    {
-      name: 'shipping-contact',
-      type: 'string',
-      description:
-        'Optional saved contact ID; when omitted the component collects address info inline.',
-    },
-    {
-      name: 'allowed-products',
-      type: 'string',
-      description: 'Comma-separated SKU list to limit which devices appear.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Merchant placing the order.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `write:terminals` scope.',
+      },
+      {
+        name: 'shipping-contact',
+        type: 'string',
+        description:
+          'Optional saved contact ID; when omitted the component collects address info inline.',
+      },
+      {
+        name: 'allowed-products',
+        type: 'string',
+        description: 'Comma-separated SKU list to limit which devices appear.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -58,27 +64,21 @@ Component to render a form for terminal order requests.
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Restrict SKUs
-
-<pre><code className="language-html">{`<justifi-order-terminals
-  account-id="acc_123"
-  auth-token="wct_terminals"
-  allowed-products="WISEPAD_3,WISEPOS_E"
-/>`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+    ]),
+  }}
+/>

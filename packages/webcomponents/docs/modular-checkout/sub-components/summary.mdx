@@ -5,7 +5,11 @@ description: Order summary block that lists line items, totals, and ancillary di
 sidebar_position: 27
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -59,27 +63,31 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'checkout-id',
-      type: 'string',
-      required: true,
-      description: 'Determines the line items and totals to display.',
-    },
-    {
-      name: 'show-disclosures',
-      type: 'boolean',
-      defaultValue: 'false',
-      description:
-        'Displays compliance copy (e.g., insurance terms, surcharges).',
-    },
-    {
-      name: 'show-line-item-icons',
-      type: 'boolean',
-      defaultValue: 'true',
-      description: 'Hide icons when you want an ultra-minimal summary.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'checkout-id',
+        type: 'string',
+        required: true,
+        description: 'Determines the line items and totals to display.',
+      },
+      {
+        name: 'show-disclosures',
+        type: 'boolean',
+        defaultValue: 'false',
+        description:
+          'Displays compliance copy (e.g., insurance terms, surcharges).',
+      },
+      {
+        name: 'show-line-item-icons',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Hide icons when you want an ultra-minimal summary.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -91,17 +99,13 @@ No custom events; summary listens to the parent checkout for updates automatical
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'text',
-      description: 'Text styles for the summary component.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Custom refresh
-
-<pre><code className="language-js">{`const summary = document.querySelector('justifi-modular-checkout-summary');
-
-document.querySelector('#recalculate').onclick = () => summary.refresh();`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'text',
+        description: 'Text styles for the summary component.',
+      },
+    ]),
+  }}
+/>

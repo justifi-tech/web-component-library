@@ -13,11 +13,13 @@ Component to display detailed information about a specific payout.
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-payout-details
+<pre>
+  <code className="language-html">{`<justifi-payout-details
   account-id="acc_123"
   auth-token="wct_reporting"
   payout-id="po_456"
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
@@ -80,11 +82,3 @@ Component to display detailed information about a specific payout.
     ]),
   }}
 />
-
-## Static examples
-
-### Auto-refresh
-
-<pre><code className="language-js">{`const payout = document.querySelector('justifi-payout-details');
-
-setInterval(() => payout.refresh(), 60_000);`}</code></pre>

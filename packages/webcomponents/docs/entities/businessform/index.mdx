@@ -6,7 +6,11 @@ description: Guided workflow for collecting representative, ownership, and compl
 sidebar_position: 11
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -134,38 +138,43 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Owning platform account used for authorization.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description:
-        'Short-lived onboarding token; must include `write:onboarding` scope.',
-    },
-    {
-      name: 'business-id',
-      type: 'string',
-      required: true,
-      description: 'The business whose representatives/owners you are editing.',
-    },
-    {
-      name: 'show-progress',
-      type: 'boolean',
-      defaultValue: 'false',
-      description: 'Displays a stepper + completion state when true.',
-    },
-    {
-      name: 'support-phone',
-      type: 'string',
-      description: 'Optional phone number displayed inside support callouts.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Owning platform account used for authorization.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description:
+          'Short-lived onboarding token; must include `write:onboarding` scope.',
+      },
+      {
+        name: 'business-id',
+        type: 'string',
+        required: true,
+        description:
+          'The business whose representatives/owners you are editing.',
+      },
+      {
+        name: 'show-progress',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Displays a stepper + completion state when true.',
+      },
+      {
+        name: 'support-phone',
+        type: 'string',
+        description: 'Optional phone number displayed inside support callouts.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -180,62 +189,53 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-    {
-      name: 'input',
-      description: 'Input field styles.',
-    },
-    {
-      name: 'input-focused',
-      description: 'Input styles when focused.',
-    },
-    {
-      name: 'input-invalid',
-      description: 'Input styles when invalid.',
-    },
-    {
-      name: 'input-invalid-and-focused',
-      description: 'Input styles when invalid and focused.',
-    },
-    {
-      name: 'button',
-      description: 'Button styles.',
-    },
-    {
-      name: 'button-primary',
-      description: 'Primary button styles.',
-    },
-    {
-      name: 'button-disabled',
-      description: 'Disabled button styles.',
-    },
-    {
-      name: 'tooltip-inner',
-      description: 'Tooltip inner content styles.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Custom navigation controls
-
-Use the public methods to orchestrate a bespoke progress UI.
-
-<pre>
-  <code className="language-js">{`const form = document.querySelector('justifi-business-form');
-
-document.querySelector('#next').addEventListener('click', () => form.next());
-document.querySelector('#prev').addEventListener('click', () => form.previous());`}</code>
-</pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'input',
+        description: 'Input field styles.',
+      },
+      {
+        name: 'input-focused',
+        description: 'Input styles when focused.',
+      },
+      {
+        name: 'input-invalid',
+        description: 'Input styles when invalid.',
+      },
+      {
+        name: 'input-invalid-and-focused',
+        description: 'Input styles when invalid and focused.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-primary',
+        description: 'Primary button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+      {
+        name: 'tooltip-inner',
+        description: 'Tooltip inner content styles.',
+      },
+    ]),
+  }}
+/>

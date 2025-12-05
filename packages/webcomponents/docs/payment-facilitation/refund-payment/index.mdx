@@ -5,7 +5,11 @@ description: Guided UI for issuing full or partial refunds with reason codes and
 sidebar_position: 33
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -22,7 +26,12 @@ Component to render a form for partially or fully refunding a payment based on a
   <title>justifi-refund-payment</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
   <style>
     ::part(font-family) {
       font-family: georgia;
@@ -92,6 +101,7 @@ Component to render a form for partially or fully refunding a payment based on a
       color: #333;
     }
     </style>
+
 </head>
 
 <body>
@@ -104,6 +114,7 @@ Component to render a form for partially or fully refunding a payment based on a
 
   <!-- Optional external button - this is only needed if the built in button is hidden via the hide-submit-button prop
    and the refund is submitted via provided refundPayment() method - see below. -->
+
   <button id="submit-refund-button">Submit Refund</button>
 </body>
 
@@ -128,42 +139,47 @@ Component to render a form for partially or fully refunding a payment based on a
     });
   })();
 </script>
+
 </html>`}</code></pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description:
-        'Ensures refunds are scoped to the correct platform account.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `write:refunds` scope.',
-    },
-    {
-      name: 'payment-id',
-      type: 'string',
-      required: true,
-      description: 'Payment being refunded.',
-    },
-    {
-      name: 'max-amount',
-      type: 'string | number',
-      description:
-        'Upper limit for partial refunds (defaults to remaining amount).',
-    },
-    {
-      name: 'default-reason',
-      type: 'string',
-      description: 'Preselects a refund reason code.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description:
+          'Ensures refunds are scoped to the correct platform account.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `write:refunds` scope.',
+      },
+      {
+        name: 'payment-id',
+        type: 'string',
+        required: true,
+        description: 'Payment being refunded.',
+      },
+      {
+        name: 'max-amount',
+        type: 'string | number',
+        description:
+          'Upper limit for partial refunds (defaults to remaining amount).',
+      },
+      {
+        name: 'default-reason',
+        type: 'string',
+        description: 'Preselects a refund reason code.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -177,53 +193,49 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-    {
-      name: 'button',
-      description: 'Button styles.',
-    },
-    {
-      name: 'button-disabled',
-      description: 'Disabled button styles.',
-    },
-    {
-      name: 'input',
-      description: 'Input field styles.',
-    },
-    {
-      name: 'input-focused',
-      description: 'Input styles when focused.',
-    },
-    {
-      name: 'input-invalid',
-      description: 'Input styles when invalid.',
-    },
-    {
-      name: 'input-invalid-and-focused',
-      description: 'Input styles when invalid and focused.',
-    },
-    {
-      name: 'button-primary',
-      description: 'Primary button styles.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Programmatic refunds
-
-<pre><code className="language-js">{`const component = document.querySelector('justifi-refund-payment');
-
-document.querySelector('#confirm-refund').onclick = () => component.submit();`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+      {
+        name: 'input',
+        description: 'Input field styles.',
+      },
+      {
+        name: 'input-focused',
+        description: 'Input styles when focused.',
+      },
+      {
+        name: 'input-invalid',
+        description: 'Input styles when invalid.',
+      },
+      {
+        name: 'input-invalid-and-focused',
+        description: 'Input styles when invalid and focused.',
+      },
+      {
+        name: 'button-primary',
+        description: 'Primary button styles.',
+      },
+    ]),
+  }}
+/>
