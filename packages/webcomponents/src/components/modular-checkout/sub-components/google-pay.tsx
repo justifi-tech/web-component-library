@@ -206,6 +206,7 @@ export class GooglePay {
       this.countryCode,
       checkoutStore.paymentCurrency,
       this.merchantName,
+      this.merchantId,
     );
   }
 

@@ -278,7 +278,8 @@ export class GooglePayService implements IGooglePayService {
     label: string,
     countryCode: string = 'US',
     currencyCode: string = 'USD',
-    merchantName: string
+    merchantName: string,
+    merchantId: string
   ): IGooglePayPaymentDataRequest {
     const request: IGooglePayPaymentDataRequest = {
       apiVersion: 2,
@@ -293,6 +294,7 @@ export class GooglePayService implements IGooglePayService {
       },
       merchantInfo: {
         merchantName,
+        merchantId,
       },
     };
 
