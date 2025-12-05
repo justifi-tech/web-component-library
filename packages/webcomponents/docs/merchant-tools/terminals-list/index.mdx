@@ -13,40 +13,46 @@ Component to render a formated list of terminals for the requested account.
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-terminals-list
+<pre>
+  <code className="language-html">{`<justifi-terminals-list
   account-id="acc_123"
   auth-token="wct_terminals"
   filters='{"status":"online"}'
-/>`}</code></pre>
+/>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Scope inventory to a merchant/platform.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description: 'Token with `read:terminals` scope.',
-    },
-    {
-      name: 'filters',
-      type: 'string | Record<string, unknown>',
-      description:
-        'Optional JSON to preset status, location, or software filters.',
-    },
-    {
-      name: 'columns',
-      type: 'string',
-      defaultValue: 'name,status,location,last_check_in',
-      description: 'Customize visible columns.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Scope inventory to a merchant/platform.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:terminals` scope.',
+      },
+      {
+        name: 'filters',
+        type: 'string | Record<string, unknown>',
+        description:
+          'Optional JSON to preset status, location, or software filters.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue: 'name,status,location,last_check_in',
+        description: 'Customize visible columns.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -59,35 +65,29 @@ Component to render a formated list of terminals for the requested account.
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'font-family',
-      description: 'Controls the font family for the component.',
-    },
-    {
-      name: 'color',
-      description: 'Controls the text color.',
-    },
-    {
-      name: 'background-color',
-      description: 'Controls the background color.',
-    },
-    {
-      name: 'button',
-      description: 'Button styles.',
-    },
-    {
-      name: 'button-disabled',
-      description: 'Disabled button styles.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Open device detail
-
-<pre><code className="language-js">{`const terminals = document.querySelector('justifi-terminals-list');
-
-terminals.addEventListener('click-event', ({ detail }) => {
-router.push('/terminals/' + detail.terminal_id);
-});`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+    ]),
+  }}
+/>

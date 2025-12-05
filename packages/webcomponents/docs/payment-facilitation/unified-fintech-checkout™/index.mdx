@@ -148,17 +148,3 @@ import { PropsTable, PartsTable } from '@justifi/webcomponents/docs/helpers';
     ]),
   }}
 />
-
-## Static examples
-
-### Listen for completion
-
-Trigger downstream logic when checkout completes.
-
-<pre>
-  <code className="language-js">{`const checkout = document.querySelector('justifi-checkout');
-
-checkout.addEventListener('completed', (event) => {
-analytics.track('checkout_completed', event.detail);
-});`}</code>
-</pre>

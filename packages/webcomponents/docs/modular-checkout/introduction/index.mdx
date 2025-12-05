@@ -14,51 +14,57 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 ## Usage
 
-<pre><code className="language-html">{`<justifi-modular-checkout
+<pre>
+  <code className="language-html">{`<justifi-modular-checkout
   account-id="acc_123"
   auth-token="wct_checkout"
   checkout-id="chk_456"
 >
   <justifi-modular-checkout-card-form slot="payment-methods" />
   <justifi-modular-checkout-summary slot="summary" />
-</justifi-modular-checkout>`}</code></pre>
+</justifi-modular-checkout>`}</code>
+</pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'account-id',
-      type: 'string',
-      required: true,
-      description: 'Platform or merchant account for the checkout session.',
-    },
-    {
-      name: 'auth-token',
-      type: 'string',
-      required: true,
-      description:
-        'Token with scopes for reading checkout data and tokenizing payment methods.',
-    },
-    {
-      name: 'checkout-id',
-      type: 'string',
-      required: true,
-      description:
-        'Server-side checkout object controlling totals and allowed rails.',
-    },
-    {
-      name: 'submit-label',
-      type: 'string',
-      defaultValue: 'Pay now',
-      description: 'Override the CTA copy.',
-    },
-    {
-      name: 'locale',
-      type: 'string',
-      defaultValue: 'en-US',
-      description: 'Controls currency format + copy.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Platform or merchant account for the checkout session.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description:
+          'Token with scopes for reading checkout data and tokenizing payment methods.',
+      },
+      {
+        name: 'checkout-id',
+        type: 'string',
+        required: true,
+        description:
+          'Server-side checkout object controlling totals and allowed rails.',
+      },
+      {
+        name: 'submit-label',
+        type: 'string',
+        defaultValue: 'Pay now',
+        description: 'Override the CTA copy.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description: 'Controls currency format + copy.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -75,26 +81,22 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 - Slots expose `::part(summary)` and `::part(payment-methods)` so you can adjust spacing for each region.
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'shell',
-      description: 'Outer wrapper that surrounds the full modular checkout.',
-    },
-    {
-      name: 'payment-methods',
-      description: 'Region that houses card/bank/alternative rails.',
-    },
-    {
-      name: 'summary',
-      description: 'Order summary slot, typically on the right on desktop.',
-    },
-    { name: 'cta', description: 'Primary submit button container.' },
-  ]) }} />
-
-## Static examples
-
-### Programmatic submission
-
-<pre><code className="language-js">{`const modCheckout = document.querySelector('justifi-modular-checkout');
-
-document.querySelector('#submit-order').addEventListener('click', () => modCheckout.submit());`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'shell',
+        description: 'Outer wrapper that surrounds the full modular checkout.',
+      },
+      {
+        name: 'payment-methods',
+        description: 'Region that houses card/bank/alternative rails.',
+      },
+      {
+        name: 'summary',
+        description: 'Order summary slot, typically on the right on desktop.',
+      },
+      { name: 'cta', description: 'Primary submit button container.' },
+    ]),
+  }}
+/>

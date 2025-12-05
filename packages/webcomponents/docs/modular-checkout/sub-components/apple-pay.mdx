@@ -5,7 +5,11 @@ description: Apple Pay rail for Modular Checkout that exposes wallet buttons and
 sidebar_position: 22
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -22,13 +26,19 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
   <title>justifi-apple-pay</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
-  <style>
-      /** These are the available parts for styling the component. */
-      ::part(button) {
-        // button styles
-      }
-    </style>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+<style>
+  /** These are the available parts for styling the component. */ ::part(button){' '}
+  {
+    // button styles
+  }
+</style>
+
 </head>
 
 <body>
@@ -44,27 +54,31 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'button-style',
-      type: '"black" | "white" | "white-outline"',
-      defaultValue: 'black',
-      description: 'Matches Apple\'s Human Interface Guidelines.',
-    },
-    {
-      name: 'button-type',
-      type: '"buy" | "donate" | "plain"',
-      defaultValue: 'buy',
-      description: 'Set the label/icon on the wallet button.',
-    },
-    {
-      name: 'locale',
-      type: 'string',
-      defaultValue: 'en-US',
-      description:
-        'Controls the region on the underlying `ApplePaySession` request.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'button-style',
+        type: '"black" | "white" | "white-outline"',
+        defaultValue: 'black',
+        description: "Matches Apple's Human Interface Guidelines.",
+      },
+      {
+        name: 'button-type',
+        type: '"buy" | "donate" | "plain"',
+        defaultValue: 'buy',
+        description: 'Set the label/icon on the wallet button.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description:
+          'Controls the region on the underlying `ApplePaySession` request.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -79,18 +93,14 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 - Styling is intentionally limited to keep Apple compliance.
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'button',
-      description:
-        'Wrapper around the native Apple Pay button for margin/padding tweaks.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Custom launch button
-
-<pre><code className="language-js">{`const applePay = document.querySelector('justifi-apple-pay');
-
-document.querySelector('#apple-pay-launch').onclick = () => applePay.begin();`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'button',
+        description:
+          'Wrapper around the native Apple Pay button for margin/padding tweaks.',
+      },
+    ]),
+  }}
+/>

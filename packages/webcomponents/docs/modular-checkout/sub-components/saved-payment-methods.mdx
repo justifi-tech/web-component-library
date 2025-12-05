@@ -5,7 +5,11 @@ description: Saved payment selector for Modular Checkout that handles defaulting
 sidebar_position: 26
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -30,48 +34,51 @@ This component exposes **no public methods or properties** and is not intended f
   <title>justifi-saved-payment-methods</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
-  <style>
-      /** These are the available parts for styling the component. */
-      ::part(text) {
-        // text styles
-      }
 
-      ::part(text-danger) {
-        // text danger styles
-      }
-      
-      ::part(label) { 
-        // label styles
-      }
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
 
-      ::part(input-radio) {
-        // input radio styles
-      }
+<style>
+  /** These are the available parts for styling the component. */ ::part(text){' '}
+  {
+    // text styles
+  }
+  ::part(text-danger){' '}
+  {
+    // text danger styles
+  }
+  ::part(label){' '}
+  {
+    // label styles
+  }
+  ::part(input-radio){' '}
+  {
+    // input radio styles
+  }
+  ::part(input-radio-focused){' '}
+  {
+    // input radio focused styles
+  }
+  ::part(input-radio-checked){' '}
+  {
+    // input radio checked styles
+  }
+  ::part(input-radio-checked-focused){' '}
+  {
+    // input radio checked focused styles
+  }
+  ::part(input-radio-invalid){' '}
+  {
+    // input radio invalid styles
+  }
+</style>
 
-      ::part(input-radio-focused) {
-        // input radio focused styles
-      }
-
-      ::part(input-radio-checked) {
-        // input radio checked styles
-      }
-
-      ::part(input-radio-checked-focused) {
-        // input radio checked focused styles
-      }
-
-      ::part(input-radio-invalid) {
-        // input radio invalid styles
-      }
-    </style>
 </head>
 
 <body>
-  <justifi-modular-checkout
-    auth-token="authToken"
-    checkout-id="ch_123"  
-  >
+  <justifi-modular-checkout auth-token="authToken" checkout-id="ch_123">
     <justifi-saved-payment-methods />
   </justifi-modular-checkout>
 </body>
@@ -94,31 +101,36 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
+
 </html>`}</code></pre>
 
 ## Props, Events & Methods
 
-<div dangerouslySetInnerHTML={{ __html: PropsTable([
-    {
-      name: 'customer-id',
-      type: 'string',
-      required: true,
-      description: 'Identifies which saved methods to fetch.',
-    },
-    {
-      name: 'allow-delete',
-      type: 'boolean',
-      defaultValue: 'true',
-      description: 'Shows the delete button for each saved method.',
-    },
-    {
-      name: 'show-add-new',
-      type: 'boolean',
-      defaultValue: 'true',
-      description:
-        'Displays a control that reveals the card/bank forms when no method is selected.',
-    },
-  ]) }} />
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'customer-id',
+        type: 'string',
+        required: true,
+        description: 'Identifies which saved methods to fetch.',
+      },
+      {
+        name: 'allow-delete',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Shows the delete button for each saved method.',
+      },
+      {
+        name: 'show-add-new',
+        type: 'boolean',
+        defaultValue: 'true',
+        description:
+          'Displays a control that reveals the card/bank forms when no method is selected.',
+      },
+    ]),
+  }}
+/>
 
 ### Events
 
@@ -131,47 +143,41 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Theming & Layout
 
-<div dangerouslySetInnerHTML={{ __html: PartsTable([
-    {
-      name: 'text',
-      description: 'Text styles.',
-    },
-    {
-      name: 'text-danger',
-      description: 'Danger/error text styles.',
-    },
-    {
-      name: 'label',
-      description: 'Label styles.',
-    },
-    {
-      name: 'input-radio',
-      description: 'Radio input styles.',
-    },
-    {
-      name: 'input-radio-focused',
-      description: 'Radio input styles when focused.',
-    },
-    {
-      name: 'input-radio-checked',
-      description: 'Radio input styles when checked.',
-    },
-    {
-      name: 'input-radio-checked-focused',
-      description: 'Radio input styles when checked and focused.',
-    },
-    {
-      name: 'input-radio-invalid',
-      description: 'Radio input styles when invalid.',
-    },
-  ]) }} />
-
-## Static examples
-
-### Fallback flow
-
-<pre><code className="language-js">{`const saved = document.querySelector('justifi-saved-payment-methods');
-
-saved.addEventListener('selection-changed', ({ detail }) => {
-if (!detail.payment_method_token) saved.clearSelection();
-});`}</code></pre>
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'text',
+        description: 'Text styles.',
+      },
+      {
+        name: 'text-danger',
+        description: 'Danger/error text styles.',
+      },
+      {
+        name: 'label',
+        description: 'Label styles.',
+      },
+      {
+        name: 'input-radio',
+        description: 'Radio input styles.',
+      },
+      {
+        name: 'input-radio-focused',
+        description: 'Radio input styles when focused.',
+      },
+      {
+        name: 'input-radio-checked',
+        description: 'Radio input styles when checked.',
+      },
+      {
+        name: 'input-radio-checked-focused',
+        description: 'Radio input styles when checked and focused.',
+      },
+      {
+        name: 'input-radio-invalid',
+        description: 'Radio input styles when invalid.',
+      },
+    ]),
+  }}
+/>

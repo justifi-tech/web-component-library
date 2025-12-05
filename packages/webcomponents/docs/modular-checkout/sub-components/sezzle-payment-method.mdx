@@ -5,7 +5,11 @@ description: Sezzle BNPL rail for Modular Checkout, including disclosure copy an
 sidebar_position: 24
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  PartsTable,
+  getWebcomponentsVersion,
+} from '@justifi/webcomponents/docs/helpers';
 
 ## Overview
 
@@ -28,48 +32,51 @@ This component exposes **no public methods or properties** and is not intended f
   <title>justifi-sezzle-payment-method</title>
 
   <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"></script>
-  <style>
-      /** These are the available parts for styling the component. */
-      ::part(text) {
-        // text styles
-      }
 
-      ::part(text-danger) {
-        // text danger styles
-      }
-      
-      ::part(label) {
-        // label styles
-      }
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
 
-      ::part(input-radio) {
-        // input radio styles
-      }
+<style>
+  /** These are the available parts for styling the component. */ ::part(text){' '}
+  {
+    // text styles
+  }
+  ::part(text-danger){' '}
+  {
+    // text danger styles
+  }
+  ::part(label){' '}
+  {
+    // label styles
+  }
+  ::part(input-radio){' '}
+  {
+    // input radio styles
+  }
+  ::part(input-radio-focused){' '}
+  {
+    // input radio focused styles
+  }
+  ::part(input-radio-checked){' '}
+  {
+    // input radio checked styles
+  }
+  ::part(input-radio-checked-focused){' '}
+  {
+    // input radio checked focused styles
+  }
+  ::part(input-radio-invalid){' '}
+  {
+    // input radio invalid styles
+  }
+</style>
 
-      ::part(input-radio-focused) {
-        // input radio focused styles
-      }
-
-      ::part(input-radio-checked) {
-        // input radio checked styles
-      }
-
-      ::part(input-radio-checked-focused) {
-        // input radio checked focused styles
-      }
-
-      ::part(input-radio-invalid) {
-        // input radio invalid styles
-      }
-    </style>
 </head>
 
 <body>
-  <justifi-modular-checkout
-    auth-token="authToken"
-    checkout-id="ch_123"  
-  >
+  <justifi-modular-checkout auth-token="authToken" checkout-id="ch_123">
     <justifi-sezzle-payment-method />
   </justifi-modular-checkout>
 </body>
@@ -92,6 +99,7 @@ This component exposes **no public methods or properties** and is not intended f
     });
   })();
 </script>
+
 </html>`}</code></pre>
 
 ## Props, Events & Methods
@@ -173,11 +181,3 @@ This component exposes **no public methods or properties** and is not intended f
     ]),
   }}
 />
-
-## Static examples
-
-### Track redirects
-
-<pre><code className="language-js">{`const sezzle = document.querySelector('justifi-sezzle-payment-method');
-
-sezzle.addEventListener('sezzle-redirect', () => analytics.track('sezzle_redirect_started'));`}</code></pre>
