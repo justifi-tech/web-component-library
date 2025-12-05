@@ -14,7 +14,7 @@
     },
     "./docs/*": "./docs/*",
     "./docs/helpers": "./docs/helpers/index.ts",
-    "./docs/helpers/*": "./docs/helpers/*.tsx",
+    "./docs/helpers/*": "./docs/helpers/*.js",
     "./dist/module/*": "./dist/module/*.js",
     "./dist/docs.json": "./dist/docs.json",
     "./package.json": "./package.json"
