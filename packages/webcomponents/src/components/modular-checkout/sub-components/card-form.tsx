@@ -3,6 +3,7 @@ import CardFormSkeleton from "./card-form-skeleton";
 import { StyledHost } from "../../../ui-components";
 import JustifiAnalytics from "../../../api/Analytics";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { generateTabId } from "../../../utils/utils";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 
 @Component({
@@ -12,6 +13,7 @@ import { configState, waitForConfig } from "../../config-provider/config-state";
 export class JustifiCardForm {
   @State() isReady: boolean = false;
   @State() iframeOrigin: string;
+  @State() tabId: string;
 
   private cardNumberIframeElement!: HTMLIframeInputElement;
   private expirationMonthIframeElement!: HTMLIframeInputElement;
@@ -23,6 +25,7 @@ export class JustifiCardForm {
   async componentWillLoad() {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
+    this.tabId = generateTabId();
 
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
@@ -89,7 +92,7 @@ export class JustifiCardForm {
               inputId="cardNumber"
               ref={(el) => (this.cardNumberIframeElement = el as HTMLIframeInputElement)}
               label="Card Number"
-              iframeOrigin={`${this.iframeOrigin}/v2/cardNumber`}
+              iframeOrigin={`${this.iframeOrigin}/v2/cardNumber?tabId=${this.tabId}`}
             />
           </div>
           <div class="row">
@@ -98,7 +101,7 @@ export class JustifiCardForm {
                 inputId="expirationMonth"
                 ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
                 label="Expiration"
-                iframeOrigin={`${this.iframeOrigin}/v2/expirationMonth`}
+                iframeOrigin={`${this.iframeOrigin}/v2/expirationMonth?tabId=${this.tabId}`}
               />
             </div>
             <div class="col-4 align-content-end">
@@ -106,7 +109,7 @@ export class JustifiCardForm {
                 inputId="expirationYear"
                 ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
                 label=""
-                iframeOrigin={`${this.iframeOrigin}/v2/expirationYear`}
+                iframeOrigin={`${this.iframeOrigin}/v2/expirationYear?tabId=${this.tabId}`}
               />
             </div>
             <div class="col-4 align-content-end">
@@ -114,7 +117,7 @@ export class JustifiCardForm {
                 inputId="CVV"
                 ref={(el) => (this.cvvIframeElement = el as HTMLIframeInputElement)}
                 label="CVV"
-                iframeOrigin={`${this.iframeOrigin}/v2/CVV`}
+                iframeOrigin={`${this.iframeOrigin}/v2/CVV?tabId=${this.tabId}`}
               />
             </div>
           </div>
