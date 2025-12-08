@@ -1,0 +1,84 @@
+---
+id: merchant-tools/payout-details/index
+title: Payout Details
+description: Drill-down view for a single payout, including ledger items and bank destination info.
+sidebar_position: 41
+---
+
+import { PropsTable, PartsTable } from '@justifi/webcomponents/docs/helpers';
+
+## Overview
+
+Component to display detailed information about a specific payout.
+
+## Usage
+
+<pre>
+  <code className="language-html">{`<justifi-payout-details
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  payout-id="po_456"
+/>`}</code>
+</pre>
+
+## Props, Events & Methods
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Scope the payout to a platform or merchant.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payouts` scope.',
+      },
+      {
+        name: 'payout-id',
+        type: 'string',
+        required: true,
+        description: 'Identifier for the payout you want to view.',
+      },
+      {
+        name: 'show-ledger',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Hide the ledger table when you only need summary data.',
+      },
+    ]),
+  }}
+/>
+
+### Events
+
+- `error-event`: Emits when payout data cannot be loaded.
+
+### Public methods
+
+1. `refresh()` – Reload payout data after remediation steps.
+
+## Theming & Layout
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+    ]),
+  }}
+/>

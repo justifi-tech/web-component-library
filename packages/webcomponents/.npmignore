@@ -1,0 +1,13 @@
+# Exclude development artifacts from the published package
+node_modules/
+src/
+*.log
+.DS_Store
+.turbo/
+.vscode/
+coverage/
+temp/
+tmp/
+
+# Keep docs bundle available to consumers
+!docs/
