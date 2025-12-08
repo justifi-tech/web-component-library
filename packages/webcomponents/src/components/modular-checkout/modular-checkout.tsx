@@ -535,7 +535,8 @@ export class ModularCheckout {
             () => reject()
           );
         });
-      } catch {
+      } catch (error) {
+        console.log('Checkout cancelled by preCompleteHook', error);
         return;
       }
     }
