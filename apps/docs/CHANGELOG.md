@@ -1,5 +1,28 @@
 # @repo/docs
 
+## 0.4.10
+
+### Patch Changes
+
+- Updated dependencies [0c34ce6]
+  - @justifi/webcomponents@6.7.1
+
+## 0.4.9
+
+### Patch Changes
+
+- 40ae56d: Updated the Storybook examples for the Dispute Component. Updated the existing example to have a far-future due-date so that it always shows the expected view. Added another example Past Dure Example to show what the dispute component looks like when it is past due.
+- Updated dependencies [bf665ad]
+- Updated dependencies [d11330c]
+  - @justifi/webcomponents@6.7.0
+
+## 0.4.8
+
+### Patch Changes
+
+- Updated dependencies [7235e5d]
+  - @justifi/webcomponents@6.6.0
+
 ## 0.4.7
 
 ### Patch Changes

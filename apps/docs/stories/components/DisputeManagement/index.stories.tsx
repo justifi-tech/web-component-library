@@ -80,4 +80,10 @@ const meta: Meta = {
 
 export const Example: Story = {};
 
+export const PastDueExample: Story = {
+  args: {
+    "dispute-id": "pastdue123",
+  },
+};
+
 export default meta;

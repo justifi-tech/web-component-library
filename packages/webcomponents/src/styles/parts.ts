@@ -150,6 +150,9 @@ export const checkoutsListFilterMenu = `${filterMenu} checkouts-list-filter-menu
 export const checkoutsListFilterParam = `checkouts-list-filter-param`;
 export const statusCheckoutsListFilterParam = `${checkoutsListFilterParam} checkout-status-checkouts-list-filter-param`;
 export const paymentModeCheckoutsListFilterParam = `${checkoutsListFilterParam} payment-mode-checkouts-list-filter-param`;
+export const checkoutIdCheckoutsListFilterParam = `${checkoutsListFilterParam} checkout-id-checkouts-list-filter-param`;
+export const createdAfterCheckoutsListFilterParam = `${checkoutsListFilterParam} created-after-checkouts-list-filter-param`;
+export const createdBeforeCheckoutsListFilterParam = `${checkoutsListFilterParam} created-before-checkouts-list-filter-param`;
 
 // Terminals List Filters
 export const terminalsListFilterMenu = `${filterMenu} terminals-list-filter-menu`;

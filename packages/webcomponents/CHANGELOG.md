@@ -1,5 +1,33 @@
 ### Changelog
 
+## 6.7.1
+
+### Patch Changes
+
+- 0c34ce6: Include merchant ID in google pay requests
+
+## 6.7.0
+
+### Minor Changes
+
+- bf665ad: feat(UFC): Google Pay support
+
+  - Add `justifi-google-pay` sub-component and integrate it with the `justifi-modular-checkout` flow.
+  - Enable Google Pay as a payment option in `justifi-checkout` (UFC), including eligibility checks, loading states, and error handling.
+  - Add docs and examples for configuration and usage.
+
+- d11330c: Add Checkout ID, Created Before, and Created After filters to checkouts list filter component
+
+## 6.6.0
+
+### Minor Changes
+
+- 7235e5d: - Payment Provisioning Enhancements.
+  - Add additional bank accounts to the business.
+  - Remove core components from components steps.
+  - Change label text to Date of Registration.
+  - Remove fields from Additional Questions page.
+
 ## 6.5.0
 
 ### Minor Changes
