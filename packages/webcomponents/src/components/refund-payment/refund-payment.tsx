@@ -69,7 +69,6 @@ export class RefundPayment {
   }
 
   private isPaymentCreatedWithin25Minutes(): boolean {
-    console.log({payment: this.payment})
     if (!this.payment || !this.payment?.created_at) {
       return false;
     }
