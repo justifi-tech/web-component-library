@@ -1,5 +1,15 @@
 ### Changelog
 
+## 6.7.2
+
+### Patch Changes
+
+- b67550c: Fix bug - Format is invalid for parameter: year, must be two digits
+- be3f80f: Added setup to include a /docs folder in the published package
+  Added MDX linter setup and CI workflow
+  Added new MDX documentation to replace Storybook in a near future.
+- 343d520: Adds a tentative to void the payment in case the refund is requested within 25 minutes of its creation.
+
 ## 6.7.1
 
 ### Patch Changes

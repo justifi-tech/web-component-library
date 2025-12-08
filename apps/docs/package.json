@@ -1,6 +1,6 @@
 {
   "name": "@repo/docs",
-  "version": "0.4.10",
+  "version": "0.4.11",
   "type": "module",
   "private": true,
   "scripts": {
