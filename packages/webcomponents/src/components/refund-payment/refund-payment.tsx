@@ -8,7 +8,7 @@ import {
   Method
 } from '@stencil/core';
 import RefundPaymentSchema from './refund-payment-schema';
-import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent, IApiResponse, IRefund, IRefundPayload, RefundPayload } from '../../api';
+import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent, IApiResponse, IRefund, IRefundPayload, IPayment, Payment, RefundPayload } from '../../api';
 import { FormController } from '../../ui-components/form/form';
 import { Button, StyledHost } from '../../ui-components';
 import { formatCurrency } from '../../utils/utils';
@@ -19,6 +19,8 @@ import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makePostRefund } from '../../actions/refund/refund-actions';
 import { RefundService } from '../../api/services/refund.service';
+import { makePostVoid } from '../../actions/void/void-actions';
+import { VoidService } from '../../api/services/void.service';
 import { RefundLoading } from './refund-loading';
 
 @Component({
@@ -33,6 +35,7 @@ export class RefundPayment {
   @State() paymentLoading: boolean = true;
   @State() refundLoading: boolean = false;
   @State() submitDisabled: boolean;
+  @State() payment: Payment;
   
   @Prop() authToken: string;
   @Prop() accountId: string;
@@ -63,6 +66,19 @@ export class RefundPayment {
     this.submitDisabled = true;
     const errorMessage = 'Refund amount must be greater than 0';
     this.handleError(ComponentErrorCodes.INVALID_REFUND_AMOUNT, errorMessage, ComponentErrorSeverity.ERROR);
+  }
+
+  private isPaymentCreatedWithin25Minutes(): boolean {
+    console.log({payment: this.payment})
+    if (!this.payment || !this.payment?.created_at) {
+      return false;
+    }
+    
+    const paymentCreatedAt = new Date(this.payment.created_at);
+    const now = new Date();
+    const diffInMinutes = (now.getTime() - paymentCreatedAt.getTime()) / (1000 * 60);
+    
+    return diffInMinutes <= 25;
   }
 
   private initializeFormController() {
@@ -100,6 +116,7 @@ export class RefundPayment {
       
       getPayment({
         onSuccess: ({ payment }) => {
+          this.payment = payment;
           this.refundPayload = new RefundPayload({amount: payment.amount_refundable});
         },
         onError: ({ error, code, severity }) => {
@@ -120,20 +137,68 @@ export class RefundPayment {
 
   
   @Method()
-  async refundPayment(event?: CustomEvent): Promise<IRefund> {
+  async refundPayment(event?: CustomEvent): Promise<IRefund | IPayment> {
     event && event.preventDefault();
 
     const valid = await this.formController.validate();
     if (!valid) return;
 
+    const values = this.formController.values.getValue();
+    this.refundLoading = true;
+
+    // Check if payment was created within 25 minutes and try to void first
+    if (this.isPaymentCreatedWithin25Minutes()) {
+      return this.tryVoidPayment();
+    }
+
+    // Otherwise, proceed with refund
+    return this.processRefund(values);
+  }
+
+  private async tryVoidPayment(): Promise<IRefund | IPayment> {
+    const postVoid = makePostVoid({
+      authToken: this.authToken,
+      accountId: this.accountId,
+      paymentId: this.paymentId,
+      service: new VoidService()
+    });
+
+    return new Promise((resolve) => {
+      let voidResponse: IApiResponse<IPayment>;
+      let voidAttempted = false;
+      const values = this.formController.values.getValue();
+
+      postVoid({
+        onSuccess: (response) => { 
+          voidResponse = response;
+          voidAttempted = true;
+        },
+        onError: ({ error, code, severity}) => {
+          // If void fails, fall back to refund
+          voidAttempted = true;
+          this.handleError(error, code, severity);
+          this.processRefund(values)
+            .then(resolve);
+        },
+        final: () => {
+          if (voidResponse && !voidResponse.error && voidAttempted) {
+            this.submitEvent.emit({ response: voidResponse });
+            this.submitDisabled = true;
+            this.refundLoading = false;
+            resolve(voidResponse.data);
+          }
+        },
+      });
+    });
+  }
+
+  private async processRefund(values: any): Promise<IRefund> {
     const postRefund = makePostRefund({
       authToken: this.authToken,
       accountId: this.accountId,
       paymentId: this.paymentId,
       service: new RefundService()
     });
-    const values = this.formController.values.getValue();
-    this.refundLoading = true;
 
     return new Promise((resolve) => {
       let refundResponse: IApiResponse<IRefund>;
