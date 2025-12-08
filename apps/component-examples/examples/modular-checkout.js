@@ -99,7 +99,7 @@ app.get('/', async (req, res) => {
         <div class="column-preview">
           <justifi-modular-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}">
             <justifi-card-form></justifi-card-form>
-            <div style="margin-top: 20px">
+            <div style="margin-top: 20px;">
               <button
                id="submit-button" 
                class="button"
@@ -113,18 +113,36 @@ app.get('/', async (req, res) => {
       </body>
       <script>
         const submitButton = document.getElementById('submit-button');
-        const checkoutWrapper = document.querySelector('justifi-modular-checkout');
+        const modularCheckout = document.querySelector('justifi-modular-checkout');
 
-        submitButton.addEventListener('click', async () => {
-          await checkoutWrapper.submitCheckout({ address_postal_code: '12345' });
+        modularCheckout.preCompleteHook = (state, resolve, reject) => {
+          console.log('preCompleteHook: ', state);
+          resolve(state);
+        };
+
+        modularCheckout.addEventListener('checkout-changed', (e) => {
+          const {
+            availablePaymentMethodTypes,
+            selectedPaymentMethod,
+            savedPaymentMethods,
+          } = event.detail;
+
+          if (!selectedPaymentMethod) {
+            modularCheckout.setSelectedPaymentMethod({ type: 'new_card' });
+          }
         });
 
-        checkoutWrapper.addEventListener('submit-event', (e) => {
+        modularCheckout.addEventListener('submit-event', (e) => {
           console.log('submit-event: ', e);
         });
 
-        checkoutWrapper.addEventListener('error-event', (e) => {
+        modularCheckout.addEventListener('error-event', (e) => {
           console.log('error-event: ', e);
+        });
+
+        submitButton.addEventListener('click', async () => {
+          console.log('submit-button clicked');
+          await modularCheckout.submitCheckout({ address_postal_code: '12345' });
         });
       </script>
     </html>
