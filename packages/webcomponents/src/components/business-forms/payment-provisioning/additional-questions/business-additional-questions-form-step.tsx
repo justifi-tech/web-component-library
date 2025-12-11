@@ -180,6 +180,15 @@ export class AdditionalQuestionsFormStep {
               />
             </div>
             <div class="col-12">
+              <form-control-text
+                name="business_average_transaction_amount"
+                label="What is your average transaction size?"
+                inputHandler={this.inputHandler}
+                errorText={this.errors?.business_average_transaction_amount}
+                defaultValue={additionalQuestionsDefaultValue?.business_average_transaction_amount}
+              />
+            </div>
+            <div class="col-12">
               <form-control-select
                 name="business_when_service_received"
                 label="On average, how long after paying will your customers typically receive their goods or services?"
