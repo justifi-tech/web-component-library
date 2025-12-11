@@ -45,9 +45,6 @@ const meta: Meta = {
     actions: {
       handles: ["error-event", "record-click-event"],
     },
-    chromatic: {
-      delay: 2000,
-    },
   },
   decorators: [
     customStoryDecorator,

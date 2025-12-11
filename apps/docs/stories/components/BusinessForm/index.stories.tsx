@@ -82,9 +82,6 @@ const meta: Meta = {
     actions: {
       handles: ["submit-event", "click-event"],
     },
-    chromatic: {
-      delay: 2000,
-    },
   },
   decorators: [
     customStoryDecorator,

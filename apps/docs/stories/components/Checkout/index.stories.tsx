@@ -161,9 +161,6 @@ const meta: Meta = {
     actions: {
       handles: ["submit-event", "loaded", "error-event"],
     },
-    chromatic: {
-      delay: 2000,
-    },
   },
 };
 
