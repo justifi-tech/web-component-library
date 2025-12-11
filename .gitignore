@@ -2,7 +2,6 @@
 Thumbs.db
 UserInterfaceState.xcuserstate
 .env
-/docs
 node_modules
 .turbo
 packages/mockData/mockGrossVolumeReport.js.map
