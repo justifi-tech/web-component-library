@@ -26,13 +26,7 @@ import mockPaymentTransactions from '../../../../mockData/mockPaymentTransaction
 import mockPayoutTransactions from '../../../../mockData/mockPayoutTransactionsSuccess.json';
 
 const handleMockGrossVolumeChartMock = () => {
-  // Use mock data for GrossPaymentChart in Chromatic builds for consistent screenshots.
-  const isChromaticBuild = __VITE_STORYBOOK_CHROMATIC_BUILD__ === 'true';
-  if (isChromaticBuild) {
-    return mockGrossPaymentChart;
-  }
-
-  // For regular Storybook, map all dates on the mock data to simulate dynamic data, especially to see dates from the past 30 days.
+  // Map all dates on the mock data to simulate dynamic data, especially to see dates from the past 30 days.
   let dateBuffer = -1;
   const mappedDates = mockGrossPaymentChart.data.dates.map((item: any) => {
     return {

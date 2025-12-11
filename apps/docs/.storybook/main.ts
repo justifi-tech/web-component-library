@@ -15,7 +15,6 @@ const config = {
         viewport: false,
       },
     },
-    '@chromatic-com/storybook',
   ],
   docs: {
     autodocs: true,
@@ -26,11 +25,6 @@ const config = {
   },
   async viteFinal(config) {
     return mergeConfig(config, {
-      define: {
-        __VITE_STORYBOOK_CHROMATIC_BUILD__: JSON.stringify(
-          process.env.VITE_STORYBOOK_CHROMATIC_BUILD
-        ),
-      },
       resolve: {
         dedupe: ['@storybook/blocks'],
       },

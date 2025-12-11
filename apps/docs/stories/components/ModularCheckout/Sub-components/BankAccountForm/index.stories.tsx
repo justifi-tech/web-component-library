@@ -23,11 +23,7 @@ const meta: Meta = {
       },
     },
   },
-  parameters: {
-    chromatic: {
-      delay: 2000,
-    },
-  },
+  parameters: {},
   decorators: [
     customStoryDecorator,
     // @ts-ignore
