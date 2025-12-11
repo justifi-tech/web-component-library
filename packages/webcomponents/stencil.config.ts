@@ -18,7 +18,7 @@ export const config: Config = {
     },
     {
       type: 'docs-json',
-      file: './dist/docs.json',
+      file: '../../docs/docs.json',
     },
   ],
   plugins: [

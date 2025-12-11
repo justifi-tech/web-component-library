@@ -5,7 +5,12 @@ description: Unified Fintech Checkout™ component that orchestrates payment cap
 sidebar_position: 20
 ---
 
-import { PropsTable, PartsTable } from '@justifi/webcomponents/docs/helpers';
+import {
+  PropsTable,
+  getPartsFromDocs,
+  PartsMarkdownTable,
+} from '@justifi/webcomponents/docs/helpers';
+import docsJson from '../../docs.json';
 
 ## Overview
 
@@ -78,73 +83,4 @@ import { PropsTable, PartsTable } from '@justifi/webcomponents/docs/helpers';
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'button',
-        description: 'Button styles.',
-      },
-      {
-        name: 'button-disabled',
-        description: 'Disabled button styles.',
-      },
-      {
-        name: 'input',
-        description: 'Input field styles.',
-      },
-      {
-        name: 'input-focused',
-        description: 'Input styles when focused.',
-      },
-      {
-        name: 'input-invalid',
-        description: 'Input styles when invalid.',
-      },
-      {
-        name: 'input-invalid-and-focused',
-        description: 'Input styles when invalid and focused.',
-      },
-      {
-        name: 'input-radio',
-        description: 'Radio input styles.',
-      },
-      {
-        name: 'input-checkbox',
-        description: 'Checkbox input styles.',
-      },
-      {
-        name: 'input-checkbox-checked',
-        description: 'Checkbox input styles when checked.',
-      },
-      {
-        name: 'input-checkbox-checked-focused',
-        description: 'Checkbox input styles when checked and focused.',
-      },
-      {
-        name: 'input-checkbox-focused',
-        description: 'Checkbox input styles when focused.',
-      },
-      {
-        name: 'button-primary',
-        description: 'Primary button styles.',
-      },
-      {
-        name: 'radio-list-item',
-        description: 'Radio list item styles.',
-      },
-    ]),
-  }}
-/>
+<PartsMarkdownTable parts={getPartsFromDocs('justifi-checkout', docsJson)} />

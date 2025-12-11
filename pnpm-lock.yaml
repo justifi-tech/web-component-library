@@ -117,6 +117,10 @@ importers:
         version: 6.4.1(@types/node@22.15.21)(sass-embedded@1.86.0)(yaml@2.8.1)
 
   docs:
+    dependencies:
+      markdown-table:
+        specifier: ^3.0.4
+        version: 3.0.4
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.1
@@ -3120,6 +3124,9 @@ packages:
 
   map-or-similar@1.5.0:
     resolution: {integrity: sha512-0aF7ZmVon1igznGI4VS30yugpduQW3y3GkcgGJOp7d8x8QrizhigUxjI/m2UojsXXto+jLAH3KSz+xOJTiORjg==}
+
+  markdown-table@3.0.4:
+    resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -8024,6 +8031,8 @@ snapshots:
       tmpl: 1.0.5
 
   map-or-similar@1.5.0: {}
+
+  markdown-table@3.0.4: {}
 
   math-intrinsics@1.1.0: {}
 
