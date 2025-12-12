@@ -1,5 +1,6 @@
 import { markdownTable } from 'markdown-table';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 /**
  * React component that renders a markdown table of component parts.
@@ -25,5 +26,9 @@ export function PartsMarkdownTable({ parts }) {
   const markdownTableString = markdownTable(tableData);
 
   // Render the markdown table
-  return <ReactMarkdown>{markdownTableString}</ReactMarkdown>;
+  return (
+    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      {markdownTableString}
+    </ReactMarkdown>
+  );
 }
