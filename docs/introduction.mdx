@@ -1,0 +1,125 @@
+---
+id: introduction
+title: Introduction
+description: Introduction to the JustiFi Web Component Library.
+sidebar_position: 1
+---
+
+import { getWebcomponentsVersion } from './helpers';
+
+# Introduction to JustiFi Web Component Library
+
+Welcome to the JustiFi Web Component Library. These components can be used as HTML Web Components or as React components.
+
+## Usage
+
+### HTML Web Components
+
+The simplest way to use the Web Components is to include the following script within your HTML. This loads all the components into the browser's custom component registry.
+
+<pre><code className="language-html">{`<head>
+  <script
+    type="module"
+    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+  ></script>
+
+</head>`}</code></pre>
+
+Then, you can use the custom elements as normal `HTML` tags.
+
+```html
+<justifi-checkout auth-token="token" checkout-id="chk_123"></justifi-checkout>
+```
+
+It can also be installed as a package with `npm` or `pnpm`:
+
+```bash
+npm install --save @justifi/webcomponents
+# or
+pnpm add @justifi/webcomponents
+```
+
+and import the component module using ES modules.
+
+```javascript
+import '@justifi/webcomponents/dist/module/justifi-checkout.js';
+```
+
+## Styling
+
+### How Parts Stack for Efficient Global Styling
+
+Parts are designed hierarchically to let you apply global styles like `color` or `font-family` universally, while components inherit these settings without repetitive targeting.
+
+### Core Parts and Inheritance
+
+1. **Base Parts**: `color`, `font-family`, and `background-color` define foundational styles.
+
+   - These propagate into higher-level parts like `text`, `button`, and `input`.
+
+2. **Higher-Level Parts**:
+   - **`text`**: Combines `color` and `font-family` for typography.
+   - **`input`, `button`, `label`**: Inherit `text`, ensuring consistent styles across components.
+
+### Global Styling in Action
+
+#### Universal Font
+
+Set the font for all components using `font-family`:
+
+```css
+::part(font-family) {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+```
+
+#### Universal Text Color
+
+Set the text color once via `color`:
+
+```css
+::part(color) {
+  color: #1d1b2f;
+}
+```
+
+These apply to all components that rely on `text`, including buttons, inputs, and headings.
+
+### Component-Specific Overrides
+
+After defining global styles, customize specific components using their higher-level parts:
+
+#### Buttons
+
+```css
+::part(button-primary) {
+  background-color: #0d3b66;
+  color: #fff; /* Overrides `color` */
+}
+```
+
+#### Input States
+
+```css
+::part(input-focused) {
+  border-color: #0d3b66;
+  background-color: #f0f8ff;
+}
+```
+
+To view the full list of available parts for styling, consult the source file [here](https://github.com/justifi-tech/web-component-library/blob/main/packages/webcomponents/src/styles/parts.ts).
+
+### Best Practices
+
+1. **Style Base Parts First**: Focus on `color` and `font-family` for global consistency.
+2. **Override as Needed**: Use component-specific parts (e.g., `button-primary`) sparingly for deviations.
+3. **Inspect and Leverage Stacking**: Ensure you understand how parts like `text` layer to avoid redundant styles.
+
+This hierarchy ensures maintainable, reusable styles across all components with minimal effort.
+
+## Report Issues
+
+For bugs and issues, please:
+
+1. Go to our [GitHub Issues](https://github.com/justifi-tech/web-component-library/issues).
+2. Click "New Issue" and describe the problem.

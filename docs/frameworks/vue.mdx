@@ -1,0 +1,102 @@
+---
+id: vue
+title: Vue 3
+description: Consume the JustiFi web components inside modern Vue applications.
+sidebar_position: 3
+---
+
+import { getWebcomponentsVersion } from '../helpers';
+
+Vue treats the JustiFi custom elements like native HTML tags. Load the script, import what you need, and wire up refs/events.
+
+## Integration steps
+
+### Load the components
+
+<pre><code className="language-html">{`<head>
+  <script
+    type="module"
+    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+  ></script>
+
+</head>`}</code></pre>
+
+Or install locally and import the desired module:
+
+```bash
+npm install --save @justifi/webcomponents
+```
+
+```ts
+import '@justifi/webcomponents/dist/module/justifi-checkout.js';
+```
+
+### Use inside templates
+
+```html
+<template>
+  <justifi-checkout
+    ref="checkoutFormRef"
+    :auth-token="authToken"
+    :checkout-id="checkoutId"
+    :disable-credit-card="true"
+  />
+</template>
+```
+
+## Event handling
+
+Leverage Vue's `@event-name` syntax for the custom events we emit.
+
+```html
+<template>
+  <justifi-checkout
+    ref="checkoutFormRef"
+    :auth-token="authToken"
+    :checkout-id="checkoutId"
+    @submit-event="onSubmit"
+    @error-event="onError"
+  />
+</template>
+
+<script setup lang="ts">
+  const onSubmit = (event: CustomEvent) => {
+    console.log('Submit payload', event.detail);
+  };
+
+  const onError = (event: CustomEvent) => {
+    console.error('Error payload', event.detail);
+  };
+</script>
+```
+
+## Calling methods
+
+Grab a ref to the element and call the public APIs directly.
+
+```html
+<template>
+  <justifi-checkout
+    ref="checkoutFormRef"
+    :auth-token="authToken"
+    :checkout-id="checkoutId"
+  />
+  <button @click="fillBillingForm">Prefill billing</button>
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue';
+
+  const checkoutFormRef = ref<any>(null);
+
+  const fillBillingForm = () => {
+    checkoutFormRef.value?.fillBillingForm({
+      name: 'John Doe',
+      address_line1: 'Main St',
+      address_city: 'Beverly Hills',
+      address_state: 'CA',
+      address_postal_code: '90210',
+    });
+  };
+</script>
+```
