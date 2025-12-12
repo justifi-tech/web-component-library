@@ -68,7 +68,7 @@ export class BusinessOwnerFormInputs {
             mask={PHONE_MASKS.US}
           />
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
           <form-control-date
             name="dob_full"
             label="Birth Date"
@@ -79,7 +79,16 @@ export class BusinessOwnerFormInputs {
             helpText="Must be 18 or older."
           />
         </div>
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-3">
+          <form-control-number
+            name="ownership_percentage"
+            label="% of Ownership"
+            defaultValue={this.ownerDefaultValue?.ownership_percentage}
+            errorText={this.errors.ownership_percentage}
+            inputHandler={this.inputHandler}
+          />
+        </div>
+        <div class="col-12 col-md-6">
           {(!this.ownerDefaultValue?.ssn_last4 || this.isEditingIdentification) ? (
             <form-control-number-masked
               name="identification_number"

@@ -8,6 +8,7 @@ import {
   phoneValidation,
   ssnValidation,
   makeIdentityNumberValidation,
+  ownershipPercentageValidation,
 } from './schema-validations';
 import { CountryCode } from '../../../utils/country-codes';
 
@@ -21,6 +22,7 @@ const schemaUSA = (role: string) =>
     dob_full: dobValidation(role).nullable(),
     ssn_last4: string().nullable(),
     identification_number: ssnValidation.nullable(),
+    ownership_percentage: ownershipPercentageValidation.nullable(),
     address: addressSchemaUSA(true),
   });
 
@@ -34,6 +36,7 @@ const strictSchemaUSA = (role: string) =>
     ssn_last4: string().nullable(),
     // ssn required unless last4 provided (handled inside ssnValidation)
     identification_number: ssnValidation,
+    ownership_percentage: ownershipPercentageValidation.nullable(),
     address: addressSchemaUSA(false),
   });
 
@@ -47,6 +50,7 @@ const schemaCAN = (role: string) =>
     dob_full: dobValidation(role).nullable(),
     ssn_last4: string().nullable(),
     identification_number: makeIdentityNumberValidation(CountryCode.CAN).nullable(),
+    ownership_percentage: ownershipPercentageValidation.nullable(),
     address: addressSchemaCAN(true),
   });
 
@@ -59,6 +63,7 @@ const strictSchemaCAN = (role: string) =>
     dob_full: dobValidation(role).required('Enter date of birth'),
     ssn_last4: string().nullable(),
     identification_number: makeIdentityNumberValidation(CountryCode.CAN),
+    ownership_percentage: ownershipPercentageValidation.nullable(),
     address: addressSchemaCAN(false),
   });
 

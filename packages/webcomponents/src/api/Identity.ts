@@ -22,6 +22,7 @@ export interface Identity {
   identification_number?: string;
   ssn_last4?: string;
   title?: string;
+  ownership_percentage?: string;
   updated_at?: string;
 }
 
@@ -44,6 +45,7 @@ export class Owner implements Identity {
   public identification_number?: string;
   public ssn_last4?: string;
   public title?: string;
+  public ownership_percentage?: string;
   public updated_at?: string;
 
   constructor(owner: Identity) {
@@ -66,6 +68,7 @@ export class Owner implements Identity {
     this.identification_number = owner.identification_number;
     this.ssn_last4 = owner.ssn_last4;
     this.title = owner.title;
+    this.ownership_percentage = owner.ownership_percentage;
     this.updated_at = owner.updated_at;
   }
 
@@ -84,6 +87,7 @@ export class Owner implements Identity {
       phone: this.phone || '',
       platform_account_id: this.platform_account_id || null,
       title: this.title || '',
+      ownership_percentage: this.ownership_percentage || undefined,
     };
   }
 }
@@ -107,6 +111,7 @@ export class Representative implements Identity {
   public identification_number?: string;
   public ssn_last4?: string;
   public title?: string;
+  public ownership_percentage?: string;
   public updated_at?: string;
 
   constructor(representative: Identity) {
@@ -129,6 +134,7 @@ export class Representative implements Identity {
     this.identification_number = representative.identification_number;
     this.ssn_last4 = representative.ssn_last4;
     this.title = representative.title;
+    this.ownership_percentage = representative.ownership_percentage;
     this.updated_at = representative.updated_at;
   }
 

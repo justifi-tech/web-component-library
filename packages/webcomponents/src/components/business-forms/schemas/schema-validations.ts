@@ -166,6 +166,20 @@ export const ssnValidation = string()
   })
   .transform(transformEmptyString);
 
+export const ownershipPercentageValidation = string()
+  .matches(numbersOnlyRegex, 'Enter valid percentage')
+  .test('min', 'Percentage must be at least 0', (value) => {
+    if (!value) return true;
+    const num = parseFloat(value);
+    return num >= 0;
+  })
+  .test('max', 'Percentage must be at most 100', (value) => {
+    if (!value) return true;
+    const num = parseFloat(value);
+    return num <= 100;
+  })
+  .transform(transformEmptyString);
+
 // Address Validations
 
 export const lineOneValidation = string()

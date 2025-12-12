@@ -88,6 +88,7 @@ export interface ProductCategories {
 export interface IAdditionalQuestions {
   business_revenue?: string;
   business_payment_volume?: string;
+  business_average_transaction_amount?: string;
   business_when_service_received?: string;
   business_recurring_payments?: string;
   business_recurring_payments_percentage?: string;
@@ -99,6 +100,7 @@ export interface IAdditionalQuestions {
 export class AdditionalQuestions implements IAdditionalQuestions {
   public business_revenue?: string;
   public business_payment_volume?: string;
+  public business_average_transaction_amount?: string;
   public business_when_service_received?: string;
   public business_recurring_payments?: string;
   public business_recurring_payments_percentage?: string;
@@ -108,6 +110,7 @@ export class AdditionalQuestions implements IAdditionalQuestions {
   constructor(additionalQuestions: IAdditionalQuestions) {
     this.business_revenue = additionalQuestions.business_revenue;
     this.business_payment_volume = additionalQuestions.business_payment_volume;
+    this.business_average_transaction_amount = additionalQuestions.business_average_transaction_amount;
     this.business_when_service_received =
       additionalQuestions.business_when_service_received;
     this.business_recurring_payments =
@@ -123,6 +126,7 @@ export class AdditionalQuestions implements IAdditionalQuestions {
     return {
       business_revenue: this.business_revenue || '',
       business_payment_volume: this.business_payment_volume || '',
+      business_average_transaction_amount: this.business_average_transaction_amount || '',
       business_when_service_received: this.business_when_service_received || '',
       business_recurring_payments: this.business_recurring_payments || '',
       business_recurring_payments_percentage:
