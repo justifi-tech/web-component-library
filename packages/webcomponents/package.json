@@ -12,9 +12,6 @@
       "require": "./dist/index.cjs.js",
       "import": "./dist/module/index.js"
     },
-    "./docs/*": "./docs/*",
-    "./docs/helpers": "./docs/helpers/index.ts",
-    "./docs/helpers/*": "./docs/helpers/*.js",
     "./dist/module/*": "./dist/module/*.js",
     "./dist/docs.json": "./dist/docs.json",
     "./package.json": "./package.json"
@@ -28,8 +25,7 @@
     "registry": "https://registry.npmjs.org"
   },
   "files": [
-    "dist/",
-    "docs/"
+    "dist/"
   ],
   "scripts": {
     "build": "stencil build --docs",
