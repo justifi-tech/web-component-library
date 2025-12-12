@@ -10,7 +10,8 @@
     "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs ."
   },
   "dependencies": {
-    "markdown-table": "^3.0.4"
+    "markdown-table": "^3.0.4",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

@@ -1,13 +1,5 @@
-function escapeHtml(text) {
-  const map = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;',
-  };
-  return text.replace(/[&<>"']/g, (m) => map[m]);
-}
+import markdownTable from 'markdown-table';
+import ReactMarkdown from 'react-markdown';
 
 /**
  * React component that renders a markdown table of component parts.
@@ -19,39 +11,19 @@ export function PartsMarkdownTable({ parts }) {
     return null;
   }
 
-  // Render the markdown table as HTML (similar to PartsTable)
-  // Convert markdown table to HTML for rendering
-  let html = '<table class="docs-parts-table">';
-  html += `
-    <thead>
-      <tr>
-        <th scope="col">Part</th>
-        <th scope="col">Description</th>
-        <th scope="col">DOM target</th>
-      </tr>
-    </thead>
-    <tbody>`;
+  // Prepare table data for markdown-table
+  const tableData = [
+    ['Part', 'Description', 'DOM target'],
+    ...parts.map((part) => [
+      `\`::part(${part.name})\``,
+      part.docs || part.description || '',
+      part.target || '—',
+    ]),
+  ];
 
-  for (const part of parts) {
-    html += `
-      <tr>
-        <td>
-          <code>::part(${escapeHtml(part.name)})</code>
-        </td>
-        <td>${escapeHtml(part.docs || part.description || '')}</td>
-        <td>${part.target ? escapeHtml(part.target) : '—'}</td>
-      </tr>`;
-  }
+  // Generate markdown table using markdown-table library
+  const markdownTableString = markdownTable(tableData);
 
-  html += `
-    </tbody>
-  </table>`;
-
-  return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: html,
-      }}
-    />
-  );
+  // Render the markdown table
+  return <ReactMarkdown>{markdownTableString}</ReactMarkdown>;
 }

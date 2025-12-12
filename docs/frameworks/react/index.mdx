@@ -1,11 +1,11 @@
 ---
-id: frameworks/react/index
+id: frameworks/react
 title: React
 description: How to consume JustiFi web components inside React applications.
 sidebar_position: 1
 ---
 
-import { getWebcomponentsVersion } from '@justifi/webcomponents/docs/helpers';
+import { getWebcomponentsVersion } from '../../helpers';
 
 React treats JustiFi web components like any other custom element. Load the bundle, optionally declare types, and use refs for method calls or event wiring.
 
@@ -19,6 +19,7 @@ React treats JustiFi web components like any other custom element. Load the bund
     type="module"
     src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
   ></script>
+
 </head>`}</code></pre>
 
 Or install the package:
@@ -61,7 +62,8 @@ type StencilToReact<T> = {
 
 declare global {
   export namespace JSX {
-    interface IntrinsicElements extends StencilToReact<LocalJSX.IntrinsicElements> {}
+    interface IntrinsicElements
+      extends StencilToReact<LocalJSX.IntrinsicElements> {}
   }
 }
 ```
@@ -88,7 +90,11 @@ export default function CheckoutWithRef() {
 
   return (
     <>
-      <justifi-checkout ref={checkoutRef} auth-token="token" checkout-id="chk_123" />
+      <justifi-checkout
+        ref={checkoutRef}
+        auth-token="token"
+        checkout-id="chk_123"
+      />
       <button onClick={fillBillingForm}>Prefill billing</button>
     </>
   );
@@ -119,7 +125,12 @@ export function CheckoutWithEvents() {
     return () => element.removeEventListener('submit-event', handleSubmit);
   }, []);
 
-  return <justifi-checkout ref={checkoutRef} auth-token="token" checkout-id="chk_123" />;
+  return (
+    <justifi-checkout
+      ref={checkoutRef}
+      auth-token="token"
+      checkout-id="chk_123"
+    />
+  );
 }
 ```
-
