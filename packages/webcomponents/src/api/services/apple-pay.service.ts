@@ -14,6 +14,7 @@ import {
   IApplePayPaymentResponse,
   IApplePayCancelEvent,
   IApplePayToken,
+  IApplePayContact,
 } from '../ApplePay';
 
 // Centralized error codes for Apple Pay service
@@ -119,7 +120,7 @@ export class ApplePayService implements IApplePayService {
   }
 
   /**
-   * Start Apple Pay session
+   * Start Apple Pay session with optional contact field collection
    */
   public async startPaymentSession(
     paymentRequest: IApplePayPaymentRequest,
@@ -129,6 +130,8 @@ export class ApplePayService implements IApplePayService {
     success: boolean;
     token?: IApplePayToken;
     paymentMethodId?: string;
+    billingContact?: IApplePayContact;
+    shippingContact?: IApplePayContact;
     error?: IApplePayError;
   }> {
     // Begin session
@@ -228,6 +231,8 @@ export class ApplePayService implements IApplePayService {
       success: boolean;
       token?: IApplePayToken;
       paymentMethodId?: string;
+      billingContact?: IApplePayContact;
+      shippingContact?: IApplePayContact;
       error?: IApplePayError;
     }) => void,
     reject: (reason: { success: boolean; error: IApplePayError }) => void,
@@ -306,6 +311,8 @@ export class ApplePayService implements IApplePayService {
             ),
             description: this.currentPaymentRequest!.total.label,
           },
+          ...(payment.billingContact && { billingContact: payment.billingContact }),
+          ...(payment.shippingContact && { shippingContact: payment.shippingContact }),
         };
 
         const paymentResult = await this.processPayment(
@@ -322,6 +329,8 @@ export class ApplePayService implements IApplePayService {
             success: true,
             token: payment.token,
             paymentMethodId: paymentResult.data.id,
+            billingContact: payment.billingContact,
+            shippingContact: payment.shippingContact,
           });
         } else {
           console.error('PSP reported payment failure:', paymentResult.data);

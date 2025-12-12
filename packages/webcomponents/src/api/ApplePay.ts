@@ -28,6 +28,25 @@ export enum ApplePayMerchantCapability {
   SUPPORTS_DEBIT = 'supportsDebit',
 }
 
+export type ApplePayContactField = 'postalAddress' | 'name' | 'phone' | 'email';
+
+export interface IApplePayContact {
+  phoneNumber?: string;
+  emailAddress?: string;
+  givenName?: string;
+  familyName?: string;
+  phoneticGivenName?: string;
+  phoneticFamilyName?: string;
+  addressLines?: string[];
+  locality?: string;           // City
+  administrativeArea?: string; // State/Province
+  postalCode?: string;
+  country?: string;
+  countryCode?: string;
+  subLocality?: string;
+  subAdministrativeArea?: string;
+}
+
 export interface IApplePayLineItem {
   label: string;
   amount: string;
@@ -51,6 +70,9 @@ export interface IApplePayPaymentRequest {
   shippingMethods?: IApplePayShippingMethod[];
   applicationData?: string;
   supportedCountries?: string[];
+  requiredBillingContactFields?: ApplePayContactField[];
+  requiredShippingContactFields?: ApplePayContactField[];
+  shippingType?: 'shipping' | 'delivery' | 'storePickup' | 'servicePickup';
 }
 
 export interface IApplePaySession {
@@ -150,6 +172,8 @@ export interface IApplePayPaymentProcessRequest {
     description: string;
   };
   description?: string;
+  billingContact?: IApplePayContact;
+  shippingContact?: IApplePayContact;
 }
 
 export interface IApplePayPaymentResponse {
@@ -211,6 +235,9 @@ export class ApplePayPaymentRequest implements IApplePayPaymentRequest {
   public shippingMethods?: IApplePayShippingMethod[];
   public applicationData?: string;
   public supportedCountries?: string[];
+  public requiredBillingContactFields?: ApplePayContactField[];
+  public requiredShippingContactFields?: ApplePayContactField[];
+  public shippingType?: 'shipping' | 'delivery' | 'storePickup' | 'servicePickup';
 
   constructor(data: IApplePayPaymentRequest) {
     this.countryCode = data.countryCode;
@@ -222,6 +249,9 @@ export class ApplePayPaymentRequest implements IApplePayPaymentRequest {
     this.shippingMethods = data.shippingMethods;
     this.applicationData = data.applicationData;
     this.supportedCountries = data.supportedCountries;
+    this.requiredBillingContactFields = data.requiredBillingContactFields;
+    this.requiredShippingContactFields = data.requiredShippingContactFields;
+    this.shippingType = data.shippingType;
   }
 
   public get isValid(): boolean {
