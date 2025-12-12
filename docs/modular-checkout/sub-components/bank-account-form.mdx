@@ -1,15 +1,11 @@
 ---
-id: modular-checkout/sub-components/bank-account-form
+id: bank-account-form
 title: Bank Account Form
 description: Bank account rail for Modular Checkout that tokenizes ACH details with hosted inputs.
 sidebar_position: 28
 ---
 
-import {
-  PropsTable,
-  PartsTable,
-  getWebcomponentsVersion,
-} from '@justifi/webcomponents/docs/helpers';
+import { PropsTable, PartsTable, getWebcomponentsVersion } from '../../helpers';
 
 ## Overview
 
@@ -17,7 +13,7 @@ Renders a form for collecting bank account details as part of a checkout flow.
 
 This subcomponent is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
 
-> **Note:** If you are using this sub component, you also need to provide billing information. This can be done by adding the `justifi-billing-form-full` sub component for complete billing address, the `justifi-bank-account-billing-form-simple` sub component for account owner name only, or by passing the `billingInformation` object as an argument to the `submitCheckout` method called on the `justifi-modular-checkout`. See the [modular checkout docs](../introduction/index) for more information.
+> **Note:** If you are using this sub component, you also need to provide billing information. This can be done by adding the `justifi-billing-form-full` sub component for complete billing address, the `justifi-bank-account-billing-form-simple` sub component for account owner name only, or by passing the `billingInformation` object as an argument to the `submitCheckout` method called on the `justifi-modular-checkout`. See the [modular checkout docs](../introduction) for more information.
 
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 
