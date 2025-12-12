@@ -20,6 +20,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
 
+      - name: Clear pnpm cache
+        run: pnpm store prune
+
       - name: Install dependencies
         run: pnpm install
 
