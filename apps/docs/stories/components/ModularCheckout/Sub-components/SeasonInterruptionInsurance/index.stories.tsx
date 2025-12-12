@@ -147,9 +147,6 @@ const meta: Meta = {
     actions: {
       handles: ['error-event'],
     },
-    chromatic: {
-      delay: 2000,
-    },
   },
   decorators: [
     customStoryDecorator,
