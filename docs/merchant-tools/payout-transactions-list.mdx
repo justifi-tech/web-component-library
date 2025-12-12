@@ -1,0 +1,84 @@
+---
+id: payout-transactions-list
+title: Payout Transactions List
+description: Ledger of transactions contributing to a payout, with filtering and export support.
+sidebar_position: 42
+---
+
+import { PropsTable, PartsTable } from '../helpers';
+
+## Overview
+
+Component to display a list of payout transactions for a specific payout.
+
+## Usage
+
+<pre>
+  <code className="language-html">{`<justifi-payout-transactions-list
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  payout-id="po_456"
+/>`}</code>
+</pre>
+
+## Props, Events & Methods
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Authorization context.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payouts` scope.',
+      },
+      {
+        name: 'payout-id',
+        type: 'string',
+        required: true,
+        description: 'Payout whose transactions should be displayed.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue: 'type,amount,source,status',
+        description: 'Column ordering and selection.',
+      },
+    ]),
+  }}
+/>
+
+### Events
+
+- `click-event`: row selection event that surfaces `transaction_id`.
+
+### Public methods
+
+1. `refresh()` – Reloads the ledger.
+
+## Theming & Layout
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+    ]),
+  }}
+/>

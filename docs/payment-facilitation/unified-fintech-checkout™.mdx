@@ -1,0 +1,82 @@
+---
+id: unified-fintech-checkout™
+title: Unified Fintech Checkout™
+description: Unified Fintech Checkout™ component that orchestrates payment capture, verification, and confirmation states.
+sidebar_position: 20
+---
+
+import { PropsTable, getPartsFromDocs, PartsMarkdownTable } from '../helpers';
+import docsJson from '../docs.json';
+
+## Overview
+
+`<justifi-checkout>` renders a complete checkout experience: payment method entry, order summary, error handling, and confirmation states. Use it when you want a turnkey experience without composing Modular Checkout subcomponents manually.
+
+## Usage
+
+<pre>
+  <code className="language-html">{`<justifi-checkout
+  account-id="acc_123"
+  auth-token="wct_checkout"
+  checkout-id="chk_456"
+  locale="en-US"
+/>`}</code>
+</pre>
+
+## Props, Events & Methods
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description:
+          'Owning platform account; determines branding + permissions.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Web Component Token with `write:checkout` scope.',
+      },
+      {
+        name: 'checkout-id',
+        type: 'string',
+        required: true,
+        description:
+          'Server-generated checkout session controlling line items and totals.',
+      },
+      {
+        name: 'require-save-payment-method',
+        type: 'boolean',
+        defaultValue: 'false',
+        description:
+          'When true, forces customers to save the payment method for future use.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description:
+          'Controls currency formatting, copy, and date presentation.',
+      },
+    ]),
+  }}
+/>
+
+### Events
+
+- `completed`: Emits when payment succeeds; payload includes `checkout_id`, `payment_method_token`, and receipt data.
+- `error`: Fires if payment processing fails; includes error codes for analytics.
+- `step-changed`: Useful when you pipe analytics or breadcrumbs for multi-step flows.
+
+### Public methods
+
+1. `submit()` – Programmatically trigger the pay button (helpful if you hide the built-in CTA).
+2. `reset(checkoutId)` – Reload a different checkout session without re-mounting the component.
+
+## Theming & Layout
+
+<PartsMarkdownTable parts={getPartsFromDocs('justifi-checkout', docsJson)} />

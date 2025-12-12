@@ -1,4 +1,4 @@
-import markdownTable from 'markdown-table';
+import { markdownTable } from 'markdown-table';
 import ReactMarkdown from 'react-markdown';
 
 /**
