@@ -1,0 +1,85 @@
+---
+id: payment-transactions-list
+title: Payment Transactions List
+description: Transaction-level ledger for payments, grouped by status and funding state.
+sidebar_position: 32
+---
+
+import { PropsTable, PartsTable } from '../helpers';
+
+## Overview
+
+Component to display a list of payment transactions for a specific payment.
+
+## Usage
+
+<pre>
+  <code className="language-html">{`<justifi-payment-transactions-list
+  account-id="acc_123"
+  auth-token="wct_reporting"
+  filters='{"payment_id":"pay_456"}'
+/>`}</code>
+</pre>
+
+## Props, Events & Methods
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Determines which transactions a user can view.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payments` scope.',
+      },
+      {
+        name: 'filters',
+        type: 'string | Record<string, unknown>',
+        description:
+          'JSON string or object specifying filter criteria (payment_id, status, date range).',
+      },
+      {
+        name: 'enable-export',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Adds export controls when true.',
+      },
+    ]),
+  }}
+/>
+
+### Events
+
+- `filter-changed`: emits whenever the internal filter UI updates.
+- `error-event`: surfaces API or token failures.
+
+### Public methods
+
+1. `refresh()` – Re-run the ledger query.
+
+## Theming & Layout
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+    ]),
+  }}
+/>

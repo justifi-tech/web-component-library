@@ -1,0 +1,112 @@
+---
+id: angular
+title: Angular
+description: Registering and using JustiFi web components inside Angular projects.
+sidebar_position: 2
+---
+
+import { getWebcomponentsVersion } from '../helpers';
+
+Angular can render the JustiFi custom elements once you load the library and allow custom schemas.
+
+## Usage
+
+### Load the bundle
+
+<pre><code className="language-html">{`<head>
+  <script
+    type="module"
+    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+  ></script>
+
+</head>`}</code></pre>
+
+Or install locally:
+
+```bash
+npm install --save @justifi/webcomponents
+```
+
+Import specific elements where needed:
+
+```ts
+import '@justifi/webcomponents/dist/module/justifi-checkout.js';
+```
+
+### Allow custom elements
+
+```ts
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule],
+  providers: [],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppModule {}
+```
+
+## Props and event handling
+
+Use Angular bindings for attributes and `(event)` syntax for emitted events.
+
+```html
+<justifi-checkout
+  [auth-token]="authToken"
+  [checkout-id]="checkoutId"
+  [disable-bank-account]="true"
+  (submit-event)="handleSubmit($event)"
+  (error-event)="handleError($event)"
+></justifi-checkout>
+```
+
+## Calling methods
+
+Leverage `ViewChild` to call public methods on the web component.
+
+```html
+<!-- app.component.html -->
+<justifi-checkout
+  #checkoutForm
+  [auth-token]="authToken"
+  [checkout-id]="checkoutId"
+  (submit-event)="handleSubmit($event)"
+></justifi-checkout>
+<button (click)="fillBillingForm()">Fill billing form</button>
+```
+
+```ts
+// app.component.ts
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+})
+export class AppComponent implements AfterViewInit {
+  @ViewChild('checkoutForm')
+  checkoutForm!: ElementRef<HTMLJustifiCheckoutElement>;
+
+  ngAfterViewInit() {
+    // Safe place to call component methods
+  }
+
+  fillBillingForm() {
+    const billing = {
+      name: 'John Doe',
+      address_line1: 'Main St',
+      address_city: 'Beverly Hills',
+      address_state: 'CA',
+      address_postal_code: '90210',
+    };
+
+    this.checkoutForm.nativeElement.fillBillingForm(billing);
+  }
+}
+```
+
+> `HTMLJustifiCheckoutElement` is available from `@justifi/webcomponents/dist/components` if you want stronger typing.

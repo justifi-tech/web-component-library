@@ -14,4 +14,4 @@ function run(command, commandArgs) {
   }
 }
 
-run('pnpm', ['--filter', '@justifi/webcomponents', 'docs:lint']);
+run('pnpm', ['--filter', '@repo/docs-site', 'lint']);
