@@ -20,11 +20,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
 
-      - name: Clear Cache
-        run: |
-          npm cache clean --force
-          rm -rf ~/.npm
-
       - name: Install dependencies
         run: pnpm install
 
