@@ -8,6 +8,7 @@ import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
 import { CountryCode } from '../../../../utils/country-codes';
+import { Identity } from '../../../../api';
 
 interface ownerPayloadItem { id: string; }
 
@@ -21,7 +22,7 @@ export class BusinessOwnersFormStep {
   @State() refs: any = [];
   @State() newFormOpen: boolean;
   @State() isLoading: boolean = false;
-  @State() representativeId: string | null = null;
+  @State() savedRepresentative: Identity | null = null;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -59,24 +60,19 @@ export class BusinessOwnersFormStep {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
-        const ownersPayload: ownerPayloadItem[] = [];
-        this.representativeId = response.data.representative?.id || null;
+        const savedOwners = response.data.owners;
+        this.savedRepresentative = response.data.representative;
+        const savedRepresentativeId = this.savedRepresentative.id;
         
-        if (response.data.representative?.is_owner && response.data.representative?.id) {
-          ownersPayload.push({ id: response.data.representative.id });
+        if (this.savedRepresentative.is_owner) {
+          this.ownersPayload.push({ id: savedRepresentativeId });
         }
-        const representativeId = response.data.representative?.id;
-        const existingOwners = response.data.owners || [];
-        existingOwners.forEach(owner => {
-          if (owner.id && owner.id !== representativeId) {
-            ownersPayload.push({ id: owner.id });
-          }
+
+        this.ownersPayload = savedOwners.map(owner => {
+          return (owner.id !== savedRepresentativeId) && { id: owner.id };
         });
-        if (ownersPayload.length > 0) {
-          this.ownersPayload = ownersPayload;
-        } else {
-          this.addOwnerForm();
-        }
+
+        if (!this.ownersPayload.length) this.addOwnerForm();
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -97,7 +93,10 @@ export class BusinessOwnersFormStep {
     let submittedData;
     this.formLoading.emit(true);
     this.patchBusiness({
-      payload: { owners: this.ownersPayload },
+      payload: {
+        owners: this.ownersPayload,
+        representative: this.savedRepresentative
+      },
       onSuccess: (response) => {
         submittedData = response;
         onSuccess();
@@ -165,25 +164,13 @@ export class BusinessOwnersFormStep {
   };
 
   private removeOwnerForm = (id: string) => {
-    if (id && this.representativeId && id === this.representativeId) {
-      this.patchBusiness({
-        payload: { representative: { is_owner: false } },
-        onSuccess: () => {
-          this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
-          this.newFormOpen && (this.newFormOpen = false);
-        },
-        onError: ({ error, code, severity }) => {
-          this.errorEvent.emit({
-            message: error,
-            errorCode: code,
-            severity: severity
-          });
-        },
-      });
-    } else {
-      this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
-      this.newFormOpen && (this.newFormOpen = false);
+    this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
+
+    if (id === this.savedRepresentative.id) {
+      this.savedRepresentative.is_owner = false;
     }
+
+    this.newFormOpen && (this.newFormOpen = false);
   };
 
   @Watch('ownersPayload')
