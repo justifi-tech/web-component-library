@@ -76,27 +76,3 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 1. `submit()` – Programmatically trigger the checkout CTA.
 2. `reset()` – Reset the flow back to the first step and clear transient state.
-
-## Theming & Layout
-
-- Slots expose `::part(summary)` and `::part(payment-methods)` so you can adjust spacing for each region.
-
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'shell',
-        description: 'Outer wrapper that surrounds the full modular checkout.',
-      },
-      {
-        name: 'payment-methods',
-        description: 'Region that houses card/bank/alternative rails.',
-      },
-      {
-        name: 'summary',
-        description: 'Order summary slot, typically on the right on desktop.',
-      },
-      { name: 'cta', description: 'Primary submit button container.' },
-    ]),
-  }}
-/>

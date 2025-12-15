@@ -6077,7 +6077,12 @@
       "tag": "justifi-apple-pay",
       "readme": "# payment-method-option\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "skeleton - Skeleton for the Apple Pay button."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -6492,7 +6497,12 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "skeleton",
+          "docs": "Skeleton for the Apple Pay button."
+        }
+      ],
       "dependents": [
         "justifi-checkout"
       ],
