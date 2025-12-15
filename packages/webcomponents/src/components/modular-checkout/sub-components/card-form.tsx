@@ -6,6 +6,14 @@ import { checkPkgVersion } from "../../../utils/check-pkg-version";
 import { generateTabId } from "../../../utils/utils";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 
+/**
+ * @part skeleton - Skeleton for the card form.
+ * @part input-invalid-and-focused - Style for invalid and focused input.
+ * @part input-invalid - Style for invalid input.
+ * @part input-focused - Style for focused input.
+ * @part input - Style for input.
+ * @part label - Style for label.
+ */
 @Component({
   tag: "justifi-card-form",
   shadow: true,
