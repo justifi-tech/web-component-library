@@ -60,13 +60,11 @@ export class BusinessOwnersFormStep {
     this.getBusiness({
       onSuccess: (response) => {
         const ownersPayload: ownerPayloadItem[] = [];
-        // Store representative ID for later reference
         this.representativeId = response.data.representative?.id || null;
-        // Add representative as owner if is_owner is true
+        
         if (response.data.representative?.is_owner && response.data.representative?.id) {
           ownersPayload.push({ id: response.data.representative.id });
         }
-        // Add existing owners, excluding any that match the representative id to avoid duplicates
         const representativeId = response.data.representative?.id;
         const existingOwners = response.data.owners || [];
         existingOwners.forEach(owner => {
@@ -167,13 +165,10 @@ export class BusinessOwnersFormStep {
   };
 
   private removeOwnerForm = (id: string) => {
-    // Check if the owner being removed is also the representative
     if (id && this.representativeId && id === this.representativeId) {
-      // Update representative's is_owner property to false
       this.patchBusiness({
         payload: { representative: { is_owner: false } },
         onSuccess: () => {
-          // Remove from owners payload after successful update
           this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
           this.newFormOpen && (this.newFormOpen = false);
         },
@@ -186,7 +181,6 @@ export class BusinessOwnersFormStep {
         },
       });
     } else {
-      // Not a representative, just remove from owners payload
       this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
       this.newFormOpen && (this.newFormOpen = false);
     }
