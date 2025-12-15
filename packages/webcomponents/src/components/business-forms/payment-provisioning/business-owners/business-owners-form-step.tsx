@@ -21,6 +21,7 @@ export class BusinessOwnersFormStep {
   @State() refs: any = [];
   @State() newFormOpen: boolean;
   @State() isLoading: boolean = false;
+  @State() representativeId: string | null = null;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -59,6 +60,8 @@ export class BusinessOwnersFormStep {
     this.getBusiness({
       onSuccess: (response) => {
         const ownersPayload: ownerPayloadItem[] = [];
+        // Store representative ID for later reference
+        this.representativeId = response.data.representative?.id || null;
         // Add representative as owner if is_owner is true
         if (response.data.representative?.is_owner && response.data.representative?.id) {
           ownersPayload.push({ id: response.data.representative.id });
@@ -164,8 +167,29 @@ export class BusinessOwnersFormStep {
   };
 
   private removeOwnerForm = (id: string) => {
-    this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
-    this.newFormOpen && (this.newFormOpen = false);
+    // Check if the owner being removed is also the representative
+    if (id && this.representativeId && id === this.representativeId) {
+      // Update representative's is_owner property to false
+      this.patchBusiness({
+        payload: { representative: { is_owner: false } },
+        onSuccess: () => {
+          // Remove from owners payload after successful update
+          this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
+          this.newFormOpen && (this.newFormOpen = false);
+        },
+        onError: ({ error, code, severity }) => {
+          this.errorEvent.emit({
+            message: error,
+            errorCode: code,
+            severity: severity
+          });
+        },
+      });
+    } else {
+      // Not a representative, just remove from owners payload
+      this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
+      this.newFormOpen && (this.newFormOpen = false);
+    }
   };
 
   @Watch('ownersPayload')
