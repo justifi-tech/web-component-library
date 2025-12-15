@@ -57,8 +57,8 @@ graph TD;
   justifi-form-address-fields --> form-control-select
   justifi-additional-questions-form-step --> form-control-tooltip
   justifi-additional-questions-form-step --> form-control-monetary-provisioning
-  justifi-additional-questions-form-step --> form-control-text
   justifi-additional-questions-form-step --> form-control-select
+  justifi-additional-questions-form-step --> form-control-text
   justifi-business-representative-form-step --> justifi-business-representative-form-inputs
   justifi-business-representative-form-inputs --> form-control-tooltip
   justifi-business-representative-form-inputs --> form-control-text
@@ -73,6 +73,7 @@ graph TD;
   owner-form-inputs --> form-control-text
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
+  owner-form-inputs --> form-control-number
   owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> form-control-tooltip
   justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
