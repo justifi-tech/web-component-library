@@ -1,0 +1,136 @@
+---
+id: react
+title: React
+description: How to consume JustiFi web components inside React applications.
+sidebar_position: 1
+---
+
+import { getWebcomponentsVersion } from '../helpers';
+
+React treats JustiFi web components like any other custom element. Load the bundle, optionally declare types, and use refs for method calls or event wiring.
+
+## Usage
+
+### Load the components
+
+<pre><code className="language-html">{`<head>
+  <script
+    async
+    type="module"
+    src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+  ></script>
+
+</head>`}</code></pre>
+
+Or install the package:
+
+```bash
+npm install --save @justifi/webcomponents
+```
+
+Then import the module you need:
+
+```javascript
+import '@justifi/webcomponents/dist/module/justifi-checkout.js';
+```
+
+### Render inside JSX
+
+```jsx
+export function CheckoutExample() {
+  return (
+    <justifi-checkout auth-token="token" checkout-id="chk_123" locale="en-US" />
+  );
+}
+```
+
+## TypeScript integration
+
+Let TypeScript know about the generated intrinsic elements so JSX understands attributes and custom events.
+
+```ts
+// register-web-components.ts
+import { JSX as LocalJSX } from '@justifi/webcomponents/dist/loader';
+import { HTMLAttributes } from 'react';
+
+type StencilToReact<T> = {
+  [K in keyof T]?: T[K] &
+    Omit<HTMLAttributes<Element>, 'className'> & {
+      class?: string;
+    };
+};
+
+declare global {
+  export namespace JSX {
+    interface IntrinsicElements
+      extends StencilToReact<LocalJSX.IntrinsicElements> {}
+  }
+}
+```
+
+Import that file once at the edge of your application (for example inside `src/main.tsx`) so the declarations register globally.
+
+## Calling methods with refs
+
+```tsx
+import { useRef } from 'react';
+
+export default function CheckoutWithRef() {
+  const checkoutRef = useRef<any>(null);
+
+  const fillBillingForm = () => {
+    checkoutRef.current?.fillBillingForm({
+      name: 'John Doe',
+      address_line1: '123 Main St',
+      address_city: 'Minneapolis',
+      address_state: 'MN',
+      address_postal_code: '55401',
+    });
+  };
+
+  return (
+    <>
+      <justifi-checkout
+        ref={checkoutRef}
+        auth-token="token"
+        checkout-id="chk_123"
+      />
+      <button onClick={fillBillingForm}>Prefill billing</button>
+    </>
+  );
+}
+```
+
+## Listening to events
+
+Attach listeners with `addEventListener` inside `useEffect` or via inline handlers if you wrap the component.
+
+```tsx
+import { useEffect, useRef } from 'react';
+
+export function CheckoutWithEvents() {
+  const checkoutRef = useRef<any>(null);
+
+  useEffect(() => {
+    const element = checkoutRef.current;
+    if (!element) {
+      return;
+    }
+
+    const handleSubmit = (event: CustomEvent) => {
+      console.log('Submit payload', event.detail);
+    };
+
+    element.addEventListener('submit-event', handleSubmit);
+    return () => element.removeEventListener('submit-event', handleSubmit);
+  }, []);
+
+  return (
+    <justifi-checkout
+      ref={checkoutRef}
+      auth-token="token"
+      checkout-id="chk_123"
+    />
+  );
+}
+```

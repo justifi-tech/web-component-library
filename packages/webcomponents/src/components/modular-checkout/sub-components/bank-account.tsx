@@ -2,6 +2,7 @@ import { Component, h, Method, State } from "@stencil/core";
 import { StyledHost } from "../../../ui-components";
 import BankAccountFormSkeleton from "./bank-account-skeleton";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { generateTabId } from "../../../utils/utils";
 import JustifiAnalytics from "../../../api/Analytics";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 
@@ -12,6 +13,7 @@ import { configState, waitForConfig } from "../../config-provider/config-state";
 export class BankAccountForm {
   @State() iframeOrigin: string;
   @State() isReady: boolean = false;
+  @State() tabId: string;
 
   private accountNumberIframeElement!: HTMLIframeInputElement;
   private routingNumberIframeElement!: HTMLIframeInputElement;
@@ -21,6 +23,7 @@ export class BankAccountForm {
   async componentWillLoad() {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
+    this.tabId = generateTabId();
 
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
@@ -83,7 +86,7 @@ export class BankAccountForm {
               inputId="accountNumber"
               ref={(el) => (this.accountNumberIframeElement = el as HTMLIframeInputElement)}
               label="Account Number"
-              iframeOrigin={`${this.iframeOrigin}/v2/accountNumber`}
+              iframeOrigin={`${this.iframeOrigin}/v2/accountNumber?tabId=${this.tabId}`}
             />
           </div>
           <div class="row">
@@ -91,7 +94,7 @@ export class BankAccountForm {
               inputId="routingNumber"
               ref={(el) => (this.routingNumberIframeElement = el as HTMLIframeInputElement)}
               label="Routing Number"
-              iframeOrigin={`${this.iframeOrigin}/v2/routingNumber`}
+              iframeOrigin={`${this.iframeOrigin}/v2/routingNumber?tabId=${this.tabId}`}
             />
           </div>
         </div>

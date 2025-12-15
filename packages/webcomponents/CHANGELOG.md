@@ -1,5 +1,33 @@
 ### Changelog
 
+## 6.7.2
+
+### Patch Changes
+
+- b67550c: Fix bug - Format is invalid for parameter: year, must be two digits
+- be3f80f: Added setup to include a /docs folder in the published package
+  Added MDX linter setup and CI workflow
+  Added new MDX documentation to replace Storybook in a near future.
+- 343d520: Adds a tentative to void the payment in case the refund is requested within 25 minutes of its creation.
+
+## 6.7.1
+
+### Patch Changes
+
+- 0c34ce6: Include merchant ID in google pay requests
+
+## 6.7.0
+
+### Minor Changes
+
+- bf665ad: feat(UFC): Google Pay support
+
+  - Add `justifi-google-pay` sub-component and integrate it with the `justifi-modular-checkout` flow.
+  - Enable Google Pay as a payment option in `justifi-checkout` (UFC), including eligibility checks, loading states, and error handling.
+  - Add docs and examples for configuration and usage.
+
+- d11330c: Add Checkout ID, Created Before, and Created After filters to checkouts list filter component
+
 ## 6.6.0
 
 ### Minor Changes

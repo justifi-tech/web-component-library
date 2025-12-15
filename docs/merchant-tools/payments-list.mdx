@@ -1,0 +1,109 @@
+---
+id: payments-list
+title: Payments List
+description: Paginated table of payments with filtering, export, and quick actions for ops teams.
+sidebar_position: 31
+---
+
+import { PropsTable, PartsTable } from '../helpers';
+
+## Overview
+
+Component to render a formated list of payments for the requested account.
+
+## Usage
+
+<pre>
+  <code className="language-html">{`<div class="payments-report">
+  <justifi-filters
+    account-id="acc_123"
+    auth-token="wct_reporting"
+    target="payments"
+  ></justifi-filters>
+  <justifi-payments-list
+    account-id="acc_123"
+    auth-token="wct_reporting"
+    columns="created_at,customer_name,payment_amount,status"
+  ></justifi-payments-list>
+</div>`}</code>
+</pre>
+
+## Props, Events & Methods
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Scope results to the platform or sub-account.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payments` scope.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue:
+          'created_at,customer_name,payment_amount,payment_description,status',
+        description:
+          'Comma-delimited list that controls which columns render and their order.',
+      },
+      {
+        name: 'page-size',
+        type: 'number',
+        defaultValue: '25',
+        description: 'Override default pagination size.',
+      },
+      {
+        name: 'enable-export',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Adds an export button that streams CSV data when true.',
+      },
+    ]),
+  }}
+/>
+
+### Events
+
+- `click-event`: emitted when users select a row or click an inline action; `event.detail` surfaces `payment_id`.
+- `error-event`: surfaces API or token errors for logging.
+
+### Public methods
+
+1. `refresh()` – Re-run the underlying query (useful after applying filters).
+2. `exportCSV()` – Programmatically trigger an export if `enable-export` is true.
+
+## Theming & Layout
+
+<div
+  dangerouslySetInnerHTML={{
+    __html: PartsTable([
+      {
+        name: 'font-family',
+        description: 'Controls the font family for the component.',
+      },
+      {
+        name: 'color',
+        description: 'Controls the text color.',
+      },
+      {
+        name: 'background-color',
+        description: 'Controls the background color.',
+      },
+      {
+        name: 'button',
+        description: 'Button styles.',
+      },
+      {
+        name: 'button-disabled',
+        description: 'Disabled button styles.',
+      },
+    ]),
+  }}
+/>
