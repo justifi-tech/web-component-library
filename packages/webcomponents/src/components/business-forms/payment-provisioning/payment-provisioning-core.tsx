@@ -7,12 +7,14 @@ import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '
 import { BusinessFormClickActions } from '../utils/event-types';
 import { CountryCode } from '../../../utils/country-codes';
 import { Business } from '../../../api/Business';
+import { PaymentProvisioningLoading } from './payment-provisioning-loading';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
 })
 export class PaymentProvisioningCore {
   @State() loading: boolean = false;
+  @State() businessLoading: boolean = true;
   @State() businessProvisioned: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
@@ -35,7 +37,11 @@ export class PaymentProvisioningCore {
   }
 
   async componentWillLoad() {
-    if (this.getBusiness) await this.setBusinessProvisioned();
+    if (this.getBusiness) {
+      await this.setBusinessProvisioned();
+    } else {
+      this.businessLoading = false;
+    }
     this.refs = [
       this.coreInfoRef,
       this.legalAddressRef,
@@ -61,6 +67,7 @@ export class PaymentProvisioningCore {
               severity: ComponentErrorSeverity.INFO,
             });
           }
+          this.businessLoading = false;
           resolve();
         },
         onError: ({ error, code, severity }) => {
@@ -69,6 +76,7 @@ export class PaymentProvisioningCore {
             errorCode: code,
             severity: severity
           });
+          this.businessLoading = false;
           resolve();
         }
       });
@@ -143,6 +151,14 @@ export class PaymentProvisioningCore {
   }
 
   render() {
+    if (this.businessLoading) {
+      return (
+        <StyledHost>
+          <PaymentProvisioningLoading />
+        </StyledHost>
+      );
+    }
+
     return (
       <StyledHost>
         <div class='row gap-3'>

@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "@stencil/core": "^4.0.5",
+    "@stencil/core": "4.38.3",
     "@stencil/store": "^2.0.8",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.4.1",
