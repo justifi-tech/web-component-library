@@ -78,7 +78,7 @@ export class RepresentativeFormInputs {
             <div class="col-12">
               <form-control-checkbox
                 name="is_owner"
-                label="Is owner"
+                label="Is Owner of the Business"
                 checked={this.isOwnerChecked}
                 inputHandler={this.handleOwnerCheckboxInput}
               />
