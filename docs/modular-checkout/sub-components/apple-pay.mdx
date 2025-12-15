@@ -5,7 +5,13 @@ description: Apple Pay rail for Modular Checkout that exposes wallet buttons and
 sidebar_position: 22
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../../helpers';
+import {
+  PropsTable,
+  PartsMarkdownTable,
+  getWebcomponentsVersion,
+  getPartsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
 
 ## Overview
 
@@ -89,14 +95,4 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 - Styling is intentionally limited to keep Apple compliance.
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'button',
-        description:
-          'Wrapper around the native Apple Pay button for margin/padding tweaks.',
-      },
-    ]),
-  }}
-/>
+<PartsMarkdownTable parts={getPartsFromDocs('justifi-apple-pay', docsJson)} />
