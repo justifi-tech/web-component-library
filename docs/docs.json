@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-11T22:21:44",
+  "timestamp": "2025-12-15T17:58:53",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.28.2",
@@ -6668,7 +6668,32 @@
       "tag": "justifi-bank-account-form",
       "readme": "# payment-method-option\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "skeleton - Skeleton for the bank account form."
+        },
+        {
+          "name": "part",
+          "text": "input-invalid-and-focused - Style for invalid and focused input."
+        },
+        {
+          "name": "part",
+          "text": "input-invalid - Style for invalid input."
+        },
+        {
+          "name": "part",
+          "text": "input-focused - Style for focused input."
+        },
+        {
+          "name": "part",
+          "text": "input - Style for input."
+        },
+        {
+          "name": "part",
+          "text": "label - Style for label."
+        }
+      ],
       "usage": {},
       "props": [],
       "methods": [
@@ -6733,7 +6758,32 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "input",
+          "docs": "Style for input."
+        },
+        {
+          "name": "input-focused",
+          "docs": "Style for focused input."
+        },
+        {
+          "name": "input-invalid",
+          "docs": "Style for invalid input."
+        },
+        {
+          "name": "input-invalid-and-focused",
+          "docs": "Style for invalid and focused input."
+        },
+        {
+          "name": "label",
+          "docs": "Style for label."
+        },
+        {
+          "name": "skeleton",
+          "docs": "Skeleton for the bank account form."
+        }
+      ],
       "dependents": [
         "internal-tokenize-payment-method"
       ],
