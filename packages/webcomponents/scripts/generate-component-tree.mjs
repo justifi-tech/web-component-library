@@ -231,6 +231,72 @@ function containsJSX(node) {
 }
 
 /**
+ * Find a variable declaration by name in the AST
+ */
+function findVariableDeclarationByName(ast, variableName) {
+  let foundDeclarator = null;
+
+  traverseAST(ast, {
+    [NODE_TYPES.VARIABLE_DECLARATION]: (node) => {
+      if (foundDeclarator) return;
+
+      node.declarations?.forEach((declarator) => {
+        if (
+          declarator.id?.type === NODE_TYPES.IDENTIFIER &&
+          declarator.id.name === variableName
+        ) {
+          foundDeclarator = declarator;
+        }
+      });
+    },
+  });
+
+  return foundDeclarator;
+}
+
+/**
+ * Process a variable declarator to check if it's a utility function
+ */
+function processVariableDeclarator(
+  declarator,
+  partsImports,
+  utilityFunctionMap,
+  utilityFunctions
+) {
+  if (declarator.id?.type === NODE_TYPES.IDENTIFIER) {
+    const name = declarator.id.name;
+    // Check if PascalCase (starts with uppercase)
+    if (REGEX_PATTERNS.PASCAL_CASE.test(name)) {
+      const init = declarator.init;
+      // Check if it's a function (arrow function or function expression)
+      if (
+        init &&
+        (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+          init.type === NODE_TYPES.FUNCTION_EXPRESSION)
+      ) {
+        // Check if it uses parts or renders JSX
+        const usesParts = partsImports.size > 0;
+        const rendersJSX = containsJSX(init);
+
+        if (usesParts || rendersJSX) {
+          // Check if already added (avoid duplicates)
+          if (!utilityFunctionMap.has(name)) {
+            const utilityFunction = {
+              name: name,
+              parts: Array.from(partsImports),
+              filePath: null, // Will be set by caller
+              jsxElements: new Set(),
+            };
+            utilityFunctionMap.set(name, utilityFunction);
+            utilityFunctions.push(utilityFunction);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
  * Find utility function declarations in AST
  */
 function findUtilityFunctionDeclarations(ast, partsImports) {
@@ -243,38 +309,43 @@ function findUtilityFunctionDeclarations(ast, partsImports) {
 
       if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
         declaration.declarations?.forEach((declarator) => {
-          if (declarator.id?.type === NODE_TYPES.IDENTIFIER) {
-            const name = declarator.id.name;
-            // Check if PascalCase (starts with uppercase)
-            if (REGEX_PATTERNS.PASCAL_CASE.test(name)) {
-              const init = declarator.init;
-              // Check if it's a function (arrow function or function expression)
-              if (
-                init &&
-                (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
-                  init.type === NODE_TYPES.FUNCTION_EXPRESSION)
-              ) {
-                // Check if it uses parts or renders JSX
-                const usesParts = partsImports.size > 0;
-                const rendersJSX = containsJSX(init);
-
-                if (usesParts || rendersJSX) {
-                  // Check if already added (avoid duplicates)
-                  if (!utilityFunctionMap.has(name)) {
-                    const utilityFunction = {
-                      name: name,
-                      parts: Array.from(partsImports),
-                      filePath: null, // Will be set by caller
-                      jsxElements: new Set(),
-                    };
-                    utilityFunctionMap.set(name, utilityFunction);
-                    utilityFunctions.push(utilityFunction);
-                  }
-                }
-              }
-            }
-          }
+          processVariableDeclarator(
+            declarator,
+            partsImports,
+            utilityFunctionMap,
+            utilityFunctions
+          );
         });
+      }
+    },
+    [NODE_TYPES.EXPORT_DEFAULT_DECLARATION]: (node) => {
+      const declaration = node.declaration;
+
+      // Handle default export of variable declaration
+      if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
+        declaration.declarations?.forEach((declarator) => {
+          processVariableDeclarator(
+            declarator,
+            partsImports,
+            utilityFunctionMap,
+            utilityFunctions
+          );
+        });
+      }
+      // Handle default export of identifier (references a variable declared elsewhere)
+      else if (declaration?.type === NODE_TYPES.IDENTIFIER) {
+        const variableName = declaration.name;
+        if (variableName && REGEX_PATTERNS.PASCAL_CASE.test(variableName)) {
+          const declarator = findVariableDeclarationByName(ast, variableName);
+          if (declarator) {
+            processVariableDeclarator(
+              declarator,
+              partsImports,
+              utilityFunctionMap,
+              utilityFunctions
+            );
+          }
+        }
       }
     },
   });
@@ -337,6 +408,66 @@ function findUtilityFunctionBody(ast, functionName) {
           }
         });
       }
+    },
+    [NODE_TYPES.EXPORT_DEFAULT_DECLARATION]: (node) => {
+      if (foundBody) return;
+
+      const declaration = node.declaration;
+      // Handle default export of variable declaration
+      if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
+        declaration.declarations?.forEach((declarator) => {
+          if (
+            declarator.id?.type === NODE_TYPES.IDENTIFIER &&
+            declarator.id.name === functionName
+          ) {
+            const init = declarator.init;
+            if (
+              init &&
+              (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+                init.type === NODE_TYPES.FUNCTION_EXPRESSION)
+            ) {
+              foundBody = init.body;
+            }
+          }
+        });
+      }
+      // Handle default export of identifier (references a variable declared elsewhere)
+      else if (
+        declaration?.type === NODE_TYPES.IDENTIFIER &&
+        declaration.name === functionName
+      ) {
+        const declarator = findVariableDeclarationByName(ast, functionName);
+        if (declarator) {
+          const init = declarator.init;
+          if (
+            init &&
+            (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+              init.type === NODE_TYPES.FUNCTION_EXPRESSION)
+          ) {
+            foundBody = init.body;
+          }
+        }
+      }
+    },
+    // Also check regular variable declarations (for default exports that reference them)
+    [NODE_TYPES.VARIABLE_DECLARATION]: (node) => {
+      if (foundBody) return;
+
+      node.declarations?.forEach((declarator) => {
+        if (
+          declarator.id?.type === NODE_TYPES.IDENTIFIER &&
+          declarator.id.name === functionName
+        ) {
+          const init = declarator.init;
+          if (
+            init &&
+            (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+              init.type === NODE_TYPES.FUNCTION_EXPRESSION)
+          ) {
+            foundBody = init.body;
+          }
+        }
+      });
     },
   });
 
