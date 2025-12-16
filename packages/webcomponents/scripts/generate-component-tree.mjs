@@ -15,6 +15,109 @@ const COMPONENTS_DIR = join(__dirname, '../src');
 const PARTS_FILE = join(__dirname, '../src/styles/parts.ts');
 const OUTPUT_FILE = join(__dirname, '../../../docs/component-tree.json');
 
+// AST Node Type Constants
+const NODE_TYPES = {
+  IMPORT_DECLARATION: 'ImportDeclaration',
+  EXPORT_NAMED_DECLARATION: 'ExportNamedDeclaration',
+  EXPORT_DEFAULT_DECLARATION: 'ExportDefaultDeclaration',
+  CLASS_DECLARATION: 'ClassDeclaration',
+  VARIABLE_DECLARATION: 'VariableDeclaration',
+  FUNCTION_DECLARATION: 'FunctionDeclaration',
+  ARROW_FUNCTION_EXPRESSION: 'ArrowFunctionExpression',
+  FUNCTION_EXPRESSION: 'FunctionExpression',
+  VARIABLE_DECLARATOR: 'VariableDeclarator',
+  IDENTIFIER: 'Identifier',
+  IMPORT_SPECIFIER: 'ImportSpecifier',
+  CALL_EXPRESSION: 'CallExpression',
+  OBJECT_EXPRESSION: 'ObjectExpression',
+  JSX_ELEMENT: 'JSXElement',
+  JSX_FRAGMENT: 'JSXFragment',
+  JSX_OPENING_ELEMENT: 'JSXOpeningElement',
+  JSX_CLOSING_ELEMENT: 'JSXClosingElement',
+  JSX_EXPRESSION_CONTAINER: 'JSXExpressionContainer',
+  JSX_IDENTIFIER: 'JSXIdentifier',
+  JSX_MEMBER_EXPRESSION: 'JSXMemberExpression',
+};
+
+// Regex Patterns
+const REGEX_PATTERNS = {
+  EXPORT_STATEMENT: /export\s+(?:const|function)\s+(\w+)\s*=/g,
+  FILE_EXTENSION: /\.(ts|tsx|js|jsx)$/,
+  PASCAL_CASE: /^[A-Z]/,
+  KEBAB_CASE_CONVERSION: /([A-Z])/g,
+  LEADING_HYPHEN: /^-/,
+  JUSTIFI_PREFIX: /^justifi-/,
+  PATH_SEPARATOR: /\\/g,
+};
+
+// Parts Import Patterns
+const PARTS_IMPORT_PATTERNS = [
+  /styles\/parts$/,
+  /\.\.\/.*styles\/parts$/,
+  /@packages\/webcomponents\/src\/styles\/parts/,
+  /packages\/webcomponents\/src\/styles\/parts/,
+];
+
+// Keys to skip during AST traversal
+const SKIP_KEYS = new Set(['parent', 'range', 'loc']);
+
+/**
+ * Normalize path separators (Windows to Unix style)
+ */
+function normalizePath(path) {
+  return path.replace(REGEX_PATTERNS.PATH_SEPARATOR, '/');
+}
+
+/**
+ * Extract JSX element name from a JSX node
+ */
+function extractJSXElementName(node) {
+  if (!node) return null;
+
+  const jsxName = node.name || node.openingElement?.name;
+  if (!jsxName) return null;
+
+  if (jsxName.type === NODE_TYPES.JSX_IDENTIFIER) {
+    return jsxName.name;
+  }
+
+  if (jsxName.type === NODE_TYPES.JSX_MEMBER_EXPRESSION) {
+    return jsxName.object?.name || null;
+  }
+
+  return null;
+}
+
+/**
+ * Traverse AST with visitor callbacks
+ */
+function traverseAST(node, visitors = {}) {
+  if (!node) return;
+
+  // Call visitor for this node type if provided
+  const nodeType = node.type;
+  if (nodeType && visitors[nodeType]) {
+    visitors[nodeType](node);
+  }
+
+  // Call generic visitor if provided
+  if (visitors.visit) {
+    visitors.visit(node);
+  }
+
+  // Recursively traverse children
+  for (const key in node) {
+    if (SKIP_KEYS.has(key)) continue;
+
+    const child = node[key];
+    if (Array.isArray(child)) {
+      child.forEach((item) => traverseAST(item, visitors));
+    } else if (child && typeof child === 'object') {
+      traverseAST(child, visitors);
+    }
+  }
+}
+
 /**
  * Extract all exported part names from parts.ts
  */
@@ -24,7 +127,7 @@ function getAvailableParts() {
     const parts = new Set();
 
     // Match export const/export statements
-    const exportRegex = /export\s+(?:const|function)\s+(\w+)\s*=/g;
+    const exportRegex = new RegExp(REGEX_PATTERNS.EXPORT_STATEMENT.source, 'g');
     let match;
     while ((match = exportRegex.exec(partsContent)) !== null) {
       parts.add(match[1]);
@@ -44,13 +147,18 @@ function isPartsImport(sourcePath, filePath) {
   if (!sourcePath) return false;
 
   // Remove file extension if present
-  const normalizedSource = sourcePath.replace(/\.(ts|tsx|js|jsx)$/, '');
+  const normalizedSource = sourcePath.replace(
+    REGEX_PATTERNS.FILE_EXTENSION,
+    ''
+  );
 
   // Try to resolve the import path relative to the file
   try {
     const fileDir = dirname(filePath);
-    const resolvedPath = resolve(fileDir, normalizedSource).replace(/\\/g, '/');
-    const partsPath = PARTS_FILE.replace(/\.ts$/, '').replace(/\\/g, '/');
+    const resolvedPath = normalizePath(resolve(fileDir, normalizedSource));
+    const partsPath = normalizePath(
+      PARTS_FILE.replace(REGEX_PATTERNS.FILE_EXTENSION, '')
+    );
 
     if (resolvedPath === partsPath) {
       return true;
@@ -60,14 +168,34 @@ function isPartsImport(sourcePath, filePath) {
   }
 
   // Pattern matching fallback
-  const patterns = [
-    /styles\/parts$/,
-    /\.\.\/.*styles\/parts$/,
-    /@packages\/webcomponents\/src\/styles\/parts/,
-    /packages\/webcomponents\/src\/styles\/parts/,
-  ];
+  return PARTS_IMPORT_PATTERNS.some((pattern) =>
+    pattern.test(normalizedSource)
+  );
+}
 
-  return patterns.some((pattern) => pattern.test(normalizedSource));
+/**
+ * Extract parts imports from AST
+ */
+function extractPartsImports(ast, filePath, availableParts) {
+  const partsImports = new Set();
+
+  traverseAST(ast, {
+    [NODE_TYPES.IMPORT_DECLARATION]: (node) => {
+      const source = node.source?.value;
+      if (isPartsImport(source, filePath)) {
+        node.specifiers?.forEach((spec) => {
+          if (spec.type === NODE_TYPES.IMPORT_SPECIFIER) {
+            const importedName = spec.imported?.name || spec.imported?.value;
+            if (importedName && availableParts.has(importedName)) {
+              partsImports.add(importedName);
+            }
+          }
+        });
+      }
+    },
+  });
+
+  return partsImports;
 }
 
 /**
@@ -76,19 +204,21 @@ function isPartsImport(sourcePath, filePath) {
 function containsJSX(node) {
   if (!node) return false;
 
-  if (
-    node.type === 'JSXElement' ||
-    node.type === 'JSXFragment' ||
-    node.type === 'JSXOpeningElement' ||
-    node.type === 'JSXClosingElement' ||
-    node.type === 'JSXExpressionContainer'
-  ) {
+  const jsxTypes = [
+    NODE_TYPES.JSX_ELEMENT,
+    NODE_TYPES.JSX_FRAGMENT,
+    NODE_TYPES.JSX_OPENING_ELEMENT,
+    NODE_TYPES.JSX_CLOSING_ELEMENT,
+    NODE_TYPES.JSX_EXPRESSION_CONTAINER,
+  ];
+
+  if (jsxTypes.includes(node.type)) {
     return true;
   }
 
   // Recursively check children
   for (const key in node) {
-    if (key === 'parent' || key === 'range' || key === 'loc') continue;
+    if (SKIP_KEYS.has(key)) continue;
     const child = node[key];
     if (Array.isArray(child)) {
       if (child.some((item) => containsJSX(item))) return true;
@@ -101,53 +231,31 @@ function containsJSX(node) {
 }
 
 /**
- * Extract utility functions from AST
+ * Find utility function declarations in AST
  */
-function extractUtilityFunctions(ast, filePath, availableParts) {
+function findUtilityFunctionDeclarations(ast, partsImports) {
   const utilityFunctions = [];
-  const partsImports = new Set();
-  let hasPartsImport = false;
-  const utilityFunctionMap = new Map(); // Track utility functions by name to extract their JSX elements
+  const utilityFunctionMap = new Map();
 
-  function traverse(node) {
-    if (!node) return;
-
-    // Check for imports from parts.ts
-    if (node.type === 'ImportDeclaration') {
-      const source = node.source?.value;
-      if (isPartsImport(source, filePath)) {
-        hasPartsImport = true;
-        node.specifiers?.forEach((spec) => {
-          if (spec.type === 'ImportSpecifier') {
-            const importedName = spec.imported?.name || spec.imported?.value;
-            if (importedName && availableParts.has(importedName)) {
-              partsImports.add(importedName);
-            }
-          }
-        });
-      }
-    }
-
-    // Check for exported const declarations with PascalCase names
-    if (node.type === 'ExportNamedDeclaration') {
+  traverseAST(ast, {
+    [NODE_TYPES.EXPORT_NAMED_DECLARATION]: (node) => {
       const declaration = node.declaration;
 
-      // Handle: export const UtilityName = ... or export const UtilityName: Type = ...
-      if (declaration?.type === 'VariableDeclaration') {
+      if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
         declaration.declarations?.forEach((declarator) => {
-          if (declarator.id?.type === 'Identifier') {
+          if (declarator.id?.type === NODE_TYPES.IDENTIFIER) {
             const name = declarator.id.name;
             // Check if PascalCase (starts with uppercase)
-            if (/^[A-Z]/.test(name)) {
+            if (REGEX_PATTERNS.PASCAL_CASE.test(name)) {
               const init = declarator.init;
               // Check if it's a function (arrow function or function expression)
               if (
                 init &&
-                (init.type === 'ArrowFunctionExpression' ||
-                  init.type === 'FunctionExpression')
+                (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+                  init.type === NODE_TYPES.FUNCTION_EXPRESSION)
               ) {
                 // Check if it uses parts or renders JSX
-                const usesParts = hasPartsImport && partsImports.size > 0;
+                const usesParts = partsImports.size > 0;
                 const rendersJSX = containsJSX(init);
 
                 if (usesParts || rendersJSX) {
@@ -156,7 +264,7 @@ function extractUtilityFunctions(ast, filePath, availableParts) {
                     const utilityFunction = {
                       name: name,
                       parts: Array.from(partsImports),
-                      filePath: filePath,
+                      filePath: null, // Will be set by caller
                       jsxElements: new Set(),
                     };
                     utilityFunctionMap.set(name, utilityFunction);
@@ -168,49 +276,30 @@ function extractUtilityFunctions(ast, filePath, availableParts) {
           }
         });
       }
-    }
+    },
+  });
 
-    // Extract JSX element names from utility function bodies
-    if (node.type === 'JSXOpeningElement' || node.type === 'JSXElement') {
-      const jsxName = node.name || node.openingElement?.name;
-      let elementName = null;
+  return { utilityFunctions, utilityFunctionMap };
+}
 
-      if (jsxName) {
-        if (jsxName.type === 'JSXIdentifier') {
-          elementName = jsxName.name;
-        } else if (jsxName.type === 'JSXMemberExpression') {
-          elementName = jsxName.object?.name;
-        }
-      }
+/**
+ * Extract utility functions from AST
+ */
+function extractUtilityFunctions(ast, filePath, availableParts) {
+  // Extract parts imports first
+  const partsImports = extractPartsImports(ast, filePath, availableParts);
 
-      if (elementName) {
-        // Find which utility function this JSX belongs to by traversing up the tree
-        // For simplicity, we'll extract JSX from all utility functions
-        utilityFunctionMap.forEach((uf) => {
-          uf.jsxElements.add(elementName);
-        });
-      }
-    }
+  // Find utility function declarations
+  const { utilityFunctions, utilityFunctionMap } =
+    findUtilityFunctionDeclarations(ast, partsImports);
 
-    // Recursively traverse children
-    for (const key in node) {
-      if (key === 'parent' || key === 'range' || key === 'loc') continue;
-      const child = node[key];
-      if (Array.isArray(child)) {
-        child.forEach((item) => traverse(item));
-      } else if (child && typeof child === 'object') {
-        traverse(child);
-      }
-    }
-  }
-
-  traverse(ast);
-
-  // Clean up JSX elements - only keep those that are actually used in each utility function
-  // We need to traverse each utility function's body separately to get accurate JSX elements
+  // Set file path for all utility functions
   utilityFunctions.forEach((uf) => {
-    // Reset JSX elements and re-extract from the specific function
-    uf.jsxElements = new Set();
+    uf.filePath = filePath;
+  });
+
+  // Extract JSX elements from each utility function's body
+  utilityFunctions.forEach((uf) => {
     const functionBody = findUtilityFunctionBody(ast, uf.name);
     if (functionBody) {
       extractJSXFromNode(functionBody, uf.jsxElements);
@@ -226,44 +315,31 @@ function extractUtilityFunctions(ast, filePath, availableParts) {
 function findUtilityFunctionBody(ast, functionName) {
   let foundBody = null;
 
-  function traverse(node) {
-    if (!node || foundBody) return;
+  traverseAST(ast, {
+    [NODE_TYPES.EXPORT_NAMED_DECLARATION]: (node) => {
+      if (foundBody) return;
 
-    if (node.type === 'ExportNamedDeclaration') {
       const declaration = node.declaration;
-      if (declaration?.type === 'VariableDeclaration') {
+      if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
         declaration.declarations?.forEach((declarator) => {
           if (
-            declarator.id?.type === 'Identifier' &&
+            declarator.id?.type === NODE_TYPES.IDENTIFIER &&
             declarator.id.name === functionName
           ) {
             const init = declarator.init;
             if (
               init &&
-              (init.type === 'ArrowFunctionExpression' ||
-                init.type === 'FunctionExpression')
+              (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+                init.type === NODE_TYPES.FUNCTION_EXPRESSION)
             ) {
               foundBody = init.body;
             }
           }
         });
       }
-    }
+    },
+  });
 
-    if (!foundBody) {
-      for (const key in node) {
-        if (key === 'parent' || key === 'range' || key === 'loc') continue;
-        const child = node[key];
-        if (Array.isArray(child)) {
-          child.forEach((item) => traverse(item));
-        } else if (child && typeof child === 'object') {
-          traverse(child);
-        }
-      }
-    }
-  }
-
-  traverse(ast);
   return foundBody;
 }
 
@@ -273,33 +349,133 @@ function findUtilityFunctionBody(ast, functionName) {
 function extractJSXFromNode(node, jsxElements) {
   if (!node) return;
 
-  if (node.type === 'JSXOpeningElement' || node.type === 'JSXElement') {
-    const jsxName = node.name || node.openingElement?.name;
-    let elementName = null;
-
-    if (jsxName) {
-      if (jsxName.type === 'JSXIdentifier') {
-        elementName = jsxName.name;
-      } else if (jsxName.type === 'JSXMemberExpression') {
-        elementName = jsxName.object?.name;
+  traverseAST(node, {
+    [NODE_TYPES.JSX_OPENING_ELEMENT]: (node) => {
+      const elementName = extractJSXElementName(node);
+      if (elementName) {
+        jsxElements.add(elementName);
       }
-    }
+    },
+    [NODE_TYPES.JSX_ELEMENT]: (node) => {
+      const elementName = extractJSXElementName(node);
+      if (elementName) {
+        jsxElements.add(elementName);
+      }
+    },
+  });
+}
 
-    if (elementName) {
-      jsxElements.add(elementName);
-    }
+/**
+ * Extract component decorator from AST
+ */
+function extractComponentDecorator(ast) {
+  let componentDecorator = null;
+
+  traverseAST(ast, {
+    [NODE_TYPES.CLASS_DECLARATION]: (node) => {
+      if (node.decorators) {
+        node.decorators.forEach((decorator) => {
+          if (
+            decorator.expression?.type === NODE_TYPES.CALL_EXPRESSION &&
+            decorator.expression.callee?.name === 'Component'
+          ) {
+            componentDecorator = decorator.expression;
+          }
+        });
+      }
+    },
+  });
+
+  return componentDecorator;
+}
+
+/**
+ * Extract tag and shadow DOM setting from component decorator
+ */
+function extractDecoratorMetadata(componentDecorator) {
+  const metadata = { tag: null, shadowDom: false };
+
+  if (!componentDecorator) return metadata;
+
+  const args = componentDecorator.arguments?.[0];
+  if (args?.type === NODE_TYPES.OBJECT_EXPRESSION) {
+    args.properties?.forEach((prop) => {
+      if (prop.key?.name === 'tag' && prop.value?.value) {
+        metadata.tag = prop.value.value;
+      }
+      if (prop.key?.name === 'shadow') {
+        metadata.shadowDom = prop.value?.value === true;
+      }
+    });
   }
 
-  // Recursively traverse children
-  for (const key in node) {
-    if (key === 'parent' || key === 'range' || key === 'loc') continue;
-    const child = node[key];
-    if (Array.isArray(child)) {
-      child.forEach((item) => extractJSXFromNode(item, jsxElements));
-    } else if (child && typeof child === 'object') {
-      extractJSXFromNode(child, jsxElements);
-    }
-  }
+  return metadata;
+}
+
+/**
+ * Extract functional component declaration from AST
+ */
+function extractFunctionalComponent(ast) {
+  let exportedFunction = null;
+
+  traverseAST(ast, {
+    [NODE_TYPES.EXPORT_NAMED_DECLARATION]: (node) => {
+      const declaration = node.declaration;
+      if (
+        declaration?.type === NODE_TYPES.FUNCTION_DECLARATION ||
+        declaration?.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+        declaration?.type === NODE_TYPES.VARIABLE_DECLARATOR
+      ) {
+        exportedFunction = declaration;
+      }
+    },
+    [NODE_TYPES.EXPORT_DEFAULT_DECLARATION]: (node) => {
+      const declaration = node.declaration;
+      if (
+        declaration?.type === NODE_TYPES.FUNCTION_DECLARATION ||
+        declaration?.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+        declaration?.type === NODE_TYPES.VARIABLE_DECLARATOR
+      ) {
+        exportedFunction = declaration;
+      }
+    },
+  });
+
+  return exportedFunction;
+}
+
+/**
+ * Convert PascalCase to kebab-case
+ */
+function pascalToKebabCase(name) {
+  return name
+    .replace(REGEX_PATTERNS.KEBAB_CASE_CONVERSION, '-$1')
+    .toLowerCase()
+    .replace(REGEX_PATTERNS.LEADING_HYPHEN, '');
+}
+
+/**
+ * Extract JSX elements from AST
+ */
+function extractJSXElements(ast) {
+  const jsxElements = new Set();
+
+  traverseAST(ast, {
+    [NODE_TYPES.JSX_OPENING_ELEMENT]: (node) => {
+      const elementName = extractJSXElementName(node);
+      if (elementName) {
+        jsxElements.add(elementName);
+      }
+    },
+    [NODE_TYPES.JSX_ELEMENT]: (node) => {
+      const elementName = extractJSXElementName(node);
+      if (elementName) {
+        jsxElements.add(elementName);
+      }
+    },
+  });
+
+  return jsxElements;
 }
 
 /**
@@ -314,127 +490,122 @@ function extractComponentMetadata(ast, filePath, availableParts) {
     jsxElements: new Set(),
   };
 
-  // Track imports from parts.ts
-  const partsImports = new Set();
-
-  // Track component decorator
-  let componentDecorator = null;
-  let exportedClass = null;
-  let exportedFunction = null;
-
-  function traverse(node) {
-    if (!node) return;
-
-    // Check for imports from parts.ts
-    if (node.type === 'ImportDeclaration') {
-      const source = node.source?.value;
-      if (isPartsImport(source, filePath)) {
-        node.specifiers?.forEach((spec) => {
-          if (spec.type === 'ImportSpecifier') {
-            const importedName = spec.imported?.name || spec.imported?.value;
-            if (importedName && availableParts.has(importedName)) {
-              partsImports.add(importedName);
-            }
-          }
-        });
-      }
-    }
-
-    // Check for @Component decorator
-    if (node.type === 'ClassDeclaration' && node.decorators) {
-      node.decorators.forEach((decorator) => {
-        if (
-          decorator.expression?.type === 'CallExpression' &&
-          decorator.expression.callee?.name === 'Component'
-        ) {
-          componentDecorator = decorator.expression;
-          exportedClass = node;
-        }
-      });
-    }
-
-    // Check for exported functional components
-    if (
-      node.type === 'ExportNamedDeclaration' ||
-      node.type === 'ExportDefaultDeclaration'
-    ) {
-      const declaration = node.declaration;
-      if (
-        declaration?.type === 'FunctionDeclaration' ||
-        declaration?.type === 'ArrowFunctionExpression' ||
-        declaration?.type === 'VariableDeclarator'
-      ) {
-        exportedFunction = declaration;
-        metadata.isFunctional = true;
-      }
-    }
-
-    // Extract JSX element names
-    if (node.type === 'JSXOpeningElement' || node.type === 'JSXElement') {
-      const jsxName = node.name || node.openingElement?.name;
-      let elementName = null;
-
-      if (jsxName) {
-        if (jsxName.type === 'JSXIdentifier') {
-          elementName = jsxName.name;
-        } else if (jsxName.type === 'JSXMemberExpression') {
-          // Handle <Component.SubComponent> patterns
-          elementName = jsxName.object?.name;
-        }
-      }
-
-      if (elementName) {
-        // Track both kebab-case components (e.g., justifi-card-form)
-        // and PascalCase utility functions (e.g., DetailItem)
-        metadata.jsxElements.add(elementName);
-      }
-    }
-
-    // Recursively traverse children
-    for (const key in node) {
-      if (key === 'parent' || key === 'range' || key === 'loc') continue;
-      const child = node[key];
-      if (Array.isArray(child)) {
-        child.forEach((item) => traverse(item));
-      } else if (child && typeof child === 'object') {
-        traverse(child);
-      }
-    }
-  }
-
-  traverse(ast);
-
-  // Extract tag and shadow from @Component decorator
-  if (componentDecorator) {
-    const args = componentDecorator.arguments?.[0];
-    if (args?.type === 'ObjectExpression') {
-      args.properties?.forEach((prop) => {
-        if (prop.key?.name === 'tag' && prop.value?.value) {
-          metadata.tag = prop.value.value;
-        }
-        if (prop.key?.name === 'shadow') {
-          metadata.shadowDom = prop.value?.value === true;
-        }
-      });
-    }
-  }
-
-  // For functional components, try to infer tag from export name
-  if (metadata.isFunctional && !metadata.tag) {
-    if (exportedFunction?.id?.name) {
-      // Convert PascalCase to kebab-case for functional components
-      const name = exportedFunction.id.name;
-      metadata.tag = name
-        .replace(/([A-Z])/g, '-$1')
-        .toLowerCase()
-        .replace(/^-/, '');
-    }
-  }
-
-  // Convert parts imports to array
+  // Extract parts imports
+  const partsImports = extractPartsImports(ast, filePath, availableParts);
   metadata.parts = Array.from(partsImports);
 
+  // Extract component decorator (for class components)
+  const componentDecorator = extractComponentDecorator(ast);
+  if (componentDecorator) {
+    const decoratorMetadata = extractDecoratorMetadata(componentDecorator);
+    metadata.tag = decoratorMetadata.tag;
+    metadata.shadowDom = decoratorMetadata.shadowDom;
+  }
+
+  // Extract functional component
+  const exportedFunction = extractFunctionalComponent(ast);
+  if (exportedFunction) {
+    metadata.isFunctional = true;
+    // For functional components, try to infer tag from export name
+    if (!metadata.tag && exportedFunction.id?.name) {
+      metadata.tag = pascalToKebabCase(exportedFunction.id.name);
+    }
+  }
+
+  // Extract JSX elements
+  metadata.jsxElements = extractJSXElements(ast);
+
   return metadata;
+}
+
+/**
+ * Find matching component for an element name
+ */
+function findMatchingComponent(elementName, componentMap) {
+  // Try exact match first
+  if (componentMap.has(elementName)) {
+    return elementName;
+  }
+
+  // Try matching without justifi- prefix
+  const elementWithoutPrefix = elementName.replace(
+    REGEX_PATTERNS.JUSTIFI_PREFIX,
+    ''
+  );
+  for (const [tag] of componentMap.entries()) {
+    const tagWithoutPrefix = tag.replace(REGEX_PATTERNS.JUSTIFI_PREFIX, '');
+    if (tagWithoutPrefix === elementWithoutPrefix) {
+      return tag;
+    }
+  }
+
+  // Try substring match at the end (e.g., "card-form" matches "justifi-card-form")
+  for (const [tag] of componentMap.entries()) {
+    if (tag.endsWith(elementName) && tag.length > elementName.length) {
+      return tag;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Build a child node from a utility function
+ */
+function buildUtilityChildNode(
+  utilityFunc,
+  componentMap,
+  utilityFunctionMap,
+  visited
+) {
+  const childRelativePath = normalizePath(
+    relative(COMPONENTS_DIR, utilityFunc.filePath)
+  );
+  const childVisited = new Set(visited);
+  const childChildren = buildChildren(
+    utilityFunc,
+    componentMap,
+    utilityFunctionMap,
+    childVisited
+  );
+
+  return {
+    tag: utilityFunc.name,
+    filePath: childRelativePath,
+    shadowDom: false,
+    parts: utilityFunc.parts,
+    isUtility: true,
+    children: childChildren,
+  };
+}
+
+/**
+ * Build a child node from a component
+ */
+function buildComponentChildNode(
+  childComp,
+  componentMap,
+  utilityFunctionMap,
+  visited
+) {
+  const childRelativePath = normalizePath(
+    relative(COMPONENTS_DIR, childComp.filePath)
+  );
+  const childVisited = new Set(visited);
+  const childChildren = buildChildren(
+    childComp,
+    componentMap,
+    utilityFunctionMap,
+    childVisited
+  );
+
+  return {
+    tag: childComp.tag,
+    filePath: childRelativePath,
+    shadowDom: childComp.shadowDom,
+    parts: childComp.parts,
+    children: childChildren,
+  };
 }
 
 /**
@@ -462,42 +633,21 @@ function buildChildren(
     }
 
     // Check if it's a PascalCase utility function
-    if (/^[A-Z]/.test(elementName)) {
+    if (REGEX_PATTERNS.PASCAL_CASE.test(elementName)) {
       if (utilityFunctionMap.has(elementName)) {
         children.push({ name: elementName, isUtility: true });
         return;
       }
     }
 
-    // Try exact match first for components
-    if (componentMap.has(elementName)) {
-      children.push({ tag: elementName, isUtility: false });
-      return;
-    }
-
-    // Try to find by matching (be more strict) for components
-    for (const [tag, childComp] of componentMap.entries()) {
-      // Exact match
-      if (tag === elementName) {
-        children.push({ tag: tag, isUtility: false });
-        return;
-      }
-      // Match without justifi- prefix
-      if (
-        tag.replace(/^justifi-/, '') === elementName.replace(/^justifi-/, '')
-      ) {
-        children.push({ tag: tag, isUtility: false });
-        return;
-      }
-      // Match if element name is a substring at the end of tag (e.g., "card-form" matches "justifi-card-form")
-      if (tag.endsWith(elementName) && tag.length > elementName.length) {
-        children.push({ tag: tag, isUtility: false });
-        return;
-      }
+    // Try to find matching component
+    const matchingTag = findMatchingComponent(elementName, componentMap);
+    if (matchingTag) {
+      children.push({ tag: matchingTag, isUtility: false });
     }
   });
 
-  // Build child nodes recursively
+  // Remove duplicates
   const uniqueChildren = [];
   const seen = new Set();
   children.forEach((child) => {
@@ -508,55 +658,27 @@ function buildChildren(
     }
   });
 
+  // Build child nodes recursively
   const childNodes = uniqueChildren
     .map((child) => {
       if (child.isUtility) {
         const utilityFunc = utilityFunctionMap.get(child.name);
         if (!utilityFunc) return null;
-
-        const childRelativePath = relative(
-          COMPONENTS_DIR,
-          utilityFunc.filePath
-        ).replace(/\\/g, '/');
-        const childVisited = new Set(visited);
-        const childChildren = buildChildren(
+        return buildUtilityChildNode(
           utilityFunc,
           componentMap,
           utilityFunctionMap,
-          childVisited
+          visited
         );
-
-        return {
-          tag: utilityFunc.name,
-          filePath: childRelativePath,
-          shadowDom: false,
-          parts: utilityFunc.parts,
-          isUtility: true,
-          children: childChildren,
-        };
       } else {
         const childComp = componentMap.get(child.tag);
         if (!childComp) return null;
-
-        const childRelativePath = relative(
-          COMPONENTS_DIR,
-          childComp.filePath
-        ).replace(/\\/g, '/');
-        const childVisited = new Set(visited);
-        const childChildren = buildChildren(
+        return buildComponentChildNode(
           childComp,
           componentMap,
           utilityFunctionMap,
-          childVisited
+          visited
         );
-
-        return {
-          tag: childComp.tag,
-          filePath: childRelativePath,
-          shadowDom: childComp.shadowDom,
-          parts: childComp.parts,
-          children: childChildren,
-        };
       }
     })
     .filter(Boolean);
@@ -588,10 +710,7 @@ function buildDependencyTree(components, utilityFunctions = []) {
   components.forEach((comp) => {
     if (!comp.tag) return;
 
-    const relativePath = relative(COMPONENTS_DIR, comp.filePath).replace(
-      /\\/g,
-      '/'
-    );
+    const relativePath = normalizePath(relative(COMPONENTS_DIR, comp.filePath));
     const children = buildChildren(
       comp,
       componentMap,
