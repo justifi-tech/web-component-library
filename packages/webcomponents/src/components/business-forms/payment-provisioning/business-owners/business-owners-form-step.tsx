@@ -63,13 +63,14 @@ export class BusinessOwnersFormStep {
         const savedOwners = response.data.owners;
         this.savedRepresentative = response.data.representative;
         const savedRepresentativeId = this.savedRepresentative.id;
-        
         if (this.savedRepresentative.is_owner) {
           this.ownersPayload.push({ id: savedRepresentativeId });
         }
 
-        this.ownersPayload = savedOwners.map(owner => {
-          return (owner.id !== savedRepresentativeId) && { id: owner.id };
+        savedOwners.forEach(owner => {
+          if (owner.id && owner.id !== savedRepresentativeId) {
+            this.ownersPayload.push({ id: owner.id });
+          }
         });
 
         if (!this.ownersPayload.length) this.addOwnerForm();
