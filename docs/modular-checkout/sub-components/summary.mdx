@@ -5,7 +5,8 @@ description: Order summary block that lists line items, totals, and ancillary di
 sidebar_position: 27
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../../helpers';
+import componentTreeJson from '../../component-tree.json';
 
 ## Overview
 
@@ -95,13 +96,6 @@ No custom events; summary listens to the parent checkout for updates automatical
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'text',
-        description: 'Text styles for the summary component.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-checkout-summary', componentTreeJson)}
 />

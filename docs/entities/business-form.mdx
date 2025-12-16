@@ -6,7 +6,8 @@ description: Guided workflow for collecting representative, ownership, and compl
 sidebar_position: 11
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../helpers';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -185,53 +186,6 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'input',
-        description: 'Input field styles.',
-      },
-      {
-        name: 'input-focused',
-        description: 'Input styles when focused.',
-      },
-      {
-        name: 'input-invalid',
-        description: 'Input styles when invalid.',
-      },
-      {
-        name: 'input-invalid-and-focused',
-        description: 'Input styles when invalid and focused.',
-      },
-      {
-        name: 'button',
-        description: 'Button styles.',
-      },
-      {
-        name: 'button-primary',
-        description: 'Primary button styles.',
-      },
-      {
-        name: 'button-disabled',
-        description: 'Disabled button styles.',
-      },
-      {
-        name: 'tooltip-inner',
-        description: 'Tooltip inner content styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-business-form', componentTreeJson)}
 />

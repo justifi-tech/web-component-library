@@ -5,7 +5,8 @@ description: Visualizes gross payment volume over time with tooltips and range s
 sidebar_position: 43
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -67,17 +68,6 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'chart',
-        description: 'SVG/Canvas container for the line chart.',
-      },
-      {
-        name: 'tooltip',
-        description: 'Floating tooltip bubble when hovering/focusing a point.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-gross-payment-chart', componentTreeJson)}
 />

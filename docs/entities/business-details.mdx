@@ -6,7 +6,8 @@ description: Collect and review business profile information with inline validat
 sidebar_position: 10
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../helpers';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -119,21 +120,6 @@ Component to render detailed information about a business. You will need to firs
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-business-details', componentTreeJson)}
 />

@@ -5,7 +5,8 @@ description: Paginated reporting table for monitoring active and past checkouts.
 sidebar_position: 26
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -67,31 +68,8 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'button',
-        description: 'Button styles.',
-      },
-      {
-        name: 'button-disabled',
-        description: 'Disabled button styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-checkouts-list', componentTreeJson)}
 />
 
 - Filters component emits custom events; ensure both components share the same container so spacing stays consistent.
