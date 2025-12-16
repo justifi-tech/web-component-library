@@ -6,7 +6,13 @@ description: Collect and review business profile information with inline validat
 sidebar_position: 10
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsTable,
+  getWebcomponentsVersion,
+  getPropsFromDocs,
+} from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -67,44 +73,8 @@ Component to render detailed information about a business. You will need to firs
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Owning platform account; used for authorization and data scoping.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Short-lived token with `write:onboarding` scope.',
-      },
-      {
-        name: 'business-id',
-        type: 'string',
-        required: true,
-        description:
-          'Existing business to hydrate; omit for brand-new entities.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description:
-          'Controls localization of labels, address formatting, and validation hints.',
-      },
-      {
-        name: 'readonly',
-        type: 'boolean',
-        defaultValue: 'false',
-        description: 'Displays the form as read-only for audit surfaces.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-business-details', docsJson)}
 />
 
 ### Events

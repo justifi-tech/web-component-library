@@ -5,7 +5,8 @@ description: Drill-down view for a single payout, including ledger items and ban
 sidebar_position: 41
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -23,35 +24,8 @@ Component to display detailed information about a specific payout.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Scope the payout to a platform or merchant.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:payouts` scope.',
-      },
-      {
-        name: 'payout-id',
-        type: 'string',
-        required: true,
-        description: 'Identifier for the payout you want to view.',
-      },
-      {
-        name: 'show-ledger',
-        type: 'boolean',
-        defaultValue: 'true',
-        description: 'Hide the ledger table when you only need summary data.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-payout-details', docsJson)}
 />
 
 ### Events

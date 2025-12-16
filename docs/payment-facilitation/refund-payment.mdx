@@ -5,7 +5,13 @@ description: Guided UI for issuing full or partial refunds with reason codes and
 sidebar_position: 33
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsTable,
+  getWebcomponentsVersion,
+  getPropsFromDocs,
+} from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -140,41 +146,8 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Ensures refunds are scoped to the correct platform account.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `write:refunds` scope.',
-      },
-      {
-        name: 'payment-id',
-        type: 'string',
-        required: true,
-        description: 'Payment being refunded.',
-      },
-      {
-        name: 'max-amount',
-        type: 'string | number',
-        description:
-          'Upper limit for partial refunds (defaults to remaining amount).',
-      },
-      {
-        name: 'default-reason',
-        type: 'string',
-        description: 'Preselects a refund reason code.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-refund-payment', docsJson)}
 />
 
 ### Events

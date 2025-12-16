@@ -5,7 +5,13 @@ description: Optional insurance add-on rail that pairs with Modular Checkout sum
 sidebar_position: 25
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../../helpers';
+import {
+  PropsMarkdownTable,
+  PartsTable,
+  getWebcomponentsVersion,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
 
 ## Overview
 
@@ -85,86 +91,8 @@ Component to render a formated list of season interruption insurance for the req
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'auth-token',
-        type: 'string',
-        description:
-          'JWT used to call the insurance service. Optional when the checkout store already contains an auth token.',
-      },
-      {
-        name: 'checkout-id',
-        type: 'string',
-        description:
-          'Checkout identifier passed to the quote endpoint. Optional when running inside `<justifi-modular-checkout>` where it is pulled from the shared store.',
-      },
-      {
-        name: 'primary-identity-first-name',
-        type: 'string',
-        required: true,
-        description: 'First name of the person purchasing the coverage.',
-      },
-      {
-        name: 'primary-identity-last-name',
-        type: 'string',
-        required: true,
-        description: 'Last name of the person purchasing the coverage.',
-      },
-      {
-        name: 'primary-identity-email-address',
-        type: 'string',
-        required: true,
-        description: 'Email address used in the quote payload.',
-      },
-      {
-        name: 'primary-identity-state',
-        type: 'string',
-        required: true,
-        description: '2-letter state or province for the insured person.',
-      },
-      {
-        name: 'primary-identity-postal-code',
-        type: 'string',
-        required: true,
-        description: 'Postal or ZIP code for the insured person.',
-      },
-      {
-        name: 'primary-identity-country',
-        type: 'string',
-        required: true,
-        description: 'ISO 3166-1 alpha-2 country code for the insured person.',
-      },
-      {
-        name: 'policy-attributes-insurable-amount',
-        type: 'number',
-        required: true,
-        description: 'Amount (in cents) that should be covered by the policy.',
-      },
-      {
-        name: 'policy-attributes-start-date',
-        type: 'string',
-        description: 'ISO 8601 start date for the coverage period.',
-      },
-      {
-        name: 'policy-attributes-end-date',
-        type: 'string',
-        description: 'ISO 8601 end date for the coverage period.',
-      },
-      {
-        name: 'covered-identity-first-name',
-        type: 'string',
-        description:
-          'First name of the person whose season is being covered (if different from the purchaser).',
-      },
-      {
-        name: 'covered-identity-last-name',
-        type: 'string',
-        description: 'Last name of the covered person.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-season-interruption-insurance', docsJson)}
 />
 
 ### Events

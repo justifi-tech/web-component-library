@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property         | Attribute | Description | Type       | Default     |
-| ---------------- | --------- | ----------- | ---------- | ----------- |
-| `columns`        | `columns` |             | `string`   | `undefined` |
-| `getPayoutCSV`   | --        |             | `Function` | `undefined` |
-| `getPayouts`     | --        |             | `Function` | `undefined` |
-| `getSubAccounts` | --        |             | `Function` | `undefined` |
+| Property                      | Attribute | Description | Type       | Default     |
+| ----------------------------- | --------- | ----------- | ---------- | ----------- |
+| `columns` _(required)_        | `columns` |             | `string`   | `undefined` |
+| `getPayoutCSV` _(required)_   | --        |             | `Function` | `undefined` |
+| `getPayouts` _(required)_     | --        |             | `Function` | `undefined` |
+| `getSubAccounts` _(required)_ | --        |             | `Function` | `undefined` |
 
 
 ## Events

@@ -5,7 +5,8 @@ description: Operator console for reviewing and responding to card disputes.
 sidebar_position: 34
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -23,36 +24,8 @@ Component to render notification of disputed payments and allow platform to resp
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Authorizes access to disputes for a platform or merchant.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `write:disputes` scope.',
-      },
-      {
-        name: 'dispute-id',
-        type: 'string',
-        required: true,
-        description: 'Specific dispute to review/respond to.',
-      },
-      {
-        name: 'read-only',
-        type: 'boolean',
-        defaultValue: 'false',
-        description: 'Disable response actions when true.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-dispute-management', docsJson)}
 />
 
 ### Events

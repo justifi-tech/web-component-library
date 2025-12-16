@@ -6,10 +6,11 @@ sidebar_position: 22
 ---
 
 import {
-  PropsTable,
+  PropsMarkdownTable,
   PartsMarkdownTable,
   getWebcomponentsVersion,
   getPartsFromDocs,
+  getPropsFromDocs,
 } from '../../helpers';
 import docsJson from '../../docs.json';
 
@@ -56,31 +57,7 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'button-style',
-        type: '"black" | "white" | "white-outline"',
-        defaultValue: 'black',
-        description: "Matches Apple's Human Interface Guidelines.",
-      },
-      {
-        name: 'button-type',
-        type: '"buy" | "donate" | "plain"',
-        defaultValue: 'buy',
-        description: 'Set the label/icon on the wallet button.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description:
-          'Controls the region on the underlying `ApplePaySession` request.',
-      },
-    ]),
-  }}
-/>
+<PropsMarkdownTable props={getPropsFromDocs('justifi-apple-pay', docsJson)} />
 
 ### Events
 

@@ -14,9 +14,9 @@ import { DisputeManagementClickActions } from "./event-types";
   shadow: true
 })
 export class DisputeNotification {
-  @Prop() dispute: Dispute;
-  @Prop() authToken: string;
-  @Prop() isLoading: boolean;
+  @Prop() dispute!: Dispute;
+  @Prop() authToken!: string;
+  @Prop() isLoading!: boolean;
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;

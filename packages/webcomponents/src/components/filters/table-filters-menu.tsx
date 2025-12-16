@@ -11,8 +11,8 @@ export class TableFiltersMenu {
   @State() menu: HTMLElement;
   @State() showClearButton: boolean = false;
 
-  @Prop() params: any;
-  @Prop() clearParams: () => void;
+  @Prop() params!: any;
+  @Prop() clearParams!: () => void;
 
   @Watch('params')
   watchParamsHandler(newValue: any) {

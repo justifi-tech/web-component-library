@@ -5,7 +5,8 @@ description: Reporting table of hardware orders with fulfillment status and trac
 sidebar_position: 51
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -22,29 +23,8 @@ Component to render a formated list of terminal device orders for the requested 
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Restricts orders to a merchant/platform.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:terminals` scope.',
-      },
-      {
-        name: 'columns',
-        type: 'string',
-        defaultValue: 'created_at,order_number,items,status,tracking_number',
-        description: 'Customize visible columns.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-terminal-orders-list', docsJson)}
 />
 
 ### Events

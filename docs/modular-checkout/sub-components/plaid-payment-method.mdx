@@ -5,7 +5,13 @@ description: Plaid-powered ACH rail for Modular Checkout with hosted Link flow.
 sidebar_position: 23
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../../helpers';
+import {
+  PropsMarkdownTable,
+  PartsTable,
+  getWebcomponentsVersion,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
 
 ## Overview
 
@@ -72,30 +78,8 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'link-token',
-        type: 'string',
-        required: true,
-        description:
-          'Server-generated Plaid link token scoped to the current customer.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description: 'Pass through to Plaid for language + formatting.',
-      },
-      {
-        name: 'theme',
-        type: '"dark" | "light"',
-        defaultValue: 'dark',
-        description: 'Controls Plaid Link UI theme.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-plaid-payment-method', docsJson)}
 />
 
 ### Events

@@ -5,7 +5,8 @@ description: Inventory table showing active, inactive, and assigned terminals in
 sidebar_position: 52
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -23,35 +24,8 @@ Component to render a formated list of terminals for the requested account.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Scope inventory to a merchant/platform.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:terminals` scope.',
-      },
-      {
-        name: 'filters',
-        type: 'string | Record<string, unknown>',
-        description:
-          'Optional JSON to preset status, location, or software filters.',
-      },
-      {
-        name: 'columns',
-        type: 'string',
-        defaultValue: 'name,status,location,last_check_in',
-        description: 'Customize visible columns.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-terminals-list', docsJson)}
 />
 
 ### Events

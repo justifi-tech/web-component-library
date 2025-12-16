@@ -5,7 +5,13 @@ description: Secure standalone card/bank tokenization form with built-in validat
 sidebar_position: 1
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsTable,
+  getWebcomponentsVersion,
+  getPropsFromDocs,
+} from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -205,57 +211,8 @@ Component to render an entire form including a switch to use a credit card or ba
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Platform account that will own the resulting payment method.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description:
-          'Short-lived Web Component Token with `write:tokenize:account_id` scope.',
-      },
-      {
-        name: 'payment-method-group-id',
-        type: 'string',
-        description:
-          'Optional grouping identifier that lets you preselect payment rails in Modular Checkout.',
-      },
-      {
-        name: 'hide-submit-button',
-        type: 'boolean',
-        defaultValue: 'false',
-        description:
-          'Hides the internal CTA when hosting app handles submission.',
-      },
-      {
-        name: 'save-payment-method-label',
-        type: 'string',
-        description:
-          'Overrides the checkbox label when allowing customers to store a card.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description:
-          'Controls localization of labels, placeholders, and currency formatting.',
-      },
-      {
-        name: 'theme',
-        type: 'string',
-        description:
-          'Name of a predefined theme exported by JustiFi (optional).',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-tokenize-payment-method', docsJson)}
 />
 
 ### Events

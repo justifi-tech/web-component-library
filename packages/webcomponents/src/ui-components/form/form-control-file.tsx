@@ -23,14 +23,14 @@ export class FileInput {
   @State() fileString: string;
   @State() isFocused: boolean = false;
 
-  @Prop() label: string;
-  @Prop() name: any;
+  @Prop() label!: string;
+  @Prop() name!: any;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
   @Prop() multiple?: boolean;
-  @Prop() documentType: EntityDocumentType;
-  @Prop() inputHandler: (name: string, value: string) => void;
-  @Prop() disabled: boolean;
+  @Prop() documentType!: EntityDocumentType;
+  @Prop() inputHandler!: (name: string, value: string) => void;
+  @Prop() disabled!: boolean;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;

@@ -5,8 +5,8 @@ import { alertDanger } from '../../../../styles/parts';
   tag: 'form-alert'
 })
 export class FormAlert {
-  @Prop() text: string;
-  @Prop() hideAlert: boolean;
+  @Prop() text!: string;
+  @Prop() hideAlert!: boolean;
 
   render() {
 

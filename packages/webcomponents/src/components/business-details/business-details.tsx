@@ -12,8 +12,8 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   shadow: true,
 })
 export class BusinessDetails {
-  @Prop() businessId: string;
-  @Prop() authToken: string;
+  @Prop() businessId!: string;
+  @Prop() authToken!: string;
 
   @State() errorMessage: string = null;
   @State() getBusiness: Function;
@@ -35,7 +35,7 @@ export class BusinessDetails {
     this.analytics?.cleanup();
   };
 
-   handleErrorEvent = event => {
+  handleErrorEvent = event => {
     this.errorMessage = event.detail.message;
     this.errorEvent.emit(event.detail);
   }
@@ -63,8 +63,8 @@ export class BusinessDetails {
       return ErrorState(this.errorMessage);
     }
     return (
-      <business-details-core 
-        getBusiness={this.getBusiness} 
+      <business-details-core
+        getBusiness={this.getBusiness}
         onError-event={this.handleErrorEvent}
       />
     );

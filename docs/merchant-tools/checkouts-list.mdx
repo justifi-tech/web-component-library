@@ -5,7 +5,8 @@ description: Paginated reporting table for monitoring active and past checkouts.
 sidebar_position: 26
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -29,30 +30,8 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Platform or sub-account whose checkouts should appear.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:checkouts` scope.',
-      },
-      {
-        name: 'columns',
-        type: 'string',
-        defaultValue:
-          'created_at,payment_amount,payment_description,payment_mode,status',
-        description: 'Controls which table columns render and their order.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-checkouts-list', docsJson)}
 />
 
 ### Events
