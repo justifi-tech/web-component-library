@@ -1,6 +1,6 @@
 import { createRequire } from 'module';
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
-import { join, dirname, relative, resolve, normalize } from 'path';
+import { join, dirname, relative, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import glob from 'fast-glob';
 
@@ -263,34 +263,68 @@ function processVariableDeclarator(
   utilityFunctionMap,
   utilityFunctions
 ) {
-  if (declarator.id?.type === NODE_TYPES.IDENTIFIER) {
-    const name = declarator.id.name;
-    // Check if PascalCase (starts with uppercase)
-    if (REGEX_PATTERNS.PASCAL_CASE.test(name)) {
-      const init = declarator.init;
-      // Check if it's a function (arrow function or function expression)
-      if (
-        init &&
-        (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
-          init.type === NODE_TYPES.FUNCTION_EXPRESSION)
-      ) {
-        // Check if it uses parts or renders JSX
-        const usesParts = partsImports.size > 0;
-        const rendersJSX = containsJSX(init);
+  if (declarator.id?.type !== NODE_TYPES.IDENTIFIER) return;
 
-        if (usesParts || rendersJSX) {
-          // Check if already added (avoid duplicates)
-          if (!utilityFunctionMap.has(name)) {
-            const utilityFunction = {
-              name: name,
-              parts: Array.from(partsImports),
-              filePath: null, // Will be set by caller
-              jsxElements: new Set(),
-            };
-            utilityFunctionMap.set(name, utilityFunction);
-            utilityFunctions.push(utilityFunction);
-          }
-        }
+  const name = declarator.id.name;
+  // Check if PascalCase (starts with uppercase) and is a function
+  if (!REGEX_PATTERNS.PASCAL_CASE.test(name)) return;
+  if (!isFunctionNode(declarator.init)) return;
+
+  // Check if it uses parts or renders JSX
+  const usesParts = partsImports.size > 0;
+  const rendersJSX = containsJSX(declarator.init);
+
+  if (usesParts || rendersJSX) {
+    // Check if already added (avoid duplicates)
+    if (!utilityFunctionMap.has(name)) {
+      const utilityFunction = {
+        name,
+        parts: Array.from(partsImports),
+        filePath: null, // Will be set by caller
+        jsxElements: new Set(),
+      };
+      utilityFunctionMap.set(name, utilityFunction);
+      utilityFunctions.push(utilityFunction);
+    }
+  }
+}
+
+/**
+ * Process an export declaration node to find utility functions
+ */
+function processExportDeclaration(
+  exportNode,
+  ast,
+  partsImports,
+  utilityFunctionMap,
+  utilityFunctions
+) {
+  const declaration = exportNode.declaration;
+  if (!declaration) return;
+
+  // Handle variable declaration exports
+  if (declaration.type === NODE_TYPES.VARIABLE_DECLARATION) {
+    declaration.declarations?.forEach((declarator) => {
+      processVariableDeclarator(
+        declarator,
+        partsImports,
+        utilityFunctionMap,
+        utilityFunctions
+      );
+    });
+  }
+  // Handle identifier exports (references a variable declared elsewhere)
+  else if (declaration.type === NODE_TYPES.IDENTIFIER) {
+    const variableName = declaration.name;
+    if (variableName && REGEX_PATTERNS.PASCAL_CASE.test(variableName)) {
+      const declarator = findVariableDeclarationByName(ast, variableName);
+      if (declarator) {
+        processVariableDeclarator(
+          declarator,
+          partsImports,
+          utilityFunctionMap,
+          utilityFunctions
+        );
       }
     }
   }
@@ -305,48 +339,22 @@ function findUtilityFunctionDeclarations(ast, partsImports) {
 
   traverseAST(ast, {
     [NODE_TYPES.EXPORT_NAMED_DECLARATION]: (node) => {
-      const declaration = node.declaration;
-
-      if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
-        declaration.declarations?.forEach((declarator) => {
-          processVariableDeclarator(
-            declarator,
-            partsImports,
-            utilityFunctionMap,
-            utilityFunctions
-          );
-        });
-      }
+      processExportDeclaration(
+        node,
+        ast,
+        partsImports,
+        utilityFunctionMap,
+        utilityFunctions
+      );
     },
     [NODE_TYPES.EXPORT_DEFAULT_DECLARATION]: (node) => {
-      const declaration = node.declaration;
-
-      // Handle default export of variable declaration
-      if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
-        declaration.declarations?.forEach((declarator) => {
-          processVariableDeclarator(
-            declarator,
-            partsImports,
-            utilityFunctionMap,
-            utilityFunctions
-          );
-        });
-      }
-      // Handle default export of identifier (references a variable declared elsewhere)
-      else if (declaration?.type === NODE_TYPES.IDENTIFIER) {
-        const variableName = declaration.name;
-        if (variableName && REGEX_PATTERNS.PASCAL_CASE.test(variableName)) {
-          const declarator = findVariableDeclarationByName(ast, variableName);
-          if (declarator) {
-            processVariableDeclarator(
-              declarator,
-              partsImports,
-              utilityFunctionMap,
-              utilityFunctions
-            );
-          }
-        }
-      }
+      processExportDeclaration(
+        node,
+        ast,
+        partsImports,
+        utilityFunctionMap,
+        utilityFunctions
+      );
     },
   });
 
@@ -370,14 +378,71 @@ function extractUtilityFunctions(ast, filePath, availableParts) {
   });
 
   // Extract JSX elements from each utility function's body
-  utilityFunctions.forEach((uf) => {
-    const functionBody = findUtilityFunctionBody(ast, uf.name);
+  for (const utilityFunction of utilityFunctions) {
+    const functionBody = findUtilityFunctionBody(ast, utilityFunction.name);
     if (functionBody) {
-      extractJSXFromNode(functionBody, uf.jsxElements);
+      extractJSXElements(functionBody, utilityFunction.jsxElements);
     }
-  });
+  }
 
   return utilityFunctions;
+}
+
+/**
+ * Check if a node is a function (arrow function or function expression)
+ */
+function isFunctionNode(node) {
+  return (
+    node &&
+    (node.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+      node.type === NODE_TYPES.FUNCTION_EXPRESSION)
+  );
+}
+
+/**
+ * Extract function body from a variable declarator
+ */
+function getFunctionBodyFromDeclarator(declarator) {
+  const init = declarator?.init;
+  return isFunctionNode(init) ? init.body : null;
+}
+
+/**
+ * Find function body from a variable name in the AST
+ */
+function findFunctionBodyFromVariable(ast, variableName) {
+  const declarator = findVariableDeclarationByName(ast, variableName);
+  return declarator ? getFunctionBodyFromDeclarator(declarator) : null;
+}
+
+/**
+ * Extract function body from an export declaration node
+ */
+function getFunctionBodyFromExport(exportNode, functionName, ast) {
+  const declaration = exportNode.declaration;
+  if (!declaration) return null;
+
+  // Handle variable declaration exports
+  if (declaration.type === NODE_TYPES.VARIABLE_DECLARATION) {
+    for (const declarator of declaration.declarations || []) {
+      if (
+        declarator.id?.type === NODE_TYPES.IDENTIFIER &&
+        declarator.id.name === functionName
+      ) {
+        const body = getFunctionBodyFromDeclarator(declarator);
+        if (body) return body;
+      }
+    }
+  }
+  // Handle identifier exports (references a variable declared elsewhere)
+  else if (
+    declaration.type === NODE_TYPES.IDENTIFIER &&
+    declaration.name === functionName
+  ) {
+    return findFunctionBodyFromVariable(ast, functionName);
+  }
+
+  return null;
 }
 
 /**
@@ -388,86 +453,27 @@ function findUtilityFunctionBody(ast, functionName) {
 
   traverseAST(ast, {
     [NODE_TYPES.EXPORT_NAMED_DECLARATION]: (node) => {
-      if (foundBody) return;
-
-      const declaration = node.declaration;
-      if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
-        declaration.declarations?.forEach((declarator) => {
-          if (
-            declarator.id?.type === NODE_TYPES.IDENTIFIER &&
-            declarator.id.name === functionName
-          ) {
-            const init = declarator.init;
-            if (
-              init &&
-              (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
-                init.type === NODE_TYPES.FUNCTION_EXPRESSION)
-            ) {
-              foundBody = init.body;
-            }
-          }
-        });
+      if (!foundBody) {
+        foundBody = getFunctionBodyFromExport(node, functionName, ast);
       }
     },
     [NODE_TYPES.EXPORT_DEFAULT_DECLARATION]: (node) => {
-      if (foundBody) return;
-
-      const declaration = node.declaration;
-      // Handle default export of variable declaration
-      if (declaration?.type === NODE_TYPES.VARIABLE_DECLARATION) {
-        declaration.declarations?.forEach((declarator) => {
+      if (!foundBody) {
+        foundBody = getFunctionBodyFromExport(node, functionName, ast);
+      }
+    },
+    [NODE_TYPES.VARIABLE_DECLARATION]: (node) => {
+      if (!foundBody) {
+        for (const declarator of node.declarations || []) {
           if (
             declarator.id?.type === NODE_TYPES.IDENTIFIER &&
             declarator.id.name === functionName
           ) {
-            const init = declarator.init;
-            if (
-              init &&
-              (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
-                init.type === NODE_TYPES.FUNCTION_EXPRESSION)
-            ) {
-              foundBody = init.body;
-            }
-          }
-        });
-      }
-      // Handle default export of identifier (references a variable declared elsewhere)
-      else if (
-        declaration?.type === NODE_TYPES.IDENTIFIER &&
-        declaration.name === functionName
-      ) {
-        const declarator = findVariableDeclarationByName(ast, functionName);
-        if (declarator) {
-          const init = declarator.init;
-          if (
-            init &&
-            (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
-              init.type === NODE_TYPES.FUNCTION_EXPRESSION)
-          ) {
-            foundBody = init.body;
+            foundBody = getFunctionBodyFromDeclarator(declarator);
+            if (foundBody) break;
           }
         }
       }
-    },
-    // Also check regular variable declarations (for default exports that reference them)
-    [NODE_TYPES.VARIABLE_DECLARATION]: (node) => {
-      if (foundBody) return;
-
-      node.declarations?.forEach((declarator) => {
-        if (
-          declarator.id?.type === NODE_TYPES.IDENTIFIER &&
-          declarator.id.name === functionName
-        ) {
-          const init = declarator.init;
-          if (
-            init &&
-            (init.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
-              init.type === NODE_TYPES.FUNCTION_EXPRESSION)
-          ) {
-            foundBody = init.body;
-          }
-        }
-      });
     },
   });
 
@@ -475,25 +481,30 @@ function findUtilityFunctionBody(ast, functionName) {
 }
 
 /**
- * Extract JSX element names from a node
+ * Extract JSX element names from a node or AST
+ * @param {Object} node - AST node to extract from
+ * @param {Set} [targetSet] - Optional set to add elements to. If not provided, creates a new Set.
+ * @returns {Set} Set of JSX element names
  */
-function extractJSXFromNode(node, jsxElements) {
-  if (!node) return;
+function extractJSXElements(node, targetSet = new Set()) {
+  if (!node) return targetSet;
 
   traverseAST(node, {
     [NODE_TYPES.JSX_OPENING_ELEMENT]: (node) => {
       const elementName = extractJSXElementName(node);
       if (elementName) {
-        jsxElements.add(elementName);
+        targetSet.add(elementName);
       }
     },
     [NODE_TYPES.JSX_ELEMENT]: (node) => {
       const elementName = extractJSXElementName(node);
       if (elementName) {
-        jsxElements.add(elementName);
+        targetSet.add(elementName);
       }
     },
   });
+
+  return targetSet;
 }
 
 /**
@@ -544,6 +555,17 @@ function extractDecoratorMetadata(componentDecorator) {
 }
 
 /**
+ * Check if a declaration is a functional component
+ */
+function isFunctionalComponentDeclaration(declaration) {
+  return (
+    declaration?.type === NODE_TYPES.FUNCTION_DECLARATION ||
+    declaration?.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
+    declaration?.type === NODE_TYPES.VARIABLE_DECLARATOR
+  );
+}
+
+/**
  * Extract functional component declaration from AST
  */
 function extractFunctionalComponent(ast) {
@@ -551,23 +573,19 @@ function extractFunctionalComponent(ast) {
 
   traverseAST(ast, {
     [NODE_TYPES.EXPORT_NAMED_DECLARATION]: (node) => {
-      const declaration = node.declaration;
       if (
-        declaration?.type === NODE_TYPES.FUNCTION_DECLARATION ||
-        declaration?.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
-        declaration?.type === NODE_TYPES.VARIABLE_DECLARATOR
+        !exportedFunction &&
+        isFunctionalComponentDeclaration(node.declaration)
       ) {
-        exportedFunction = declaration;
+        exportedFunction = node.declaration;
       }
     },
     [NODE_TYPES.EXPORT_DEFAULT_DECLARATION]: (node) => {
-      const declaration = node.declaration;
       if (
-        declaration?.type === NODE_TYPES.FUNCTION_DECLARATION ||
-        declaration?.type === NODE_TYPES.ARROW_FUNCTION_EXPRESSION ||
-        declaration?.type === NODE_TYPES.VARIABLE_DECLARATOR
+        !exportedFunction &&
+        isFunctionalComponentDeclaration(node.declaration)
       ) {
-        exportedFunction = declaration;
+        exportedFunction = node.declaration;
       }
     },
   });
@@ -586,67 +604,53 @@ function pascalToKebabCase(name) {
 }
 
 /**
- * Extract JSX elements from AST
+ * Extract component tag from decorator or functional component
  */
-function extractJSXElements(ast) {
-  const jsxElements = new Set();
+function extractComponentTag(ast) {
+  // Try decorator first (for class components)
+  const componentDecorator = extractComponentDecorator(ast);
+  if (componentDecorator) {
+    const decoratorMetadata = extractDecoratorMetadata(componentDecorator);
+    if (decoratorMetadata.tag) {
+      return decoratorMetadata.tag;
+    }
+  }
 
-  traverseAST(ast, {
-    [NODE_TYPES.JSX_OPENING_ELEMENT]: (node) => {
-      const elementName = extractJSXElementName(node);
-      if (elementName) {
-        jsxElements.add(elementName);
-      }
-    },
-    [NODE_TYPES.JSX_ELEMENT]: (node) => {
-      const elementName = extractJSXElementName(node);
-      if (elementName) {
-        jsxElements.add(elementName);
-      }
-    },
-  });
+  // Try functional component (infer tag from export name)
+  const exportedFunction = extractFunctionalComponent(ast);
+  if (exportedFunction?.id?.name) {
+    return pascalToKebabCase(exportedFunction.id.name);
+  }
 
-  return jsxElements;
+  return null;
+}
+
+/**
+ * Extract shadow DOM setting from component decorator
+ */
+function extractComponentShadowDom(ast) {
+  const componentDecorator = extractComponentDecorator(ast);
+  if (componentDecorator) {
+    const decoratorMetadata = extractDecoratorMetadata(componentDecorator);
+    return decoratorMetadata.shadowDom;
+  }
+  return false;
 }
 
 /**
  * Extract component metadata from AST
  */
 function extractComponentMetadata(ast, filePath, availableParts) {
-  const metadata = {
-    tag: null,
-    shadowDom: false,
-    parts: [],
-    isFunctional: false,
-    jsxElements: new Set(),
-  };
-
-  // Extract parts imports
   const partsImports = extractPartsImports(ast, filePath, availableParts);
-  metadata.parts = Array.from(partsImports);
-
-  // Extract component decorator (for class components)
-  const componentDecorator = extractComponentDecorator(ast);
-  if (componentDecorator) {
-    const decoratorMetadata = extractDecoratorMetadata(componentDecorator);
-    metadata.tag = decoratorMetadata.tag;
-    metadata.shadowDom = decoratorMetadata.shadowDom;
-  }
-
-  // Extract functional component
   const exportedFunction = extractFunctionalComponent(ast);
-  if (exportedFunction) {
-    metadata.isFunctional = true;
-    // For functional components, try to infer tag from export name
-    if (!metadata.tag && exportedFunction.id?.name) {
-      metadata.tag = pascalToKebabCase(exportedFunction.id.name);
-    }
-  }
 
-  // Extract JSX elements
-  metadata.jsxElements = extractJSXElements(ast);
-
-  return metadata;
+  return {
+    tag: extractComponentTag(ast),
+    shadowDom: extractComponentShadowDom(ast),
+    parts: Array.from(partsImports),
+    isFunctional: !!exportedFunction,
+    jsxElements: extractJSXElements(ast),
+  };
 }
 
 /**
@@ -681,62 +685,77 @@ function findMatchingComponent(elementName, componentMap) {
 }
 
 /**
- * Build a child node from a utility function
+ * Build a child node from a component or utility function
  */
-function buildUtilityChildNode(
-  utilityFunc,
-  componentMap,
-  utilityFunctionMap,
-  visited
-) {
-  const childRelativePath = normalizePath(
-    relative(COMPONENTS_DIR, utilityFunc.filePath)
-  );
+function buildChildNode(item, componentMap, utilityFunctionMap, visited) {
+  const relativePath = normalizePath(relative(COMPONENTS_DIR, item.filePath));
   const childVisited = new Set(visited);
-  const childChildren = buildChildren(
-    utilityFunc,
+  const children = buildChildren(
+    item,
     componentMap,
     utilityFunctionMap,
     childVisited
   );
 
   return {
-    tag: utilityFunc.name,
-    filePath: childRelativePath,
-    shadowDom: false,
-    parts: utilityFunc.parts,
-    isUtility: true,
-    children: childChildren,
+    tag: item.tag || item.name,
+    filePath: relativePath,
+    shadowDom: item.shadowDom ?? false,
+    parts: item.parts,
+    ...(item.isUtility && { isUtility: true }),
+    children,
   };
 }
 
 /**
- * Build a child node from a component
+ * Find child components and utility functions from JSX elements
  */
-function buildComponentChildNode(
-  childComp,
+function findChildComponents(
+  jsxElements,
+  compId,
   componentMap,
-  utilityFunctionMap,
-  visited
+  utilityFunctionMap
 ) {
-  const childRelativePath = normalizePath(
-    relative(COMPONENTS_DIR, childComp.filePath)
-  );
-  const childVisited = new Set(visited);
-  const childChildren = buildChildren(
-    childComp,
-    componentMap,
-    utilityFunctionMap,
-    childVisited
-  );
+  const children = [];
 
-  return {
-    tag: childComp.tag,
-    filePath: childRelativePath,
-    shadowDom: childComp.shadowDom,
-    parts: childComp.parts,
-    children: childChildren,
-  };
+  jsxElements.forEach((elementName) => {
+    // Skip if it's the same component/utility (avoid self-reference)
+    if (elementName === compId) return;
+
+    // Check if it's a PascalCase utility function
+    if (REGEX_PATTERNS.PASCAL_CASE.test(elementName)) {
+      if (utilityFunctionMap.has(elementName)) {
+        children.push({ name: elementName, isUtility: true });
+        return;
+      }
+    }
+
+    // Try to find matching component
+    const matchingTag = findMatchingComponent(elementName, componentMap);
+    if (matchingTag) {
+      children.push({ tag: matchingTag, isUtility: false });
+    }
+  });
+
+  return children;
+}
+
+/**
+ * Remove duplicate children based on their key (name or tag)
+ */
+function deduplicateChildren(children) {
+  const uniqueChildren = [];
+  const seen = new Set();
+
+  children.forEach((child) => {
+    const key = child.isUtility ? child.name : child.tag;
+    if (!seen.has(key)) {
+      seen.add(key);
+      uniqueChildren.push(child);
+    }
+  });
+
+  return uniqueChildren;
 }
 
 /**
@@ -754,67 +773,36 @@ function buildChildren(
   }
   visited.add(compId);
 
-  const children = [];
-
-  // Find children by matching JSX elements to component tags and utility function names
-  comp.jsxElements.forEach((elementName) => {
-    // Skip if it's the same component/utility (avoid self-reference)
-    if (elementName === compId) {
-      return;
-    }
-
-    // Check if it's a PascalCase utility function
-    if (REGEX_PATTERNS.PASCAL_CASE.test(elementName)) {
-      if (utilityFunctionMap.has(elementName)) {
-        children.push({ name: elementName, isUtility: true });
-        return;
-      }
-    }
-
-    // Try to find matching component
-    const matchingTag = findMatchingComponent(elementName, componentMap);
-    if (matchingTag) {
-      children.push({ tag: matchingTag, isUtility: false });
-    }
-  });
-
-  // Remove duplicates
-  const uniqueChildren = [];
-  const seen = new Set();
-  children.forEach((child) => {
-    const key = child.isUtility ? child.name : child.tag;
-    if (!seen.has(key)) {
-      seen.add(key);
-      uniqueChildren.push(child);
-    }
-  });
+  // Find and deduplicate children
+  const children = findChildComponents(
+    comp.jsxElements,
+    compId,
+    componentMap,
+    utilityFunctionMap
+  );
+  const uniqueChildren = deduplicateChildren(children);
 
   // Build child nodes recursively
-  const childNodes = uniqueChildren
+  return uniqueChildren
     .map((child) => {
       if (child.isUtility) {
         const utilityFunc = utilityFunctionMap.get(child.name);
-        if (!utilityFunc) return null;
-        return buildUtilityChildNode(
-          utilityFunc,
-          componentMap,
-          utilityFunctionMap,
-          visited
-        );
+        return utilityFunc
+          ? buildChildNode(
+              utilityFunc,
+              componentMap,
+              utilityFunctionMap,
+              visited
+            )
+          : null;
       } else {
         const childComp = componentMap.get(child.tag);
-        if (!childComp) return null;
-        return buildComponentChildNode(
-          childComp,
-          componentMap,
-          utilityFunctionMap,
-          visited
-        );
+        return childComp
+          ? buildChildNode(childComp, componentMap, utilityFunctionMap, visited)
+          : null;
       }
     })
     .filter(Boolean);
-
-  return childNodes;
 }
 
 /**
@@ -879,8 +867,6 @@ async function main() {
   });
 
   console.log(`Found ${componentFiles.length} component files`);
-  // log component names
-  console.log('Component names:', componentFiles);
 
   const components = [];
   const utilityFunctions = [];
