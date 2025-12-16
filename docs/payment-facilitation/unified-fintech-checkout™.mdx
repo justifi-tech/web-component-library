@@ -5,8 +5,8 @@ description: Unified Fintech Checkout™ component that orchestrates payment cap
 sidebar_position: 20
 ---
 
-import { PropsTable, getPartsFromDocs, PartsMarkdownTable } from '../helpers';
-import docsJson from '../docs.json';
+import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -79,4 +79,6 @@ import docsJson from '../docs.json';
 
 ## Theming & Layout
 
-<PartsMarkdownTable parts={getPartsFromDocs('justifi-checkout', docsJson)} />
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-checkout', componentTreeJson)}
+/>
