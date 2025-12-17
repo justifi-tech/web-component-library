@@ -2,3 +2,5 @@ export { PropsTable } from './PropsTable';
 export { getWebcomponentsVersion } from './version';
 export { PartsMarkdownTable } from './PartsMarkdownTable';
 export { getComponentParts } from './getComponentParts';
+export { ComponentBox } from './ComponentBox';
+export { setUpMocks } from './mockAllServices';

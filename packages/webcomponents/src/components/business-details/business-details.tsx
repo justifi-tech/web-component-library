@@ -29,13 +29,14 @@ export class BusinessDetails {
     checkPkgVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetBusiness();
+    console.log('businessId', this.businessId);
   }
 
   disconnectedCallback() {
     this.analytics?.cleanup();
   };
 
-   handleErrorEvent = event => {
+  handleErrorEvent = event => {
     this.errorMessage = event.detail.message;
     this.errorEvent.emit(event.detail);
   }
@@ -63,8 +64,8 @@ export class BusinessDetails {
       return ErrorState(this.errorMessage);
     }
     return (
-      <business-details-core 
-        getBusiness={this.getBusiness} 
+      <business-details-core
+        getBusiness={this.getBusiness}
         onError-event={this.handleErrorEvent}
       />
     );
