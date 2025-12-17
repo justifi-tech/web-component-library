@@ -5,7 +5,8 @@ description: Guided UI for issuing full or partial refunds with reason codes and
 sidebar_position: 33
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../helpers';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -189,49 +190,6 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'button',
-        description: 'Button styles.',
-      },
-      {
-        name: 'button-disabled',
-        description: 'Disabled button styles.',
-      },
-      {
-        name: 'input',
-        description: 'Input field styles.',
-      },
-      {
-        name: 'input-focused',
-        description: 'Input styles when focused.',
-      },
-      {
-        name: 'input-invalid',
-        description: 'Input styles when invalid.',
-      },
-      {
-        name: 'input-invalid-and-focused',
-        description: 'Input styles when invalid and focused.',
-      },
-      {
-        name: 'button-primary',
-        description: 'Primary button styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-refund-payment', componentTreeJson)}
 />

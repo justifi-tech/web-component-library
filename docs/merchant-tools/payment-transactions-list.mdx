@@ -5,7 +5,8 @@ description: Transaction-level ledger for payments, grouped by status and fundin
 sidebar_position: 32
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -65,21 +66,6 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payment-transactions-list', componentTreeJson)}
 />

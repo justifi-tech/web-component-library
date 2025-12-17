@@ -5,7 +5,8 @@ description: Optional insurance add-on rail that pairs with Modular Checkout sum
 sidebar_position: 25
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../../helpers';
+import componentTreeJson from '../../component-tree.json';
 
 ## Overview
 
@@ -181,37 +182,6 @@ Component to render a formated list of season interruption insurance for the req
 - The host inherits the same typography tokens as other Modular Checkout rails via `StyledHost`, so it naturally matches surrounding content.
 - Use the exposed parts to restyle copy or validation messaging without affecting the radios themselves.
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'input-radio',
-        description: 'Radio input styles.',
-      },
-      {
-        name: 'input-radio-checked',
-        description: 'Radio input styles when checked.',
-      },
-      {
-        name: 'input-radio-focused',
-        description: 'Radio input styles when focused.',
-      },
-      {
-        name: 'input-radio-checked-focused',
-        description: 'Radio input styles when checked and focused.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-season-interruption-insurance', componentTreeJson)}
 />

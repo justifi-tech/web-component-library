@@ -8,10 +8,10 @@ sidebar_position: 22
 import {
   PropsTable,
   PartsMarkdownTable,
+  getComponentParts,
   getWebcomponentsVersion,
-  getPartsFromDocs,
 } from '../../helpers';
-import docsJson from '../../docs.json';
+import componentTreeJson from '../../component-tree.json';
 
 ## Overview
 
@@ -95,4 +95,6 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 - Styling is intentionally limited to keep Apple compliance.
 
-<PartsMarkdownTable parts={getPartsFromDocs('justifi-apple-pay', docsJson)} />
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-apple-pay', componentTreeJson)}
+/>

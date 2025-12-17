@@ -5,7 +5,8 @@ description: Detailed view for a single payment, including customer data, timeli
 sidebar_position: 30
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../helpers';
+import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../helpers';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -108,21 +109,6 @@ Component to display detailed information about a specific payment.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payment-details', componentTreeJson)}
 />
