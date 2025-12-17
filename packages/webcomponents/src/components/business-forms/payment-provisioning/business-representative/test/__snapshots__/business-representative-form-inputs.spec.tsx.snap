@@ -18,9 +18,6 @@ exports[`justifi-business-representative-form-inputs Country-specific identifica
         <div class="col-12 col-md-4">
           <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
         </div>
-        <div class="col-12">
-          <form-control-checkbox label="Is Owner of the Business" name="is_owner"></form-control-checkbox>
-        </div>
         <div class="col-12 col-md-6">
           <form-control-text label="Email Address" name="email"></form-control-text>
         </div>
@@ -60,9 +57,6 @@ exports[`justifi-business-representative-form-inputs Country-specific identifica
         <div class="col-12 col-md-4">
           <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
         </div>
-        <div class="col-12">
-          <form-control-checkbox label="Is Owner of the Business" name="is_owner"></form-control-checkbox>
-        </div>
         <div class="col-12 col-md-6">
           <form-control-text label="Email Address" name="email"></form-control-text>
         </div>
@@ -101,9 +95,6 @@ exports[`justifi-business-representative-form-inputs Form component behavior use
         </div>
         <div class="col-12 col-md-4">
           <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
-        </div>
-        <div class="col-12">
-          <form-control-checkbox label="Is Owner of the Business" name="is_owner"></form-control-checkbox>
         </div>
         <div class="col-12 col-md-6">
           <form-control-text label="Email Address" name="email"></form-control-text>

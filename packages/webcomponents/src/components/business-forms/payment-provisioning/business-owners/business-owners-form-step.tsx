@@ -58,21 +58,8 @@ export class BusinessOwnersFormStep {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
-        const ownersPayload: ownerPayloadItem[] = [];
-        // Add representative as owner if is_owner is true
-        if (response.data.representative?.is_owner && response.data.representative?.id) {
-          ownersPayload.push({ id: response.data.representative.id });
-        }
-        // Add existing owners, excluding any that match the representative id to avoid duplicates
-        const representativeId = response.data.representative?.id;
-        const existingOwners = response.data.owners || [];
-        existingOwners.forEach(owner => {
-          if (owner.id && owner.id !== representativeId) {
-            ownersPayload.push({ id: owner.id });
-          }
-        });
-        if (ownersPayload.length > 0) {
-          this.ownersPayload = ownersPayload;
+        if (response.data.owners.length) {
+          this.ownersPayload = response.data.owners.map(owner => ({ id: owner.id }));
         } else {
           this.addOwnerForm();
         }
