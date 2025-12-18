@@ -184,7 +184,7 @@ export class BusinessOwnersFormStep {
     if (this.representativeIsOwner) {
       this.patchBusiness({
         payload: {
-          owners: [...this.ownersPayload, { id: this.representative.id }],
+          owners: [{ id: this.representative.id }, ...this.ownersPayload],
         },
         onSuccess: () => {
           this.getData();
