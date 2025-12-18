@@ -22,6 +22,7 @@ export class BusinessOwnerForm {
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
   @Prop() country: CountryCode;
+  @Prop() initialRepresentativeData?: any;
 
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
@@ -75,6 +76,7 @@ export class BusinessOwnerForm {
         newFormOpen={this.newFormOpen}
         ownersLength={this.ownersLength}
         country={this.country}
+        initialRepresentativeData={this.initialRepresentativeData}
         ref={ref => this.coreComponent = ref}
       />
     )

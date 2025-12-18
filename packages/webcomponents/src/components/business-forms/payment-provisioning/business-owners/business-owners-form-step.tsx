@@ -8,6 +8,7 @@ import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
 import { CountryCode } from '../../../../utils/country-codes';
+import { Representative } from '../../../../api/Identity';
 
 interface ownerPayloadItem { id: string; }
 
@@ -21,6 +22,8 @@ export class BusinessOwnersFormStep {
   @State() refs: any = [];
   @State() newFormOpen: boolean;
   @State() isLoading: boolean = false;
+  @State() representativeIsOwner: boolean = false;
+  @State() representative: Representative | null = null;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -58,10 +61,29 @@ export class BusinessOwnersFormStep {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
+        // Store representative data
+        if (response.data.representative) {
+          this.representative = new Representative(response.data.representative);
+          // Check if representative is already marked as owner
+          this.representativeIsOwner = response.data.representative.is_owner || false;
+        }
+        
         if (response.data.owners.length) {
           this.ownersPayload = response.data.owners.map(owner => ({ id: owner.id }));
+          // If representative is owner and not in owners list, add it
+          if (this.representativeIsOwner && this.representative?.id) {
+            const representativeInOwners = this.ownersPayload.some(owner => owner.id === this.representative.id);
+            if (!representativeInOwners) {
+              this.ownersPayload = [{ id: this.representative.id }, ...this.ownersPayload];
+            }
+          }
         } else {
-          this.addOwnerForm();
+          // If representative is owner and no owners exist, add representative as owner
+          if (this.representativeIsOwner && this.representative?.id) {
+            this.ownersPayload = [{ id: this.representative.id }];
+          } else {
+            this.addOwnerForm();
+          }
         }
       },
       onError: ({ error, code, severity }) => {
@@ -82,10 +104,31 @@ export class BusinessOwnersFormStep {
   private sendData = async (onSuccess?: () => void) => {
     let submittedData;
     this.formLoading.emit(true);
+    
+    // If representative is owner, ensure representative ID is in owners payload
+    let ownersPayload = [...this.ownersPayload];
+    if (this.representativeIsOwner && this.representative?.id) {
+      const representativeInOwners = ownersPayload.some(owner => owner.id === this.representative.id);
+      if (!representativeInOwners) {
+        ownersPayload = [{ id: this.representative.id }, ...ownersPayload];
+      }
+    }
+    
+    // Prepare payload with owners and representative is_owner status
+    const payload: any = { owners: ownersPayload };
+    if (this.representative) {
+      const representativePayload = new Representative(this.representative).payload;
+      representativePayload.is_owner = this.representativeIsOwner;
+      payload.representative = representativePayload;
+    }
+    
     this.patchBusiness({
-      payload: { owners: this.ownersPayload },
+      payload: payload,
       onSuccess: (response) => {
         submittedData = response;
+        if (this.representative) {
+          this.representative.is_owner = this.representativeIsOwner;
+        }
         onSuccess();
       },
       onError: ({ error, code, severity }) => {
@@ -150,9 +193,76 @@ export class BusinessOwnersFormStep {
     fireClick && this.clickEvent.emit({ name: BusinessFormClickActions.addOwnerForm });
   };
 
+  private updateRepresentativeIsOwner = (isOwner: boolean) => {
+    if (!this.representative || !this.patchBusiness) return;
+    
+    const representativePayload = new Representative(this.representative).payload;
+    representativePayload.is_owner = isOwner;
+    
+    this.patchBusiness({
+      payload: { representative: representativePayload },
+      onSuccess: () => {
+        // Update local representative state
+        if (this.representative) {
+          this.representative.is_owner = isOwner;
+        }
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          message: error,
+          errorCode: code,
+          severity: severity
+        });
+      }
+    });
+  };
+
+  private handleRepresentativeIsOwnerChange = (checked: boolean) => {
+    this.representativeIsOwner = checked;
+    
+    if (checked && this.representative) {
+      // If representative is owner and no owners exist, add representative as first owner
+      if (this.ownersPayload.length === 0 || (this.ownersPayload.length === 1 && !this.ownersPayload[0].id)) {
+        if (this.representative.id) {
+          this.ownersPayload = [{ id: this.representative.id }];
+        } else {
+          // Representative doesn't have ID yet, populate first form with representative data
+          if (this.ownersPayload.length === 0) {
+            this.ownersPayload = [{ id: '' }];
+          }
+        }
+      } else if (this.representative.id) {
+        // Add representative ID to owners if not already present
+        const representativeInOwners = this.ownersPayload.some(owner => owner.id === this.representative.id);
+        if (!representativeInOwners) {
+          this.ownersPayload = [{ id: this.representative.id }, ...this.ownersPayload];
+        }
+      }
+      // Update representative is_owner to true
+      this.updateRepresentativeIsOwner(true);
+    } else if (!checked && this.representative?.id) {
+      // Remove representative from owners if unchecked
+      this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== this.representative.id);
+      if (this.ownersPayload.length === 0) {
+        this.addOwnerForm();
+      }
+      // Update representative is_owner to false
+      this.updateRepresentativeIsOwner(false);
+    }
+  };
+
   private removeOwnerForm = (id: string) => {
+    // Check if the removed owner is the representative
+    const isRepresentative = this.representative?.id === id;
+    
     this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== id);
     this.newFormOpen && (this.newFormOpen = false);
+    
+    // If the removed owner is the representative, update representative is_owner to false
+    if (isRepresentative) {
+      this.representativeIsOwner = false;
+      this.updateRepresentativeIsOwner(false);
+    }
   };
 
   @Watch('ownersPayload')
@@ -192,8 +302,25 @@ export class BusinessOwnersFormStep {
             <form-control-tooltip helpText="For partnerships, LLCs or privately held corporations, the business is required to apply with all individuals with 25% or more ownership to the application. For charities and registered non-profits, the business is required to apply with 1 individual with substantial control over the entity, such as a board member or director." />
           </div>
           <hr class="mt-2" />
+          {this.representative && (
+            <div class="mb-3">
+              <form-control-checkbox
+                name="representativeIsOwner"
+                label="The representative is also an owner"
+                inputHandler={(_name, value) => this.handleRepresentativeIsOwnerChange(value)}
+                checked={this.representativeIsOwner}
+              />
+            </div>
+          )}
           <div class='row gy-3'>
-            {this.ownersPayload.map((owner) => {
+            {this.ownersPayload.map((owner, index) => {
+              // Pass representative data to first owner form if it's a new form and representative is owner
+              const shouldPopulateWithRepresentative = 
+                this.representativeIsOwner && 
+                !owner.id && 
+                index === 0 && 
+                this.representative;
+              
               return (
                 <justifi-owner-form
                   key={owner.id}
@@ -205,6 +332,7 @@ export class BusinessOwnersFormStep {
                   ownersLength={this.ownersPayload.length}
                   country={this.country}
                   allowOptionalFields={this.allowOptionalFields}
+                  initialRepresentativeData={shouldPopulateWithRepresentative ? this.representative : undefined}
                   ref={(ref) => this.matchRef(ref, owner.id)}
                 />
               );

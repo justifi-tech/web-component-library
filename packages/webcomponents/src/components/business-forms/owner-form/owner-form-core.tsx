@@ -27,10 +27,18 @@ export class BusinessOwnerFormCore {
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
   @Prop() country: CountryCode;
+  @Prop() initialRepresentativeData?: Identity;
 
   @Watch('isLoading')
   loadingWatcher() {
     this.formLoading.emit(this.isLoading);
+  }
+
+  @Watch('initialRepresentativeData')
+  async representativeDataWatcher(newData: Identity) {
+    if (newData && !this.ownerId && this.formController) {
+      await this.instantiateOwner(newData);
+    }
   }
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
@@ -106,7 +114,13 @@ export class BusinessOwnerFormCore {
   componentWillLoad() {
     const schemaFactory = identitySchemaByCountry[this.country];
     this.formController = new FormController(schemaFactory('owner', this.allowOptionalFields));
-    this.ownerId ? this.getData() : this.instantiateOwner({});
+    if (this.ownerId) {
+      this.getData();
+    } else if (this.initialRepresentativeData) {
+      this.instantiateOwner(this.initialRepresentativeData);
+    } else {
+      this.instantiateOwner({});
+    }
   }
 
   componentDidLoad() {
