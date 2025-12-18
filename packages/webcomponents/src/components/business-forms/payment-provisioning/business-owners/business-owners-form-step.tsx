@@ -18,7 +18,6 @@ interface ownerPayloadItem { id: string; }
 export class BusinessOwnersFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
-  @State() postOwner: Function;
   @State() ownersPayload: ownerPayloadItem[] = [];
   @State() refs: any = [];
   @State() newFormOpen: boolean;
