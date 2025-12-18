@@ -1,8 +1,11 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
+import mockPayoutDetails from '../mocks/mockPayoutDetailsSuccess.json';
+import mockNPMVersion from '../mocks/mockNPMVersion.json';
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
+  PAYOUT_DETAILS: '/payouts/:id',
   PKG_VERSION: '/@justifi/webcomponents/latest',
 };
 
@@ -15,6 +18,9 @@ export const setUpMocks = () => {
 
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
+
+      // PayoutDetails
+      this.get(API_PATHS.PAYOUT_DETAILS, () => mockPayoutDetails);
 
       // URL Prefix for NPM Package Check
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
