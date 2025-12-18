@@ -8,7 +8,8 @@ export const ComponentBox = ({ children }: { children: any }) => {
       borderRadius: '4px',
       padding: '16px',
       marginBottom: '16px',
-      marginTop: '20px'
+      marginTop: '20px',
+      backgroundColor: '#fff'
     }}>
       {children}
     </div>

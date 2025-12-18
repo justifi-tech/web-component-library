@@ -2,10 +2,23 @@ import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
 import mockPaymentsList from '../mocks/mockPaymentsList.json';
 import mockNPMVersion from '../mocks/mockNPMVersion.json';
+import mockBusinessOwner from '../mocks/mockBusinessOwner.json';
+import mockDocumentUpload from '../mocks/mockDocumentUpload.json';
+import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
+import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
+import mockBankAccount from '../mocks/mockBankAccount.json';
+import mockNPMVersion from '../mocks/mockNPMVersion.json';
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
   PAYMENTS_LIST: '/account/:id/payments',
+  EXISTING_BUSINESS_OWNER: '/entities/identity/:id',
+  NEW_BUSINESS_OWNER: '/entities/identity',
+  BUSINESS_DETAILS: '/entities/business/:id',
+  BUSINESS_DOCUMENT_RECORD: '/entities/document',
+  BANK_ACCOUNTS: '/entities/bank_accounts',
+  BUSINESS_TERMS_AND_CONDITIONS: '/entities/terms_and_conditions',
+  BUSINESS_PROVISIONING: '/entities/provisioning',
   PKG_VERSION: '/@justifi/webcomponents/latest',
 };
 
@@ -21,6 +34,55 @@ export const setUpMocks = () => {
 
       // PaymentsList
       this.get(API_PATHS.PAYMENTS_LIST, () => mockPaymentsList);
+      // BusinessOwner
+      this.get(API_PATHS.EXISTING_BUSINESS_OWNER, () => mockBusinessOwner);
+
+      this.patch(API_PATHS.EXISTING_BUSINESS_OWNER, (_schema, request) => {
+        const newRequestData = JSON.parse(request.requestBody);
+        let mergedRequestData = {
+          ...mockBusinessDetails.data.owners[0],
+          ...newRequestData,
+        };
+        return {
+          id: 2,
+          type: 'identity',
+          data: mergedRequestData,
+          page_info: 'string',
+        };
+      });
+
+      this.post(API_PATHS.NEW_BUSINESS_OWNER, () => mockBusinessOwner);
+
+      // BusinessDetails
+      this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
+
+      this.patch(API_PATHS.BUSINESS_DETAILS, (_schema, request) => {
+        const newRequestData = JSON.parse(request.requestBody);
+        let mergedRequestData = {
+          ...mockBusinessDetails.data,
+          ...newRequestData,
+        };
+        return {
+          id: 1,
+          type: 'business',
+          data: mergedRequestData,
+          page_info: 'string',
+        };
+      });
+
+      this.post(API_PATHS.BUSINESS_DOCUMENT_RECORD, () => mockDocumentUpload);
+
+      this.post(API_PATHS.BANK_ACCOUNTS, () => mockBankAccount);
+
+      this.post(
+        API_PATHS.BUSINESS_TERMS_AND_CONDITIONS,
+        () => mockBusinessTerms
+      );
+
+      this.post(
+        API_PATHS.BUSINESS_PROVISIONING,
+        () => mockBusinessProvisioning
+      );
 
       // URL Prefix for NPM Package Check
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
