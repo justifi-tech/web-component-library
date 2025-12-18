@@ -5,8 +5,18 @@ description: Visualizes gross payment volume over time with tooltips and range s
 sidebar_position: 43
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import {
+  PropsTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
 import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-gross-payment-chart';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -71,3 +81,69 @@ Component to render chart displaying last 30 days of gross payment data.
 <PartsMarkdownTable
   parts={getComponentParts('justifi-gross-payment-chart', componentTreeJson)}
 />
+
+# Usage Example
+
+---
+
+<ComponentBox>
+  <justifi-gross-payment-chart account-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-gross-payment-chart</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <justifi-gross-payment-chart account-id="acc_123" auth-token="authToken" />
+</body>
+
+<script>
+  (function () {
+    const grossPaymentChart = document.querySelector('justifi-gross-payment-chart');
+
+    grossPaymentChart.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+
+    grossPaymentChart.addEventListener('point-hover', (event) => {
+      // here is where you would handle the point hover event
+      console.log('point-hover', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>
