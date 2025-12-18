@@ -1,5 +1,8 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
+import mockCheckoutsList from '../mocks/mockCheckoutsList.json';
+import mockSubAccounts from '../mocks/mockSubAccounts.json';
+import mockNPMVersion from '../mocks/mockNPMVersion.json';
 import mockBusinessOwner from '../mocks/mockBusinessOwner.json';
 import mockDocumentUpload from '../mocks/mockDocumentUpload.json';
 import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
@@ -8,6 +11,9 @@ import mockBankAccount from '../mocks/mockBankAccount.json';
 import mockNPMVersion from '../mocks/mockNPMVersion.json';
 
 export const API_PATHS = {
+  BUSINESS_DETAILS: '/entities/business/:id',
+  CHECKOUTS_LIST: 'checkouts',
+  SUB_ACCOUNTS_LIST: 'sub_accounts',
   EXISTING_BUSINESS_OWNER: '/entities/identity/:id',
   NEW_BUSINESS_OWNER: '/entities/identity',
   BUSINESS_DETAILS: '/entities/business/:id',
@@ -25,6 +31,14 @@ export const setUpMocks = () => {
       this.urlPrefix = 'https://wc-proxy.justifi.ai';
       this.namespace = '/v1';
 
+      // BusinessDetails
+      this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
+
+      // CheckoutsList
+      this.get(API_PATHS.CHECKOUTS_LIST, () => mockCheckoutsList);
+
+      // SubAccountsList
+      this.get(API_PATHS.SUB_ACCOUNTS_LIST, () => mockSubAccounts);
       // BusinessOwner
       this.get(API_PATHS.EXISTING_BUSINESS_OWNER, () => mockBusinessOwner);
 
