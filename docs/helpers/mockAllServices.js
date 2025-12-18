@@ -9,7 +9,7 @@ import mockDocumentUpload from '../mocks/mockDocumentUpload.json';
 import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
-import mockNPMVersion from '../mocks/mockNPMVersion.json';
+import mockRefundResponse from '../mocks/mockPostRefundSuccess.json';
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
@@ -23,6 +23,7 @@ export const API_PATHS = {
   BANK_ACCOUNTS: '/entities/bank_accounts',
   BUSINESS_TERMS_AND_CONDITIONS: '/entities/terms_and_conditions',
   BUSINESS_PROVISIONING: '/entities/provisioning',
+  REFUND: '/payments/:id/refunds',
   PKG_VERSION: '/@justifi/webcomponents/latest',
 };
 
@@ -92,6 +93,9 @@ export const setUpMocks = () => {
         API_PATHS.BUSINESS_PROVISIONING,
         () => mockBusinessProvisioning
       );
+
+      // Post Refund
+      this.post(API_PATHS.REFUND, () => mockRefundResponse);
 
       // URL Prefix for NPM Package Check
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
