@@ -1,0 +1,99 @@
+{
+  "name": "@justifi/webcomponents",
+  "version": "5.3.2",
+  "description": "JustiFi Web Components",
+  "collection": "dist/collection/collection-manifest.json",
+  "main": "dist/index.cjs.js",
+  "module": "dist/module/index.js",
+  "types": "dist/module/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justifi-tech/web-component-library.git"
+  },
+  "homepage": "https://storybook.justifi.ai/?path=/docs/introduction--docs",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@stencil/core": "^4.0.5",
+    "@stencil/store": "^2.0.8",
+    "bootstrap": "^5.2.3",
+    "chart.js": "^4.4.1",
+    "date-fns": "^2.30.0",
+    "dinero.js": "^1.9.1",
+    "iframe-resizer": "^4.3.7",
+    "imask": "^7.6.0",
+    "lodash": "^4.17.21",
+    "rxjs": "^7.8.1",
+    "ts-dedent": "^2.2.0",
+    "uuid": "^9.0.0",
+    "yup": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.21.5",
+    "@rollup/plugin-replace": "^6.0.1",
+    "@stencil/sass": "^3.0.1",
+    "@types/jest": "27.0.3",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "dotenv": "^16.3.1",
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "ts-jest": "^29.1.2"
+  },
+  "license": "MIT",
+  "gitHead": "507bac1d941eae6e1f56e185ecd9bc9d22637783",
+  "scripts": {
+    "build": "stencil build --docs",
+    "dev": "stencil build --watch",
+    "lint": "eslint . --max-warnings 0",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "generate": "stencil generate",
+    "test": "TZ=utc stencil test --spec",
+    "test:watch": "TZ=utc stencil test --spec --watchAll",
+    "test:file": "stencil test --spec --watch --"
+  },
+  "bugs": {
+    "url": "https://github.com/justifi-tech/web-component-library/issues"
+  },
+  "_id": "@justifi/webcomponents@5.3.2",
+  "_integrity": "sha512-gLI5WmB8mvFECGEce3KIqJDcMQLDLOhatJfUo6Xbeiushgg8If3vyCx+QGbYOCVZ5jX8P4zbIyt+MoWmK8c33w==",
+  "_resolved": "/tmp/eafef46cbe79576738b46977e3486771/justifi-webcomponents-5.3.2.tgz",
+  "_from": "file:justifi-webcomponents-5.3.2.tgz",
+  "_nodeVersion": "18.17.1",
+  "_npmVersion": "9.6.7",
+  "dist": {
+    "integrity": "sha512-gLI5WmB8mvFECGEce3KIqJDcMQLDLOhatJfUo6Xbeiushgg8If3vyCx+QGbYOCVZ5jX8P4zbIyt+MoWmK8c33w==",
+    "shasum": "5c98c04f5990c5ba71f5a78dd5ae4065ecff1f06",
+    "tarball": "https://registry.npmjs.org/@justifi/webcomponents/-/webcomponents-5.3.2.tgz",
+    "fileCount": 1204,
+    "unpackedSize": 9871989,
+    "signatures": [
+      {
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+        "sig": "MEUCIGTkD4YOox9tadF1gxeXBsOHrC9rIoNa9w16V5bm7eY6AiEA8Ook6bt6KF1ZJDrWndzkdfPzJh0K+S0BprAdjKVHzTQ="
+      }
+    ]
+  },
+  "_npmUser": {
+    "name": "npm_support",
+    "email": "npm_support@justifi.ai"
+  },
+  "directories": {},
+  "maintainers": [
+    {
+      "name": "npm_support",
+      "email": "npm_support@justifi.ai"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages-npm-production",
+    "tmp": "tmp/webcomponents_5.3.2_1738947141444_0.11414827608190259"
+  },
+  "_hasShrinkwrap": false
+}
+

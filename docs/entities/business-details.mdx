@@ -6,8 +6,18 @@ description: Collect and review business profile information with inline validat
 sidebar_position: 10
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../helpers';
+import {
+  PropsTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
 import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-business-details';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -123,3 +133,13 @@ Component to render detailed information about a business. You will need to firs
 <PartsMarkdownTable
   parts={getComponentParts('justifi-business-details', componentTreeJson)}
 />
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-business-details business-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
