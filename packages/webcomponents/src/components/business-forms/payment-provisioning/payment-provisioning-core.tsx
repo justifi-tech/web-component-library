@@ -121,7 +121,7 @@ export class PaymentProvisioningCore {
   }
 
   get stepCounter() {
-    return `${this.currentStep + 1} of ${this.totalSteps + 1}`;
+    return `Step ${this.currentStep + 1} of ${this.totalSteps + 1}`;
   }
 
   @Listen('formLoading')

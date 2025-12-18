@@ -4,10 +4,11 @@ import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-acti
 import { BusinessService } from '../../../../api/services/business.service';
 import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { Button } from '../../../../ui-components';
-import { heading2 } from '../../../../styles/parts';
+import { heading2, alert } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
 import { CountryCode } from '../../../../utils/country-codes';
+import { Representative } from '../../../../api/Identity';
 
 interface ownerPayloadItem { id: string; }
 
@@ -17,10 +18,13 @@ interface ownerPayloadItem { id: string; }
 export class BusinessOwnersFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
+  @State() postOwner: Function;
   @State() ownersPayload: ownerPayloadItem[] = [];
   @State() refs: any = [];
   @State() newFormOpen: boolean;
   @State() isLoading: boolean = false;
+  @State() representativeIsOwner: boolean | null = null;
+  @State() representative: Representative;
 
   @Prop() authToken: string;
   @Prop() businessId: string;
@@ -58,6 +62,7 @@ export class BusinessOwnersFormStep {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
+        this.representative = new Representative(response.data.representative || {});
         if (response.data.owners.length) {
           this.ownersPayload = response.data.owners.map(owner => ({ id: owner.id }));
         } else {
@@ -175,6 +180,21 @@ export class BusinessOwnersFormStep {
     this.ownersPayload = updatedOwners;
   }
 
+  private handleRepresentativeIsOwnerChange = (value: boolean) => {
+    this.representativeIsOwner = value;
+    if (this.representativeIsOwner) {
+      this.patchBusiness({
+        payload: {
+          owners: [...this.ownersPayload, { id: this.representative.id }],
+        },
+        onSuccess: () => {
+          this.getData();
+          this.newFormOpen = false;
+        },
+      });
+    }
+  }
+
   render() {
     if (this.isLoading) {
       return (
@@ -184,6 +204,9 @@ export class BusinessOwnersFormStep {
       );
     }
 
+    const isRepresentativeOwner = this.ownersPayload.some(owner => owner.id === this.representative.id);
+    const shouldShowRepresentativeIsOwner = this.representativeIsOwner === null && !isRepresentativeOwner;
+
     return (
       <Host>
         <div>
@@ -192,6 +215,27 @@ export class BusinessOwnersFormStep {
             <form-control-tooltip helpText="For partnerships, LLCs or privately held corporations, the business is required to apply with all individuals with 25% or more ownership to the application. For charities and registered non-profits, the business is required to apply with 1 individual with substantial control over the entity, such as a board member or director." />
           </div>
           <hr class="mt-2" />
+          {shouldShowRepresentativeIsOwner && (
+            <div class={`alert alert-warning mb-3`} part={alert}>
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <strong>Is the representative of this business also an owner?</strong>
+                </div>
+                <div class="d-flex gap-2">
+                  <Button
+                    variant='primary'
+                    onClick={() => this.handleRepresentativeIsOwnerChange(true)}>
+                    Yes
+                  </Button>
+                  <Button
+                    variant='secondary'
+                    onClick={() => this.handleRepresentativeIsOwnerChange(false)}>
+                    No
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
           <div class='row gy-3'>
             {this.ownersPayload.map((owner) => {
               return (
