@@ -5,8 +5,18 @@ description: Paginated reporting table for monitoring active and past checkouts.
 sidebar_position: 26
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import {
+  PropsTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
 import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-checkouts-list';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -73,3 +83,13 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 />
 
 - Filters component emits custom events; ensure both components share the same container so spacing stays consistent.
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-checkouts-list account-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
