@@ -4,6 +4,7 @@ import mockBusinessOwner from '../mocks/mockBusinessOwner.json';
 import mockDocumentUpload from '../mocks/mockDocumentUpload.json';
 import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
+import mockBankAccount from '../mocks/mockBankAccount.json';
 import mockNPMVersion from '../mocks/mockNPMVersion.json';
 
 export const API_PATHS = {
@@ -11,6 +12,7 @@ export const API_PATHS = {
   NEW_BUSINESS_OWNER: '/entities/identity',
   BUSINESS_DETAILS: '/entities/business/:id',
   BUSINESS_DOCUMENT_RECORD: '/entities/document',
+  BANK_ACCOUNTS: '/entities/bank_accounts',
   BUSINESS_TERMS_AND_CONDITIONS: '/entities/terms_and_conditions',
   BUSINESS_PROVISIONING: '/entities/provisioning',
   PKG_VERSION: '/@justifi/webcomponents/latest',
@@ -60,6 +62,8 @@ export const setUpMocks = () => {
       });
 
       this.post(API_PATHS.BUSINESS_DOCUMENT_RECORD, () => mockDocumentUpload);
+
+      this.post(API_PATHS.BANK_ACCOUNTS, () => mockBankAccount);
 
       this.post(
         API_PATHS.BUSINESS_TERMS_AND_CONDITIONS,
