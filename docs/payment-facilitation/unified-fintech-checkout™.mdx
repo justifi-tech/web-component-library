@@ -5,8 +5,14 @@ description: Unified Fintech Checkout™ component that orchestrates payment cap
 sidebar_position: 20
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getPropsFromDocs,
+} from '../helpers';
 import componentTreeJson from '../component-tree.json';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -25,46 +31,7 @@ import componentTreeJson from '../component-tree.json';
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Owning platform account; determines branding + permissions.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Web Component Token with `write:checkout` scope.',
-      },
-      {
-        name: 'checkout-id',
-        type: 'string',
-        required: true,
-        description:
-          'Server-generated checkout session controlling line items and totals.',
-      },
-      {
-        name: 'require-save-payment-method',
-        type: 'boolean',
-        defaultValue: 'false',
-        description:
-          'When true, forces customers to save the payment method for future use.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description:
-          'Controls currency formatting, copy, and date presentation.',
-      },
-    ]),
-  }}
-/>
+<PropsMarkdownTable props={getPropsFromDocs('justifi-checkout', docsJson)} />
 
 ### Events
 
