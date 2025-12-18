@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": "1",
+    "business_id": "1",
+    "document_type": "voided_check",
+    "file_name": "voided_check.jpg",
+    "file_type": "image/jpeg",
+    "presigned_url": "https://entities-production-documents.s3.us-east-2.amazonaws.com/acc_123/doc_123",
+    "record_data": {
+      "business_id": "1",
+      "document_type": "voided_check",
+      "file_name": "voided_check.jpg",
+      "file_type": "image/jpeg"
+    }
+  }
+}
+

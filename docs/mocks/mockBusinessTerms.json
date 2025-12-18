@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "type": "onboarding",
+  "data": {
+    "id": "tac_xyz",
+    "business_id": "biz_xyz",
+    "accepted": true,
+    "ip": "123.456.789.00",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15"
+  },
+  "page_info": "string"
+}
+
