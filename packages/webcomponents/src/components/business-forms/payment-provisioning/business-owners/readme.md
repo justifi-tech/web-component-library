@@ -53,12 +53,14 @@ Type: `Promise<void>`
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
+- [form-control-checkbox](../../../../ui-components/form)
 - [justifi-owner-form](../../owner-form)
 
 ### Graph
 ```mermaid
 graph TD;
   justifi-business-owners-form-step --> form-control-tooltip
+  justifi-business-owners-form-step --> form-control-checkbox
   justifi-business-owners-form-step --> justifi-owner-form
   form-control-tooltip --> custom-popper
   justifi-owner-form --> owner-form-core

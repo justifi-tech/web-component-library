@@ -220,33 +220,21 @@ export class BusinessOwnersFormStep {
   private handleRepresentativeIsOwnerChange = (checked: boolean) => {
     this.representativeIsOwner = checked;
     
-    if (checked && this.representative) {
-      // If representative is owner and no owners exist, add representative as first owner
-      if (this.ownersPayload.length === 0 || (this.ownersPayload.length === 1 && !this.ownersPayload[0].id)) {
-        if (this.representative.id) {
-          this.ownersPayload = [{ id: this.representative.id }];
-        } else {
-          // Representative doesn't have ID yet, populate first form with representative data
-          if (this.ownersPayload.length === 0) {
-            this.ownersPayload = [{ id: '' }];
-          }
-        }
-      } else if (this.representative.id) {
-        // Add representative ID to owners if not already present
-        const representativeInOwners = this.ownersPayload.some(owner => owner.id === this.representative.id);
-        if (!representativeInOwners) {
-          this.ownersPayload = [{ id: this.representative.id }, ...this.ownersPayload];
-        }
+    if (!this.representative) return;
+    
+    if (this.representativeIsOwner) {
+      // Add representative to owners if not already present
+      const representativeInOwners = this.ownersPayload.some(owner => owner.id === this.representative.id);
+      if (!representativeInOwners) {
+        this.ownersPayload = [{ id: this.representative.id }, ...this.ownersPayload];
       }
-      // Update representative is_owner to true
       this.updateRepresentativeIsOwner(true);
-    } else if (!checked && this.representative?.id) {
-      // Remove representative from owners if unchecked
+    } else {
+      // Remove representative from owners
       this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== this.representative.id);
       if (this.ownersPayload.length === 0) {
         this.addOwnerForm();
       }
-      // Update representative is_owner to false
       this.updateRepresentativeIsOwner(false);
     }
   };
