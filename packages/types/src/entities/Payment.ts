@@ -1,6 +1,5 @@
-import { formatCurrency } from '../utils/utils';
 import { DisputeStatus } from './Dispute';
-import { IRefund } from '.';
+import { IRefund } from './Refund';
 
 export enum CaptureStrategy {
   automatic = 'automatic',
@@ -38,17 +37,19 @@ export enum CurrencyTypes {
   cad = 'cad',
 }
 
-export interface IPaymentMethod {
-  card?: Card;
+export interface IPaymentMethodData {
+  card?: PaymentCard;
   bank_account?: PaymentBankAccount;
 }
 
-export class PaymentMethod implements IPaymentMethod {
-  public card?: Card;
+export class PaymentMethodData implements IPaymentMethodData {
+  public card?: PaymentCard;
   public bank_account?: PaymentBankAccount;
 
-  constructor(paymentMethod: IPaymentMethod) {
-    this.card = paymentMethod.card ? new Card(paymentMethod.card) : undefined;
+  constructor(paymentMethod: IPaymentMethodData) {
+    this.card = paymentMethod.card
+      ? new PaymentCard(paymentMethod.card)
+      : undefined;
     this.bank_account = paymentMethod.bank_account
       ? new PaymentBankAccount(paymentMethod.bank_account)
       : undefined;
@@ -113,7 +114,7 @@ export class PaymentBankAccount implements IPaymentBankAccount {
   }
 }
 
-export interface ICard {
+export interface IPaymentCard {
   id: string;
   acct_last_four: string;
   name: string;
@@ -123,7 +124,7 @@ export interface ICard {
   updated_at: string;
 }
 
-export class Card implements ICard {
+export class PaymentCard implements IPaymentCard {
   public id: string;
   public acct_last_four: string;
   public name: string;
@@ -132,7 +133,7 @@ export class Card implements ICard {
   public created_at: string;
   public updated_at: string;
 
-  constructor(card: ICard) {
+  constructor(card: IPaymentCard) {
     this.id = card.id || '';
     this.acct_last_four = card.acct_last_four;
     this.name = card.name;
@@ -152,6 +153,14 @@ export interface IPaymentDispute {
   payment_id: string;
   reason: null;
   status: string;
+  updated_at: string;
+}
+
+export interface IApplicationFee {
+  id: string;
+  amount: number;
+  currency: CurrencyTypes;
+  created_at: string;
   updated_at: string;
 }
 
@@ -175,8 +184,8 @@ export interface IPayment {
   expedited?: boolean;
   fee_amount: number;
   is_test: boolean;
-  metadata: Object | null;
-  payment_method: IPaymentMethod;
+  metadata: object | null;
+  payment_method: IPaymentMethodData;
   payment_intent_id?: string | null;
   refunded: boolean;
   status: PaymentStatuses;
@@ -207,11 +216,11 @@ export class Payment implements IPayment {
   public disputes: IPaymentDispute[];
   public error_code: string | null;
   public error_description: string | null;
-  public expedited: boolean;
+  public expedited?: boolean;
   public fee_amount: number;
   public is_test: boolean;
-  public metadata: Object | null;
-  public payment_method: PaymentMethod;
+  public metadata: object | null;
+  public payment_method: PaymentMethodData;
   public payment_intent_id: string | null;
   public refunded: boolean;
   public status: PaymentStatuses;
@@ -244,12 +253,18 @@ export class Payment implements IPayment {
     this.fee_amount = payment.fee_amount;
     this.is_test = payment.is_test;
     this.metadata = payment.metadata;
-    this.payment_method = new PaymentMethod(payment.payment_method);
-    this.payment_intent_id = payment.payment_intent_id;
+    this.payment_method = new PaymentMethodData(payment.payment_method);
+    this.payment_intent_id = payment.payment_intent_id ?? null;
     this.refunded = payment.refunded;
     this.status = payment.status;
     this.created_at = payment.created_at;
     this.updated_at = payment.updated_at;
+    this.statement_descriptor = payment.statement_descriptor;
+    this.financial_transaction_id = payment.financial_transaction_id;
+    this.returned = payment.returned;
+    this.application_fee = payment.application_fee;
+    this.refunds = payment.refunds;
+    this.transaction_hold = payment.transaction_hold ?? null;
   }
 
   get disputedStatus(): DisputeStatus | null {
@@ -258,8 +273,6 @@ export class Payment implements IPayment {
     );
 
     // if a dispute is 'won', we don't show a dispute status, just general status
-    // TODO: update this logic to work with new DisputeStatus enum
-    // (cast 'open' as DisputeStatus in the meantime to keep existing functionality)
     if (!this.disputed) {
       return null;
     } else if (lost) {
@@ -286,17 +299,6 @@ export class Payment implements IPayment {
   get last_four_digits(): string | null {
     return this.payment_method.lastFourDigits;
   }
-
-  formattedPaymentAmount(amount: number): string {
-    return formatCurrency(amount, this.currency);
-  }
-}
-export interface IApplicationFee {
-  id: string;
-  amount: number;
-  currency: CurrencyTypes;
-  created_at: string;
-  updated_at: string;
 }
 
 export interface PaymentsQueryParams {
