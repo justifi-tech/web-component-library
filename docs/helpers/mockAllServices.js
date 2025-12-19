@@ -1,5 +1,6 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
+import mockTerminalOrders from '../mocks/mockTerminalOrdersListSuccess.json';
 import mockOrderModels from '../mocks/mockTerminalModels.json';
 import mockPayoutTransactions from '../mocks/mockPayoutTransactionsSuccess.json';
 import mockPayoutDetails from '../mocks/mockPayoutDetailsSuccess.json';
@@ -36,10 +37,9 @@ const handleMockGrossVolumeChart = () => {
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
+  TERMINAL_ORDERS_LIST: 'terminals/orders',
   ORDER_MODELS: '/terminals/order_models',
   ORDER_TERMINALS: '/terminals/orders',
-  GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
-  BUSINESS_DETAILS: '/entities/business/:id',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
   PAYOUT_TRANSACTIONS: '/balance_transactions',
   PAYOUT_DETAILS: '/payouts/:id',
@@ -69,6 +69,8 @@ export const setUpMocks = () => {
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
 
+      // TerminalOrdersList
+      this.get(API_PATHS.TERMINAL_ORDERS_LIST, () => mockTerminalOrders);
       // OrderTerminals
       this.get(API_PATHS.ORDER_MODELS, () => mockOrderModels);
       this.post(API_PATHS.ORDER_TERMINALS, (_schema, request) => {
