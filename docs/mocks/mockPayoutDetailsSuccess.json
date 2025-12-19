@@ -1,0 +1,39 @@
+{
+  "id": "po_17745yESnHyEgWNeunmhmR",
+  "type": "payout",
+  "page_info": null,
+  "data": {
+    "id": "po_17745yESnHyEgWNeunmhmR",
+    "account_id": "acc_5Et9iXrSSAZR2KSouQGAWi",
+    "description": "Payout",
+    "status": "paid",
+    "payout_type": "cc",
+    "delivery_method": null,
+    "amount": 22015,
+    "fees_total": 1485,
+    "refunds_count": 1,
+    "refunds_total": -1000,
+    "payments_count": 5,
+    "payments_total": 24500,
+    "other_total": 0,
+    "currency": "USD",
+    "created_at": "2023-12-28T01:27:00.742Z",
+    "updated_at": "2023-12-28T01:27:06.070Z",
+    "settlement_priority": "expedited",
+    "deposits_at": "2023-12-28T00:00:00.000Z",
+    "metadata": {
+      "customer_payout_id": "cp_12345"
+    },
+    "bank_account": {
+      "id": "ba_4MUXhq5ZZZfR5GF7fM3427",
+      "full_name": "Jenny Rosen",
+      "bank_name": "Test Bank",
+      "account_number_last4": "6789",
+      "routing_number": "110000000",
+      "country": "US",
+      "currency": "usd",
+      "nickname": "Successful Payout",
+      "account_type": "checking"
+    }
+  }
+}
