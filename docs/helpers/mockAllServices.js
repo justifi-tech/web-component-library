@@ -1,5 +1,7 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
+import mockGetCheckout from '../mocks/mockGetCheckoutSuccess.json';
+import mockPostCheckout from '../mocks/mockPostCheckoutSuccess.json';
 import mockTerminals from '../mocks/mockTerminalsListSuccess.json';
 import mockPostPaymentMethods from '../mocks/mockPostPaymentMethodsSuccess.json';
 import mockTerminalOrders from '../mocks/mockTerminalOrdersListSuccess.json';
@@ -19,6 +21,7 @@ import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
 import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
+  
 
   
 const handleMockGrossVolumeChart = () => {
@@ -40,6 +43,8 @@ const handleMockGrossVolumeChart = () => {
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
+  CHECKOUT: '/checkouts/:id',
+  CHECKOUT_COMPLETE: '/checkouts/:id/complete',
   TERMINAL_ORDERS_LIST: 'terminals/orders',
   TERMINALS_LIST: 'terminals',
   PAYMENT_METHODS: '/payment_methods',
@@ -74,6 +79,9 @@ export const setUpMocks = () => {
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
 
+      // Checkout
+      this.get(API_PATHS.CHECKOUT, () => mockGetCheckout);
+      this.post(API_PATHS.CHECKOUT_COMPLETE, () => mockPostCheckout);
       // TerminalsList
       this.get(API_PATHS.TERMINALS_LIST, () => mockTerminals);
 
