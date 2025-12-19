@@ -14,9 +14,30 @@ import mockDocumentUpload from '../mocks/mockDocumentUpload.json';
 import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
+import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
+
+const handleMockGrossVolumeChart = () => {
+  // Map all dates on the mock data to simulate dynamic data, especially to see dates from the past 30 days.
+  let dateBuffer = -1;
+  const mappedDates = mockGrossPaymentChart.data.dates.map((item) => {
+    return {
+      ...item,
+      // for each item in the array, assign a new date one day behind the current date
+      date: new Date(new Date().setDate(new Date().getDate() - ++dateBuffer))
+        .toISOString()
+        .split('T')[0],
+    };
+  });
+
+  mockGrossPaymentChart.data.dates = mappedDates;
+  return mockGrossPaymentChart;
+};
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
+  GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
+  BUSINESS_DETAILS: '/entities/business/:id',
+  GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
   PAYOUT_TRANSACTIONS: '/balance_transactions',
   PAYOUT_DETAILS: '/payouts/:id',
   PAYOUTS_LIST: '/account/:id/payouts',
@@ -45,6 +66,8 @@ export const setUpMocks = () => {
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
 
+      // GrossPaymentChart
+      this.get(API_PATHS.GROSS_VOLUME, handleMockGrossVolumeChart);
       // PayoutTransactions
       this.get(API_PATHS.PAYOUT_TRANSACTIONS, () => mockPayoutTransactions);
       // PayoutDetails
