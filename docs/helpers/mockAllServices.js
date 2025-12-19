@@ -1,5 +1,6 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
+import mockPaymentTransactions from '../mocks/mockPaymentTransactionsSuccess.json';
 import mockPaymentsList from '../mocks/mockPaymentsList.json';
 import mockPaymentDetails from '../mocks/mockPaymentDetails.json';
 import mockCheckoutsList from '../mocks/mockCheckoutsList.json';
@@ -14,6 +15,7 @@ import mockNPMVersion from '../mocks/mockNPMVersion.json';
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
+  PAYMENT_TRANSACTIONS: '/payments/:id/payment_balance_transactions',
   PAYMENTS_LIST: '/account/:id/payments',
   PAYMENT_DETAILS: '/payments/:id',
   CHECKOUTS_LIST: 'checkouts',
@@ -38,6 +40,8 @@ export const setUpMocks = () => {
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
 
+      // PaymentTransactions
+      this.get(API_PATHS.PAYMENT_TRANSACTIONS, () => mockPaymentTransactions);
       // PaymentsList
       this.get(API_PATHS.PAYMENTS_LIST, () => mockPaymentsList);
       // PaymentDetails
