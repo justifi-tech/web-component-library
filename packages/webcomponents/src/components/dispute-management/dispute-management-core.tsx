@@ -7,9 +7,9 @@ import { ComponentErrorEvent } from "../../api/ComponentEvents";
   tag: 'justifi-dispute-management-core',
 })
 export class DisputeManagementCore {
-  @Prop() getDispute: Function;
-  @Prop() disputeId: string;
-  @Prop() authToken: string;
+  @Prop() getDispute!: Function;
+  @Prop() disputeId!: string;
+  @Prop() authToken!: string;
 
   @State() dispute: Dispute;
   @State() isLoading: boolean = true;

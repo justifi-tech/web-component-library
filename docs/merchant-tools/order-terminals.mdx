@@ -6,13 +6,15 @@ sidebar_position: 50
 ---
 
 import {
-  PropsTable,
+  PropsMarkdownTable,
   PartsMarkdownTable,
+  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
+import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-order-terminals';
 
@@ -34,34 +36,8 @@ Component to render a form for terminal order requests.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Merchant placing the order.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `write:terminals` scope.',
-      },
-      {
-        name: 'shipping-contact',
-        type: 'string',
-        description:
-          'Optional saved contact ID; when omitted the component collects address info inline.',
-      },
-      {
-        name: 'allowed-products',
-        type: 'string',
-        description: 'Comma-separated SKU list to limit which devices appear.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-order-terminals', docsJson)}
 />
 
 ### Events

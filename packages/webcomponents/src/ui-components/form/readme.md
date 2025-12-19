@@ -5,11 +5,11 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type     | Default     |
-| -------------- | --------------- | ----------- | -------- | ----------- |
-| `iframeOrigin` | `iframe-origin` |             | `string` | `undefined` |
-| `inputId`      | `input-id`      |             | `string` | `undefined` |
-| `label`        | `label`         |             | `string` | `undefined` |
+| Property                    | Attribute       | Description | Type     | Default     |
+| --------------------------- | --------------- | ----------- | -------- | ----------- |
+| `iframeOrigin` _(required)_ | `iframe-origin` |             | `string` | `undefined` |
+| `inputId` _(required)_      | `input-id`      |             | `string` | `undefined` |
+| `label` _(required)_        | `label`         |             | `string` | `undefined` |
 
 
 ## Events

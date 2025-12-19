@@ -13,15 +13,15 @@ export class BusinessOwnerForm {
   @State() getOwner: Function;
   @State() patchOwner: Function;
   @State() postOwner: Function;
-  
-  @Prop() authToken: string;
+
+  @Prop() authToken!: string;
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() removeOwner: (id: string) => void;
+  @Prop() removeOwner!: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
-  @Prop() country: CountryCode;
+  @Prop() country!: CountryCode;
 
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
@@ -45,7 +45,7 @@ export class BusinessOwnerForm {
   }
 
   private initializeApi() {
-    if (!this.authToken) { return;}
+    if (!this.authToken) { return; }
     this.getOwner = makeGetIdentity({
       authToken: this.authToken,
       identityId: this.ownerId,
@@ -61,10 +61,10 @@ export class BusinessOwnerForm {
       service: new IdentityService()
     });
   }
-  
+
   render() {
     return (
-      <owner-form-core 
+      <owner-form-core
         ownerId={this.ownerId}
         businessId={this.businessId}
         getOwner={this.getOwner}

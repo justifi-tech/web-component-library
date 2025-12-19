@@ -32,13 +32,13 @@ export class PaymentTransactionsList {
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
-  @Prop() paymentId: string;
-  @Prop() authToken: string;
+  @Prop() paymentId!: string;
+  @Prop() authToken!: string;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  
+
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
@@ -51,7 +51,7 @@ export class PaymentTransactionsList {
   disconnectedCallback() {
     this.analytics?.cleanup();
   };
-  
+
   @Watch('pagingParams')
   @Watch('paymentId')
   @Watch('authToken')

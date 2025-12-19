@@ -6,13 +6,15 @@ sidebar_position: 51
 ---
 
 import {
-  PropsTable,
+  PropsMarkdownTable,
   PartsMarkdownTable,
+  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
+import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-terminal-orders-list';
 
@@ -33,29 +35,8 @@ Component to render a formated list of terminal device orders for the requested 
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Restricts orders to a merchant/platform.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:terminals` scope.',
-      },
-      {
-        name: 'columns',
-        type: 'string',
-        defaultValue: 'created_at,order_number,items,status,tracking_number',
-        description: 'Customize visible columns.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-terminal-orders-list', docsJson)}
 />
 
 ### Events

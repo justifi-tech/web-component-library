@@ -6,7 +6,12 @@ description: Layout manager that composes payment, summary, and confirmation sub
 sidebar_position: 21
 ---
 
-import { PropsTable } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+} from '../helpers';
+import docsJson from '../docs.json';
 
 ## Overview
 
@@ -27,43 +32,8 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Platform or merchant account for the checkout session.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description:
-          'Token with scopes for reading checkout data and tokenizing payment methods.',
-      },
-      {
-        name: 'checkout-id',
-        type: 'string',
-        required: true,
-        description:
-          'Server-side checkout object controlling totals and allowed rails.',
-      },
-      {
-        name: 'submit-label',
-        type: 'string',
-        defaultValue: 'Pay now',
-        description: 'Override the CTA copy.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description: 'Controls currency format + copy.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-modular-checkout', docsJson)}
 />
 
 ### Events

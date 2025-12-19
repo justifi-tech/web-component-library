@@ -6,13 +6,15 @@ sidebar_position: 40
 ---
 
 import {
-  PropsTable,
+  PropsMarkdownTable,
   PartsMarkdownTable,
+  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
+import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-payouts-list';
 
@@ -34,35 +36,8 @@ Component to render a formated list of payouts for the requested account.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Filters payouts to the merchant or platform account.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:payouts` scope.',
-      },
-      {
-        name: 'columns',
-        type: 'string',
-        defaultValue: 'created_at,amount,destination,status,expected_arrival',
-        description: 'Comma-separated list controlling table columns.',
-      },
-      {
-        name: 'timezone',
-        type: 'string',
-        defaultValue: 'UTC',
-        description: 'Controls formatting for timestamps.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-payouts-list', docsJson)}
 />
 
 ### Events
