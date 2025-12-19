@@ -1,5 +1,6 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
+import mockOrderModels from '../mocks/mockTerminalModels.json';
 import mockPayoutTransactions from '../mocks/mockPayoutTransactionsSuccess.json';
 import mockPayoutDetails from '../mocks/mockPayoutDetailsSuccess.json';
 import mockPayouts from '../mocks/mockPayoutsSuccess.json';
@@ -35,6 +36,8 @@ const handleMockGrossVolumeChart = () => {
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
+  ORDER_MODELS: '/terminals/order_models',
+  ORDER_TERMINALS: '/terminals/orders',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
   BUSINESS_DETAILS: '/entities/business/:id',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
@@ -65,6 +68,53 @@ export const setUpMocks = () => {
 
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
+
+      // OrderTerminals
+      this.get(API_PATHS.ORDER_MODELS, () => mockOrderModels);
+      this.post(API_PATHS.ORDER_TERMINALS, (_schema, request) => {
+        const response = JSON.parse(request.requestBody);
+
+        return {
+          id: 'tord_4DbrOOMTbsO2ZPG0MsvS3i',
+          type: 'terminal_order',
+          page_info: null,
+          data: {
+            id: 'tord_4DbrOOMTbsO2ZPG0MsvS3i',
+            business_id: response.business_id,
+            account_id: response.account_id,
+            order_type: response.order_type,
+            order_status: 'created',
+            shipping_tracking_reference: null,
+            company_name: 'Apricot Tavern 163',
+            mcc: '7998',
+            receiver_name: 'Jake Jake',
+            contact_first_name: 'Jake',
+            contact_last_name: 'Jake',
+            contact_email: 'jakemerringer@gmail.com',
+            contact_phone_number: '6124005000',
+            line1: '730 Happiness Ln',
+            line2: '100',
+            city: 'Minneapolis',
+            state: 'MN',
+            postal_code: '55555',
+            time_zone: 'US/Central',
+            country: 'USA',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            terminals: response.order_items
+              .map((item) => {
+                return Array.from({ length: item.quantity }, () => {
+                  return {
+                    terminal_id: `trm_${Math.random().toString(36).substring(2, 15)}`,
+                    terminal_did: `${Math.floor(Math.random() * 100000000)}`,
+                    model_name: item.model_name,
+                  };
+                });
+              })
+              .flat(),
+          },
+        };
+      });
 
       // GrossPaymentChart
       this.get(API_PATHS.GROSS_VOLUME, handleMockGrossVolumeChart);
