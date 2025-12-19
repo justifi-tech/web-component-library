@@ -5,8 +5,18 @@ description: Guided purchasing flow for ordering in-person terminals and accesso
 sidebar_position: 50
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import {
+  PropsTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
 import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-order-terminals';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -68,3 +78,77 @@ Component to render a form for terminal order requests.
 <PartsMarkdownTable
   parts={getComponentParts('justifi-order-terminals', componentTreeJson)}
 />
+
+# Usage Example
+
+---
+
+<ComponentBox>
+  <justifi-order-terminals
+    business-id="biz_123"
+    account-id="acc_123"
+    auth-token="123abc"
+  />
+</ComponentBox>
+
+---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-order-terminals</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <justifi-order-terminals
+    business-id="biz_123"
+    account-id="acc_123"
+    auth-token="authToken"
+  />
+</body>
+
+<script>
+  (function () {
+    const orderTerminals = document.querySelector('justifi-order-terminals');
+
+    orderTerminals.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+
+    orderTerminals.addEventListener('submit-event', (event) => {
+      // here is where you would handle the submit event
+      console.log('submit-event', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>
