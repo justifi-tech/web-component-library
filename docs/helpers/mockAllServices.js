@@ -14,12 +14,14 @@ import mockPaymentsList from '../mocks/mockPaymentsList.json';
 import mockPaymentDetails from '../mocks/mockPaymentDetails.json';
 import mockCheckoutsList from '../mocks/mockCheckoutsList.json';
 import mockSubAccounts from '../mocks/mockSubAccounts.json';
-import mockNPMVersion from '../mocks/mockNPMVersion.json';
 import mockBusinessOwner from '../mocks/mockBusinessOwner.json';
 import mockDocumentUpload from '../mocks/mockDocumentUpload.json';
 import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
+import mockDispute from '../mocks/mockDisputeResponse.json';
+import mockDisputePastDue from '../mocks/mockDisputePastDueResponse.json';
+import mockNPMVersion from '../mocks/mockNPMVersion.json';
 import mockRefundResponse from '../mocks/mockPostRefundSuccess.json';
 import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
   
@@ -65,6 +67,8 @@ export const API_PATHS = {
   BANK_ACCOUNTS: '/entities/bank_accounts',
   BUSINESS_TERMS_AND_CONDITIONS: '/entities/terms_and_conditions',
   BUSINESS_PROVISIONING: '/entities/provisioning',
+  DISPUTE: '/disputes/:id',
+  DISPUTE_RESPONSE: '/disputes/:id/response',
   REFUND: '/payments/:id/refunds',
   PKG_VERSION: '/@justifi/webcomponents/latest',
 };
@@ -214,6 +218,15 @@ export const setUpMocks = () => {
         () => mockBusinessProvisioning
       );
 
+      // Dispute
+      this.get(API_PATHS.DISPUTE, (_schema, request) => {
+        const id = request.params.id;
+        return id.includes('pastdue') ? mockDisputePastDue : mockDispute;
+      });
+      this.post(API_PATHS.DISPUTE_RESPONSE, (_schema, request) => {
+        const id = request.params.id;
+        return id.includes('pastdue') ? mockDisputePastDue : mockDispute;
+      });
       // Post Refund
       this.post(API_PATHS.REFUND, () => mockRefundResponse);
 
