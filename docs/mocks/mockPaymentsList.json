@@ -1,0 +1,422 @@
+{
+  "id": null,
+  "type": "array",
+  "page_info": {
+    "has_previous": false,
+    "has_next": false,
+    "start_cursor": "WyIyMDI0LTAxLTE3IDE3OjM1OjQ4Ljk2NzY3MzAwMCIsImM4ODU5ZWIyLTg3Y2ItNDhjYS1hOTBkLWY2YTgwMjAzNDFmNyJd",
+    "end_cursor": "WyIyMDIzLTEyLTI3IDE4OjMxOjMwLjUxMjgzMTAwMCIsIjhhYjk4MzEzLWZlYzktNDBkMi1iYzZmLTBlZTZhMDM0ZDVmNiJd",
+    "amount": 10
+  },
+  "data": [
+    {
+      "id": "py_1A2B3C4D5E6F7G8H9I0J",
+      "account_id": "acc_1A2B3C4D5E6F7G8H9I0J",
+      "amount_disputed": 0,
+      "amount_refunded": 0,
+      "amount_returned": 0,
+      "amount": 12345,
+      "amount_refundable": 12345,
+      "application_fee_rate_id": "afr_1A2B3C4D5E6F7G8H9I0J",
+      "balance": 12000,
+      "capture_strategy": "automatic",
+      "captured": true,
+      "created_at": "2024-05-01T08:45:10.789Z",
+      "currency": "usd",
+      "description": "one-time payment",
+      "statement_descriptor": "One-Time Payment",
+      "disputed": false,
+      "error_code": null,
+      "error_description": null,
+      "fee_amount": 345,
+      "financial_transaction_id": "ft_1A2B3C4D5E6F7G8H9I0J",
+      "is_test": false,
+      "metadata": {
+        "invoice_id": "inv_12345"
+      },
+      "payment_intent_id": "pi_12345",
+      "refunded": false,
+      "returned": false,
+      "status": "succeeded",
+      "updated_at": "2024-05-01T08:45:11.123Z",
+      "payment_method": {
+        "card": {
+          "id": "pm_1A2B3C4D5E6F7G8H9I0J",
+          "acct_last_four": "1234",
+          "brand": "visa",
+          "name": "test card",
+          "token": "pm_1A2B3C4D5E6F7G8H9I0J",
+          "metadata": null,
+          "created_at": "2024-05-01T08:45:10.780Z",
+          "updated_at": "2024-05-01T08:45:10.780Z"
+        },
+        "customer_id": "cust_1A2B3C4D5E6F7G8H9I0J",
+        "signature": "1hi1fWPJ39xdLzOIeG2EkN"
+      },
+      "application_fee": {
+        "id": "fee_1A2B3C4D5E6F7G8H9I0J",
+        "amount": 345,
+        "currency": "usd",
+        "created_at": "2024-05-01T08:45:11.120Z",
+        "updated_at": "2024-05-01T08:45:30.000Z"
+      },
+      "refunds": [],
+      "disputes": [],
+      "transaction_hold": null
+    },
+    {
+      "id": "py_2B3C4D5E6F7G8H9I0J1K",
+      "account_id": "acc_2B3C4D5E6F7G8H9I0J1K",
+      "amount_disputed": 0,
+      "amount_refunded": 0,
+      "amount_returned": 0,
+      "amount": 23456,
+      "amount_refundable": 23456,
+      "application_fee_rate_id": "afr_2B3C4D5E6F7G8H9I0J1K",
+      "balance": 23000,
+      "capture_strategy": "manual",
+      "captured": false,
+      "created_at": "2024-06-01T08:45:10.789Z",
+      "currency": "usd",
+      "description": "subscription payment",
+      "statement_descriptor": "Subscription",
+      "disputed": false,
+      "error_code": null,
+      "error_description": null,
+      "fee_amount": 456,
+      "financial_transaction_id": "ft_2B3C4D5E6F7G8H9I0J1K",
+      "is_test": false,
+      "metadata": {
+        "subscription_id": "sub_67890"
+      },
+      "payment_intent_id": "pi_67890",
+      "refunded": false,
+      "returned": false,
+      "status": "pending",
+      "updated_at": "2024-06-01T08:45:11.123Z",
+      "payment_method": {
+        "bank_account": {
+          "id": "ba_2B3C4D5E6F7G8H9I0J1K",
+          "acct_last_four": "5678",
+          "brand": "Test Bank",
+          "name": "test bank account",
+          "token": "ba_2B3C4D5E6F7G8H9I0J1K",
+          "metadata": null,
+          "created_at": "2024-06-01T08:45:10.780Z",
+          "updated_at": "2024-06-01T08:45:10.780Z"
+        },
+        "customer_id": "cust_2B3C4D5E6F7G8H9I0J1K",
+        "signature": "2hi1fWPJ39xdLzOIeG2EkO"
+      },
+      "application_fee": {
+        "id": "fee_2B3C4D5E6F7G8H9I0J1K",
+        "amount": 456,
+        "currency": "usd",
+        "created_at": "2024-06-01T08:45:11.120Z",
+        "updated_at": "2024-06-01T08:45:30.000Z"
+      },
+      "refunds": [],
+      "disputes": [],
+      "transaction_hold": null
+    },
+    {
+      "id": "py_3C4D5E6F7G8H9I0J1K2L",
+      "account_id": "acc_3C4D5E6F7G8H9I0J1K2L",
+      "amount_disputed": 0,
+      "amount_refunded": 0,
+      "amount_returned": 0,
+      "amount": 34567,
+      "amount_refundable": 34567,
+      "application_fee_rate_id": "afr_3C4D5E6F7G8H9I0J1K2L",
+      "balance": 34000,
+      "capture_strategy": "automatic",
+      "captured": true,
+      "created_at": "2024-07-01T08:45:10.789Z",
+      "currency": "usd",
+      "description": "manual payment",
+      "statement_descriptor": "Manual Payment",
+      "disputed": false,
+      "error_code": null,
+      "error_description": null,
+      "fee_amount": 567,
+      "financial_transaction_id": "ft_3C4D5E6F7G8H9I0J1K2L",
+      "is_test": false,
+      "metadata": {
+        "order_id": "ord_12345"
+      },
+      "payment_intent_id": "pi_12345",
+      "refunded": false,
+      "returned": false,
+      "status": "succeeded",
+      "updated_at": "2024-07-01T08:45:11.123Z",
+      "payment_method": {
+        "card": {
+          "id": "pm_3C4D5E6F7G8H9I0J1K2L",
+          "acct_last_four": "9101",
+          "brand": "mastercard",
+          "name": "test card",
+          "token": "pm_3C4D5E6F7G8H9I0J1K2L",
+          "metadata": null,
+          "created_at": "2024-07-01T08:45:10.780Z",
+          "updated_at": "2024-07-01T08:45:10.780Z"
+        },
+        "customer_id": "cust_3C4D5E6F7G8H9I0J1K2L",
+        "signature": "3hi1fWPJ39xdLzOIeG2EkP"
+      },
+      "application_fee": {
+        "id": "fee_3C4D5E6F7G8H9I0J1K2L",
+        "amount": 567,
+        "currency": "usd",
+        "created_at": "2024-07-01T08:45:11.120Z",
+        "updated_at": "2024-07-01T08:45:30.000Z"
+      },
+      "refunds": [],
+      "disputes": [],
+      "transaction_hold": null
+    },
+    {
+      "id": "py_1A2B3C4D5E6F7G8H9I0J",
+      "account_id": "acc_1A2B3C4D5E6F7G8H9I0J",
+      "amount_disputed": 0,
+      "amount_refunded": 0,
+      "amount_returned": 0,
+      "amount": 12345,
+      "amount_refundable": 12345,
+      "application_fee_rate_id": "afr_1A2B3C4D5E6F7G8H9I0J",
+      "balance": 12000,
+      "capture_strategy": "automatic",
+      "captured": true,
+      "created_at": "2024-05-01T08:45:10.789Z",
+      "currency": "usd",
+      "description": "one-time payment",
+      "statement_descriptor": "One-Time Payment",
+      "disputed": false,
+      "error_code": "ERR123",
+      "error_description": "Insufficient funds",
+      "fee_amount": 345,
+      "financial_transaction_id": "ft_1A2B3C4D5E6F7G8H9I0J",
+      "is_test": false,
+      "metadata": {
+        "invoice_id": "inv_12345"
+      },
+      "payment_intent_id": "pi_12345",
+      "refunded": false,
+      "returned": false,
+      "status": "failed",
+      "updated_at": "2024-05-01T08:45:11.123Z",
+      "payment_method": {
+        "card": {
+          "id": "pm_1A2B3C4D5E6F7G8H9I0J",
+          "acct_last_four": "1234",
+          "brand": "visa",
+          "name": "test card",
+          "token": "pm_1A2B3C4D5E6F7G8H9I0J",
+          "metadata": null,
+          "created_at": "2024-05-01T08:45:10.780Z",
+          "updated_at": "2024-05-01T08:45:10.780Z"
+        },
+        "customer_id": "cust_1A2B3C4D5E6F7G8H9I0J",
+        "signature": "1hi1fWPJ39xdLzOIeG2EkN"
+      },
+      "application_fee": {
+        "id": "fee_1A2B3C4D5E6F7G8H9I0J",
+        "amount": 345,
+        "currency": "usd",
+        "created_at": "2024-05-01T08:45:11.120Z",
+        "updated_at": "2024-05-01T08:45:30.000Z"
+      },
+      "refunds": [],
+      "disputes": [],
+      "transaction_hold": null
+    },
+    {
+      "id": "py_2B3C4D5E6F7G8H9I0J1K",
+      "account_id": "acc_2B3C4D5E6F7G8H9I0J1K",
+      "amount_disputed": 0,
+      "amount_refunded": 0,
+      "amount_returned": 0,
+      "amount": 23456,
+      "amount_refundable": 23456,
+      "application_fee_rate_id": "afr_2B3C4D5E6F7G8H9I0J1K",
+      "balance": 23000,
+      "capture_strategy": "manual",
+      "captured": false,
+      "created_at": "2024-06-01T08:45:10.789Z",
+      "currency": "usd",
+      "description": "subscription payment",
+      "statement_descriptor": "Subscription",
+      "disputed": false,
+      "error_code": null,
+      "error_description": null,
+      "fee_amount": 456,
+      "financial_transaction_id": "ft_2B3C4D5E6F7G8H9I0J1K",
+      "is_test": false,
+      "metadata": {
+        "subscription_id": "sub_67890"
+      },
+      "payment_intent_id": "pi_67890",
+      "refunded": false,
+      "returned": false,
+      "status": "pending",
+      "updated_at": "2024-06-01T08:45:11.123Z",
+      "payment_method": {
+        "bank_account": {
+          "id": "ba_2B3C4D5E6F7G8H9I0J1K",
+          "acct_last_four": "5678",
+          "brand": "Test Bank",
+          "name": "test bank account",
+          "token": "ba_2B3C4D5E6F7G8H9I0J1K",
+          "metadata": null,
+          "created_at": "2024-06-01T08:45:10.780Z",
+          "updated_at": "2024-06-01T08:45:10.780Z"
+        },
+        "customer_id": "cust_2B3C4D5E6F7G8H9I0J1K",
+        "signature": "2hi1fWPJ39xdLzOIeG2EkO"
+      },
+      "application_fee": {
+        "id": "fee_2B3C4D5E6F7G8H9I0J1K",
+        "amount": 456,
+        "currency": "usd",
+        "created_at": "2024-06-01T08:45:11.120Z",
+        "updated_at": "2024-06-01T08:45:30.000Z"
+      },
+      "refunds": [],
+      "disputes": [],
+      "transaction_hold": null
+    },
+    {
+      "id": "py_3C4D5E6F7G8H9I0J1K2L",
+      "account_id": "acc_3C4D5E6F7G8H9I0J1K2L",
+      "amount_disputed": 5000,
+      "amount_refunded": 0,
+      "amount_returned": 0,
+      "amount": 34567,
+      "amount_refundable": 34567,
+      "application_fee_rate_id": "afr_3C4D5E6F7G8H9I0J1K2L",
+      "balance": 34000,
+      "capture_strategy": "automatic",
+      "captured": true,
+      "created_at": "2024-07-01T08:45:10.789Z",
+      "currency": "usd",
+      "description": "manual payment",
+      "statement_descriptor": "Manual Payment",
+      "disputed": true,
+      "error_code": null,
+      "error_description": null,
+      "fee_amount": 567,
+      "financial_transaction_id": "ft_3C4D5E6F7G8H9I0J1K2L",
+      "is_test": false,
+      "metadata": {
+        "order_id": "ord_12345"
+      },
+      "payment_intent_id": "pi_12345",
+      "refunded": false,
+      "returned": false,
+      "status": "disputed",
+      "updated_at": "2024-07-01T08:45:11.123Z",
+      "payment_method": {
+        "card": {
+          "id": "pm_3C4D5E6F7G8H9I0J1K2L",
+          "acct_last_four": "9101",
+          "brand": "mastercard",
+          "name": "test card",
+          "token": "pm_3C4D5E6F7G8H9I0J1K2L",
+          "metadata": null,
+          "created_at": "2024-07-01T08:45:10.780Z",
+          "updated_at": "2024-07-01T08:45:10.780Z"
+        },
+        "customer_id": "cust_3C4D5E6F7G8H9I0J1K2L",
+        "signature": "3hi1fWPJ39xdLzOIeG2EkP"
+      },
+      "application_fee": {
+        "id": "fee_3C4D5E6F7G8H9I0J1K2L",
+        "amount": 567,
+        "currency": "usd",
+        "created_at": "2024-07-01T08:45:11.120Z",
+        "updated_at": "2024-07-01T08:45:30.000Z"
+      },
+      "refunds": [],
+      "disputes": [
+        {
+          "amount_cents": 5000,
+          "created_at": "2024-07-01T08:45:11.120Z",
+          "currency": "usd",
+          "gateway_ref_id": "gw_12345",
+          "id": "dp_12345",
+          "payment_id": "py_3C4D5E6F7G8H9I0J1K2L",
+          "reason": "fraudulent",
+          "status": "open",
+          "updated_at": "2024-07-01T08:45:11.120Z"
+        }
+      ],
+      "transaction_hold": null
+    },
+    {
+      "id": "py_4D5E6F7G8H9I0J1K2L3M",
+      "account_id": "acc_4D5E6F7G8H9I0J1K2L3M",
+      "amount_disputed": 0,
+      "amount_refunded": 34567,
+      "amount_returned": 0,
+      "amount": 34567,
+      "amount_refundable": 0,
+      "application_fee_rate_id": "afr_4D5E6F7G8H9I0J1K2L3M",
+      "balance": 0,
+      "capture_strategy": "automatic",
+      "captured": true,
+      "created_at": "2024-08-01T08:45:10.789Z",
+      "currency": "usd",
+      "description": "refund payment",
+      "statement_descriptor": "Refund Payment",
+      "disputed": false,
+      "error_code": null,
+      "error_description": null,
+      "fee_amount": 0,
+      "financial_transaction_id": "ft_4D5E6F7G8H9I0J1K2L3M",
+      "is_test": false,
+      "metadata": {
+        "order_id": "ord_67890"
+      },
+      "payment_intent_id": "pi_67890",
+      "refunded": true,
+      "returned": false,
+      "status": "fully_refunded",
+      "updated_at": "2024-08-01T08:45:11.123Z",
+      "payment_method": {
+        "card": {
+          "id": "pm_4D5E6F7G8H9I0J1K2L3M",
+          "acct_last_four": "1122",
+          "brand": "american_express",
+          "name": "test card",
+          "token": "pm_4D5E6F7G8H9I0J1K2L3M",
+          "metadata": null,
+          "created_at": "2024-08-01T08:45:10.780Z",
+          "updated_at": "2024-08-01T08:45:10.780Z"
+        },
+        "customer_id": "cust_4D5E6F7G8H9I0J1K2L3M",
+        "signature": "4hi1fWPJ39xdLzOIeG2EkQ"
+      },
+      "application_fee": {
+        "id": "fee_4D5E6F7G8H9I0J1K2L3M",
+        "amount": 0,
+        "currency": "usd",
+        "created_at": "2024-08-01T08:45:11.120Z",
+        "updated_at": "2024-08-01T08:45:30.000Z"
+      },
+      "refunds": [
+        {
+          "id": "re_2",
+          "payment_id": "py_4D5E6F7G8H9I0J1K2L3M",
+          "amount": 34567,
+          "description": "Full refund for order 67890",
+          "reason": "requested_by_customer",
+          "status": "succeeded",
+          "metadata": null,
+          "created_at": "2024-08-01T08:45:11.120Z",
+          "updated_at": "2024-08-01T08:45:11.120Z"
+        }
+      ],
+      "disputes": [],
+      "transaction_hold": null
+    }
+  ]
+}

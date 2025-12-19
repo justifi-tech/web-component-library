@@ -1,6 +1,10 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
 import mockPayoutDetails from '../mocks/mockPayoutDetailsSuccess.json';
+import mockPayouts from '../mocks/mockPayoutsSuccess.json';
+import mockPaymentTransactions from '../mocks/mockPaymentTransactionsSuccess.json';
+import mockPaymentsList from '../mocks/mockPaymentsList.json';
+import mockPaymentDetails from '../mocks/mockPaymentDetails.json';
 import mockCheckoutsList from '../mocks/mockCheckoutsList.json';
 import mockSubAccounts from '../mocks/mockSubAccounts.json';
 import mockNPMVersion from '../mocks/mockNPMVersion.json';
@@ -14,6 +18,10 @@ import mockNPMVersion from '../mocks/mockNPMVersion.json';
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
   PAYOUT_DETAILS: '/payouts/:id',
+  PAYOUTS_LIST: '/account/:id/payouts',
+  PAYMENT_TRANSACTIONS: '/payments/:id/payment_balance_transactions',
+  PAYMENTS_LIST: '/account/:id/payments',
+  PAYMENT_DETAILS: '/payments/:id',
   CHECKOUTS_LIST: 'checkouts',
   SUB_ACCOUNTS_LIST: 'sub_accounts',
   EXISTING_BUSINESS_OWNER: '/entities/identity/:id',
@@ -38,6 +46,14 @@ export const setUpMocks = () => {
 
       // PayoutDetails
       this.get(API_PATHS.PAYOUT_DETAILS, () => mockPayoutDetails);
+      // PayoutsList
+      this.get(API_PATHS.PAYOUTS_LIST, () => mockPayouts);
+      // PaymentTransactions
+      this.get(API_PATHS.PAYMENT_TRANSACTIONS, () => mockPaymentTransactions);
+      // PaymentsList
+      this.get(API_PATHS.PAYMENTS_LIST, () => mockPaymentsList);
+      // PaymentDetails
+      this.get(API_PATHS.PAYMENT_DETAILS, () => mockPaymentDetails);
       // CheckoutsList
       this.get(API_PATHS.CHECKOUTS_LIST, () => mockCheckoutsList);
 
