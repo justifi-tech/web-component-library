@@ -5,8 +5,18 @@ description: Transaction-level ledger for payments, grouped by status and fundin
 sidebar_position: 32
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import {
+  PropsTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
 import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payment-transactions-list';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -67,5 +77,77 @@ Component to display a list of payment transactions for a specific payment.
 ## Theming & Layout
 
 <PartsMarkdownTable
-  parts={getComponentParts('justifi-payment-transactions-list', componentTreeJson)}
+  parts={getComponentParts(
+    'justifi-payment-transactions-list',
+    componentTreeJson
+  )}
 />
+
+# Usage Example
+
+---
+
+<ComponentBox>
+  <justifi-payment-transactions-list payment-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-payment-transactions-list</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <justifi-payment-transactions-list
+    payment-id="py_123"
+    auth-token="authToken"
+  />
+</body>
+
+<script>
+  (function () {
+    const paymentTransactionsList = document.querySelector('justifi-payment-transactions-list');
+
+    paymentTransactionsList.addEventListener('click-event', (event) => {
+      // here is where you would handle the click events
+      console.log('click-event', event.detail);
+    });
+
+    paymentTransactionsList.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>
