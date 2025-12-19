@@ -20,9 +20,8 @@ import mockDocumentUpload from '../mocks/mockDocumentUpload.json';
 import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
+import mockRefundResponse from '../mocks/mockPostRefundSuccess.json';
 import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
-  
-
   
 const handleMockGrossVolumeChart = () => {
   // Map all dates on the mock data to simulate dynamic data, especially to see dates from the past 30 days.
@@ -66,6 +65,7 @@ export const API_PATHS = {
   BANK_ACCOUNTS: '/entities/bank_accounts',
   BUSINESS_TERMS_AND_CONDITIONS: '/entities/terms_and_conditions',
   BUSINESS_PROVISIONING: '/entities/provisioning',
+  REFUND: '/payments/:id/refunds',
   PKG_VERSION: '/@justifi/webcomponents/latest',
 };
 
@@ -213,6 +213,9 @@ export const setUpMocks = () => {
         API_PATHS.BUSINESS_PROVISIONING,
         () => mockBusinessProvisioning
       );
+
+      // Post Refund
+      this.post(API_PATHS.REFUND, () => mockRefundResponse);
 
       // URL Prefix for NPM Package Check
       this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
