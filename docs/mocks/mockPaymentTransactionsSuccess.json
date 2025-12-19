@@ -1,0 +1,93 @@
+{
+  "id": null,
+  "type": "array",
+  "page_info": {
+    "has_previous": false,
+    "has_next": true,
+    "start_cursor": "WyIyMDI0LTAxLTE3IDE3OjM1OjQ4Ljk2NzY3MzAwMCIsImM4ODU5ZWIyLTg3Y2ItNDhjYS1hOTBkLWY2YTgwMjAzNDFmNyJd",
+    "end_cursor": "WyIyMDI0LTAxLTE3IDE3OjM1OjQ4Ljk2NzY3MzAwMCIsImM4ODU5ZWIyLTg3Y2ItNDhjYS1hOTBkLWY2YTgwMjAzNDFmNyJd",
+    "amount": 5
+  },
+  "data": [
+    {
+      "id": "pbt_1A2B3C4D5E6F7G8H9I0J",
+      "payment_id": "py_1A2B3C4D5E6F7G8H9I0J",
+      "account_id": "acc_1A2B3C4D5E6F7G8H9I0J",
+      "amount": 12345,
+      "currency": "usd",
+      "source_type": "ApplicationFee",
+      "payment_balance_txn_type": "payment_fee",
+      "description": "Payment charge",
+      "created_at": "2024-05-01T08:45:10.789Z",
+      "updated_at": "2024-05-01T08:45:10.789Z",
+      "balance": 12345,
+      "fee_amount": 345,
+      "net_amount": 12000,
+      "status": "succeeded"
+    },
+    {
+      "id": "pbt_2B3C4D5E6F7G8H9I0J1K",
+      "payment_id": "py_1A2B3C4D5E6F7G8H9I0J",
+      "account_id": "acc_1A2B3C4D5E6F7G8H9I0J",
+      "amount": -345,
+      "currency": "usd",
+      "source_type": "ApplicationFee",
+      "payment_balance_txn_type": "payment_fee",
+      "description": "Application fee",
+      "created_at": "2024-05-01T08:45:11.120Z",
+      "updated_at": "2024-05-01T08:45:11.120Z",
+      "balance": 12000,
+      "fee_amount": 0,
+      "net_amount": -345,
+      "status": "succeeded"
+    },
+    {
+      "id": "pbt_3C4D5E6F7G8H9I0J1K2L",
+      "payment_id": "py_1A2B3C4D5E6F7G8H9I0J",
+      "account_id": "acc_1A2B3C4D5E6F7G8H9I0J",
+      "amount": 5000,
+      "currency": "usd",
+      "source_type": "Payment",
+      "payment_balance_txn_type": "payment",
+      "description": "Partial refund",
+      "created_at": "2024-05-02T10:30:15.456Z",
+      "updated_at": "2024-05-02T10:30:15.456Z",
+      "balance": 7000,
+      "fee_amount": 0,
+      "net_amount": 5000,
+      "status": "succeeded"
+    },
+    {
+      "id": "pbt_4D5E6F7G8H9I0J1K2L3M",
+      "payment_id": "py_1A2B3C4D5E6F7G8H9I0J",
+      "account_id": "acc_1A2B3C4D5E6F7G8H9I0J",
+      "amount": 2000,
+      "currency": "usd",
+      "source_type": "Payment",
+      "payment_balance_txn_type": "payment",
+      "description": "Dispute chargeback",
+      "created_at": "2024-05-03T14:20:30.789Z",
+      "updated_at": "2024-05-03T14:20:30.789Z",
+      "balance": 5000,
+      "fee_amount": 150,
+      "net_amount": 1850,
+      "status": "pending"
+    },
+    {
+      "id": "pbt_5E6F7G8H9I0J1K2L3M4N",
+      "payment_id": "py_1A2B3C4D5E6F7G8H9I0J",
+      "account_id": "acc_1A2B3C4D5E6F7G8H9I0J",
+      "amount": 1000,
+      "currency": "usd",
+      "source_type": "ApplicationFee",
+      "payment_balance_txn_type": "payment_fee",
+      "description": "Manual adjustment",
+      "created_at": "2024-05-04T09:15:45.123Z",
+      "updated_at": "2024-05-04T09:15:45.123Z",
+      "balance": 6000,
+      "fee_amount": 0,
+      "net_amount": 1000,
+      "status": "succeeded"
+    }
+  ]
+}
