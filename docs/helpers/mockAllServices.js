@@ -1,6 +1,7 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
 import mockTerminals from '../mocks/mockTerminalsListSuccess.json';
+import mockPostPaymentMethods from '../mocks/mockPostPaymentMethodsSuccess.json';
 import mockTerminalOrders from '../mocks/mockTerminalOrdersListSuccess.json';
 import mockOrderModels from '../mocks/mockTerminalModels.json';
 import mockPayoutTransactions from '../mocks/mockPayoutTransactionsSuccess.json';
@@ -18,6 +19,7 @@ import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
 import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
+
   
 const handleMockGrossVolumeChart = () => {
   // Map all dates on the mock data to simulate dynamic data, especially to see dates from the past 30 days.
@@ -40,6 +42,7 @@ export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
   TERMINAL_ORDERS_LIST: 'terminals/orders',
   TERMINALS_LIST: 'terminals',
+  PAYMENT_METHODS: '/payment_methods',
   ORDER_MODELS: '/terminals/order_models',
   ORDER_TERMINALS: '/terminals/orders',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
@@ -73,6 +76,18 @@ export const setUpMocks = () => {
 
       // TerminalsList
       this.get(API_PATHS.TERMINALS_LIST, () => mockTerminals);
+
+      // URL prefix for direct API requests (for iframed application requests which don't use the proxy)
+      // As of now this does not work because the request happens within the iframe and the iframe does not have access to the proxy
+      this.namespace = '/v1/js'; // Reset the namespace to avoid prefixing with the primary URL prefix
+      this.urlPrefix = 'https://api.justifi.ai';
+
+      // PaymentMethods (TokenizePaymentMethod component)
+      this.post(API_PATHS.PAYMENT_METHODS, () => mockPostPaymentMethods);
+
+      // Reset namespace and URL prefix for other endpoints
+      this.namespace = '/v1';
+      this.urlPrefix = 'https://wc-proxy.justifi.ai';
       // TerminalOrdersList
       this.get(API_PATHS.TERMINAL_ORDERS_LIST, () => mockTerminalOrders);
       // OrderTerminals
