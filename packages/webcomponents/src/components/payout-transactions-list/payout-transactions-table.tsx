@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { convertToLocal } from '../../utils/utils';
+import { convertToLocal, formatCurrency } from '../../utils/utils';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
 import { PayoutBalanceTransaction } from '../../api';
 
@@ -113,17 +113,17 @@ export const payoutTransactionTableCells = {
   ),
   amount: (transaction: PayoutBalanceTransaction) => (
     <td part={getAlternateTableCellPart(transaction.amount)}>
-      {transaction.formattedPaymentAmount(transaction.amount)}
+      {formatCurrency(transaction.amount, transaction.currency)}
     </td>
   ),
   fee: (transaction: PayoutBalanceTransaction) => (
     <td part={getAlternateTableCellPart(transaction.fee)}>
-      {transaction.formattedPaymentAmount(transaction.fee)}
+      {formatCurrency(transaction.fee, transaction.currency)}
     </td>
   ),
   net: (transaction: PayoutBalanceTransaction) => (
     <td part={getAlternateTableCellPart(transaction.net)}>
-      {transaction.formattedPaymentAmount(transaction.net)}
+      {formatCurrency(transaction.net, transaction.currency)}
     </td>
   ),
   currency: (transaction: PayoutBalanceTransaction) => (

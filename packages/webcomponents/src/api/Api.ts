@@ -1,34 +1,20 @@
 import { waitForConfig, configState } from '../components/config-provider/config-state';
 import { generateId } from '../utils/utils';
-import { PagingInfo } from './Pagination';
 
-export interface IApiResponse<T> {
-  data: T;
-  error?: IErrorObject | IServerError;
-  page_info?: PagingInfo;
-  errors?: string[];
-  id: number | string;
-  type: string;
-}
-
-export type IServerError = string;
-
-export interface IErrorObject {
-  message: string;
-  code: string;
-  param?: string;
-}
-
-export interface IApiResponseCollection<T> extends IApiResponse<T> {
-  page_info: PagingInfo;
-}
+// Re-export types from @justifi/types for backward compatibility
+export type {
+  IApiResponse,
+  IServerError,
+  IErrorObject,
+  IApiResponseCollection,
+} from '@justifi/types';
 
 interface MakeRequestProps {
   authToken: string;
   endpoint: string;
   method: string;
-  params?: any;
-  body?: any;
+  params?: unknown;
+  body?: string;
   signal?: AbortSignal;
   headers?: HeadersInit;
 }
@@ -36,7 +22,7 @@ interface MakeRequestProps {
 interface GetProps {
   authToken: string;
   endpoint: string;
-  params?: any;
+  params?: unknown;
   signal?: AbortSignal;
   headers?: HeadersInit;
 }
@@ -44,8 +30,8 @@ interface GetProps {
 interface PostProps {
   authToken?: string;
   endpoint: string;
-  body?: any;
-  params?: any;
+  body?: unknown;
+  params?: unknown;
   signal?: AbortSignal;
   headers?: HeadersInit;
 }
@@ -53,23 +39,23 @@ interface PostProps {
 interface PutProps {
   authToken: string;
   endpoint: string;
-  body?: any;
-  params?: any;
+  body?: unknown;
+  params?: unknown;
   signal?: AbortSignal;
 }
 
 interface PatchProps {
   authToken: string;
   endpoint: string;
-  body?: any;
-  params?: any;
+  body?: unknown;
+  params?: unknown;
   signal?: AbortSignal;
 }
 
 interface DestroyProps {
   authToken: string;
   endpoint: string;
-  params?: any;
+  params?: unknown;
   signal?: AbortSignal;
 }
 
@@ -95,7 +81,7 @@ export const Api = () => {
     const apiOrigin = configState.apiOrigin;
 
     const url = `${apiOrigin}/v1/${endpoint}`;
-    const requestUrl = params ? `${url}?${new URLSearchParams(params)}` : url;
+    const requestUrl = params ? `${url}?${new URLSearchParams(params as Record<string, string>)}` : url;
 
     const defaultHeaders = await getAuthorizationHeader(authToken);
     const mergedHeaders = { ...defaultHeaders, ...headers };
@@ -121,7 +107,7 @@ export const Api = () => {
   async function post(props: PostProps) {
     const { authToken, endpoint, body, params, signal, headers } = props;
     return makeRequest({
-      authToken,
+      authToken: authToken || '',
       endpoint,
       method: 'POST',
       params,

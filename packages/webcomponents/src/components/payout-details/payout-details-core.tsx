@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Payout } from '../../api';
-import { capitalizeFirstLetter, formatDate, formatTime } from '../../utils/utils';
+import { capitalizeFirstLetter, formatCurrency, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
@@ -113,7 +113,7 @@ export class PayoutDetailsCore {
                   )}
                 </div>
               )}
-              title={this.payout.formattedPaymentAmount(this.payout.amount)}
+              title={formatCurrency(this.payout.amount, this.payout.currency)}
             >
               <EntityHeadInfoItem
                 classes="border-1 border-end"
@@ -138,8 +138,8 @@ export class PayoutDetailsCore {
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />
                 <DetailItem title="Statement Description" value={this.payout.description} />
                 <DetailItem title="Payout Method" value={this.formatMethod(this.payout.delivery_method)} />
-                <DetailItem title="Amount" value={this.payout.formattedPaymentAmount(this.payout.amount)} />
-                <DetailItem title="Fee" value={this.payout.formattedPaymentAmount(this.payout.fees_total)} />
+                <DetailItem title="Amount" value={formatCurrency(this.payout.amount, this.payout.currency)} />
+                <DetailItem title="Fee" value={formatCurrency(this.payout.fees_total, this.payout.currency)} />
               </div>
               <DetailSectionTitle sectionTitle="Account" />
               <div class="d-flex flex-column gap-2 w-100">
