@@ -1,5 +1,6 @@
 import { createServer } from 'miragejs';
 import mockBusinessDetails from '../mocks/mockBusinessDetails.json';
+import mockTerminals from '../mocks/mockTerminalsListSuccess.json';
 import mockTerminalOrders from '../mocks/mockTerminalOrdersListSuccess.json';
 import mockOrderModels from '../mocks/mockTerminalModels.json';
 import mockPayoutTransactions from '../mocks/mockPayoutTransactionsSuccess.json';
@@ -17,7 +18,7 @@ import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
 import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
-
+  
 const handleMockGrossVolumeChart = () => {
   // Map all dates on the mock data to simulate dynamic data, especially to see dates from the past 30 days.
   let dateBuffer = -1;
@@ -38,6 +39,7 @@ const handleMockGrossVolumeChart = () => {
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
   TERMINAL_ORDERS_LIST: 'terminals/orders',
+  TERMINALS_LIST: 'terminals',
   ORDER_MODELS: '/terminals/order_models',
   ORDER_TERMINALS: '/terminals/orders',
   GROSS_VOLUME: '/account/:accountId/reports/gross_volume',
@@ -69,6 +71,8 @@ export const setUpMocks = () => {
       // BusinessDetails
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
 
+      // TerminalsList
+      this.get(API_PATHS.TERMINALS_LIST, () => mockTerminals);
       // TerminalOrdersList
       this.get(API_PATHS.TERMINAL_ORDERS_LIST, () => mockTerminalOrders);
       // OrderTerminals
