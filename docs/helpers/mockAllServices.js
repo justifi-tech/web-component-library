@@ -11,7 +11,6 @@ import mockDocumentUpload from '../mocks/mockDocumentUpload.json';
 import mockBusinessTerms from '../mocks/mockBusinessTerms.json';
 import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
-import mockNPMVersion from '../mocks/mockNPMVersion.json';
 
 export const API_PATHS = {
   BUSINESS_DETAILS: '/entities/business/:id',
