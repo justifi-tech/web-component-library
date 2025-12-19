@@ -5,8 +5,18 @@ description: Embed-ready workflow for collecting payout bank info and provisioni
 sidebar_position: 12
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import {
+  PropsTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
 import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payment-provisioning';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -80,3 +90,13 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 <PartsMarkdownTable
   parts={getComponentParts('justifi-payment-provisioning', componentTreeJson)}
 />
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-payment-provisioning business-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
