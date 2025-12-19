@@ -7,11 +7,13 @@ sidebar_position: 27
 
 import {
   PropsMarkdownTable,
-  PartsTable,
+  PartsMarkdownTable,
+  getComponentParts,
   getWebcomponentsVersion,
   getPropsFromDocs,
 } from '../../helpers';
 import docsJson from '../../docs.json';
+import componentTreeJson from '../../component-tree.json';
 
 ## Overview
 
@@ -79,13 +81,6 @@ No custom events; summary listens to the parent checkout for updates automatical
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'text',
-        description: 'Text styles for the summary component.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-checkout-summary', componentTreeJson)}
 />

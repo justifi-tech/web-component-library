@@ -5,8 +5,14 @@ description: Ledger of transactions contributing to a payout, with filtering and
 sidebar_position: 42
 ---
 
-import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+} from '../helpers';
 import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -38,21 +44,9 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts(
+    'justifi-payout-transactions-list',
+    componentTreeJson
+  )}
 />

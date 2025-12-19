@@ -5,8 +5,20 @@ description: Embed-ready workflow for collecting payout bank info and provisioni
 sidebar_position: 12
 ---
 
-import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
 import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payment-provisioning';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -41,53 +53,16 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'input',
-        description: 'Input field styles.',
-      },
-      {
-        name: 'input-focused',
-        description: 'Input styles when focused.',
-      },
-      {
-        name: 'input-invalid',
-        description: 'Input styles when invalid.',
-      },
-      {
-        name: 'input-invalid-and-focused',
-        description: 'Input styles when invalid and focused.',
-      },
-      {
-        name: 'button',
-        description: 'Button styles.',
-      },
-      {
-        name: 'button-primary',
-        description: 'Primary button styles.',
-      },
-      {
-        name: 'button-disabled',
-        description: 'Disabled button styles.',
-      },
-      {
-        name: 'tooltip-inner',
-        description: 'Tooltip inner content styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payment-provisioning', componentTreeJson)}
 />
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-payment-provisioning business-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---

@@ -5,8 +5,20 @@ description: Paginated table of payments with filtering, export, and quick actio
 sidebar_position: 31
 ---
 
-import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
 import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payments-list';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -47,29 +59,16 @@ Component to render a formated list of payments for the requested account.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'button',
-        description: 'Button styles.',
-      },
-      {
-        name: 'button-disabled',
-        description: 'Disabled button styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payments-list', componentTreeJson)}
 />
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-payments-list account-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---

@@ -7,11 +7,13 @@ sidebar_position: 2
 
 import {
   PropsMarkdownTable,
-  PartsTable,
+  PartsMarkdownTable,
   getWebcomponentsVersion,
+  getComponentParts,
   getPropsFromDocs,
 } from '../../helpers';
 import docsJson from '../../docs.json';
+import componentTreeJson from '../../component-tree.json';
 
 ## Overview
 
@@ -116,35 +118,8 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
 
 - When embedded inside cards, wrap the host element in your layout container and scope typography overrides via the parts listed below.
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'skeleton',
-        description: 'Skeleton loading state styles.',
-      },
-      {
-        name: 'label',
-        description: 'Label styles.',
-      },
-      {
-        name: 'input-invalid-and-focused',
-        description: 'Input styles when invalid and focused.',
-      },
-      {
-        name: 'input-invalid',
-        description: 'Input styles when invalid.',
-      },
-      {
-        name: 'input-focused',
-        description: 'Input styles when focused.',
-      },
-      {
-        name: 'input',
-        description: 'Input field styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-card-form', componentTreeJson)}
 />
 
 - Use the `card-form` CSS part (`::part(card-form)`) to apply box shadows or wrapper padding.

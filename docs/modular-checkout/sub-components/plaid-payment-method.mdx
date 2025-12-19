@@ -7,11 +7,13 @@ sidebar_position: 23
 
 import {
   PropsMarkdownTable,
-  PartsTable,
+  PartsMarkdownTable,
   getWebcomponentsVersion,
   getPropsFromDocs,
+  getComponentParts,
 } from '../../helpers';
 import docsJson from '../../docs.json';
+import componentTreeJson from '../../component-tree.json';
 
 ## Overview
 
@@ -98,41 +100,6 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 - Styling is limited to the wrapper since Plaid controls the Link modal.
 - Provide fallback instructions for devices where Plaid is unavailable.
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'text',
-        description: 'Text styles.',
-      },
-      {
-        name: 'text-danger',
-        description: 'Danger/error text styles.',
-      },
-      {
-        name: 'label',
-        description: 'Label styles.',
-      },
-      {
-        name: 'input-radio',
-        description: 'Radio input styles.',
-      },
-      {
-        name: 'input-radio-focused',
-        description: 'Radio input styles when focused.',
-      },
-      {
-        name: 'input-radio-checked',
-        description: 'Radio input styles when checked.',
-      },
-      {
-        name: 'input-radio-checked-focused',
-        description: 'Radio input styles when checked and focused.',
-      },
-      {
-        name: 'input-radio-invalid',
-        description: 'Radio input styles when invalid.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-plaid-payment-method', componentTreeJson)}
 />

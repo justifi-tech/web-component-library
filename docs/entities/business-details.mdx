@@ -8,11 +8,18 @@ sidebar_position: 10
 
 import {
   PropsMarkdownTable,
-  PartsTable,
+  PartsMarkdownTable,
   getWebcomponentsVersion,
   getPropsFromDocs,
+  getComponentParts,
+  ComponentBox,
+  setUpMocks,
 } from '../helpers';
 import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-business-details';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -89,21 +96,16 @@ Component to render detailed information about a business. You will need to firs
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-business-details', componentTreeJson)}
 />
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-business-details business-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---

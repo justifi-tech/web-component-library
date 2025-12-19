@@ -5,8 +5,14 @@ description: Reporting table for outbound payouts including status, destination,
 sidebar_position: 40
 ---
 
-import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+} from '../helpers';
 import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -38,29 +44,6 @@ Component to render a formated list of payouts for the requested account.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'button',
-        description: 'Button styles.',
-      },
-      {
-        name: 'button-disabled',
-        description: 'Disabled button styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payouts-list', componentTreeJson)}
 />

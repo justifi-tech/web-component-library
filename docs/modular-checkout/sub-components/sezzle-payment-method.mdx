@@ -7,11 +7,13 @@ sidebar_position: 24
 
 import {
   PropsMarkdownTable,
-  PartsTable,
+  PartsMarkdownTable,
   getWebcomponentsVersion,
+  getComponentParts,
   getPropsFromDocs,
 } from '../../helpers';
 import docsJson from '../../docs.json';
+import componentTreeJson from '../../component-tree.json';
 
 ## Overview
 
@@ -124,41 +126,6 @@ This component exposes **no public methods or properties** and is not intended f
 
 - Respect Sezzle's branding by keeping the provided colors and logos intact.
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'text',
-        description: 'Text styles.',
-      },
-      {
-        name: 'text-danger',
-        description: 'Danger/error text styles.',
-      },
-      {
-        name: 'label',
-        description: 'Label styles.',
-      },
-      {
-        name: 'input-radio',
-        description: 'Radio input styles.',
-      },
-      {
-        name: 'input-radio-focused',
-        description: 'Radio input styles when focused.',
-      },
-      {
-        name: 'input-radio-checked',
-        description: 'Radio input styles when checked.',
-      },
-      {
-        name: 'input-radio-checked-focused',
-        description: 'Radio input styles when checked and focused.',
-      },
-      {
-        name: 'input-radio-invalid',
-        description: 'Radio input styles when invalid.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-sezzle-payment-method', componentTreeJson)}
 />

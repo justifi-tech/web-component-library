@@ -7,11 +7,18 @@ sidebar_position: 30
 
 import {
   PropsMarkdownTable,
-  PartsTable,
+  PartsMarkdownTable,
   getWebcomponentsVersion,
   getPropsFromDocs,
+  getComponentParts,
+  ComponentBox,
+  setUpMocks,
 } from '../helpers';
 import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payment-details';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -87,21 +94,16 @@ Component to display detailed information about a specific payment.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payment-details', componentTreeJson)}
 />
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-payment-details payment-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---

@@ -5,8 +5,14 @@ description: Drill-down view for a single payout, including ledger items and ban
 sidebar_position: 41
 ---
 
-import { PropsMarkdownTable, PartsTable, getPropsFromDocs } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+} from '../helpers';
 import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
 
 ## Overview
 
@@ -38,21 +44,6 @@ Component to display detailed information about a specific payout.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payout-details', componentTreeJson)}
 />

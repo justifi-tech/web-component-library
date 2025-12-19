@@ -112,9 +112,15 @@ importers:
 
   docs:
     dependencies:
+      '@justifi/webcomponents':
+        specifier: 6.7.2
+        version: 6.7.2
       markdown-table:
         specifier: ^3.0.4
         version: 3.0.4
+      miragejs:
+        specifier: ^0.1.48
+        version: 0.1.48
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.0.12)(react@18.3.1)
@@ -1206,6 +1212,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@justifi/webcomponents@6.7.2':
+    resolution: {integrity: sha512-irhGGnjbYZCEt8zkIZZAcSl5YiDosfyOY2cu/8xsSxnrpS/m0+oX6TbTAtL+7mog8+IYZ0O1rGHOk/4JA18gTA==}
 
   '@kurkle/color@0.3.4':
     resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
@@ -5938,6 +5947,22 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@justifi/webcomponents@6.7.2':
+    dependencies:
+      '@popperjs/core': 2.11.8
+      '@stencil/core': 4.28.2
+      '@stencil/store': 2.1.2(@stencil/core@4.28.2)
+      bootstrap: 5.3.3(@popperjs/core@2.11.8)
+      chart.js: 4.4.8
+      date-fns: 4.1.0
+      dinero.js: 1.9.1
+      iframe-resizer: 4.4.5
+      imask: 7.6.1
+      lodash: 4.17.21
+      rxjs: 7.8.2
+      ts-dedent: 2.2.0
+      yup: 1.6.1
 
   '@kurkle/color@0.3.4': {}
 
