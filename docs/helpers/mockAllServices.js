@@ -16,7 +16,7 @@ import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
 import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
 
-const handleMockGrossVolumeChartMock = () => {
+const handleMockGrossVolumeChart = () => {
   // Map all dates on the mock data to simulate dynamic data, especially to see dates from the past 30 days.
   let dateBuffer = -1;
   const mappedDates = mockGrossPaymentChart.data.dates.map((item) => {
@@ -67,7 +67,7 @@ export const setUpMocks = () => {
       this.get(API_PATHS.BUSINESS_DETAILS, () => mockBusinessDetails);
 
       // GrossPaymentChart
-      this.get(API_PATHS.GROSS_VOLUME, handleMockGrossVolumeChartMock);
+      this.get(API_PATHS.GROSS_VOLUME, handleMockGrossVolumeChart);
       // PayoutTransactions
       this.get(API_PATHS.PAYOUT_TRANSACTIONS, () => mockPayoutTransactions);
       // PayoutDetails
