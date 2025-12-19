@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "type": "refund",
+  "data": {
+    "id": "re_xyz",
+    "payment_id": "py_xyz",
+    "amount": 23456,
+    "description": "customer canceled their order",
+    "reason": "duplicate",
+    "status": "succeeded",
+    "metadata": {},
+    "created_at": "2021-01-01T12:00:00Z",
+    "updated_at": "2021-01-01T12:00:00Z"
+  },
+  "page_info": "string"
+}
