@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { createPopper, Options, Placement, PositioningStrategy } from '@popperjs/core';
 
 @Component({
@@ -8,8 +8,8 @@ export class CustomPopper {
   @Prop() placement: Placement = 'bottom';
   @Prop() offset: [number, number] = [0, 10];
   @Prop() strategy: PositioningStrategy = 'absolute';
-  @Prop() trigger: string = 'click'; // 'click', 'hover', 'focus'
-  @Prop() anchorRef!: HTMLElement | SVGElement;
+  @Prop() trigger: string = 'click';
+  @Prop() anchorRef: HTMLElement | SVGElement;
 
   @State() isOpen: boolean = false;
 
@@ -18,8 +18,25 @@ export class CustomPopper {
 
   private popperInstance: any;
   private popperContentRef: HTMLElement;
+  private initialized: boolean = false;
+
+  @Watch('anchorRef')
+  onAnchorRefChange(newValue: HTMLElement | SVGElement) {
+    if (newValue && this.popperContentRef && !this.initialized) {
+      this.initPopper();
+    }
+  }
 
   componentDidLoad() {
+    if (this.anchorRef && this.popperContentRef) {
+      this.initPopper();
+    }
+  }
+
+  private initPopper() {
+    if (this.initialized) return;
+    this.initialized = true;
+
     this.popperInstance = createPopper(this.anchorRef, this.popperContentRef, this.popperOptions);
 
     if (this.trigger === 'click') {
@@ -36,17 +53,18 @@ export class CustomPopper {
   }
 
   disconnectedCallback() {
+    if (!this.initialized) return;
+
     if (this.trigger === 'click') {
       window.removeEventListener('click', this.handleClick.bind(this));
-    }
-    else if (this.trigger === 'hover') {
-      this.anchorRef.removeEventListener('mouseenter', this.show.bind(this));
-      this.anchorRef.removeEventListener('mouseleave', this.hide.bind(this));
-      this.popperContentRef.removeEventListener('mouseenter', this.show.bind(this));
-      this.popperContentRef.removeEventListener('mouseleave', this.hide.bind(this));
+    } else if (this.trigger === 'hover') {
+      this.anchorRef?.removeEventListener('mouseenter', this.show.bind(this));
+      this.anchorRef?.removeEventListener('mouseleave', this.hide.bind(this));
+      this.popperContentRef?.removeEventListener('mouseenter', this.show.bind(this));
+      this.popperContentRef?.removeEventListener('mouseleave', this.hide.bind(this));
     } else if (this.trigger === 'focus') {
-      this.anchorRef.removeEventListener('focus', this.show.bind(this));
-      this.anchorRef.removeEventListener('blur', this.hide.bind(this));
+      this.anchorRef?.removeEventListener('focus', this.show.bind(this));
+      this.anchorRef?.removeEventListener('blur', this.hide.bind(this));
     }
   }
 
