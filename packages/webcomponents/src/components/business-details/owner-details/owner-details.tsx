@@ -10,7 +10,7 @@ import { Identity } from "../../../api/Identity";
   tag: "owner-details",
 })
 export class OwnerDetails {
-  @Prop() owners!: Identity[];
+  @Prop() owners: Identity[];
 
   render() {
     if (!this?.owners?.length) return null;

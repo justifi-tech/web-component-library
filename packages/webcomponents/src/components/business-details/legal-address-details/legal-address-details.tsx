@@ -7,7 +7,7 @@ import { isEmptyObject } from '../../../utils/utils';
   tag: 'legal-address-details',
 })
 export class LegalAddressDetails {
-  @Prop() legalAddress!: IAddress;
+  @Prop() legalAddress: IAddress;
 
   render() {
     if (!this.legalAddress || isEmptyObject(this.legalAddress)) return null;

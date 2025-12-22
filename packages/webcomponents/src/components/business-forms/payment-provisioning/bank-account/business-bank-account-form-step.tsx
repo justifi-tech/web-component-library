@@ -26,10 +26,10 @@ export class BusinessBankAccountFormStep {
   @State() postDocumentRecord: Function;
   @State() postDocument: Function;
 
-  @Prop() authToken!: string;
-  @Prop() businessId!: string;
+  @Prop() authToken: string;
+  @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() country!: CountryCode;
+  @Prop() country: CountryCode;
 
   @Watch('authToken')
   @Watch('businessId')
@@ -41,7 +41,7 @@ export class BusinessBankAccountFormStep {
   watchHandler(newValue: boolean) {
     this.formLoading.emit(newValue);
   }
-
+ 
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event() formLoading: EventEmitter<boolean>;
@@ -56,7 +56,7 @@ export class BusinessBankAccountFormStep {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));
     }
   }
-
+ 
   componentWillLoad() {
     this.initializeApi();
     if (this.getBusiness) {
@@ -178,19 +178,19 @@ export class BusinessBankAccountFormStep {
       if (!bankAccountPosted) {
         return;
       }
-
+  
       // Post documents only after bank account was successfully created
       const documentsUploaded = await this.postBusinessDocuments();
       if (!documentsUploaded) {
         return;
       }
-
+  
       // Refresh bank account data after successful save
       if (this.isAddingNewBankAccount) {
         this.isAddingNewBankAccount = false;
         await this.refreshBankAccountData();
       }
-
+  
       onSuccess();
     } catch (error) {
       this.errorEvent.emit({
@@ -285,23 +285,23 @@ export class BusinessBankAccountFormStep {
       if (!docArray.length) {
         return true;
       }
-
+  
       const recordsCreated = await Promise.all(
         docArray.map((docData) => this.postDocumentRecordData(docData))
       ); // Create document records
-
+  
       if (recordsCreated.includes(false)) {
         return false;
       } // Exit if document record creation fails
-
+  
       const uploadsCompleted = await Promise.all(
         docArray.map((docData) => this.uploadDocument(docData))
       ); // Upload documents to AWS presigned URLs
-
+  
       if (uploadsCompleted.includes(false)) {
         return false;
       } // Exit if any upload fails
-
+  
       return true;
     } finally {
       this.isLoading = false;
@@ -351,13 +351,13 @@ export class BusinessBankAccountFormStep {
 
     const fileData = await docData.getFileData();
     const response = await fetch(docData.presigned_url, {
-      method: 'PUT',
+      method: 'PUT', 
       body: fileData
     })
 
     return this.handleUploadResponse(response);
   }
-
+  
   handleUploadResponse = (response: any) => {
     if (response.error) {
       this.errorEvent.emit({
@@ -371,7 +371,7 @@ export class BusinessBankAccountFormStep {
       return true;
     }
   }
-
+  
   render() {
     const bankAccountDefaultValue = this.formController.getInitialValues();
 

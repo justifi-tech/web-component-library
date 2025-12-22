@@ -6,15 +6,13 @@ sidebar_position: 52
 ---
 
 import {
-  PropsMarkdownTable,
+  PropsTable,
   PartsMarkdownTable,
-  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
-import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-terminals-list';
 
@@ -36,8 +34,35 @@ Component to render a formated list of terminals for the requested account.
 
 ## Props, Events & Methods
 
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-terminals-list', docsJson)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Scope inventory to a merchant/platform.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:terminals` scope.',
+      },
+      {
+        name: 'filters',
+        type: 'string | Record<string, unknown>',
+        description:
+          'Optional JSON to preset status, location, or software filters.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue: 'name,status,location,last_check_in',
+        description: 'Customize visible columns.',
+      },
+    ]),
+  }}
 />
 
 ### Events

@@ -22,13 +22,13 @@ import SeasonInterruptionInsuranceLoading from './season-interruption-insurance-
 export class SeasonInterruptionInsurance {
   @Prop() authToken?: string;
   @Prop() checkoutId?: string;
-  @Prop() primaryIdentityFirstName!: string;
-  @Prop() primaryIdentityLastName!: string;
-  @Prop() primaryIdentityState!: string;
-  @Prop() primaryIdentityPostalCode!: string;
-  @Prop() primaryIdentityCountry!: string;
-  @Prop() primaryIdentityEmailAddress!: string;
-  @Prop() policyAttributesInsurableAmount!: number;
+  @Prop() primaryIdentityFirstName: string;
+  @Prop() primaryIdentityLastName: string;
+  @Prop() primaryIdentityState: string;
+  @Prop() primaryIdentityPostalCode: string;
+  @Prop() primaryIdentityCountry: string;
+  @Prop() primaryIdentityEmailAddress: string;
+  @Prop() policyAttributesInsurableAmount: number;
   @Prop() policyAttributesStartDate?: string;
   @Prop() policyAttributesEndDate?: string;
   @Prop() coveredIdentityFirstName?: string;

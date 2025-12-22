@@ -22,10 +22,10 @@ export class BusinessOwnersFormStep {
   @State() newFormOpen: boolean;
   @State() isLoading: boolean = false;
 
-  @Prop() authToken!: string;
-  @Prop() businessId!: string;
+  @Prop() authToken: string;
+  @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() country!: CountryCode;
+  @Prop() country: CountryCode;
 
   @Watch('authToken')
   @Watch('businessId')

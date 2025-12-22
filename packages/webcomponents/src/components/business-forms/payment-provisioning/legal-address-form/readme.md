@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property                  | Attribute               | Description | Type                                 | Default     |
-| ------------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
-| `allowOptionalFields`     | `allow-optional-fields` |             | `boolean`                            | `undefined` |
-| `authToken` _(required)_  | `auth-token`            |             | `string`                             | `undefined` |
-| `businessId` _(required)_ | `business-id`           |             | `string`                             | `undefined` |
-| `country`                 | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
+| Property              | Attribute               | Description | Type                                 | Default     |
+| --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------- |
+| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `undefined` |
+| `authToken`           | `auth-token`            |             | `string`                             | `undefined` |
+| `businessId`          | `business-id`           |             | `string`                             | `undefined` |
+| `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
 
 
 ## Events

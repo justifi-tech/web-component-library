@@ -6,15 +6,13 @@ sidebar_position: 43
 ---
 
 import {
-  PropsMarkdownTable,
+  PropsTable,
   PartsMarkdownTable,
-  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
-import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-gross-payment-chart';
 
@@ -39,8 +37,35 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ## Props, Events & Methods
 
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-gross-payment-chart', docsJson)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Determines which payments to graph.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payments` scope.',
+      },
+      {
+        name: 'interval',
+        type: '"day" | "week" | "month"',
+        defaultValue: 'day',
+        description: 'Bucket size for data points.',
+      },
+      {
+        name: 'range',
+        type: 'string',
+        defaultValue: '30d',
+        description: 'Total timeframe (e.g., `7d`, `3m`, `12m`).',
+      },
+    ]),
+  }}
 />
 
 ### Events

@@ -36,10 +36,10 @@ export class RefundPayment {
   @State() refundLoading: boolean = false;
   @State() submitDisabled: boolean;
   @State() payment: Payment;
-
-  @Prop() authToken!: string;
-  @Prop() accountId!: string;
-  @Prop() paymentId!: string;
+  
+  @Prop() authToken: string;
+  @Prop() accountId: string;
+  @Prop() paymentId: string;
   @Prop() hideSubmitButton?: boolean = false;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -72,11 +72,11 @@ export class RefundPayment {
     if (!this.payment || !this.payment?.created_at) {
       return false;
     }
-
+    
     const paymentCreatedAt = new Date(this.payment.created_at);
     const now = new Date();
     const diffInMinutes = (now.getTime() - paymentCreatedAt.getTime()) / (1000 * 60);
-
+    
     return diffInMinutes <= 25;
   }
 
@@ -84,7 +84,7 @@ export class RefundPayment {
     const amount = this.refundPayload.amount;
     const amountRefundable = amount ? amount.toString() : '0';
     this.formController = new FormController(RefundPaymentSchema(amountRefundable));
-
+    
     this.formController.setInitialValues({
       amount: amountRefundable
     });
@@ -112,11 +112,11 @@ export class RefundPayment {
         authToken: this.authToken,
         service: new PaymentService()
       });
-
+      
       getPayment({
         onSuccess: ({ payment }) => {
           this.payment = payment;
-          this.refundPayload = new RefundPayload({ amount: payment.amount_refundable });
+          this.refundPayload = new RefundPayload({amount: payment.amount_refundable});
         },
         onError: ({ error, code, severity }) => {
           this.handleError(code, error, severity);
@@ -134,7 +134,7 @@ export class RefundPayment {
     }
   }
 
-
+  
   @Method()
   async refundPayment(event?: CustomEvent): Promise<IRefund | IPayment> {
     event && event.preventDefault();
@@ -168,11 +168,11 @@ export class RefundPayment {
       const values = this.formController.values.getValue();
 
       postVoid({
-        onSuccess: (response) => {
+        onSuccess: (response) => { 
           voidResponse = response;
           voidAttempted = true;
         },
-        onError: ({ error, code, severity }) => {
+        onError: ({ error, code, severity}) => {
           // If void fails, fall back to refund
           voidAttempted = true;
           this.handleError(error, code, severity);
@@ -201,7 +201,7 @@ export class RefundPayment {
 
     return new Promise((resolve) => {
       let refundResponse: IApiResponse<IRefund>;
-
+  
       postRefund({
         refundBody: values,
         onSuccess: (response) => { refundResponse = response; },
@@ -218,7 +218,7 @@ export class RefundPayment {
       });
     });
   }
-
+  
   render() {
     if (this.paymentLoading) {
       return <RefundLoading />

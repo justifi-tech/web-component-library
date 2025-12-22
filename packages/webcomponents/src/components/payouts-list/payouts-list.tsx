@@ -22,8 +22,8 @@ export class PayoutsList {
   @State() getSubAccounts: Function;
   @State() errorMessage: string = null;
 
-  @Prop() accountId!: string;
-  @Prop() authToken!: string;
+  @Prop() accountId: string;
+  @Prop() authToken: string;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;

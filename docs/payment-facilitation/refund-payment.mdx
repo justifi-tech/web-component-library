@@ -6,15 +6,13 @@ sidebar_position: 33
 ---
 
 import {
-  PropsMarkdownTable,
+  PropsTable,
   PartsMarkdownTable,
-  getWebcomponentsVersion,
   getComponentParts,
-  getPropsFromDocs,
+  getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
-import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-refund-payment';
 
@@ -233,22 +231,6 @@ Component to render a form for partially or fully refunding a payment based on a
 </script>
 
 </html>`}</code></pre>
-
-## Props, Events & Methods
-
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-refund-payment', docsJson)}
-/>
-
-### Events
-
-- `submitted`: Emits when the refund is created; payload includes `refund_id` and amount.
-- `error-event`: Fires when validation or network calls fail.
-
-### Public methods
-
-1. `submit()` – Trigger the refund flow (useful if the component is inside a modal with custom buttons).
-2. `focus()` – Move focus to the amount input.
 
 ## Theming & Layout
 

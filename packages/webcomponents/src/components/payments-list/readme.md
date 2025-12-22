@@ -5,10 +5,10 @@
 
 ## Properties
 
-| Property                   | Attribute | Description | Type       | Default     |
-| -------------------------- | --------- | ----------- | ---------- | ----------- |
-| `columns` _(required)_     | `columns` |             | `string`   | `undefined` |
-| `getPayments` _(required)_ | --        |             | `Function` | `undefined` |
+| Property      | Attribute | Description | Type       | Default     |
+| ------------- | --------- | ----------- | ---------- | ----------- |
+| `columns`     | `columns` |             | `string`   | `undefined` |
+| `getPayments` | --        |             | `Function` | `undefined` |
 
 
 ## Events

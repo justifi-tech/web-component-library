@@ -23,9 +23,9 @@ export class IframeInput {
   @State() isValid: boolean = true;
   @State() errorText: string;
 
-  @Prop() inputId!: string;
-  @Prop() label!: string;
-  @Prop() iframeOrigin!: string;
+  @Prop() inputId: string;
+  @Prop() label: string;
+  @Prop() iframeOrigin: string;
 
   disconnectedCallback() {
     this.frameService.removeMessageListener(this.dispatchMessageEvent);

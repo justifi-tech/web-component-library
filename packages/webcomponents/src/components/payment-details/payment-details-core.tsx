@@ -13,7 +13,7 @@ import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 })
 
 export class PaymentDetailsCore {
-  @Prop() getPaymentDetails!: Function;
+  @Prop() getPaymentDetails: Function;
 
   @State() payment: Payment;
   @State() loading: boolean = true;

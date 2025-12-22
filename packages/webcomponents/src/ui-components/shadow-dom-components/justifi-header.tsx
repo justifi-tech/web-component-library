@@ -15,7 +15,7 @@ export class Header {
     h3: Header3,
   }
 
-  @Prop() text!: string;
+  @Prop() text: string;
   @Prop() level: keyof typeof this.levels = 'h1';
   @Prop() class?: string;
 

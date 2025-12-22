@@ -8,7 +8,7 @@ export class TooltipComponent {
   @State() anchorIcon: SVGElement;
   @State() tooltip: HTMLElement;
 
-  @Prop() helpText!: string;
+  @Prop() helpText: string;
 
   @Listen('showEvent')
   show() {

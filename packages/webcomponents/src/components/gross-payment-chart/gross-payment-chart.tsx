@@ -12,8 +12,8 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   shadow: true,
 })
 export class GrossPaymentChart {
-  @Prop() accountId!: string;
-  @Prop() authToken!: string;
+  @Prop() accountId: string;
+  @Prop() authToken: string;
 
   @State() getGrossPayment: Function;
   @State() errorMessage: string = null;

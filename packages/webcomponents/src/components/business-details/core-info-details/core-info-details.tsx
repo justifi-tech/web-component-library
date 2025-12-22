@@ -7,7 +7,7 @@ import { snakeCaseToHumanReadable } from '../../../utils/utils';
   tag: 'core-info-details',
 })
 export class CoreInfoDetails {
-  @Prop() business!: Business;
+  @Prop() business: Business;
 
   render() {
     if (!this.business) {

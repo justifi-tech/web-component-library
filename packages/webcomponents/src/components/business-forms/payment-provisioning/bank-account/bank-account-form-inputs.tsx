@@ -6,10 +6,10 @@ import { numberOnlyHandler } from '../../../../ui-components/form/utils';
   tag: 'bank-account-form-inputs'
 })
 export class BankAccountFormInputs {
-  @Prop() defaultValue!: any;
-  @Prop() errors!: any;
-  @Prop() inputHandler!: (name: string, value: string) => void;
-  @Prop() formDisabled!: boolean;
+  @Prop() defaultValue: any;
+  @Prop() errors: any;
+  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() formDisabled: boolean;
 
   render() {
     return (

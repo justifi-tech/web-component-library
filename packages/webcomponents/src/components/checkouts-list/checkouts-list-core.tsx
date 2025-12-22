@@ -22,9 +22,9 @@ import {
   tag: 'checkouts-list-core'
 })
 export class CheckoutsListCore {
-  @Prop() getCheckouts!: Function;
-  @Prop() getSubAccounts!: Function;
-  @Prop() columns!: string;
+  @Prop() getCheckouts: Function;
+  @Prop() getSubAccounts: Function;
+  @Prop() columns: string;
 
   @State() checkouts: Checkout[] = [];
   @State() checkoutsTable: Table<Checkout>;

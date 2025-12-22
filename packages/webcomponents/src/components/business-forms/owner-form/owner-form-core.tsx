@@ -19,14 +19,14 @@ export class BusinessOwnerFormCore {
 
   @Prop() ownerId?: string;
   @Prop() businessId?: string;
-  @Prop() getOwner!: Function;
-  @Prop() patchOwner!: Function;
-  @Prop() postOwner!: Function;
+  @Prop() getOwner: Function;
+  @Prop() patchOwner: Function;
+  @Prop() postOwner: Function;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() removeOwner!: (id: string) => void;
+  @Prop() removeOwner: (id: string) => void;
   @Prop() newFormOpen?: boolean;
   @Prop() ownersLength?: number;
-  @Prop() country!: CountryCode;
+  @Prop() country: CountryCode;
 
   @Watch('isLoading')
   loadingWatcher() {
@@ -35,7 +35,7 @@ export class BusinessOwnerFormCore {
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-
+  
   // internal events used to manage loading and data submission for the owner form step
   @Event() formLoading: EventEmitter<boolean>;
   @Event({ bubbles: true }) ownerSubmitted: EventEmitter<any>;
