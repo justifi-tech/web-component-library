@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property              | Attribute | Description | Type                   | Default     |
-| --------------------- | --------- | ----------- | ---------------------- | ----------- |
-| `additionalQuestions` | --        |             | `IAdditionalQuestions` | `undefined` |
+| Property                           | Attribute | Description | Type                   | Default     |
+| ---------------------------------- | --------- | ----------- | ---------------------- | ----------- |
+| `additionalQuestions` _(required)_ | --        |             | `IAdditionalQuestions` | `undefined` |
 
 
 ## Dependencies

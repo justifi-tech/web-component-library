@@ -5,7 +5,7 @@ import { text } from '../../../../styles/parts';
   tag: 'bank-account-read-only-value'
 })
 export class BankAccountReadOnlyValue {
-  @Prop() label: string;
+  @Prop() label!: string;
   @Prop() value?: string;
 
   render() {

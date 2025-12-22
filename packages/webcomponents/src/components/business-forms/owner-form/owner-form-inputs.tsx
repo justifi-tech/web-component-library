@@ -10,10 +10,10 @@ import { label, inputDisabled, buttonSecondary } from '../../../styles/parts';
   tag: 'owner-form-inputs'
 })
 export class BusinessOwnerFormInputs {
-  @Prop() ownerDefaultValue: any;
-  @Prop() errors: any;
-  @Prop() formController: FormController;
-  @Prop() country: CountryCode;
+  @Prop() ownerDefaultValue!: any;
+  @Prop() errors!: any;
+  @Prop() formController!: FormController;
+  @Prop() country!: CountryCode;
   @State() isEditingIdentification: boolean = false;
 
   inputHandler = (name: string, value: string) => {

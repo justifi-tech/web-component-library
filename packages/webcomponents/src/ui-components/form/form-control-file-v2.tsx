@@ -18,13 +18,13 @@ export class FileInput {
 
   @State() files: File[];
 
-  @Prop() label: string;
-  @Prop() name: any;
+  @Prop() label!: string;
+  @Prop() name!: any;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
   @Prop() multiple?: boolean;
-  @Prop() inputHandler: (name: string, value: string) => void;
-  @Prop() disabled: boolean;
+  @Prop() inputHandler!: (name: string, value: string) => void;
+  @Prop() disabled!: boolean;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;

@@ -6,13 +6,15 @@ sidebar_position: 32
 ---
 
 import {
-  PropsTable,
+  PropsMarkdownTable,
   PartsMarkdownTable,
+  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
+import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-payment-transactions-list';
 
@@ -34,35 +36,8 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Determines which transactions a user can view.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:payments` scope.',
-      },
-      {
-        name: 'filters',
-        type: 'string | Record<string, unknown>',
-        description:
-          'JSON string or object specifying filter criteria (payment_id, status, date range).',
-      },
-      {
-        name: 'enable-export',
-        type: 'boolean',
-        defaultValue: 'false',
-        description: 'Adds export controls when true.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-payment-transactions-list', docsJson)}
 />
 
 ### Events

@@ -14,8 +14,8 @@ import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 })
 
 export class PayoutDetailsCore {
-  @Prop() getPayout: Function;
-  @Prop() getPayoutCSV: Function;
+  @Prop() getPayout!: Function;
+  @Prop() getPayoutCSV!: Function;
   @Prop() enableRecordClick: boolean = false;
 
   @State() payout: Payout;
@@ -24,7 +24,7 @@ export class PayoutDetailsCore {
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEvent: EventEmitter<RecordClickEvent>;
-  
+
 
   componentWillLoad() {
     if (this.getPayout) {

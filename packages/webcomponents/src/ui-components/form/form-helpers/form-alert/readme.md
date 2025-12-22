@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type      | Default     |
-| ----------- | ------------ | ----------- | --------- | ----------- |
-| `hideAlert` | `hide-alert` |             | `boolean` | `undefined` |
-| `text`      | `text`       |             | `string`  | `undefined` |
+| Property                 | Attribute    | Description | Type      | Default     |
+| ------------------------ | ------------ | ----------- | --------- | ----------- |
+| `hideAlert` _(required)_ | `hide-alert` |             | `boolean` | `undefined` |
+| `text` _(required)_      | `text`       |             | `string`  | `undefined` |
 
 
 ## Dependencies

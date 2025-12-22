@@ -20,9 +20,9 @@ export class TextInput {
 
   @State() isFocused: boolean = false;
 
-  @Prop() name: any;
-  @Prop() label: string;
-  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() name!: any;
+  @Prop() label!: string;
+  @Prop() inputHandler!: (name: string, value: string) => void;
   @Prop() defaultValue?: string;
   @Prop() helpText?: string;
   @Prop() errorText?: string;

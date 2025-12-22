@@ -6,13 +6,15 @@ sidebar_position: 1
 ---
 
 import {
-  PropsTable,
+  PropsMarkdownTable,
   PartsMarkdownTable,
-  getComponentParts,
   getWebcomponentsVersion,
+  getComponentParts,
+  getPropsFromDocs,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
+import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-tokenize-payment-method';
 
@@ -404,6 +406,22 @@ When used within the `justifi-modular-checkout` wrapper component, this componen
   </script>
 
 </html>`}</code></pre>
+
+## Props, Events & Methods
+
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-tokenize-payment-method', docsJson)}
+/>
+
+### Events
+
+- `tokenized`: fires when a payment token is created; payload includes `payment_method_token` and metadata.
+- `error`: fires if tokenization fails; payload includes `code`, `message`, and validation hints.
+
+### Public methods
+
+1. `tokenizePaymentMethod()` – programmatically trigger submission (returns a promise that resolves to a token payload).
+2. `fillBillingForm(partialBillingDetails)` – prefill customers' billing information from saved data.
 
 ## Theming & Layout
 

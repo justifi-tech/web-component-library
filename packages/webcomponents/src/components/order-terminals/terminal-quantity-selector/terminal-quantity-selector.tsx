@@ -7,10 +7,10 @@ import { TerminalModelName } from "../../../api";
   shadow: false,
 })
 export class TerminalQuantitySelector {
-  @Prop() modelName: TerminalModelName;
-  @Prop() imageUrl: string;
-  @Prop() description: string;
-  @Prop() helpUrl: string;
+  @Prop() modelName!: TerminalModelName;
+  @Prop() imageUrl!: string;
+  @Prop() description!: string;
+  @Prop() helpUrl!: string;
   @Prop() limit: number = Infinity;
 
   @State() selectedQuantity: number = 0;

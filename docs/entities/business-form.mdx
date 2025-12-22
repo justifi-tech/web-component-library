@@ -7,13 +7,16 @@ sidebar_position: 11
 ---
 
 import {
+  PropsMarkdownTable,
+  getWebcomponentsVersion,
+  getPropsFromDocs,
   PropsTable,
   PartsMarkdownTable,
   getComponentParts,
-  getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
+import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-business-form';
 
@@ -145,42 +148,8 @@ Component to render a business onboarding form. You will need to first create a 
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Owning platform account used for authorization.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description:
-          'Short-lived onboarding token; must include `write:onboarding` scope.',
-      },
-      {
-        name: 'business-id',
-        type: 'string',
-        required: true,
-        description:
-          'The business whose representatives/owners you are editing.',
-      },
-      {
-        name: 'show-progress',
-        type: 'boolean',
-        defaultValue: 'false',
-        description: 'Displays a stepper + completion state when true.',
-      },
-      {
-        name: 'support-phone',
-        type: 'string',
-        description: 'Optional phone number displayed inside support callouts.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-business-form', docsJson)}
 />
 
 ### Events

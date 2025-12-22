@@ -49,8 +49,8 @@ export class ModularCheckout {
   private completeCheckout: Function;
   private plaidService = new PlaidService();
 
-  @Prop() authToken: string;
-  @Prop() checkoutId: string;
+  @Prop() authToken!: string;
+  @Prop() checkoutId!: string;
   @Prop() preCompleteHook?: Hook<CheckoutState>;
 
   @Element() hostEl: HTMLElement;

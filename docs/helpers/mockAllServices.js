@@ -24,7 +24,7 @@ import mockDisputePastDue from '../mocks/mockDisputePastDueResponse.json';
 import mockNPMVersion from '../mocks/mockNPMVersion.json';
 import mockRefundResponse from '../mocks/mockPostRefundSuccess.json';
 import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
-  
+
 const handleMockGrossVolumeChart = () => {
   // Map all dates on the mock data to simulate dynamic data, especially to see dates from the past 30 days.
   let dateBuffer = -1;

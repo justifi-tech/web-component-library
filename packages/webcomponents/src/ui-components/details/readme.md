@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type     | Default     |
-| -------------- | --------------- | ----------- | -------- | ----------- |
-| `errorMessage` | `error-message` |             | `string` | `undefined` |
+| Property                    | Attribute       | Description | Type     | Default     |
+| --------------------------- | --------------- | ----------- | -------- | ----------- |
+| `errorMessage` _(required)_ | `error-message` |             | `string` | `undefined` |
 
 
 ## Dependencies

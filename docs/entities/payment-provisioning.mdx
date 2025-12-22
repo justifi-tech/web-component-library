@@ -6,13 +6,15 @@ sidebar_position: 12
 ---
 
 import {
-  PropsTable,
+  PropsMarkdownTable,
   PartsMarkdownTable,
+  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
+import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-payment-provisioning';
 
@@ -35,44 +37,8 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Platform account or sub-account context for provisioning.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description:
-          'Token with `write:provisioning` scope to securely store payout details.',
-      },
-      {
-        name: 'business-id',
-        type: 'string',
-        required: true,
-        description: 'Business whose payout method is being added.',
-      },
-      {
-        name: 'on-success-text',
-        type: 'string',
-        description:
-          'Overrides the confirmation copy once the payout account is linked.',
-      },
-      {
-        name: 'disable-ach',
-        type: 'boolean',
-        defaultValue: 'false',
-        description:
-          'Hide ACH specific fields when you only support push-to-card or other rails.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-payment-provisioning', docsJson)}
 />
 
 ### Events
