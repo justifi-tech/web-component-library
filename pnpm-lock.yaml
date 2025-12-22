@@ -5951,8 +5951,8 @@ snapshots:
   '@justifi/webcomponents@6.7.2':
     dependencies:
       '@popperjs/core': 2.11.8
-      '@stencil/core': 4.28.2
-      '@stencil/store': 2.1.2(@stencil/core@4.28.2)
+      '@stencil/core': 4.38.3
+      '@stencil/store': 2.1.2(@stencil/core@4.38.3)
       bootstrap: 5.3.3(@popperjs/core@2.11.8)
       chart.js: 4.4.8
       date-fns: 4.1.0
