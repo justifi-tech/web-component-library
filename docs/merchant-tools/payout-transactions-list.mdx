@@ -5,7 +5,20 @@ description: Ledger of transactions contributing to a payout, with filtering and
 sidebar_position: 42
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
+import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payout-transactions-list';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -23,35 +36,8 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Authorization context.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:payouts` scope.',
-      },
-      {
-        name: 'payout-id',
-        type: 'string',
-        required: true,
-        description: 'Payout whose transactions should be displayed.',
-      },
-      {
-        name: 'columns',
-        type: 'string',
-        defaultValue: 'type,amount,source,status',
-        description: 'Column ordering and selection.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-payout-transactions-list', docsJson)}
 />
 
 ### Events
@@ -64,21 +50,75 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts(
+    'justifi-payout-transactions-list',
+    componentTreeJson
+  )}
 />
+
+# Usage Example
+
+---
+
+<ComponentBox>
+  <justifi-payout-transactions-list payout-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-payout-transactions-list</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <justifi-payout-transactions-list payout-id="po_123" auth-token="authToken" />
+</body>
+
+<script>
+  (function () {
+    const payoutTransactionsList = document.querySelector('justifi-payout-transactions-list');
+
+    payoutTransactionsList.addEventListener('click-event', (event) => {
+      // here is where you would handle the click events
+      console.log('click-event', event.detail);
+    });
+
+    payoutTransactionsList.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>

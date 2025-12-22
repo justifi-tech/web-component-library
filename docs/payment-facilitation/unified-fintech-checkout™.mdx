@@ -5,66 +5,31 @@ description: Unified Fintech Checkout™ component that orchestrates payment cap
 sidebar_position: 20
 ---
 
-import { PropsTable, getPartsFromDocs, PartsMarkdownTable } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getPropsFromDocs,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
+import componentTreeJson from '../component-tree.json';
 import docsJson from '../docs.json';
+import '@justifi/webcomponents/dist/module/justifi-checkout';
+
+{setUpMocks()}
 
 ## Overview
 
-`<justifi-checkout>` renders a complete checkout experience: payment method entry, order summary, error handling, and confirmation states. Use it when you want a turnkey experience without composing Modular Checkout subcomponents manually.
+Component to render the necessary fields to enter proper payment method information and process a payment.
+You will need to first create a checkout via [Checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts) to get the `checkout-id` required for this component.
 
-## Usage
+# Props, events and methods
 
-<pre>
-  <code className="language-html">{`<justifi-checkout
-  account-id="acc_123"
-  auth-token="wct_checkout"
-  checkout-id="chk_456"
-  locale="en-US"
-/>`}</code>
-</pre>
+---
 
-## Props, Events & Methods
-
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Owning platform account; determines branding + permissions.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Web Component Token with `write:checkout` scope.',
-      },
-      {
-        name: 'checkout-id',
-        type: 'string',
-        required: true,
-        description:
-          'Server-generated checkout session controlling line items and totals.',
-      },
-      {
-        name: 'require-save-payment-method',
-        type: 'boolean',
-        defaultValue: 'false',
-        description:
-          'When true, forces customers to save the payment method for future use.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description:
-          'Controls currency formatting, copy, and date presentation.',
-      },
-    ]),
-  }}
-/>
+<PropsMarkdownTable props={getPropsFromDocs('justifi-checkout', docsJson)} />
 
 ### Events
 
@@ -77,6 +42,270 @@ import docsJson from '../docs.json';
 1. `submit()` – Programmatically trigger the pay button (helpful if you hide the built-in CTA).
 2. `reset(checkoutId)` – Reload a different checkout session without re-mounting the component.
 
+# Pre-Complete Hook
+
+---
+
+You can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds.
+
+The hook runs after validation and payment method tokenization (including Plaid exchange when applicable), and before the checkout is completed, so the state includes the latest values such as `paymentToken` when available.
+
+The hook receives three parameters:
+
+- `state`: A `CheckoutState` object containing the current checkout information
+- `resolve`: Call to proceed with submission
+- `reject`: Call to cancel submission
+
+Example:
+
+```html
+<justifi-checkout auth-token="123abc" checkout-id="chk_123"></justifi-checkout>
+
+<script>
+  const checkout = document.querySelector('justifi-checkout');
+  checkout.preCompleteHook = (state, resolve, reject) => {
+    // For example, require confirmation for large payments
+    if (state.totalAmount > 100000) {
+      const confirmed = confirm(
+        `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`
+      );
+      if (confirmed) {
+        resolve(state);
+      } else {
+        reject();
+      }
+    } else {
+      resolve(state);
+    }
+  };
+</script>
+```
+
+> Important: Assign the hook as a JavaScript property on the element (e.g., `checkout.preCompleteHook = fn`). Do not pass it as an HTML attribute (e.g., `pre-complete-hook="..."`); functions must be set on properties, not attributes.
+
+# Payment methods
+
+---
+
+The Unified Checkout automatically displays additional payment method options when they are enabled in your account settings and when device/browser or other eligibility constraints are met:
+
+- **Apple Pay**: Must be enabled in account settings. It renders automatically only on eligible devices/browsers; otherwise it will not appear.
+- **Sezzle (BNPL)**: Must be enabled in account settings. It displays automatically when available for the account.
+- **Plaid (Bank account verification)**: Must be enabled in account settings. It displays automatically when bank account payments with Plaid verification are enabled.
+
+No extra component configuration is required beyond enabling these features on the account. When unavailable or ineligible, these options are simply not shown.
+
+# Authorization
+
+---
+
+Web Component Token: These tokens are generated by your backend services using the [Web Component Tokens API](https://docs.justifi.tech/api-spec#tag/Web-Component-Tokens).
+Each token can be scoped to perform a set number of actions and is active for 60 minutes.
+When creating a web component token for this specific component you'll need to use the following roles:
+
+<ul>
+  <li>
+    `write:checkout:checkout_id` - use the `checkout_id` you receive when you
+    create a checkout via [Checkout
+    API](https://docs.justifi.tech/api-spec#tag/Checkouts)
+  </li>
+  <li>
+    `write:tokenize:account_id` - use the `account_id` you pass to the checkout
+    API
+  </li>
+</ul>
+
+# Security
+
+---
+
+The api endpoint associated with this component has the following security measures in place:
+
+1. **Rate Limiting**: POST requests to are limited to 2 requests per 10 seconds.
+2. **Token-based Request Limiting**: POST requests using web component token authentication are limited to 10 attempts per token.
+
+These measures are in place to prevent abuse and ensure the security of the payment processing system.
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-checkout account-id="123" auth-token="123abc" checkout-id="123" />
+</ComponentBox>
+
+---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-checkout</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+    ::part(font-family) {
+      font-family: georgia;
+    }
+
+    ::part(color) {
+      color: darkslategray;
+    }
+
+    ::part(background-color) {
+      background-color: transparent;
+    }
+
+    ::part(button) {
+      padding: 0.375rem 0.75rem;
+      font-size: 16px;
+      box-shadow: none;
+      border-radius: 0px;
+      line-height: 1.5;
+      text-transform: none;
+    }
+
+    ::part(button-disabled) {
+      opacity: 0.5;
+    }
+
+    ::part(input) {
+      border-color: #555;
+      border-width: 1px;
+      border-bottom-width: 1px;
+      border-left-width: 1px;
+      border-right-width: 1px;
+      border-top-width: 1px;
+      border-radius: 0;
+      border-style: solid;
+      box-shadow: none;
+      font-size: 1rem;
+      font-weight: normal;
+      line-height: 1.5;
+      padding: 0.375rem 0.75rem;
+    }
+
+    ::part(input-focused) {
+      border-color: #333;
+      box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+    }
+
+    ::part(input-invalid) {
+      border-color: #8a2a35;
+      box-shadow: 0 0 0 0.25rem rgba(244, 67, 54, 0.25);
+    }
+
+    ::part(input-invalid-and-focused) {
+      box-shadow: 0 0 0 0.25rem rgba(244, 67, 54, 0.25);
+      border-color: #8a2a35;
+    }
+
+    ::part(input-radio) {
+      background-color: #fff;
+      border-color: #333;
+    }
+
+    ::part(input-checkbox) {
+      border-color: #333;
+    }
+    
+    ::part(input-checkbox-checked) {
+      background-color: #000;
+      border-color: #333;
+    }
+
+    ::part(input-checkbox-checked-focused) {
+      background-color: #000;
+      box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+    }
+
+    ::part(input-checkbox-focused) {
+      background-color: #fff;
+      box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+    }
+
+    ::part(button-primary) {
+      color: #333;
+      background-color: transparent;
+      border-color: #333;
+    }
+
+    ::part(button-primary):hover {
+      background-color: rgba(0, 0, 0, .05);
+      border-color: #333;
+      color: #333;
+    }
+
+    ::part(radio-list-item) {
+      border-bottom: 1px solid #ddd;
+    }
+    
+    ::part(radio-list-item):hover {
+      background-color: #f9f9f9;
+      cursor: pointer;
+    }
+    </style>
+
+</head>
+
+<body>
+  <justifi-checkout 
+    checkout-id="cho_123"
+    auth-token="authToken"
+  >
+    <!-- Optional: add the insurance slot and component -->
+    <div slot="insurance">
+      <!-- see the insurance component docs for the full list of props -->
+      <justifi-season-interruption-insurance checkout-id="abc123"></justifi-season-interruption-insurance>
+    </div>
+  </justifi-checkout>
+  <button id="fill-billing-form-button">Fill Billing Form</button>
+</body>
+
+<script>
+  (function () {
+    var checkoutForm = document.querySelector("justifi-checkout");
+
+    checkoutForm.addEventListener("submit-event", (event) => {
+      /* this event is raised when the server response is received */
+      console.log("server response received", event.detail.response);
+    });
+
+    checkoutForm.addEventListener("error-event", (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+
+    // loaded event is raised when the form is fully loaded
+    checkoutForm.addEventListener("loaded", () => {
+      console.log("checkout form loaded");
+    });
+
+    // fill billing form button click event
+    document.getElementById("fill-billing-form-button").addEventListener("click", () => {
+      checkoutForm.fillBillingForm({
+        name: "John",
+        address_line1: "123 Main St",
+        address_line2: "Apt 1",
+        address_city: "Anytown",
+        address_state: "NY", // Use 2-letter state code
+        address_postal_code: "12345",
+      });
+  })();
+</script>
+
+</html>`}</code></pre>
+
 ## Theming & Layout
 
-<PartsMarkdownTable parts={getPartsFromDocs('justifi-checkout', docsJson)} />
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-checkout', componentTreeJson)}
+/>

@@ -22,6 +22,9 @@ import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
 import { checkoutStore } from "../../../store/checkout.store";
 
+/**
+ * @part skeleton - Skeleton for the Apple Pay button.
+ */
 @Component({
   tag: "justifi-apple-pay",
   shadow: true,

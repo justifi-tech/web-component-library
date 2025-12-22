@@ -19,9 +19,9 @@ export class DateInput {
 
   @State() isFocused: boolean = false;
 
-  @Prop() name: string;
-  @Prop() label: string;
-  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() name!: string;
+  @Prop() label!: string;
+  @Prop() inputHandler!: (name: string, value: string) => void;
   @Prop() defaultValue?: string;
   @Prop() helpText?: string;
   @Prop() errorText?: string;

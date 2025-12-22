@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type     | Default     |
-| ----------- | ------------ | ----------- | -------- | ----------- |
-| `accountId` | `account-id` |             | `string` | `undefined` |
-| `authToken` | `auth-token` |             | `string` | `undefined` |
+| Property                 | Attribute    | Description | Type     | Default     |
+| ------------------------ | ------------ | ----------- | -------- | ----------- |
+| `accountId` _(required)_ | `account-id` |             | `string` | `undefined` |
+| `authToken` _(required)_ | `auth-token` |             | `string` | `undefined` |
 
 
 ## Events

@@ -22,9 +22,9 @@ export class BusinessForm {
   @State() isSaving: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;
   @State() country: CountryCode = CountryCode.USA;
-  
-  @Prop() authToken: string;
-  @Prop() businessId: string;
+
+  @Prop() authToken!: string;
+  @Prop() businessId!: string;
   @Prop() hideErrors?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
@@ -32,7 +32,7 @@ export class BusinessForm {
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  
+
   private getBusiness: Function;
   private patchBusiness: Function;
 
@@ -46,7 +46,7 @@ export class BusinessForm {
   }
 
   disconnectedCallback() {
-    this.analytics?.cleanup(); 
+    this.analytics?.cleanup();
   };
 
   get title() {

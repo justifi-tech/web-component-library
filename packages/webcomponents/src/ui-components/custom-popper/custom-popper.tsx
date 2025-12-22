@@ -9,7 +9,7 @@ export class CustomPopper {
   @Prop() offset: [number, number] = [0, 10];
   @Prop() strategy: PositioningStrategy = 'absolute';
   @Prop() trigger: string = 'click'; // 'click', 'hover', 'focus'
-  @Prop() anchorRef: HTMLElement | SVGElement;
+  @Prop() anchorRef!: HTMLElement | SVGElement;
 
   @State() isOpen: boolean = false;
 
@@ -86,7 +86,7 @@ export class CustomPopper {
     this.showEvent.emit();
   }
 
-  hide(){
+  hide() {
     this.isOpen = false;
     this.popperContentRef.removeAttribute('data-show');
     this.popperInstance.update();
@@ -108,9 +108,9 @@ export class CustomPopper {
           `}
         </style>
 
-      <div class="popper-content" ref={(el) => this.popperContentRef = el }>
-        <slot></slot>
-      </div>
+        <div class="popper-content" ref={(el) => this.popperContentRef = el}>
+          <slot></slot>
+        </div>
       </div>
     );
   }

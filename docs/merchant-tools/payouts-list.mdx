@@ -5,7 +5,20 @@ description: Reporting table for outbound payouts including status, destination,
 sidebar_position: 40
 ---
 
-import { PropsTable, PartsTable } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
+import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payouts-list';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -23,35 +36,8 @@ Component to render a formated list of payouts for the requested account.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Filters payouts to the merchant or platform account.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:payouts` scope.',
-      },
-      {
-        name: 'columns',
-        type: 'string',
-        defaultValue: 'created_at,amount,destination,status,expected_arrival',
-        description: 'Comma-separated list controlling table columns.',
-      },
-      {
-        name: 'timezone',
-        type: 'string',
-        defaultValue: 'UTC',
-        description: 'Controls formatting for timestamps.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-payouts-list', docsJson)}
 />
 
 ### Events
@@ -64,29 +50,72 @@ Component to render a formated list of payouts for the requested account.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-      {
-        name: 'button',
-        description: 'Button styles.',
-      },
-      {
-        name: 'button-disabled',
-        description: 'Disabled button styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payouts-list', componentTreeJson)}
 />
+
+# Usage Example
+
+---
+
+<ComponentBox>
+  <justifi-payouts-list account-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-payouts-list</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <justifi-payouts-list account-id="acc_123" auth-token="authToken" />
+</body>
+
+<script>
+  (function () {
+    const payoutsList = document.querySelector('justifi-payouts-list');
+
+    payoutsList.addEventListener('click-event', (event) => {
+      // here is where you would handle the click events
+      console.log('click-event', event.detail);
+    });
+
+    payoutsList.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>

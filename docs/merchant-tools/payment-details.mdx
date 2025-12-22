@@ -5,7 +5,20 @@ description: Detailed view for a single payment, including customer data, timeli
 sidebar_position: 30
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getWebcomponentsVersion,
+  getPropsFromDocs,
+  getComponentParts,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
+import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payment-details';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -66,35 +79,8 @@ Component to display detailed information about a specific payment.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Owning platform account for authorization.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:payments` scope.',
-      },
-      {
-        name: 'payment-id',
-        type: 'string',
-        required: true,
-        description: 'Payment to display.',
-      },
-      {
-        name: 'show-actions',
-        type: 'boolean',
-        defaultValue: 'true',
-        description: 'Hide when you only need a read-only audit surface.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-payment-details', docsJson)}
 />
 
 ### Events
@@ -108,21 +94,16 @@ Component to display detailed information about a specific payment.
 
 ## Theming & Layout
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'font-family',
-        description: 'Controls the font family for the component.',
-      },
-      {
-        name: 'color',
-        description: 'Controls the text color.',
-      },
-      {
-        name: 'background-color',
-        description: 'Controls the background color.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payment-details', componentTreeJson)}
 />
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-payment-details payment-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---

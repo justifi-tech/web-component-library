@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property            | Attribute | Description | Type       | Default     |
-| ------------------- | --------- | ----------- | ---------- | ----------- |
-| `getPaymentDetails` | --        |             | `Function` | `undefined` |
+| Property                         | Attribute | Description | Type       | Default     |
+| -------------------------------- | --------- | ----------- | ---------- | ----------- |
+| `getPaymentDetails` _(required)_ | --        |             | `Function` | `undefined` |
 
 
 ## Events

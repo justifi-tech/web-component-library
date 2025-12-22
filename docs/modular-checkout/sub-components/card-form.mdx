@@ -5,7 +5,15 @@ description: Card entry sub-component for Modular Checkout layouts with shared v
 sidebar_position: 2
 ---
 
-import { PropsTable, PartsTable, getWebcomponentsVersion } from '../../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getWebcomponentsVersion,
+  getComponentParts,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
+import componentTreeJson from '../../component-tree.json';
 
 ## Overview
 
@@ -96,37 +104,7 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'payment-method-group-id',
-        type: 'string',
-        description:
-          'Matches the group configured in the parent checkout to toggle allowed rails.',
-      },
-      {
-        name: 'show-save-payment-method',
-        type: 'boolean',
-        defaultValue: 'true',
-        description:
-          'Displays a checkbox that surfaces the modular checkout save-preference state.',
-      },
-      {
-        name: 'card-brand-icons',
-        type: '"auto" | "none"',
-        defaultValue: 'auto',
-        description: 'Controls whether brand icons display above inputs.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description: 'Overrides localized labels if needed.',
-      },
-    ]),
-  }}
-/>
+<PropsMarkdownTable props={getPropsFromDocs('justifi-card-form', docsJson)} />
 
 ### Events
 
@@ -140,35 +118,8 @@ All submit and error events bubble through the parent `<justifi-modular-checkout
 
 - When embedded inside cards, wrap the host element in your layout container and scope typography overrides via the parts listed below.
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PartsTable([
-      {
-        name: 'skeleton',
-        description: 'Skeleton loading state styles.',
-      },
-      {
-        name: 'label',
-        description: 'Label styles.',
-      },
-      {
-        name: 'input-invalid-and-focused',
-        description: 'Input styles when invalid and focused.',
-      },
-      {
-        name: 'input-invalid',
-        description: 'Input styles when invalid.',
-      },
-      {
-        name: 'input-focused',
-        description: 'Input styles when focused.',
-      },
-      {
-        name: 'input',
-        description: 'Input field styles.',
-      },
-    ]),
-  }}
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-card-form', componentTreeJson)}
 />
 
 - Use the `card-form` CSS part (`::part(card-form)`) to apply box shadows or wrapper padding.

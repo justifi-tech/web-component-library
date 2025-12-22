@@ -9,7 +9,13 @@
     "clean": "rm -rf .turbo && rm -rf node_modules",
     "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "markdown-table": "^3.0.4",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.0",
+    "miragejs": "^0.1.48",
+    "@justifi/webcomponents": "6.7.2"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^22.15.21",
