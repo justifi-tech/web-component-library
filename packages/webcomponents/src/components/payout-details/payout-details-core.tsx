@@ -14,8 +14,8 @@ import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 })
 
 export class PayoutDetailsCore {
-  @Prop() getPayout!: Function;
-  @Prop() getPayoutCSV!: Function;
+  @Prop() getPayout?: Function;
+  @Prop() getPayoutCSV?: Function;
   @Prop() enableRecordClick: boolean = false;
 
   @State() payout: Payout;

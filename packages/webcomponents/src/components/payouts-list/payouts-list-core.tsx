@@ -24,10 +24,10 @@ import {
 })
 
 export class PayoutsListCore {
-  @Prop() getPayouts!: Function;
-  @Prop() getSubAccounts!: Function;
-  @Prop() getPayoutCSV!: Function;
-  @Prop() columns!: string;
+  @Prop() getPayouts?: Function;
+  @Prop() getSubAccounts?: Function;
+  @Prop() getPayoutCSV?: Function;
+  @Prop() columns?: string;
 
   @State() payouts: Payout[] = [];
   @State() payoutsTable: Table<Payout>;

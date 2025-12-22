@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property                    | Attribute             | Description | Type       | Default     |
-| --------------------------- | --------------------- | ----------- | ---------- | ----------- |
-| `enableRecordClick`         | `enable-record-click` |             | `boolean`  | `false`     |
-| `getPayout` _(required)_    | --                    |             | `Function` | `undefined` |
-| `getPayoutCSV` _(required)_ | --                    |             | `Function` | `undefined` |
+| Property            | Attribute             | Description | Type       | Default     |
+| ------------------- | --------------------- | ----------- | ---------- | ----------- |
+| `enableRecordClick` | `enable-record-click` |             | `boolean`  | `false`     |
+| `getPayout`         | --                    |             | `Function` | `undefined` |
+| `getPayoutCSV`      | --                    |             | `Function` | `undefined` |
 
 
 ## Events

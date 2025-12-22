@@ -12,8 +12,8 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   shadow: true,
 })
 export class BusinessDetails {
-  @Prop() businessId!: string;
-  @Prop() authToken!: string;
+  @Prop() businessId?: string;
+  @Prop() authToken?: string;
 
   @State() errorMessage: string = null;
   @State() getBusiness: Function;

@@ -14,8 +14,8 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 })
 
 export class PayoutDetails {
-  @Prop() payoutId!: string;
-  @Prop() authToken!: string;
+  @Prop() payoutId?: string;
+  @Prop() authToken?: string;
   @Prop() enableRecordClick: boolean = false;
 
   @State() getPayout: Function;

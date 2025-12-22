@@ -21,9 +21,9 @@ import { formatPhoneNumber } from "../../utils/utils";
   shadow: true,
 })
 export class OrderTerminals {
-  @Prop() businessId!: string;
-  @Prop() authToken!: string;
-  @Prop() accountId!: string;
+  @Prop() businessId?: string;
+  @Prop() authToken?: string;
+  @Prop() accountId?: string;
   @Prop() shipping: boolean = false;
   @Prop() submitButtonText: string = 'Submit Order';
 

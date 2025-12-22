@@ -25,8 +25,8 @@ export class BusinessCoreInfoFormStep {
   @State() isLoading: boolean = false;
   @State() isEditingTaxId: boolean = false;
 
-  @Prop() authToken!: string;
-  @Prop() businessId!: string;
+  @Prop() authToken?: string;
+  @Prop() businessId?: string;
   @Prop() allowOptionalFields?: boolean;
   @Prop() country!: CountryCode;
 

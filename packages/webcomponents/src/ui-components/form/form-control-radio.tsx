@@ -28,9 +28,9 @@ export class RadioInput {
   @Prop() name!: any;
   @Prop() value!: string;
   @Prop() helpText?: string;
-  @Prop() inputHandler!: (name: string, value: string) => void;
-  @Prop() disabled!: boolean;
-  @Prop() errorText!: string;
+  @Prop() inputHandler?: (name: string, value: string) => void;
+  @Prop() disabled?: boolean;
+  @Prop() errorText?: string;
   @Prop() checked!: boolean;
 
   @Event() formControlInput: EventEmitter<any>;

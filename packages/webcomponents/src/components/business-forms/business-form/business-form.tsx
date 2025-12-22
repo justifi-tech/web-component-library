@@ -23,8 +23,8 @@ export class BusinessForm {
   @State() errorMessage: BusinessFormServerErrors;
   @State() country: CountryCode = CountryCode.USA;
 
-  @Prop() authToken!: string;
-  @Prop() businessId!: string;
+  @Prop() authToken?: string;
+  @Prop() businessId?: string;
   @Prop() hideErrors?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;

@@ -6,10 +6,10 @@ import { IAddress } from '../../../../api/Business';
   tag: 'justifi-identity-address-form'
 })
 export class IdentityAddressForm {
-  @Prop() handleFormUpdate!: (values: any) => void;
-  @Prop() errors!: any;
-  @Prop() defaultValues!: any;
-  @Prop() country!: CountryCode;
+  @Prop() handleFormUpdate?: (values: any) => void;
+  @Prop() errors?: any;
+  @Prop() defaultValues?: any;
+  @Prop() country?: CountryCode;
   @State() address: IAddress = {};
 
   @Watch('address')

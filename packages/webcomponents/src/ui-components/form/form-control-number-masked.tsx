@@ -25,10 +25,10 @@ export class NumberInputMasked {
   @Prop() name!: any;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
-  @Prop() defaultValue!: string;
-  @Prop() inputHandler!: (name: string, value: string) => void;
+  @Prop() defaultValue?: string;
+  @Prop() inputHandler?: (name: string, value: string) => void;
   @Prop() mask!: string;
-  @Prop() disabled!: boolean;
+  @Prop() disabled?: boolean;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {

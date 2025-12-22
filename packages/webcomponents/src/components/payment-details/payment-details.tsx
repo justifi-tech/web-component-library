@@ -13,8 +13,8 @@ import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents
 })
 
 export class PaymentDetails {
-  @Prop() paymentId!: string;
-  @Prop() authToken!: string;
+  @Prop() paymentId?: string;
+  @Prop() authToken?: string;
 
   @State() getPaymentDetails: Function;
   @State() errorMessage: string = null;
