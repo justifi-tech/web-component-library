@@ -50,21 +50,11 @@ export class BusinessOwnersFormStep {
   }
 
   private matchRef = (ref: any, ownerId: string) => {
-    // If ref is null, the component is being unmounted
-    // Filter out any null refs and ensure array stays in sync with ownersPayload
-    if (ref === null) {
-      // Remove null refs and ensure the array matches ownersPayload
-      this.refs = this.refs.filter(r => r !== null);
-      // Re-sync with ownersPayload to ensure correct length and order
-      if (this.refs.length !== this.ownersPayload.length) {
-        this.manageRefs();
-      }
-      return;
-    }
-    // Find the index of the owner in ownersPayload and set the ref at that same index
+    if (ref === null) return;
+    
     const ownerIndex = this.ownersPayload.findIndex(owner => owner.id === ownerId);
     if (ownerIndex !== -1) {
-      // Ensure refs array matches ownersPayload length
+      // Ensure refs array is properly sized before setting ref
       if (this.refs.length !== this.ownersPayload.length) {
         this.manageRefs();
       }
