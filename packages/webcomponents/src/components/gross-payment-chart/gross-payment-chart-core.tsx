@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
-import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration } from 'chart.js'
+import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title, ChartConfiguration } from 'chart.js';
 import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
 import { ErrorState } from '../../ui-components/details/utils';

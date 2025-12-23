@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-12-23T19:42:01",
+  "timestamp": "2025-12-23T21:44:28",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.28.2",
-    "typescriptVersion": "5.5.4"
+    "version": "4.38.3",
+    "typescriptVersion": "5.9.3"
   },
   "components": [
     {
@@ -732,7 +732,12 @@
           "attr": "documents",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "[]"
+            }
+          ],
           "default": "[]",
           "values": [
             {
@@ -756,7 +761,12 @@
           "attr": "is-loading",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -1144,7 +1154,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "[0, 10]"
+            }
+          ],
           "default": "[0, 10]",
           "values": [
             {
@@ -1174,7 +1189,12 @@
           "attr": "placement",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'bottom'"
+            }
+          ],
           "default": "'bottom'",
           "values": [
             {
@@ -1261,7 +1281,12 @@
           "attr": "strategy",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'absolute'"
+            }
+          ],
           "default": "'absolute'",
           "values": [
             {
@@ -1290,7 +1315,12 @@
           "attr": "trigger",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'click'"
+            }
+          ],
           "default": "'click'",
           "values": [
             {
@@ -1468,7 +1498,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -1492,7 +1527,12 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -1538,7 +1578,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
           "default": "() => { }",
           "values": [
             {
@@ -1804,7 +1849,12 @@
           "attr": "max-date",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "this.currentDate"
+            }
+          ],
           "default": "this.currentDate",
           "values": [
             {
@@ -1977,7 +2027,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -2048,7 +2103,12 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -2094,7 +2154,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
           "default": "() => { }",
           "values": [
             {
@@ -2270,7 +2335,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -2294,7 +2364,12 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -2340,7 +2415,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
           "default": "() => { }",
           "values": [
             {
@@ -2605,7 +2685,12 @@
           "attr": "default-value",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'0'"
+            }
+          ],
           "default": "'0'",
           "values": [
             {
@@ -2866,7 +2951,12 @@
           "attr": "default-value",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'0'"
+            }
+          ],
           "default": "'0'",
           "values": [
             {
@@ -2890,7 +2980,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -2914,7 +3009,12 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -2960,7 +3060,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
           "default": "() => { }",
           "values": [
             {
@@ -3007,7 +3112,12 @@
           "attr": "mask-options",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "CURRENCY_MASK.DECIMAL"
+            }
+          ],
           "default": "CURRENCY_MASK.DECIMAL",
           "values": [
             {
@@ -3136,14 +3246,20 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
-          "required": true,
+          "optional": true,
+          "required": false,
           "getter": false,
           "setter": false
         },
@@ -3297,9 +3413,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "owner-form-inputs"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "owner-form-inputs": [
+          "form-control-number"
+        ]
+      }
     },
     {
       "filePath": "src/ui-components/form/form-control-number-masked.tsx",
@@ -3345,7 +3467,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -3414,7 +3541,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
           "default": "() => { }",
           "values": [
             {
@@ -3609,7 +3741,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -3633,7 +3770,12 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -3679,7 +3821,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
           "default": "() => { }",
           "values": [
             {
@@ -4512,7 +4659,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -4536,7 +4688,12 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -4560,7 +4717,12 @@
           "attr": "help-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -4583,7 +4745,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
           "default": "() => { }",
           "values": [
             {
@@ -5405,7 +5572,12 @@
           "attr": "submit-button-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Submit'"
+            }
+          ],
           "default": "'Submit'",
           "values": [
             {
@@ -6003,7 +6175,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -6125,7 +6302,12 @@
           "attr": "button-style",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "ApplePayButtonStyle.BLACK"
+            }
+          ],
           "default": "ApplePayButtonStyle.BLACK",
           "values": [
             {
@@ -6161,7 +6343,12 @@
           "attr": "button-type",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "ApplePayButtonType.PLAIN"
+            }
+          ],
           "default": "ApplePayButtonType.PLAIN",
           "values": [
             {
@@ -6203,7 +6390,12 @@
           "attr": "country-code",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"US\""
+            }
+          ],
           "default": "\"US\"",
           "values": [
             {
@@ -6227,7 +6419,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -6251,7 +6448,12 @@
           "attr": "height",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"48px\""
+            }
+          ],
           "default": "\"48px\"",
           "values": [
             {
@@ -6275,7 +6477,12 @@
           "attr": "initiative-context",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"dev-checkout.justifi-staging.com\""
+            }
+          ],
           "default": "\"dev-checkout.justifi-staging.com\"",
           "values": [
             {
@@ -6299,7 +6506,12 @@
           "attr": "merchant-display-name",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"JustiFi Checkout\""
+            }
+          ],
           "default": "\"JustiFi Checkout\"",
           "values": [
             {
@@ -6323,7 +6535,12 @@
           "attr": "merchant-identifier",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"merchant.com.staging-justifi.checkout-dev\""
+            }
+          ],
           "default": "\"merchant.com.staging-justifi.checkout-dev\"",
           "values": [
             {
@@ -6347,7 +6564,12 @@
           "attr": "show-skeleton",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
           "default": "true",
           "values": [
             {
@@ -6371,7 +6593,12 @@
           "attr": "width",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"100%\""
+            }
+          ],
           "default": "\"100%\"",
           "values": [
             {
@@ -7940,7 +8167,12 @@
           "attr": "form-title",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Business Information'"
+            }
+          ],
           "default": "'Business Information'",
           "values": [
             {
@@ -7964,7 +8196,12 @@
           "attr": "hide-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -7988,7 +8225,12 @@
           "attr": "remove-title",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -8386,6 +8628,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "form-control-text": [
@@ -9320,7 +9563,12 @@
           "attr": "type",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'button'"
+            }
+          ],
           "default": "'button'",
           "values": [
             {
@@ -9353,7 +9601,12 @@
           "attr": "variant",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
           "default": "'primary'",
           "values": [
             {
@@ -9435,7 +9688,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -9899,7 +10157,12 @@
           "attr": "disable-bank-account",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9923,7 +10186,12 @@
           "attr": "disable-bnpl",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9947,7 +10215,12 @@
           "attr": "disable-credit-card",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9971,7 +10244,12 @@
           "attr": "disable-payment-method-group",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9995,7 +10273,12 @@
           "attr": "hide-bank-account-billing-form",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -10019,7 +10302,12 @@
           "attr": "hide-card-billing-form",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -10453,7 +10741,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -10716,7 +11009,12 @@
           "attr": "account-id",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -10740,7 +11038,12 @@
           "attr": "api-origin",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "PROXY_API_ORIGIN"
+            }
+          ],
           "default": "PROXY_API_ORIGIN",
           "values": [
             {
@@ -10764,7 +11067,12 @@
           "attr": "iframe-origin",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "IFRAME_ORIGIN"
+            }
+          ],
           "default": "IFRAME_ORIGIN",
           "values": [
             {
@@ -10831,7 +11139,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -11539,7 +11852,12 @@
           "attr": "api-origin",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "PROXY_API_ORIGIN"
+            }
+          ],
           "default": "PROXY_API_ORIGIN",
           "values": [
             {
@@ -11782,7 +12100,12 @@
           "attr": "dispute-response",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -12081,7 +12404,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -12220,7 +12548,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -12337,7 +12670,12 @@
           "attr": "country",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "CountryCode.USA"
+            }
+          ],
           "default": "CountryCode.USA",
           "values": [
             {
@@ -12488,7 +12826,12 @@
           "attr": "button-size-mode",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "GooglePayButtonSizeMode.FILL"
+            }
+          ],
           "default": "GooglePayButtonSizeMode.FILL",
           "values": [
             {
@@ -12521,7 +12864,12 @@
           "attr": "button-style",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "GooglePayButtonStyle.BLACK"
+            }
+          ],
           "default": "GooglePayButtonStyle.BLACK",
           "values": [
             {
@@ -12554,7 +12902,12 @@
           "attr": "button-type",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "GooglePayButtonType.PLAIN"
+            }
+          ],
           "default": "GooglePayButtonType.PLAIN",
           "values": [
             {
@@ -12599,7 +12952,12 @@
           "attr": "country-code",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"US\""
+            }
+          ],
           "default": "\"US\"",
           "values": [
             {
@@ -12623,7 +12981,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -12653,7 +13016,12 @@
           "attr": "environment",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "GooglePayEnvironment.PRODUCTION"
+            }
+          ],
           "default": "GooglePayEnvironment.PRODUCTION",
           "values": [
             {
@@ -12680,7 +13048,12 @@
           "attr": "merchant-id",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"gateway:justifi\""
+            }
+          ],
           "default": "\"gateway:justifi\"",
           "values": [
             {
@@ -12704,7 +13077,12 @@
           "attr": "merchant-name",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"justifi\""
+            }
+          ],
           "default": "\"justifi\"",
           "values": [
             {
@@ -12728,7 +13106,12 @@
           "attr": "show-skeleton",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
           "default": "true",
           "values": [
             {
@@ -13059,7 +13442,12 @@
           "attr": "level",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'h1'"
+            }
+          ],
           "default": "'h1'",
           "values": [
             {
@@ -13959,7 +14347,12 @@
           "attr": "shipping",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -13983,7 +14376,12 @@
           "attr": "submit-button-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Submit Order'"
+            }
+          ],
           "default": "'Submit Order'",
           "values": [
             {
@@ -14378,6 +14776,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "form-control-text": [
@@ -14544,7 +14943,12 @@
           "attr": "allow-optional-fields",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -14614,7 +15018,12 @@
           "attr": "form-title",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Business Information'"
+            }
+          ],
           "default": "'Business Information'",
           "values": [
             {
@@ -14737,6 +15146,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "justifi-business-bank-account-form-step": [
@@ -14788,7 +15198,12 @@
           "attr": "allow-optional-fields",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -15085,6 +15500,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "justifi-business-bank-account-form-step": [
@@ -15311,7 +15727,12 @@
           "attr": "allow-optional-fields",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -15387,7 +15808,12 @@
           "attr": "country",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "CountryCode.USA"
+            }
+          ],
           "default": "CountryCode.USA",
           "values": [
             {
@@ -15565,6 +15991,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "justifi-business-bank-account-form-step": [
@@ -15642,7 +16069,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -15802,7 +16234,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -16061,7 +16498,12 @@
           "attr": "enable-record-click",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -16181,7 +16623,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -16341,7 +16788,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -16831,7 +17283,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -16947,7 +17404,12 @@
           "attr": "checked",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -16994,7 +17456,12 @@
           "attr": "hidden",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -17186,7 +17653,12 @@
           "attr": "hide-submit-button",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -17385,7 +17857,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -17496,7 +17973,12 @@
           "attr": "label",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Save New Payment Method'"
+            }
+          ],
           "default": "'Save New Payment Method'",
           "values": [
             {
@@ -18245,7 +18727,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -18552,7 +19039,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -18836,7 +19328,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -19246,7 +19743,12 @@
           "attr": "submit-button-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Submit'"
+            }
+          ],
           "default": "'Submit'",
           "values": [
             {
@@ -19991,6 +20493,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "form-control-text": [
@@ -20150,6 +20653,7 @@
         "form-control-text",
         "form-control-number-masked",
         "form-control-date",
+        "form-control-number",
         "justifi-identity-address-form"
       ],
       "dependencyGraph": {
@@ -20157,6 +20661,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "form-control-text": [
@@ -20212,7 +20717,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "ExtendedPagingDefaults"
+            }
+          ],
           "default": "ExtendedPagingDefaults",
           "values": [
             {
@@ -20241,7 +20751,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -20664,7 +21179,12 @@
           "attr": "enable-record-click",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -21338,7 +21858,12 @@
           "attr": "limit",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "Infinity"
+            }
+          ],
           "default": "Infinity",
           "values": [
             {
@@ -21593,7 +22118,7 @@
       "path": "src/api/ComponentEvents.ts"
     },
     "src/api/Business.ts::IAdditionalQuestions": {
-      "declaration": "export interface IAdditionalQuestions {\n  business_revenue?: string;\n  business_payment_volume?: string;\n  business_when_service_received?: string;\n  business_recurring_payments?: string;\n  business_recurring_payments_percentage?: string;\n  business_seasonal?: string;\n  business_other_payment_details?: string;\n  payload?: any;\n}",
+      "declaration": "export interface IAdditionalQuestions {\n  business_revenue?: string;\n  business_payment_volume?: string;\n  business_average_transaction_amount?: string;\n  business_when_service_received?: string;\n  business_recurring_payments?: string;\n  business_recurring_payments_percentage?: string;\n  business_seasonal?: string;\n  business_other_payment_details?: string;\n  payload?: any;\n}",
       "docstring": "",
       "path": "src/api/Business.ts"
     },
@@ -21608,7 +22133,7 @@
       "path": "src/api/Business.ts"
     },
     "src/api/Identity.ts::Identity": {
-      "declaration": "export interface Identity {\n  address?: IAddress;\n  created_at?: string;\n  dob_day?: string;\n  dob_month?: string;\n  dob_year?: string;\n  documents?: Document[];\n  email?: string;\n  id?: string;\n  business_id?: string;\n  is_owner?: boolean;\n  metadata?: any;\n  name?: string;\n  phone?: string;\n  platform_account_id?: string;\n  identification_number?: string;\n  ssn_last4?: string;\n  title?: string;\n  updated_at?: string;\n}",
+      "declaration": "export interface Identity {\n  address?: IAddress;\n  created_at?: string;\n  dob_day?: string;\n  dob_month?: string;\n  dob_year?: string;\n  documents?: Document[];\n  email?: string;\n  id?: string;\n  business_id?: string;\n  is_owner?: boolean;\n  metadata?: any;\n  name?: string;\n  phone?: string;\n  platform_account_id?: string;\n  identification_number?: string;\n  ssn_last4?: string;\n  title?: string;\n  ownership_percentage?: string;\n  updated_at?: string;\n}",
       "docstring": "",
       "path": "src/api/Identity.ts"
     },

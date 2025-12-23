@@ -13,8 +13,7 @@
     "markdown-table": "^3.0.4",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.0",
-    "miragejs": "^0.1.48",
-    "@justifi/webcomponents": "6.7.2"
+    "miragejs": "^0.1.48"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
