@@ -25,10 +25,10 @@ export class BusinessOwnersFormStep {
   @State() representativeIsOwner: boolean | null = null;
   @State() representative: Representative;
 
-  @Prop() authToken!: string;
-  @Prop() businessId!: string;
+  @Prop() authToken: string;
+  @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
-  @Prop() country!: CountryCode;
+  @Prop() country: CountryCode;
 
   @Watch('authToken')
   @Watch('businessId')

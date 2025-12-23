@@ -10,10 +10,10 @@ import { countryLabels } from '../../utils/country-config';
   tag: 'justifi-business-representative'
 })
 export class BusinessRepresentative {
-  @Prop() formController!: FormController;
+  @Prop() formController: FormController;
   @State() errors: any = {};
   @State() representative: any = {};
-  @Prop() country!: CountryCode;
+  @Prop() country: CountryCode;
   @State() isEditingIdentification: boolean = false;
 
   get identificationNumberLabel() {

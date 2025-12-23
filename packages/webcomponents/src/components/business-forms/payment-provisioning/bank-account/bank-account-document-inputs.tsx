@@ -5,9 +5,9 @@ import { EntityDocumentType, FileSelectEvent } from '../../../../api';
   tag: 'bank-account-document-form-inputs'
 })
 export class BankAccountDocumentFormInputs {
-  @Prop() inputHandler!: (name: string, value: string) => void;
-  @Prop() errors!: any;
-  @Prop() storeFiles!: (e: CustomEvent<FileSelectEvent>) => void;
+  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() errors: any;
+  @Prop() storeFiles: (e: CustomEvent<FileSelectEvent>) => void;
 
   render() {
     return (

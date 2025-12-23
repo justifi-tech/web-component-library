@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property                    | Attribute | Description | Type       | Default     |
-| --------------------------- | --------- | ----------- | ---------- | ----------- |
-| `legalAddress` _(required)_ | --        |             | `IAddress` | `undefined` |
+| Property       | Attribute | Description | Type       | Default     |
+| -------------- | --------- | ----------- | ---------- | ----------- |
+| `legalAddress` | --        |             | `IAddress` | `undefined` |
 
 
 ## Dependencies

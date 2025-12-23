@@ -21,8 +21,8 @@ export class BusinessRepresentativeFormStep {
   @State() representative: Identity = {};
   @State() isLoading: boolean = false;
 
-  @Prop() authToken!: string;
-  @Prop() businessId!: string;
+  @Prop() authToken: string;
+  @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
   @Prop() country?: CountryCode;
 
@@ -32,11 +32,11 @@ export class BusinessRepresentativeFormStep {
     this.initializeApi();
     this.getData();
   }
-
+  
   @Event({ eventName: 'error-event', bubbles: true })
-  errorEvent: EventEmitter<ComponentErrorEvent>;
+    errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true })
-  stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+    stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event() formLoading: EventEmitter<boolean>;
 
   @Method()

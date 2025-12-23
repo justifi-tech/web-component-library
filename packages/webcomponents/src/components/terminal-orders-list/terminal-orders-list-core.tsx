@@ -23,8 +23,8 @@ import {
 })
 
 export class TerminalOrdersListCore {
-  @Prop() getTerminalOrders!: Function;
-  @Prop() columns!: string;
+  @Prop() getTerminalOrders: Function;
+  @Prop() columns: string;
 
   @State() terminalOrders: TerminalOrder[] = [];
   @State() terminalOrdersTable: Table<TerminalOrder>;
@@ -42,7 +42,7 @@ export class TerminalOrdersListCore {
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-
+  
   componentWillLoad() {
     this.terminalOrdersTable = new Table<TerminalOrder>(this.terminalOrders, this.columns, terminalOrdersTableColumns, terminalOrdersTableCells);
     if (this.getTerminalOrders) {
@@ -61,7 +61,7 @@ export class TerminalOrdersListCore {
 
   fetchData(): void {
     this.loading = true;
-
+    
     this.getTerminalOrders({
       params: this.terminalOrderParams,
       onSuccess: async ({ terminalOrders, pagingInfo }) => {

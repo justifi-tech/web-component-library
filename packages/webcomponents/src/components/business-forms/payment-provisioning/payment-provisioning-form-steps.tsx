@@ -5,13 +5,13 @@ import { CountryCode } from '../../../utils/country-codes';
   tag: 'justifi-payment-provisioning-form-steps'
 })
 export class PaymentProvisioningFormSteps {
-  @Prop() businessId!: string;
-  @Prop() authToken!: string;
-  @Prop() refs!: any[];
-  @Prop() currentStep!: number;
+  @Prop() businessId: string;
+  @Prop() authToken: string;
+  @Prop() refs: any[];
+  @Prop() currentStep: number;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() country?: CountryCode = CountryCode.USA;
-  @Prop() handleFormLoading!: (e: CustomEvent) => void
+  @Prop() handleFormLoading: (e: CustomEvent) => void
 
   get currentStepComponent() {
     return this.componentStepMapping[this.currentStep]();
@@ -68,7 +68,7 @@ export class PaymentProvisioningFormSteps {
     />,
   };
 
-
+  
 
   render() {
     return (

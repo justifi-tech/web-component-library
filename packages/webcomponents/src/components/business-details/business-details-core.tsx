@@ -15,7 +15,7 @@ enum RENDER_STATES {
   tag: 'business-details-core'
 })
 export class BusinessDetailsCore {
-  @Prop() getBusiness!: Function;
+  @Prop() getBusiness: Function;
 
   @State() business: Business;
   @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;

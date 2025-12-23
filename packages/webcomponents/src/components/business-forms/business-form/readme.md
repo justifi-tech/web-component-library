@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property                  | Attribute      | Description | Type      | Default                  |
-| ------------------------- | -------------- | ----------- | --------- | ------------------------ |
-| `authToken` _(required)_  | `auth-token`   |             | `string`  | `undefined`              |
-| `businessId` _(required)_ | `business-id`  |             | `string`  | `undefined`              |
-| `formTitle`               | `form-title`   |             | `string`  | `'Business Information'` |
-| `hideErrors`              | `hide-errors`  |             | `boolean` | `false`                  |
-| `removeTitle`             | `remove-title` |             | `boolean` | `false`                  |
+| Property      | Attribute      | Description | Type      | Default                  |
+| ------------- | -------------- | ----------- | --------- | ------------------------ |
+| `authToken`   | `auth-token`   |             | `string`  | `undefined`              |
+| `businessId`  | `business-id`  |             | `string`  | `undefined`              |
+| `formTitle`   | `form-title`   |             | `string`  | `'Business Information'` |
+| `hideErrors`  | `hide-errors`  |             | `boolean` | `false`                  |
+| `removeTitle` | `remove-title` |             | `boolean` | `false`                  |
 
 
 ## Events

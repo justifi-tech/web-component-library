@@ -5,14 +5,7 @@ description: Bank account rail for Modular Checkout that tokenizes ACH details w
 sidebar_position: 28
 ---
 
-import {
-  PropsMarkdownTable,
-  PartsMarkdownTable,
-  getWebcomponentsVersion,
-  getPropsFromDocs,
-  getComponentParts,
-} from '../../helpers';
-import docsJson from '../../docs.json';
+import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../../helpers';
 import componentTreeJson from '../../component-tree.json';
 
 ## Overview
@@ -104,8 +97,29 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-bank-account-form', docsJson)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'payment-method-group-id',
+        type: 'string',
+        description:
+          "Match the parent checkout's group when you want to toggle which rails appear.",
+      },
+      {
+        name: 'show-account-type',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Hide when you only accept checking accounts.',
+      },
+      {
+        name: 'locale',
+        type: 'string',
+        defaultValue: 'en-US',
+        description: 'Controls labels + validation messages.',
+      },
+    ]),
+  }}
 />
 
 ### Events

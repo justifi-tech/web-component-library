@@ -5,14 +5,7 @@ description: Saved payment selector for Modular Checkout that handles defaulting
 sidebar_position: 26
 ---
 
-import {
-  PropsMarkdownTable,
-  PartsMarkdownTable,
-  getWebcomponentsVersion,
-  getComponentParts,
-  getPropsFromDocs,
-} from '../../helpers';
-import docsJson from '../../docs.json';
+import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../../helpers';
 import componentTreeJson from '../../component-tree.json';
 
 ## Overview
@@ -110,8 +103,30 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-saved-payment-methods', docsJson)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'customer-id',
+        type: 'string',
+        required: true,
+        description: 'Identifies which saved methods to fetch.',
+      },
+      {
+        name: 'allow-delete',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Shows the delete button for each saved method.',
+      },
+      {
+        name: 'show-add-new',
+        type: 'boolean',
+        defaultValue: 'true',
+        description:
+          'Displays a control that reveals the card/bank forms when no method is selected.',
+      },
+    ]),
+  }}
 />
 
 ### Events

@@ -22,8 +22,8 @@ export class LegalAddressFormStep {
   @State() legal_address: IAddress = {};
   @State() isLoading: boolean = false;
 
-  @Prop() authToken!: string;
-  @Prop() businessId!: string;
+  @Prop() authToken: string;
+  @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
   @Prop() country?: CountryCode;
 
@@ -35,7 +35,7 @@ export class LegalAddressFormStep {
 
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true })
-  stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+    stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event() formLoading: EventEmitter<boolean>;
 
   @Method()

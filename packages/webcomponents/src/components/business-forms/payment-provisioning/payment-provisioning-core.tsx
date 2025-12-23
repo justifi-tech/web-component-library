@@ -20,12 +20,12 @@ export class PaymentProvisioningCore {
   @State() errorMessage: string;
   @State() country: CountryCode = CountryCode.USA;
 
-  @Prop() businessId!: string;
-  @Prop() authToken!: string;
+  @Prop() businessId: string;
+  @Prop() authToken: string;
   @Prop() allowOptionalFields?: boolean = false;
-  @Prop() formTitle!: string
-  @Prop() getBusiness!: Function;
-  @Prop() postProvisioning!: Function;
+  @Prop() formTitle: string
+  @Prop() getBusiness: Function;
+  @Prop() postProvisioning: Function;
 
   @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;

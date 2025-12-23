@@ -6,15 +6,13 @@ sidebar_position: 34
 ---
 
 import {
-  PropsMarkdownTable,
+  PropsTable,
   PartsMarkdownTable,
-  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
-import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-dispute-management';
 
@@ -28,8 +26,36 @@ Component to render notification of disputed payments and allow platform to resp
 
 ---
 
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-dispute-management', docsJson)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description:
+          'Authorizes access to disputes for a platform or merchant.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `write:disputes` scope.',
+      },
+      {
+        name: 'dispute-id',
+        type: 'string',
+        required: true,
+        description: 'Specific dispute to review/respond to.',
+      },
+      {
+        name: 'read-only',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Disable response actions when true.',
+      },
+    ]),
+  }}
 />
 
 ### Events

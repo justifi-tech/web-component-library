@@ -6,15 +6,13 @@ sidebar_position: 26
 ---
 
 import {
-  PropsMarkdownTable,
+  PropsTable,
   PartsMarkdownTable,
-  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
-import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-checkouts-list';
 
@@ -42,8 +40,30 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 
 ## Props, Events & Methods
 
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-checkouts-list', docsJson)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Platform or sub-account whose checkouts should appear.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:checkouts` scope.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue:
+          'created_at,payment_amount,payment_description,payment_mode,status',
+        description: 'Controls which table columns render and their order.',
+      },
+    ]),
+  }}
 />
 
 ### Events

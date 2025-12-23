@@ -7,8 +7,8 @@ import { radioListItem } from '../../styles/parts';
   tag: 'justifi-saved-payment-method',
 })
 export class SavedPaymentMethod {
-  @Prop() paymentMethodOption!: PaymentMethodOption;
-  @Prop() isSelected!: boolean;
+  @Prop() paymentMethodOption: PaymentMethodOption;
+  @Prop() isSelected: boolean;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 

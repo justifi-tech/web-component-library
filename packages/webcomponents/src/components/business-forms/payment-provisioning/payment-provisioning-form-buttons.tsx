@@ -6,12 +6,12 @@ import { Button } from '../../../ui-components';
   tag: 'justifi-payment-provisioning-form-buttons'
 })
 export class PaymentProvisioningFormButtons {
-  @Prop() currentStep!: number;
-  @Prop() totalSteps!: number;
-  @Prop() formLoading!: boolean;
-  @Prop() formDisabled!: boolean;
-  @Prop() previousStepButtonOnClick!: Function;
-  @Prop() nextStepButtonOnClick!: Function
+  @Prop() currentStep: number;
+  @Prop() totalSteps: number;
+  @Prop() formLoading: boolean;
+  @Prop() formDisabled: boolean;
+  @Prop() previousStepButtonOnClick: Function;
+  @Prop() nextStepButtonOnClick: Function
 
   get showPreviousStepButton() {
     return this.currentStep > 0;

@@ -10,8 +10,8 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   tag: 'justifi-dispute-management',
 })
 export class DisputeManagement {
-  @Prop() disputeId!: string;
-  @Prop() authToken!: string;
+  @Prop() disputeId: string;
+  @Prop() authToken: string;
 
   @State() getDispute: Function;
   @State() errorMessage: string = null;

@@ -4,8 +4,8 @@ import { Component, Prop, h } from '@stencil/core';
   tag: 'form-control-help-text',
 })
 export class FormControlHelpText {
-  @Prop() helpText!: string;
-  @Prop() name!: string;
+  @Prop() helpText: string;
+  @Prop() name: string;
 
   render() {
 

@@ -7,7 +7,7 @@ import { isEmptyObject } from '../../../utils/utils';
   tag: 'additional-questions-details',
 })
 export class AdditionalQuestionsDetails {
-  @Prop() additionalQuestions!: IAdditionalQuestions
+  @Prop() additionalQuestions: IAdditionalQuestions
 
   render() {
     if (!this.additionalQuestions || isEmptyObject(this.additionalQuestions)) return null;

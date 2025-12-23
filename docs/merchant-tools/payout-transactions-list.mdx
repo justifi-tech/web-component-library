@@ -6,15 +6,13 @@ sidebar_position: 42
 ---
 
 import {
-  PropsMarkdownTable,
+  PropsTable,
   PartsMarkdownTable,
-  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
-import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-payout-transactions-list';
 
@@ -36,8 +34,35 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Props, Events & Methods
 
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-payout-transactions-list', docsJson)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Authorization context.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payouts` scope.',
+      },
+      {
+        name: 'payout-id',
+        type: 'string',
+        required: true,
+        description: 'Payout whose transactions should be displayed.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue: 'type,amount,source,status',
+        description: 'Column ordering and selection.',
+      },
+    ]),
+  }}
 />
 
 ### Events

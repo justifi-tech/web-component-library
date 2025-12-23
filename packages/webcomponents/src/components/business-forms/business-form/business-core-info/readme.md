@@ -13,10 +13,10 @@ and the other one  is meant to be just read only.
 
 ## Properties
 
-| Property                      | Attribute | Description | Type                                 | Default     |
-| ----------------------------- | --------- | ----------- | ------------------------------------ | ----------- |
-| `country` _(required)_        | `country` |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
-| `formController` _(required)_ | --        |             | `FormController`                     | `undefined` |
+| Property         | Attribute | Description | Type                                 | Default     |
+| ---------------- | --------- | ----------- | ------------------------------------ | ----------- |
+| `country`        | `country` |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
+| `formController` | --        |             | `FormController`                     | `undefined` |
 
 
 ## Dependencies

@@ -10,10 +10,10 @@ import { countryLabels } from '../../utils/country-config';
   tag: 'justifi-business-representative-form-inputs',
 })
 export class RepresentativeFormInputs {
-  @Prop() representativeDefaultValue!: any;
-  @Prop() errors!: any;
-  @Prop() formController!: FormController;
-  @Prop() country!: CountryCode;
+  @Prop() representativeDefaultValue: any;
+  @Prop() errors: any;
+  @Prop() formController: FormController;
+  @Prop() country: CountryCode;
   @State() isEditingIdentification: boolean = false;
 
   inputHandler = (name: string, value: string) => {

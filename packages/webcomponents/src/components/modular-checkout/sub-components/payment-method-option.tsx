@@ -7,11 +7,11 @@ import { StyledHost } from "../../../ui-components";
   shadow: true,
 })
 export class PaymentMethodOption {
-  @Prop() paymentMethodOptionId!: string;
-  @Prop() isSelected!: boolean;
-  @Prop() clickHandler!: (event: MouseEvent) => void;
-  @Prop() radioButtonHidden!: boolean;
-  @Prop() label!: string;
+  @Prop() paymentMethodOptionId: string;
+  @Prop() isSelected: boolean;
+  @Prop() clickHandler: (event: MouseEvent) => void;
+  @Prop() radioButtonHidden: boolean;
+  @Prop() label: string;
 
   render() {
     return (

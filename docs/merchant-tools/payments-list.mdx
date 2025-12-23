@@ -6,15 +6,13 @@ sidebar_position: 31
 ---
 
 import {
-  PropsMarkdownTable,
+  PropsTable,
   PartsMarkdownTable,
-  getPropsFromDocs,
   getComponentParts,
   getWebcomponentsVersion,
   ComponentBox,
   setUpMocks,
 } from '../helpers';
-import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
 import '@justifi/webcomponents/dist/module/justifi-payments-list';
 
@@ -43,8 +41,43 @@ Component to render a formated list of payments for the requested account.
 
 ## Props, Events & Methods
 
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-payments-list', docsJson)}
+<div
+  dangerouslySetInnerHTML={{
+    __html: PropsTable([
+      {
+        name: 'account-id',
+        type: 'string',
+        required: true,
+        description: 'Scope results to the platform or sub-account.',
+      },
+      {
+        name: 'auth-token',
+        type: 'string',
+        required: true,
+        description: 'Token with `read:payments` scope.',
+      },
+      {
+        name: 'columns',
+        type: 'string',
+        defaultValue:
+          'created_at,customer_name,payment_amount,payment_description,status',
+        description:
+          'Comma-delimited list that controls which columns render and their order.',
+      },
+      {
+        name: 'page-size',
+        type: 'number',
+        defaultValue: '25',
+        description: 'Override default pagination size.',
+      },
+      {
+        name: 'enable-export',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Adds an export button that streams CSV data when true.',
+      },
+    ]),
+  }}
 />
 
 ### Events

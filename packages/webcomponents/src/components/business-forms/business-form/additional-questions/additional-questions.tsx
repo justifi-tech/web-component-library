@@ -12,7 +12,7 @@ import { heading2 } from '../../../../styles/parts';
   tag: 'justifi-additional-questions',
 })
 export class AdditionalQuestions {
-  @Prop() formController!: FormController;
+  @Prop() formController: FormController;
   @State() errors: any = {};
   @State() additional_questions: any = {};
 

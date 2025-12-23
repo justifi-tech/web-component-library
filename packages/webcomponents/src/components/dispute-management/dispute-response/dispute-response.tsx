@@ -31,9 +31,9 @@ export class DisputeResponse {
   }) => Promise<IApiResponse<any>>;
   @State() errorMessage: string = null;
 
-  @Prop() authToken!: string;
-  @Prop() disputeId!: string;
-  @Prop() disputeResponse!: DisputeResponse;
+  @Prop() authToken: string;
+  @Prop() disputeId: string;
+  @Prop() disputeResponse: DisputeResponse;
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;

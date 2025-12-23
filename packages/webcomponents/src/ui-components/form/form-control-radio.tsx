@@ -24,14 +24,14 @@ export class RadioInput {
 
   @State() isFocused: boolean = false;
 
-  @Prop() label!: any;
-  @Prop() name!: any;
-  @Prop() value!: string;
+  @Prop() label: any;
+  @Prop() name: any;
+  @Prop() value: string;
   @Prop() helpText?: string;
-  @Prop() inputHandler!: (name: string, value: string) => void;
-  @Prop() disabled!: boolean;
-  @Prop() errorText!: string;
-  @Prop() checked!: boolean;
+  @Prop() inputHandler: (name: string, value: string) => void;
+  @Prop() disabled: boolean;
+  @Prop() errorText: string;
+  @Prop() checked: boolean;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;

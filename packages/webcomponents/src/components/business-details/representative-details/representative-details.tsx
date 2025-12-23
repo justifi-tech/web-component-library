@@ -7,7 +7,7 @@ import { Identity } from '../../../api/Identity';
   tag: 'representative-details',
 })
 export class JustifiRepresentativeDetails {
-  @Prop() representative!: Identity;
+  @Prop() representative: Identity;
 
   render() {
     if (!this.representative || isEmptyObject(this.representative)) return null;

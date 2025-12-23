@@ -6,7 +6,7 @@ import { ErrorState } from './utils';
 })
 
 export class Details {
-  @Prop() errorMessage!: string;
+  @Prop() errorMessage: string;
 
   render() {
     return (

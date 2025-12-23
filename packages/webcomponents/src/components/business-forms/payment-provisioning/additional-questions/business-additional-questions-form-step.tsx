@@ -23,8 +23,8 @@ export class AdditionalQuestionsFormStep {
   @State() recurringPayments: boolean = false;
   @State() isLoading: boolean = false;
 
-  @Prop() authToken!: string;
-  @Prop() businessId!: string;
+  @Prop() authToken: string;
+  @Prop() businessId: string;
   @Prop() allowOptionalFields?: boolean;
 
   @Watch('authToken')

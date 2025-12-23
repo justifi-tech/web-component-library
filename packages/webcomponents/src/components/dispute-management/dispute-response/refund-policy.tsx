@@ -10,7 +10,7 @@ import fileInputHandler from "./file-input-handler";
   tag: 'justifi-refund-policy',
 })
 export class RefundPolicy {
-  @Prop() disputeResponse!: any;
+  @Prop() disputeResponse: any;
   @Prop() documentErrors: any = {};
 
   @State() form: FormController;

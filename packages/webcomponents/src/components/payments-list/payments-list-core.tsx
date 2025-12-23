@@ -22,8 +22,8 @@ import {
   tag: 'payments-list-core'
 })
 export class PaymentsListCore {
-  @Prop() getPayments!: Function;
-  @Prop() columns!: string;
+  @Prop() getPayments: Function;
+  @Prop() columns: string;
 
   @State() payments: Payment[] = [];
   @State() paymentsTable: Table<Payment>;
