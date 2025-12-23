@@ -1,5 +1,15 @@
 ### Changelog
 
+## 6.7.3
+
+### Patch Changes
+
+- 2d76315: Adds % of Ownership field on owners form of payments provisioning
+- 2d76315: Format the business payment volume question to show the value in a monetary format.
+- 2d76315: Adds a new field to the Payment Provisioning Additional questions called "What is your average transaction size?"
+- 2d76315: Add skeleton loading state to payment provisioning form while business data is being fetched
+- 2d76315: Add Card asking if the representative is also an owner in the owners form of Payment Provisioning
+
 ## 6.7.2
 
 ### Patch Changes
