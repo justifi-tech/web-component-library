@@ -5,15 +5,15 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type                                 | Default           |
-| --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `false`           |
-| `authToken`           | `auth-token`            |             | `string`                             | `undefined`       |
-| `businessId`          | `business-id`           |             | `string`                             | `undefined`       |
-| `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `CountryCode.USA` |
-| `currentStep`         | `current-step`          |             | `number`                             | `undefined`       |
-| `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void`      | `undefined`       |
-| `refs`                | --                      |             | `any[]`                              | `undefined`       |
+| Property                         | Attribute               | Description | Type                                 | Default           |
+| -------------------------------- | ----------------------- | ----------- | ------------------------------------ | ----------------- |
+| `allowOptionalFields`            | `allow-optional-fields` |             | `boolean`                            | `false`           |
+| `authToken` _(required)_         | `auth-token`            |             | `string`                             | `undefined`       |
+| `businessId` _(required)_        | `business-id`           |             | `string`                             | `undefined`       |
+| `country`                        | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `CountryCode.USA` |
+| `currentStep` _(required)_       | `current-step`          |             | `number`                             | `undefined`       |
+| `handleFormLoading` _(required)_ | --                      |             | `(e: CustomEvent<any>) => void`      | `undefined`       |
+| `refs` _(required)_              | --                      |             | `any[]`                              | `undefined`       |
 
 
 ## Dependencies

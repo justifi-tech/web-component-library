@@ -23,7 +23,7 @@ exports[`form-control-file Renders with all props provided 1`] = `
         </div>
       </form-control-tooltip>
     </div>
-    <input class="form-control is-invalid" disabled="" name="resume" part="input-disabled input text color font-family background-color" type="file">
+    <input class="form-control is-invalid" name="resume" part="input-invalid input text color font-family background-color" type="file">
     <small class="form-text text-danger" id="form-error-text-resume" part="text-danger text color font-family">
       Invalid file type
     </small>

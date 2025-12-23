@@ -27,15 +27,15 @@ describe('justifi-terminals-list with filters', () => {
       components: components,
       autoApplyChanges: true,
       flushQueue: true,
-      template: () => 
-      <div>
-        <justifi-terminals-list-filters />
-        <justifi-terminals-list 
-          account-id="abc"
-          auth-token="abc" 
-          columns={defaultColumnsKeys} 
-        />,
-      </div>
+      template: () =>
+        <div>
+          <justifi-terminals-list-filters />
+          <justifi-terminals-list
+            accountId="abc"
+            authToken="abc"
+            columns={defaultColumnsKeys}
+          />,
+        </div>
     });
 
     const filterButton = page.root.shadowRoot.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
@@ -52,15 +52,15 @@ describe('justifi-terminals-list with filters', () => {
     page = await newSpecPage({
       components: components,
       autoApplyChanges: true,
-      template: () => 
-      <div>
-        <justifi-terminals-list-filters />
-        <justifi-terminals-list 
-          account-id="abc"
-          auth-token="abc" 
-          columns={defaultColumnsKeys}
-        />,
-      </div>
+      template: () =>
+        <div>
+          <justifi-terminals-list-filters />
+          <justifi-terminals-list
+            accountId="abc"
+            authToken="abc"
+            columns={defaultColumnsKeys}
+          />,
+        </div>
     });
 
     expect(fetchDataSpy).toHaveBeenCalled();
@@ -78,10 +78,10 @@ describe('justifi-terminals-list with filters', () => {
     expect(selectFilterInput).not.toBeNull();
 
     selectFilterInput.click();
-    
+
     const selectOptions = selectFilterInput.querySelectorAll('option');
     expect(selectOptions).not.toBeNull();
-    
+
     const succeededOption = selectOptions[3] as HTMLOptionElement;
     succeededOption.click();
     selectFilterInput.value = 'connected';
@@ -89,7 +89,7 @@ describe('justifi-terminals-list with filters', () => {
 
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = filterParams;
-    expect(updatedParams).toEqual({"status": "connected"});
+    expect(updatedParams).toEqual({ "status": "connected" });
   });
 
   it('clears filters and refetches data on clear filters interaction', async () => {
@@ -98,15 +98,15 @@ describe('justifi-terminals-list with filters', () => {
       components: components,
       autoApplyChanges: true,
       flushQueue: true,
-      template: () => 
-      <div>
-        <justifi-terminals-list-filters />
-        <justifi-terminals-list 
-          account-id="abc"
-          auth-token="abc" 
-          columns={defaultColumnsKeys} 
-        />,
-      </div>
+      template: () =>
+        <div>
+          <justifi-terminals-list-filters />
+          <justifi-terminals-list
+            accountId="abc"
+            authToken="abc"
+            columns={defaultColumnsKeys}
+          />,
+        </div>
     });
 
     expect(fetchDataSpy).toHaveBeenCalled();
@@ -124,10 +124,10 @@ describe('justifi-terminals-list with filters', () => {
     expect(selectFilterInput).not.toBeNull();
 
     selectFilterInput.click();
-    
+
     const selectOptions = selectFilterInput.querySelectorAll('option');
     expect(selectOptions).not.toBeNull();
-    
+
     const succeededOption = selectOptions[3] as HTMLOptionElement;
     succeededOption.click();
     selectFilterInput.value = 'succeeded';

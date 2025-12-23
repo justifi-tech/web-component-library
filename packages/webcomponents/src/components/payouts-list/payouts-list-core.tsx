@@ -24,10 +24,10 @@ import {
 })
 
 export class PayoutsListCore {
-  @Prop() getPayouts: Function;
-  @Prop() getSubAccounts: Function;
-  @Prop() getPayoutCSV: Function;
-  @Prop() columns: string;
+  @Prop() getPayouts!: Function;
+  @Prop() getSubAccounts!: Function;
+  @Prop() getPayoutCSV!: Function;
+  @Prop() columns!: string;
 
   @State() payouts: Payout[] = [];
   @State() payoutsTable: Table<Payout>;
@@ -52,7 +52,7 @@ export class PayoutsListCore {
     if (this.getPayouts && this.getSubAccounts) {
       this.fetchData();
     }
- 
+
     onQueryParamsChange('set', () => {
       this.pagingParams = {};
     });
@@ -140,10 +140,10 @@ export class PayoutsListCore {
 
   rowClickHandler = (e) => {
     const clickedRow = e.target.closest('tr');
-    
+
     const clickedPayoutID = clickedRow.dataset.rowEntityId;
     if (!clickedPayoutID) return;
-    
+
     const clickedCSV = clickedRow.querySelector('a');
     if (clickedCSV === e.target) return;
 

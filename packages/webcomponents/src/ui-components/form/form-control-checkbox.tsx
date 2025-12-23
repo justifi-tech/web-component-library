@@ -18,13 +18,13 @@ export class CheckboxInput {
 
   @State() isFocused: boolean = false;
 
-  @Prop() label: string;
-  @Prop() name: any;
+  @Prop() label!: string;
+  @Prop() name!: any;
   @Prop() helpText?: string;
-  @Prop() errorText?: string;
-  @Prop() checked: boolean;
-  @Prop() inputHandler: (name: string, value: boolean) => void;
-  @Prop() disabled: boolean;
+  @Prop() errorText?: string = '';
+  @Prop() checked!: boolean;
+  @Prop() inputHandler?: (name: string, value: boolean) => void = () => { };
+  @Prop() disabled?: boolean = false;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;

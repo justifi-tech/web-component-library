@@ -3,6 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { FileInput } from '../form-control-file';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
 import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
+import { EntityDocumentType } from '../../../api/Document';
 
 describe('form-control-file', () => {
   const components = [FileInput, FormControlErrorText, TooltipComponent];
@@ -11,7 +12,7 @@ describe('form-control-file', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-file label='Profile Picture' name='profilePicture'></form-control-file>,
+      template: () => <form-control-file label='Profile Picture' name='profilePicture' inputHandler={mockInputHandler} documentType={EntityDocumentType.other}></form-control-file>,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -28,8 +29,8 @@ describe('form-control-file', () => {
           name='resume'
           errorText='Invalid file type'
           helpText='Upload your resume in PDF format'
-          disabled
           inputHandler={mockInputHandler}
+          documentType={EntityDocumentType.other}
         >
         </form-control-file>
     });
@@ -45,6 +46,7 @@ describe('form-control-file', () => {
           label='Government ID'
           name='governmentId'
           inputHandler={mockInputHandler}
+          documentType={EntityDocumentType.other}
         >
         </form-control-file>
     });
@@ -66,6 +68,7 @@ describe('form-control-file', () => {
           label='Government ID'
           name='governmentId'
           inputHandler={mockInputHandler}
+          documentType={EntityDocumentType.other}
         >
         </form-control-file>
     });
@@ -94,6 +97,7 @@ describe('form-control-file', () => {
           label='Government ID'
           name='governmentId'
           inputHandler={mockInputHandler}
+          documentType={EntityDocumentType.other}
         >
         </form-control-file>
     });
@@ -115,6 +119,7 @@ describe('form-control-file', () => {
           label='Government ID'
           name='governmentId'
           disabled
+          documentType={EntityDocumentType.other}
         >
         </form-control-file>
     });
@@ -132,6 +137,7 @@ describe('form-control-file', () => {
           name='governmentId'
           inputHandler={mockInputHandler}
           helpText='Select a file to upload.'
+          documentType={EntityDocumentType.other}
         >
         </form-control-file>
     });
@@ -158,6 +164,7 @@ describe('form-control-file', () => {
           name='governmentId'
           inputHandler={mockInputHandler}
           errorText='This field is required.'
+          documentType={EntityDocumentType.other}
         >
         </form-control-file>
     });

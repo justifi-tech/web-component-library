@@ -5,7 +5,14 @@ description: Sezzle BNPL rail for Modular Checkout, including disclosure copy an
 sidebar_position: 24
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getWebcomponentsVersion,
+  getComponentParts,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
 import componentTreeJson from '../../component-tree.json';
 
 ## Overview
@@ -101,29 +108,8 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'merchant-id',
-        type: 'string',
-        required: true,
-        description:
-          'Sezzle merchant identifier configured in your JustiFi account.',
-      },
-      {
-        name: 'terms-url',
-        type: 'string',
-        description: 'Overrides the default Sezzle terms link.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description: 'Controls copy for disclosures.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-sezzle-payment-method', docsJson)}
 />
 
 ### Events

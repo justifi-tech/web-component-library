@@ -32,8 +32,8 @@ describe('justifi-payouts-list filters', () => {
         <div>
           <justifi-payouts-list-filters />
           <justifi-payouts-list
-            account-id="abc"
-            auth-token="abc"
+            accountId="abc"
+            authToken="abc"
             columns={defaultColumnsKeys}
           />,
         </div>
@@ -57,8 +57,8 @@ describe('justifi-payouts-list filters', () => {
         <div>
           <justifi-payouts-list-filters />
           <justifi-payouts-list
-            account-id="abc"
-            auth-token="abc"
+            accountId="abc"
+            authToken="abc"
             columns={defaultColumnsKeys}
           />,
         </div>
@@ -96,8 +96,8 @@ describe('justifi-payouts-list filters', () => {
         <div>
           <justifi-payouts-list-filters />
           <justifi-payouts-list
-            account-id="abc"
-            auth-token="abc"
+            accountId="abc"
+            authToken="abc"
             columns={defaultColumnsKeys}
           />,
         </div>

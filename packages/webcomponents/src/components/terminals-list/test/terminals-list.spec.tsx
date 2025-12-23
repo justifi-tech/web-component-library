@@ -18,7 +18,7 @@ describe('terminals-list', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [TerminalsList, TerminalsListCore],
-      template: () => <justifi-terminals-list onError-event={errorEvent} />,
+      template: () => <justifi-terminals-list accountId="" authToken="" onError-event={errorEvent} />,
     });
     await page.waitForChanges();
     expect(errorEvent).toHaveBeenCalled();
@@ -32,8 +32,8 @@ describe('terminals-list', () => {
       components: [TerminalsList, TerminalsListCore],
       template: () => (
         <justifi-terminals-list
-          account-id="abc"
-          auth-token="abc"
+          accountId="abc"
+          authToken="abc"
           onError-event={errorEvent}
         />
       ),

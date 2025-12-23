@@ -18,7 +18,7 @@ describe('GrossPaymentChart', () => {
   it('renders an error when no accountId and authToken is passed', async () => {
     const page = await newSpecPage({
       components: [GrossPaymentChart, GrossPaymentChartCore],
-      template: () => <justifi-gross-payment-chart />,
+      template: () => <justifi-gross-payment-chart accountId="" authToken="" />,
     });
 
     await page.waitForChanges();
@@ -28,7 +28,7 @@ describe('GrossPaymentChart', () => {
   it('renders an error when no accountId is passed', async () => {
     const page = await newSpecPage({
       components: [GrossPaymentChart, GrossPaymentChartCore],
-      template: () => <justifi-gross-payment-chart auth-token="abc" />,
+      template: () => <justifi-gross-payment-chart authToken="abc" accountId="" />,
     });
 
     await page.waitForChanges();
@@ -38,7 +38,7 @@ describe('GrossPaymentChart', () => {
   it('renders an error when no authToken is passed', async () => {
     const page = await newSpecPage({
       components: [GrossPaymentChart, GrossPaymentChartCore],
-      template: () => <justifi-gross-payment-chart account-id="abc" />,
+      template: () => <justifi-gross-payment-chart accountId="abc" authToken="" />,
     });
 
     await page.waitForChanges();
@@ -49,7 +49,7 @@ describe('GrossPaymentChart', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [GrossPaymentChart, GrossPaymentChartCore],
-      template: () => <justifi-gross-payment-chart onError-event={errorEvent} />,
+      template: () => <justifi-gross-payment-chart onError-event={errorEvent} accountId="" authToken="" />,
     });
 
     await page.waitForChanges();
@@ -73,8 +73,8 @@ describe('GrossPaymentChart', () => {
       components: [GrossPaymentChart, GrossPaymentChartCore],
       template: () => (
         <justifi-gross-payment-chart
-          account-id="abc"
-          auth-token="abc"
+          accountId="abc"
+          authToken="abc"
           onError-event={errorEvent}
         />
       ),
@@ -103,8 +103,8 @@ describe('GrossPaymentChart', () => {
       components: [GrossPaymentChart, GrossPaymentChartCore],
       template: () => (
         <justifi-gross-payment-chart
-          account-id="abc"
-          auth-token="abc"
+          accountId="abc"
+          authToken="abc"
           onError-event={errorEvent}
         />
       ),

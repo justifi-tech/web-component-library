@@ -18,7 +18,7 @@ describe('justifi-order-terminals', () => {
   it('should instantiate JustifiAnalytics on componentWillLoad', async () => {
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals />,
+      template: () => <justifi-order-terminals businessId="" authToken="" accountId="" />,
     });
 
     await page.rootInstance.componentWillLoad();
@@ -30,7 +30,7 @@ describe('justifi-order-terminals', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals onerror-event={errorEvent} />,
+      template: () => <justifi-order-terminals onError-event={errorEvent} businessId="" authToken="" accountId="" />,
     });
 
     await page.rootInstance.componentWillLoad();
@@ -43,7 +43,7 @@ describe('justifi-order-terminals', () => {
   it('should display an skeleton loader while loading', async () => {
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals />,
+      template: () => <justifi-order-terminals businessId="" authToken="" accountId="" />,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -59,7 +59,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" accountId="" />,
     });
 
     await page.waitForChanges();
@@ -78,7 +78,7 @@ describe('justifi-order-terminals', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" onerror-event={errorEvent} />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" onError-event={errorEvent} accountId="" />,
     });
 
     await page.waitForChanges();
@@ -91,7 +91,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" accountId="" />,
     });
 
     await page.waitForChanges();
@@ -104,7 +104,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" accountId="" />,
     });
 
     await page.waitForChanges();
@@ -118,7 +118,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId='123' authToken='123' />
+      template: () => <justifi-order-terminals businessId='123' authToken='123' accountId="" />
     });
 
     await page.rootInstance.componentWillLoad();
@@ -136,7 +136,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" accountId="" />,
     });
 
     await page.waitForChanges();
@@ -155,7 +155,7 @@ describe('justifi-order-terminals', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" onerror-event={errorEvent} />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" onError-event={errorEvent} accountId="" />,
     });
 
     await page.waitForChanges();
@@ -188,7 +188,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" accountId="" />,
     });
 
     await page.rootInstance.componentWillLoad();
@@ -237,7 +237,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" accountId="" />,
     });
 
     await page.waitForChanges();
@@ -270,7 +270,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals, TerminalQuantitySelector],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" accountId="" />,
     });
 
     await page.waitForChanges();
@@ -311,7 +311,7 @@ describe('justifi-order-terminals', () => {
 
     const page = await newSpecPage({
       components: [OrderTerminals, TerminalQuantitySelector],
-      template: () => <justifi-order-terminals businessId="123" authToken="123" />,
+      template: () => <justifi-order-terminals businessId="123" authToken="123" accountId="" />,
     });
 
     await page.waitForChanges();

@@ -18,7 +18,7 @@ describe('payout-details-core', () => {
     // Initialize the page with the mock getPayout function included in the component tag
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      template: () => <payout-details-core getPayout={mockGetPayout} />
+      template: () => <payout-details-core getPayout={mockGetPayout} getPayoutCSV={() => { }} />
     });
 
     // Wait for any state changes to complete
@@ -41,7 +41,7 @@ describe('payout-details-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      template: () => <payout-details-core getPayout={getPayout} />
+      template: () => <payout-details-core getPayout={getPayout} getPayoutCSV={() => { }} />
     });
 
     await page.waitForChanges();
@@ -69,7 +69,7 @@ describe('payout-details-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      template: () => <payout-details-core getPayout={getPayout} />
+      template: () => <payout-details-core getPayout={getPayout} getPayoutCSV={() => { }} />
     });
 
     await page.waitForChanges();
@@ -94,7 +94,8 @@ describe('payout-details-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      template: () => <payout-details-core getPayout={getPayout} onError-event={onErrorEvent} />
+      template: () => <payout-details-core
+        getPayout={getPayout} getPayoutCSV={() => { }} onError-event={onErrorEvent} />
     });
 
     await page.waitForChanges();
@@ -123,7 +124,7 @@ describe('payout-details-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetailsCore],
-      template: () => <payout-details-core getPayout={getPayout} onError-event={onErrorEvent} />
+      template: () => <payout-details-core getPayout={getPayout} getPayoutCSV={() => { }} onError-event={onErrorEvent} />
     });
 
     await page.waitForChanges();

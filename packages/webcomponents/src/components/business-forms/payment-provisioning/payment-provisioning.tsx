@@ -15,8 +15,8 @@ export class PaymentProvisioning {
   @State() postProvisioning: Function;
   @State() getBusiness: Function;
 
-  @Prop() businessId: string;
-  @Prop() authToken: string;
+  @Prop() businessId!: string;
+  @Prop() authToken!: string;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
 

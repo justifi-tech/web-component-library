@@ -18,7 +18,7 @@ describe('checkouts-list', () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
       components: [CheckoutsList, CheckoutsListCore],
-      template: () => <justifi-checkouts-list onError-event={errorEvent} />,
+      template: () => <justifi-checkouts-list accountId="" authToken="" onError-event={errorEvent} />,
     });
     await page.waitForChanges();
     expect(errorEvent).toHaveBeenCalled();
@@ -32,8 +32,8 @@ describe('checkouts-list', () => {
       components: [CheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
-          account-id="abc"
-          auth-token="abc"
+          accountId="abc"
+          authToken="abc"
           onError-event={errorEvent}
         />
       ),

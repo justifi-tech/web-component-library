@@ -8,10 +8,10 @@ import { CountryCode } from '../../../../utils/country-codes';
   tag: 'justifi-legal-address-form'
 })
 export class LegalAddressForm {
-  @Prop() formController: FormController;
+  @Prop() formController!: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress;
-  @Prop() country: CountryCode;
+  @Prop() country!: CountryCode;
 
   constructor() {
     this.inputHandler = this.inputHandler.bind(this);

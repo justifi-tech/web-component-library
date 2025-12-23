@@ -15,7 +15,7 @@ enum RENDER_STATES {
   tag: 'business-details-core'
 })
 export class BusinessDetailsCore {
-  @Prop() getBusiness: Function;
+  @Prop() getBusiness!: Function;
 
   @State() business: Business;
   @State() renderState: RENDER_STATES = RENDER_STATES.LOADING;
@@ -65,7 +65,7 @@ export class BusinessDetailsCore {
 
     return (
       <StyledHost>
-        <justifi-details error-message={this.errorMessage}>
+        <justifi-details errorMessage={this.errorMessage}>
           <div slot='detail-sections'>
             <core-info-details business={this.business} />
             <legal-address-details legalAddress={this.business.legal_address} />

@@ -19,11 +19,12 @@ describe('justifi-business-core-info-form-step-core', () => {
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"
+            authToken="test-token"
             country={CountryCode.USA}
           />
         ),
       });
-      
+
       expect(page.root).toMatchSnapshot();
     });
 
@@ -33,11 +34,12 @@ describe('justifi-business-core-info-form-step-core', () => {
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"
+            authToken="test-token"
             country={CountryCode.CAN}
           />
         ),
       });
-      
+
       expect(page.root).toMatchSnapshot();
     });
   });
@@ -56,18 +58,18 @@ describe('justifi-business-core-info-form-step-core', () => {
           />
         ),
       });
-      
+
       // Mock the state properties directly on the component instance
       // This overrides the functions created by initializeApi()
       page.rootInstance.getBusiness = mockGetBusiness;
       page.rootInstance.patchBusiness = mockPatchBusiness;
-      
+
       // Manually trigger getData to use our mocked function
       // @ts-ignore - accessing private method for testing
       page.rootInstance.getData();
-      
+
       await page.waitForChanges();
-      
+
       // Should render masked input when no last4 present
       const taxIdMasked = page.root.querySelector('form-control-number-masked[name="tax_id"]');
       expect(taxIdMasked).toBeTruthy();
@@ -84,7 +86,7 @@ describe('justifi-business-core-info-form-step-core', () => {
         });
         final?.();
       });
-      
+
       const page = await newSpecPage({
         components: [BusinessCoreInfoFormStep],
         template: () => (
@@ -95,15 +97,15 @@ describe('justifi-business-core-info-form-step-core', () => {
           />
         ),
       });
-      
+
       // Mock the state properties directly on the component instance
       page.rootInstance.getBusiness = mockGetBusiness;
       page.rootInstance.patchBusiness = mockPatchBusiness;
-      
+
       // Manually trigger getData to use our mocked function
       // @ts-ignore - accessing private method for testing
       page.rootInstance.getData();
-      
+
       // Wait for component to load and call getBusiness
       await page.waitForChanges();
       // Should render read-only UI with label and disabled input
@@ -126,17 +128,17 @@ describe('justifi-business-core-info-form-step-core', () => {
           />
         ),
       });
-      
+
       // Mock the state properties directly on the component instance
       page.rootInstance.getBusiness = mockGetBusiness;
       page.rootInstance.patchBusiness = mockPatchBusiness;
-      
+
       // Manually trigger getData to use our mocked function
       // @ts-ignore - accessing private method for testing
       page.rootInstance.getData();
-      
+
       await page.waitForChanges();
-      
+
       // Inline implementation preseunt; snapshot covers structure
       expect(page.root).toMatchSnapshot();
     });

@@ -24,7 +24,7 @@ export class GrossPaymentChartCore {
   chart: Chart
   chartRef: HTMLCanvasElement
 
-  @Prop() getGrossPayment: Function;
+  @Prop() getGrossPayment!: Function;
   @State() grossVolumeReport: GrossVolumeReport;
   @State() loading: boolean = true;
   @State() errorMessage: string = '';
