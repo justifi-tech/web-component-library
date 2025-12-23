@@ -15,7 +15,7 @@ describe('form-control-select', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-select label='Select your delivery method' name='delivery_method' />
+      template: () => <form-control-select label='Select your delivery method' name='delivery_method' inputHandler={mockInputHandler} options={options} />
     });
 
     expect(page.root).toMatchSnapshot();
@@ -52,6 +52,7 @@ describe('form-control-select', () => {
           label='Select your delivery method'
           name='delivery_method'
           defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
           options={options}
         />
     });
@@ -69,6 +70,7 @@ describe('form-control-select', () => {
           label='Select your delivery method'
           name='delivery_method'
           defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
           options={options}
         />
     });
@@ -170,7 +172,8 @@ describe('form-control-select', () => {
         <form-control-select
           label='Select your delivery method'
           name='delivery_method'
-          disabled
+          inputHandler={mockInputHandler}
+          options={options}
         />
     });
 
@@ -186,6 +189,8 @@ describe('form-control-select', () => {
           label='Select your delivery method'
           name='delivery_method'
           helpText='Select your preferred delivery method'
+          inputHandler={mockInputHandler}
+          options={options}
         />
     });
 
@@ -210,6 +215,8 @@ describe('form-control-select', () => {
           label='Select your delivery method'
           name='delivery_method'
           errorText='This field is required.'
+          inputHandler={mockInputHandler}
+          options={options}
         />
     });
 

@@ -92,7 +92,7 @@ export class PayoutDetailsCore {
         {this.loading && <PayoutDetailsLoading />}
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && this.payout && (
-          <justifi-details error-message={this.errorMessage}>
+          <justifi-details errorMessage={this.errorMessage}>
             <EntityHeadInfo
               slot="head-info"
               badge={(

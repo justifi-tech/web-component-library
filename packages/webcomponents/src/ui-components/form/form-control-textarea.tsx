@@ -21,13 +21,13 @@ export class TextInput {
 
   @Prop() label!: string;
   @Prop() name!: any;
-  @Prop() helpText?: string;
-  @Prop() errorText?: string;
+  @Prop() helpText?: string = '';
+  @Prop() errorText?: string = '';
   @Prop() defaultValue!: string;
   @Prop() maxLength?: number;
-  @Prop() inputHandler!: (name: string, value: string) => void;
+  @Prop() inputHandler?: (name: string, value: string) => void = () => { };
   @Prop() keyDownHandler?: (event: any) => void;
-  @Prop() disabled!: boolean;
+  @Prop() disabled?: boolean = false;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {

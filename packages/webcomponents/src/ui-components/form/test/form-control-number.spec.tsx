@@ -11,7 +11,7 @@ describe('form-control-number', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-number label='Age' name='age' />
+      template: () => <form-control-number label='Age' name='age' inputHandler={mockInputHandler} defaultValue='25' disabled={false} />
     });
 
     expect(page.root).toMatchSnapshot();
@@ -46,6 +46,7 @@ describe('form-control-number', () => {
           name='age'
           defaultValue={defaultValue}
           inputHandler={mockInputHandler}
+          disabled={false}
         />
     });
     let inputElement = page.root.querySelector('input');
@@ -61,6 +62,7 @@ describe('form-control-number', () => {
           name='age'
           defaultValue={defaultValue}
           inputHandler={mockInputHandler}
+          disabled={false}
         />
     });
 
@@ -77,6 +79,7 @@ describe('form-control-number', () => {
           name='age'
           defaultValue='25'
           inputHandler={mockInputHandler}
+          disabled={false}
         />
     });
 
@@ -98,6 +101,7 @@ describe('form-control-number', () => {
           name='age'
           defaultValue='25'
           inputHandler={mockInputHandler}
+          disabled={false}
         />
     });
 
@@ -125,6 +129,8 @@ describe('form-control-number', () => {
           label='Age'
           name='age'
           inputHandler={mockInputHandler}
+          disabled={false}
+          defaultValue='25'
         />
     });
     const blurEventSpy = jest.fn();
@@ -143,8 +149,9 @@ describe('form-control-number', () => {
         <form-control-number
           label='Age'
           name='age'
-          disabled
+          disabled={true}
           inputHandler={mockInputHandler}
+          defaultValue='25'
         />
     });
 
@@ -161,6 +168,8 @@ describe('form-control-number', () => {
           name='age'
           helpText='Enter your age'
           inputHandler={mockInputHandler}
+          defaultValue='25'
+          disabled={false}
         />
     });
 
@@ -179,6 +188,8 @@ describe('form-control-number', () => {
           name='age'
           errorText='Invalid age'
           inputHandler={mockInputHandler}
+          defaultValue='25'
+          disabled={false}
         />
     });
 

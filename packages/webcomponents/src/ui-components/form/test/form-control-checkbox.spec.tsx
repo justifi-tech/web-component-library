@@ -11,7 +11,7 @@ describe('form-control-checkbox', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-checkbox label='Accept Terms' name='accept' />,
+      template: () => <form-control-checkbox label='Accept Terms' name='accept' inputHandler={mockInputHandler} checked={false} />,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -26,7 +26,7 @@ describe('form-control-checkbox', () => {
           name='accept'
           helpText='Accept terms and conditions to continue'
           errorText='You must accept the terms and conditions to continue'
-          disabled
+          checked={false}
           inputHandler={mockInputHandler}
         />
     });
@@ -42,6 +42,7 @@ describe('form-control-checkbox', () => {
           label='Accept Terms'
           name='accept'
           inputHandler={mockInputHandler}
+          checked={false}
         />
     });
 
@@ -62,6 +63,7 @@ describe('form-control-checkbox', () => {
           label='Accept Terms'
           name='accept'
           inputHandler={mockInputHandler}
+          checked={false}
         />
     });
 
@@ -88,6 +90,7 @@ describe('form-control-checkbox', () => {
           label='Accept Terms'
           name='accept'
           inputHandler={mockInputHandler}
+          checked={false}
         />
     });
 
@@ -107,7 +110,7 @@ describe('form-control-checkbox', () => {
           label='Accept Terms'
           name='accept'
           inputHandler={mockInputHandler}
-          disabled
+          checked={false}
         />
     });
 
@@ -124,6 +127,7 @@ describe('form-control-checkbox', () => {
           name='accept'
           helpText='Accept terms and conditions to continue'
           inputHandler={mockInputHandler}
+          checked={false}
         />
     });
 
@@ -142,6 +146,7 @@ describe('form-control-checkbox', () => {
           name='accept'
           errorText='You must accept the terms and conditions to continue'
           inputHandler={mockInputHandler}
+          checked={false}
         />
     });
 

@@ -21,7 +21,7 @@ describe('payment-details', () => {
   it('renders an error message when paymentId and authToken are not provided', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details />,
+      template: () => <justifi-payment-details paymentId="" authToken="" />,
     });
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
@@ -30,7 +30,7 @@ describe('payment-details', () => {
   it('renders an error message when paymentId is not provided', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details auth-token="abc" />,
+      template: () => <justifi-payment-details authToken="abc" paymentId="" />,
     });
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
@@ -39,7 +39,7 @@ describe('payment-details', () => {
   it('renders an error message when authToken is not provided', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details payment-id="abc" />,
+      template: () => <justifi-payment-details paymentId="abc" authToken="" />,
     });
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
@@ -50,7 +50,7 @@ describe('payment-details', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details payment-id="abc" onError-event={errorSpy} />,
+      template: () => <justifi-payment-details paymentId="abc" authToken="" onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -69,7 +69,7 @@ describe('payment-details', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details auth-token="abc" onError-event={errorSpy} />,
+      template: () => <justifi-payment-details authToken="abc" paymentId="" onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -90,7 +90,7 @@ describe('payment-details', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details payment-id="abc" auth-token="abc" onError-event={errorSpy} />,
+      template: () => <justifi-payment-details paymentId="abc" authToken="abc" onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -111,7 +111,7 @@ describe('payment-details', () => {
 
     const page = await newSpecPage({
       components,
-      template: () => <justifi-payment-details payment-id="abc" auth-token="abc" onError-event={errorSpy} />,
+      template: () => <justifi-payment-details paymentId="abc" authToken="abc" onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();

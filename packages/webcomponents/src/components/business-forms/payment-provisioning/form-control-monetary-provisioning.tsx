@@ -25,11 +25,11 @@ export class MonetaryInputProvisioning {
   @Prop() label!: string;
   @Prop() name!: string;
   @Prop() helpText?: string;
-  @Prop() errorText?: string;
-  @Prop() defaultValue!: string;
-  @Prop() inputHandler!: (name: string, value: string) => void;
+  @Prop() errorText?: string = '';
+  @Prop() defaultValue?: string = '0';
+  @Prop() inputHandler?: (name: string, value: string) => void = () => { };
   @Prop() maskOptions: any = CURRENCY_MASK.DECIMAL;
-  @Prop() disabled!: boolean;
+  @Prop() disabled?: boolean = false;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {

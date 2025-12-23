@@ -65,7 +65,7 @@ export class BusinessDetailsCore {
 
     return (
       <StyledHost>
-        <justifi-details error-message={this.errorMessage}>
+        <justifi-details errorMessage={this.errorMessage}>
           <div slot='detail-sections'>
             <core-info-details business={this.business} />
             <legal-address-details legalAddress={this.business.legal_address} />

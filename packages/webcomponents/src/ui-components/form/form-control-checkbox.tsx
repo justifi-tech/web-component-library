@@ -21,10 +21,10 @@ export class CheckboxInput {
   @Prop() label!: string;
   @Prop() name!: any;
   @Prop() helpText?: string;
-  @Prop() errorText?: string;
+  @Prop() errorText?: string = '';
   @Prop() checked!: boolean;
-  @Prop() inputHandler!: (name: string, value: boolean) => void;
-  @Prop() disabled!: boolean;
+  @Prop() inputHandler?: (name: string, value: boolean) => void = () => { };
+  @Prop() disabled?: boolean = false;
 
   @Event() formControlInput: EventEmitter<any>;
   @Event() formControlBlur: EventEmitter<any>;
