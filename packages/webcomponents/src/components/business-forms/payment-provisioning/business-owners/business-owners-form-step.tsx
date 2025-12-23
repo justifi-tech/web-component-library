@@ -188,6 +188,7 @@ export class BusinessOwnersFormStep {
   private handleRepresentativeIsOwnerChange = (value: boolean) => {
     this.representativeIsOwner = value;
     if (this.representativeIsOwner) {
+      this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== '');
       this.patchBusiness({
         payload: {
           owners: [{ id: this.representative.id }, ...this.ownersPayload],
