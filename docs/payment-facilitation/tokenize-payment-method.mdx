@@ -25,61 +25,10 @@ import '@justifi/webcomponents/dist/module/justifi-tokenize-payment-method';
 Component to render an entire form including a switch to use a credit card or bank
 account, a submit button and all fields required for proper use. This component can be used standalone or as part of the modular checkout system.
 
-# Props, events and methods
+## Props, Events & Methods
 
----
-
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Platform account that will own the resulting payment method.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description:
-          'Short-lived Web Component Token with `write:tokenize:account_id` scope.',
-      },
-      {
-        name: 'payment-method-group-id',
-        type: 'string',
-        description:
-          'Optional grouping identifier that lets you preselect payment rails in Modular Checkout.',
-      },
-      {
-        name: 'hide-submit-button',
-        type: 'boolean',
-        defaultValue: 'false',
-        description:
-          'Hides the internal CTA when hosting app handles submission.',
-      },
-      {
-        name: 'save-payment-method-label',
-        type: 'string',
-        description:
-          'Overrides the checkbox label when allowing customers to store a card.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description:
-          'Controls localization of labels, placeholders, and currency formatting.',
-      },
-      {
-        name: 'theme',
-        type: 'string',
-        description:
-          'Name of a predefined theme exported by JustiFi (optional).',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-tokenize-payment-method', docsJson)}
 />
 
 ### Events
@@ -406,22 +355,6 @@ When used within the `justifi-modular-checkout` wrapper component, this componen
   </script>
 
 </html>`}</code></pre>
-
-## Props, Events & Methods
-
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-tokenize-payment-method', docsJson)}
-/>
-
-### Events
-
-- `tokenized`: fires when a payment token is created; payload includes `payment_method_token` and metadata.
-- `error`: fires if tokenization fails; payload includes `code`, `message`, and validation hints.
-
-### Public methods
-
-1. `tokenizePaymentMethod()` – programmatically trigger submission (returns a promise that resolves to a token payload).
-2. `fillBillingForm(partialBillingDetails)` – prefill customers' billing information from saved data.
 
 ## Theming & Layout
 
