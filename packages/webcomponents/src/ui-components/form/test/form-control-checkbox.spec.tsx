@@ -111,6 +111,7 @@ describe('form-control-checkbox', () => {
           name='accept'
           inputHandler={mockInputHandler}
           checked={false}
+          disabled={true}
         />
     });
 

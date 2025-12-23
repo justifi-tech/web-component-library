@@ -13,7 +13,7 @@ exports[`GrossPaymentChart renders an error when no accountId and authToken is p
 `;
 
 exports[`GrossPaymentChart renders an error when no accountId is passed 1`] = `
-<justifi-gross-payment-chart auth-token="abc">
+<justifi-gross-payment-chart>
   <template shadowrootmode="open">
     <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
       <p part="text color font-family">
@@ -25,7 +25,7 @@ exports[`GrossPaymentChart renders an error when no accountId is passed 1`] = `
 `;
 
 exports[`GrossPaymentChart renders an error when no authToken is passed 1`] = `
-<justifi-gross-payment-chart account-id="abc">
+<justifi-gross-payment-chart>
   <template shadowrootmode="open">
     <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
       <p part="text color font-family">

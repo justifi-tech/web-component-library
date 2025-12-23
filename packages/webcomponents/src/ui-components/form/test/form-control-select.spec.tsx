@@ -174,6 +174,7 @@ describe('form-control-select', () => {
           name='delivery_method'
           inputHandler={mockInputHandler}
           options={options}
+          disabled={true}
         />
     });
 
