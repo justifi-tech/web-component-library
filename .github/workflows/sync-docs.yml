@@ -1,0 +1,39 @@
+name: Sync WC Docs to Public Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+
+jobs:
+  sync-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      - name: Clone public-docs repo
+        uses: actions/checkout@v4
+        with:
+          repository: your-org/public-docs
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: public-docs
+
+      - name: Sync docs to .wc-current/
+        run: |
+          rm -rf public-docs/.wc-current/*
+          cp -r docs/* public-docs/.wc-current/
+
+      - name: Create PR in public-docs
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: public-docs
+          commit-message: 'chore: sync WC docs from web-component-library'
+          title: 'Sync WC docs from web-component-library'
+          body: 'Automated PR to sync latest WC docs.'
+          base: main
+          branch: auto/sync-wc-docs
