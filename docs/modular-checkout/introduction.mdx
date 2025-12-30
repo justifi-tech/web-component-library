@@ -10,25 +10,13 @@ import {
   PropsMarkdownTable,
   PartsMarkdownTable,
   getPropsFromDocs,
+  getWebcomponentsVersion,
 } from '../helpers';
 import docsJson from '../docs.json';
 
 ## Overview
 
 The `justifi-modular-checkout` wrapper component serves as a container for checkout-related sub components. It manages the tokenization of payment methods, billing information, insurance, and overall form submission to complete the checkout. It also supports saving a payment method to a payment method group for future use.
-
-## Usage
-
-<pre>
-  <code className="language-html">{`<justifi-modular-checkout
-  account-id="acc_123"
-  auth-token="wct_checkout"
-  checkout-id="chk_456"
->
-  <justifi-modular-checkout-card-form slot="payment-methods" />
-  <justifi-modular-checkout-summary slot="summary" />
-</justifi-modular-checkout>`}</code>
-</pre>
 
 ## Props, Events & Methods
 
@@ -46,3 +34,78 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 1. `submit()` – Programmatically trigger the checkout CTA.
 2. `reset()` – Reset the flow back to the first step and clear transient state.
+
+---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-modular-checkout</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <justifi-modular-checkout auth-token="authToken" checkout-id="cho_1234567890">
+    <justifi-checkout-summary />
+    <justifi-card-form />
+    <justifi-billing-form-full />
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function () {
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
+
+    modularCheckout.addEventListener('error-event', (event) => {
+      // this event is emitted when validation fails or an error occurs during processing
+      console.error('error-event', event.detail);
+    });
+
+    modularCheckout.addEventListener('submit-event', (event) => {
+      // this event is emitted when checkout is successfully completed
+      console.log('submit-event', event.detail);
+    });
+
+    modularCheckout.addEventListener('checkout-changed', (event) => {
+      // this event is emitted when the checkout state changes
+      // includes availablePaymentMethodTypes, selectedPaymentMethod, and savedPaymentMethods
+      const {
+        availablePaymentMethodTypes,
+        selectedPaymentMethod,
+        savedPaymentMethods,
+      } = event.detail;
+      console.log('Available payment methods:', availablePaymentMethodTypes);
+      console.log('Selected payment method:', selectedPaymentMethod);
+      console.log('Saved payment methods:', savedPaymentMethods);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>
