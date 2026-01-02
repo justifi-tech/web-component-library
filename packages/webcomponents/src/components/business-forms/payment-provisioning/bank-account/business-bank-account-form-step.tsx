@@ -25,6 +25,8 @@ export class BusinessBankAccountFormStep {
   @State() postBankAccount: Function;
   @State() postDocumentRecord: Function;
   @State() postDocument: Function;
+  @State() bankAccountVerification: boolean = false;
+  @State() platformAccountId: string | null = null;
 
   @Prop() authToken!: string;
   @Prop() businessId!: string;
@@ -156,6 +158,8 @@ export class BusinessBankAccountFormStep {
           this.bankAccount.business_id = this.businessId;
         }
         this.existingDocuments = response.data.documents;
+        this.bankAccountVerification = response.data.bank_account_verification === true;
+        this.platformAccountId = response.data.platform_account_id;
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -241,6 +245,8 @@ export class BusinessBankAccountFormStep {
             this.bankAccount = new BankAccount(latestBankAccount);
           }
           this.existingDocuments = response.data.documents;
+          this.bankAccountVerification = response.data.bank_account_verification === true;
+          this.platformAccountId = response.data.platform_account_id;
           this.initializeFormController();
         },
         onError: ({ error, code, severity }) => {
@@ -413,6 +419,19 @@ export class BusinessBankAccountFormStep {
               >
                 Change Bank Account
               </Button>
+            </div>
+          )}
+          {this.bankAccountVerification && this.platformAccountId && (
+            <div class="mt-3">
+              <internal-plaid-verification
+                authToken={this.authToken}
+                accountId={this.platformAccountId}
+                businessId={this.businessId}
+                onPlaidVerificationSuccess={() => {
+                  // Refresh bank account data after successful Plaid verification
+                  this.refreshBankAccountData();
+                }}
+              />
             </div>
           )}
           {(!this.existingBankAccount || this.isAddingNewBankAccount) && (
