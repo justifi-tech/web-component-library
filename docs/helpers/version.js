@@ -23,7 +23,7 @@ export const getWebcomponentsVersion = () => {
       return cleanVersion;
     }
   } catch (error) {
-    // Ignore errors
+    console.error(error);
   }
 
   // Last resort: return 'latest' if we can't determine the version
