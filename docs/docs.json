@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-02T17:20:31",
+  "timestamp": "2026-01-05T14:21:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.38.3",
@@ -5467,13 +5467,8 @@
       "dependents": [
         "justifi-business-bank-account-form-step"
       ],
-      "dependencies": [
-        "justifi-button"
-      ],
+      "dependencies": [],
       "dependencyGraph": {
-        "internal-plaid-verification": [
-          "justifi-button"
-        ],
         "justifi-business-bank-account-form-step": [
           "internal-plaid-verification"
         ]
@@ -7736,18 +7731,18 @@
       ],
       "dependencies": [
         "form-control-tooltip",
+        "internal-plaid-verification",
         "bank-account-form-inputs-canada",
         "bank-account-form-inputs",
-        "internal-plaid-verification",
         "business-documents-on-file",
         "bank-account-document-form-inputs"
       ],
       "dependencyGraph": {
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
+          "internal-plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
-          "internal-plaid-verification",
           "business-documents-on-file",
           "bank-account-document-form-inputs"
         ],
@@ -7769,9 +7764,6 @@
           "bank-account-read-only-value",
           "form-control-text",
           "form-control-select"
-        ],
-        "internal-plaid-verification": [
-          "justifi-button"
         ],
         "bank-account-document-form-inputs": [
           "form-control-file"
@@ -9771,15 +9763,11 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "internal-plaid-verification",
         "internal-tokenize-payment-method",
         "justifi-checkout"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "internal-plaid-verification": [
-          "justifi-button"
-        ],
         "internal-tokenize-payment-method": [
           "justifi-button"
         ],
@@ -15295,9 +15283,9 @@
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
+          "internal-plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
-          "internal-plaid-verification",
           "business-documents-on-file",
           "bank-account-document-form-inputs"
         ],
@@ -15310,9 +15298,6 @@
           "bank-account-read-only-value",
           "form-control-text",
           "form-control-select"
-        ],
-        "internal-plaid-verification": [
-          "justifi-button"
         ],
         "bank-account-document-form-inputs": [
           "form-control-file"
@@ -15653,9 +15638,9 @@
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
+          "internal-plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
-          "internal-plaid-verification",
           "business-documents-on-file",
           "bank-account-document-form-inputs"
         ],
@@ -15668,9 +15653,6 @@
           "bank-account-read-only-value",
           "form-control-text",
           "form-control-select"
-        ],
-        "internal-plaid-verification": [
-          "justifi-button"
         ],
         "bank-account-document-form-inputs": [
           "form-control-file"
@@ -16148,9 +16130,9 @@
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
+          "internal-plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
-          "internal-plaid-verification",
           "business-documents-on-file",
           "bank-account-document-form-inputs"
         ],
@@ -16163,9 +16145,6 @@
           "bank-account-read-only-value",
           "form-control-text",
           "form-control-select"
-        ],
-        "internal-plaid-verification": [
-          "justifi-button"
         ],
         "bank-account-document-form-inputs": [
           "form-control-file"

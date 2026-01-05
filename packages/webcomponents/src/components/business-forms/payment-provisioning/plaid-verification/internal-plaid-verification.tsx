@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { StyledHost } from '../../../../ui-components';
+import { Button, StyledHost } from '../../../../ui-components';
 import { PlaidService } from '../../../../api/services/plaid.service';
 import { ComponentErrorSeverity } from '../../../../api/ComponentError';
 import {
@@ -8,6 +8,8 @@ import {
   PLAID_ERROR_SEVERITY,
   PlaidError,
 } from '../../../../api/Plaid';
+import plaidLogoSvg from '../../../../assets/plaid-icon.svg';
+import { buttonSecondary } from '../../../../styles/parts';
 
 @Component({
   tag: 'internal-plaid-verification',
@@ -192,7 +194,6 @@ export class InternalPlaidVerification {
   };
 
   handlePlaidSuccess = async (publicToken: string, _metadata: any) => {
-    console.log('handlePlaidSuccess', publicToken, _metadata);
     this.isAuthenticating = false;
     this.isLoading = true;
     this.clearError();
@@ -396,6 +397,22 @@ export class InternalPlaidVerification {
       return null;
     };
 
+    const plaidLogo = (
+      <img
+        class="plaid-logo-img"
+        src={plaidLogoSvg}
+        alt="Plaid"
+        title="Plaid"
+        style={{
+          display: 'inline',
+          width: '20px',
+          height: '20px',
+          marginLeft: '5px',
+          marginTop: '-2px',
+        }}
+      />
+    );
+
     return (
       <StyledHost>
         <script
@@ -405,22 +422,17 @@ export class InternalPlaidVerification {
         />
 
         <div>
-          <justifi-button
-            text={
-              this.isLoading
-                ? 'Verifying...'
-                : this.isSuccess
-                  ? 'Verified'
-                  : this.isAuthenticating
-                    ? 'Connecting...'
-                    : 'Verify Bank Account'
-            }
-            variant="primary"
-            type="button"
-            clickHandler={() => this.openPlaidLink()}
-            disabled={!this.plaidLink || this.isAuthenticating || this.isLoading || this.isSuccess}
-            isLoading={this.isLoading}
-          />
+          <div class="mb-3">
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={(event) => { event.preventDefault(); this.openPlaidLink(); }}
+              disabled={this.isLoading}
+              part={buttonSecondary}
+            >
+              Link Bank Account with {plaidLogo}
+            </Button>
+          </div>
           {renderErrorState()}
           {renderStatusState()}
         </div>

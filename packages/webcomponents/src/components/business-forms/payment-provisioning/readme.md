@@ -76,9 +76,9 @@ graph TD;
   owner-form-inputs --> form-control-number
   owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> form-control-tooltip
+  justifi-business-bank-account-form-step --> internal-plaid-verification
   justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
   justifi-business-bank-account-form-step --> bank-account-form-inputs
-  justifi-business-bank-account-form-step --> internal-plaid-verification
   justifi-business-bank-account-form-step --> business-documents-on-file
   justifi-business-bank-account-form-step --> bank-account-document-form-inputs
   bank-account-form-inputs-canada --> bank-account-read-only-value
@@ -87,7 +87,6 @@ graph TD;
   bank-account-form-inputs --> bank-account-read-only-value
   bank-account-form-inputs --> form-control-text
   bank-account-form-inputs --> form-control-select
-  internal-plaid-verification --> justifi-button
   bank-account-document-form-inputs --> form-control-file
   form-control-file --> form-control-tooltip
   justifi-business-terms-conditions-form-step --> form-control-checkbox
