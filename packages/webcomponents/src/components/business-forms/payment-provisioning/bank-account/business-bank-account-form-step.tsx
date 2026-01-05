@@ -241,16 +241,18 @@ export class BusinessBankAccountFormStep {
       this.isLoading = true;
       this.getBusiness({
         onSuccess: (response) => {
-          if (response.data.bank_accounts.length > 0) {
+          const { data } = response;
+          const { bank_accounts, documents, settings, platform_account_id } = data;
+          if (bank_accounts.length > 0) {
             // Get the latest bank account (last in array)
-            const bankAccounts = response.data.bank_accounts;
+            const bankAccounts = bank_accounts;
             const latestBankAccount = bankAccounts[bankAccounts.length - 1];
             this.bankAccount = new BankAccount(latestBankAccount);
           }
-          console.log('response.data.settings', response.data);
-          this.existingDocuments = response.data.documents;
-          this.bankAccountVerification = response.data.settings.bank_account_verification === true;
-          this.platformAccountId = response.data.platform_account_id;
+
+          this.existingDocuments = documents;
+          this.bankAccountVerification = settings.bank_account_verification === true;
+          this.platformAccountId = platform_account_id;
           this.initializeFormController();
         },
         onError: ({ error, code, severity }) => {
