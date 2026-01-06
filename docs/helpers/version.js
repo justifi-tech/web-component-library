@@ -1,4 +1,3 @@
-// Import the local package.json - webpack can handle JSON imports at build time
 import localPackageJson from '../package.json';
 
 let cachedVersion = null;
