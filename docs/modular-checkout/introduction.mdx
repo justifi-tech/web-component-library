@@ -46,4 +46,4 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 1. `submitCheckout(submitCheckoutArgs?)` – Programmatically trigger the checkout submission. Validates forms, tokenizes payment methods if needed, and completes the checkout. Optionally accepts billing form fields as arguments.
 2. `validate()` – Validates all nested forms (payment method, billing, insurance) and returns a boolean indicating if validation passed. Emits `error-event` if validation fails.
-3. `setSelectedPaymentMethod(paymentMethod)` – Sets the selected payment method and payment token in the checkout store.
+3. `setSelectedPaymentMethod(paymentMethod)` – Sets the selected payment method programmatically on the checkout.
