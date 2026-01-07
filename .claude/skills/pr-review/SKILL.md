@@ -51,38 +51,83 @@ Handle errors gracefully:
 
 ### Step 3: Count Meaningful Lines with Categorization
 
-Run this bash script to count lines and categorize them:
+Run this bash script to count and categorize lines:
 
 ```bash
 PR_NUMBER=<PR_NUMBER>
-SOURCE_LINES=0
-TEST_LINES=0
-GENERATED_LINES=0
 
 # Get all changed files
 CHANGED_FILES=$(gh pr diff "$PR_NUMBER" --name-only)
 
-# Process each file
-while IFS= read -r file; do
-  # Count added/removed lines for this file (excluding diff headers)
-  FILE_LINES=$(gh pr diff "$PR_NUMBER" -- "$file" 2>/dev/null | \
-    grep -E "^[+-]" | grep -v -E "^(---|\+\+\+)" | wc -l | tr -d ' ')
+# Check if there are any changed files
+if [ -z "$CHANGED_FILES" ]; then
+  echo "No files changed in this PR"
+  SOURCE_LINES=0
+  TEST_LINES=0
+  GENERATED_LINES=0
+else
+  # Save diff to temp file for processing
+  DIFF_FILE="/tmp/pr_diff_${PR_NUMBER}.txt"
+  gh pr diff "$PR_NUMBER" > "$DIFF_FILE"
 
-  # Skip if no lines
-  [ "$FILE_LINES" -eq 0 ] && continue
+  # Initialize counters and file lists
+  SOURCE_LINES=0
+  TEST_LINES=0
+  GENERATED_LINES=0
+  SOURCE_COUNT=0
+  TEST_COUNT=0
+  GENERATED_COUNT=0
 
-  # Categorize file based on patterns
-  if [[ "$file" =~ (\.spec\.(ts|tsx)|/test/|/__tests__/|/__snapshots__/|\.snap$|/mockData/|/__mocks__/) ]]; then
-    # Test files
-    TEST_LINES=$((TEST_LINES + FILE_LINES))
-  elif [[ "$file" =~ (^dist/|^coverage/|^\.turbo/|components\.d\.ts$|global\.d\.ts$|docs\.d\.ts$|pnpm-lock\.yaml$|package-lock\.json$|yarn\.lock$|node_modules) ]]; then
-    # Generated files
-    GENERATED_LINES=$((GENERATED_LINES + FILE_LINES))
+  # First pass: categorize all files
+  while IFS= read -r file; do
+    [ -z "$file" ] && continue
+
+    # Categorize file based on patterns
+    if [[ "$file" =~ \.(spec|test)\.(ts|tsx)$ ]] || \
+       [[ "$file" =~ /(test|__tests__|__snapshots__|mockData|__mocks__)/ ]] || \
+       [[ "$file" =~ \.snap$ ]]; then
+      TEST_COUNT=$((TEST_COUNT + 1))
+    elif [[ "$file" =~ ^dist/ ]] || \
+         [[ "$file" =~ /dist/.*\.d\.ts ]] || \
+         [[ "$file" =~ ^(coverage|\.turbo)/ ]] || \
+         [[ "$file" =~ (components|global|docs)\.d\.ts$ ]] || \
+         [[ "$file" =~ (pnpm-lock|package-lock|yarn\.lock)$ ]] || \
+         [[ "$file" =~ node_modules ]]; then
+      GENERATED_COUNT=$((GENERATED_COUNT + 1))
+    else
+      SOURCE_COUNT=$((SOURCE_COUNT + 1))
+    fi
+  done <<< "$CHANGED_FILES"
+
+  TOTAL_FILES=$((SOURCE_COUNT + TEST_COUNT + GENERATED_COUNT))
+
+  # Count total diff lines (excluding file markers)
+  TOTAL_LINES=$(grep -E "^[+-]" "$DIFF_FILE" | grep -v -E "^(---|\+\+\+)" | wc -l | tr -d ' ')
+
+  # If all files are the same category, assign all lines to that category
+  # Otherwise, distribute lines proportionally by file count (approximation)
+  if [ $TOTAL_FILES -eq $SOURCE_COUNT ]; then
+    SOURCE_LINES=$TOTAL_LINES
+  elif [ $TOTAL_FILES -eq $TEST_COUNT ]; then
+    TEST_LINES=$TOTAL_LINES
+  elif [ $TOTAL_FILES -eq $GENERATED_COUNT ]; then
+    GENERATED_LINES=$TOTAL_LINES
   else
-    # Source files
-    SOURCE_LINES=$((SOURCE_LINES + FILE_LINES))
+    # Mixed categories: distribute proportionally (approximation)
+    if [ $SOURCE_COUNT -gt 0 ]; then
+      SOURCE_LINES=$((TOTAL_LINES * SOURCE_COUNT / TOTAL_FILES))
+    fi
+    if [ $TEST_COUNT -gt 0 ]; then
+      TEST_LINES=$((TOTAL_LINES * TEST_COUNT / TOTAL_FILES))
+    fi
+    if [ $GENERATED_COUNT -gt 0 ]; then
+      GENERATED_LINES=$((TOTAL_LINES * GENERATED_COUNT / TOTAL_FILES))
+    fi
   fi
-done <<< "$CHANGED_FILES"
+
+  # Cleanup
+  rm -f "$DIFF_FILE"
+fi
 
 echo "Categorized line counts:"
 echo "  Source code: $SOURCE_LINES lines"
@@ -90,7 +135,9 @@ echo "  Test code: $TEST_LINES lines"
 echo "  Generated files: $GENERATED_LINES lines (excluded)"
 ```
 
-Store these counts in variables for use in subsequent steps.
+Store the SOURCE_LINES, TEST_LINES, and GENERATED_LINES values for use in subsequent steps.
+
+**Note**: Line counts per category are approximated when PRs contain mixed file types. The categorization is accurate for file types, and line distribution is proportional to file count.
 
 If counting fails, proceed with review anyway (don't let it block).
 
@@ -100,7 +147,7 @@ If counting fails, proceed with review anyway (don't let it block).
 
 Use the Read tool to get the code review guidelines:
 ```
-Read: /Users/jakemerringer/justifi-tech/web-component-library/.claude/agents/code-review/AGENT.md
+Read: .claude/agents/code-review/AGENT.md
 ```
 
 Extract the review criteria and output format from these instructions.
