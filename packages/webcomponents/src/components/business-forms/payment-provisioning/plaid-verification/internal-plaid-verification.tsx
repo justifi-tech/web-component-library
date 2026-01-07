@@ -12,10 +12,10 @@ import plaidLogoSvg from '../../../../assets/plaid-icon.svg';
 import { buttonSecondary } from '../../../../styles/parts';
 
 @Component({
-  tag: 'internal-plaid-verification',
+  tag: 'plaid-verification',
   shadow: false,
 })
-export class InternalPlaidVerification {
+export class PlaidVerification {
   @Prop() authToken: string;
   @Prop() accountId: string;
   @Prop() businessId: string;

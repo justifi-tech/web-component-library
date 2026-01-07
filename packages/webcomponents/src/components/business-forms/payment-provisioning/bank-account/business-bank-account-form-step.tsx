@@ -402,7 +402,7 @@ export class BusinessBankAccountFormStep {
           <hr class="mt-2" />
           {shouldShowPlaidVerification && (
             <div class="mt-3">
-              <internal-plaid-verification
+              <plaid-verification
                 authToken={this.authToken}
                 accountId={this.platformAccountId}
                 businessId={this.businessId}
