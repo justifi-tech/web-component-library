@@ -145,7 +145,6 @@ export class PlaidVerification {
         throw new Error(errorMessage);
       }
 
-      console.log('getLinkToken', response.data);
       this.linkToken = response.data.link_token;
       this.linkTokenId = response.data.id;
     } catch (error) {
@@ -207,7 +206,6 @@ export class PlaidVerification {
         this.abortController?.signal
       );
 
-      console.log('postBankAccount', response);
 
       if (response.error) {
         const errorMessage =
