@@ -408,6 +408,7 @@ export class BusinessBankAccountFormStep {
                 businessId={this.businessId}
                 onPlaidVerificationSuccess={() => {
                   // Refresh bank account data after successful Plaid verification
+                  this.isAddingNewBankAccount = false;
                   this.refreshBankAccountData();
                 }}
               />
