@@ -91,3 +91,49 @@ Copy `.env.example` to `.env` and configure:
 ## Documentation
 
 - [JustiFi API Documentation](https://developer.justifi.ai/)
+
+## Pull Request Guidelines
+
+### PR Size Limits
+
+Keep PRs focused and reviewable:
+- **Maximum 250 lines** of meaningful code (source + tests)
+- Excludes: lock files, dist/, build/, __snapshots__, generated files
+- Automated review will flag oversized PRs with split suggestions
+
+**Why this matters:**
+- Large PRs get superficial reviews
+- Bugs hide in volume
+- Slower review cycles
+- More merge conflicts
+
+**When implementing features:**
+- Break work into logical, independent chunks
+- Consider splitting:
+  1. Infrastructure/refactoring changes first
+  2. New functionality in focused PRs
+  3. Tests and docs separately if needed
+- Each PR should have single, clear purpose
+
+**If your PR is flagged as too large:**
+- Review the suggested split strategy from the automated review
+- Create multiple PRs with clear dependencies
+- Link related PRs in descriptions
+
+### PR Content Standards
+
+- **Single concern**: One feature/bug/refactoring per PR
+- **Include tests**: All new functionality needs tests
+- **Error handling**: Handle error cases appropriately
+- **Follow patterns**: Match existing code style and architecture
+- **Changeset**: Run `pnpm changeset` before creating PR
+- **Avoid over-engineering**: Keep solutions simple and direct. Don't add unnecessary abstractions.
+
+### AI-Generated Code Review
+
+If using AI to generate code, review carefully for:
+- Over-engineering (unnecessary abstractions)
+- Inconsistent patterns (doesn't match codebase)
+- Missing error handling
+- Missing or inadequate tests
+- Generic/template comments
