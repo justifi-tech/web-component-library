@@ -22,7 +22,7 @@ jobs:
       - name: Clone public-docs repo
         uses: actions/checkout@v4
         with:
-          repository: your-org/public-docs
+          repository: justif-tech/public-docs
           token: ${{ secrets.GITHUB_TOKEN }}
           path: public-docs
 
