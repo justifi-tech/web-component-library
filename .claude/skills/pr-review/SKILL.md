@@ -49,22 +49,52 @@ Handle errors gracefully:
 - Permission issues: Explain what's needed
 - API errors: Report the issue
 
-### Step 3: Count Meaningful Lines
+### Step 3: Count Meaningful Lines with Categorization
 
-Run this bash command to count lines excluding non-meaningful files:
+Run this bash script to count lines and categorize them:
 
 ```bash
-gh pr diff <PR_NUMBER> | grep -E "^[+-]" | grep -v -E "^(---|\+\+\+)" | wc -l
+PR_NUMBER=<PR_NUMBER>
+SOURCE_LINES=0
+TEST_LINES=0
+GENERATED_LINES=0
+
+# Get all changed files
+CHANGED_FILES=$(gh pr diff "$PR_NUMBER" --name-only)
+
+# Process each file
+while IFS= read -r file; do
+  # Count added/removed lines for this file (excluding diff headers)
+  FILE_LINES=$(gh pr diff "$PR_NUMBER" -- "$file" 2>/dev/null | \
+    grep -E "^[+-]" | grep -v -E "^(---|\+\+\+)" | wc -l | tr -d ' ')
+
+  # Skip if no lines
+  [ "$FILE_LINES" -eq 0 ] && continue
+
+  # Categorize file based on patterns
+  if [[ "$file" =~ (\.spec\.(ts|tsx)|/test/|/__tests__/|/__snapshots__/|\.snap$|/mockData/|/__mocks__/) ]]; then
+    # Test files
+    TEST_LINES=$((TEST_LINES + FILE_LINES))
+  elif [[ "$file" =~ (^dist/|^coverage/|^\.turbo/|components\.d\.ts$|global\.d\.ts$|docs\.d\.ts$|pnpm-lock\.yaml$|package-lock\.json$|yarn\.lock$|node_modules) ]]; then
+    # Generated files
+    GENERATED_LINES=$((GENERATED_LINES + FILE_LINES))
+  else
+    # Source files
+    SOURCE_LINES=$((SOURCE_LINES + FILE_LINES))
+  fi
+done <<< "$CHANGED_FILES"
+
+echo "Categorized line counts:"
+echo "  Source code: $SOURCE_LINES lines"
+echo "  Test code: $TEST_LINES lines"
+echo "  Generated files: $GENERATED_LINES lines (excluded)"
 ```
 
-This counts all added/removed lines. For more accuracy, subtract lines from:
-- Lock files (look for package-lock.json, pnpm-lock.yaml, yarn.lock in the diff)
-- Snapshot files (look for __snapshots__ or .snap in the diff)
-- Generated files (look for .generated., .gen., -generated., -gen. in the diff)
+Store these counts in variables for use in subsequent steps.
 
 If counting fails, proceed with review anyway (don't let it block).
 
-**Line count threshold: 250 lines**
+**Line count threshold: 250 lines of source code only** (tests and generated files don't count toward limit)
 
 ### Step 4: Read Code Review Agent Instructions
 
@@ -81,7 +111,7 @@ Since custom agents aren't available in Task tool, use the `general-purpose` sub
 
 Build the prompt:
 
-**If line count > 250:**
+**If source lines > 250:**
 ```
 You are performing a code review following the guidelines in .claude/agents/code-review/AGENT.md.
 
@@ -92,12 +122,16 @@ Review the following code changes:
 PR: #<NUMBER> - <TITLE>
 Author: <AUTHOR>
 Branch: <HEAD> -> <BASE>
-Meaningful lines changed: <LINE_COUNT> (exceeds limit of 250 lines)
+
+Line count breakdown:
+- Source code: <SOURCE_LINES> lines (limit: 250) ⚠️ EXCEEDS LIMIT
+- Test code: <TEST_LINES> lines (no limit)
+- Generated files: <GENERATED_LINES> lines (excluded)
 
 Description:
 <BODY>
 
-This PR exceeds our 250-line limit for meaningful code changes. First, suggest how to split this PR into logical chunks, then review the code.
+This PR exceeds our 250-line limit for source code changes. First, suggest how to split this PR into logical chunks, then review the code.
 
 Diff:
 <DIFF_CONTENT>
@@ -110,7 +144,7 @@ CRITICAL: Start your response with exactly one of these verdict markers:
 Follow the code-review agent format: provide concise verdict-driven feedback, only mention issues that need attention.
 ```
 
-**If line count <= 250:**
+**If source lines <= 250:**
 ```
 You are performing a code review following the guidelines in .claude/agents/code-review/AGENT.md.
 
@@ -121,7 +155,11 @@ Review the following code changes:
 PR: #<NUMBER> - <TITLE>
 Author: <AUTHOR>
 Branch: <HEAD> -> <BASE>
-Meaningful lines changed: <LINE_COUNT>
+
+Line count breakdown:
+- Source code: <SOURCE_LINES> lines (limit: 250)
+- Test code: <TEST_LINES> lines (no limit)
+- Generated files: <GENERATED_LINES> lines (excluded)
 
 Description:
 <BODY>
@@ -156,11 +194,11 @@ Extract the verdict using string matching or regex.
 
 ### Step 7: Map Verdict to GitHub Review Flag
 
-**If line count > 250:**
+**If source lines > 250:**
 - Always use `--comment` (regardless of verdict)
 - Rationale: Encourage splitting before approval
 
-**If line count <= 250:**
+**If source lines <= 250:**
 - `APPROVED` → `--approve`
 - `NOT_APPROVED` → `--request-changes`
 - `COMMENT` → `--comment`
@@ -200,7 +238,10 @@ Report success to the user:
 ```
 ✓ Review posted to PR #<NUMBER>
 Action: [Approved / Requested Changes / Comment]
-Meaningful lines: <LINE_COUNT>
+Line breakdown:
+  - Source code: <SOURCE_LINES> lines (limit: 250)
+  - Test code: <TEST_LINES> lines
+  - Generated files: <GENERATED_LINES> lines (excluded)
 ```
 
 ## Error Handling

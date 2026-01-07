@@ -33,19 +33,25 @@ You are a specialized code review agent for the JustiFi Web Component Library. Y
 ### 1. Understand the Changes
 
 - The git diff will be provided to you in the task prompt
-- Check if the prompt mentions PR is oversized (> 250 lines)
+- Check if the prompt mentions PR is oversized (source code > 250 lines)
+- Review the line count breakdown provided (source, test, generated files)
 - Read the full diff carefully to understand what's changing
 - Identify which files and components are affected
 - If needed, use Read tool to see full file context for better understanding
 
-### 2. If PR is Oversized (> 250 lines)
+### 2. If PR is Oversized (> 250 source lines)
 
-When told the PR exceeds 250 lines, provide split strategy:
+When told the PR exceeds 250 source lines, provide split strategy:
 
 ```markdown
 ## PR Size: Too Large
 
-This PR modifies **[X] lines** of meaningful code (limit: 250 lines)
+This PR modifies **[X] source lines** (limit: 250 lines)
+
+**Line Breakdown:**
+- Source code: [X] lines ⚠️
+- Test code: [Y] lines ✓
+- Generated files: [Z] lines (excluded)
 
 ### Suggested Split Strategy
 
