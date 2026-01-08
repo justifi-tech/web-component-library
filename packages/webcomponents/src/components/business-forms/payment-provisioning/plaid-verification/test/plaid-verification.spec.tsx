@@ -31,11 +31,11 @@ describe('plaid-verification', () => {
     // Mock PlaidService methods
     mockPlaidService = {
       getLinkTokenForVerification: jest.fn(),
-      postBankAccount: jest.fn(),
+      postPlaidVerifiedBankAccountData: jest.fn(),
     } as any;
 
     PlaidService.prototype.getLinkTokenForVerification = mockPlaidService.getLinkTokenForVerification;
-    PlaidService.prototype.postBankAccount = mockPlaidService.postBankAccount;
+    PlaidService.prototype.postPlaidVerifiedBankAccountData = mockPlaidService.postPlaidVerifiedBankAccountData;
   });
 
   afterEach(() => {
@@ -480,7 +480,7 @@ describe('plaid-verification', () => {
   describe('handlePlaidSuccess', () => {
     it('should handle successful bank account verification', async () => {
       const mockBankAccount = { id: 'bank_123', status: 'verified' };
-      mockPlaidService.postBankAccount.mockResolvedValue({
+      mockPlaidService.postPlaidVerifiedBankAccountData.mockResolvedValue({
         data: mockBankAccount,
         error: null,
       } as any);
@@ -503,7 +503,7 @@ describe('plaid-verification', () => {
       await page.rootInstance.handlePlaidSuccess('public_token_abc', {});
       await page.waitForChanges();
 
-      expect(mockPlaidService.postBankAccount).toHaveBeenCalledWith(
+      expect(mockPlaidService.postPlaidVerifiedBankAccountData).toHaveBeenCalledWith(
         'test-token',
         'biz_123',
         { public_token: 'public_token_abc', link_token_id: 'link_token_id_123' },
@@ -522,7 +522,7 @@ describe('plaid-verification', () => {
     });
 
     it('should handle bank account verification failure', async () => {
-      mockPlaidService.postBankAccount.mockResolvedValue({
+      mockPlaidService.postPlaidVerifiedBankAccountData.mockResolvedValue({
         error: 'Failed to verify bank account',
         data: null,
       } as any);

@@ -199,7 +199,7 @@ export class PlaidVerification {
 
     try {
       // Send publicToken to backend
-      const response = await this.plaidService.postBankAccount(
+      const response = await this.plaidService.postPlaidVerifiedBankAccountData(
         this.authToken,
         this.businessId,
         { public_token: publicToken, link_token_id: this.linkTokenId },

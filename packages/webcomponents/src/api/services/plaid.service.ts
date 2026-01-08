@@ -53,7 +53,7 @@ export class PlaidService implements IPlaidService {
     return api.post({ endpoint, body, authToken, signal });
   }
 
-  async getBankAccount(
+  async getBankAccountData(
     authToken: string,
     businessId: string,
     signal?: AbortSignal
@@ -62,7 +62,7 @@ export class PlaidService implements IPlaidService {
     return api.get({ endpoint, authToken, signal });
   }
 
-  async postBankAccount(
+  async postPlaidVerifiedBankAccountData(
     authToken: string,
     businessId: string,
     payload: { public_token: string, link_token_id: string },
