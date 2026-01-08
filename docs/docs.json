@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-06T13:32:30",
+  "timestamp": "2026-01-08T14:56:04",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.38.3",
@@ -5345,136 +5345,6 @@
       }
     },
     {
-      "filePath": "src/components/business-forms/payment-provisioning/plaid-verification/internal-plaid-verification.tsx",
-      "encapsulation": "none",
-      "tag": "internal-plaid-verification",
-      "readme": "# internal-plaid-verification\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "accountId",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "account-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
-          "name": "authToken",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "auth-token",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
-          "name": "businessId",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "business-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        }
-      ],
-      "methods": [],
-      "events": [
-        {
-          "event": "plaidVerificationError",
-          "detail": "PlaidError",
-          "bubbles": true,
-          "complexType": {
-            "original": "PlaidError",
-            "resolved": "PlaidError",
-            "references": {
-              "PlaidError": {
-                "location": "import",
-                "path": "../../../../api/Plaid",
-                "id": "src/api/Plaid.ts::PlaidError"
-              }
-            }
-          },
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "event": "plaidVerificationSuccess",
-          "detail": "{ publicToken: string; bankAccount: any; }",
-          "bubbles": true,
-          "complexType": {
-            "original": "{ publicToken: string, bankAccount: any }",
-            "resolved": "{ publicToken: string; bankAccount: any; }",
-            "references": {}
-          },
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        }
-      ],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "justifi-business-bank-account-form-step"
-      ],
-      "dependencies": [],
-      "dependencyGraph": {
-        "justifi-business-bank-account-form-step": [
-          "internal-plaid-verification"
-        ]
-      }
-    },
-    {
       "filePath": "src/components/tokenize-payment-method/internal-tokenize-payment-method.tsx",
       "encapsulation": "none",
       "tag": "internal-tokenize-payment-method",
@@ -7731,7 +7601,7 @@
       ],
       "dependencies": [
         "form-control-tooltip",
-        "internal-plaid-verification",
+        "plaid-verification",
         "bank-account-form-inputs-canada",
         "bank-account-form-inputs",
         "business-documents-on-file",
@@ -7740,7 +7610,7 @@
       "dependencyGraph": {
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
-          "internal-plaid-verification",
+          "plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
           "business-documents-on-file",
@@ -15283,7 +15153,7 @@
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
-          "internal-plaid-verification",
+          "plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
           "business-documents-on-file",
@@ -15638,7 +15508,7 @@
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
-          "internal-plaid-verification",
+          "plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
           "business-documents-on-file",
@@ -16130,7 +16000,7 @@
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
-          "internal-plaid-verification",
+          "plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
           "business-documents-on-file",
@@ -21622,6 +21492,136 @@
         ],
         "justifi-payouts-list": [
           "payouts-list-core"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/business-forms/payment-provisioning/plaid-verification/plaid-verification.tsx",
+      "encapsulation": "none",
+      "tag": "plaid-verification",
+      "readme": "# internal-plaid-verification\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "accountId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "account-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "authToken",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "auth-token",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "businessId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "business-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "plaidVerificationError",
+          "detail": "PlaidError",
+          "bubbles": true,
+          "complexType": {
+            "original": "PlaidError",
+            "resolved": "PlaidError",
+            "references": {
+              "PlaidError": {
+                "location": "import",
+                "path": "../../../../api/Plaid",
+                "id": "src/api/Plaid.ts::PlaidError"
+              }
+            }
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "plaidVerificationSuccess",
+          "detail": "{ publicToken: string; bankAccount: any; }",
+          "bubbles": true,
+          "complexType": {
+            "original": "{ publicToken: string, bankAccount: any }",
+            "resolved": "{ publicToken: string; bankAccount: any; }",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "justifi-business-bank-account-form-step"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "justifi-business-bank-account-form-step": [
+          "plaid-verification"
         ]
       }
     },
