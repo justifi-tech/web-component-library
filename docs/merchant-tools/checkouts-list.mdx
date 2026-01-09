@@ -24,18 +24,6 @@ import '@justifi/webcomponents/dist/module/justifi-checkouts-list';
 
 Component to render a formated list of checkouts for the requested account.
 
-## Usage
-
-### Basic list with filters
-
-<pre>
-  <code className="language-html">{`<justifi-checkouts-list-filters></justifi-checkouts-list-filters>
-<justifi-checkouts-list
-  account-id="acc_123"
-  auth-token="wct_reportingToken"
-/>`}</code>
-</pre>
-
 ### Custom columns
 
 Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,status`) to match the data points your operators expect.
@@ -73,3 +61,71 @@ Pass a comma-separated list to the `columns` prop (`created_at,payment_amount,st
 </ComponentBox>
 
 ---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-checkouts-list</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <!-- Optional: add the filters component -->
+  <justifi-checkouts-list-filters></justifi-checkouts-list-filters>
+  <justifi-checkouts-list
+    account-id="acc_123"
+    auth-token="authToken"
+    columns="created_at,payment_amount,status"
+  />
+</body>
+
+<script>
+  (function () {
+    const checkoutsList = document.querySelector('justifi-checkouts-list');
+
+    checkoutsList.addEventListener('click-event', (event) => {
+      // 'click-event' is emitted when a user clicks on a table row, or clicks on the next or previous page buttons
+      // event.detail.name describes the action that was clicked - it could be 'nextPage', 'previousPage', or 'tableRow'
+      // event.detail.data will be included if the action was 'tableRow', and will contain the data for the row that was clicked
+      
+      if (event.detail.name === 'tableRow') {
+        // Here is where you would handle the click event
+        console.log('data from click-event', event.detail.data);
+      }
+    });
+
+    checkoutsList.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>

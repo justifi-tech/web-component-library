@@ -24,23 +24,6 @@ import '@justifi/webcomponents/dist/module/justifi-payments-list';
 
 Component to render a formated list of payments for the requested account.
 
-## Usage
-
-<pre>
-  <code className="language-html">{`<div class="payments-report">
-  <justifi-filters
-    account-id="acc_123"
-    auth-token="wct_reporting"
-    target="payments"
-  ></justifi-filters>
-  <justifi-payments-list
-    account-id="acc_123"
-    auth-token="wct_reporting"
-    columns="created_at,customer_name,payment_amount,status"
-  ></justifi-payments-list>
-</div>`}</code>
-</pre>
-
 ## Props, Events & Methods
 
 <PropsMarkdownTable
@@ -72,3 +55,75 @@ Component to render a formated list of payments for the requested account.
 </ComponentBox>
 
 ---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-payments-list</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <!-- Optional: add the filters component -->
+  <justifi-filters
+    account-id="acc_123"
+    auth-token="authToken"
+    target="payments"
+  ></justifi-filters>
+  <justifi-payments-list
+    account-id="acc_123"
+    auth-token="authToken"
+    columns="created_at,customer_name,payment_amount,status"
+  />
+</body>
+
+<script>
+  (function () {
+    const paymentsList = document.querySelector('justifi-payments-list');
+
+    paymentsList.addEventListener('click-event', (event) => {
+      // 'click-event' is emitted when a user clicks on a table row, or clicks on the next or previous page buttons
+      // event.detail.name describes the action that was clicked - it could be 'nextPage', 'previousPage', or 'tableRow'
+      // event.detail.data will be included if the action was 'tableRow', and will contain the data for the row that was clicked
+      
+      if (event.detail.name === 'tableRow') {
+        // Here is where you would handle the click event
+        console.log('data from click-event', event.detail.data);
+      }
+    });
+
+    paymentsList.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>
