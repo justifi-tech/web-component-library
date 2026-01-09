@@ -26,14 +26,15 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 ### Events
 
-- `completed`: Fired when all nested components finish and a payment succeeds.
-- `error`: Emitted when nested components report a failure (validation, network, etc.).
-- `step-changed`: Surfaces stepper transitions for analytics.
+- `error-event`: Emitted when validation fails, tokenization errors occur, or any other error happens during checkout processing. The event detail includes `message`, `errorCode`, and `severity`.
+- `submit-event`: Fired when checkout is successfully completed. The event detail includes the `checkout` object and a success `message`.
+- `checkout-changed`: Emitted whenever the checkout state changes (e.g., payment method selection, available payment methods). The event detail includes `availablePaymentMethodTypes`, `selectedPaymentMethod`, and `savedPaymentMethods`.
 
 ### Public methods
 
-1. `submit()` – Programmatically trigger the checkout CTA.
-2. `reset()` – Reset the flow back to the first step and clear transient state.
+1. `submitCheckout(submitCheckoutArgs?)` – Programmatically trigger the checkout submission. Validates forms, tokenizes payment methods if needed, and completes the checkout. Optionally accepts billing form fields as arguments.
+2. `validate()` – Validates all nested forms (payment method, billing, insurance) and returns a boolean indicating if validation passed. Emits `error-event` if validation fails.
+3. `setSelectedPaymentMethod(paymentMethod)` – Sets the selected payment method programmatically on the checkout.
 
 ---
 
