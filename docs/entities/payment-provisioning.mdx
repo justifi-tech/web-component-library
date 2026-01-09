@@ -1,0 +1,68 @@
+---
+id: payment-provisioning
+title: Payment Provisioning
+description: Embed-ready workflow for collecting payout bank info and provisioning merchants for funding.
+sidebar_position: 12
+---
+
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
+import docsJson from '../docs.json';
+import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-payment-provisioning';
+
+{setUpMocks()}
+
+## Overview
+
+Component to render a business onboarding form, segmented into multiple steps. You will need to first create a business via [Business API](https://docs.justifi.tech/api-spec#tag/Business) to get the business-id required for this component.
+
+## Usage
+
+<pre>
+  <code className="language-html">{`<justifi-payment-provisioning
+  account-id="acc_123"
+  auth-token="wct_provisioning"
+  business-id="biz_456"
+  on-success-text="Payout method saved"
+/>`}</code>
+</pre>
+
+## Props, Events & Methods
+
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-payment-provisioning', docsJson)}
+/>
+
+### Events
+
+- `submitted`: Fires when payout information is collected and saved; payload includes the provisioning status.
+- `error-event`: Provides `code`/`message` details when token scopes or API calls fail.
+
+### Public methods
+
+1. `submit()` – Trigger provisioning if you render external controls.
+2. `focus()` – Move focus to the first interactive element (helpful after displaying a banner).
+
+## Theming & Layout
+
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-payment-provisioning', componentTreeJson)}
+/>
+
+# Example Usage
+
+---
+
+<ComponentBox>
+  <justifi-payment-provisioning business-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
