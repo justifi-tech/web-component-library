@@ -49,28 +49,162 @@ Handle errors gracefully:
 - Permission issues: Explain what's needed
 - API errors: Report the issue
 
-### Step 3: Count Meaningful Lines
+### Step 3: Count Meaningful Lines with Categorization
 
-Run this bash command to count lines excluding non-meaningful files:
+Run this bash script to count and categorize lines:
 
 ```bash
-gh pr diff <PR_NUMBER> | grep -E "^[+-]" | grep -v -E "^(---|\+\+\+)" | wc -l
+PR_NUMBER=<PR_NUMBER>
+
+# Read pattern config file
+CONFIG_FILE=".claude/config/line-count-ignored-files.txt"
+TEST_PATTERNS=()
+GENERATED_PATTERNS=()
+CURRENT_SECTION=""
+
+# Parse config file into pattern arrays
+while IFS= read -r line; do
+  # Skip comments and empty lines
+  [[ "$line" =~ ^#.*$ ]] && continue
+  [[ -z "$line" ]] && continue
+
+  # Track current section
+  if [[ "$line" == "[TEST]" ]]; then
+    CURRENT_SECTION="TEST"
+    continue
+  elif [[ "$line" == "[GENERATED]" ]]; then
+    CURRENT_SECTION="GENERATED"
+    continue
+  fi
+
+  # Add pattern to appropriate array
+  if [[ "$CURRENT_SECTION" == "TEST" ]]; then
+    TEST_PATTERNS+=("$line")
+  elif [[ "$CURRENT_SECTION" == "GENERATED" ]]; then
+    GENERATED_PATTERNS+=("$line")
+  fi
+done < "$CONFIG_FILE"
+
+# Function to check if file matches any pattern in array
+matches_pattern() {
+  local file="$1"
+  shift
+  local patterns=("$@")
+
+  for pattern in "${patterns[@]}"; do
+    # Convert glob pattern to regex using placeholders to avoid conflicts
+    local regex="$pattern"
+
+    # Step 1: Replace glob patterns with placeholders
+    regex="${regex//\*\*\//__DEEPDIR__}"  # **/ -> match any depth of dirs
+    regex="${regex//\*\*/__ANYPATH__}"    # ** -> match anything
+    regex="${regex//\*/__FILENAME__}"     # * -> match filename chars
+
+    # Step 2: Escape regex special chars
+    regex="${regex//./\\.}"
+    regex="${regex//\//\\/}"
+
+    # Step 3: Convert placeholders to actual regex
+    regex="${regex//__DEEPDIR__/(.*/)?}"       # Optional path prefix
+    regex="${regex//__ANYPATH__/.*}"           # Match anything
+    regex="${regex//__FILENAME__/[^/]*}"       # Match non-slash chars
+
+    # Step 4: Anchor the pattern
+    regex="^${regex}$"
+
+    if [[ "$file" =~ $regex ]]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+# Get all changed files
+CHANGED_FILES=$(gh pr diff "$PR_NUMBER" --name-only)
+
+# Check if there are any changed files
+if [ -z "$CHANGED_FILES" ]; then
+  echo "No files changed in this PR"
+  SOURCE_LINES=0
+  TEST_LINES=0
+  GENERATED_LINES=0
+else
+  # Save diff to temp file for processing
+  DIFF_FILE="/tmp/pr_diff_${PR_NUMBER}.txt"
+  gh pr diff "$PR_NUMBER" > "$DIFF_FILE"
+
+  # Initialize counters
+  SOURCE_LINES=0
+  TEST_LINES=0
+  GENERATED_LINES=0
+  SOURCE_COUNT=0
+  TEST_COUNT=0
+  GENERATED_COUNT=0
+
+  # Categorize all files
+  while IFS= read -r file; do
+    [ -z "$file" ] && continue
+
+    # Check against patterns
+    if matches_pattern "$file" "${TEST_PATTERNS[@]}"; then
+      TEST_COUNT=$((TEST_COUNT + 1))
+    elif matches_pattern "$file" "${GENERATED_PATTERNS[@]}"; then
+      GENERATED_COUNT=$((GENERATED_COUNT + 1))
+    else
+      SOURCE_COUNT=$((SOURCE_COUNT + 1))
+    fi
+  done <<< "$CHANGED_FILES"
+
+  TOTAL_FILES=$((SOURCE_COUNT + TEST_COUNT + GENERATED_COUNT))
+
+  # Count total diff lines (excluding file markers)
+  TOTAL_LINES=$(grep -E "^[+-]" "$DIFF_FILE" | grep -v -E "^(---|\+\+\+)" | wc -l | tr -d ' ')
+
+  # If all files are the same category, assign all lines to that category
+  # Otherwise, distribute lines proportionally by file count (approximation)
+  if [ $TOTAL_FILES -eq $SOURCE_COUNT ]; then
+    SOURCE_LINES=$TOTAL_LINES
+  elif [ $TOTAL_FILES -eq $TEST_COUNT ]; then
+    TEST_LINES=$TOTAL_LINES
+  elif [ $TOTAL_FILES -eq $GENERATED_COUNT ]; then
+    GENERATED_LINES=$TOTAL_LINES
+  else
+    # Mixed categories: distribute proportionally (approximation)
+    if [ $SOURCE_COUNT -gt 0 ]; then
+      SOURCE_LINES=$((TOTAL_LINES * SOURCE_COUNT / TOTAL_FILES))
+    fi
+    if [ $TEST_COUNT -gt 0 ]; then
+      TEST_LINES=$((TOTAL_LINES * TEST_COUNT / TOTAL_FILES))
+    fi
+    if [ $GENERATED_COUNT -gt 0 ]; then
+      GENERATED_LINES=$((TOTAL_LINES * GENERATED_COUNT / TOTAL_FILES))
+    fi
+  fi
+
+  # Cleanup
+  rm -f "$DIFF_FILE"
+fi
+
+echo "Categorized line counts:"
+echo "  Source code: $SOURCE_LINES lines"
+echo "  Test code: $TEST_LINES lines"
+echo "  Generated files: $GENERATED_LINES lines (excluded)"
 ```
 
-This counts all added/removed lines. For more accuracy, subtract lines from:
-- Lock files (look for package-lock.json, pnpm-lock.yaml, yarn.lock in the diff)
-- Snapshot files (look for __snapshots__ or .snap in the diff)
-- Generated files (look for .generated., .gen., -generated., -gen. in the diff)
+Store the SOURCE_LINES, TEST_LINES, and GENERATED_LINES values for use in subsequent steps.
+
+**Note**: Line counts per category are approximated when PRs contain mixed file types. The categorization is accurate for file types, and line distribution is proportional to file count.
 
 If counting fails, proceed with review anyway (don't let it block).
 
-**Line count threshold: 250 lines**
+**Line count threshold: 250 lines of source code only** (tests and generated files don't count toward limit)
 
 ### Step 4: Read Code Review Agent Instructions
 
 Use the Read tool to get the code review guidelines:
 ```
-Read: /Users/jakemerringer/justifi-tech/web-component-library/.claude/agents/code-review/AGENT.md
+Read: .claude/agents/code-review/AGENT.md
 ```
 
 Extract the review criteria and output format from these instructions.
@@ -81,7 +215,7 @@ Since custom agents aren't available in Task tool, use the `general-purpose` sub
 
 Build the prompt:
 
-**If line count > 250:**
+**If source lines > 250:**
 ```
 You are performing a code review following the guidelines in .claude/agents/code-review/AGENT.md.
 
@@ -92,12 +226,16 @@ Review the following code changes:
 PR: #<NUMBER> - <TITLE>
 Author: <AUTHOR>
 Branch: <HEAD> -> <BASE>
-Meaningful lines changed: <LINE_COUNT> (exceeds limit of 250 lines)
+
+Line count breakdown:
+- Source code: <SOURCE_LINES> lines (limit: 250) ⚠️ EXCEEDS LIMIT
+- Test code: <TEST_LINES> lines (no limit)
+- Generated files: <GENERATED_LINES> lines (excluded)
 
 Description:
 <BODY>
 
-This PR exceeds our 250-line limit for meaningful code changes. First, suggest how to split this PR into logical chunks, then review the code.
+This PR exceeds our 250-line limit for source code changes. First, suggest how to split this PR into logical chunks, then review the code.
 
 Diff:
 <DIFF_CONTENT>
@@ -110,7 +248,7 @@ CRITICAL: Start your response with exactly one of these verdict markers:
 Follow the code-review agent format: provide concise verdict-driven feedback, only mention issues that need attention.
 ```
 
-**If line count <= 250:**
+**If source lines <= 250:**
 ```
 You are performing a code review following the guidelines in .claude/agents/code-review/AGENT.md.
 
@@ -121,7 +259,11 @@ Review the following code changes:
 PR: #<NUMBER> - <TITLE>
 Author: <AUTHOR>
 Branch: <HEAD> -> <BASE>
-Meaningful lines changed: <LINE_COUNT>
+
+Line count breakdown:
+- Source code: <SOURCE_LINES> lines (limit: 250)
+- Test code: <TEST_LINES> lines (no limit)
+- Generated files: <GENERATED_LINES> lines (excluded)
 
 Description:
 <BODY>
@@ -156,11 +298,11 @@ Extract the verdict using string matching or regex.
 
 ### Step 7: Map Verdict to GitHub Review Flag
 
-**If line count > 250:**
+**If source lines > 250:**
 - Always use `--comment` (regardless of verdict)
 - Rationale: Encourage splitting before approval
 
-**If line count <= 250:**
+**If source lines <= 250:**
 - `APPROVED` → `--approve`
 - `NOT_APPROVED` → `--request-changes`
 - `COMMENT` → `--comment`
@@ -200,7 +342,10 @@ Report success to the user:
 ```
 ✓ Review posted to PR #<NUMBER>
 Action: [Approved / Requested Changes / Comment]
-Meaningful lines: <LINE_COUNT>
+Line breakdown:
+  - Source code: <SOURCE_LINES> lines (limit: 250)
+  - Test code: <TEST_LINES> lines
+  - Generated files: <GENERATED_LINES> lines (excluded)
 ```
 
 ## Error Handling

@@ -92,14 +92,46 @@ Copy `.env.example` to `.env` and configure:
 
 - [JustiFi API Documentation](https://developer.justifi.ai/)
 
+## Auto-Generated Files
+
+The following patterns identify auto-generated files that should be excluded from PR line counting:
+
+### Build Output
+- `dist/**/*` - All Stencil build output
+- `coverage/**/*` - Test coverage reports
+- `.turbo/**/*` - Turborepo cache
+
+### Generated Type Definitions
+- `src/components.d.ts` - Stencil auto-generated component types
+- `src/global.d.ts` - Global type declarations
+- `dist/docs.d.ts` - Documentation types
+- `**/*.d.ts` files in `dist/` directories
+
+### Test Snapshots
+- `**/__snapshots__/**/*.snap` - Jest snapshot files
+- All `.snap` files
+
+### Package Lock Files
+- `pnpm-lock.yaml`
+- `package-lock.json`
+- `yarn.lock`
+- `**/node_modules/**`
+
+### Build Artifacts
+- `**/*.entry.js` - Stencil entry point chunks
+- `dist/docs.json` - Component metadata
+- `dist/collection/collection-manifest.json`
+- Build logs in `.turbo/` directories
+
 ## Pull Request Guidelines
 
 ### PR Size Limits
 
 Keep PRs focused and reviewable:
-- **Maximum 250 lines** of meaningful code (source + tests)
-- Excludes: lock files, dist/, build/, __snapshots__, generated files
-- Automated review will flag oversized PRs with split suggestions
+- **Maximum 250 lines** of source code changes
+- Test code has no limit (comprehensive test coverage is encouraged)
+- Auto-generated files are excluded (lock files, dist/, coverage/, .turbo/, __snapshots__, *.d.ts in dist/)
+- Automated review will flag oversized PRs with split suggestions and show line count breakdown
 
 **Why this matters:**
 - Large PRs get superficial reviews

@@ -1,0 +1,41 @@
+# PR Line Count - Ignored File Patterns
+# Format: gitignore-style patterns, one per line
+# Lines starting with # are comments, empty lines are ignored
+# Patterns are grouped into categories: [TEST], [GENERATED]
+# Everything else is considered [SOURCE] code
+
+[TEST]
+# Test files (no limit - encourage comprehensive test coverage)
+**/*.spec.ts
+**/*.spec.tsx
+**/*.test.ts
+**/*.test.tsx
+**/test/**
+**/__tests__/**
+**/__snapshots__/**
+**/__mocks__/**
+**/mockData/**
+*.snap
+
+[GENERATED]
+# Build output directories
+dist/**
+coverage/**
+.turbo/**
+
+# Generated type definitions
+src/components.d.ts
+src/global.d.ts
+dist/docs.d.ts
+**/dist/**/*.d.ts
+
+# Package lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+**/node_modules/**
+
+# Build artifacts
+**/*.entry.js
+dist/docs.json
+dist/collection/collection-manifest.json
