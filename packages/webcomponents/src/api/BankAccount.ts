@@ -18,6 +18,7 @@ export interface IBankAccount {
   platform_account_id?: string;
   created_at?: string;
   updated_at?: string;
+  verification_provider?: string;
 }
 
 export class BankAccount implements IBankAccount {
