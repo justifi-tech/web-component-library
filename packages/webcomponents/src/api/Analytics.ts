@@ -23,6 +23,7 @@ class JustifiAnalytics {
   eventEmitters: string[];
   service: AnalyticsService;
   basicData: iBasicData;
+  private eventListeners: Map<string, Function> = new Map();
 
   constructor(component: ComponentInterface) {
     // dont track analytics in local or storybook
@@ -73,12 +74,14 @@ class JustifiAnalytics {
     this.eventEmitters.forEach((eventName) => {
       // if this.componentInstance.addEventListener is a function add the event listener
       if (typeof this.componentInstance.addEventListener === 'function') {
-        this.componentInstance.addEventListener(eventName, (event: any) =>
+        const boundHandler = (event: any) =>
           this.handleCustomEvent({
             event_type: eventName,
             data: { ...this.basicData, error: event.detail },
-          })
-        );
+          });
+
+        this.eventListeners.set(eventName, boundHandler);
+        this.componentInstance.addEventListener(eventName, boundHandler);
       }
     });
   }
@@ -97,13 +100,10 @@ class JustifiAnalytics {
 
   cleanup() {
     // Remove event listeners
-    if (!this.eventEmitters) {
-      return;
-    }
-
-    this.eventEmitters.forEach((event) => {
-      this.componentInstance.removeEventListener(event, this.handleCustomEvent);
+    this.eventListeners.forEach((handler, eventName) => {
+      this.componentInstance.removeEventListener(eventName, handler);
     });
+    this.eventListeners.clear();
   }
 }
 
