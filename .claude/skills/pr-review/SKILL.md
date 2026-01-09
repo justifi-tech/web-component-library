@@ -56,6 +56,70 @@ Run this bash script to count and categorize lines:
 ```bash
 PR_NUMBER=<PR_NUMBER>
 
+# Read pattern config file
+CONFIG_FILE=".claude/config/line-count-ignored-files.txt"
+TEST_PATTERNS=()
+GENERATED_PATTERNS=()
+CURRENT_SECTION=""
+
+# Parse config file into pattern arrays
+while IFS= read -r line; do
+  # Skip comments and empty lines
+  [[ "$line" =~ ^#.*$ ]] && continue
+  [[ -z "$line" ]] && continue
+
+  # Track current section
+  if [[ "$line" == "[TEST]" ]]; then
+    CURRENT_SECTION="TEST"
+    continue
+  elif [[ "$line" == "[GENERATED]" ]]; then
+    CURRENT_SECTION="GENERATED"
+    continue
+  fi
+
+  # Add pattern to appropriate array
+  if [[ "$CURRENT_SECTION" == "TEST" ]]; then
+    TEST_PATTERNS+=("$line")
+  elif [[ "$CURRENT_SECTION" == "GENERATED" ]]; then
+    GENERATED_PATTERNS+=("$line")
+  fi
+done < "$CONFIG_FILE"
+
+# Function to check if file matches any pattern in array
+matches_pattern() {
+  local file="$1"
+  shift
+  local patterns=("$@")
+
+  for pattern in "${patterns[@]}"; do
+    # Convert glob pattern to regex using placeholders to avoid conflicts
+    local regex="$pattern"
+
+    # Step 1: Replace glob patterns with placeholders
+    regex="${regex//\*\*\//__DEEPDIR__}"  # **/ -> match any depth of dirs
+    regex="${regex//\*\*/__ANYPATH__}"    # ** -> match anything
+    regex="${regex//\*/__FILENAME__}"     # * -> match filename chars
+
+    # Step 2: Escape regex special chars
+    regex="${regex//./\\.}"
+    regex="${regex//\//\\/}"
+
+    # Step 3: Convert placeholders to actual regex
+    regex="${regex//__DEEPDIR__/(.*/)?}"       # Optional path prefix
+    regex="${regex//__ANYPATH__/.*}"           # Match anything
+    regex="${regex//__FILENAME__/[^/]*}"       # Match non-slash chars
+
+    # Step 4: Anchor the pattern
+    regex="^${regex}$"
+
+    if [[ "$file" =~ $regex ]]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
 # Get all changed files
 CHANGED_FILES=$(gh pr diff "$PR_NUMBER" --name-only)
 
@@ -70,7 +134,7 @@ else
   DIFF_FILE="/tmp/pr_diff_${PR_NUMBER}.txt"
   gh pr diff "$PR_NUMBER" > "$DIFF_FILE"
 
-  # Initialize counters and file lists
+  # Initialize counters
   SOURCE_LINES=0
   TEST_LINES=0
   GENERATED_LINES=0
@@ -78,21 +142,14 @@ else
   TEST_COUNT=0
   GENERATED_COUNT=0
 
-  # First pass: categorize all files
+  # Categorize all files
   while IFS= read -r file; do
     [ -z "$file" ] && continue
 
-    # Categorize file based on patterns
-    if [[ "$file" =~ \.(spec|test)\.(ts|tsx)$ ]] || \
-       [[ "$file" =~ /(test|__tests__|__snapshots__|mockData|__mocks__)/ ]] || \
-       [[ "$file" =~ \.snap$ ]]; then
+    # Check against patterns
+    if matches_pattern "$file" "${TEST_PATTERNS[@]}"; then
       TEST_COUNT=$((TEST_COUNT + 1))
-    elif [[ "$file" =~ ^dist/ ]] || \
-         [[ "$file" =~ /dist/.*\.d\.ts ]] || \
-         [[ "$file" =~ ^(coverage|\.turbo)/ ]] || \
-         [[ "$file" =~ (components|global|docs)\.d\.ts$ ]] || \
-         [[ "$file" =~ (pnpm-lock|package-lock|yarn\.lock)$ ]] || \
-         [[ "$file" =~ node_modules ]]; then
+    elif matches_pattern "$file" "${GENERATED_PATTERNS[@]}"; then
       GENERATED_COUNT=$((GENERATED_COUNT + 1))
     else
       SOURCE_COUNT=$((SOURCE_COUNT + 1))
