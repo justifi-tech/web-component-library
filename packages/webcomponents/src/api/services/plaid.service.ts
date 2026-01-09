@@ -17,7 +17,7 @@ export interface IPlaidService {
 
   getLinkTokenForVerification(
     authToken: string,
-    accountId: string,
+    businessId: string,
     signal?: AbortSignal
   ): Promise<IApiResponse<ILinkTokenResponse>>;
 
