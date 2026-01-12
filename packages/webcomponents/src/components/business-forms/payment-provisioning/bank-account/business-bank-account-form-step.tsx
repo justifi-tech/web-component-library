@@ -27,7 +27,6 @@ export class BusinessBankAccountFormStep {
   @State() postDocument: Function;
   @State() bankAccountVerification: boolean = false;
   @State() platformAccountId: string | null = null;
-  @State() isPlaidVerification: boolean = false;
 
   @Prop() authToken!: string;
   @Prop() businessId!: string;
@@ -161,8 +160,6 @@ export class BusinessBankAccountFormStep {
         this.existingDocuments = response.data.documents;
         this.bankAccountVerification = response.data.settings.bank_account_verification === true;
         this.platformAccountId = response.data.platform_account_id;
-
-        this.isPlaidVerification = this.bankAccount.verification_provider === 'plaid';
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
