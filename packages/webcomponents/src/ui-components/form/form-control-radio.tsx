@@ -29,7 +29,7 @@ export class RadioInput {
   @Prop() value!: string;
   @Prop() helpText?: string;
   @Prop() inputHandler!: (name: string, value: string) => void;
-  @Prop() disabled!: boolean;
+  @Prop() disabled?: boolean = false;
   @Prop() errorText!: string;
   @Prop() checked!: boolean;
 

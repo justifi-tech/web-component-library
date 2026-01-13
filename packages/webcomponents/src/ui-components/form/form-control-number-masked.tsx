@@ -28,7 +28,7 @@ export class NumberInputMasked {
   @Prop() defaultValue!: string;
   @Prop() inputHandler!: (name: string, value: string) => void;
   @Prop() mask!: string;
-  @Prop() disabled!: boolean;
+  @Prop() disabled?: boolean = false;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {

@@ -27,7 +27,7 @@ export class TextInput {
   @Prop() maxLength?: number;
   @Prop() inputHandler!: (name: string, value: string) => void;
   @Prop() keyDownHandler?: (event: any) => void;
-  @Prop() disabled!: boolean;
+  @Prop() disabled?: boolean = false;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
