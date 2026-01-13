@@ -26,10 +26,10 @@ export class FileInput {
   @Prop() label!: string;
   @Prop() name!: any;
   @Prop() helpText?: string;
-  @Prop() errorText?: string;
+  @Prop() errorText?: string = '';
   @Prop() multiple?: boolean;
   @Prop() documentType!: EntityDocumentType;
-  @Prop() inputHandler!: (name: string, value: string) => void;
+  @Prop() inputHandler?: (name: string, value: string) => void = () => { };
   @Prop() disabled?: boolean = false;
 
   @Event() formControlInput: EventEmitter<any>;

@@ -12,7 +12,7 @@ describe('BusinessDetailsCore', () => {
   it('should display loading state correclty', async () => {
     const page = await newSpecPage({
       components: [BusinessDetailsCore],
-      template: () => <business-details-core />,
+      template: () => <business-details-core getBusiness={() => { }} />,
     });
 
     await page.waitForChanges();

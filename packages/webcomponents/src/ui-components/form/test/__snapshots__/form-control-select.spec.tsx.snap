@@ -47,7 +47,14 @@ exports[`form-control-select Renders with default props 1`] = `
       </label>
       <form-control-tooltip></form-control-tooltip>
     </div>
-    <select class="form-select" id="delivery_method" name="delivery_method" part="input text color font-family background-color"></select>
+    <select class="form-select" id="delivery_method" name="delivery_method" part="input text color font-family background-color">
+      <option value="pickup">
+        Pickup
+      </option>
+      <option value="delivery">
+        Delivery
+      </option>
+    </select>
   </div>
 </form-control-select>
 `;

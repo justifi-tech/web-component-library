@@ -170,12 +170,22 @@ export class AdditionalQuestionsFormStep {
               />
             </div>
             <div class="col-12 col-md-6">
-              <form-control-text
+              <form-control-monetary-provisioning
                 name="business_payment_volume"
                 label="What is your business' annual credit card & ACH volume anticipated to process?"
                 inputHandler={this.inputHandler}
                 errorText={this.errors?.business_payment_volume}
                 defaultValue={additionalQuestionsDefaultValue?.business_payment_volume}
+                maskOptions={CURRENCY_MASK.WHOLE}
+              />
+            </div>
+            <div class="col-12">
+              <form-control-text
+                name="business_average_transaction_amount"
+                label="What is your average transaction size?"
+                inputHandler={this.inputHandler}
+                errorText={this.errors?.business_average_transaction_amount}
+                defaultValue={additionalQuestionsDefaultValue?.business_average_transaction_amount}
               />
             </div>
             <div class="col-12">

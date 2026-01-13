@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`payment-details renders an error message when authToken is not provided 1`] = `
-<justifi-payment-details payment-id="abc">
+<justifi-payment-details>
   <template shadowrootmode="open">
     <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
       <p part="text color font-family">
@@ -25,7 +25,7 @@ exports[`payment-details renders an error message when paymentId and authToken a
 `;
 
 exports[`payment-details renders an error message when paymentId is not provided 1`] = `
-<justifi-payment-details auth-token="abc">
+<justifi-payment-details>
   <template shadowrootmode="open">
     <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
       <p part="text color font-family">

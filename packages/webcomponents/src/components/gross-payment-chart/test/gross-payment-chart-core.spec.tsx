@@ -18,7 +18,7 @@ describe('gross-payment-chart', () => {
   it('should initialize with default states', async () => {
     const page = await newSpecPage({
       components: [GrossPaymentChartCore],
-      template: () => <gross-payment-chart-core />,
+      template: () => <gross-payment-chart-core getGrossPayment={() => { }} />,
     });
     expect(page.rootInstance.loading).toBeTruthy();
     expect(page.rootInstance.errorMessage).toBe('');
@@ -48,7 +48,7 @@ describe('gross-payment-chart', () => {
   it('matches the snapshot when in loading state', async () => {
     const page = await newSpecPage({
       components: [GrossPaymentChartCore],
-      template: () => <gross-payment-chart-core />,
+      template: () => <gross-payment-chart-core getGrossPayment={() => { }} />,
     });
 
     expect(page.root).toMatchSnapshot();

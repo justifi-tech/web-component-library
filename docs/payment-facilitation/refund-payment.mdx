@@ -24,45 +24,10 @@ import '@justifi/webcomponents/dist/module/justifi-refund-payment';
 
 Component to render a form for partially or fully refunding a payment based on a provided payment ID.
 
-# Props, events and methods
+## Props, Events & Methods
 
----
-
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description:
-          'Ensures refunds are scoped to the correct platform account.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `write:refunds` scope.',
-      },
-      {
-        name: 'payment-id',
-        type: 'string',
-        required: true,
-        description: 'Payment being refunded.',
-      },
-      {
-        name: 'max-amount',
-        type: 'string | number',
-        description:
-          'Upper limit for partial refunds (defaults to remaining amount).',
-      },
-      {
-        name: 'default-reason',
-        type: 'string',
-        description: 'Preselects a refund reason code.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-refund-payment', docsJson)}
 />
 
 ### Events
@@ -233,22 +198,6 @@ Component to render a form for partially or fully refunding a payment based on a
 </script>
 
 </html>`}</code></pre>
-
-## Props, Events & Methods
-
-<PropsMarkdownTable
-  props={getPropsFromDocs('justifi-refund-payment', docsJson)}
-/>
-
-### Events
-
-- `submitted`: Emits when the refund is created; payload includes `refund_id` and amount.
-- `error-event`: Fires when validation or network calls fail.
-
-### Public methods
-
-1. `submit()` – Trigger the refund flow (useful if the component is inside a modal with custom buttons).
-2. `focus()` – Move focus to the amount input.
 
 ## Theming & Layout
 

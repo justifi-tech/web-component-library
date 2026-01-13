@@ -12,7 +12,7 @@ describe('form-control-text', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' />,
+      template: () => <form-control-text label='Username' name='username' inputHandler={mockInputHandler} defaultValue='John Doe' disabled={false} />,
     });
 
     expect(page.root).toMatchSnapshot();
@@ -50,6 +50,7 @@ describe('form-control-text', () => {
           label='Email'
           name='email'
           defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
         />
     });
 
@@ -66,6 +67,7 @@ describe('form-control-text', () => {
           label='Email'
           name='email'
           defaultValue={defaultValue}
+          inputHandler={mockInputHandler}
         />
     });
 
@@ -129,7 +131,7 @@ describe('form-control-text', () => {
   it('Emits formControlBlur event on blur', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text defaultValue='user@example.com' inputHandler={mockInputHandler} />
+      template: () => <form-control-text label='Username' name='username' defaultValue='user@example.com' inputHandler={mockInputHandler} />
     });
 
     const blurEventSpy = jest.fn();
@@ -144,7 +146,7 @@ describe('form-control-text', () => {
   it('Disables input when disabled prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' disabled />,
+      template: () => <form-control-text label='Username' name='username' defaultValue='user@example.com' inputHandler={mockInputHandler} disabled={true} />,
     });
 
     const inputElement = page.root.querySelector('input');
@@ -154,7 +156,7 @@ describe('form-control-text', () => {
   it('Shows help text when helpText prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' helpText='This is the help text.' />,
+      template: () => <form-control-text label='Username' name='username' defaultValue='user@example.com' inputHandler={mockInputHandler} helpText='This is the help text.' />,
     });
 
     const tooltipComponent = page.root.querySelector('form-control-tooltip');
@@ -173,7 +175,7 @@ describe('form-control-text', () => {
   it('Shows error and applies error styling when error prop is provided', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-text label='Username' name='username' errorText='This field is required.' />,
+      template: () => <form-control-text label='Username' name='username' defaultValue='user@example.com' inputHandler={mockInputHandler} errorText='This field is required.' />,
     });
 
     const errorTextComponent = page.root.querySelector('#form-error-text-username');

@@ -15,7 +15,7 @@ describe('justifi-business-details', () => {
   it('initializes getBusiness on load with valid props', async () => {
     const page = await newSpecPage({
       components: [BusinessDetails],
-      template: () => <justifi-business-details business-id="123" auth-token="token" />,
+      template: () => <justifi-business-details businessId="123" authToken="token" />,
     });
 
     page.waitForChanges();
@@ -27,7 +27,7 @@ describe('justifi-business-details', () => {
   it('sets an error message with invalid props', async () => {
     const page = await newSpecPage({
       components: [BusinessDetails],
-      template: () => <justifi-business-details />, // No props provided
+      template: () => <justifi-business-details businessId="" authToken="" />, // No props provided
     });
 
     page.waitForChanges();
@@ -38,7 +38,7 @@ describe('justifi-business-details', () => {
   it('renders the error state when there is an error message', async () => {
     const page = await newSpecPage({
       components: [BusinessDetails, BusinessDetailsCore],
-      template: () => <justifi-business-details />,
+      template: () => <justifi-business-details businessId="" authToken="" />,
     });
 
     await page.waitForChanges();
@@ -50,7 +50,7 @@ describe('justifi-business-details', () => {
   it('renders business-details-core when there is no error message', async () => {
     const page = await newSpecPage({
       components: [BusinessDetails, BusinessDetailsCore],
-      template: () => <justifi-business-details business-id="123" auth-token="token" />,
+      template: () => <justifi-business-details businessId="123" authToken="token" />,
     });
 
     page.waitForChanges();
@@ -64,19 +64,11 @@ describe('justifi-business-details', () => {
 
     const page = await newSpecPage({
       components: [BusinessDetails],
-      template: () => <justifi-business-details business-id="123" onError-event={errorSpy} />,
+      template: () => <justifi-business-details businessId="123" authToken="" onError-event={errorSpy} />,
     });
 
-    page.waitForChanges();
+    await page.waitForChanges();
 
-    expect(errorSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        detail: {
-          errorCode: 'missing-props',
-          message: 'Invalid business id or auth token',
-          severity: 'error',
-        }
-      })
-    );
+    expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({ detail: { message: 'Invalid business id or auth token', errorCode: 'missing-props', severity: 'error' } }));
   });
 });

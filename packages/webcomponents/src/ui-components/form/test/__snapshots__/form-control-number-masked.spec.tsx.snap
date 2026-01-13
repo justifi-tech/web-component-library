@@ -40,7 +40,7 @@ exports[`form-control-number-masked Renders with default props 1`] = `
       </label>
       <form-control-tooltip></form-control-tooltip>
     </div>
-    <input class="form-control" id="age" name="age" part="input text color font-family background-color" type="text">
+    <input class="form-control" id="age" name="age" part="input text color font-family background-color" type="text" value="25">
   </div>
 </form-control-number-masked>
 `;

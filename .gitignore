@@ -7,4 +7,4 @@ node_modules
 packages/mockData/mockGrossVolumeReport.js.map
 packages/mockData/mockGrossVolumeReport.js
 /agent-os/*
-.claude/*
+.claude/settings.local.json

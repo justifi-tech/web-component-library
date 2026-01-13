@@ -26,7 +26,7 @@ export class NumberInput {
   @Prop() errorText?: string;
   @Prop() defaultValue!: string;
   @Prop() inputHandler!: (name: string, value: string) => void;
-  @Prop() disabled!: boolean;
+  @Prop() disabled?: boolean = false;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {
