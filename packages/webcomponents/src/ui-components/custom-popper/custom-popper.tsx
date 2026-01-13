@@ -65,6 +65,9 @@ export class CustomPopper {
   disconnectedCallback() {
     if (!this.initialized) return;
 
+    // Clean up popper instance
+    this.popperInstance?.destroy();
+
     if (this.trigger === 'click') {
       window.removeEventListener('click', this.boundHandlers.handleClick);
     } else if (this.trigger === 'hover') {
