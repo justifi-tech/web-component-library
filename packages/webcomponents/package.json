@@ -12,6 +12,7 @@
       "require": "./dist/index.cjs.js",
       "import": "./dist/module/index.js"
     },
+    "./dist/module/*.js": "./dist/module/*.js",
     "./dist/module/*": "./dist/module/*.js",
     "./dist/docs.json": "./dist/docs.json",
     "./package.json": "./package.json"

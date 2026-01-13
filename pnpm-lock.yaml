@@ -113,8 +113,8 @@ importers:
   docs:
     dependencies:
       '@justifi/webcomponents':
-        specifier: 6.7.2
-        version: 6.7.2
+        specifier: 6.7.3
+        version: 6.7.3
       markdown-table:
         specifier: ^3.0.4
         version: 3.0.4
@@ -1213,8 +1213,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@justifi/webcomponents@6.7.2':
-    resolution: {integrity: sha512-irhGGnjbYZCEt8zkIZZAcSl5YiDosfyOY2cu/8xsSxnrpS/m0+oX6TbTAtL+7mog8+IYZ0O1rGHOk/4JA18gTA==}
+  '@justifi/webcomponents@6.7.3':
+    resolution: {integrity: sha512-/x3pLtFSv/2RKSOVb4uLeFpcmUWtWrrWllExGGAZoHVR8nrGvXJzxL6hZMWzLa40xDdmyQmAz6ZWGdXmrZbVBg==}
 
   '@kurkle/color@0.3.4':
     resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
@@ -5948,7 +5948,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@justifi/webcomponents@6.7.2':
+  '@justifi/webcomponents@6.7.3':
     dependencies:
       '@popperjs/core': 2.11.8
       '@stencil/core': 4.38.3
