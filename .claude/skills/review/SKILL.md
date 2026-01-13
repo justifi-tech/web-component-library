@@ -6,7 +6,9 @@ allowed-tools: Bash, Task, Read
 
 # Review Skill
 
-Quick PR code review skill that provides streamlined, verdict-first feedback.
+Quick PR code review for CLI (does NOT post to GitHub).
+
+**See also:** `.claude/CODE_REVIEW_SYSTEM.md` for full system overview.
 
 ## How to Use
 

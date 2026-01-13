@@ -6,7 +6,11 @@ allowed-tools: Bash, Task, Read
 
 # PR Review Skill
 
-This skill handles the full GitHub PR review workflow with size checking, intelligent code analysis, and native GitHub review actions.
+Posts code review to GitHub with size checking and native GitHub review actions.
+
+**See also:** `.claude/CODE_REVIEW_SYSTEM.md` for full system overview.
+
+**Note:** This produces the SAME concise output as `/review` skill, just posts it to GitHub instead of CLI.
 
 ## How to Use
 
