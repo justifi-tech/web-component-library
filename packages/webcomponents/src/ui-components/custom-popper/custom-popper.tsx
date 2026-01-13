@@ -19,6 +19,11 @@ export class CustomPopper {
   private popperInstance: any;
   private popperContentRef: HTMLElement;
   private initialized: boolean = false;
+  private boundHandlers = {
+    show: null as (() => void) | null,
+    hide: null as (() => void) | null,
+    handleClick: null as ((event: MouseEvent) => void) | null,
+  };
 
   @Watch('anchorRef')
   onAnchorRefChange(newValue: HTMLElement | SVGElement) {
@@ -37,18 +42,23 @@ export class CustomPopper {
     if (this.initialized) return;
     this.initialized = true;
 
+    // Store bound references
+    this.boundHandlers.show = this.show.bind(this);
+    this.boundHandlers.hide = this.hide.bind(this);
+    this.boundHandlers.handleClick = this.handleClick.bind(this);
+
     this.popperInstance = createPopper(this.anchorRef, this.popperContentRef, this.popperOptions);
 
     if (this.trigger === 'click') {
-      window.addEventListener('click', this.handleClick.bind(this));
+      window.addEventListener('click', this.boundHandlers.handleClick);
     } else if (this.trigger === 'hover') {
-      this.anchorRef.addEventListener('mouseenter', this.show.bind(this));
-      this.anchorRef.addEventListener('mouseleave', this.hide.bind(this));
-      this.popperContentRef.addEventListener('mouseenter', this.show.bind(this));
-      this.popperContentRef.addEventListener('mouseleave', this.hide.bind(this));
+      this.anchorRef.addEventListener('mouseenter', this.boundHandlers.show);
+      this.anchorRef.addEventListener('mouseleave', this.boundHandlers.hide);
+      this.popperContentRef.addEventListener('mouseenter', this.boundHandlers.show);
+      this.popperContentRef.addEventListener('mouseleave', this.boundHandlers.hide);
     } else if (this.trigger === 'focus') {
-      this.anchorRef.addEventListener('focus', this.show.bind(this));
-      this.anchorRef.addEventListener('blur', this.hide.bind(this));
+      this.anchorRef.addEventListener('focus', this.boundHandlers.show);
+      this.anchorRef.addEventListener('blur', this.boundHandlers.hide);
     }
   }
 
@@ -56,15 +66,15 @@ export class CustomPopper {
     if (!this.initialized) return;
 
     if (this.trigger === 'click') {
-      window.removeEventListener('click', this.handleClick.bind(this));
+      window.removeEventListener('click', this.boundHandlers.handleClick);
     } else if (this.trigger === 'hover') {
-      this.anchorRef?.removeEventListener('mouseenter', this.show.bind(this));
-      this.anchorRef?.removeEventListener('mouseleave', this.hide.bind(this));
-      this.popperContentRef?.removeEventListener('mouseenter', this.show.bind(this));
-      this.popperContentRef?.removeEventListener('mouseleave', this.hide.bind(this));
+      this.anchorRef?.removeEventListener('mouseenter', this.boundHandlers.show);
+      this.anchorRef?.removeEventListener('mouseleave', this.boundHandlers.hide);
+      this.popperContentRef?.removeEventListener('mouseenter', this.boundHandlers.show);
+      this.popperContentRef?.removeEventListener('mouseleave', this.boundHandlers.hide);
     } else if (this.trigger === 'focus') {
-      this.anchorRef?.removeEventListener('focus', this.show.bind(this));
-      this.anchorRef?.removeEventListener('blur', this.hide.bind(this));
+      this.anchorRef?.removeEventListener('focus', this.boundHandlers.show);
+      this.anchorRef?.removeEventListener('blur', this.boundHandlers.hide);
     }
   }
 
