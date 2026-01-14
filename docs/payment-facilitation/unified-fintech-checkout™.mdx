@@ -33,14 +33,14 @@ You will need to first create a checkout via [Checkout API](https://docs.justifi
 
 ### Events
 
-- `completed`: Emits when payment succeeds; payload includes `checkout_id`, `payment_method_token`, and receipt data.
-- `error`: Fires if payment processing fails; includes error codes for analytics.
-- `step-changed`: Useful when you pipe analytics or breadcrumbs for multi-step flows.
+- `submit-event`: Emits when payment succeeds; payload includes the server response.
+- `error-event`: Fires if payment processing fails; includes error codes for analytics.
+- `loaded`: Emits when the checkout form is fully loaded.
 
 ### Public methods
 
-1. `submit()` – Programmatically trigger the pay button (helpful if you hide the built-in CTA).
-2. `reset(checkoutId)` – Reload a different checkout session without re-mounting the component.
+1. `fillBillingForm(fields)` – Pre-fill the billing form with the provided fields (name, address, etc.).
+2. `validate()` – Validates all form fields and returns `{ isValid: boolean }`.
 
 # Pre-Complete Hook
 

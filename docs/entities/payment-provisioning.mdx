@@ -43,13 +43,8 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ### Events
 
-- `submitted`: Fires when payout information is collected and saved; payload includes the provisioning status.
+- `submit-event`: Fires when payout information is collected and saved; payload includes the server response.
 - `error-event`: Provides `code`/`message` details when token scopes or API calls fail.
-
-### Public methods
-
-1. `submit()` – Trigger provisioning if you render external controls.
-2. `focus()` – Move focus to the first interactive element (helpful after displaying a banner).
 
 ## Theming & Layout
 
