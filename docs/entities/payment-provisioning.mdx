@@ -28,14 +28,12 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 <pre>
   <code className="language-html">{`<justifi-payment-provisioning
-  account-id="acc_123"
   auth-token="wct_provisioning"
   business-id="biz_456"
-  on-success-text="Payout method saved"
 />`}</code>
 </pre>
 
-## Props, Events & Methods
+## Props & Events
 
 <PropsMarkdownTable
   props={getPropsFromDocs('justifi-payment-provisioning', docsJson)}
@@ -43,13 +41,18 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 ### Events
 
-- `submitted`: Fires when payout information is collected and saved; payload includes the provisioning status.
-- `error-event`: Provides `code`/`message` details when token scopes or API calls fail.
+- `submit-event`: Fires when payout information is collected and saved. Payload includes the API response or error details.
+- `click-event`: Fires on button interactions (Previous/Next step navigation). Payload includes the action name.
+- `error-event`: Fires when errors occur, including:
+  - Missing required props (`auth-token` or `business-id`)
+  - API failures during business data fetch or provisioning submission
+  - When provisioning has already been requested for the business
 
-### Public methods
+  Payload includes `message`, `errorCode`, and `severity` properties.
 
-1. `submit()` – Trigger provisioning if you render external controls.
-2. `focus()` – Move focus to the first interactive element (helpful after displaying a banner).
+### Public Methods
+
+This component does not expose any public methods. Form submission is handled automatically through the multi-step form flow.
 
 ## Theming & Layout
 
@@ -62,7 +65,10 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 ---
 
 <ComponentBox>
-  <justifi-payment-provisioning business-id="123" auth-token="123abc" />
+  <justifi-payment-provisioning
+    business-id="biz_123"
+    auth-token="wct_provisioning"
+  />
 </ComponentBox>
 
 ---
