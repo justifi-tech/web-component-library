@@ -25,6 +25,8 @@ export class BusinessBankAccountFormStep {
   @State() postBankAccount: Function;
   @State() postDocumentRecord: Function;
   @State() postDocument: Function;
+  @State() bankAccountVerification: boolean = false;
+  @State() platformAccountId: string | null = null;
 
   @Prop() authToken!: string;
   @Prop() businessId!: string;
@@ -156,6 +158,8 @@ export class BusinessBankAccountFormStep {
           this.bankAccount.business_id = this.businessId;
         }
         this.existingDocuments = response.data.documents;
+        this.bankAccountVerification = response.data.settings.bank_account_verification === true;
+        this.platformAccountId = response.data.platform_account_id;
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -234,13 +238,18 @@ export class BusinessBankAccountFormStep {
       this.isLoading = true;
       this.getBusiness({
         onSuccess: (response) => {
-          if (response.data.bank_accounts.length > 0) {
+          const { data } = response;
+          const { bank_accounts, documents, settings, platform_account_id } = data;
+          if (bank_accounts.length > 0) {
             // Get the latest bank account (last in array)
-            const bankAccounts = response.data.bank_accounts;
+            const bankAccounts = bank_accounts;
             const latestBankAccount = bankAccounts[bankAccounts.length - 1];
             this.bankAccount = new BankAccount(latestBankAccount);
           }
-          this.existingDocuments = response.data.documents;
+
+          this.existingDocuments = documents;
+          this.bankAccountVerification = settings.bank_account_verification === true;
+          this.platformAccountId = platform_account_id;
           this.initializeFormController();
         },
         onError: ({ error, code, severity }) => {
@@ -374,6 +383,7 @@ export class BusinessBankAccountFormStep {
 
   render() {
     const bankAccountDefaultValue = this.formController.getInitialValues();
+    const shouldShowPlaidVerification = this.bankAccountVerification && this.platformAccountId;
 
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
@@ -387,6 +397,20 @@ export class BusinessBankAccountFormStep {
             <form-control-tooltip helpText="This direct deposit account is the designated bank account where incoming funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />
+          {shouldShowPlaidVerification && (
+            <div class="mt-3">
+              <plaid-verification
+                authToken={this.authToken}
+                accountId={this.platformAccountId}
+                businessId={this.businessId}
+                onPlaidVerificationSuccess={() => {
+                  // Refresh bank account data after successful Plaid verification
+                  this.isAddingNewBankAccount = false;
+                  this.refreshBankAccountData();
+                }}
+              />
+            </div>
+          )}
           {this.country === CountryCode.CAN ? (
             <bank-account-form-inputs-canada
               defaultValue={bankAccountDefaultValue}
@@ -415,6 +439,7 @@ export class BusinessBankAccountFormStep {
               </Button>
             </div>
           )}
+         
           {(!this.existingBankAccount || this.isAddingNewBankAccount) && (
             <div class="mt-3 d-flex gap-2">
               {this.isAddingNewBankAccount && (

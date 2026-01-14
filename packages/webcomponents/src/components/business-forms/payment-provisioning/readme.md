@@ -76,6 +76,7 @@ graph TD;
   owner-form-inputs --> form-control-number
   owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> form-control-tooltip
+  justifi-business-bank-account-form-step --> plaid-verification
   justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
   justifi-business-bank-account-form-step --> bank-account-form-inputs
   justifi-business-bank-account-form-step --> business-documents-on-file

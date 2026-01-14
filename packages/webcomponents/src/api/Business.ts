@@ -216,6 +216,7 @@ export interface IBusiness {
   website_url: string;
   date_of_incorporation?: string;
   country_of_establishment?: CountryCode;
+  bank_account_verification?: boolean;
 }
 
 export class Business implements IBusiness {
@@ -244,6 +245,7 @@ export class Business implements IBusiness {
   public date_of_incorporation?: string;
   public product_categories: ProductCategories;
   public country_of_establishment?: CountryCode;
+  public bank_account_verification?: boolean;
 
   constructor(business: IBusiness) {
     this.additional_questions = business.additional_questions
@@ -277,6 +279,7 @@ export class Business implements IBusiness {
     this.website_url = business.website_url;
     this.date_of_incorporation = business.date_of_incorporation;
     this.country_of_establishment = normalizeCountry(business.country_of_establishment);
+    this.bank_account_verification = business.bank_account_verification;
   }
 
   public get payload() {

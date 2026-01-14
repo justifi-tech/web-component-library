@@ -3,6 +3,7 @@ import { Api, IApiResponse } from '..';
 const api = Api();
 
 export interface ILinkTokenResponse {
+  id: string;
   link_token: string;
 }
 
@@ -11,6 +12,12 @@ export interface IPlaidService {
     authToken: string,
     accountId: string,
     checkoutId: string,
+    signal?: AbortSignal
+  ): Promise<IApiResponse<ILinkTokenResponse>>;
+
+  getLinkTokenForVerification(
+    authToken: string,
+    businessId: string,
     signal?: AbortSignal
   ): Promise<IApiResponse<ILinkTokenResponse>>;
 
@@ -34,6 +41,35 @@ export class PlaidService implements IPlaidService {
     const endpoint = `plaid/${accountId}/link`;
     const body = { checkout_id: checkoutId };
     return api.post({ endpoint, body, authToken, signal });
+  }
+
+  async getLinkTokenForVerification(
+    authToken: string,
+    businessId: string,
+    signal?: AbortSignal
+  ): Promise<IApiResponse<ILinkTokenResponse>> {
+    const endpoint = `entities/plaid/${businessId}/link_token`;
+    const body = {};
+    return api.post({ endpoint, body, authToken, signal });
+  }
+
+  async getBankAccountData(
+    authToken: string,
+    businessId: string,
+    signal?: AbortSignal
+  ): Promise<IApiResponse<any>> {
+    const endpoint = `entities/plaid/${businessId}/bank_account`;
+    return api.get({ endpoint, authToken, signal });
+  }
+
+  async postPlaidVerifiedBankAccountData(
+    authToken: string,
+    businessId: string,
+    payload: { public_token: string, link_token_id: string },
+    signal?: AbortSignal
+  ): Promise<IApiResponse<any>> {
+    const endpoint = `entities/plaid/${businessId}/bank_account`;
+    return api.post({ endpoint, body: payload, authToken, signal });
   }
 
   async tokenizeBankAccount(
