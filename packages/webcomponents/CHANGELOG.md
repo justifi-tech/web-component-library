@@ -1,5 +1,33 @@
 ### Changelog
 
+## 6.8.0
+
+### Minor Changes
+
+- 7befaa2: Add Plaid integration for bank account verification
+
+  This release introduces comprehensive Plaid integration to enable instant bank account verification within the payment provisioning flow. The implementation includes:
+
+  - **API Infrastructure**: Service methods for initializing Plaid Link, exchanging public tokens, and handling verification status
+  - **Type Definitions**: Complete TypeScript interfaces for Plaid API requests and responses
+  - **UI Components**: New verification components integrated into the bank account form with real-time status updates
+
+### Patch Changes
+
+- fccb31f: Fix custom-popper errors on the browser console
+- 61d0c65: Fix event listener cleanup bug in Analytics.ts to prevent memory leaks. Event listeners are now properly removed on component disconnect by storing bound handler references in a Map.
+- 1a5094b: Support module imports with or without `.js` file extension
+
+  Adds backwards compatibility for imports from `/dist/module` to work both with and without the `.js` suffix. Both of the following import styles now work:
+
+  ```js
+  // With .js extension
+  import "@justifi/webcomponents/dist/module/justifi-checkout.js";
+
+  // Without .js extension
+  import "@justifi/webcomponents/dist/module/justifi-checkout";
+  ```
+
 ## 6.7.3
 
 ### Patch Changes
