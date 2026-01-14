@@ -86,14 +86,8 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 
 ### Events
 
-- `plaid-success`: Provides the Plaid public token and metadata when customers finish linking.
-- `plaid-exit`: Emits when Link closes without success and includes exit metadata.
-- `error`: Surfaces integration failures (expired link token, network issues).
-
-### Public methods
-
-1. `open()` – Programmatically open Plaid Link (if you render a custom CTA).
-2. `close()` – Force-close the Link flow.
+- `plaidError`: Surfaces integration failures (expired link token, network issues, user errors).
+- `plaidErrorRecovered`: Fires when a previous Plaid error has been resolved and the flow can continue.
 
 ## Theming & Layout
 

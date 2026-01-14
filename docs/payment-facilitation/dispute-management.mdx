@@ -34,13 +34,10 @@ Component to render notification of disputed payments and allow platform to resp
 
 ### Events
 
-- `evidence-uploaded`: Fires when users add files or notes.
-- `status-changed`: Indicates dispute submission or withdrawal.
+- `submit-event`: Fires when the dispute response is submitted or when a dispute is accepted.
+- `complete-form-step-event`: Fires when a form step is completed; includes server response and completed form step.
+- `click-event`: Fires when users click on actions; `event.detail.name` indicates the action (e.g., `nextStep`, `previousStep`, `cancelDispute`, `respondToDispute`, `submit`).
 - `error-event`: Captures upload or API issues.
-
-### Public methods
-
-1. `refresh()` – Reload in-progress disputes to reflect new deadlines or statuses.
 
 # Authorization
 

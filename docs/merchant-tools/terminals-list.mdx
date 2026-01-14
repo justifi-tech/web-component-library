@@ -43,11 +43,7 @@ Component to render a formated list of terminals for the requested account.
 ### Events
 
 - `click-event`: Row click event that surfaces `terminal_id`.
-- `filter-changed`: Emits when the built-in filters change.
-
-### Public methods
-
-1. `refresh()` – Reloads terminal data.
+- `error-event`: Surfaces API or token errors for logging.
 
 ## Theming & Layout
 
@@ -115,11 +111,6 @@ Component to render a formated list of terminals for the requested account.
     terminalsList.addEventListener('error-event', (event) => {
       // here is where you would handle the error
       console.error('error-event', event.detail);
-    });
-
-    terminalsList.addEventListener('filter-changed', (event) => {
-      // here is where you would handle the filter changed event
-      console.log('filter-changed', event.detail);
     });
   })();
 </script>
