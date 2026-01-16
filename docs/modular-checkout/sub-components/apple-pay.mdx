@@ -63,12 +63,16 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 ### Events
 
-- `availability-changed`: Notifies the parent when Apple Pay is disabled for the current device/browser.
-- `error`: Surfaces tokenization failures (network, customer cancel, etc.).
+- `applePayStarted`: Fires when the Apple Pay sheet is presented.
+- `applePayCompleted`: Fires when payment completes; includes success status and payment method details.
+- `applePayCancelled`: Fires when the user dismisses the Apple Pay sheet.
+- `applePayError`: Surfaces tokenization failures (network issues, validation errors, etc.).
 
 ### Public methods
 
-1. `begin()` – Trigger the Apple Pay sheet programmatically if you hide the built-in button.
+1. `isSupported()` – Check if Apple Pay is available on the current device/browser.
+2. `getPaymentMethods()` – Returns available payment method types.
+3. `abort()` – Programmatically cancel an in-progress Apple Pay session.
 
 ## Theming & Layout
 

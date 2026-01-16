@@ -45,11 +45,7 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ### Events
 
-- `point-hover`: Emits when a user hovers/focuses a data point; includes amount and date.
-
-### Public methods
-
-1. `refresh()` – Re-fetch chart data (useful when filters change).
+- `error-event`: Surfaces API or token errors for logging.
 
 ## Theming & Layout
 
@@ -112,11 +108,6 @@ Component to render chart displaying last 30 days of gross payment data.
     grossPaymentChart.addEventListener('error-event', (event) => {
       // here is where you would handle the error
       console.error('error-event', event.detail);
-    });
-
-    grossPaymentChart.addEventListener('point-hover', (event) => {
-      // here is where you would handle the point hover event
-      console.log('point-hover', event.detail);
     });
   })();
 </script>

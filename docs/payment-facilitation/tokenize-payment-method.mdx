@@ -33,13 +33,14 @@ account, a submit button and all fields required for proper use. This component 
 
 ### Events
 
-- `tokenized`: fires when a payment token is created; payload includes `payment_method_token` and metadata.
-- `error`: fires if tokenization fails; payload includes `code`, `message`, and validation hints.
+- `submit-event`: fires when a payment token is created; payload includes `payment_method_token` and metadata.
+- `error-event`: fires if tokenization fails; payload includes `code`, `message`, and validation hints.
 
 ### Public methods
 
 1. `tokenizePaymentMethod()` – programmatically trigger submission (returns a promise that resolves to a token payload).
 2. `fillBillingForm(partialBillingDetails)` – prefill customers' billing information from saved data.
+3. `validate()` – validate the form fields and return validation result.
 
 # Authorization
 

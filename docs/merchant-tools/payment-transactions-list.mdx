@@ -42,12 +42,8 @@ Component to display a list of payment transactions for a specific payment.
 
 ### Events
 
-- `filter-changed`: emits whenever the internal filter UI updates.
-- `error-event`: surfaces API or token failures.
-
-### Public methods
-
-1. `refresh()` – Re-run the ledger query.
+- `click-event`: Emitted when a row is clicked; surfaces `transaction_id`.
+- `error-event`: Surfaces API or token failures.
 
 ## Theming & Layout
 
