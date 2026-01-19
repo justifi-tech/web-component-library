@@ -32,13 +32,12 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ### Events
 
-- `submitted`: Emits when the refund is created; payload includes `refund_id` and amount.
+- `submit-event`: Emits when the refund is created; payload includes `refund_id` and amount.
 - `error-event`: Fires when validation or network calls fail.
 
 ### Public methods
 
-1. `submit()` – Trigger the refund flow (useful if the component is inside a modal with custom buttons).
-2. `focus()` – Move focus to the amount input.
+1. `refundPayment()` – Trigger the refund flow programmatically (useful if the component is inside a modal with custom buttons).
 
 # Authorization
 

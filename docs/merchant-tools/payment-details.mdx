@@ -85,12 +85,8 @@ Component to display detailed information about a specific payment.
 
 ### Events
 
-- `refund-requested`: emitted when an operator clicks the refund CTA.
-- `dispute-opened`: indicates that the "Open dispute" action was invoked.
-
-### Public methods
-
-1. `refresh()` – Re-fetch the payment to reflect new statuses after an action.
+- `error-event`: Surfaces API or token errors for logging.
+- `record-click-event`: Emitted when users click on a related record (e.g., refund, dispute).
 
 ## Theming & Layout
 
