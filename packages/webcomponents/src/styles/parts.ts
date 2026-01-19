@@ -160,6 +160,8 @@ export const terminalsListFilterParam = `terminals-list-filter-param`;
 export const terminalIdTerminalsListFilterParam = `${terminalsListFilterParam} terminal-id-terminals-list-filter-param`;
 export const terminalOrderIdTerminalsListFilterParam = `${terminalsListFilterParam} terminal-order-id-terminals-list-filter-param`;
 export const terminalStatusTerminalsListFilterParam = `${terminalsListFilterParam} terminal-status-terminals-list-filter-param`;
+export const createdAfterTerminalsListFilterParam = `${terminalsListFilterParam} created-after-terminals-list-filter-param`;
+export const createdBeforeTerminalsListFilterParam = `${terminalsListFilterParam} created-before-terminals-list-filter-param`;
 
 // Terminal Orders List Filters
 export const terminalOrdersListFilterMenu = `${filterMenu} terminal-orders-list-filter-menu`;
