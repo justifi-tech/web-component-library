@@ -109,8 +109,7 @@ export class TerminalsListFilters {
                 label="Created After"
                 inputHandler={this.handleDateInput}
                 defaultValue={
-                  convertToLocal(this.createdAfter, { showInputDateTime: true }) ||
-                  convertToLocal(filterParams.created_after, { showInputDateTime: true })
+                  convertToLocal(this.createdAfter || filterParams.created_after, { showInputDateTime: true })
                 }
                 showTime
                 disabled={!!this.createdAfter}
@@ -123,8 +122,7 @@ export class TerminalsListFilters {
                 label="Created Before"
                 inputHandler={this.handleDateInput}
                 defaultValue={
-                  convertToLocal(this.createdBefore, { showInputDateTime: true }) ||
-                  convertToLocal(filterParams.created_before, { showInputDateTime: true })
+                  convertToLocal(this.createdBefore || filterParams.created_before, { showInputDateTime: true })
                 }
                 showTime
                 disabled={!!this.createdBefore}
