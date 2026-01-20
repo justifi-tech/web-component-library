@@ -40,7 +40,7 @@ exports[`form-control-text Renders with default props 1`] = `
       </label>
       <form-control-tooltip></form-control-tooltip>
     </div>
-    <input class="form-control" id="username" name="username" part="input text color font-family background-color" type="text" value="">
+    <input class="form-control" id="username" name="username" part="input text color font-family background-color" type="text" value="John Doe">
   </div>
 </form-control-text>
 `;

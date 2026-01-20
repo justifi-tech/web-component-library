@@ -13,7 +13,7 @@ import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 })
 
 export class PaymentDetailsCore {
-  @Prop() getPaymentDetails: Function;
+  @Prop() getPaymentDetails!: Function;
 
   @State() payment: Payment;
   @State() loading: boolean = true;
@@ -73,7 +73,7 @@ export class PaymentDetailsCore {
         {!this.loading && this.errorMessage && ErrorState(this.errorMessage)}
         {!this.loading && !this.errorMessage &&
           this.payment && (
-            <justifi-details error-message={this.errorMessage}>
+            <justifi-details errorMessage={this.errorMessage}>
               <EntityHeadInfo
                 slot="head-info"
                 badge={(

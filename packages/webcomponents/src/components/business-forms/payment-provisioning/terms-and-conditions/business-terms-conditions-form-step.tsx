@@ -17,8 +17,8 @@ export class BusinessTermsConditionsFormStep {
   @State() acceptedTermsBefore: boolean;
   @State() acceptedTerms: boolean;
 
-  @Prop() authToken: string;
-  @Prop() businessId: string;
+  @Prop() authToken!: string;
+  @Prop() businessId!: string;
   @Prop() allowOptionalFields?: boolean;
 
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
@@ -61,7 +61,7 @@ export class BusinessTermsConditionsFormStep {
   private fetchData = async () => {
     this.formLoading.emit(true);
     try {
-      const response: IApiResponse<IBusiness> = await this.api.get({ endpoint: this.businessEndpoint,  authToken: this.authToken });
+      const response: IApiResponse<IBusiness> = await this.api.get({ endpoint: this.businessEndpoint, authToken: this.authToken });
       this.acceptedTermsBefore = response.data.terms_conditions_accepted;
     } catch (error) {
       this.errorEvent.emit({

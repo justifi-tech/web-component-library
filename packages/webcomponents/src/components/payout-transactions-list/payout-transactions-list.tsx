@@ -33,13 +33,13 @@ export class PayoutTransactionsList {
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
-  @Prop() payoutId: string;
-  @Prop() authToken: string;
+  @Prop() payoutId!: string;
+  @Prop() authToken!: string;
   @Prop() columns?: string = defaultColumnsKeys;
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  
+
   analytics: JustifiAnalytics;
 
   componentWillLoad() {

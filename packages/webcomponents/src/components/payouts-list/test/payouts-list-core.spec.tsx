@@ -42,7 +42,7 @@ describe('payouts-list-core', () => {
     // components.pop();
     const page = await newSpecPage({
       components: [PayoutsListCore, PaginationMenu],
-      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+      template: () => <payouts-list-core getPayouts={getPayouts} getPayoutCSV={() => { }} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -76,7 +76,7 @@ describe('payouts-list-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutsListCore, PaginationMenu],
-      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+      template: () => <payouts-list-core getPayouts={getPayouts} getPayoutCSV={() => { }} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -111,7 +111,7 @@ describe('payouts-list-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
-      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} onError-event={errorSpy} />,
+      template: () => <payouts-list-core getPayouts={getPayouts} getPayoutCSV={() => { }} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} onError-event={errorSpy} />,
     });
 
     await page.waitForChanges();
@@ -148,7 +148,7 @@ describe('payouts-list-core', () => {
 
     const page = await newSpecPage({
       components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
-      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+      template: () => <payouts-list-core getPayouts={getPayouts} getPayoutCSV={() => { }} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
     await page.waitForChanges();
@@ -189,7 +189,7 @@ describe('payouts-list-core pagination', () => {
 
     const page = await newSpecPage({
       components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
-      template: () => <payouts-list-core getPayouts={getPayouts} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
+      template: () => <payouts-list-core getPayouts={getPayouts} getPayoutCSV={() => { }} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
     await page.waitForChanges();
 

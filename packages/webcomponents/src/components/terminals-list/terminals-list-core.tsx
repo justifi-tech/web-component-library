@@ -22,9 +22,9 @@ import {
   tag: 'terminals-list-core'
 })
 export class TerminalsListCore {
-  @Prop() getTerminals: Function;
-  @Prop() getSubAccounts: Function;
-  @Prop() columns: string;
+  @Prop() getTerminals!: Function;
+  @Prop() getSubAccounts!: Function;
+  @Prop() columns!: string;
 
   @State() terminals: Terminal[] = [];
   @State() terminalsTable: Table<Terminal>;
@@ -33,7 +33,7 @@ export class TerminalsListCore {
   @State() errorMessage: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
-  
+
   @Watch('pagingParams')
   @Watch('getTerminals')
   @Watch('getSubAccounts')

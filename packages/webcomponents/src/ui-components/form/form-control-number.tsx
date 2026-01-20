@@ -20,13 +20,13 @@ export class NumberInput {
 
   @State() isFocused: boolean = false;
 
-  @Prop() label: string;
-  @Prop() name: any;
+  @Prop() label!: string;
+  @Prop() name!: any;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
-  @Prop() defaultValue: string;
-  @Prop() inputHandler: (name: string, value: string) => void;
-  @Prop() disabled: boolean;
+  @Prop() defaultValue!: string;
+  @Prop() inputHandler!: (name: string, value: string) => void;
+  @Prop() disabled?: boolean = false;
 
   @Watch('defaultValue')
   handleDefaultValueChange(newValue: string) {

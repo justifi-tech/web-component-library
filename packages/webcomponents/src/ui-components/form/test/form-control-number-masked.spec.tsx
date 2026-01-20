@@ -11,7 +11,7 @@ describe('form-control-number-masked', () => {
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
-      template: () => <form-control-number-masked label='Age' name='age' mask='00' />,
+      template: () => <form-control-number-masked label='Age' name='age' mask='00' inputHandler={mockInputHandler} defaultValue='25' />,
     });
     expect(page.root).toMatchSnapshot();
   });
@@ -132,6 +132,7 @@ describe('form-control-number-masked', () => {
           label='Age'
           name='age'
           inputHandler={mockInputHandler}
+          defaultValue='25'
           mask='00'
         />
     });
@@ -151,6 +152,7 @@ describe('form-control-number-masked', () => {
         <form-control-number-masked
           label='Age'
           name='age'
+          defaultValue='25'
           disabled
           inputHandler={mockInputHandler}
           mask='00'
@@ -170,6 +172,7 @@ describe('form-control-number-masked', () => {
           name='age'
           helpText='Enter your age'
           inputHandler={mockInputHandler}
+          defaultValue='25'
           mask='00'
         />
     });
@@ -196,6 +199,7 @@ describe('form-control-number-masked', () => {
           name='age'
           errorText='Invalid age'
           inputHandler={mockInputHandler}
+          defaultValue='25'
           mask='00'
         />
     });
@@ -219,6 +223,7 @@ describe('form-control-number-masked', () => {
           name='identification_number'
           inputHandler={mockHandler}
           mask='000-00-0000'
+          defaultValue='123-45-6789'
         />
     });
 
@@ -226,7 +231,7 @@ describe('form-control-number-masked', () => {
     page.root.addEventListener('formControlInput', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
-    
+
     // Simulate entering SSN with dashes
     inputElement.value = '123-45-6789';
     await inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
@@ -235,7 +240,7 @@ describe('form-control-number-masked', () => {
     // Note: In the test environment, IMask might not be fully functional,
     // but the logic should attempt to use unmaskedValue when available
     expect(inputEventSpy).toHaveBeenCalled();
-    
+
     // The event should have been called with either the unmasked value or fall back to input value
     const lastCall = inputEventSpy.mock.calls[inputEventSpy.mock.calls.length - 1][0];
     expect(lastCall.detail.name).toBe('identification_number');

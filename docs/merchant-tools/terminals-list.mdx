@@ -5,8 +5,20 @@ description: Inventory table showing active, inactive, and assigned terminals in
 sidebar_position: 52
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts } from '../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getPropsFromDocs,
+  getComponentParts,
+  getWebcomponentsVersion,
+  ComponentBox,
+  setUpMocks,
+} from '../helpers';
+import docsJson from '../docs.json';
 import componentTreeJson from '../component-tree.json';
+import '@justifi/webcomponents/dist/module/justifi-terminals-list';
+
+{setUpMocks()}
 
 ## Overview
 
@@ -24,48 +36,83 @@ Component to render a formated list of terminals for the requested account.
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'account-id',
-        type: 'string',
-        required: true,
-        description: 'Scope inventory to a merchant/platform.',
-      },
-      {
-        name: 'auth-token',
-        type: 'string',
-        required: true,
-        description: 'Token with `read:terminals` scope.',
-      },
-      {
-        name: 'filters',
-        type: 'string | Record<string, unknown>',
-        description:
-          'Optional JSON to preset status, location, or software filters.',
-      },
-      {
-        name: 'columns',
-        type: 'string',
-        defaultValue: 'name,status,location,last_check_in',
-        description: 'Customize visible columns.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-terminals-list', docsJson)}
 />
 
 ### Events
 
 - `click-event`: Row click event that surfaces `terminal_id`.
-- `filter-changed`: Emits when the built-in filters change.
-
-### Public methods
-
-1. `refresh()` – Reloads terminal data.
+- `error-event`: Surfaces API or token errors for logging.
 
 ## Theming & Layout
 
 <PartsMarkdownTable
   parts={getComponentParts('justifi-terminals-list', componentTreeJson)}
 />
+
+# Usage Example
+
+---
+
+<ComponentBox>
+  <justifi-terminals-list account-id="123" auth-token="123abc" />
+</ComponentBox>
+
+---
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-terminals-list</title>
+
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
+></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) {
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+    </style>
+
+</head>
+
+<body>
+  <justifi-terminals-list account-id="acc_123" auth-token="authToken" />
+</body>
+
+<script>
+  (function () {
+    const terminalsList = document.querySelector('justifi-terminals-list');
+
+    terminalsList.addEventListener('click-event', (event) => {
+      // here is where you would handle the click events
+      console.log('click-event', event.detail);
+    });
+
+    terminalsList.addEventListener('error-event', (event) => {
+      // here is where you would handle the error
+      console.error('error-event', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>

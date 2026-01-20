@@ -17,7 +17,7 @@ describe('payout-details', () => {
   it('renders error state when no payoutId or authToken', async () => {
     const page = await newSpecPage({
       components: [PayoutDetails, PayoutDetailsCore],
-      template: () => <justifi-payout-details />,
+      template: () => <justifi-payout-details payoutId="" authToken="" />,
     });
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
@@ -28,7 +28,7 @@ describe('payout-details', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetails, PayoutDetailsCore],
-      template: () => <justifi-payout-details authToken="token" onError-event={eventSpy} />,
+      template: () => <justifi-payout-details payoutId="" authToken="token" onError-event={eventSpy} />,
     });
     await page.waitForChanges();
     expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({
@@ -45,7 +45,7 @@ describe('payout-details', () => {
 
     const page = await newSpecPage({
       components: [PayoutDetails, PayoutDetailsCore],
-      template: () => <justifi-payout-details payoutId="payoutId" onError-event={eventSpy} />,
+      template: () => <justifi-payout-details payoutId="payoutId" authToken="" onError-event={eventSpy} />,
     });
     await page.waitForChanges();
     expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({

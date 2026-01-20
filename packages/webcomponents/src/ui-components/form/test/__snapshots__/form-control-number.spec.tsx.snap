@@ -23,7 +23,7 @@ exports[`form-control-number Renders with default props 1`] = `
     <label class="form-label" htmlfor="age" part="label text color font-family">
       Age
     </label>
-    <input class="form-control" id="age" name="age" part="input text color font-family background-color" type="number" value="">
+    <input class="form-control" id="age" name="age" part="input text color font-family background-color" type="number" value="25">
   </div>
 </form-control-number>
 `;

@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-12-19T02:22:31",
+  "timestamp": "2026-01-08T14:56:04",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.28.2",
-    "typescriptVersion": "5.5.4"
+    "version": "4.38.3",
+    "typescriptVersion": "5.9.3"
   },
   "components": [
     {
@@ -39,7 +39,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -64,7 +64,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/bank-account-document-inputs.tsx",
       "encapsulation": "none",
       "tag": "bank-account-document-form-inputs",
-      "readme": "# justifi-business-bank-account-form-step-core\n\n\n",
+      "readme": "# justifi-business-bank-account-form-step-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -88,7 +88,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -110,7 +110,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -142,7 +142,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -178,7 +178,7 @@
       "filePath": "src/components/checkout/bank-account-form/bank-account-form.tsx",
       "encapsulation": "none",
       "tag": "bank-account-form",
-      "readme": "# bank-account-form\n\n\n",
+      "readme": "# bank-account-form\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -280,7 +280,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/bank-account-form-inputs.tsx",
       "encapsulation": "none",
       "tag": "bank-account-form-inputs",
-      "readme": "# justifi-business-bank-account-form-step-core\n\n\n",
+      "readme": "# justifi-business-bank-account-form-step-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -304,7 +304,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -327,7 +327,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -350,7 +350,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -372,7 +372,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -415,7 +415,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/bank-account-form-inputs-canada.tsx",
       "encapsulation": "none",
       "tag": "bank-account-form-inputs-canada",
-      "readme": "# justifi-business-bank-account-form-step-core\n\n\n",
+      "readme": "# justifi-business-bank-account-form-step-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -439,7 +439,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -462,7 +462,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -485,7 +485,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -507,7 +507,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -550,7 +550,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/bank-account-read-only-value.tsx",
       "encapsulation": "none",
       "tag": "bank-account-read-only-value",
-      "readme": "# justifi-business-bank-account-form-step-core\n\n\n",
+      "readme": "# justifi-business-bank-account-form-step-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -574,7 +574,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -654,7 +654,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -715,7 +715,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/business-documents-on-file.tsx",
       "encapsulation": "none",
       "tag": "business-documents-on-file",
-      "readme": "# justifi-business-bank-account-form-step-core\n\n\n",
+      "readme": "# justifi-business-bank-account-form-step-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -732,7 +732,12 @@
           "attr": "documents",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "[]"
+            }
+          ],
           "default": "[]",
           "values": [
             {
@@ -756,7 +761,12 @@
           "attr": "is-loading",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -789,7 +799,7 @@
       "filePath": "src/components/checkout/card-form/card-form.tsx",
       "encapsulation": "none",
       "tag": "card-form",
-      "readme": "# card-form\n\n\n",
+      "readme": "# card-form\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -891,7 +901,7 @@
       "filePath": "src/components/checkouts-list/checkouts-list-core.tsx",
       "encapsulation": "none",
       "tag": "checkouts-list-core",
-      "readme": "# justifi-checkouts-list-filters\n\n\n",
+      "readme": "# justifi-checkouts-list-filters\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -915,7 +925,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -942,7 +952,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -969,7 +979,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -1040,7 +1050,7 @@
       "filePath": "src/components/business-details/core-info-details/core-info-details.tsx",
       "encapsulation": "none",
       "tag": "core-info-details",
-      "readme": "# core-info-details\n\n\n",
+      "readme": "# core-info-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -1069,7 +1079,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -1129,7 +1139,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -1144,7 +1154,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "[0, 10]"
+            }
+          ],
           "default": "[0, 10]",
           "values": [
             {
@@ -1174,7 +1189,12 @@
           "attr": "placement",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'bottom'"
+            }
+          ],
           "default": "'bottom'",
           "values": [
             {
@@ -1261,7 +1281,12 @@
           "attr": "strategy",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'absolute'"
+            }
+          ],
           "default": "'absolute'",
           "values": [
             {
@@ -1290,7 +1315,12 @@
           "attr": "trigger",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'click'"
+            }
+          ],
           "default": "'click'",
           "values": [
             {
@@ -1380,7 +1410,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -1403,7 +1433,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -1452,7 +1482,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -1468,13 +1498,19 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -1491,7 +1527,13 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -1536,13 +1578,19 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
+          "default": "() => { }",
           "values": [
             {
               "type": "(name: string, value: boolean) => void"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -1566,7 +1614,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -1589,7 +1637,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -1762,7 +1810,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -1785,7 +1833,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -1801,7 +1849,12 @@
           "attr": "max-date",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "this.currentDate"
+            }
+          ],
           "default": "this.currentDate",
           "values": [
             {
@@ -1832,7 +1885,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -1974,13 +2027,19 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -2028,7 +2087,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -2044,7 +2103,13 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -2089,13 +2154,19 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
+          "default": "() => { }",
           "values": [
             {
               "type": "(name: string, value: string) => void"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -2119,7 +2190,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -2165,7 +2236,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -2264,13 +2335,19 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -2287,7 +2364,13 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -2332,13 +2415,19 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
+          "default": "() => { }",
           "values": [
             {
               "type": "(name: string, value: string) => void"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -2362,7 +2451,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -2408,7 +2497,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -2527,7 +2616,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -2550,7 +2639,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -2596,7 +2685,12 @@
           "attr": "default-value",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'0'"
+            }
+          ],
           "default": "'0'",
           "values": [
             {
@@ -2695,7 +2789,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -2740,7 +2834,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -2786,7 +2880,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -2857,13 +2951,19 @@
           "attr": "default-value",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'0'"
+            }
+          ],
+          "default": "'0'",
           "values": [
             {
               "type": "string"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -2880,13 +2980,19 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -2903,7 +3009,13 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -2948,13 +3060,19 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
+          "default": "() => { }",
           "values": [
             {
               "type": "(name: string, value: string) => void"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -2978,7 +3096,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -2994,7 +3112,12 @@
           "attr": "mask-options",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "CURRENCY_MASK.DECIMAL"
+            }
+          ],
           "default": "CURRENCY_MASK.DECIMAL",
           "values": [
             {
@@ -3025,7 +3148,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -3107,7 +3230,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3123,13 +3246,19 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -3198,7 +3327,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3221,7 +3350,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3244,7 +3373,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -3284,9 +3413,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "owner-form-inputs"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "owner-form-inputs": [
+          "form-control-number"
+        ]
+      }
     },
     {
       "filePath": "src/ui-components/form/form-control-number-masked.tsx",
@@ -3316,7 +3451,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3332,13 +3467,19 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -3400,13 +3541,19 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
+          "default": "() => { }",
           "values": [
             {
               "type": "(name: string, value: string) => void"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -3430,7 +3577,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3453,7 +3600,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3476,7 +3623,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -3578,7 +3725,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3594,13 +3741,19 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -3617,13 +3770,19 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
+          "default": "''",
           "values": [
             {
               "type": "string"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -3662,13 +3821,19 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
+          "default": "() => { }",
           "values": [
             {
               "type": "(name: string, value: string) => void"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -3692,7 +3857,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3715,7 +3880,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3738,7 +3903,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -3928,7 +4093,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3951,7 +4116,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3974,7 +4139,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -3996,7 +4161,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -4221,7 +4386,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -4266,7 +4431,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -4312,7 +4477,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -4478,7 +4643,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -4494,13 +4659,19 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -4517,7 +4688,13 @@
           "attr": "error-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -4540,7 +4717,13 @@
           "attr": "help-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -4562,13 +4745,19 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "() => { }"
+            }
+          ],
+          "default": "() => { }",
           "values": [
             {
               "type": "(name: string, value: string) => void"
             }
           ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -4614,7 +4803,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -4660,7 +4849,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -4767,7 +4956,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -4880,7 +5069,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -4979,7 +5168,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -5002,7 +5191,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -5025,7 +5214,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -5383,7 +5572,12 @@
           "attr": "submit-button-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Submit'"
+            }
+          ],
           "default": "'Submit'",
           "values": [
             {
@@ -5693,7 +5887,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -5783,7 +5977,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -5806,7 +6000,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -5941,7 +6135,7 @@
       "filePath": "src/components/dispute-management/dispute-response/additional-statement.tsx",
       "encapsulation": "none",
       "tag": "justifi-additional-statement",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -5965,7 +6159,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -5981,7 +6175,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -6075,7 +6274,7 @@
       "filePath": "src/components/modular-checkout/sub-components/apple-pay.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-apple-pay",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [
         {
@@ -6103,7 +6302,12 @@
           "attr": "button-style",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "ApplePayButtonStyle.BLACK"
+            }
+          ],
           "default": "ApplePayButtonStyle.BLACK",
           "values": [
             {
@@ -6139,7 +6343,12 @@
           "attr": "button-type",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "ApplePayButtonType.PLAIN"
+            }
+          ],
           "default": "ApplePayButtonType.PLAIN",
           "values": [
             {
@@ -6181,7 +6390,12 @@
           "attr": "country-code",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"US\""
+            }
+          ],
           "default": "\"US\"",
           "values": [
             {
@@ -6205,7 +6419,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -6229,7 +6448,12 @@
           "attr": "height",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"48px\""
+            }
+          ],
           "default": "\"48px\"",
           "values": [
             {
@@ -6253,7 +6477,12 @@
           "attr": "initiative-context",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"dev-checkout.justifi-staging.com\""
+            }
+          ],
           "default": "\"dev-checkout.justifi-staging.com\"",
           "values": [
             {
@@ -6277,7 +6506,12 @@
           "attr": "merchant-display-name",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"JustiFi Checkout\""
+            }
+          ],
           "default": "\"JustiFi Checkout\"",
           "values": [
             {
@@ -6301,7 +6535,12 @@
           "attr": "merchant-identifier",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"merchant.com.staging-justifi.checkout-dev\""
+            }
+          ],
           "default": "\"merchant.com.staging-justifi.checkout-dev\"",
           "values": [
             {
@@ -6325,7 +6564,12 @@
           "attr": "show-skeleton",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
           "default": "true",
           "values": [
             {
@@ -6349,7 +6593,12 @@
           "attr": "width",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"100%\""
+            }
+          ],
           "default": "\"100%\"",
           "values": [
             {
@@ -6517,7 +6766,7 @@
       "filePath": "src/components/modular-checkout/sub-components/bank-account-billing-form-simple.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-bank-account-billing-form-simple",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6666,7 +6915,7 @@
       "filePath": "src/components/modular-checkout/sub-components/bank-account.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-bank-account-form",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6755,7 +7004,7 @@
       "filePath": "src/components/checkout/billing-form/billing-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-billing-form",
-      "readme": "# justifi-billing-form\n\n\n",
+      "readme": "# justifi-card-billing-form-simple\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6990,7 +7239,7 @@
       "filePath": "src/components/modular-checkout/sub-components/billing-form-full.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-billing-form-full",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7144,7 +7393,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/business-bank-account-form-step.tsx",
       "encapsulation": "none",
       "tag": "justifi-business-bank-account-form-step",
-      "readme": "# justifi-business-bank-account-form-step-core\n\n\n",
+      "readme": "# justifi-business-bank-account-form-step-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7191,7 +7440,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -7214,7 +7463,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -7246,7 +7495,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -7352,6 +7601,7 @@
       ],
       "dependencies": [
         "form-control-tooltip",
+        "plaid-verification",
         "bank-account-form-inputs-canada",
         "bank-account-form-inputs",
         "business-documents-on-file",
@@ -7360,6 +7610,7 @@
       "dependencyGraph": {
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
+          "plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
           "business-documents-on-file",
@@ -7432,7 +7683,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -7460,7 +7711,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -7558,7 +7809,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -7581,7 +7832,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -7613,7 +7864,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -7778,7 +8029,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -7801,7 +8052,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -7879,7 +8130,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -7902,7 +8153,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -7918,7 +8169,12 @@
           "attr": "form-title",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Business Information'"
+            }
+          ],
           "default": "'Business Information'",
           "values": [
             {
@@ -7942,7 +8198,12 @@
           "attr": "hide-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -7966,7 +8227,12 @@
           "attr": "remove-title",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -8157,7 +8423,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -8180,7 +8446,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -8212,7 +8478,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -8364,6 +8630,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "form-control-text": [
@@ -8427,7 +8694,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -8456,7 +8723,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -8547,7 +8814,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -8570,7 +8837,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -8598,7 +8865,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -8621,7 +8888,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -8728,7 +8995,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -8751,7 +9018,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -8932,7 +9199,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/terms-and-conditions/business-terms-conditions-form-step.tsx",
       "encapsulation": "none",
       "tag": "justifi-business-terms-conditions-form-step",
-      "readme": "# justifi-business-terms-conditions-form-step\n\n\n",
+      "readme": "# justifi-business-terms-conditions-form-step\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8979,7 +9246,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -9002,7 +9269,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -9298,7 +9565,12 @@
           "attr": "type",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'button'"
+            }
+          ],
           "default": "'button'",
           "values": [
             {
@@ -9331,7 +9603,12 @@
           "attr": "variant",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
           "default": "'primary'",
           "values": [
             {
@@ -9373,7 +9650,7 @@
       "filePath": "src/components/dispute-management/dispute-response/cancellation-policy.tsx",
       "encapsulation": "none",
       "tag": "justifi-cancellation-policy",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9397,7 +9674,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -9413,7 +9690,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -9507,7 +9789,7 @@
       "filePath": "src/components/modular-checkout/sub-components/card-billing-form-simple.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-card-billing-form-simple",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9656,7 +9938,7 @@
       "filePath": "src/components/modular-checkout/sub-components/card-form.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-card-form",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9745,7 +10027,7 @@
       "filePath": "src/components/checkout/checkout.tsx",
       "encapsulation": "none",
       "tag": "justifi-checkout",
-      "readme": "# justifi-sezzle-payment-method\n\n\n",
+      "readme": "# justifi-sezzle-payment-method\n",
       "docs": "",
       "docsTags": [
         {
@@ -9838,7 +10120,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -9861,7 +10143,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -9877,7 +10159,12 @@
           "attr": "disable-bank-account",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9901,7 +10188,12 @@
           "attr": "disable-bnpl",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9925,7 +10217,12 @@
           "attr": "disable-credit-card",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9949,7 +10246,12 @@
           "attr": "disable-payment-method-group",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9973,7 +10275,12 @@
           "attr": "hide-bank-account-billing-form",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -9997,7 +10304,12 @@
           "attr": "hide-card-billing-form",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -10343,7 +10655,7 @@
       "filePath": "src/components/modular-checkout/sub-components/summary.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-checkout-summary",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10368,7 +10680,7 @@
       "filePath": "src/components/checkouts-list/checkouts-list.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-checkouts-list",
-      "readme": "# justifi-checkouts-list-filters\n\n\n",
+      "readme": "# justifi-checkouts-list-filters\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10392,7 +10704,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -10415,7 +10727,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -10431,7 +10743,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -10488,7 +10805,7 @@
       "filePath": "src/components/checkouts-list/checkouts-list-filters.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-checkouts-list-filters",
-      "readme": "# justifi-checkouts-list-filters\n\n\n",
+      "readme": "# justifi-checkouts-list-filters\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10677,7 +10994,7 @@
       "filePath": "src/components/config-provider/config-provider.tsx",
       "encapsulation": "none",
       "tag": "justifi-config-provider",
-      "readme": "# justifi-config-provider\n\n\n",
+      "readme": "# justifi-config-provider\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10694,7 +11011,12 @@
           "attr": "account-id",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
           "default": "''",
           "values": [
             {
@@ -10718,7 +11040,12 @@
           "attr": "api-origin",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "PROXY_API_ORIGIN"
+            }
+          ],
           "default": "PROXY_API_ORIGIN",
           "values": [
             {
@@ -10742,7 +11069,12 @@
           "attr": "iframe-origin",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "IFRAME_ORIGIN"
+            }
+          ],
           "default": "IFRAME_ORIGIN",
           "values": [
             {
@@ -10769,7 +11101,7 @@
       "filePath": "src/components/dispute-management/dispute-response/customer-details.tsx",
       "encapsulation": "none",
       "tag": "justifi-customer-details",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10793,7 +11125,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -10809,7 +11141,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -10932,7 +11269,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -10965,7 +11302,7 @@
       "filePath": "src/components/dispute-management/dispute-management.tsx",
       "encapsulation": "none",
       "tag": "justifi-dispute-management",
-      "readme": "# justifi-dispute-notification\n\n\n",
+      "readme": "# justifi-dispute-notification\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10989,7 +11326,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -11012,7 +11349,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -11127,7 +11464,7 @@
       "filePath": "src/components/dispute-management/dispute-management-core.tsx",
       "encapsulation": "none",
       "tag": "justifi-dispute-management-core",
-      "readme": "# justifi-dispute-notification\n\n\n",
+      "readme": "# justifi-dispute-notification\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11151,7 +11488,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -11174,7 +11511,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -11201,7 +11538,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -11330,7 +11667,7 @@
       "filePath": "src/components/dispute-management/dispute-notification.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-dispute-notification",
-      "readme": "# justifi-dispute-notification\n\n\n",
+      "readme": "# justifi-dispute-notification\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11354,7 +11691,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -11382,7 +11719,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -11405,7 +11742,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -11500,7 +11837,7 @@
       "filePath": "src/components/dispute-management/dispute-response/dispute-response.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-dispute-response",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11517,7 +11854,12 @@
           "attr": "api-origin",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "PROXY_API_ORIGIN"
+            }
+          ],
           "default": "PROXY_API_ORIGIN",
           "values": [
             {
@@ -11548,7 +11890,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -11571,7 +11913,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -11598,7 +11940,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -11711,7 +12053,7 @@
       "filePath": "src/components/dispute-management/dispute-response/dispute-response-core.tsx",
       "encapsulation": "none",
       "tag": "justifi-dispute-response-core",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11760,7 +12102,12 @@
           "attr": "dispute-response",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -12019,7 +12366,7 @@
       "filePath": "src/components/dispute-management/dispute-response/duplicate-charge.tsx",
       "encapsulation": "none",
       "tag": "justifi-duplicate-charge",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12043,7 +12390,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -12059,7 +12406,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -12158,7 +12510,7 @@
       "filePath": "src/components/dispute-management/dispute-response/electronic-evidence.tsx",
       "encapsulation": "none",
       "tag": "justifi-electronic-evidence",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12182,7 +12534,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -12198,7 +12550,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -12315,7 +12672,12 @@
           "attr": "country",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "CountryCode.USA"
+            }
+          ],
           "default": "CountryCode.USA",
           "values": [
             {
@@ -12349,7 +12711,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -12372,7 +12734,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -12394,7 +12756,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -12443,7 +12805,7 @@
       "filePath": "src/components/modular-checkout/sub-components/google-pay.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-google-pay",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12466,7 +12828,12 @@
           "attr": "button-size-mode",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "GooglePayButtonSizeMode.FILL"
+            }
+          ],
           "default": "GooglePayButtonSizeMode.FILL",
           "values": [
             {
@@ -12499,7 +12866,12 @@
           "attr": "button-style",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "GooglePayButtonStyle.BLACK"
+            }
+          ],
           "default": "GooglePayButtonStyle.BLACK",
           "values": [
             {
@@ -12532,7 +12904,12 @@
           "attr": "button-type",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "GooglePayButtonType.PLAIN"
+            }
+          ],
           "default": "GooglePayButtonType.PLAIN",
           "values": [
             {
@@ -12577,7 +12954,12 @@
           "attr": "country-code",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"US\""
+            }
+          ],
           "default": "\"US\"",
           "values": [
             {
@@ -12601,7 +12983,12 @@
           "attr": "disabled",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -12631,7 +13018,12 @@
           "attr": "environment",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "GooglePayEnvironment.PRODUCTION"
+            }
+          ],
           "default": "GooglePayEnvironment.PRODUCTION",
           "values": [
             {
@@ -12658,7 +13050,12 @@
           "attr": "merchant-id",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"gateway:justifi\""
+            }
+          ],
           "default": "\"gateway:justifi\"",
           "values": [
             {
@@ -12682,7 +13079,12 @@
           "attr": "merchant-name",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"justifi\""
+            }
+          ],
           "default": "\"justifi\"",
           "values": [
             {
@@ -12706,7 +13108,12 @@
           "attr": "show-skeleton",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
           "default": "true",
           "values": [
             {
@@ -12928,7 +13335,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -12951,7 +13358,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -13037,7 +13444,12 @@
           "attr": "level",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'h1'"
+            }
+          ],
           "default": "'h1'",
           "values": [
             {
@@ -13077,7 +13489,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -13135,7 +13547,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13158,7 +13570,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13181,7 +13593,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13203,7 +13615,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -13287,7 +13699,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13316,7 +13728,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -13406,7 +13818,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13429,7 +13841,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13596,7 +14008,7 @@
       "filePath": "src/components/modular-checkout/modular-checkout.tsx",
       "encapsulation": "none",
       "tag": "justifi-modular-checkout",
-      "readme": "# justifi-modular-checkout\n\n\n",
+      "readme": "# justifi-modular-checkout\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -13620,7 +14032,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13643,7 +14055,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13851,7 +14263,7 @@
       "filePath": "src/components/order-terminals/order-terminals.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-order-terminals",
-      "readme": "# justifi-order-terminals\n\n\n",
+      "readme": "# justifi-order-terminals\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -13875,7 +14287,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13898,7 +14310,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13921,7 +14333,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -13937,7 +14349,12 @@
           "attr": "shipping",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -13961,7 +14378,12 @@
           "attr": "submit-button-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Submit Order'"
+            }
+          ],
           "default": "'Submit Order'",
           "values": [
             {
@@ -14035,7 +14457,7 @@
       "filePath": "src/components/business-forms/owner-form/owner-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-owner-form",
-      "readme": "# owner-form-inputs\n\n\n",
+      "readme": "# owner-form-inputs\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -14082,7 +14504,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14137,7 +14559,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14228,7 +14650,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -14356,6 +14778,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "form-control-text": [
@@ -14413,7 +14836,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14436,7 +14859,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -14522,7 +14945,12 @@
           "attr": "allow-optional-fields",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -14553,7 +14981,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14576,7 +15004,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14592,7 +15020,12 @@
           "attr": "form-title",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Business Information'"
+            }
+          ],
           "default": "'Business Information'",
           "values": [
             {
@@ -14715,10 +15148,12 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
+          "plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
           "business-documents-on-file",
@@ -14766,7 +15201,12 @@
           "attr": "allow-optional-fields",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -14797,7 +15237,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14820,7 +15260,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14843,7 +15283,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14870,7 +15310,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -14897,7 +15337,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -15063,10 +15503,12 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
+          "plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
           "business-documents-on-file",
@@ -15124,7 +15566,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15147,7 +15589,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15170,7 +15612,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15197,7 +15639,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15224,7 +15666,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15247,7 +15689,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -15289,7 +15731,12 @@
           "attr": "allow-optional-fields",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -15320,7 +15767,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15343,7 +15790,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15365,7 +15812,12 @@
           "attr": "country",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "CountryCode.USA"
+            }
+          ],
           "default": "CountryCode.USA",
           "values": [
             {
@@ -15399,7 +15851,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15426,7 +15878,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15448,7 +15900,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -15543,10 +15995,12 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "justifi-business-bank-account-form-step": [
           "form-control-tooltip",
+          "plaid-verification",
           "bank-account-form-inputs-canada",
           "bank-account-form-inputs",
           "business-documents-on-file",
@@ -15580,7 +16034,7 @@
       "filePath": "src/components/payment-transactions-list/payment-transactions-list.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-payment-transactions-list",
-      "readme": "# justifi-payment-transactions-list\n\n\n",
+      "readme": "# justifi-payment-transactions-list\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -15604,7 +16058,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15620,7 +16074,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -15651,7 +16110,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -15741,7 +16200,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15764,7 +16223,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -15780,7 +16239,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -16023,7 +16487,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -16039,7 +16503,12 @@
           "attr": "enable-record-click",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -16070,7 +16539,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -16119,7 +16588,7 @@
       "filePath": "src/components/payout-transactions-list/payout-transactions-list.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-payout-transactions-list",
-      "readme": "# justifi-payout-transactions-list\n\n\n",
+      "readme": "# justifi-payout-transactions-list\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -16143,7 +16612,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -16159,7 +16628,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -16190,7 +16664,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -16280,7 +16754,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -16303,7 +16777,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -16319,7 +16793,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -16459,7 +16938,7 @@
       "filePath": "src/components/modular-checkout/sub-components/plaid-payment-method.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-plaid-payment-method",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -16502,8 +16981,9 @@
                 "id": "global::Promise"
               },
               "PlaidError": {
-                "location": "global",
-                "id": "global::PlaidError"
+                "location": "import",
+                "path": "../../../api/Plaid",
+                "id": "src/api/Plaid.ts::PlaidError"
               }
             },
             "return": "Promise<PlaidError>"
@@ -16769,7 +17249,7 @@
       "filePath": "src/components/dispute-management/dispute-response/product-or-service.tsx",
       "encapsulation": "none",
       "tag": "justifi-product-or-service",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -16793,7 +17273,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -16809,7 +17289,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -16925,7 +17410,12 @@
           "attr": "checked",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -16972,7 +17462,12 @@
           "attr": "hidden",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -17101,7 +17596,7 @@
       "filePath": "src/components/refund-payment/refund-payment.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-refund-payment",
-      "readme": "# justifi-refund-payment\n\n\n",
+      "readme": "# justifi-refund-payment\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17125,7 +17620,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17148,7 +17643,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17164,7 +17659,12 @@
           "attr": "hide-submit-button",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -17195,7 +17695,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -17323,7 +17823,7 @@
       "filePath": "src/components/dispute-management/dispute-response/refund-policy.tsx",
       "encapsulation": "none",
       "tag": "justifi-refund-policy",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17347,7 +17847,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17363,7 +17863,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -17457,7 +17962,7 @@
       "filePath": "src/components/checkout/save-new-payment-method.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-save-new-payment-method",
-      "readme": "# justifi-sezzle-payment-method\n\n\n",
+      "readme": "# justifi-sezzle-payment-method\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17474,7 +17979,12 @@
           "attr": "label",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Save New Payment Method'"
+            }
+          ],
           "default": "'Save New Payment Method'",
           "values": [
             {
@@ -17527,7 +18037,7 @@
       "filePath": "src/components/checkout/saved-payment-method.tsx",
       "encapsulation": "none",
       "tag": "justifi-saved-payment-method",
-      "readme": "# justifi-sezzle-payment-method\n\n\n",
+      "readme": "# justifi-sezzle-payment-method\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17551,7 +18061,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17579,7 +18089,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -17662,7 +18172,7 @@
       "filePath": "src/components/modular-checkout/sub-components/saved-payment-methods.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-saved-payment-methods",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17695,7 +18205,7 @@
       "filePath": "src/components/insurance/season-interruption/season-interruption-insurance.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-season-interruption-insurance",
-      "readme": "# justifi-season-interruption-insurance-core\n\n\n",
+      "readme": "# justifi-season-interruption-insurance-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17834,7 +18344,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17880,7 +18390,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17903,7 +18413,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17926,7 +18436,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17949,7 +18459,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17972,7 +18482,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -17995,7 +18505,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -18081,7 +18591,7 @@
       "filePath": "src/components/modular-checkout/sub-components/sezzle-payment-method.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-sezzle-payment-method",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -18183,7 +18693,7 @@
       "filePath": "src/components/dispute-management/dispute-response/shipping-details.tsx",
       "encapsulation": "none",
       "tag": "justifi-shipping-details",
-      "readme": "# justifi-shipping-details\n\n\n",
+      "readme": "# justifi-shipping-details\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -18207,7 +18717,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -18223,7 +18733,12 @@
           "attr": "document-errors",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -18467,7 +18982,7 @@
       "filePath": "src/components/terminal-orders-list/terminal-orders-list.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-terminal-orders-list",
-      "readme": "# terminal-orders-list-core\n\n\n",
+      "readme": "# terminal-orders-list-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -18491,7 +19006,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -18514,7 +19029,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -18530,7 +19045,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -18587,7 +19107,7 @@
       "filePath": "src/components/terminal-orders-list/terminal-orders-list-filters.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-terminal-orders-list-filters",
-      "readme": "# terminal-orders-list-core\n\n\n",
+      "readme": "# terminal-orders-list-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -18751,7 +19271,7 @@
       "filePath": "src/components/terminals-list/terminals-list.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-terminals-list",
-      "readme": "# terminals-list-core\n\n\n",
+      "readme": "# terminals-list-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -18775,7 +19295,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -18798,7 +19318,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -18814,7 +19334,12 @@
           "attr": "columns",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "defaultColumnsKeys"
+            }
+          ],
           "default": "defaultColumnsKeys",
           "values": [
             {
@@ -18871,7 +19396,7 @@
       "filePath": "src/components/terminals-list/terminals-list-filters.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-terminals-list-filters",
-      "readme": "# terminals-list-core\n\n\n",
+      "readme": "# terminals-list-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -19224,7 +19749,12 @@
           "attr": "submit-button-text",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'Submit'"
+            }
+          ],
           "default": "'Submit'",
           "values": [
             {
@@ -19444,7 +19974,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -19498,7 +20028,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -19523,7 +20053,7 @@
       "filePath": "src/components/business-forms/owner-form/owner-form-core.tsx",
       "encapsulation": "none",
       "tag": "owner-form-core",
-      "readme": "# owner-form-inputs\n\n\n",
+      "readme": "# owner-form-inputs\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -19602,7 +20132,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -19629,7 +20159,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -19725,7 +20255,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -19752,7 +20282,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -19774,7 +20304,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -19969,6 +20499,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "form-control-text": [
@@ -20002,7 +20533,7 @@
       "filePath": "src/components/business-forms/owner-form/owner-form-inputs.tsx",
       "encapsulation": "none",
       "tag": "owner-form-inputs",
-      "readme": "# owner-form-inputs\n\n\n",
+      "readme": "# owner-form-inputs\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -20035,7 +20566,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20058,7 +20589,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20087,7 +20618,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20110,7 +20641,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -20128,6 +20659,7 @@
         "form-control-text",
         "form-control-number-masked",
         "form-control-date",
+        "form-control-number",
         "justifi-identity-address-form"
       ],
       "dependencyGraph": {
@@ -20135,6 +20667,7 @@
           "form-control-text",
           "form-control-number-masked",
           "form-control-date",
+          "form-control-number",
           "justifi-identity-address-form"
         ],
         "form-control-text": [
@@ -20182,7 +20715,7 @@
             "references": {
               "PaginationProps": {
                 "location": "local",
-                "path": "/Users/jakemerringer/justifi-tech/web-component-library/packages/webcomponents/src/ui-components/pagination-menu/pagination-menu.tsx",
+                "path": "/Users/rodrigoeidelvein/justifi/web-component-library/packages/webcomponents/src/ui-components/pagination-menu/pagination-menu.tsx",
                 "id": "src/ui-components/pagination-menu/pagination-menu.tsx::PaginationProps"
               }
             }
@@ -20190,7 +20723,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "ExtendedPagingDefaults"
+            }
+          ],
           "default": "ExtendedPagingDefaults",
           "values": [
             {
@@ -20211,7 +20749,7 @@
             "references": {
               "PaginationProps": {
                 "location": "local",
-                "path": "/Users/jakemerringer/justifi-tech/web-component-library/packages/webcomponents/src/ui-components/pagination-menu/pagination-menu.tsx",
+                "path": "/Users/rodrigoeidelvein/justifi/web-component-library/packages/webcomponents/src/ui-components/pagination-menu/pagination-menu.tsx",
                 "id": "src/ui-components/pagination-menu/pagination-menu.tsx::PaginationProps"
               }
             }
@@ -20219,7 +20757,12 @@
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
           "default": "{}",
           "values": [
             {
@@ -20304,7 +20847,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -20355,7 +20898,7 @@
       "filePath": "src/components/modular-checkout/sub-components/payment-method-option.tsx",
       "encapsulation": "shadow",
       "tag": "payment-method-option",
-      "readme": "# payment-method-option\n\n\n",
+      "readme": "# payment-method-option\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -20383,7 +20926,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20406,7 +20949,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20429,7 +20972,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20452,7 +20995,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20475,7 +21018,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -20527,7 +21070,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20554,7 +21097,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -20642,7 +21185,12 @@
           "attr": "enable-record-click",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
           "default": "false",
           "values": [
             {
@@ -20677,7 +21225,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20704,7 +21252,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -20799,7 +21347,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20826,7 +21374,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20853,7 +21401,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -20880,7 +21428,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -20948,6 +21496,136 @@
       }
     },
     {
+      "filePath": "src/components/business-forms/payment-provisioning/plaid-verification/plaid-verification.tsx",
+      "encapsulation": "none",
+      "tag": "plaid-verification",
+      "readme": "# internal-plaid-verification\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "accountId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "account-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "authToken",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "auth-token",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "businessId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "business-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "plaidVerificationError",
+          "detail": "PlaidError",
+          "bubbles": true,
+          "complexType": {
+            "original": "PlaidError",
+            "resolved": "PlaidError",
+            "references": {
+              "PlaidError": {
+                "location": "import",
+                "path": "../../../../api/Plaid",
+                "id": "src/api/Plaid.ts::PlaidError"
+              }
+            }
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "plaidVerificationSuccess",
+          "detail": "{ publicToken: string; bankAccount: any; }",
+          "bubbles": true,
+          "complexType": {
+            "original": "{ publicToken: string, bankAccount: any }",
+            "resolved": "{ publicToken: string; bankAccount: any; }",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "justifi-business-bank-account-form-step"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "justifi-business-bank-account-form-step": [
+          "plaid-verification"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/business-details/representative-details/representative-details.tsx",
       "encapsulation": "none",
       "tag": "representative-details",
@@ -20980,7 +21658,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -21005,7 +21683,7 @@
       "filePath": "src/components/filters/table-filters-menu.tsx",
       "encapsulation": "none",
       "tag": "table-filters-menu",
-      "readme": "# text-filter\n\n\n",
+      "readme": "# table-filters-menu\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -21028,7 +21706,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -21051,7 +21729,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -21108,7 +21786,7 @@
       "filePath": "src/components/terminal-orders-list/terminal-orders-list-core.tsx",
       "encapsulation": "none",
       "tag": "terminal-orders-list-core",
-      "readme": "# terminal-orders-list-core\n\n\n",
+      "readme": "# terminal-orders-list-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -21132,7 +21810,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -21159,7 +21837,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -21230,7 +21908,7 @@
       "filePath": "src/components/order-terminals/terminal-quantity-selector/terminal-quantity-selector.tsx",
       "encapsulation": "none",
       "tag": "terminal-quantity-selector",
-      "readme": "# terminal-quantity-selector\n\n\n",
+      "readme": "# terminal-quantity-selector\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -21254,7 +21932,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -21277,7 +21955,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -21300,7 +21978,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -21316,7 +21994,12 @@
           "attr": "limit",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [],
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "Infinity"
+            }
+          ],
           "default": "Infinity",
           "values": [
             {
@@ -21359,7 +22042,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -21413,7 +22096,7 @@
       "filePath": "src/components/terminals-list/terminals-list-core.tsx",
       "encapsulation": "none",
       "tag": "terminals-list-core",
-      "readme": "# terminals-list-core\n\n\n",
+      "readme": "# terminals-list-core\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -21437,7 +22120,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -21464,7 +22147,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         },
@@ -21491,7 +22174,7 @@
             }
           ],
           "optional": false,
-          "required": false,
+          "required": true,
           "getter": false,
           "setter": false
         }
@@ -21571,7 +22254,7 @@
       "path": "src/api/ComponentEvents.ts"
     },
     "src/api/Business.ts::IAdditionalQuestions": {
-      "declaration": "export interface IAdditionalQuestions {\n  business_revenue?: string;\n  business_payment_volume?: string;\n  business_when_service_received?: string;\n  business_recurring_payments?: string;\n  business_recurring_payments_percentage?: string;\n  business_seasonal?: string;\n  business_other_payment_details?: string;\n  payload?: any;\n}",
+      "declaration": "export interface IAdditionalQuestions {\n  business_revenue?: string;\n  business_payment_volume?: string;\n  business_average_transaction_amount?: string;\n  business_when_service_received?: string;\n  business_recurring_payments?: string;\n  business_recurring_payments_percentage?: string;\n  business_seasonal?: string;\n  business_other_payment_details?: string;\n  payload?: any;\n}",
       "docstring": "",
       "path": "src/api/Business.ts"
     },
@@ -21586,7 +22269,7 @@
       "path": "src/api/Business.ts"
     },
     "src/api/Identity.ts::Identity": {
-      "declaration": "export interface Identity {\n  address?: IAddress;\n  created_at?: string;\n  dob_day?: string;\n  dob_month?: string;\n  dob_year?: string;\n  documents?: Document[];\n  email?: string;\n  id?: string;\n  business_id?: string;\n  is_owner?: boolean;\n  metadata?: any;\n  name?: string;\n  phone?: string;\n  platform_account_id?: string;\n  identification_number?: string;\n  ssn_last4?: string;\n  title?: string;\n  updated_at?: string;\n}",
+      "declaration": "export interface Identity {\n  address?: IAddress;\n  created_at?: string;\n  dob_day?: string;\n  dob_month?: string;\n  dob_year?: string;\n  documents?: Document[];\n  email?: string;\n  id?: string;\n  business_id?: string;\n  is_owner?: boolean;\n  metadata?: any;\n  name?: string;\n  phone?: string;\n  platform_account_id?: string;\n  identification_number?: string;\n  ssn_last4?: string;\n  title?: string;\n  ownership_percentage?: string;\n  updated_at?: string;\n}",
       "docstring": "",
       "path": "src/api/Identity.ts"
     },
@@ -21634,6 +22317,11 @@
       "declaration": "any",
       "docstring": "",
       "path": "src/api/index.ts"
+    },
+    "src/api/Plaid.ts::PlaidError": {
+      "declaration": "export interface PlaidError {\n  code: PlaidErrorCodes;\n  message: string;\n  severity: ComponentErrorSeverity;\n  originalError?: any;\n  retryable: boolean;\n  userAction?: string;\n}",
+      "docstring": "",
+      "path": "src/api/Plaid.ts"
     },
     "src/components/modular-checkout/ModularCheckout.ts::Hook": {
       "declaration": "(\n  data: T,\n  resolve: (data: T) => void,\n  reject: () => void,\n) => void",

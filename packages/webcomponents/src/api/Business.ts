@@ -88,6 +88,7 @@ export interface ProductCategories {
 export interface IAdditionalQuestions {
   business_revenue?: string;
   business_payment_volume?: string;
+  business_average_transaction_amount?: string;
   business_when_service_received?: string;
   business_recurring_payments?: string;
   business_recurring_payments_percentage?: string;
@@ -99,6 +100,7 @@ export interface IAdditionalQuestions {
 export class AdditionalQuestions implements IAdditionalQuestions {
   public business_revenue?: string;
   public business_payment_volume?: string;
+  public business_average_transaction_amount?: string;
   public business_when_service_received?: string;
   public business_recurring_payments?: string;
   public business_recurring_payments_percentage?: string;
@@ -108,6 +110,7 @@ export class AdditionalQuestions implements IAdditionalQuestions {
   constructor(additionalQuestions: IAdditionalQuestions) {
     this.business_revenue = additionalQuestions.business_revenue;
     this.business_payment_volume = additionalQuestions.business_payment_volume;
+    this.business_average_transaction_amount = additionalQuestions.business_average_transaction_amount;
     this.business_when_service_received =
       additionalQuestions.business_when_service_received;
     this.business_recurring_payments =
@@ -123,6 +126,7 @@ export class AdditionalQuestions implements IAdditionalQuestions {
     return {
       business_revenue: this.business_revenue || '',
       business_payment_volume: this.business_payment_volume || '',
+      business_average_transaction_amount: this.business_average_transaction_amount || '',
       business_when_service_received: this.business_when_service_received || '',
       business_recurring_payments: this.business_recurring_payments || '',
       business_recurring_payments_percentage:
@@ -212,6 +216,7 @@ export interface IBusiness {
   website_url: string;
   date_of_incorporation?: string;
   country_of_establishment?: CountryCode;
+  bank_account_verification?: boolean;
 }
 
 export class Business implements IBusiness {
@@ -240,6 +245,7 @@ export class Business implements IBusiness {
   public date_of_incorporation?: string;
   public product_categories: ProductCategories;
   public country_of_establishment?: CountryCode;
+  public bank_account_verification?: boolean;
 
   constructor(business: IBusiness) {
     this.additional_questions = business.additional_questions
@@ -273,6 +279,7 @@ export class Business implements IBusiness {
     this.website_url = business.website_url;
     this.date_of_incorporation = business.date_of_incorporation;
     this.country_of_establishment = normalizeCountry(business.country_of_establishment);
+    this.bank_account_verification = business.bank_account_verification;
   }
 
   public get payload() {

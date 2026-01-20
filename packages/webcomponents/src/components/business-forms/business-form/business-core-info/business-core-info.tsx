@@ -18,8 +18,8 @@ import { countryLabels } from '../../utils/country-config';
   tag: 'justifi-business-core-info'
 })
 export class BusinessCoreInfo {
-  @Prop() formController: FormController;
-  @Prop() country: CountryCode;
+  @Prop() formController!: FormController;
+  @Prop() country!: CountryCode;
   @State() errors: any = {};
   @State() coreInfo: ICoreBusinessInfo = {};
   @State() isEditingTaxId: boolean = false;

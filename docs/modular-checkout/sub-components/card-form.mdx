@@ -5,7 +5,14 @@ description: Card entry sub-component for Modular Checkout layouts with shared v
 sidebar_position: 2
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getWebcomponentsVersion,
+  getComponentParts,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
 import componentTreeJson from '../../component-tree.json';
 
 ## Overview
@@ -97,45 +104,11 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'payment-method-group-id',
-        type: 'string',
-        description:
-          'Matches the group configured in the parent checkout to toggle allowed rails.',
-      },
-      {
-        name: 'show-save-payment-method',
-        type: 'boolean',
-        defaultValue: 'true',
-        description:
-          'Displays a checkbox that surfaces the modular checkout save-preference state.',
-      },
-      {
-        name: 'card-brand-icons',
-        type: '"auto" | "none"',
-        defaultValue: 'auto',
-        description: 'Controls whether brand icons display above inputs.',
-      },
-      {
-        name: 'locale',
-        type: 'string',
-        defaultValue: 'en-US',
-        description: 'Overrides localized labels if needed.',
-      },
-    ]),
-  }}
-/>
+<PropsMarkdownTable props={getPropsFromDocs('justifi-card-form', docsJson)} />
 
 ### Events
 
 All submit and error events bubble through the parent `<justifi-modular-checkout>`, so no additional listeners are required on the card form.
-
-### Public methods
-
-- `focus()` – moves focus to the iframe representing the current active field (useful for custom UX flows).
 
 ## Theming & Layout
 

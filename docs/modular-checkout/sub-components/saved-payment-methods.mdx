@@ -5,7 +5,14 @@ description: Saved payment selector for Modular Checkout that handles defaulting
 sidebar_position: 26
 ---
 
-import { PropsTable, PartsMarkdownTable, getComponentParts, getWebcomponentsVersion } from '../../helpers';
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getWebcomponentsVersion,
+  getComponentParts,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
 import componentTreeJson from '../../component-tree.json';
 
 ## Overview
@@ -103,40 +110,13 @@ This component exposes **no public methods or properties** and is not intended f
 
 ## Props, Events & Methods
 
-<div
-  dangerouslySetInnerHTML={{
-    __html: PropsTable([
-      {
-        name: 'customer-id',
-        type: 'string',
-        required: true,
-        description: 'Identifies which saved methods to fetch.',
-      },
-      {
-        name: 'allow-delete',
-        type: 'boolean',
-        defaultValue: 'true',
-        description: 'Shows the delete button for each saved method.',
-      },
-      {
-        name: 'show-add-new',
-        type: 'boolean',
-        defaultValue: 'true',
-        description:
-          'Displays a control that reveals the card/bank forms when no method is selected.',
-      },
-    ]),
-  }}
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-saved-payment-methods', docsJson)}
 />
 
 ### Events
 
-- `selection-changed`: Emits when customers choose a different saved method.
-- `delete-requested`: Fires when someone clicks delete on a saved method (confirm server-side permissions).
-
-### Public methods
-
-1. `clearSelection()` – Deselect saved methods so the new card/bank forms reappear.
+This component does not emit any events directly. Events are handled by the parent `justifi-modular-checkout` component.
 
 ## Theming & Layout
 

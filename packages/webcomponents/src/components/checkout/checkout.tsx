@@ -46,8 +46,8 @@ export class Checkout {
   @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
   @State() serverError: string;
 
-  @Prop() authToken: string;
-  @Prop() checkoutId: string;
+  @Prop() authToken!: string;
+  @Prop() checkoutId!: string;
   @Prop() disableBankAccount?: boolean = false;
   @Prop() disableBnpl?: boolean = false;
   @Prop() disableCreditCard?: boolean = false;

@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "6.7.2",
+  "version": "6.8.0",
   "description": "JustiFi Web Components",
   "collection": "dist/collection/collection-manifest.json",
   "main": "dist/index.cjs.js",
@@ -12,6 +12,7 @@
       "require": "./dist/index.cjs.js",
       "import": "./dist/module/index.js"
     },
+    "./dist/module/*.js": "./dist/module/*.js",
     "./dist/module/*": "./dist/module/*.js",
     "./dist/docs.json": "./dist/docs.json",
     "./package.json": "./package.json"
@@ -40,7 +41,7 @@
   "dependencies": {
     "@justifi/types": "workspace:*",
     "@popperjs/core": "^2.11.8",
-    "@stencil/core": "^4.0.5",
+    "@stencil/core": "4.38.3",
     "@stencil/store": "^2.0.8",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.4.1",

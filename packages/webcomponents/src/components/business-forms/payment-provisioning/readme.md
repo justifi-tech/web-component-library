@@ -5,15 +5,15 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type                                 | Default           |
-| --------------------- | ----------------------- | ----------- | ------------------------------------ | ----------------- |
-| `allowOptionalFields` | `allow-optional-fields` |             | `boolean`                            | `false`           |
-| `authToken`           | `auth-token`            |             | `string`                             | `undefined`       |
-| `businessId`          | `business-id`           |             | `string`                             | `undefined`       |
-| `country`             | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `CountryCode.USA` |
-| `currentStep`         | `current-step`          |             | `number`                             | `undefined`       |
-| `handleFormLoading`   | --                      |             | `(e: CustomEvent<any>) => void`      | `undefined`       |
-| `refs`                | --                      |             | `any[]`                              | `undefined`       |
+| Property                         | Attribute               | Description | Type                                 | Default           |
+| -------------------------------- | ----------------------- | ----------- | ------------------------------------ | ----------------- |
+| `allowOptionalFields`            | `allow-optional-fields` |             | `boolean`                            | `false`           |
+| `authToken` _(required)_         | `auth-token`            |             | `string`                             | `undefined`       |
+| `businessId` _(required)_        | `business-id`           |             | `string`                             | `undefined`       |
+| `country`                        | `country`               |             | `CountryCode.CAN \| CountryCode.USA` | `CountryCode.USA` |
+| `currentStep` _(required)_       | `current-step`          |             | `number`                             | `undefined`       |
+| `handleFormLoading` _(required)_ | --                      |             | `(e: CustomEvent<any>) => void`      | `undefined`       |
+| `refs` _(required)_              | --                      |             | `any[]`                              | `undefined`       |
 
 
 ## Dependencies
@@ -73,8 +73,10 @@ graph TD;
   owner-form-inputs --> form-control-text
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
+  owner-form-inputs --> form-control-number
   owner-form-inputs --> justifi-identity-address-form
   justifi-business-bank-account-form-step --> form-control-tooltip
+  justifi-business-bank-account-form-step --> plaid-verification
   justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
   justifi-business-bank-account-form-step --> bank-account-form-inputs
   justifi-business-bank-account-form-step --> business-documents-on-file

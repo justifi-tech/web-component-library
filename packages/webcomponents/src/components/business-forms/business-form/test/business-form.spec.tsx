@@ -24,22 +24,22 @@ describe('justifi-business-form', () => {
   });
 
   it('emit an error event when accountId and authToken are not provided', async () => {
-      const errorEvent = jest.fn();
-      const page = await newSpecPage({
-        components: [BusinessForm],
-        template: () => <justifi-business-form onError-event={errorEvent} />,
-      });
-      await page.waitForChanges();
-      expect(errorEvent).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: {
-            errorCode: 'missing-props',
-            message: 'auth-token and business-id are required',
-            severity: 'error',
-          },
-        })
-      );
+    const errorEvent = jest.fn();
+    const page = await newSpecPage({
+      components: [BusinessForm],
+      template: () => <justifi-business-form businessId="" authToken="" onError-event={errorEvent} />,
     });
+    await page.waitForChanges();
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'missing-props',
+          message: 'auth-token and business-id are required',
+          severity: 'error',
+        },
+      })
+    );
+  });
 
   it('should not log a warning if an authToken is provided', async () => {
     await newSpecPage({

@@ -1,0 +1,103 @@
+{
+  "id": null,
+  "type": "array",
+  "page_info": {
+    "has_previous": false,
+    "has_next": false,
+    "start_cursor": "WyIyMDI0LTA4LTA1IDIwOjQ4OjI5LjE1ODY5NTAwMCIsIjg1NGVlYWIwLTBlNzktNDViNS1iNzQ1LTRjMDcxNWMyMzg5MyJd",
+    "end_cursor": "WyIyMDIzLTExLTIxIDIxOjM0OjM1LjUyMTQwOTAwMCIsIjA4MDU5YTkwLWM5MzItNDEyMS04YmM3LTYzNTM1N2QzMzhjOCJd"
+  },
+  "data": [
+    {
+      "id": "trm_43Y2lE9E2ULR8pvaKI6D5v",
+      "nickname": "Terminal 1",
+      "provider": "verifone",
+      "status": "disconnected",
+      "account_id": "subaccount_1",
+      "platform_account_id": "acc_5678",
+      "provider_id": "453-760-515",
+      "provider_serial_number": "453-760-515",
+      "verified_at": null,
+      "created_at": "2024-08-05T20:48:29.158Z",
+      "updated_at": "2024-09-25T15:52:31.298Z"
+    },
+    {
+      "id": "trm_6TFOXK5U0LZLyQ6y6t3sbj",
+      "nickname": "Terminal 2",
+      "provider": "verifone",
+      "status": "disconnected",
+      "account_id": "subaccount_2",
+      "platform_account_id": "acc_5678",
+      "provider_id": "807-075-625",
+      "provider_serial_number": "807-075-625",
+      "verified_at": null,
+      "created_at": "2024-08-05T20:15:21.765Z",
+      "updated_at": "2024-10-31T19:21:51.886Z"
+    },
+    {
+      "id": "trm_F8UyFyXcaTBwSDh1cMxjc",
+      "nickname": "Terminal 3",
+      "provider": "verifone",
+      "status": "connected",
+      "account_id": "subaccount_3",
+      "platform_account_id": "acc_5678",
+      "provider_id": "450-060-752",
+      "provider_serial_number": "450-060-752",
+      "verified_at": null,
+      "created_at": "2023-11-21T21:34:35.521Z",
+      "updated_at": "2023-11-29T21:36:29.026Z"
+    },
+    {
+      "id": "trm_2Z2lE9E2ULR8pvaKI6D5v",
+      "nickname": "Terminal 4",
+      "provider": "verifone",
+      "status": "pending_configuration",
+      "account_id": "subaccount_4",
+      "platform_account_id": "acc_5678",
+      "provider_id": "453-760-515",
+      "provider_serial_number": "453-760-515",
+      "verified_at": null,
+      "created_at": "2022-08-05T20:48:29.158Z",
+      "updated_at": "2022-09-25T15:52:31.298Z"
+    },
+    {
+      "id": "trm_6TFOXK5U0LZLyQ6y6t3sbj",
+      "nickname": "Terminal 5",
+      "provider": "verifone",
+      "status": "pending_configuration",
+      "account_id": "subaccount_5",
+      "platform_account_id": "acc_5678",
+      "provider_id": "807-075-625",
+      "provider_serial_number": "807-075-625",
+      "verified_at": null,
+      "created_at": "2021-08-05T20:15:21.765Z",
+      "updated_at": "2021-10-31T19:21:51.886Z"
+    },
+    {
+      "id": "trm_F8UyFyXcaTBwSDh1cMxjc",
+      "nickname": "Terminal 6",
+      "provider": "verifone",
+      "status": "disconnected",
+      "account_id": "subaccount_6",
+      "platform_account_id": "acc_5678",
+      "provider_id": "450-060-752",
+      "provider_serial_number": "450-060-752",
+      "verified_at": null,
+      "created_at": "2021-08-05T20:15:21.765Z",
+      "updated_at": "2021-10-31T19:21:51.886Z"
+    },
+    {
+      "id": "trm_3I5QFcX420XQP59zOMAbH7",
+      "nickname": "Terminal 7",
+      "provider": "verifone",
+      "status": "archived",
+      "account_id": "subaccount_7",
+      "platform_account_id": "acc_5678",
+      "provider_id": "438-128-999",
+      "provider_serial_number": "438-128-999",
+      "verified_at": null,
+      "created_at": "2021-08-05T20:15:21.765Z",
+      "updated_at": "2021-10-31T19:21:51.886Z"
+    }
+  ]
+}

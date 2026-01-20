@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type     | Default     |
-| ---------- | ----------- | ----------- | -------- | ----------- |
-| `helpText` | `help-text` |             | `string` | `undefined` |
-| `name`     | `name`      |             | `string` | `undefined` |
+| Property                | Attribute   | Description | Type     | Default     |
+| ----------------------- | ----------- | ----------- | -------- | ----------- |
+| `helpText` _(required)_ | `help-text` |             | `string` | `undefined` |
+| `name` _(required)_     | `name`      |             | `string` | `undefined` |
 
 
 ## Dependencies

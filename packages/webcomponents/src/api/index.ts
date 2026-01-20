@@ -109,3 +109,6 @@ export {
 } from './Document';
 
 export * from './DisputeEvidenceDocument';
+export * from './Plaid';
+// In a future PR I would like to update the naming of the BankAccount Payment Method class in Payment.ts so this import can be updated to be written the same as the others in this file.
+export { BankAccount, IBankAccount } from './BankAccount';
