@@ -5348,7 +5348,7 @@
       "filePath": "src/components/tokenize-payment-method/internal-tokenize-payment-method.tsx",
       "encapsulation": "none",
       "tag": "internal-tokenize-payment-method",
-      "readme": "# justifi-tokenize-payment-method\n\n\n",
+      "readme": "# justifi-tokenize-payment-method\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -19525,7 +19525,7 @@
       "filePath": "src/components/tokenize-payment-method/tokenize-payment-method.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-tokenize-payment-method",
-      "readme": "# justifi-tokenize-payment-method\n\n\n",
+      "readme": "# justifi-tokenize-payment-method\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -22509,7 +22509,7 @@
       "path": "../../node_modules/.pnpm/@popperjs+core@2.11.8/node_modules/@popperjs/core/index.d.ts"
     },
     "src/api/Document.ts::EntityDocumentType": {
-      "declaration": "any",
+      "declaration": "export enum EntityDocumentType {\n  voidedCheck = 'voided_check',\n  balanceSheet = 'balance_sheet',\n  bankStatement = 'bank_statement',\n  governmentId = 'government_id',\n  profitAndLossStatement = 'profit_and_loss_statement',\n  taxReturn = 'tax_return',\n  other = 'other',\n}",
       "docstring": "",
       "path": "src/api/Document.ts"
     },
