@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.8.1
+
+### Patch Changes
+
+- 85a8312: Add translations for new payment transaction types: processing_fee, platform_fee, processing_fee_return, and platform_fee_return
+
 ## 6.8.0
 
 ### Minor Changes
