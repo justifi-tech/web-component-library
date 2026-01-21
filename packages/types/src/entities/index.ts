@@ -24,3 +24,11 @@ export {
   type ISubAccount,
   SubAccount,
 } from './SubAccount';
+
+export {
+  DisputeStatus,
+  type IDispute,
+  Dispute,
+  type IDisputeResponse,
+  DisputeResponse,
+} from './Dispute';
