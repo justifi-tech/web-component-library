@@ -6,3 +6,5 @@ export {
   EntityDocumentStatus,
   type DocumentRecordData,
 } from './Document';
+
+export { type Identity, Owner, Representative } from './Identity';
