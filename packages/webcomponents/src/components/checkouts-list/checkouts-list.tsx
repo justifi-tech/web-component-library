@@ -6,6 +6,7 @@ import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
+import { makeGetSubAccount } from '../../actions/sub-account/get-subaccount';
 import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './checkouts-table';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
@@ -66,12 +67,32 @@ export class CheckoutsList {
     }
   }
 
-  private initializeGetSubAccounts() {
+  private async initializeGetSubAccounts() {
     if (this.accountId && this.authToken) {
-      this.getSubAccounts = makeGetSubAccounts({
+      // First, fetch the subaccount data to check if this account is a subaccount
+      const getSubAccount = makeGetSubAccount({
         accountId: this.accountId,
         authToken: this.authToken,
         service: new SubAccountService()
+      });
+
+      await getSubAccount({
+        subAccountId: this.accountId,
+        onSuccess: ({ subAccount }) => {
+          this.getSubAccounts = makeGetSubAccounts({
+            accountId: subAccount.platform_account_id,
+            authToken: this.authToken,
+            service: new SubAccountService()
+          });
+        },
+        onError: () => {
+          // If fetching sub account fails, it means it's a primary account
+          this.getSubAccounts = makeGetSubAccounts({
+            accountId: this.accountId,
+            authToken: this.authToken,
+            service: new SubAccountService()
+          });
+        }
       });
     }
   }

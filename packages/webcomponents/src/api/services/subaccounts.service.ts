@@ -1,4 +1,4 @@
-import { Api, IApiResponseCollection, ISubAccount } from '..';
+import { Api, IApiResponse, IApiResponseCollection, ISubAccount } from '..';
 
 const api = Api();
 
@@ -8,6 +8,11 @@ export interface ISubAccountService {
     authToken: string,
     params: any
   ): Promise<IApiResponseCollection<ISubAccount[]>>;
+  fetchSubAccount(
+    accountId: string,
+    authToken: string,
+    subAccountId: string
+  ): Promise<IApiResponse<ISubAccount>>;
 }
 
 export class SubAccountService implements ISubAccountService {
@@ -19,5 +24,15 @@ export class SubAccountService implements ISubAccountService {
     const endpoint = 'sub_accounts';
     const headers = { Account: accountId };
     return api.get({ authToken, endpoint, params, headers });
+  }
+
+  async fetchSubAccount(
+    accountId: string,
+    authToken: string,
+    subAccountId: string
+  ): Promise<IApiResponse<ISubAccount>> {
+    const endpoint = `sub_accounts/${subAccountId}`;
+    const headers = { Account: accountId };
+    return api.get({ authToken, endpoint, headers });
   }
 }
