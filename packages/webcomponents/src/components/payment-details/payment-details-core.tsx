@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { DisputeStatus, Payment, PaymentStatuses } from '../../api';
-import { formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
+import { formatCurrency, formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { MapPaymentStatusToBadge, PaymentStatusBadge } from '../payments-list/payments-status';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
@@ -88,7 +88,7 @@ export class PaymentDetailsCore {
                     ) : null}
                   </div>
                 )}
-                title={this.payment.formattedPaymentAmount(this.payment.amount)}
+                title={formatCurrency(this.payment.amount, this.payment.currency)}
               >
                 <EntityHeadInfoItem
                   classes="border-1 border-end"
@@ -105,13 +105,13 @@ export class PaymentDetailsCore {
               <div slot='detail-sections'>
                 <DetailSectionTitle sectionTitle="Details" />
                 <div class="d-flex flex-column gap-2 w-100">
-                  <DetailItem title="Amount" value={this.payment.formattedPaymentAmount(this.payment.amount)} />
-                  <DetailItem title="Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
-                  <DetailItem title="Refunded" value={this.payment.formattedPaymentAmount(this.payment.amount_refunded)} />
-                  <DetailItem title="Net" value={this.payment.formattedPaymentAmount(this.payment.balance)} />
+                  <DetailItem title="Amount" value={formatCurrency(this.payment.amount, this.payment.currency)} />
+                  <DetailItem title="Fees" value={formatCurrency(this.payment.fee_amount, this.payment.currency)} />
+                  <DetailItem title="Refunded" value={formatCurrency(this.payment.amount_refunded, this.payment.currency)} />
+                  <DetailItem title="Net" value={formatCurrency(this.payment.balance, this.payment.currency)} />
                   <DetailItem title="Status" value={MapPaymentStatusToBadge(this.PaymentStatus)} />
                   <DetailItem title="Payment ID" value={this.payment.id} />
-                  <DetailItem title="Processing Fees" value={this.payment.formattedPaymentAmount(this.payment.fee_amount)} />
+                  <DetailItem title="Processing Fees" value={formatCurrency(this.payment.fee_amount, this.payment.currency)} />
                   <DetailItem title="Statement Descriptor" value={this.payment.statement_descriptor} />
                   <DetailItem title="Description" value={this.payment.description} />
                   <DetailItem title="Expedited" value={this.payment.expedited ? 'Yes' : 'No'} />

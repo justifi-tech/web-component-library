@@ -1,46 +1,19 @@
-export interface IDocument {
-  business_id: string;
-  created_at: string;
-  description: string | null;
-  document_type: string;
-  file_name: string;
-  file_type: string;
-  id: string;
-  identity_id: string;
-  metadata: any;
-  platform_account_id: string;
-  presigned_url: string | null;
-  status: EntityDocumentStatus;
-  updated_at: string;
-}
+// Re-export types from @justifi/types for backward compatibility
+export type { IDocument, DocumentRecordData } from '@justifi/types';
+export { EntityDocumentType, EntityDocumentStatus } from '@justifi/types';
 
-export enum EntityDocumentType {
-  voidedCheck = 'voided_check',
-  balanceSheet = 'balance_sheet',
-  bankStatement = 'bank_statement',
-  governmentId = 'government_id',
-  profitAndLossStatement = 'profit_and_loss_statement',
-  taxReturn = 'tax_return',
-  other = 'other',
-}
+// Import types for use in this file
+import { EntityDocumentType, type DocumentRecordData } from '@justifi/types';
 
-export enum EntityDocumentStatus {
-  pending = 'pending',
-  uploaded = 'uploaded',
-  canceled = 'canceled',
-  needed = 'needed',
-}
-
+// Component-specific types (use browser APIs like FileList and File)
 export interface FileSelectEvent {
   fileList: FileList;
   document_type: EntityDocumentType;
 }
 
-export interface DocumentRecordData {
-  business_id: string;
+export interface EntityFileData {
+  file: File;
   document_type: EntityDocumentType;
-  file_name: string;
-  file_type: string;
 }
 
 export class EntityDocumentStorage {
@@ -61,11 +34,6 @@ export class EntityDocumentStorage {
     this.tax_return = [];
     this.other = [];
   }
-}
-
-export interface EntityFileData {
-  file: File;
-  document_type: EntityDocumentType;
 }
 
 export class EntityDocument {
@@ -95,7 +63,7 @@ export class EntityDocument {
     const fileDataPromise = new Promise<ArrayBuffer>((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.fileData = e.target.result as ArrayBuffer;
+        this.fileData = e.target?.result as ArrayBuffer;
         resolve(this.fileData);
       };
       reader.onerror = () => {
@@ -103,7 +71,7 @@ export class EntityDocument {
       };
       reader.readAsArrayBuffer(this.file);
     });
-    
+
     return await fileDataPromise;
   }
 

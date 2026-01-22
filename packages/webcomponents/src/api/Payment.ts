@@ -40,17 +40,17 @@ export enum CurrencyTypes {
 
 export interface IPaymentMethod {
   card?: Card;
-  bank_account?: BankAccount;
+  bank_account?: PaymentBankAccount;
 }
 
 export class PaymentMethod implements IPaymentMethod {
   public card?: Card;
-  public bank_account?: BankAccount;
+  public bank_account?: PaymentBankAccount;
 
   constructor(paymentMethod: IPaymentMethod) {
     this.card = paymentMethod.card ? new Card(paymentMethod.card) : undefined;
     this.bank_account = paymentMethod.bank_account
-      ? new BankAccount(paymentMethod.bank_account)
+      ? new PaymentBankAccount(paymentMethod.bank_account)
       : undefined;
   }
 
@@ -83,7 +83,7 @@ export type CardBrand =
   | 'visa'
   | 'unknown';
 
-export interface IBankAccount {
+export interface IPaymentBankAccount {
   id: string;
   acct_last_four: string;
   name: string;
@@ -93,7 +93,7 @@ export interface IBankAccount {
   updated_at: string;
 }
 
-export class BankAccount implements IBankAccount {
+export class PaymentBankAccount implements IPaymentBankAccount {
   public id: string;
   public acct_last_four: string;
   public name: string;
@@ -102,7 +102,7 @@ export class BankAccount implements IBankAccount {
   public created_at: string;
   public updated_at: string;
 
-  constructor(bankAccount: IBankAccount) {
+  constructor(bankAccount: IPaymentBankAccount) {
     this.id = bankAccount.id;
     this.acct_last_four = bankAccount.acct_last_four;
     this.name = bankAccount.name;
