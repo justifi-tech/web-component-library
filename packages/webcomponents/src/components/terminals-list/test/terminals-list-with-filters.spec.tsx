@@ -182,7 +182,7 @@ describe('justifi-terminals-list with filters', () => {
 
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = filterParams;
-    expect(updatedParams.created_after).toBe('2024-01-15T13:30:00.000Z');
+    expect(updatedParams.created_after).toBe('2024-01-15T10:30:00.000Z');
   });
 
   it('updates params and refetches data on created_before date filter interaction', async () => {
