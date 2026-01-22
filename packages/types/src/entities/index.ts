@@ -32,3 +32,29 @@ export {
   type IDisputeResponse,
   DisputeResponse,
 } from './Dispute';
+
+export {
+  CaptureStrategy,
+  PaymentMethodTypes,
+  PaymentTypes,
+  PaymentStatuses,
+  CurrencyTypes,
+  type IPaymentMethodData,
+  PaymentMethodData,
+  type CardBrand,
+  type IPaymentBankAccount,
+  PaymentBankAccount,
+  type IPaymentCard,
+  PaymentCard,
+  type IPaymentDispute,
+  type IApplicationFee,
+  type IPayment,
+  Payment,
+  type PaymentsQueryParams,
+} from './Payment';
+
+export {
+  PaymentBalanceTxnType,
+  type IPaymentBalanceTransaction,
+  PaymentBalanceTransaction,
+} from './PaymentBalanceTransaction';
