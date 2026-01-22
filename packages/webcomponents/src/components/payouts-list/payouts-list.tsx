@@ -73,7 +73,7 @@ export class PayoutsList {
   private initializeGetSubAccounts() {
     if (this.accountId && this.authToken) {
       this.getSubAccounts = makeGetSubAccounts({
-        accountId: this.accountId,
+        primaryAccountId: this.accountId,
         authToken: this.authToken,
         service: new SubAccountService()
       });
