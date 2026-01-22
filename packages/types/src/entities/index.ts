@@ -92,3 +92,29 @@ export {
   type CheckoutAccountType,
   type ICheckoutPaymentMethod,
 } from './Checkout';
+
+export {
+  type TerminalsQueryParams,
+  ITerminalStatus,
+  type ITerminal,
+  TerminalProviders,
+  Terminal,
+} from './Terminal';
+
+export {
+  TerminalModelName,
+  type ITerminalModel,
+  type ITerminalModelApiResponse,
+  type ITerminalModelsApiResponse,
+  TerminalModel,
+} from './TerminalModel';
+
+export {
+  type TerminalOrderQueryParams,
+  TerminalOrderType,
+  TerminalOrderStatus,
+  type OrderedTerminal,
+  type TerminalOrderItem,
+  type ITerminalOrder,
+  TerminalOrder,
+} from './TerminalOrder';
