@@ -72,3 +72,23 @@ export {
   type IPayoutBalanceTransaction,
   PayoutBalanceTransaction,
 } from './PayoutBalanceTransaction';
+
+export {
+  PAYMENT_METHOD_TYPES,
+  type IBnpl,
+  type ICompletion,
+  Completion,
+  type ICheckoutPaymentSettings,
+  type ICheckout,
+  Checkout,
+  ICheckoutPaymentMode,
+  ICheckoutPaymentModeParam,
+  ICheckoutStatus,
+  CompletionStatuses,
+  type ICheckoutCompleteResponse,
+  type ILoadedEventResponse,
+  type CheckoutsQueryParams,
+  type CheckoutCardBrand,
+  type CheckoutAccountType,
+  type ICheckoutPaymentMethod,
+} from './Checkout';
