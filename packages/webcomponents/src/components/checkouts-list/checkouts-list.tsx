@@ -41,6 +41,7 @@ export class CheckoutsList {
 
   @Watch('accountId')
   @Watch('authToken')
+  @Watch('subAccountId')
   propChanged() {
     this.initializeGetData();
   }
