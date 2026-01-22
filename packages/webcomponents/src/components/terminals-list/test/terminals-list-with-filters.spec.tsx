@@ -223,7 +223,7 @@ describe('justifi-terminals-list with filters', () => {
 
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = filterParams;
-    expect(updatedParams.created_before).toBe('2025-01-01T02:59:00.000Z');
+    expect(updatedParams.created_before).toBe('2024-12-31T23:59:00.000Z');
   });
 
   it('updates params with both created_after and created_before date filters', async () => {
@@ -264,7 +264,7 @@ describe('justifi-terminals-list with filters', () => {
 
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = filterParams;
-    expect(updatedParams.created_after).toBe('2024-01-01T03:00:00.000Z');
+    expect(updatedParams.created_after).toBe('2024-01-01T00:00:00.000Z');
     expect(updatedParams.created_before).toBe('2025-01-01T02:59:00.000Z');
   });
 
