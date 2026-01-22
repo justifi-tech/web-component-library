@@ -58,3 +58,17 @@ export {
   type IPaymentBalanceTransaction,
   PaymentBalanceTransaction,
 } from './PaymentBalanceTransaction';
+
+export {
+  type PayoutsQueryParams,
+  PayoutStatuses,
+  PayoutStatusesSafeNames,
+  type IPayout,
+  Payout,
+} from './Payout';
+
+export {
+  PayoutBalanceTransactionType,
+  type IPayoutBalanceTransaction,
+  PayoutBalanceTransaction,
+} from './PayoutBalanceTransaction';
