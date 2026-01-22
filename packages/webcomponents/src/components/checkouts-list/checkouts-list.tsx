@@ -52,7 +52,6 @@ export class CheckoutsList {
 
   private initializeGetCheckouts() {
     const accountToUse = this.subAccountId || this.accountId;
-    console.log({accountToUse})
     if (accountToUse && this.authToken) {
       this.getCheckouts = makeGetCheckouts({
         accountId: accountToUse,
