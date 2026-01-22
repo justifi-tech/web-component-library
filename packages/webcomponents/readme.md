@@ -15,6 +15,17 @@ The best method for including the JustiFi web components in your application is 
 `npm install @justifi/webcomponents`
 
 
+## TypeScript Types
+
+TypeScript types are included with the webcomponents package. For applications that only need type definitions without the components, types can also be imported directly from `@justifi/types`:
+
+```typescript
+import { IPayment, PaymentStatuses, Business } from '@justifi/types';
+```
+
+See the [@justifi/types README](../types/README.md) for more details on available exports.
+
+
 ## Documentation
 
 Visit [https://storybook.justifi.ai/?path=/docs/introduction--docs](https://storybook.justifi.ai/?path=/docs/introduction--docs) to view the full documentation.
