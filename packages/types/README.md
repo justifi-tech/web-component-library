@@ -52,7 +52,7 @@ import { CountryCode, StateOptions, filterNumber } from '@justifi/types/utils';
 
 ## Documentation
 
-Visit [https://storybook.justifi.ai/?path=/docs/introduction--docs](https://storybook.justifi.ai/?path=/docs/introduction--docs) for full documentation.
+Visit [https://docs.justifi.tech/web-components/introduction](https://docs.justifi.tech/web-components/introduction) for full documentation.
 
 ## License
 

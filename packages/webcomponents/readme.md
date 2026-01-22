@@ -28,18 +28,18 @@ See the [@justifi/types README](../types/README.md) for more details on availabl
 
 ## Documentation
 
-Visit [https://storybook.justifi.ai/?path=/docs/introduction--docs](https://storybook.justifi.ai/?path=/docs/introduction--docs) to view the full documentation.
+Visit [https://docs.justifi.tech/web-components/introduction](https://docs.justifi.tech/web-components/introduction) to view the full documentation.
 
 
 ## Examples
 
 Our documentation features examples of rendered components. 
 
-- [Payment Form](https://storybook.justifi.ai/?path=/story/components-paymentform--basic)
-- [Payments List](https://storybook.justifi.ai/?path=/docs/components-paymentslist--docs)
-- [Payment Detail](https://storybook.justifi.ai/?path=/docs/components-paymentdetails--docs)
+- [Payments List](https://docs.justifi.tech/web-components/merchant-tools/payments-list)
+- [Payment Detail](https://docs.justifi.tech/web-components/merchant-tools/payment-details)
+- [Payment Transactions List](https://docs.justifi.tech/web-components/merchant-tools/payment-transactions-list)
 
-Visit our [documentation home page](https://storybook.justifi.ai/?path=/docs/introduction--docs) to view examples of all available components.
+Visit our [documentation home page](https://docs.justifi.tech/web-components/introduction) to view examples of all available components.
 
 
 ## Questions and Issues
