@@ -1,5 +1,14 @@
 # @repo/component-examples
 
+## 1.1.15
+
+### Patch Changes
+
+- Updated dependencies [79c1fac]
+- Updated dependencies [aea215b]
+- Updated dependencies [aea215b]
+  - @justifi/webcomponents@6.9.0
+
 ## 1.1.14
 
 ### Patch Changes
