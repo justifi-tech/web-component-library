@@ -1,5 +1,16 @@
 ### Changelog
 
+## 6.9.0
+
+### Minor Changes
+
+- aea215b: Add optional subAccountId prop to checkouts-list component
+
+### Patch Changes
+
+- 79c1fac: Fix missing CSS ::part markup in dispute notification component for underReview, won, and lost states
+- aea215b: Add Created After and Created Before date filters to terminals list
+
 ## 6.8.1
 
 ### Patch Changes
