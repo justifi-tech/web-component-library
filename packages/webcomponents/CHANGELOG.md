@@ -1,15 +1,5 @@
 ### Changelog
 
-## 6.9.0
-
-### Minor Changes
-
-- a5950ef: Add optional subAccountId prop to checkouts-list component
-
-### Patch Changes
-
-- a4066ca: Add Created After and Created Before date filters to terminals list
-
 ## 6.8.1
 
 ### Patch Changes
