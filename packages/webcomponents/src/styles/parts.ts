@@ -142,6 +142,7 @@ export const createdBeforePaymentsListFilterParam = `${paymentsListFilterParam} 
 
 export const payoutsListFilterMenu = `${filterMenu} payouts-list-filter-menu`;
 export const payoutsListFilterParam = `payouts-list-filter-param`;
+export const statusPayoutsListFilterParam = `${payoutsListFilterParam} status-payouts-list-filter-param`;
 export const createdAfterPayoutsListFilterParam = `${payoutsListFilterParam} created-after-payouts-list-filter-param`;
 export const createdBeforePayoutsListFilterParam = `${payoutsListFilterParam} created-before-payouts-list-filter-param`;
 
