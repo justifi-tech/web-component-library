@@ -135,6 +135,9 @@ export const paymentsListFilterParam = `payments-list-filter-param`;
 export const paymentIdPaymentsListFilterParam = `${paymentsListFilterParam} payment-id-payments-list-filter-param`;
 export const terminalIdPaymentsListFilterParam = `${paymentsListFilterParam} terminal-id-payments-list-filter-param`;
 export const paymentStatusPaymentsListFilterParam = `${paymentsListFilterParam} payment-status-payments-list-filter-param`;
+export const paymentModePaymentsListFilterParam = `${paymentsListFilterParam} payment-mode-payments-list-filter-param`;
+export const checkoutIdPaymentsListFilterParam = `${paymentsListFilterParam} checkout-id-payments-list-filter-param`;
+export const accountHolderPaymentsListFilterParam = `${paymentsListFilterParam} account-holder-payments-list-filter-param`;
 export const createdAfterPaymentsListFilterParam = `${paymentsListFilterParam} created-after-payments-list-filter-param`;
 export const createdBeforePaymentsListFilterParam = `${paymentsListFilterParam} created-before-payments-list-filter-param`;
 

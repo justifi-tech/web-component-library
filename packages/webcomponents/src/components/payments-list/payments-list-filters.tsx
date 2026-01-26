@@ -9,6 +9,9 @@ import {
   createdBeforePaymentsListFilterParam,
   paymentIdPaymentsListFilterParam,
   paymentStatusPaymentsListFilterParam,
+  paymentModePaymentsListFilterParam,
+  checkoutIdPaymentsListFilterParam,
+  accountHolderPaymentsListFilterParam,
   terminalIdPaymentsListFilterParam
 } from '../../styles/parts';
 
@@ -20,6 +23,9 @@ export class PaymentsListFilters {
   @Prop() paymentId?: string;
   @Prop() terminalId?: string;
   @Prop() paymentStatus?: string;
+  @Prop() paymentMode?: string;
+  @Prop() checkoutId?: string;
+  @Prop() accountHolder?: string;
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;
 
@@ -33,6 +39,9 @@ export class PaymentsListFilters {
       payment_id: this.paymentId,
       terminal_id: this.terminalId,
       payment_status: this.paymentStatus,
+      payment_mode: this.paymentMode,
+      checkout_id: this.checkoutId,
+      account_holder: this.accountHolder,
       created_after: this.createdAfter,
       created_before: this.createdBefore
     };
@@ -62,6 +71,15 @@ export class PaymentsListFilters {
       { label: 'Failed', value: 'failed' },
       { label: 'Disputed', value: 'disputed' },
       { label: 'Refunded', value: 'refunded' }
+    ]
+  }
+
+  get paymentModeOptions() {
+    return [
+      { label: 'All', value: '' },
+      { label: 'E-commerce', value: 'ecom' },
+      { label: 'ACH', value: 'ach' },
+      { label: 'Card Present', value: 'card_present' }
     ]
   }
 
@@ -101,6 +119,37 @@ export class PaymentsListFilters {
                 defaultValue={this.paymentStatus || filterParams.payment_status || ''}
                 disabled={!!this.paymentStatus}
                 part={paymentStatusPaymentsListFilterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-select
+                name="payment_mode"
+                label="Payment Mode"
+                options={this.paymentModeOptions}
+                inputHandler={this.setParamsOnChange}
+                defaultValue={this.paymentMode || filterParams.payment_mode || ''}
+                disabled={!!this.paymentMode}
+                part={paymentModePaymentsListFilterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-text
+                name="checkout_id"
+                label="Checkout ID"
+                inputHandler={this.debouncedSetParamsOnChange}
+                defaultValue={this.checkoutId || filterParams.checkout_id}
+                disabled={!!this.checkoutId}
+                part={checkoutIdPaymentsListFilterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-text
+                name="account_holder"
+                label="Account Holder"
+                inputHandler={this.debouncedSetParamsOnChange}
+                defaultValue={this.accountHolder || filterParams.account_holder}
+                disabled={!!this.accountHolder}
+                part={accountHolderPaymentsListFilterParam}
               />
             </div>
             <div class="p-2">
