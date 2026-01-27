@@ -1,15 +1,22 @@
-import localPackageJson from '../package.json';
+import { readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
 export const getWebcomponentsVersion = () => {
   try {
-    const deps = localPackageJson?.dependencies || {};
-    const versionSpec = deps['@justifi/webcomponents'];
+    // Try to find package.json relative to this module
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+    const packageJsonPath = join(__dirname, '..', 'package.json');
+    const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+    const peerDeps = packageJson?.peerDependencies || {};
+    const versionSpec = peerDeps['@justifi/webcomponents'];
 
     if (versionSpec) {
       return versionSpec;
     }
   } catch (error) {
-    console.error(error);
+    // Fallback for environments where fs is not available (browser)
+    console.warn('Could not read package.json:', error.message);
   }
 
   // Last resort: return 'latest' if we can't determine the version

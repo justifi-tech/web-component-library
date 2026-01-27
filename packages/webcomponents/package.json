@@ -29,7 +29,8 @@
     "dist/"
   ],
   "scripts": {
-    "build": "stencil build --docs && node scripts/generate-component-tree.mjs",
+    "build": "stencil build",
+    "build:docs": "stencil build --docs && node scripts/generate-component-tree.mjs",
     "dev": "stencil build --watch",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
