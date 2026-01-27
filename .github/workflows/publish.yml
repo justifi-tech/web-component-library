@@ -1,4 +1,4 @@
-name: Publish components
+name: Publish packages
 on:
   workflow_dispatch:
 
@@ -30,10 +30,10 @@ jobs:
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
           echo "API_ORIGIN=${{ secrets.API_ORIGIN }}" >> .env
 
-      - name: Build packages
-        working-directory: ./packages/webcomponents
+      - name: Build all packages
         run: pnpm build
 
       - name: Publish to NPM Registry
-        run: |
-          pnpm release
+        run: pnpm release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
