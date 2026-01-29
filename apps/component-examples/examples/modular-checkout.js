@@ -99,6 +99,7 @@ app.get('/', async (req, res) => {
         <div class="column-preview">
           <justifi-modular-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}">
             <justifi-card-form></justifi-card-form>
+            <justifi-google-pay></justifi-google-pay>
             <div style="margin-top: 20px">
               <button
                id="submit-button" 
