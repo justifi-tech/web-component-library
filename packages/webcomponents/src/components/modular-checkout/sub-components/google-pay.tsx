@@ -9,6 +9,7 @@ import {
 } from "@stencil/core";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { checkoutStore } from "../../../store/checkout.store";
+import GooglePaySkeleton from "./google-pay-skeleton";
 
 enum GooglePayEventTypes {
   initialize = "justifi.googlePay.initialize",
@@ -108,10 +109,16 @@ export class GooglePay {
 
     return (
       <Host>
+        <GooglePaySkeleton isLoading={!this.isReadyToPay} />
         <iframe
           ref={(el) => (this.iframeElement = el)}
           src={`${this.iframeOrigin}/v2/googlePay`}
-          style={{ border: "none", width: "100%", height: "48px" }}
+          style={{
+            border: "none",
+            width: "100%",
+            height: "48px",
+            display: this.isReadyToPay ? "block" : "none",
+          }}
         />
       </Host>
     );
