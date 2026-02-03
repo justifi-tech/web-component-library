@@ -144,4 +144,92 @@ describe('justifi-business-core-info-form-step-core', () => {
     });
   });
 
+  describe('Payload behavior with tax_id_last4', () => {
+    test('excludes tax_id from payload when tax_id_last4 is present', async () => {
+      mockGetBusiness.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({
+          data: {
+            legal_name: 'Test Business',
+            classification: 'llc',
+            industry: 'technology',
+            tax_id: '123456789',
+            tax_id_last4: '6789',
+            email: 'test@example.com',
+            phone: '5555555555'
+          }
+        });
+        final?.();
+      });
+
+      const page = await newSpecPage({
+        components: [BusinessCoreInfoFormStep],
+        template: () => (
+          <justifi-business-core-info-form-step
+            businessId="biz_123"
+            authToken="test-token"
+            country={CountryCode.USA}
+          />
+        ),
+      });
+
+      page.rootInstance.getBusiness = mockGetBusiness;
+      page.rootInstance.patchBusiness = mockPatchBusiness;
+
+      // @ts-ignore - accessing private method for testing
+      page.rootInstance.getData();
+      await page.waitForChanges();
+
+      // Access payload getter directly
+      const payload = page.rootInstance.patchPayload;
+
+      // Verify tax_id is NOT in the payload when tax_id_last4 exists
+      expect(payload).not.toHaveProperty('tax_id');
+      expect(payload.legal_name).toBe('Test Business');
+      expect(payload.classification).toBe('llc');
+    });
+
+    test('includes tax_id in payload when tax_id_last4 is not present', async () => {
+      mockGetBusiness.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({
+          data: {
+            legal_name: 'Test Business',
+            classification: 'llc',
+            industry: 'technology',
+            tax_id: '123456789',
+            email: 'test@example.com',
+            phone: '5555555555'
+          }
+        });
+        final?.();
+      });
+
+      const page = await newSpecPage({
+        components: [BusinessCoreInfoFormStep],
+        template: () => (
+          <justifi-business-core-info-form-step
+            businessId="biz_123"
+            authToken="test-token"
+            country={CountryCode.USA}
+          />
+        ),
+      });
+
+      page.rootInstance.getBusiness = mockGetBusiness;
+      page.rootInstance.patchBusiness = mockPatchBusiness;
+
+      // @ts-ignore - accessing private method for testing
+      page.rootInstance.getData();
+      await page.waitForChanges();
+
+      // Access payload getter directly
+      const payload = page.rootInstance.patchPayload;
+
+      // Verify tax_id IS in the payload when tax_id_last4 doesn't exist
+      expect(payload).toHaveProperty('tax_id');
+      expect(payload.tax_id).toBe('123456789');
+      expect(payload.legal_name).toBe('Test Business');
+      expect(payload.classification).toBe('llc');
+    });
+  });
+
 });
