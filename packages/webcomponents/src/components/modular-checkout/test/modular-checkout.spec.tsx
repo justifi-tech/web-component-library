@@ -182,6 +182,7 @@ describe('justifi-modular-checkout', () => {
       await assertPaymentMode(PAYMENT_METHODS.SAVED_BANK_ACCOUNT, 'ecom');
       await assertPaymentMode(PAYMENT_METHODS.SEZZLE, 'bnpl');
       await assertPaymentMode(PAYMENT_METHODS.APPLE_PAY, 'apple_pay');
+      await assertPaymentMode(PAYMENT_METHODS.GOOGLE_PAY, 'google_pay');
     });
 
     it('handles Apple Pay completed event success by setting token and submitting', async () => {
@@ -221,6 +222,66 @@ describe('justifi-modular-checkout', () => {
       (instance as any).handleApplePayError(event);
 
       expect(handler).toHaveBeenCalled();
+    });
+
+    it('handles Google Pay completed event success by setting token and submitting', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+
+      const event = new CustomEvent('googlePayCompleted', {
+        detail: { success: true, paymentMethodId: 'pm_google_123' },
+      } as any);
+
+      (instance as any).handleGooglePayCompleted(event);
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.paymentToken).toBe('pm_google_123');
+      expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.GOOGLE_PAY });
+      expect((instance.completeCheckout as jest.Mock)).toHaveBeenCalledTimes(1);
+    });
+
+    it('handles Google Pay error by emitting error-event', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      const event = new CustomEvent('googlePayCompleted', {
+        detail: { success: false, error: { code: 'ERR', message: 'Payment failed' } },
+      } as any);
+
+      (instance as any).handleGooglePayCompleted(event);
+
+      expect(handler).toHaveBeenCalled();
+      const detail = handler.mock.calls[0][0].detail;
+      expect(detail.message).toBe('Payment failed');
+    });
+
+    it('handles Google Pay cancelled by clearing paymentToken and selectedPaymentMethod', async () => {
+      checkoutStore.paymentToken = 'pm_123';
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
+
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      (instance as any).handleGooglePayCancelled();
+
+      expect(checkoutStore.paymentToken).toBeUndefined();
+      expect(checkoutStore.selectedPaymentMethod).toBeUndefined();
     });
   });
 
