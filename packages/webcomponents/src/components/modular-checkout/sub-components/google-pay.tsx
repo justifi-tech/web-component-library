@@ -69,16 +69,13 @@ export class GooglePay {
 
     switch (eventType) {
       case GooglePayEventTypes.ready:
-        console.log("Google Pay iframe ready");
         this.iframeReady = true;
         break;
       case GooglePayEventTypes.sdkLoaded:
-        console.log("Google Pay SDK loaded");
         this.sdkLoaded = true;
         this.sendInitialize();
         break;
       case GooglePayEventTypes.initializeResult:
-        console.log("Google Pay init result:", data);
         this.isReadyToPay = data.isReadyToPay;
         if (data.error) console.error("Init error:", data.error);
         break;
@@ -86,11 +83,9 @@ export class GooglePay {
         console.error("Google Pay error:", data);
         break;
       case GooglePayEventTypes.buttonClicked:
-        console.log("Google Pay button clicked");
         this.sendStartPayment();
         break;
       case GooglePayEventTypes.paymentSuccess:
-        console.log("Google Pay payment success:", data);
         this.googlePayCompleted.emit({
           success: true,
           paymentMethodId: data.paymentMethodId,
@@ -99,11 +94,9 @@ export class GooglePay {
         });
         break;
       case GooglePayEventTypes.paymentCanceled:
-        console.log("Google Pay payment canceled");
         this.googlePayCancelled.emit();
         break;
       case GooglePayEventTypes.paymentError:
-        console.error("Google Pay payment error:", data);
         this.googlePayCompleted.emit({
           success: false,
           error: { code: data.code, message: data.message },
