@@ -35,7 +35,7 @@ export class GooglePay {
   @Prop() merchantId?: string;
   @Prop() merchantName?: string;
 
-  @State() iframeOrigin: string; z
+  @State() iframeOrigin: string;
   @State() iframeReady: boolean = false;
   @State() sdkLoaded: boolean = false;
   @State() isReadyToPay: boolean = false;
