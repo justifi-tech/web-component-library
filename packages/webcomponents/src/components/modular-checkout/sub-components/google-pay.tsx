@@ -17,6 +17,11 @@ enum GooglePayEventTypes {
   sdkLoaded = "justifi.googlePay.sdkLoaded",
   initializeResult = "justifi.googlePay.initializeResult",
   error = "justifi.googlePay.error",
+  buttonClicked = "justifi.googlePay.buttonClicked",
+  startPayment = "justifi.googlePay.startPayment",
+  paymentSuccess = "justifi.googlePay.paymentSuccess",
+  paymentCanceled = "justifi.googlePay.paymentCanceled",
+  paymentError = "justifi.googlePay.paymentError",
 }
 
 @Component({
@@ -27,11 +32,10 @@ export class GooglePay {
   private iframeElement: HTMLIFrameElement;
 
   @Prop() environment: "TEST" | "PRODUCTION" = "TEST";
-  @Prop() gatewayMerchantId: string = "gateway:justifi";
   @Prop() merchantId?: string;
   @Prop() merchantName?: string;
 
-  @State() iframeOrigin: string;
+  @State() iframeOrigin: string; z
   @State() iframeReady: boolean = false;
   @State() sdkLoaded: boolean = false;
   @State() isReadyToPay: boolean = false;
@@ -39,7 +43,9 @@ export class GooglePay {
   @Event() googlePayCompleted: EventEmitter<{
     success: boolean;
     paymentMethodId?: string;
-    error?: any;
+    cardNetwork?: string;
+    cardDetails?: string;
+    error?: { code: string; message: string };
   }>;
   @Event() googlePayCancelled: EventEmitter<void>;
 
@@ -79,6 +85,30 @@ export class GooglePay {
       case GooglePayEventTypes.error:
         console.error("Google Pay error:", data);
         break;
+      case GooglePayEventTypes.buttonClicked:
+        console.log("Google Pay button clicked");
+        this.sendStartPayment();
+        break;
+      case GooglePayEventTypes.paymentSuccess:
+        console.log("Google Pay payment success:", data);
+        this.googlePayCompleted.emit({
+          success: true,
+          paymentMethodId: data.paymentMethodId,
+          cardNetwork: data.cardNetwork,
+          cardDetails: data.cardDetails,
+        });
+        break;
+      case GooglePayEventTypes.paymentCanceled:
+        console.log("Google Pay payment canceled");
+        this.googlePayCancelled.emit();
+        break;
+      case GooglePayEventTypes.paymentError:
+        console.error("Google Pay payment error:", data);
+        this.googlePayCompleted.emit({
+          success: false,
+          error: { code: data.code, message: data.message },
+        });
+        break;
     }
   };
 
@@ -87,15 +117,35 @@ export class GooglePay {
 
     const config = {
       environment: this.environment,
-      gatewayMerchantId: this.gatewayMerchantId,
+      gatewayMerchantId: checkoutStore.accountId,
       merchantId: this.merchantId,
       merchantName: this.merchantName,
+      authToken: checkoutStore.authToken,
+      accountId: checkoutStore.accountId,
     };
 
     this.iframeElement.contentWindow.postMessage(
       {
         eventType: GooglePayEventTypes.initialize,
         data: config,
+      },
+      this.iframeOrigin,
+    );
+  }
+
+  private sendStartPayment() {
+    if (!this.iframeElement?.contentWindow) return;
+
+    const transactionInfo = {
+      totalPrice: String(checkoutStore.paymentAmount / 100),
+      totalPriceStatus: "FINAL",
+      currencyCode: checkoutStore.paymentCurrency || "USD",
+    };
+
+    this.iframeElement.contentWindow.postMessage(
+      {
+        eventType: GooglePayEventTypes.startPayment,
+        data: transactionInfo,
       },
       this.iframeOrigin,
     );
