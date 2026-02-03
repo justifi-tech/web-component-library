@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import Dinero from 'dinero.js';
+import { decodeJwt } from 'jose';
 import { Address } from '../api/Business';
 import { CurrencyTypes } from '../api/Payment';
 
@@ -245,34 +246,16 @@ export function capitalizeFirstLetter(str: string): string {
 
 // JWT Token Utilities
 
-export interface JWTPayload {
-  exp?: number;
-  iat?: number;
-  [key: string]: any;
-}
-
-export function decodeJWT(token: string): JWTPayload | null {
+export function isTokenExpired(token: string): boolean {
   try {
-    const parts = token.split('.');
-    if (parts.length !== 3) {
-      return null;
+    const payload = decodeJwt(token);
+    if (!payload.exp) {
+      return true; // Treat missing exp as expired
     }
 
-    const payload = parts[1];
-    const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
-    return JSON.parse(decoded);
+    return payload.exp * 1000 < Date.now();
   } catch (e) {
-    return null;
+    return true; // Treat invalid token as expired
   }
-}
-
-export function isTokenExpired(token: string): boolean {
-  const payload = decodeJWT(token);
-  if (!payload || !payload.exp) {
-    return true; // Treat invalid/missing exp as expired
-  }
-
-  const now = Math.floor(Date.now() / 1000);
-  return payload.exp < now;
 }
 
