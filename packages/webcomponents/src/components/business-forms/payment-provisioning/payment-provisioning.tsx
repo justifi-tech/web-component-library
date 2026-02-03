@@ -50,7 +50,7 @@ export class PaymentProvisioning {
       });
       return;
     }
-    console.log(isTokenExpired(this.authToken));
+
     if (isTokenExpired(this.authToken)) {
       this.errorEvent.emit({
         message: 'auth-token is expired',
