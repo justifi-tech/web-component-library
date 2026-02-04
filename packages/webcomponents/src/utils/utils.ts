@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import Dinero from 'dinero.js';
+import { decodeJwt } from 'jose';
 import { Address } from '../api/Business';
 import { CurrencyTypes } from '../api/Payment';
 
@@ -242,4 +243,19 @@ export function generateTabId(): string {
 export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+// JWT Token Utilities
+
+export function isTokenExpired(token: string): boolean {
+  try {
+    const payload = decodeJwt(token);
+    if (!payload.exp) {
+      return true; // Treat missing exp as expired
+    }
+
+    return payload.exp * 1000 < Date.now();
+  } catch (e) {
+    return true; // Treat invalid token as expired
+  }
+}
 

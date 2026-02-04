@@ -6,31 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 JustiFi Web Component Library - A Stencil-based web components library for fintech UI elements (payment forms, business onboarding, transaction lists, etc.). Published as `@justifi/webcomponents` on npm.
 
-## Common Commands
-
-```bash
-# Development
-pnpm install          # Install dependencies
-pnpm build            # Build all packages (uses Turborepo)
-pnpm dev              # Run webcomponents in watch mode + docs dev server
-pnpm dev:checkout     # Run specific component example (checkout, dispute, business-form, etc.)
-
-# Testing
-pnpm test             # Run all tests
-pnpm test:watch       # Run tests in watch mode
-pnpm test:file -- packages/webcomponents/src/path/to/test.spec.tsx  # Run specific test
-
-# Code Quality
-pnpm lint             # Lint all packages
-pnpm format           # Format code with Prettier
-
-# Versioning
-pnpm changeset        # Generate changeset before PR
-```
-
 ## General Guidelines
 
 - In all interactions and commit messages, be extremely concise and to the point and sacrifice grammar for the sake of concision.
+- Do not run build, dev, start, test, lint, format, clean, or any other commands. Just answer the question or task.
 
 ## Plans
 
