@@ -36,8 +36,8 @@ test.describe('Checkout Component', () => {
       { timeout: 15000 }
     );
 
-    // Click Pay button
-    await page.getByRole('button', { name: 'Pay' }).click();
+    // Click Pay button (use exact match to avoid Google Pay button)
+    await page.getByRole('button', { name: 'Pay', exact: true }).click();
 
     // Assert that a request was made
     const request = await requestPromise;

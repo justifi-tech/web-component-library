@@ -63,7 +63,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install chromium
+        run: pnpm --filter @repo/component-examples exec playwright install chromium
 
       - name: Run E2E tests
         run: pnpm test:e2e
