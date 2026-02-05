@@ -38,7 +38,6 @@ export const config: Config = {
     setupFiles: ['./setupTests.js'],
     moduleNameMapper: {
       '\\.(svg|png|jpg|jpeg|gif|webp)$': '<rootDir>/src/__mocks__/fileMock.js',
-      '^jose$': '<rootDir>/src/__mocks__/jose.ts',
     },
   },
 };
