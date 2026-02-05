@@ -32,7 +32,6 @@ export class GooglePay {
   private iframeElement: HTMLIFrameElement;
 
   @Prop() environment: "TEST" | "PRODUCTION" = "TEST";
-  @Prop() merchantId?: string;
   @Prop() merchantName?: string;
 
   @State() iframeOrigin: string;
@@ -111,7 +110,6 @@ export class GooglePay {
     const config = {
       environment: this.environment,
       gatewayMerchantId: checkoutStore.accountId,
-      merchantId: this.merchantId,
       merchantName: this.merchantName,
       authToken: checkoutStore.authToken,
       accountId: checkoutStore.accountId,
