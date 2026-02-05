@@ -246,16 +246,19 @@ export function capitalizeFirstLetter(str: string): string {
 // JWT Token Utilities
 
 function decodeJwt(token: string): any {
-  const parts = token.split('.');
-  if (parts.length !== 3) {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      throw new Error('Invalid JWT');
+    }
+
+    const payload = parts[1];
+    const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+    return JSON.parse(decoded);
+  } catch (e) {
     throw new Error('Invalid JWT');
   }
-
-  const payload = parts[1];
-  const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
-  return JSON.parse(decoded);
 }
-
 export function isTokenExpired(token: string): boolean {
   try {
     const payload = decodeJwt(token);
