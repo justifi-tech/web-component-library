@@ -1,6 +1,6 @@
-require('dotenv').config({ path: '../../.env' });
-const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
+require("dotenv").config({ path: "../../.env" });
+const express = require("express");
+const { API_PATHS } = require("../utils/api-paths");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,10 +13,10 @@ const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
-  '/scripts',
-  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
+  "/scripts",
+  express.static(__dirname + "/../node_modules/@justifi/webcomponents/dist/"),
 );
-app.use('/styles', express.static(__dirname + '/../css/'));
+app.use("/styles", express.static(__dirname + "/../css/"));
 
 async function getToken() {
   const requestBody = JSON.stringify({
@@ -27,14 +27,14 @@ async function getToken() {
   let response;
   try {
     response = await fetch(authTokenEndpoint, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: requestBody,
     });
   } catch (error) {
-    console.log('ERROR:', error);
+    console.log("ERROR:", error);
   }
 
   const responseJson = await response.json();
@@ -46,21 +46,21 @@ async function makeCheckout(token) {
   let response;
   try {
     response = await fetch(checkoutEndpoint, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        'Sub-Account': subAccountId,
+        "Sub-Account": subAccountId,
       },
       body: JSON.stringify({
         amount: 1799,
-        description: 'One Chocolate Donut',
+        description: "One Chocolate Donut",
         payment_method_group_id: paymentMethodGroupId,
         origin_url: `localhost:${port}`,
       }),
     });
   } catch (error) {
-    console.log('ERROR:', error);
+    console.log("ERROR:", error);
   }
 
   const responseJson = await response.json();
@@ -70,9 +70,9 @@ async function makeCheckout(token) {
 
 async function getWebComponentToken(token, checkoutId) {
   const response = await fetch(webComponentTokenEndpoint, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -88,7 +88,7 @@ async function getWebComponentToken(token, checkoutId) {
   return access_token;
 }
 
-app.get('/', async (req, res) => {
+app.get("/", async (req, res) => {
   const token = await getToken();
   const checkout = await makeCheckout(token);
   const webComponentToken = await getWebComponentToken(token, checkout.id);
@@ -99,12 +99,12 @@ app.get('/', async (req, res) => {
   const hideBankAccountBillingForm = false;
 
   const billingFormFields = {
-    name: 'John Doe',
-    address_line1: 'Main St',
-    address_line2: 'Apt 1',
-    address_city: 'Beverly Hills',
-    address_state: 'CA',
-    address_postal_code: '90210',
+    name: "John Doe",
+    address_line1: "Main St",
+    address_line2: "Apt 1",
+    address_city: "Beverly Hills",
+    address_state: "CA",
+    address_postal_code: "90210",
   };
 
   res.send(`
@@ -118,8 +118,8 @@ app.get('/', async (req, res) => {
       </head>
       <body class="two-column-layout">
         <div class="column-preview">
-          <justifi-checkout 
-            auth-token="${webComponentToken}" 
+          <justifi-checkout
+            auth-token="${webComponentToken}"
             checkout-id="${checkout.id}"
             disable-bank-account="${disableBankAccount}"
             disable-credit-card="${disableCreditCard}"
@@ -157,7 +157,7 @@ app.get('/', async (req, res) => {
           console.log(event);
           writeOutputToPage(event);
         });
-        
+
         fillBillingFormButton.addEventListener('click', () => {
           justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
         });
