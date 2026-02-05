@@ -1,0 +1,14 @@
+node_modules
+dist
+.turbo
+.git
+.github
+*.md
+.env
+.DS_Store
+coverage
+playwright-report
+test-results
+*.log
+.vscode
+.idea
