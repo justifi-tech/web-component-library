@@ -48,22 +48,19 @@ jobs:
           docker logs checkout-component
           exit 1
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: '24.3.0'
-
-      - name: Enable Corepack
-        run: corepack enable
+          bun-version: latest
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: bun install
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium
+        run: bunx playwright install chromium
 
       - name: Run E2E tests
-        run: pnpm test:e2e
+        run: cd apps/component-examples && bun test:e2e
         env:
           CI: true
 
