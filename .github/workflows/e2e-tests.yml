@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Load all environment variables
-        uses: ./.github/actions/load-env
+        uses: justifi-tech/workflows/load-env@main
         with:
           vars-json: "${{ toJSON(vars) }}"
           secrets-json: "${{ toJSON(secrets) }}"
