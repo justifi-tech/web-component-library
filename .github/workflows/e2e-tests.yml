@@ -22,8 +22,8 @@ jobs:
       - name: Load all environment variables
         uses: ./.github/actions/load-env
         with:
-          vars-json: '${{ toJSON(vars) }}'
-          secrets-json: '${{ toJSON(secrets) }}'
+          vars-json: "${{ toJSON(vars) }}"
+          secrets-json: "${{ toJSON(secrets) }}"
 
       - name: Build Docker image
         run: docker build -t checkout-component:test .
@@ -79,8 +79,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24.3.0'
-          cache: 'pnpm'
+          node-version: "24.3.0"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
