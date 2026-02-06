@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   e2e-checkout:
     runs-on: ubuntu-latest
@@ -23,6 +26,19 @@ jobs:
           docker run -d \
             --name checkout-component \
             -p 3000:3000 \
+            -e IFRAME_ORIGIN="${{ secrets.IFRAME_ORIGIN }}" \
+            -e PROXY_API_ORIGIN="${{ secrets.PROXY_API_ORIGIN }}" \
+            -e PORT=3000 \
+            -e API_ORIGIN="${{ secrets.API_ORIGIN }}" \
+            -e DISPUTE_ID="${{ secrets.DISPUTE_ID }}" \
+            -e PAYMENT_METHOD_GROUP_ID="${{ secrets.PAYMENT_METHOD_GROUP_ID }}" \
+            -e CLIENT_ID="${{ secrets.CLIENT_ID }}" \
+            -e CLIENT_SECRET="${{ secrets.CLIENT_SECRET }}" \
+            -e ACCOUNT_ID="${{ secrets.ACCOUNT_ID }}" \
+            -e SUB_ACCOUNT_ID="${{ secrets.SUB_ACCOUNT_ID }}" \
+            -e BUSINESS_ID="${{ secrets.BUSINESS_ID }}" \
+            -e PAYMENT_ID="${{ secrets.PAYMENT_ID }}" \
+            -e PAYOUT_ID="${{ secrets.PAYOUT_ID }}" \
             checkout-component:test
 
           echo "Container started, waiting for it to be ready..."
