@@ -1,0 +1,89 @@
+name: 'Load GitHub Environment Variables'
+description: 'Automatically loads all variables and secrets from a GitHub environment'
+author: 'Justifi Tech'
+branding:
+  icon: 'download-cloud'
+  color: 'blue'
+
+inputs:
+  environment-name:
+    description: 'The name of the GitHub environment to load variables from'
+    required: false
+    default: 'staging'
+  vars-json:
+    description: 'JSON string of all variables (passed from workflow using toJSON(vars))'
+    required: true
+  secrets-json:
+    description: 'JSON string of all secrets (passed from workflow using toJSON(secrets))'
+    required: true
+  additional-env:
+    description: 'Additional environment variables as key=value pairs, separated by newlines'
+    required: false
+    default: ''
+  exclude-secrets:
+    description: 'Comma-separated list of secret names to exclude from loading'
+    required: false
+    default: 'github_token'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Load all environment variables and secrets
+      shell: bash
+      env:
+        VARS_JSON: '${{ inputs.vars-json }}'
+        SECRETS_JSON: '${{ inputs.secrets-json }}'
+        EXCLUDE_SECRETS: '${{ inputs.exclude-secrets }}'
+        ADDITIONAL_ENV: '${{ inputs.additional-env }}'
+      run: |
+        # Function to check if a secret should be excluded
+        is_excluded() {
+          local secret_name="$1"
+          local exclude_list="$EXCLUDE_SECRETS"
+          if [[ ",$exclude_list," == *",$secret_name,"* ]]; then
+            return 0
+          fi
+          return 1
+        }
+
+        # Export all variables from the GitHub environment
+        if [ -n "$VARS_JSON" ] && [ "$VARS_JSON" != "{}" ]; then
+          echo "📦 Loading environment variables..."
+          echo "$VARS_JSON" | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' | while IFS= read -r line; do
+            echo "$line" >> $GITHUB_ENV
+            key="${line%%=*}"
+            echo "  ✓ Loaded variable: $key"
+          done
+        else
+          echo "ℹ️  No environment variables to load"
+        fi
+
+        # Export all secrets from the GitHub environment (excluding specified ones)
+        if [ -n "$SECRETS_JSON" ] && [ "$SECRETS_JSON" != "{}" ]; then
+          echo "🔐 Loading secrets..."
+          echo "$SECRETS_JSON" | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' | while IFS= read -r line; do
+            key="${line%%=*}"
+            if ! is_excluded "$key"; then
+              echo "$line" >> $GITHUB_ENV
+              echo "  ✓ Loaded secret: $key"
+            else
+              echo "  ⊘ Skipped excluded secret: $key"
+            fi
+          done
+        else
+          echo "ℹ️  No secrets to load"
+        fi
+
+        # Add any additional environment variables
+        if [ -n "$ADDITIONAL_ENV" ]; then
+          echo "➕ Loading additional environment variables..."
+          echo "$ADDITIONAL_ENV" | while IFS= read -r line; do
+            if [ -n "$line" ]; then
+              echo "$line" >> $GITHUB_ENV
+              key="${line%%=*}"
+              echo "  ✓ Added: $key"
+            fi
+          done
+        fi
+
+        echo "✅ Environment loading complete!"
