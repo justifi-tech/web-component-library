@@ -1,5 +1,20 @@
 ### Changelog
 
+## 6.10.0
+
+### Minor Changes
+
+- 47b454f: Add iframe-based Google Pay component for modular checkout
+
+### Patch Changes
+
+- d69a93c: Fix payload of Payments provisioning where an empty tax_id was overriding the existing ID.
+- 3ef304c: Adds the Status filter to Payouts List
+- 8c2e3d1: Add JWT token validation when initializating the Payment Provisioning form
+- 05fb036: Add Payment Mode, Checkout ID and Account Holder filters to Payments List
+- ca0e302: Allow backend validation messages to also be shown on field errors
+- 2a5cbbe: Replaces the library jose to use native functions instead.
+
 ## 6.9.0
 
 ### Minor Changes
