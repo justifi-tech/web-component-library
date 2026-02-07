@@ -1,0 +1,108 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  e2e-checkout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: CI
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Load environment variables
+        uses: justifi-tech/workflows/load-env@main
+        with:
+          vars-json: "${{ toJSON(vars) }}"
+          secrets-json: "${{ toJSON(secrets) }}"
+
+      - name: Build Docker image
+        run: docker build -t checkout-component:test .
+
+      - name: Start checkout container
+        run: |
+          docker run -d \
+            --name checkout-component \
+            -p 3000:3000 \
+            -e IFRAME_ORIGIN="$IFRAME_ORIGIN" \
+            -e PROXY_API_ORIGIN="$PROXY_API_ORIGIN" \
+            -e PORT=3000 \
+            -e API_ORIGIN="$API_ORIGIN" \
+            -e DISPUTE_ID="$DISPUTE_ID" \
+            -e PAYMENT_METHOD_GROUP_ID="$PAYMENT_METHOD_GROUP_ID" \
+            -e CLIENT_ID="$CLIENT_ID" \
+            -e CLIENT_SECRET="$CLIENT_SECRET" \
+            -e ACCOUNT_ID="$ACCOUNT_ID" \
+            -e SUB_ACCOUNT_ID="$SUB_ACCOUNT_ID" \
+            -e BUSINESS_ID="$BUSINESS_ID" \
+            -e PAYMENT_ID="$PAYMENT_ID" \
+            -e PAYOUT_ID="$PAYOUT_ID" \
+            checkout-component:test
+
+          echo "Container started, waiting for it to be ready..."
+
+      - name: Wait for checkout service
+        run: |
+          echo "Polling http://localhost:3000 until ready..."
+          max_attempts=60
+          attempt=0
+
+          while [ $attempt -lt $max_attempts ]; do
+            if curl -f http://localhost:3000 > /dev/null 2>&1; then
+              echo "✅ Checkout service is ready!"
+              exit 0
+            fi
+
+            echo "Attempt $((attempt + 1))/$max_attempts - Service not ready yet, waiting..."
+            sleep 2
+            attempt=$((attempt + 1))
+          done
+
+          echo "❌ Service failed to start within timeout"
+          docker logs checkout-component
+          exit 1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.3.0"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @repo/component-examples exec playwright install chromium
+
+      - name: Run E2E tests
+        run: pnpm test:e2e
+        env:
+          CI: true
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/component-examples/playwright-report/
+          retention-days: 7
+
+      - name: Stop and remove container
+        if: always()
+        run: |
+          docker stop checkout-component || true
+          docker rm checkout-component || true
