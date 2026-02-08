@@ -23,14 +23,14 @@ jobs:
         uses: ./.github/actions/load-env
         with:
           vars-json: "${{ toJSON(vars) }}"
-          secrets-json: "${{ toJSON(secrets) }}"
+          secrets-json: '{"CLIENT_ID":"${{ secrets.CLIENT_ID }}","CLIENT_SECRET":"${{ secrets.CLIENT_SECRET }}"}'
 
       - name: Build Docker image
         run: |
           docker build \
-            --build-arg IFRAME_ORIGIN="$IFRAME_ORIGIN" \
-            --build-arg PROXY_API_ORIGIN="$PROXY_API_ORIGIN" \
-            --build-arg API_ORIGIN="$API_ORIGIN" \
+            --build-arg IFRAME_ORIGIN \
+            --build-arg PROXY_API_ORIGIN \
+            --build-arg API_ORIGIN \
             -t checkout-component:test .
 
       - name: Start checkout container
@@ -38,19 +38,8 @@ jobs:
           docker run -d \
             --name checkout-component \
             -p 3000:3000 \
-            -e IFRAME_ORIGIN="$IFRAME_ORIGIN" \
-            -e PROXY_API_ORIGIN="$PROXY_API_ORIGIN" \
+            --env-file "$GITHUB_ENV" \
             -e PORT=3000 \
-            -e API_ORIGIN="$API_ORIGIN" \
-            -e DISPUTE_ID="$DISPUTE_ID" \
-            -e PAYMENT_METHOD_GROUP_ID="$PAYMENT_METHOD_GROUP_ID" \
-            -e CLIENT_ID="$CLIENT_ID" \
-            -e CLIENT_SECRET="$CLIENT_SECRET" \
-            -e ACCOUNT_ID="$ACCOUNT_ID" \
-            -e SUB_ACCOUNT_ID="$SUB_ACCOUNT_ID" \
-            -e BUSINESS_ID="$BUSINESS_ID" \
-            -e PAYMENT_ID="$PAYMENT_ID" \
-            -e PAYOUT_ID="$PAYOUT_ID" \
             checkout-component:test
 
           echo "Container started, waiting for it to be ready..."
@@ -78,20 +67,30 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10.6.5
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24.3.0"
-          cache: "pnpm"
+          node-version-file: '.tool-versions'
+          cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install test dependencies
+        run: pnpm install --frozen-lockfile --filter @repo/component-examples
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('apps/component-examples/package.json') }}
 
       - name: Install Playwright browsers
-        run: pnpm --filter @repo/component-examples exec playwright install chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter @repo/component-examples exec playwright install chromium --with-deps
+
+      - name: Install Playwright system deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm --filter @repo/component-examples exec playwright install-deps chromium
 
       - name: Run E2E tests
         run: pnpm test:e2e
