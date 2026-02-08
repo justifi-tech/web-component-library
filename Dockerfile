@@ -1,5 +1,13 @@
 FROM node:24.3.0
 
+# Build-time env vars required by Stencil's replace plugin
+ARG IFRAME_ORIGIN
+ARG PROXY_API_ORIGIN
+ARG API_ORIGIN
+ENV IFRAME_ORIGIN=$IFRAME_ORIGIN
+ENV PROXY_API_ORIGIN=$PROXY_API_ORIGIN
+ENV API_ORIGIN=$API_ORIGIN
+
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@10.6.5 --activate
 

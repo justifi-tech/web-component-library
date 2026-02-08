@@ -26,7 +26,12 @@ jobs:
           secrets-json: "${{ toJSON(secrets) }}"
 
       - name: Build Docker image
-        run: docker build -t checkout-component:test .
+        run: |
+          docker build \
+            --build-arg IFRAME_ORIGIN="$IFRAME_ORIGIN" \
+            --build-arg PROXY_API_ORIGIN="$PROXY_API_ORIGIN" \
+            --build-arg API_ORIGIN="$API_ORIGIN" \
+            -t checkout-component:test .
 
       - name: Start checkout container
         run: |
