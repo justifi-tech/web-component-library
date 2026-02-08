@@ -9,7 +9,7 @@ async function fillIframeInput(page: Page, iframeName: string, value: string) {
 
 test.describe('Checkout Component', () => {
   test('should complete checkout with credit card', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/checkout');
     await page.waitForSelector('justifi-checkout');
 
     await page.getByRole('radio', { name: 'New credit or debit card' }).click();

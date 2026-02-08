@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm start:checkout',
+    command: 'pnpm start',
     url: 'http://localhost:3000',
     reuseExistingServer: true, // Always reuse - Docker container manages server in CI
     timeout: 120000,

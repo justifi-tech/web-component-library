@@ -1,48 +1,15 @@
-require('dotenv').config({ path: '../../.env' });
 const express = require('express');
 const { API_PATHS } = require('../utils/api-paths');
+const { getToken, getWebComponentToken } = require('../utils/auth');
 
-const app = express();
-const port = process.env.PORT || 3000;
-const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
-const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
-
-app.use(
-  '/scripts',
-  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
-);
-app.use('/styles', express.static(__dirname + '/../css/'));
-
-async function getToken() {
-  const requestBody = JSON.stringify({
-    client_id: clientId,
-    client_secret: clientSecret,
-  });
-
-  let response;
-  try {
-    response = await fetch(authTokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestBody,
-    });
-  } catch (error) {
-    console.log('ERROR:', error);
-  }
-
-  const responseJson = await response.json();
-  const { access_token } = responseJson;
-  return access_token;
-}
+const router = express.Router();
 
 async function makeCheckout(token) {
+  const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
+  const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
+  const port = process.env.PORT || 3000;
+
   const response = await fetch(checkoutEndpoint, {
     method: 'POST',
     headers: {
@@ -61,30 +28,16 @@ async function makeCheckout(token) {
   return data;
 }
 
-async function getWebComponentToken(token, checkoutId) {
-  const response = await fetch(webComponentTokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      resources: [
-        `write:checkout:${checkoutId}`,
-        `write:tokenize:${subAccountId}`,
-      ],
-    }),
-  });
-  const { access_token } = await response.json();
+router.get('/', async (req, res) => {
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
 
-  return access_token;
-}
-
-app.get('/', async (req, res) => {
   const token = await getToken();
   const checkout = await makeCheckout(token);
-
-  const webComponentToken = await getWebComponentToken(token, checkout.id);
+  const resources = [
+    `write:checkout:${checkout.id}`,
+    `write:tokenize:${subAccountId}`,
+  ];
+  const webComponentToken = await getWebComponentToken(token, resources);
 
   res.send(`
     <!DOCTYPE html>
@@ -101,7 +54,7 @@ app.get('/', async (req, res) => {
             <justifi-card-form></justifi-card-form>
             <div style="margin-top: 20px">
               <button
-               id="submit-button" 
+               id="submit-button"
                class="button"
                style="padding:10px"
               >
@@ -131,6 +84,14 @@ app.get('/', async (req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = router;
+
+if (require.main === module) {
+  require('dotenv').config({ path: '../../.env' });
+  const app = express();
+  const port = process.env.PORT || 3000;
+  app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
+  app.use('/styles', express.static(__dirname + '/../css/'));
+  app.use('/', router);
+  app.listen(port, () => console.log(`Example app listening on port ${port}`));
+}

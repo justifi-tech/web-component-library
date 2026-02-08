@@ -1,75 +1,15 @@
-require('dotenv').config({ path: '../../.env' });
-
 const express = require('express');
 const { API_PATHS } = require('../utils/api-paths');
+const { getToken, getWebComponentToken } = require('../utils/auth');
 
-const app = express();
-const port = process.env.PORT || 3000;
-const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
-const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
-const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
-
-app.use(
-  '/scripts',
-  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
-);
-app.use('/styles', express.static(__dirname + '/../css/'));
-
-const startDate = new Date();
-const startDateString = startDate.toISOString().split('T')[0];
-
-const endDate = new Date();
-endDate.setFullYear(endDate.getFullYear() + 1);
-const endDateString = endDate.toISOString().split('T')[0];
-
-const insurance = {
-  primary_identity: {
-    state: 'MN',
-    email: 'test@justifi.tech',
-    first_name: 'John',
-    last_name: 'Doe',
-    postal_code: '55401',
-    country: 'US',
-  },
-  policy_attributes: {
-    insurable_amount: 1000,
-    start_date: startDateString,
-    end_date: endDateString,
-    covered_identity: {
-      first_name: 'John',
-      last_name: 'Doe',
-    },
-  },
-};
-
-async function getToken() {
-  const requestBody = JSON.stringify({
-    client_id: clientId,
-    client_secret: clientSecret,
-  });
-
-  let response;
-  try {
-    response = await fetch(authTokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestBody,
-    });
-  } catch (error) {
-    console.log('ERROR:', error);
-  }
-
-  const { access_token } = await response.json();
-  return access_token;
-}
+const router = express.Router();
 
 async function makeCheckout(token) {
+  const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
+  const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
+  const port = process.env.PORT || 3000;
+
   const response = await fetch(checkoutEndpoint, {
     method: 'POST',
     headers: {
@@ -89,28 +29,43 @@ async function makeCheckout(token) {
   return data;
 }
 
-async function getWebComponentToken(token, checkoutId) {
-  const response = await fetch(webComponentTokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      resources: [
-        `write:checkout:${checkoutId}`,
-        `write:tokenize:${subAccountId}`,
-      ],
-    }),
-  });
-  const { access_token } = await response.json();
-  return access_token;
-}
+router.get('/', async (req, res) => {
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
 
-app.get('/', async (req, res) => {
+  const startDate = new Date();
+  const startDateString = startDate.toISOString().split('T')[0];
+
+  const endDate = new Date();
+  endDate.setFullYear(endDate.getFullYear() + 1);
+  const endDateString = endDate.toISOString().split('T')[0];
+
+  const insurance = {
+    primary_identity: {
+      state: 'MN',
+      email: 'test@justifi.tech',
+      first_name: 'John',
+      last_name: 'Doe',
+      postal_code: '55401',
+      country: 'US',
+    },
+    policy_attributes: {
+      insurable_amount: 1000,
+      start_date: startDateString,
+      end_date: endDateString,
+      covered_identity: {
+        first_name: 'John',
+        last_name: 'Doe',
+      },
+    },
+  };
+
   const token = await getToken();
   const checkout = await makeCheckout(token);
-  const webComponentToken = await getWebComponentToken(token, checkout.id);
+  const resources = [
+    `write:checkout:${checkout.id}`,
+    `write:tokenize:${subAccountId}`,
+  ];
+  const webComponentToken = await getWebComponentToken(token, resources);
 
   res.send(`
     <!DOCTYPE html>
@@ -188,15 +143,15 @@ app.get('/', async (req, res) => {
           const eventLog = document.getElementById('event-log');
           const eventMessage = document.createElement('div');
           eventMessage.style.cssText = 'margin-bottom: 10px; padding: 8px; border-left: 3px solid #007bff; background-color: #f8f9fa;';
-          eventMessage.innerHTML = 
+          eventMessage.innerHTML =
             '<strong>[' + timestamp + '] ' + eventType + ':</strong><br>' +
             '<code style="font-size: 12px;">' + JSON.stringify(eventData, null, 2) + '</code>';
-          
+
           // Clear the initial message if it's still there
           if (eventLog.innerHTML.includes('Event messages will appear here...')) {
             eventLog.innerHTML = '';
           }
-          
+
           eventLog.appendChild(eventMessage);
           eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll to bottom
         }
@@ -223,6 +178,14 @@ app.get('/', async (req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = router;
+
+if (require.main === module) {
+  require('dotenv').config({ path: '../../.env' });
+  const app = express();
+  const port = process.env.PORT || 3000;
+  app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
+  app.use('/styles', express.static(__dirname + '/../css/'));
+  app.use('/', router);
+  app.listen(port, () => console.log(`Example app listening on port ${port}`));
+}

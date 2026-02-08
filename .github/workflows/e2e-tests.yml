@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  e2e-checkout:
+  e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: CI
@@ -31,12 +31,12 @@ jobs:
             --build-arg IFRAME_ORIGIN \
             --build-arg PROXY_API_ORIGIN \
             --build-arg API_ORIGIN \
-            -t checkout-component:test .
+            -t component-examples:test .
 
-      - name: Start checkout container
+      - name: Start component server
         run: |
           docker run -d \
-            --name checkout-component \
+            --name component-examples \
             -p 3000:3000 \
             -e PORT=3000 \
             -e API_ORIGIN \
@@ -44,11 +44,15 @@ jobs:
             -e CLIENT_SECRET \
             -e SUB_ACCOUNT_ID \
             -e PAYMENT_METHOD_GROUP_ID \
-            checkout-component:test
+            -e DISPUTE_ID \
+            -e BUSINESS_ID \
+            -e PAYMENT_ID \
+            -e PAYOUT_ID \
+            component-examples:test
 
           echo "Container started, waiting for it to be ready..."
 
-      - name: Wait for checkout service
+      - name: Wait for component server
         run: |
           echo "Polling http://localhost:3000 until ready..."
           max_attempts=60
@@ -56,7 +60,7 @@ jobs:
 
           while [ $attempt -lt $max_attempts ]; do
             if curl -f http://localhost:3000 > /dev/null 2>&1; then
-              echo "✅ Checkout service is ready!"
+              echo "Component server is ready!"
               exit 0
             fi
 
@@ -65,8 +69,8 @@ jobs:
             attempt=$((attempt + 1))
           done
 
-          echo "❌ Service failed to start within timeout"
-          docker logs checkout-component
+          echo "Service failed to start within timeout"
+          docker logs component-examples
           exit 1
 
       - name: Setup pnpm
@@ -112,5 +116,5 @@ jobs:
       - name: Stop and remove container
         if: always()
         run: |
-          docker stop checkout-component || true
-          docker rm checkout-component || true
+          docker stop component-examples || true
+          docker rm component-examples || true

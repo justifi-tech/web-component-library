@@ -1,62 +1,13 @@
-require('dotenv').config({ path: '../../.env' });
 const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
+const { getToken, getWebComponentToken } = require('../utils/auth');
 
-const app = express();
-const port = process.env.PORT || 3000;
-const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
+const router = express.Router();
 
-app.use(
-  '/scripts',
-  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
-);
-app.use('/styles', express.static(__dirname + '/../css/'));
+router.get('/', async (req, res) => {
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
 
-async function getToken() {
-  const requestBody = JSON.stringify({
-    client_id: clientId,
-    client_secret: clientSecret,
-  });
-
-  let response;
-  try {
-    response = await fetch(authTokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestBody,
-    });
-  } catch (error) {
-    console.log('ERROR:', error);
-  }
-
-  const data = await response.json();
-  return data.access_token;
-}
-
-async function getWebComponentToken(token) {
-  const response = await fetch(webComponentTokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      resources: [`write:tokenize:${subAccountId}`],
-    }),
-  });
-  const { access_token } = await response.json();
-  return access_token;
-}
-
-app.get('/', async (req, res) => {
   const token = await getToken();
-  const webComponentToken = await getWebComponentToken(token);
+  const webComponentToken = await getWebComponentToken(token, [`write:tokenize:${subAccountId}`]);
 
   const disableBankAccount = false;
   const disableCreditCard = false;
@@ -98,7 +49,7 @@ app.get('/', async (req, res) => {
             flex-direction: column;
             height: 100%;
           }
-          
+
           .column-output > div {
             flex: 1;
             min-height: 50%;
@@ -160,15 +111,15 @@ app.get('/', async (req, res) => {
           const eventLog = document.getElementById('event-log');
           const eventMessage = document.createElement('div');
           eventMessage.style.cssText = 'margin-bottom: 10px; padding: 8px; border-left: 3px solid #007bff; background-color: #f8f9fa;';
-          eventMessage.innerHTML = 
+          eventMessage.innerHTML =
             '<strong>[' + timestamp + '] ' + eventType + ':</strong><br>' +
             '<code style="font-size: 12px;">' + JSON.stringify(eventData, null, 2) + '</code>';
-          
+
           // Clear the initial message if it's still there
           if (eventLog.innerHTML.includes('Event messages will appear here...')) {
             eventLog.innerHTML = '';
           }
-          
+
           eventLog.appendChild(eventMessage);
           eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll to bottom
         }
@@ -202,12 +153,12 @@ app.get('/', async (req, res) => {
           if (response.token) {
             console.log('Token from tokenize method', response.token);
           }
-          
+
           if (response.error) {
             console.log('Error from tokenize method', response.error);
           };
         });
-      
+
         testValidateButton.addEventListener('click', async () => {
           const response = await justifiTokenizePaymentMethod.validate();
           console.log('Validate response', response);
@@ -217,6 +168,14 @@ app.get('/', async (req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = router;
+
+if (require.main === module) {
+  require('dotenv').config({ path: '../../.env' });
+  const app = express();
+  const port = process.env.PORT || 3000;
+  app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
+  app.use('/styles', express.static(__dirname + '/../css/'));
+  app.use('/', router);
+  app.listen(port, () => console.log(`Example app listening on port ${port}`));
+}

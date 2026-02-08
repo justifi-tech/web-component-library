@@ -26,5 +26,5 @@ RUN pnpm --filter @justifi/webcomponents build
 # Expose port
 EXPOSE 3000
 
-# Start checkout component server
-CMD ["pnpm", "--filter", "@repo/component-examples", "start:checkout"]
+# Start unified component server
+CMD ["pnpm", "--filter", "@repo/component-examples", "start:server"]
