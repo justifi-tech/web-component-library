@@ -38,8 +38,12 @@ jobs:
           docker run -d \
             --name checkout-component \
             -p 3000:3000 \
-            --env-file "$GITHUB_ENV" \
             -e PORT=3000 \
+            -e API_ORIGIN \
+            -e CLIENT_ID \
+            -e CLIENT_SECRET \
+            -e SUB_ACCOUNT_ID \
+            -e PAYMENT_METHOD_GROUP_ID \
             checkout-component:test
 
           echo "Container started, waiting for it to be ready..."
