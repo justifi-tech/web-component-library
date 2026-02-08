@@ -14,7 +14,7 @@ RUN corepack enable && corepack prepare pnpm@10.6.5 --activate
 # Set working directory
 WORKDIR /app
 
-# Copy entire monorepo
+# Copy the code
 COPY . .
 
 # Install dependencies
