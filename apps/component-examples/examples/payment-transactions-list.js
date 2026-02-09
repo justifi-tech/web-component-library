@@ -1,7 +1,8 @@
-const express = require('express');
-const crypto = require('crypto');
-const { API_PATHS } = require('../utils/api-paths');
-const { getToken, getWebComponentToken } = require('../utils/auth');
+const express = require("express");
+const crypto = require("crypto");
+const { API_PATHS } = require("../utils/api-paths");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { startStandaloneServer } = require("../utils/standalone-server");
 
 const router = express.Router();
 
@@ -11,28 +12,28 @@ async function createPayment(token) {
 
   const requestBody = JSON.stringify({
     amount: 1000,
-    currency: 'usd',
-    capture_strategy: 'automatic',
-    description: 'Test payment for refund example file',
+    currency: "usd",
+    capture_strategy: "automatic",
+    description: "Test payment for refund example file",
     payment_method: {
       card: {
-        name: 'Sylvia Fowles',
-        number: '4242424242424242',
-        verification: '123',
-        month: '3',
-        year: '2040',
-        address_postal_code: '55555',
+        name: "Sylvia Fowles",
+        number: "4242424242424242",
+        verification: "123",
+        month: "3",
+        year: "2040",
+        address_postal_code: "55555",
       },
     },
   });
 
   const response = await fetch(createPaymentEndpoint, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-      'sub-account': subAccountId,
-      'Idempotency-Key': crypto.randomUUID(),
+      "sub-account": subAccountId,
+      "Idempotency-Key": crypto.randomUUID(),
     },
     body: requestBody,
   });
@@ -40,12 +41,14 @@ async function createPayment(token) {
   return id;
 }
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const subAccountId = process.env.SUB_ACCOUNT_ID;
 
   const token = await getToken();
   const paymentId = await createPayment(token);
-  const webComponentToken = await getWebComponentToken(token, [`read:payments:${subAccountId}`]);
+  const webComponentToken = await getWebComponentToken(token, [
+    `read:payments:${subAccountId}`,
+  ]);
 
   res.send(`
     <!DOCTYPE html>
@@ -82,11 +85,5 @@ router.get('/', async (req, res) => {
 module.exports = router;
 
 if (require.main === module) {
-  require('dotenv').config({ path: '../../.env' });
-  const app = express();
-  const port = process.env.PORT || 3000;
-  app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
-  app.use('/styles', express.static(__dirname + '/../css/'));
-  app.use('/', router);
-  app.listen(port, () => console.log(`Example app listening on port ${port}`));
+  startStandaloneServer(router);
 }

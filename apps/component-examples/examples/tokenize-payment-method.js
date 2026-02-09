@@ -1,13 +1,16 @@
-const express = require('express');
-const { getToken, getWebComponentToken } = require('../utils/auth');
+const express = require("express");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { startStandaloneServer } = require("../utils/standalone-server");
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const subAccountId = process.env.SUB_ACCOUNT_ID;
 
   const token = await getToken();
-  const webComponentToken = await getWebComponentToken(token, [`write:tokenize:${subAccountId}`]);
+  const webComponentToken = await getWebComponentToken(token, [
+    `write:tokenize:${subAccountId}`,
+  ]);
 
   const disableBankAccount = false;
   const disableCreditCard = false;
@@ -17,12 +20,12 @@ router.get('/', async (req, res) => {
   const paymentMethodGroupId = undefined;
 
   const billingFormFields = {
-    name: 'John Doe',
-    address_line1: 'Main St',
-    address_line2: 'Apt 1',
-    address_city: 'Beverly Hills',
-    address_state: 'CA',
-    address_postal_code: '90210',
+    name: "John Doe",
+    address_line1: "Main St",
+    address_line2: "Apt 1",
+    address_city: "Beverly Hills",
+    address_state: "CA",
+    address_postal_code: "90210",
   };
 
   res.send(`
@@ -67,7 +70,7 @@ router.get('/', async (req, res) => {
               hide-bank-account-billing-form="${hideBankAccountBillingForm}"
               hide-card-billing-form="${hideCardBillingForm}"
               hide-submit-button="${hideSubmitButton}"
-              ${paymentMethodGroupId ? `payment-method-group-id="${paymentMethodGroupId}"` : ''}
+              ${paymentMethodGroupId ? `payment-method-group-id="${paymentMethodGroupId}"` : ""}
             >
             </justifi-tokenize-payment-method>
           </div>
@@ -80,7 +83,7 @@ router.get('/', async (req, res) => {
               <button class="btn btn-secondary" id="test-validate-button">
                 <span class="monospace">validate()</span>
               </button>
-              <button class="btn btn-secondary" id="test-submit-button" ${!hideSubmitButton ? 'hidden' : ''}>
+              <button class="btn btn-secondary" id="test-submit-button" ${!hideSubmitButton ? "hidden" : ""}>
                 <span class="monospace">tokenizePaymentMethod()</span>
               </button>
             </div>
@@ -171,11 +174,5 @@ router.get('/', async (req, res) => {
 module.exports = router;
 
 if (require.main === module) {
-  require('dotenv').config({ path: '../../.env' });
-  const app = express();
-  const port = process.env.PORT || 3000;
-  app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
-  app.use('/styles', express.static(__dirname + '/../css/'));
-  app.use('/', router);
-  app.listen(port, () => console.log(`Example app listening on port ${port}`));
+  startStandaloneServer(router);
 }

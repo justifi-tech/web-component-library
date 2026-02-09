@@ -1,12 +1,15 @@
-const express = require('express');
-const { getToken, getWebComponentToken } = require('../utils/auth');
+const express = require("express");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { startStandaloneServer } = require("../utils/standalone-server");
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const disputeId = process.env.DISPUTE_ID;
   const token = await getToken();
-  const webComponentToken = await getWebComponentToken(token, [`write:dispute:${disputeId}`]);
+  const webComponentToken = await getWebComponentToken(token, [
+    `write:dispute:${disputeId}`,
+  ]);
 
   res.send(`
     <!DOCTYPE html>
@@ -44,11 +47,5 @@ router.get('/', async (req, res) => {
 module.exports = router;
 
 if (require.main === module) {
-  require('dotenv').config({ path: '../../.env' });
-  const app = express();
-  const port = process.env.PORT || 3000;
-  app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
-  app.use('/styles', express.static(__dirname + '/../css/'));
-  app.use('/', router);
-  app.listen(port, () => console.log(`Example app listening on port ${port}`));
+  startStandaloneServer(router);
 }

@@ -1,6 +1,7 @@
-const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
-const { getToken, getWebComponentToken } = require('../utils/auth');
+const express = require("express");
+const { API_PATHS } = require("../utils/api-paths");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { startStandaloneServer } = require("../utils/standalone-server");
 
 const router = express.Router();
 
@@ -11,15 +12,15 @@ async function makeCheckout(token) {
   const port = process.env.PORT || 3000;
 
   const response = await fetch(checkoutEndpoint, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-      'Sub-Account': subAccountId,
+      "Sub-Account": subAccountId,
     },
     body: JSON.stringify({
       amount: 1799,
-      description: 'One Chocolate Donut',
+      description: "One Chocolate Donut",
       payment_method_group_id: paymentMethodGroupId,
       origin_url: `localhost:${port}`,
     }),
@@ -28,7 +29,7 @@ async function makeCheckout(token) {
   return data;
 }
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const subAccountId = process.env.SUB_ACCOUNT_ID;
 
   const token = await getToken();
@@ -56,7 +57,7 @@ router.get('/', async (req, res) => {
               <justifi-card-form></justifi-card-form>
               <justifi-google-pay></justifi-google-pay>
               <button
-               id="submit-button" 
+               id="submit-button"
                class="button"
                style="padding: 10px"
               >
@@ -89,11 +90,5 @@ router.get('/', async (req, res) => {
 module.exports = router;
 
 if (require.main === module) {
-  require('dotenv').config({ path: '../../.env' });
-  const app = express();
-  const port = process.env.PORT || 3000;
-  app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
-  app.use('/styles', express.static(__dirname + '/../css/'));
-  app.use('/', router);
-  app.listen(port, () => console.log(`Example app listening on port ${port}`));
+  startStandaloneServer(router);
 }

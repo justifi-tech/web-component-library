@@ -1,7 +1,8 @@
-const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
-const { getToken, getWebComponentToken } = require('../utils/auth');
-const { generateRandomLegalName } = require('../utils/random-business-names');
+const express = require("express");
+const { API_PATHS } = require("../utils/api-paths");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { generateRandomLegalName } = require("../utils/random-business-names");
+const { startStandaloneServer } = require("../utils/standalone-server");
 
 const router = express.Router();
 
@@ -9,25 +10,27 @@ async function createBusiness(token) {
   const businessEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.BUSINESS}`;
   const randomLegalName = generateRandomLegalName();
   const response = await fetch(businessEndpoint, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       legal_name: randomLegalName,
-      country_of_establishment: 'USA',
+      country_of_establishment: "USA",
     }),
   });
   const res = await response.json();
-  console.log('response from createBusiness', res);
+  console.log("response from createBusiness", res);
   return res.id;
 }
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const token = await getToken();
-  const businessId = 'biz_4G7XkdwIXbm1I3Bmy0ixld'; //await createBusiness(token);
-  const webComponentToken = await getWebComponentToken(token, [`write:business:${businessId}`]);
+  const businessId = "biz_4G7XkdwIXbm1I3Bmy0ixld"; //await createBusiness(token);
+  const webComponentToken = await getWebComponentToken(token, [
+    `write:business:${businessId}`,
+  ]);
 
   res.send(`
     <!DOCTYPE html>
@@ -65,11 +68,5 @@ router.get('/', async (req, res) => {
 module.exports = router;
 
 if (require.main === module) {
-  require('dotenv').config({ path: '../../.env' });
-  const app = express();
-  const port = process.env.PORT || 3000;
-  app.use('/scripts', express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'));
-  app.use('/styles', express.static(__dirname + '/../css/'));
-  app.use('/', router);
-  app.listen(port, () => console.log(`Example app listening on port ${port}`));
+  startStandaloneServer(router);
 }
