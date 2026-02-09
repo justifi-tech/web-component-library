@@ -4,7 +4,7 @@ import { text } from '../../../styles/parts';
 
 export const PaymentProvisioningAlreadyProvisioned = () => {
   return (
-    <div class="row gap-3">
+    <div class="row gap-3 p-5">
       <div class="col-12">
         <Header1 text="Business Already Provisioned" />
       </div>

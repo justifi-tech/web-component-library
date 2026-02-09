@@ -4,7 +4,7 @@ import { text } from '../../../styles/parts';
 
 export const PaymentProvisioningSubmissionComplete = () => {
   return (
-    <div class="row gap-3">
+    <div class="row gap-3 p5">
       <div class="col-12">
         <Header1 text="You're all set for now" />
       </div>
