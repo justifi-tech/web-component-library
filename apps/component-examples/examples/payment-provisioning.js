@@ -81,7 +81,7 @@ async function getWebComponentToken(token, businessId) {
 
 app.get('/', async (req, res) => {
   const token = await getToken();
-  const businessId = 'biz_4G7XkdwIXbm1I3Bmy0ixld'; //await createBusiness(token);
+  const businessId = await createBusiness(token);
   const webComponentToken = await getWebComponentToken(token, businessId);
 
   res.send(`
