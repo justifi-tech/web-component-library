@@ -9,7 +9,8 @@ export const PaymentProvisioningSubmissionComplete = () => {
         <Header1 text="You're all set for now" />
       </div>
       <div class="col-12" part={text}>
-        <p>We have already received the onboarding information for this business.</p>
+        <p>We're reviewing your information and working on your approval. We'll be in touch to let
+        you know once you've been approved (or if we find anything that needs fixing). Have a good one!</p>
       </div>
     </div>
   );
