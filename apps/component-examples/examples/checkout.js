@@ -85,6 +85,7 @@ router.get("/", async (req, res) => {
           <button id="test-validate-button" hidden>Test Validate</button>
         </div>
         <div class="column-output" id="output-pane"><em>Checkout output will appear here...</em></div>
+        <div id="checkout-changed-pane" hidden></div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');
@@ -98,18 +99,18 @@ router.get("/", async (req, res) => {
         // Assign function as a DOM property (functions cannot be passed via HTML attributes)
         justifiCheckout.preCompleteHook = preCompleteHook;
 
-        function writeOutputToPage(event) {
-          document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
+        function writeOutputToPage(elementId, event) {
+          document.getElementById(elementId).innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
 
         justifiCheckout.addEventListener('submit-event', (event) => {
           console.log(event);
-          writeOutputToPage(event);
+          writeOutputToPage('output-pane', event);
         });
 
         justifiCheckout.addEventListener('error-event', (event) => {
           console.log(event);
-          writeOutputToPage(event);
+          writeOutputToPage('output-pane', event);
         });
 
         fillBillingFormButton.addEventListener('click', () => {
@@ -118,7 +119,7 @@ router.get("/", async (req, res) => {
 
         justifiCheckout.addEventListener('checkout-changed', (event) => {
           console.log('Checkout changed', event);
-          writeOutputToPage(event);
+          writeOutputToPage('checkout-changed-pane', event);
         });
 
         testValidateButton.addEventListener('click', async () => {
