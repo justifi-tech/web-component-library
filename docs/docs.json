@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-08T14:56:04",
+  "timestamp": "2026-02-09T18:16:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.38.3",
@@ -64,7 +64,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/bank-account-document-inputs.tsx",
       "encapsulation": "none",
       "tag": "bank-account-document-form-inputs",
-      "readme": "# justifi-business-bank-account-form-step-core\n",
+      "readme": "# justifi-business-bank-account-form-step\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -280,7 +280,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/bank-account-form-inputs.tsx",
       "encapsulation": "none",
       "tag": "bank-account-form-inputs",
-      "readme": "# justifi-business-bank-account-form-step-core\n",
+      "readme": "# justifi-business-bank-account-form-step\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -415,7 +415,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/bank-account-form-inputs-canada.tsx",
       "encapsulation": "none",
       "tag": "bank-account-form-inputs-canada",
-      "readme": "# justifi-business-bank-account-form-step-core\n",
+      "readme": "# justifi-business-bank-account-form-step\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -550,7 +550,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/bank-account-read-only-value.tsx",
       "encapsulation": "none",
       "tag": "bank-account-read-only-value",
-      "readme": "# justifi-business-bank-account-form-step-core\n",
+      "readme": "# justifi-business-bank-account-form-step\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -715,7 +715,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/business-documents-on-file.tsx",
       "encapsulation": "none",
       "tag": "business-documents-on-file",
-      "readme": "# justifi-business-bank-account-form-step-core\n",
+      "readme": "# justifi-business-bank-account-form-step\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -901,7 +901,7 @@
       "filePath": "src/components/checkouts-list/checkouts-list-core.tsx",
       "encapsulation": "none",
       "tag": "checkouts-list-core",
-      "readme": "# justifi-checkouts-list-filters\n",
+      "readme": "# justifi-checkouts-list\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -1139,7 +1139,7 @@
             }
           ],
           "optional": false,
-          "required": true,
+          "required": false,
           "getter": false,
           "setter": false
         },
@@ -1959,6 +1959,7 @@
         "justifi-product-or-service",
         "justifi-shipping-details",
         "justifi-terminal-orders-list-filters",
+        "justifi-terminals-list-filters",
         "owner-form-inputs"
       ],
       "dependencies": [
@@ -1999,6 +2000,9 @@
           "form-control-date"
         ],
         "justifi-terminal-orders-list-filters": [
+          "form-control-date"
+        ],
+        "justifi-terminals-list-filters": [
           "form-control-date"
         ],
         "owner-form-inputs": [
@@ -4212,6 +4216,7 @@
         "justifi-checkouts-list-filters",
         "justifi-form-address-fields",
         "justifi-payments-list-filters",
+        "justifi-payouts-list-filters",
         "justifi-refund-payment",
         "justifi-terminal-orders-list-filters",
         "justifi-terminals-list-filters"
@@ -4254,6 +4259,9 @@
           "form-control-select"
         ],
         "justifi-payments-list-filters": [
+          "form-control-select"
+        ],
+        "justifi-payouts-list-filters": [
           "form-control-select"
         ],
         "justifi-refund-payment": [
@@ -7004,7 +7012,7 @@
       "filePath": "src/components/checkout/billing-form/billing-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-billing-form",
-      "readme": "# justifi-card-billing-form-simple\n",
+      "readme": "# justifi-billing-form\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7393,7 +7401,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/bank-account/business-bank-account-form-step.tsx",
       "encapsulation": "none",
       "tag": "justifi-business-bank-account-form-step",
-      "readme": "# justifi-business-bank-account-form-step-core\n",
+      "readme": "# justifi-business-bank-account-form-step\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9199,7 +9207,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/terms-and-conditions/business-terms-conditions-form-step.tsx",
       "encapsulation": "none",
       "tag": "justifi-business-terms-conditions-form-step",
-      "readme": "# justifi-business-terms-conditions-form-step\n",
+      "readme": "# justifi-business-terms-conditions-text\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10027,8 +10035,8 @@
       "filePath": "src/components/checkout/checkout.tsx",
       "encapsulation": "none",
       "tag": "justifi-checkout",
-      "readme": "# justifi-sezzle-payment-method\n",
-      "docs": "",
+      "readme": "# justifi-sezzle-payment-method\n\nThe `justifi-modular-checkout` wrapper component serves as a container for checkout-related sub components. It manages the tokenization of payment methods, billing information, insurance, and overall form submission to complete the checkout. It also supports saving a payment method to a payment method group for future use.\n\n## Index\n\n- [Supported sub components](#supported-sub-components)\n- [Providing Billing Information](#providing-billing-information)\n  - [Card Form Billing](#card-form-billing)\n  - [Bank Account Form Billing](#bank-account-form-billing)\n- [Completing Checkout](#completing-checkout)\n- [Pre-Complete Hook](#pre-complete-hook)\n- [Validation](#validation)\n- [Setting Payment Method Programmatically](#setting-payment-method-programmatically)\n- [Checkout Changed Event](#checkout-changed-event)\n- [Insurance Integration](#insurance-integration)\n- [Props, events and methods](#props-events-and-methods)\n- [Authorization](#authorization)\n- [Example Usage](#example-usage)\n\n## Supported sub components\n\nRequired for checkout completion (add at least one of the following sub components):\n\n- [justifi-card-form](/docs/modular-checkout-card-form--docs)\n- [justifi-bank-account-form](/docs/modular-checkout-bank-account-form--docs)\n- [justifi-saved-payment-methods](/docs/modular-checkout-saved-payment-methods--docs)\n- [justifi-sezzle-payment-method](/docs/modular-checkout-sezzle-payment-method--docs)\n- [justifi-plaid-payment-method](/docs/modular-checkout-plaid-payment-method--docs)\n\nOptional:\n\n- [justifi-checkout-summary](/docs/modular-checkout-checkout-summary--docs)\n- [justifi-season-interruption-insurance](/docs/modular-checkout-season-interruption-insurance--docs)\n- [justifi-billing-form-full](/docs/modular-checkout-billing-form-full--docs)\n- [justifi-card-billing-form-simple](/docs/modular-checkout-card-billing-form-simple--docs)\n- [justifi-bank-account-billing-form-simple](/docs/modular-checkout-bank-account-billing-form-simple--docs)\n- [justifi-apple-pay](/docs/modular-checkout-apple-pay--docs)\n\n> **Note:** In addition to the supported sub components, you can add any custom HTML elements or markup inside the justifi-modular-checkout. This allows you to render headings, descriptions, disclaimers, or other layout elements as needed.\n\n## Providing Billing Information\n\nBilling information **is required** for checkout completion and can be provided in one of the following ways:\n\n- Using the `<justifi-billing-form-full />` sub component for complete billing address collection\n- Using the `<justifi-card-billing-form-simple />` sub component for ZIP code only (card payments)\n- Using the `<justifi-bank-account-billing-form-simple />` sub component for account owner name only (ACH payments)\n- Passing a `billingInformation` object directly to the `submitCheckout` method\n\nThe `billingInformation` object can take one of two forms:\n\n**Full billing address:**\n\n```javascript\n{\n  name: string;\n  address_line1: string;\n  address_line2?: string;\n  address_city: string;\n  address_state: string;\n  address_postal_code: string;\n}\n```\n\n**Only postal code:**\n\n```javascript\n{\n  address_postal_code: string;\n}\n```\n\n### Card Form Billing Information\n\nWhen using `<justifi-card-form />`, billing information **must be provided** through either:\n\n- `<justifi-billing-form-full />` sub component for complete billing address\n- `<justifi-card-billing-form-simple />` sub component for ZIP code only\n- Passing the full `billingInformation` object directly to the `submitCheckout` method\n- Passing the `billingInformation` object with only `address_postal_code` to the `submitCheckout` method\n\n### Bank Account Form Billing Information:\n\nWhen using `<justifi-bank-account-form />`, billing information **must be provided** through either:\n\n- `<justifi-billing-form-full />` sub component for complete billing address\n- `<justifi-bank-account-billing-form-simple />` sub component for account owner name only\n- Passing the full `billingInformation` object directly to the `submitCheckout` method\n\n## Completing Checkout\n\nTo finalize the checkout process, include a submit button that calls the `submitCheckout` method on the `justifi-modular-checkout` wrapper component. This method.\n\n- handles validation, form submission and payment method tokenization\n\n- optionally accepts a `billingInformation` object (useful when not using a billing component)\n\n- executes `preCompleteHook` (if provided) after validation and tokenization (including Plaid exchange) and before checkout completion\n\n- emits a `submit-event` when the submission is successful\n- returns a promise (`Promise<void>`) and you should listen for `submit-event` to handle completion\n\n> If you passed a `payment_method_group_id` to the [create checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-modular-checkout`. This will automatically save the payment method to that payment method group after successful checkout.\n\n## Pre-Complete Hook\n\nYou can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds. This is useful for implementing custom validation, user confirmation dialogs, or conditional payment restrictions based on business rules.\n\nThe hook runs after validation and payment method tokenization (including Plaid exchange when applicable), and before the checkout is completed, so the state includes the latest values such as `paymentToken` when available.\n\nThe hook receives three parameters:\n\n- `state`: A `CheckoutState` object containing the current checkout information\n- `resolve`: A function to call to proceed with submission\n- `reject`: A function to call to stop submission\n\n```javascript\nconst checkout = document.querySelector(\"justifi-modular-checkout\");\n\ncheckout.preCompleteHook = (state, resolve, reject) => {\n  // Example: Require confirmation for large payments\n  if (state.totalAmount > 100000) {\n    const confirmed = confirm(\n      `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`,\n    );\n    if (confirmed) {\n      resolve(state);\n    } else {\n      reject();\n    }\n  } else {\n    resolve(state);\n  }\n};\n```\n\n> Important: Assign the hook as a JavaScript property on the element (e.g., `checkout.preCompleteHook = fn`). Do not pass it as an HTML attribute (e.g., `pre-complete-hook=\"...\"`); functions must be set on properties, not attributes.\n\nSee the `CheckoutState` type definition in the [Public Types](#public-types) section below for the complete structure of the state object.\n\n## Validation\n\nWhen `submitCheckout` is called, the `justifi-modular-checkout` wrapper component automatically validates all included sub components. If any required fields are missing or invalid, submission is blocked and validation errors will appear inline.\n\nYou can also trigger validation manually by calling the `validate` method on the `justifi-modular-checkout` wrapper component. This returns a promise that resolves to a `boolean` indicating whether the form is valid.\n\n## Setting Payment Method Programmatically\n\nYou can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method accepts either a saved payment method object or an object with a `type` field.\n\n> Important: The wrapper does not automatically select a default payment method. If you want a default to be selected (for example, the first saved method or a new card), explicitly call `setSelectedPaymentMethod` after initialization (e.g., on the first `checkout-changed` event).\n\n```javascript\nimport { PAYMENT_METHODS } from \"@justifi/webcomponents\";\n\nconst modularCheckout = document.querySelector(\"justifi-modular-checkout\");\n\n// Set to new card payment method\nmodularCheckout.setSelectedPaymentMethod({ type: PAYMENT_METHODS.NEW_CARD });\n\n// Set to new bank account payment method\nmodularCheckout.setSelectedPaymentMethod({\n  type: PAYMENT_METHODS.NEW_BANK_ACCOUNT,\n});\n\n// Set to a saved payment method by id\nmodularCheckout.setSelectedPaymentMethod({\n  id: \"pm_123\",\n  type: PAYMENT_METHODS.SAVED_CARD,\n});\n```\n\n## Checkout Changed Event\n\nThe `justifi-modular-checkout` wrapper component emits a `checkout-changed` event whenever any internal checkout state changes. The event detail includes `availablePaymentMethodTypes`, `selectedPaymentMethod`, and `savedPaymentMethods`.\n\n```javascript\nconst modularCheckout = document.querySelector(\"justifi-modular-checkout\");\nmodularCheckout.addEventListener(\"checkout-changed\", (event) => {\n  const {\n    availablePaymentMethodTypes,\n    selectedPaymentMethod,\n    savedPaymentMethods,\n  } = event.detail;\n  console.log(\"Available:\", availablePaymentMethodTypes);\n  console.log(\"Selected:\", selectedPaymentMethod);\n  console.log(\"Saved methods:\", savedPaymentMethods);\n});\n```\n\n`availablePaymentMethodTypes` includes:\n\n- `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group` (respects disabling flags).\n- `new_card`, `new_bank_account`: Entry forms for new payment methods (respects disabling flags).\n- `sezzle`: BNPL is available when enabled by the account and not disabled.\n- `plaid`: Plaid is available when bank account verification is enabled for the checkout.\n\n## Insurance Integration\n\nThe `justifi-modular-checkout` wrapper component automatically integrates the `justifi-season-interruption-insurance` component.\n\n- **Automatic Refresh**: When insurance values change the checkout data is automatically refreshed when insurance values are updated\n- **Feature Flag**: If the checkout's `payment_settings.insurance_payments` is `false`, the wrapper will skip validating the insurance component. The `justifi-season-interruption-insurance` component will also render nothing and log a console warning indicating that insurance is disabled for the checkout.\n\n```html\n<justifi-modular-checkout auth-token=\"123xyz\" checkout-id=\"cho_1234567890\">\n  <justifi-checkout-summary />\n  <justifi-card-form />\n  <justifi-billing-form-full />\n  <justifi-season-interruption-insurance />\n</justifi-modular-checkout>\n```\n",
+      "docs": "The `justifi-modular-checkout` wrapper component serves as a container for checkout-related sub components. It manages the tokenization of payment methods, billing information, insurance, and overall form submission to complete the checkout. It also supports saving a payment method to a payment method group for future use.",
       "docsTags": [
         {
           "name": "part",
@@ -10680,7 +10688,7 @@
       "filePath": "src/components/checkouts-list/checkouts-list.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-checkouts-list",
-      "readme": "# justifi-checkouts-list-filters\n",
+      "readme": "# justifi-checkouts-list\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10759,6 +10767,29 @@
           "required": false,
           "getter": false,
           "setter": false
+        },
+        {
+          "name": "subAccountId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "sub-account-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
         }
       ],
       "methods": [],
@@ -10805,7 +10836,7 @@
       "filePath": "src/components/checkouts-list/checkouts-list-filters.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-checkouts-list-filters",
-      "readme": "# justifi-checkouts-list-filters\n",
+      "readme": "# justifi-checkouts-list\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12649,7 +12680,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/form-address-fields/form-address-fields.tsx",
       "encapsulation": "none",
       "tag": "justifi-form-address-fields",
-      "readme": "# justifi-form-address-fields\n\n\n",
+      "readme": "# justifi-form-address-fields\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12811,208 +12842,12 @@
       "usage": {},
       "props": [
         {
-          "name": "buttonSizeMode",
-          "type": "GooglePayButtonSizeMode.FILL | GooglePayButtonSizeMode.STATIC",
-          "complexType": {
-            "original": "GooglePayButtonSizeMode",
-            "resolved": "GooglePayButtonSizeMode.FILL | GooglePayButtonSizeMode.STATIC",
-            "references": {
-              "GooglePayButtonSizeMode": {
-                "location": "import",
-                "path": "../../../api/GooglePay",
-                "id": "src/api/GooglePay.ts::GooglePayButtonSizeMode"
-              }
-            }
-          },
-          "mutable": false,
-          "attr": "button-size-mode",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "GooglePayButtonSizeMode.FILL"
-            }
-          ],
-          "default": "GooglePayButtonSizeMode.FILL",
-          "values": [
-            {
-              "type": "GooglePayButtonSizeMode.FILL"
-            },
-            {
-              "type": "GooglePayButtonSizeMode.STATIC"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
-          "name": "buttonStyle",
-          "type": "GooglePayButtonStyle.BLACK | GooglePayButtonStyle.WHITE",
-          "complexType": {
-            "original": "GooglePayButtonStyle",
-            "resolved": "GooglePayButtonStyle.BLACK | GooglePayButtonStyle.WHITE",
-            "references": {
-              "GooglePayButtonStyle": {
-                "location": "import",
-                "path": "../../../api/GooglePay",
-                "id": "src/api/GooglePay.ts::GooglePayButtonStyle"
-              }
-            }
-          },
-          "mutable": false,
-          "attr": "button-style",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "GooglePayButtonStyle.BLACK"
-            }
-          ],
-          "default": "GooglePayButtonStyle.BLACK",
-          "values": [
-            {
-              "type": "GooglePayButtonStyle.BLACK"
-            },
-            {
-              "type": "GooglePayButtonStyle.WHITE"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
-          "name": "buttonType",
-          "type": "GooglePayButtonType.BOOK | GooglePayButtonType.BUY | GooglePayButtonType.CHECKOUT | GooglePayButtonType.DONATE | GooglePayButtonType.ORDER | GooglePayButtonType.PAY | GooglePayButtonType.PLAIN | GooglePayButtonType.SUBSCRIBE",
-          "complexType": {
-            "original": "GooglePayButtonType",
-            "resolved": "GooglePayButtonType.BOOK | GooglePayButtonType.BUY | GooglePayButtonType.CHECKOUT | GooglePayButtonType.DONATE | GooglePayButtonType.ORDER | GooglePayButtonType.PAY | GooglePayButtonType.PLAIN | GooglePayButtonType.SUBSCRIBE",
-            "references": {
-              "GooglePayButtonType": {
-                "location": "import",
-                "path": "../../../api/GooglePay",
-                "id": "src/api/GooglePay.ts::GooglePayButtonType"
-              }
-            }
-          },
-          "mutable": false,
-          "attr": "button-type",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "GooglePayButtonType.PLAIN"
-            }
-          ],
-          "default": "GooglePayButtonType.PLAIN",
-          "values": [
-            {
-              "type": "GooglePayButtonType.BOOK"
-            },
-            {
-              "type": "GooglePayButtonType.BUY"
-            },
-            {
-              "type": "GooglePayButtonType.CHECKOUT"
-            },
-            {
-              "type": "GooglePayButtonType.DONATE"
-            },
-            {
-              "type": "GooglePayButtonType.ORDER"
-            },
-            {
-              "type": "GooglePayButtonType.PAY"
-            },
-            {
-              "type": "GooglePayButtonType.PLAIN"
-            },
-            {
-              "type": "GooglePayButtonType.SUBSCRIBE"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
-          "name": "countryCode",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "country-code",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "\"US\""
-            }
-          ],
-          "default": "\"US\"",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
-          "name": "disabled",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "disabled",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "false"
-            }
-          ],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
           "name": "environment",
-          "type": "GooglePayEnvironment.PRODUCTION | GooglePayEnvironment.TEST",
+          "type": "\"PRODUCTION\" | \"TEST\"",
           "complexType": {
-            "original": "GooglePayEnvironment",
-            "resolved": "GooglePayEnvironment.PRODUCTION | GooglePayEnvironment.TEST",
-            "references": {
-              "GooglePayEnvironment": {
-                "location": "import",
-                "path": "../../../api/GooglePay",
-                "id": "src/api/GooglePay.ts::GooglePayEnvironment"
-              }
-            }
+            "original": "\"TEST\" | \"PRODUCTION\"",
+            "resolved": "\"PRODUCTION\" | \"TEST\"",
+            "references": {}
           },
           "mutable": false,
           "attr": "environment",
@@ -13021,44 +12856,17 @@
           "docsTags": [
             {
               "name": "default",
-              "text": "GooglePayEnvironment.PRODUCTION"
+              "text": "\"TEST\""
             }
           ],
-          "default": "GooglePayEnvironment.PRODUCTION",
+          "default": "\"TEST\"",
           "values": [
             {
-              "type": "GooglePayEnvironment.PRODUCTION"
+              "value": "PRODUCTION",
+              "type": "string"
             },
             {
-              "type": "GooglePayEnvironment.TEST"
-            }
-          ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
-          "name": "merchantId",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "merchant-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "\"gateway:justifi\""
-            }
-          ],
-          "default": "\"gateway:justifi\"",
-          "values": [
-            {
+              "value": "TEST",
               "type": "string"
             }
           ],
@@ -13079,165 +12887,19 @@
           "attr": "merchant-name",
           "reflectToAttr": false,
           "docs": "",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "\"justifi\""
-            }
-          ],
-          "default": "\"justifi\"",
+          "docsTags": [],
           "values": [
             {
               "type": "string"
             }
           ],
-          "optional": false,
-          "required": false,
-          "getter": false,
-          "setter": false
-        },
-        {
-          "name": "showSkeleton",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "show-skeleton",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "true"
-            }
-          ],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
         }
       ],
-      "methods": [
-        {
-          "name": "getSupportedAuthMethods",
-          "returns": {
-            "type": "Promise<string[]>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "() => Promise<string[]>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              }
-            },
-            "return": "Promise<string[]>"
-          },
-          "signature": "getSupportedAuthMethods() => Promise<string[]>",
-          "parameters": [],
-          "docs": "Returns supported authentication methods when Google Pay is available.",
-          "docsTags": []
-        },
-        {
-          "name": "getSupportedNetworks",
-          "returns": {
-            "type": "Promise<string[]>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "() => Promise<string[]>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              }
-            },
-            "return": "Promise<string[]>"
-          },
-          "signature": "getSupportedNetworks() => Promise<string[]>",
-          "parameters": [],
-          "docs": "Returns supported card networks when Google Pay is available.",
-          "docsTags": []
-        },
-        {
-          "name": "handleSelectionClick",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "() => Promise<void>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              }
-            },
-            "return": "Promise<void>"
-          },
-          "signature": "handleSelectionClick() => Promise<void>",
-          "parameters": [],
-          "docs": "Select Google Pay in the modular checkout parent.",
-          "docsTags": []
-        },
-        {
-          "name": "isSupported",
-          "returns": {
-            "type": "Promise<boolean>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "() => Promise<boolean>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              }
-            },
-            "return": "Promise<boolean>"
-          },
-          "signature": "isSupported() => Promise<boolean>",
-          "parameters": [],
-          "docs": "Returns whether Google Pay is both available and can make payments.",
-          "docsTags": []
-        },
-        {
-          "name": "prefetchPaymentData",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "() => Promise<void>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              }
-            },
-            "return": "Promise<void>"
-          },
-          "signature": "prefetchPaymentData() => Promise<void>",
-          "parameters": [],
-          "docs": "Prefetch payment data for faster load times of the Google Pay sheet.",
-          "docsTags": []
-        }
-      ],
+      "methods": [],
       "events": [
         {
           "event": "googlePayCancelled",
@@ -13255,36 +12917,11 @@
         },
         {
           "event": "googlePayCompleted",
-          "detail": "{ success: boolean; paymentData?: IGooglePayPaymentData; paymentMethodId?: string; error?: string | IGooglePayError; }",
+          "detail": "{ success: boolean; paymentMethodId?: string; cardNetwork?: string; cardDetails?: string; error?: { code: string; message: string; }; }",
           "bubbles": true,
           "complexType": {
-            "original": "{\n    success: boolean;\n    paymentData?: IGooglePayPaymentData;\n    paymentMethodId?: string;\n    error?: IGooglePayError | string;\n  }",
-            "resolved": "{ success: boolean; paymentData?: IGooglePayPaymentData; paymentMethodId?: string; error?: string | IGooglePayError; }",
-            "references": {
-              "IGooglePayPaymentData": {
-                "location": "import",
-                "path": "../../../api/GooglePay",
-                "id": "src/api/GooglePay.ts::IGooglePayPaymentData"
-              },
-              "IGooglePayError": {
-                "location": "import",
-                "path": "../../../api/GooglePay",
-                "id": "src/api/GooglePay.ts::IGooglePayError"
-              }
-            }
-          },
-          "cancelable": true,
-          "composed": true,
-          "docs": "Emitted when Google Pay flow completes. On failure, `success=false` and `error` is populated.",
-          "docsTags": []
-        },
-        {
-          "event": "googlePayStarted",
-          "detail": "void",
-          "bubbles": true,
-          "complexType": {
-            "original": "void",
-            "resolved": "void",
+            "original": "{\n    success: boolean;\n    paymentMethodId?: string;\n    cardNetwork?: string;\n    cardDetails?: string;\n    error?: { code: string; message: string };\n  }",
+            "resolved": "{ success: boolean; paymentMethodId?: string; cardNetwork?: string; cardDetails?: string; error?: { code: string; message: string; }; }",
             "references": {}
           },
           "cancelable": true,
@@ -14457,7 +14094,7 @@
       "filePath": "src/components/business-forms/owner-form/owner-form.tsx",
       "encapsulation": "none",
       "tag": "justifi-owner-form",
-      "readme": "# owner-form-inputs\n",
+      "readme": "# justifi-owner-form\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -16307,6 +15944,52 @@
       "usage": {},
       "props": [
         {
+          "name": "accountHolder",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "account-holder",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "checkoutId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "checkout-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
           "name": "createdAfter",
           "type": "string",
           "complexType": {
@@ -16362,6 +16045,29 @@
           },
           "mutable": false,
           "attr": "payment-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "paymentMode",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "payment-mode",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -16905,6 +16611,29 @@
           "required": false,
           "getter": false,
           "setter": false
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
         }
       ],
       "methods": [],
@@ -16916,21 +16645,26 @@
       "dependents": [],
       "dependencies": [
         "table-filters-menu",
+        "form-control-select",
         "form-control-date"
       ],
       "dependencyGraph": {
         "justifi-payouts-list-filters": [
           "table-filters-menu",
+          "form-control-select",
           "form-control-date"
         ],
         "table-filters-menu": [
           "custom-popper"
         ],
-        "form-control-date": [
+        "form-control-select": [
           "form-control-tooltip"
         ],
         "form-control-tooltip": [
           "custom-popper"
+        ],
+        "form-control-date": [
+          "form-control-tooltip"
         ]
       }
     },
@@ -17962,8 +17696,8 @@
       "filePath": "src/components/checkout/save-new-payment-method.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-save-new-payment-method",
-      "readme": "# justifi-sezzle-payment-method\n",
-      "docs": "",
+      "readme": "# justifi-sezzle-payment-method\n\nThe `justifi-modular-checkout` wrapper component serves as a container for checkout-related sub components. It manages the tokenization of payment methods, billing information, insurance, and overall form submission to complete the checkout. It also supports saving a payment method to a payment method group for future use.\n\n## Index\n\n- [Supported sub components](#supported-sub-components)\n- [Providing Billing Information](#providing-billing-information)\n  - [Card Form Billing](#card-form-billing)\n  - [Bank Account Form Billing](#bank-account-form-billing)\n- [Completing Checkout](#completing-checkout)\n- [Pre-Complete Hook](#pre-complete-hook)\n- [Validation](#validation)\n- [Setting Payment Method Programmatically](#setting-payment-method-programmatically)\n- [Checkout Changed Event](#checkout-changed-event)\n- [Insurance Integration](#insurance-integration)\n- [Props, events and methods](#props-events-and-methods)\n- [Authorization](#authorization)\n- [Example Usage](#example-usage)\n\n## Supported sub components\n\nRequired for checkout completion (add at least one of the following sub components):\n\n- [justifi-card-form](/docs/modular-checkout-card-form--docs)\n- [justifi-bank-account-form](/docs/modular-checkout-bank-account-form--docs)\n- [justifi-saved-payment-methods](/docs/modular-checkout-saved-payment-methods--docs)\n- [justifi-sezzle-payment-method](/docs/modular-checkout-sezzle-payment-method--docs)\n- [justifi-plaid-payment-method](/docs/modular-checkout-plaid-payment-method--docs)\n\nOptional:\n\n- [justifi-checkout-summary](/docs/modular-checkout-checkout-summary--docs)\n- [justifi-season-interruption-insurance](/docs/modular-checkout-season-interruption-insurance--docs)\n- [justifi-billing-form-full](/docs/modular-checkout-billing-form-full--docs)\n- [justifi-card-billing-form-simple](/docs/modular-checkout-card-billing-form-simple--docs)\n- [justifi-bank-account-billing-form-simple](/docs/modular-checkout-bank-account-billing-form-simple--docs)\n- [justifi-apple-pay](/docs/modular-checkout-apple-pay--docs)\n\n> **Note:** In addition to the supported sub components, you can add any custom HTML elements or markup inside the justifi-modular-checkout. This allows you to render headings, descriptions, disclaimers, or other layout elements as needed.\n\n## Providing Billing Information\n\nBilling information **is required** for checkout completion and can be provided in one of the following ways:\n\n- Using the `<justifi-billing-form-full />` sub component for complete billing address collection\n- Using the `<justifi-card-billing-form-simple />` sub component for ZIP code only (card payments)\n- Using the `<justifi-bank-account-billing-form-simple />` sub component for account owner name only (ACH payments)\n- Passing a `billingInformation` object directly to the `submitCheckout` method\n\nThe `billingInformation` object can take one of two forms:\n\n**Full billing address:**\n\n```javascript\n{\n  name: string;\n  address_line1: string;\n  address_line2?: string;\n  address_city: string;\n  address_state: string;\n  address_postal_code: string;\n}\n```\n\n**Only postal code:**\n\n```javascript\n{\n  address_postal_code: string;\n}\n```\n\n### Card Form Billing Information\n\nWhen using `<justifi-card-form />`, billing information **must be provided** through either:\n\n- `<justifi-billing-form-full />` sub component for complete billing address\n- `<justifi-card-billing-form-simple />` sub component for ZIP code only\n- Passing the full `billingInformation` object directly to the `submitCheckout` method\n- Passing the `billingInformation` object with only `address_postal_code` to the `submitCheckout` method\n\n### Bank Account Form Billing Information:\n\nWhen using `<justifi-bank-account-form />`, billing information **must be provided** through either:\n\n- `<justifi-billing-form-full />` sub component for complete billing address\n- `<justifi-bank-account-billing-form-simple />` sub component for account owner name only\n- Passing the full `billingInformation` object directly to the `submitCheckout` method\n\n## Completing Checkout\n\nTo finalize the checkout process, include a submit button that calls the `submitCheckout` method on the `justifi-modular-checkout` wrapper component. This method.\n\n- handles validation, form submission and payment method tokenization\n\n- optionally accepts a `billingInformation` object (useful when not using a billing component)\n\n- executes `preCompleteHook` (if provided) after validation and tokenization (including Plaid exchange) and before checkout completion\n\n- emits a `submit-event` when the submission is successful\n- returns a promise (`Promise<void>`) and you should listen for `submit-event` to handle completion\n\n> If you passed a `payment_method_group_id` to the [create checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-modular-checkout`. This will automatically save the payment method to that payment method group after successful checkout.\n\n## Pre-Complete Hook\n\nYou can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds. This is useful for implementing custom validation, user confirmation dialogs, or conditional payment restrictions based on business rules.\n\nThe hook runs after validation and payment method tokenization (including Plaid exchange when applicable), and before the checkout is completed, so the state includes the latest values such as `paymentToken` when available.\n\nThe hook receives three parameters:\n\n- `state`: A `CheckoutState` object containing the current checkout information\n- `resolve`: A function to call to proceed with submission\n- `reject`: A function to call to stop submission\n\n```javascript\nconst checkout = document.querySelector(\"justifi-modular-checkout\");\n\ncheckout.preCompleteHook = (state, resolve, reject) => {\n  // Example: Require confirmation for large payments\n  if (state.totalAmount > 100000) {\n    const confirmed = confirm(\n      `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`,\n    );\n    if (confirmed) {\n      resolve(state);\n    } else {\n      reject();\n    }\n  } else {\n    resolve(state);\n  }\n};\n```\n\n> Important: Assign the hook as a JavaScript property on the element (e.g., `checkout.preCompleteHook = fn`). Do not pass it as an HTML attribute (e.g., `pre-complete-hook=\"...\"`); functions must be set on properties, not attributes.\n\nSee the `CheckoutState` type definition in the [Public Types](#public-types) section below for the complete structure of the state object.\n\n## Validation\n\nWhen `submitCheckout` is called, the `justifi-modular-checkout` wrapper component automatically validates all included sub components. If any required fields are missing or invalid, submission is blocked and validation errors will appear inline.\n\nYou can also trigger validation manually by calling the `validate` method on the `justifi-modular-checkout` wrapper component. This returns a promise that resolves to a `boolean` indicating whether the form is valid.\n\n## Setting Payment Method Programmatically\n\nYou can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method accepts either a saved payment method object or an object with a `type` field.\n\n> Important: The wrapper does not automatically select a default payment method. If you want a default to be selected (for example, the first saved method or a new card), explicitly call `setSelectedPaymentMethod` after initialization (e.g., on the first `checkout-changed` event).\n\n```javascript\nimport { PAYMENT_METHODS } from \"@justifi/webcomponents\";\n\nconst modularCheckout = document.querySelector(\"justifi-modular-checkout\");\n\n// Set to new card payment method\nmodularCheckout.setSelectedPaymentMethod({ type: PAYMENT_METHODS.NEW_CARD });\n\n// Set to new bank account payment method\nmodularCheckout.setSelectedPaymentMethod({\n  type: PAYMENT_METHODS.NEW_BANK_ACCOUNT,\n});\n\n// Set to a saved payment method by id\nmodularCheckout.setSelectedPaymentMethod({\n  id: \"pm_123\",\n  type: PAYMENT_METHODS.SAVED_CARD,\n});\n```\n\n## Checkout Changed Event\n\nThe `justifi-modular-checkout` wrapper component emits a `checkout-changed` event whenever any internal checkout state changes. The event detail includes `availablePaymentMethodTypes`, `selectedPaymentMethod`, and `savedPaymentMethods`.\n\n```javascript\nconst modularCheckout = document.querySelector(\"justifi-modular-checkout\");\nmodularCheckout.addEventListener(\"checkout-changed\", (event) => {\n  const {\n    availablePaymentMethodTypes,\n    selectedPaymentMethod,\n    savedPaymentMethods,\n  } = event.detail;\n  console.log(\"Available:\", availablePaymentMethodTypes);\n  console.log(\"Selected:\", selectedPaymentMethod);\n  console.log(\"Saved methods:\", savedPaymentMethods);\n});\n```\n\n`availablePaymentMethodTypes` includes:\n\n- `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group` (respects disabling flags).\n- `new_card`, `new_bank_account`: Entry forms for new payment methods (respects disabling flags).\n- `sezzle`: BNPL is available when enabled by the account and not disabled.\n- `plaid`: Plaid is available when bank account verification is enabled for the checkout.\n\n## Insurance Integration\n\nThe `justifi-modular-checkout` wrapper component automatically integrates the `justifi-season-interruption-insurance` component.\n\n- **Automatic Refresh**: When insurance values change the checkout data is automatically refreshed when insurance values are updated\n- **Feature Flag**: If the checkout's `payment_settings.insurance_payments` is `false`, the wrapper will skip validating the insurance component. The `justifi-season-interruption-insurance` component will also render nothing and log a console warning indicating that insurance is disabled for the checkout.\n\n```html\n<justifi-modular-checkout auth-token=\"123xyz\" checkout-id=\"cho_1234567890\">\n  <justifi-checkout-summary />\n  <justifi-card-form />\n  <justifi-billing-form-full />\n  <justifi-season-interruption-insurance />\n</justifi-modular-checkout>\n```\n",
+      "docs": "The `justifi-modular-checkout` wrapper component serves as a container for checkout-related sub components. It manages the tokenization of payment methods, billing information, insurance, and overall form submission to complete the checkout. It also supports saving a payment method to a payment method group for future use.",
       "docsTags": [],
       "usage": {},
       "props": [
@@ -18037,8 +17771,8 @@
       "filePath": "src/components/checkout/saved-payment-method.tsx",
       "encapsulation": "none",
       "tag": "justifi-saved-payment-method",
-      "readme": "# justifi-sezzle-payment-method\n",
-      "docs": "",
+      "readme": "# justifi-sezzle-payment-method\n\nThe `justifi-modular-checkout` wrapper component serves as a container for checkout-related sub components. It manages the tokenization of payment methods, billing information, insurance, and overall form submission to complete the checkout. It also supports saving a payment method to a payment method group for future use.\n\n## Index\n\n- [Supported sub components](#supported-sub-components)\n- [Providing Billing Information](#providing-billing-information)\n  - [Card Form Billing](#card-form-billing)\n  - [Bank Account Form Billing](#bank-account-form-billing)\n- [Completing Checkout](#completing-checkout)\n- [Pre-Complete Hook](#pre-complete-hook)\n- [Validation](#validation)\n- [Setting Payment Method Programmatically](#setting-payment-method-programmatically)\n- [Checkout Changed Event](#checkout-changed-event)\n- [Insurance Integration](#insurance-integration)\n- [Props, events and methods](#props-events-and-methods)\n- [Authorization](#authorization)\n- [Example Usage](#example-usage)\n\n## Supported sub components\n\nRequired for checkout completion (add at least one of the following sub components):\n\n- [justifi-card-form](/docs/modular-checkout-card-form--docs)\n- [justifi-bank-account-form](/docs/modular-checkout-bank-account-form--docs)\n- [justifi-saved-payment-methods](/docs/modular-checkout-saved-payment-methods--docs)\n- [justifi-sezzle-payment-method](/docs/modular-checkout-sezzle-payment-method--docs)\n- [justifi-plaid-payment-method](/docs/modular-checkout-plaid-payment-method--docs)\n\nOptional:\n\n- [justifi-checkout-summary](/docs/modular-checkout-checkout-summary--docs)\n- [justifi-season-interruption-insurance](/docs/modular-checkout-season-interruption-insurance--docs)\n- [justifi-billing-form-full](/docs/modular-checkout-billing-form-full--docs)\n- [justifi-card-billing-form-simple](/docs/modular-checkout-card-billing-form-simple--docs)\n- [justifi-bank-account-billing-form-simple](/docs/modular-checkout-bank-account-billing-form-simple--docs)\n- [justifi-apple-pay](/docs/modular-checkout-apple-pay--docs)\n\n> **Note:** In addition to the supported sub components, you can add any custom HTML elements or markup inside the justifi-modular-checkout. This allows you to render headings, descriptions, disclaimers, or other layout elements as needed.\n\n## Providing Billing Information\n\nBilling information **is required** for checkout completion and can be provided in one of the following ways:\n\n- Using the `<justifi-billing-form-full />` sub component for complete billing address collection\n- Using the `<justifi-card-billing-form-simple />` sub component for ZIP code only (card payments)\n- Using the `<justifi-bank-account-billing-form-simple />` sub component for account owner name only (ACH payments)\n- Passing a `billingInformation` object directly to the `submitCheckout` method\n\nThe `billingInformation` object can take one of two forms:\n\n**Full billing address:**\n\n```javascript\n{\n  name: string;\n  address_line1: string;\n  address_line2?: string;\n  address_city: string;\n  address_state: string;\n  address_postal_code: string;\n}\n```\n\n**Only postal code:**\n\n```javascript\n{\n  address_postal_code: string;\n}\n```\n\n### Card Form Billing Information\n\nWhen using `<justifi-card-form />`, billing information **must be provided** through either:\n\n- `<justifi-billing-form-full />` sub component for complete billing address\n- `<justifi-card-billing-form-simple />` sub component for ZIP code only\n- Passing the full `billingInformation` object directly to the `submitCheckout` method\n- Passing the `billingInformation` object with only `address_postal_code` to the `submitCheckout` method\n\n### Bank Account Form Billing Information:\n\nWhen using `<justifi-bank-account-form />`, billing information **must be provided** through either:\n\n- `<justifi-billing-form-full />` sub component for complete billing address\n- `<justifi-bank-account-billing-form-simple />` sub component for account owner name only\n- Passing the full `billingInformation` object directly to the `submitCheckout` method\n\n## Completing Checkout\n\nTo finalize the checkout process, include a submit button that calls the `submitCheckout` method on the `justifi-modular-checkout` wrapper component. This method.\n\n- handles validation, form submission and payment method tokenization\n\n- optionally accepts a `billingInformation` object (useful when not using a billing component)\n\n- executes `preCompleteHook` (if provided) after validation and tokenization (including Plaid exchange) and before checkout completion\n\n- emits a `submit-event` when the submission is successful\n- returns a promise (`Promise<void>`) and you should listen for `submit-event` to handle completion\n\n> If you passed a `payment_method_group_id` to the [create checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-modular-checkout`. This will automatically save the payment method to that payment method group after successful checkout.\n\n## Pre-Complete Hook\n\nYou can provide a `preCompleteHook` function to inspect the checkout state before submission proceeds. This is useful for implementing custom validation, user confirmation dialogs, or conditional payment restrictions based on business rules.\n\nThe hook runs after validation and payment method tokenization (including Plaid exchange when applicable), and before the checkout is completed, so the state includes the latest values such as `paymentToken` when available.\n\nThe hook receives three parameters:\n\n- `state`: A `CheckoutState` object containing the current checkout information\n- `resolve`: A function to call to proceed with submission\n- `reject`: A function to call to stop submission\n\n```javascript\nconst checkout = document.querySelector(\"justifi-modular-checkout\");\n\ncheckout.preCompleteHook = (state, resolve, reject) => {\n  // Example: Require confirmation for large payments\n  if (state.totalAmount > 100000) {\n    const confirmed = confirm(\n      `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`,\n    );\n    if (confirmed) {\n      resolve(state);\n    } else {\n      reject();\n    }\n  } else {\n    resolve(state);\n  }\n};\n```\n\n> Important: Assign the hook as a JavaScript property on the element (e.g., `checkout.preCompleteHook = fn`). Do not pass it as an HTML attribute (e.g., `pre-complete-hook=\"...\"`); functions must be set on properties, not attributes.\n\nSee the `CheckoutState` type definition in the [Public Types](#public-types) section below for the complete structure of the state object.\n\n## Validation\n\nWhen `submitCheckout` is called, the `justifi-modular-checkout` wrapper component automatically validates all included sub components. If any required fields are missing or invalid, submission is blocked and validation errors will appear inline.\n\nYou can also trigger validation manually by calling the `validate` method on the `justifi-modular-checkout` wrapper component. This returns a promise that resolves to a `boolean` indicating whether the form is valid.\n\n## Setting Payment Method Programmatically\n\nYou can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method accepts either a saved payment method object or an object with a `type` field.\n\n> Important: The wrapper does not automatically select a default payment method. If you want a default to be selected (for example, the first saved method or a new card), explicitly call `setSelectedPaymentMethod` after initialization (e.g., on the first `checkout-changed` event).\n\n```javascript\nimport { PAYMENT_METHODS } from \"@justifi/webcomponents\";\n\nconst modularCheckout = document.querySelector(\"justifi-modular-checkout\");\n\n// Set to new card payment method\nmodularCheckout.setSelectedPaymentMethod({ type: PAYMENT_METHODS.NEW_CARD });\n\n// Set to new bank account payment method\nmodularCheckout.setSelectedPaymentMethod({\n  type: PAYMENT_METHODS.NEW_BANK_ACCOUNT,\n});\n\n// Set to a saved payment method by id\nmodularCheckout.setSelectedPaymentMethod({\n  id: \"pm_123\",\n  type: PAYMENT_METHODS.SAVED_CARD,\n});\n```\n\n## Checkout Changed Event\n\nThe `justifi-modular-checkout` wrapper component emits a `checkout-changed` event whenever any internal checkout state changes. The event detail includes `availablePaymentMethodTypes`, `selectedPaymentMethod`, and `savedPaymentMethods`.\n\n```javascript\nconst modularCheckout = document.querySelector(\"justifi-modular-checkout\");\nmodularCheckout.addEventListener(\"checkout-changed\", (event) => {\n  const {\n    availablePaymentMethodTypes,\n    selectedPaymentMethod,\n    savedPaymentMethods,\n  } = event.detail;\n  console.log(\"Available:\", availablePaymentMethodTypes);\n  console.log(\"Selected:\", selectedPaymentMethod);\n  console.log(\"Saved methods:\", savedPaymentMethods);\n});\n```\n\n`availablePaymentMethodTypes` includes:\n\n- `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group` (respects disabling flags).\n- `new_card`, `new_bank_account`: Entry forms for new payment methods (respects disabling flags).\n- `sezzle`: BNPL is available when enabled by the account and not disabled.\n- `plaid`: Plaid is available when bank account verification is enabled for the checkout.\n\n## Insurance Integration\n\nThe `justifi-modular-checkout` wrapper component automatically integrates the `justifi-season-interruption-insurance` component.\n\n- **Automatic Refresh**: When insurance values change the checkout data is automatically refreshed when insurance values are updated\n- **Feature Flag**: If the checkout's `payment_settings.insurance_payments` is `false`, the wrapper will skip validating the insurance component. The `justifi-season-interruption-insurance` component will also render nothing and log a console warning indicating that insurance is disabled for the checkout.\n\n```html\n<justifi-modular-checkout auth-token=\"123xyz\" checkout-id=\"cho_1234567890\">\n  <justifi-checkout-summary />\n  <justifi-card-form />\n  <justifi-billing-form-full />\n  <justifi-season-interruption-insurance />\n</justifi-modular-checkout>\n```\n",
+      "docs": "The `justifi-modular-checkout` wrapper component serves as a container for checkout-related sub components. It manages the tokenization of payment methods, billing information, insurance, and overall form submission to complete the checkout. It also supports saving a payment method to a payment method group for future use.",
       "docsTags": [],
       "usage": {},
       "props": [
@@ -19271,7 +19005,7 @@
       "filePath": "src/components/terminals-list/terminals-list.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-terminals-list",
-      "readme": "# terminals-list-core\n",
+      "readme": "# terminals-list-filters\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -19396,11 +19130,57 @@
       "filePath": "src/components/terminals-list/terminals-list-filters.tsx",
       "encapsulation": "shadow",
       "tag": "justifi-terminals-list-filters",
-      "readme": "# terminals-list-core\n",
+      "readme": "# terminals-list-filters\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "createdAfter",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "created-after",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "createdBefore",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "created-before",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
         {
           "name": "terminalId",
           "type": "string",
@@ -19499,13 +19279,15 @@
       "dependencies": [
         "table-filters-menu",
         "form-control-text",
-        "form-control-select"
+        "form-control-select",
+        "form-control-date"
       ],
       "dependencyGraph": {
         "justifi-terminals-list-filters": [
           "table-filters-menu",
           "form-control-text",
-          "form-control-select"
+          "form-control-select",
+          "form-control-date"
         ],
         "table-filters-menu": [
           "custom-popper"
@@ -19517,6 +19299,9 @@
           "custom-popper"
         ],
         "form-control-select": [
+          "form-control-tooltip"
+        ],
+        "form-control-date": [
           "form-control-tooltip"
         ]
       }
@@ -20053,7 +19838,7 @@
       "filePath": "src/components/business-forms/owner-form/owner-form-core.tsx",
       "encapsulation": "none",
       "tag": "owner-form-core",
-      "readme": "# owner-form-inputs\n",
+      "readme": "# justifi-owner-form\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -20533,7 +20318,7 @@
       "filePath": "src/components/business-forms/owner-form/owner-form-inputs.tsx",
       "encapsulation": "none",
       "tag": "owner-form-inputs",
-      "readme": "# owner-form-inputs\n",
+      "readme": "# justifi-owner-form\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -20715,7 +20500,7 @@
             "references": {
               "PaginationProps": {
                 "location": "local",
-                "path": "/Users/rodrigoeidelvein/justifi/web-component-library/packages/webcomponents/src/ui-components/pagination-menu/pagination-menu.tsx",
+                "path": "/Users/tiagosaftfuelber/justifi-tech/web-component-library/packages/webcomponents/src/ui-components/pagination-menu/pagination-menu.tsx",
                 "id": "src/ui-components/pagination-menu/pagination-menu.tsx::PaginationProps"
               }
             }
@@ -20749,7 +20534,7 @@
             "references": {
               "PaginationProps": {
                 "location": "local",
-                "path": "/Users/rodrigoeidelvein/justifi/web-component-library/packages/webcomponents/src/ui-components/pagination-menu/pagination-menu.tsx",
+                "path": "/Users/tiagosaftfuelber/justifi-tech/web-component-library/packages/webcomponents/src/ui-components/pagination-menu/pagination-menu.tsx",
                 "id": "src/ui-components/pagination-menu/pagination-menu.tsx::PaginationProps"
               }
             }
@@ -21499,7 +21284,7 @@
       "filePath": "src/components/business-forms/payment-provisioning/plaid-verification/plaid-verification.tsx",
       "encapsulation": "none",
       "tag": "plaid-verification",
-      "readme": "# internal-plaid-verification\n\n\n",
+      "readme": "# plaid-verification\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -22096,7 +21881,7 @@
       "filePath": "src/components/terminals-list/terminals-list-core.tsx",
       "encapsulation": "none",
       "tag": "terminals-list-core",
-      "readme": "# terminals-list-core\n",
+      "readme": "# terminals-list-filters\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -22412,36 +22197,6 @@
       "declaration": "export interface IApplePayToken {\n  paymentData: IApplePayTokenData;\n  paymentMethod: IApplePayTokenPaymentMethod;\n  transactionIdentifier: string;\n}",
       "docstring": "",
       "path": "src/api/ApplePay.ts"
-    },
-    "src/api/GooglePay.ts::GooglePayButtonSizeMode": {
-      "declaration": "export enum GooglePayButtonSizeMode {\n  STATIC = 'static',\n  FILL = 'fill',\n}",
-      "docstring": "",
-      "path": "src/api/GooglePay.ts"
-    },
-    "src/api/GooglePay.ts::GooglePayButtonStyle": {
-      "declaration": "export enum GooglePayButtonStyle {\n  BLACK = 'black',\n  WHITE = 'white',\n}",
-      "docstring": "",
-      "path": "src/api/GooglePay.ts"
-    },
-    "src/api/GooglePay.ts::GooglePayButtonType": {
-      "declaration": "export enum GooglePayButtonType {\n  PLAIN = 'plain',\n  BUY = 'buy',\n  BOOK = 'book',\n  CHECKOUT = 'checkout',\n  DONATE = 'donate',\n  ORDER = 'order',\n  PAY = 'pay',\n  SUBSCRIBE = 'subscribe',\n}",
-      "docstring": "",
-      "path": "src/api/GooglePay.ts"
-    },
-    "src/api/GooglePay.ts::GooglePayEnvironment": {
-      "declaration": "export enum GooglePayEnvironment {\n  PRODUCTION = 'PRODUCTION',\n  TEST = 'TEST',\n}",
-      "docstring": "",
-      "path": "src/api/GooglePay.ts"
-    },
-    "src/api/GooglePay.ts::IGooglePayPaymentData": {
-      "declaration": "export interface IGooglePayPaymentData {\n  apiVersion: number;\n  apiVersionMinor: number;\n  paymentMethodData: IGooglePayPaymentMethod;\n  email?: string;\n  shippingAddress?: {\n    address1: string;\n    address2?: string;\n    address3?: string;\n    administrativeArea: string;\n    countryCode: string;\n    locality: string;\n    name: string;\n    postalCode: string;\n    sortingCode?: string;\n  };\n}",
-      "docstring": "",
-      "path": "src/api/GooglePay.ts"
-    },
-    "src/api/GooglePay.ts::IGooglePayError": {
-      "declaration": "export interface IGooglePayError {\n  code: string;\n  message: string;\n}",
-      "docstring": "",
-      "path": "src/api/GooglePay.ts"
     },
     "src/api/index.ts::TerminalModelName": {
       "declaration": "any",
