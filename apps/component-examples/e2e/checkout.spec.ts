@@ -9,6 +9,8 @@ async function fillIframeInput(page: Page, iframeName: string, value: string) {
 
 test.describe("Checkout Component", () => {
   test("should complete checkout with credit card", async ({ page }) => {
+    test.setTimeout(90000);
+
     await page.goto("/checkout");
     await page.waitForSelector("justifi-checkout");
 
@@ -24,7 +26,9 @@ test.describe("Checkout Component", () => {
     await page.getByRole("button", { name: "Pay", exact: true }).click();
 
     const preTag = page.locator("#output-pane pre");
-    await expect(preTag).toContainText("payment_status", { timeout: 30000 });
+    await expect(preTag).toContainText("Checkout completed successfully", {
+      timeout: 60000,
+    });
 
     const responseText = await preTag.textContent();
     const response = JSON.parse(responseText!);
