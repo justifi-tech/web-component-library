@@ -21,16 +21,17 @@ test.describe("Checkout Component", () => {
 
     await page.getByRole("textbox", { name: "Postal Code" }).fill("55114");
 
-    const requestPromise = page.waitForRequest(
-      (request) =>
-        request.url().includes("/v1/") && request.method() === "POST",
-      { timeout: 15000 },
-    );
-
     await page.getByRole("button", { name: "Pay", exact: true }).click();
 
-    const request = await requestPromise;
-    expect(request).toBeTruthy();
-    expect(request.url()).toContain("/v1/");
+    const preTag = page.locator("#output-pane pre");
+    await expect(preTag).toContainText("payment_status", { timeout: 30000 });
+
+    const responseText = await preTag.textContent();
+    const response = JSON.parse(responseText!);
+
+    expect(response.checkout.id).toMatch(/^chc_/);
+    expect(response.checkout.payment_status).toBe("succeeded");
+    expect(response.checkout.payment_response.data.amount).toBe(1799);
+    expect(response.message).toBe("Checkout completed successfully");
   });
 });
