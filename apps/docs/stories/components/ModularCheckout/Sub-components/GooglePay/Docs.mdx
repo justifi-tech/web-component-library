@@ -20,6 +20,31 @@ Renders a Google Pay button for eligible devices/browsers and orchestrates the G
 
 ## Props
 
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>environment</code></td>
+      <td><code>"TEST" | "PRODUCTION"</code></td>
+      <td><code>"TEST"</code></td>
+      <td>Google Pay environment</td>
+    </tr>
+    <tr>
+      <td><code>merchantName</code></td>
+      <td><code>string</code></td>
+      <td><code>undefined</code></td>
+      <td>Optional merchant name for Google Pay UI</td>
+    </tr>
+  </tbody>
+</table>
+
 ## Events
 
 - `googlePayCompleted`
