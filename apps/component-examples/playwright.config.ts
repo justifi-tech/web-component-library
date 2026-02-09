@@ -2,14 +2,14 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
-  fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
   workers: 1,
-  reporter: 'html',
+  reporter: process.env.CI
+    ? [['list'], ['html', { open: 'never' }]]
+    : 'html',
   use: {
     baseURL: 'http://localhost:3000',
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
   },
   projects: [
     {
@@ -20,7 +20,7 @@ export default defineConfig({
   webServer: {
     command: 'pnpm start',
     url: 'http://localhost:3000',
-    reuseExistingServer: true, // Always reuse - Docker container manages server in CI
+    reuseExistingServer: true,
     timeout: 120000,
   },
 });
