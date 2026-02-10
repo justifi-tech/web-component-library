@@ -52,6 +52,7 @@
     "miragejs": "^0.1.48"
   },
   "devDependencies": {
+    "@justifi/webcomponents": "workspace:*",
     "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^22.15.21",
     "@types/react": "^18.3.0",
