@@ -4,7 +4,7 @@ exports[`terminals-list-core displays an error state on failed data fetch 1`] = 
 <terminals-list-core>
   <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head" part="table-head">
+      <thead class="sticky-top table-head" part="table-head" style="background-color: white;">
         <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The nickname associated with the terminal">
             Nickname
@@ -65,7 +65,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
 <terminals-list-core>
   <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head" part="table-head">
+      <thead class="sticky-top table-head" part="table-head" style="background-color: white;">
         <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The nickname associated with the terminal">
             Nickname

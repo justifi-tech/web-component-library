@@ -43,7 +43,7 @@ export const TableRow = (props, children) => {
 
 export const TableHead = (props, children) => {
   return (
-    <thead class="table-head sticky-top" part={tableHead} {...props}>
+    <thead class="table-head sticky-top" style={{ backgroundColor: 'white' }} part={tableHead} {...props}>
       {children}
     </thead>
   );

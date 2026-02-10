@@ -4,7 +4,7 @@ exports[`payments-list-core render and events displays an error state on failed 
 <payments-list-core>
   <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head" part="table-head">
+      <thead class="sticky-top table-head" part="table-head" style="background-color: white;">
         <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time each payment was made">
             Date
@@ -80,7 +80,7 @@ exports[`payments-list-core render and events renders properly with fetched data
 <payments-list-core>
   <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head" part="table-head">
+      <thead class="sticky-top table-head" part="table-head" style="background-color: white;">
         <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time each payment was made">
             Date
@@ -115,7 +115,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               May 1, 2024
             </div>
             <div class="fw-bold">
-              8:45am
+              5:45am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -148,7 +148,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               Jun 1, 2024
             </div>
             <div class="fw-bold">
-              8:45am
+              5:45am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -181,7 +181,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               Jul 1, 2024
             </div>
             <div class="fw-bold">
-              8:45am
+              5:45am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -214,7 +214,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               May 1, 2024
             </div>
             <div class="fw-bold">
-              8:45am
+              5:45am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -247,7 +247,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               Jun 1, 2024
             </div>
             <div class="fw-bold">
-              8:45am
+              5:45am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -280,7 +280,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               Jul 1, 2024
             </div>
             <div class="fw-bold">
-              8:45am
+              5:45am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -313,7 +313,7 @@ exports[`payments-list-core render and events renders properly with fetched data
               Aug 1, 2024
             </div>
             <div class="fw-bold">
-              8:45am
+              5:45am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">

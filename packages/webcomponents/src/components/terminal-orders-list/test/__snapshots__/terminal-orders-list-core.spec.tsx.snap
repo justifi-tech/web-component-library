@@ -4,7 +4,7 @@ exports[`terminal-orders-list-core displays an error state on failed data fetch 
 <terminal-orders-list-core>
   <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head" part="table-head">
+      <thead class="sticky-top table-head" part="table-head" style="background-color: white;">
         <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time the order was created">
             Created At
@@ -68,7 +68,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
 <terminal-orders-list-core>
   <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head" part="table-head">
+      <thead class="sticky-top table-head" part="table-head" style="background-color: white;">
         <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date and time the order was created">
             Created At
@@ -91,7 +91,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Jan 2, 2025
             </div>
             <div class="fw-bold">
-              10:30am
+              7:30am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -99,7 +99,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Jan 2, 2025
             </div>
             <div class="fw-bold">
-              10:45am
+              7:45am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -117,7 +117,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Feb 10, 2025
             </div>
             <div class="fw-bold">
-              9:20am
+              6:20am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -125,7 +125,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Feb 10, 2025
             </div>
             <div class="fw-bold">
-              9:25am
+              6:25am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -143,7 +143,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Mar 11, 2025
             </div>
             <div class="fw-bold">
-              5:00pm
+              2:00pm
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -151,7 +151,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Mar 11, 2025
             </div>
             <div class="fw-bold">
-              5:05pm
+              2:05pm
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -169,7 +169,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Apr 5, 2025
             </div>
             <div class="fw-bold">
-              11:50am
+              8:50am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -177,7 +177,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Apr 5, 2025
             </div>
             <div class="fw-bold">
-              12:10pm
+              9:10am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -195,7 +195,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               May 15, 2025
             </div>
             <div class="fw-bold">
-              2:00pm
+              11:00am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -203,7 +203,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               May 15, 2025
             </div>
             <div class="fw-bold">
-              2:20pm
+              11:20am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -221,7 +221,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Jun 1, 2025
             </div>
             <div class="fw-bold">
-              8:00am
+              5:00am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -229,7 +229,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Jun 1, 2025
             </div>
             <div class="fw-bold">
-              8:15am
+              5:15am
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -247,7 +247,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Jun 20, 2025
             </div>
             <div class="fw-bold">
-              8:30am
+              5:30am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -255,7 +255,7 @@ exports[`terminal-orders-list-core renders properly with fetched data 1`] = `
               Jun 20, 2025
             </div>
             <div class="fw-bold">
-              8:45am
+              5:45am
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">

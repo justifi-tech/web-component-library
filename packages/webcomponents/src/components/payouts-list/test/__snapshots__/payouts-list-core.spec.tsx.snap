@@ -4,7 +4,7 @@ exports[`payouts-list-core displays an error state on failed data fetch 1`] = `
 <payouts-list-core>
   <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head" part="table-head">
+      <thead class="sticky-top table-head" part="table-head" style="background-color: white;">
         <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date the payout was deposited">
             Created
@@ -78,7 +78,7 @@ exports[`payouts-list-core renders properly 1`] = `
 <payouts-list-core>
   <div class="table-wrapper" part="table-wrapper">
     <table class="table table-hover" part="table text color font-family background-color">
-      <thead class="sticky-top table-head" part="table-head">
+      <thead class="sticky-top table-head" part="table-head" style="background-color: white;">
         <tr class="table-light text-nowrap" part="table-head-row text color font-family background-color">
           <th part="table-head-cell table-cell text color font-family background-color" scope="col" title="The date the payout was deposited">
             Created
@@ -108,7 +108,7 @@ exports[`payouts-list-core renders properly 1`] = `
         <tr data-row-entity-id="po_1a2b3c4d5e6f7g8h9i0j" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
-              Jan 18, 2024
+              Jan 17, 2024
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -140,7 +140,7 @@ exports[`payouts-list-core renders properly 1`] = `
         <tr data-row-entity-id="po_2b3c4d5e6f7g8h9i0j1a" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
-              Jan 17, 2024
+              Jan 16, 2024
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -172,7 +172,7 @@ exports[`payouts-list-core renders properly 1`] = `
         <tr data-row-entity-id="po_3c4d5e6f7g8h9i0j1a2b" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
-              Jan 10, 2024
+              Jan 9, 2024
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">
@@ -204,7 +204,7 @@ exports[`payouts-list-core renders properly 1`] = `
         <tr data-row-entity-id="po_4d5e6f7g8h9i0j1a2b3c" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-even table-cell text color font-family background-color">
             <div class="fw-bold">
-              Dec 28, 2023
+              Dec 27, 2023
             </div>
           </td>
           <td part="table-cell-even table-cell text color font-family background-color">
@@ -236,7 +236,7 @@ exports[`payouts-list-core renders properly 1`] = `
         <tr data-row-entity-id="po_5e6f7g8h9i0j1a2b3c4d" data-test-id="table-row" part="table-row text color font-family background-color">
           <td part="table-cell-odd table-cell text color font-family background-color">
             <div class="fw-bold">
-              Dec 28, 2023
+              Dec 27, 2023
             </div>
           </td>
           <td part="table-cell-odd table-cell text color font-family background-color">

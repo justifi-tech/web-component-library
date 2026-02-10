@@ -24,7 +24,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             Updated At
           </span>
           <span class="pe-2 ps-2 pt-2" part="text color font-family">
-            Dec 28, 2023 1:27am
+            Dec 27, 2023 10:27pm
           </span>
         </div>
         <div class="border-1 border-end d-flex flex-column">
@@ -32,7 +32,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
             Created At
           </span>
           <span class="pe-2 ps-2 pt-2" part="text color font-family">
-            Dec 28, 2023 1:27am
+            Dec 27, 2023 10:27pm
           </span>
         </div>
         <div class="d-flex flex-column undefined">
@@ -63,7 +63,7 @@ exports[`payout-details-core fetches payout details on connected callback 1`] = 
           </div>
           <div class="col-12 col-md-8" style="cursor: auto;">
             <span class="text-wrap" part="text color font-family">
-              Dec 28, 2023
+              Dec 27, 2023
             </span>
           </div>
         </div>
