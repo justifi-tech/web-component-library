@@ -75,3 +75,21 @@ jobs:
               "webcomponents_version": "${{ steps.docs_check.outputs.webcomponents_version }}",
               "docs_version": "${{ steps.docs_check.outputs.docs_version }}"
             }
+      - name: Detect version type
+        id: version
+        run: |
+          VERSION=$(node -p "require('./packages/webcomponents/package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          if [[ "$VERSION" =~ -rc\.[0-9]+$ ]]; then
+            echo "is_rc=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_rc=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish to NPM Registry
+        run: |
+          if [ "${{ steps.version.outputs.is_rc }}" == "true" ]; then
+            cd packages/webcomponents && npm publish --tag next --access public
+          else
+            pnpm release
+          fi

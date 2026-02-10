@@ -123,4 +123,25 @@ export class FormController {
   public getInitialValues(): any {
     return this._initialValues;
   }
+
+  public setFieldError(path: string, message: string): void {
+    this.setError(this._errors, path, message);
+    this.errors.next(this._errors);
+  }
+
+  public clearFieldError(path: string): void {
+    const properties = path.split('.');
+    let obj = this._errors;
+
+    for (let i = 0; i < properties.length - 1; i++) {
+      if (!obj[properties[i]]) return;
+      obj = obj[properties[i]];
+    }
+
+    const lastProp = properties[properties.length - 1];
+    if (obj[lastProp]) {
+      delete obj[lastProp];
+      this.errors.next(this._errors);
+    }
+  }
 }

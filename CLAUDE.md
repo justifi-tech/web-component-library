@@ -6,37 +6,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 JustiFi Web Component Library - A Stencil-based web components library for fintech UI elements (payment forms, business onboarding, transaction lists, etc.). Published as `@justifi/webcomponents` on npm.
 
-## Common Commands
+## General Guidelines
 
-```bash
-# Development
-pnpm install          # Install dependencies
-pnpm build            # Build all packages (uses Turborepo)
-pnpm dev              # Run webcomponents in watch mode + docs dev server
-pnpm dev:checkout     # Run specific component example (checkout, dispute, business-form, etc.)
+- In all interactions and commit messages, be extremely concise and to the point and sacrifice grammar for the sake of concision.
+- Do not run build, dev, start, test, lint, format, clean, or any other commands. Just answer the question or task.
 
-# Testing
-pnpm test             # Run all tests
-pnpm test:watch       # Run tests in watch mode
-pnpm test:file -- packages/webcomponents/src/path/to/test.spec.tsx  # Run specific test
+## Plans
 
-# Code Quality
-pnpm lint             # Lint all packages
-pnpm format           # Format code with Prettier
-
-# Versioning
-pnpm changeset        # Generate changeset before PR
-```
+- At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise. Sacrifice grammar for the sake of concision.
 
 ## Architecture
 
 ### Monorepo Structure (Turborepo + pnpm workspaces)
+
 - `packages/webcomponents/` - Main Stencil component library
 - `docs/` - Documentation site (MDX-based)
 - `apps/component-examples/` - Express server for testing components
 - `apps/docs/` - Deprecated Storybook (do not modify)
 
 ### Webcomponents Package Structure
+
 ```
 packages/webcomponents/src/
 ├── components/       # Main components (checkout, payments-list, business-forms, etc.)
@@ -49,12 +38,14 @@ packages/webcomponents/src/
 ```
 
 ### Component Patterns
+
 - Components use Stencil with React-style JSX syntax
 - Tests use `newSpecPage` from `@stencil/core/testing` with Jest
 - Test files located at `src/components/{component}/test/*.spec.tsx`
 - Form controls in `src/ui-components/form/` are reusable across components
 
 ### Key Technologies
+
 - **Stencil 4.x** - Web component compiler
 - **Bootstrap 5** - CSS framework
 - **Yup** - Schema validation
@@ -84,6 +75,7 @@ Tests run with `TZ=utc` for consistent date handling.
 ## Environment Variables
 
 Copy `.env.example` to `.env` and configure:
+
 - `IFRAME_ORIGIN` - Origin for iframe components
 - `PROXY_API_ORIGIN` - Proxy API endpoint
 - `API_ORIGIN` - Direct API endpoint
@@ -97,27 +89,32 @@ Copy `.env.example` to `.env` and configure:
 The following patterns identify auto-generated files that should be excluded from PR line counting:
 
 ### Build Output
+
 - `dist/**/*` - All Stencil build output
 - `coverage/**/*` - Test coverage reports
 - `.turbo/**/*` - Turborepo cache
 
 ### Generated Type Definitions
+
 - `src/components.d.ts` - Stencil auto-generated component types
 - `src/global.d.ts` - Global type declarations
 - `dist/docs.d.ts` - Documentation types
 - `**/*.d.ts` files in `dist/` directories
 
 ### Test Snapshots
+
 - `**/__snapshots__/**/*.snap` - Jest snapshot files
 - All `.snap` files
 
 ### Package Lock Files
+
 - `pnpm-lock.yaml`
 - `package-lock.json`
 - `yarn.lock`
 - `**/node_modules/**`
 
 ### Build Artifacts
+
 - `**/*.entry.js` - Stencil entry point chunks
 - `dist/docs.json` - Component metadata
 - `dist/collection/collection-manifest.json`
@@ -128,18 +125,21 @@ The following patterns identify auto-generated files that should be excluded fro
 ### PR Size Limits
 
 Keep PRs focused and reviewable:
+
 - **Maximum 250 lines** of source code changes
 - Test code has no limit (comprehensive test coverage is encouraged)
-- Auto-generated files are excluded (lock files, dist/, coverage/, .turbo/, __snapshots__, *.d.ts in dist/)
+- Auto-generated files are excluded (lock files, dist/, coverage/, .turbo/, **snapshots**, \*.d.ts in dist/)
 - Automated review will flag oversized PRs with split suggestions and show line count breakdown
 
 **Why this matters:**
+
 - Large PRs get superficial reviews
 - Bugs hide in volume
 - Slower review cycles
 - More merge conflicts
 
 **When implementing features:**
+
 - Break work into logical, independent chunks
 - Consider splitting:
   1. Infrastructure/refactoring changes first
@@ -148,6 +148,7 @@ Keep PRs focused and reviewable:
 - Each PR should have single, clear purpose
 
 **If your PR is flagged as too large:**
+
 - Review the suggested split strategy from the automated review
 - Create multiple PRs with clear dependencies
 - Link related PRs in descriptions
@@ -164,6 +165,7 @@ Keep PRs focused and reviewable:
 ### AI-Generated Code Review
 
 If using AI to generate code, review carefully for:
+
 - Over-engineering (unnecessary abstractions)
 - Inconsistent patterns (doesn't match codebase)
 - Missing error handling
