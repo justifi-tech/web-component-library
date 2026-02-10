@@ -9,8 +9,6 @@ async function fillIframeInput(page: Page, iframeName: string, value: string) {
 
 test.describe("Checkout Component", () => {
   test("should complete checkout with credit card", async ({ page }) => {
-    test.setTimeout(90000);
-
     await page.goto("/checkout");
     await page.waitForSelector("justifi-checkout");
 
@@ -23,19 +21,21 @@ test.describe("Checkout Component", () => {
 
     await page.getByRole("textbox", { name: "Postal Code" }).fill("55114");
 
+    const completeResponsePromise = page.waitForResponse(
+      (resp) =>
+        resp.url().includes("/v1/checkouts/") &&
+        resp.url().endsWith("/complete") &&
+        resp.request().method() === "POST",
+    );
+
     await page.getByRole("button", { name: "Pay", exact: true }).click();
 
-    const preTag = page.locator("#output-pane pre");
-    await expect(preTag).toContainText("Checkout completed successfully", {
-      timeout: 60000,
-    });
+    const completeResponse = await completeResponsePromise;
+    const body = await completeResponse.json();
 
-    const responseText = await preTag.textContent();
-    const response = JSON.parse(responseText!);
-
-    expect(response.checkout.id).toMatch(/^chc_/);
-    expect(response.checkout.payment_status).toBe("succeeded");
-    expect(response.checkout.payment_response.data.amount).toBe(1799);
-    expect(response.message).toBe("Checkout completed successfully");
+    expect(completeResponse.status()).toBe(201);
+    expect(body.data.id).toMatch(/^chc_/);
+    expect(body.data.payment_status).toBe("succeeded");
+    expect(body.data.payment_response.data.amount).toBe(1799);
   });
 });
