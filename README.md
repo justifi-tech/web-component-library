@@ -22,9 +22,13 @@ Using Turborepo simplifies managing your design system monorepo, as you can have
 
 This Turborepo includes the following packages and applications:
 
-- `apps/docs`: Component documentation site with Storybook
-- `apps/component-examples`: Simple component example files
-- `packages/webcomponents`: JustiFi component library
+**Publishable packages:**
+- `packages/webcomponents`: JustiFi component library (`@justifi/webcomponents`)
+- `docs/`: Documentation package for external consumption (`@justifi/webcomponents-docs`) - lives at repository root
+
+**Internal apps (not published):**
+- `apps/component-examples`: Simple component example files for local testing
+- `apps/docs`: Storybook documentation site (deprecated, will be removed)
 
 Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
 
@@ -85,16 +89,38 @@ This project includes a few helpful Storybook scripts:
 
 This project uses [Changesets](https://github.com/changesets/changesets) to manage versions, create changelogs, and publish to npm. It's preconfigured so you can start publishing packages immediately.
 
-### Generating the Changelog
+### Publishable Packages
 
-To generate your changelog, run `pnpm changeset` locally:
+- `@justifi/webcomponents` - Main component library
+- `@justifi/webcomponents-docs` - Documentation package (MDX files, component metadata, helpers)
 
-1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
+### Creating a Changeset
+
+Before creating a PR with changes, run `pnpm changeset` locally:
+
+1. **Which packages would you like to include?** – This shows which packages have changed. Press `space` to select the packages you want to include in the `changeset`.
 1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
 1. If doing the first major version, confirm you want to release.
 1. Write a summary for the changes.
 1. Confirm the changeset looks as expected.
 1. A new Markdown file will be created in the `changeset` folder with the summary and a list of the packages included.
+
+### Publishing
+
+Publishing is done via the **Publish packages** GitHub workflow (`publish.yml`):
+
+1. Navigate to Actions > "Publish packages" in GitHub
+2. Click "Run workflow" on the main branch
+3. The workflow will:
+   - Build all packages
+   - Run `changeset publish` to publish any package with pending changesets
+   - Trigger the `public-docs` workflow if the docs package version changed
+
+Each package publishes independently based on its own changesets. You can publish just webcomponents, just docs, or both together depending on which packages have pending changesets.
+
+### Release Candidates
+
+For pre-release versions, use the **Publish RC** workflow (`publish-rc.yml`) which publishes to the `next` npm tag.
 
 ### Running component example files
 

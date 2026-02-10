@@ -1,7 +1,7 @@
-export { getWebcomponentsVersion } from './version';
-export { PartsMarkdownTable } from './PartsMarkdownTable';
-export { getComponentParts } from './getComponentParts';
-export { ComponentBox } from './ComponentBox';
-export { setUpMocks } from './mockAllServices';
-export { PropsMarkdownTable } from './PropsMarkdownTable';
-export { getPropsFromDocs } from './getPropsFromDocs';
+export { getWebcomponentsVersion } from './version.js';
+export { PartsMarkdownTable } from './PartsMarkdownTable.js';
+export { getComponentParts } from './getComponentParts.js';
+export { ComponentBox } from './ComponentBox.js';
+export { setUpMocks } from './mockAllServices.js';
+export { PropsMarkdownTable } from './PropsMarkdownTable.js';
+export { getPropsFromDocs } from './getPropsFromDocs.js';
