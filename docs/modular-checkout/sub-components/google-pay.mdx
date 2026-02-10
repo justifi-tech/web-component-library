@@ -84,13 +84,11 @@ Renders a Google Pay button for eligible devices/browsers and orchestrates the G
 
 ## Flow
 
-1. Component initializes iframe with auth credentials
-2. Iframe loads Google Pay SDK and checks device eligibility
-3. If eligible, Google Pay button is rendered
-4. User clicks button → payment sheet opens
-5. User completes payment → iframe processes token with JustiFi API
-6. `googlePayCompleted` event fires with `paymentMethodId`
-7. Modular checkout automatically completes the checkout
+1. Component checks device/browser eligibility for Google Pay
+2. If eligible, Google Pay button renders
+3. User clicks button → Google Pay sheet opens
+4. User completes payment → `googlePayCompleted` event fires with `paymentMethodId`
+5. Modular checkout automatically completes the checkout
 
 ## Theming & Layout
 
