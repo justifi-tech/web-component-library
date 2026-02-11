@@ -24,7 +24,7 @@ export const baseBusinessCoreInfoSchema = (allowOptionalFields?: boolean) => {
     doing_business_as: doingBusinessAsValidation.nullable(),
     classification: businessClassificationValidation.required('Select business classification'),
     industry: industryValidation.required('Enter a business industry'),
-    date_of_incorporation: dateOfIncorporationValidation.required('Enter date of incorporation'),
+    date_of_incorporation: dateOfIncorporationValidation.required('Enter date of registration'),
   });
 
   const easySchema = object({

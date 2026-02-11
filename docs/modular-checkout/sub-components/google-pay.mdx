@@ -1,0 +1,100 @@
+---
+id: google-pay
+title: Google Pay
+description: Google Pay rail for Modular Checkout that exposes wallet buttons and handles tokenization.
+sidebar_position: 23
+---
+
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getWebcomponentsVersion,
+  getPartsFromDocs,
+  getPropsFromDocs,
+} from '../../helpers';
+import componentTreeJson from '../../component-tree.json';
+import docsJson from '../../docs.json';
+
+## Overview
+
+Renders a Google Pay button for eligible devices/browsers and orchestrates the Google Pay flow. Designed to be used within `justifi-modular-checkout`.
+
+## Usage
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-google-pay</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+</head>
+
+<body>
+  <justifi-modular-checkout
+    auth-token="authToken"
+    checkout-id="ch_123"
+  >
+    <justifi-google-pay />
+    <justifi-checkout-summary />
+  </justifi-modular-checkout>
+</body>
+</html>`}</code></pre>
+
+## Props, Events & Methods
+
+<PropsMarkdownTable props={getPropsFromDocs('justifi-google-pay', docsJson)} />
+
+### Events
+
+- `googlePayCompleted`: Fires when payment completes; includes success status, payment method ID, card network, and card details (last 4 digits).
+- `googlePayCancelled`: Fires when the user dismisses the Google Pay sheet.
+
+### Event Payloads
+
+**googlePayCompleted (success)**
+```typescript
+{
+  success: true,
+  paymentMethodId: "pm_xxx",  // JustiFi payment method ID
+  cardNetwork: "VISA",        // Card network (VISA, MASTERCARD, etc.)
+  cardDetails: "1234"         // Last 4 digits
+}
+```
+
+**googlePayCompleted (error)**
+```typescript
+{
+  success: false,
+  error: {
+    code: "PAYMENT_FAILED",
+    message: "Error description"
+  }
+}
+```
+
+## Flow
+
+1. Component checks device/browser eligibility for Google Pay
+2. If eligible, Google Pay button renders
+3. User clicks button → Google Pay sheet opens
+4. User completes payment → `googlePayCompleted` event fires with `paymentMethodId`
+5. Modular checkout automatically completes the checkout
+
+## Theming & Layout
+
+- Styling is intentionally limited to keep Google Pay compliance.
+- Button renders at 48px height, 100% width.
+
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-google-pay', componentTreeJson)}
+/>

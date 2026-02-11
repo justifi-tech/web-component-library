@@ -18,6 +18,12 @@ export const parameters = {
         [
           'Introduction',
           'Modular Checkout',
+          'Sub-components',
+          [
+            'Apple Pay',
+            'Google Pay',
+            '*',
+          ],
           'Checkout Summary',
           'Season Interruption Insurance',
           'Card Form',

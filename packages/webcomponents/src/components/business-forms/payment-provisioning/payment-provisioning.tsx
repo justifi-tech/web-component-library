@@ -6,6 +6,7 @@ import { BusinessService } from '../../../api/services/business.service';
 import { ProvisionService } from '../../../api/services/provision.service';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { ComponentErrorEvent } from '../../../api/ComponentEvents';
+import { isTokenExpired } from '../../../utils/utils';
 
 @Component({
   tag: 'justifi-payment-provisioning',
@@ -41,25 +42,35 @@ export class PaymentProvisioning {
   };
 
   private initializeApi() {
-    if (this.authToken && this.businessId) {
-      this.getBusiness = makeGetBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-      this.postProvisioning = makePostProvisioning({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        product: 'payment',
-        service: new ProvisionService()
-      });
-    } else {
+    if (!this.authToken || !this.businessId) {
       this.errorEvent.emit({
         message: 'auth-token and business-id are required',
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
       });
+      return;
     }
+
+    if (isTokenExpired(this.authToken)) {
+      this.errorEvent.emit({
+        message: 'auth-token is expired',
+        errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
+    this.getBusiness = makeGetBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
+    this.postProvisioning = makePostProvisioning({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      product: 'payment',
+      service: new ProvisionService()
+    });
   }
 
   render() {

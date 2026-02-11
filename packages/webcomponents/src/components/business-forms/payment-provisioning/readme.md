@@ -1,7 +1,24 @@
-# justifi-business-info
+# justifi-payment-provisioning
+
+## Country Support
+
+This component supports both USA and CAN (Canada) countries. The country is determined by the `country_of_establishment` field on the Business entity.
+
+### Country-Specific Behavior
+
+| Feature              | USA                 | CAN                   |
+| -------------------- | ------------------- | --------------------- |
+| State/Province label | State               | Province              |
+| Postal code          | Zip Code (5 digits) | Postal Code (A1A 1A1) |
+| Identity number      | SSN (xxx-xx-xxxx)   | SIN (xxx-xxx-xxx)     |
+| Tax identifier       | Tax ID              | Business Number (BN)  |
+| Bank account fields  | USA-specific        | CAN-specific          |
+
+### Important Constraint
+
+The `country` prop must only be defaulted in `payment-provisioning-core`. Child components must receive `country` via props and must NOT fall back to a default locally.
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -15,12 +32,11 @@
 | `handleFormLoading` _(required)_ | --                      |             | `(e: CustomEvent<any>) => void`      | `undefined`       |
 | `refs` _(required)_              | --                      |             | `any[]`                              | `undefined`       |
 
-
 ## Dependencies
 
 ### Used by
 
- - [justifi-payment-provisioning-core](.)
+- [justifi-payment-provisioning-core](.)
 
 ### Depends on
 
@@ -33,6 +49,7 @@
 - [justifi-business-terms-conditions-form-step](terms-and-conditions)
 
 ### Graph
+
 ```mermaid
 graph TD;
   justifi-payment-provisioning-form-steps --> justifi-business-core-info-form-step
@@ -94,6 +111,6 @@ graph TD;
   style justifi-payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

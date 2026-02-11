@@ -10,8 +10,9 @@ import { PayoutsListFilters } from '../payouts-list-filters';
 import { filterParams } from '../payouts-list-params-state';
 import { PayoutsListCore } from '../payouts-list-core';
 import { DateInput } from '../../../ui-components/form/form-control-date';
+import { SelectInput } from '../../../ui-components/form/form-control-select';
 
-const components = [PayoutsList, PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput];
+const components = [PayoutsList, PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput, SelectInput];
 
 describe('justifi-payouts-list filters', () => {
   const fetchDataSpy = jest.spyOn(PayoutsListCore.prototype, 'fetchData');
@@ -130,5 +131,43 @@ describe('justifi-payouts-list filters', () => {
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = filterParams;
     expect(updatedParams).toEqual({});
+  });
+
+  it('updates params and refetches data on status filter interaction', async () => {
+
+    page = await newSpecPage({
+      components: components,
+      autoApplyChanges: true,
+      template: () =>
+        <div>
+          <justifi-payouts-list-filters />
+          <justifi-payouts-list
+            accountId="abc"
+            authToken="abc"
+            columns={defaultColumnsKeys}
+          />,
+        </div>
+    });
+
+    expect(fetchDataSpy).toHaveBeenCalled();
+
+    const filterButton = page.root.shadowRoot.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    filterButton.click();
+
+    const filterMenu = page.root.shadowRoot.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+
+    const statusFilter = filterMenu.querySelector('form-control-select') as HTMLFormControlSelectElement;
+    expect(statusFilter).not.toBeNull();
+
+    const statusFilterSelect = statusFilter.querySelector('select') as HTMLSelectElement;
+    expect(statusFilterSelect).not.toBeNull();
+
+    statusFilterSelect.value = 'paid';
+    statusFilterSelect.dispatchEvent(new Event('input'));
+
+    expect(fetchDataSpy).toHaveBeenCalled();
+    const updatedParams = filterParams;
+    expect(updatedParams).toEqual({ "status": "paid" });
   });
 });

@@ -34,7 +34,7 @@ describe('payouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -69,7 +69,7 @@ describe('payouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -102,7 +102,7 @@ describe('payouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -141,7 +141,7 @@ describe('payouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -182,7 +182,7 @@ describe('payouts-list-core pagination', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });

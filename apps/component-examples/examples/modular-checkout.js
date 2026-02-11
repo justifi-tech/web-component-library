@@ -14,7 +14,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 
 app.use(
   '/scripts',
-  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
+  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/'),
 );
 app.use('/styles', express.static(__dirname + '/../css/'));
 
@@ -98,12 +98,14 @@ app.get('/', async (req, res) => {
       <body class="two-column-layout">
         <div class="column-preview">
           <justifi-modular-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}">
-            <justifi-card-form></justifi-card-form>
-            <div style="margin-top: 20px">
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              <justifi-summary></justifi-summary>
+              <justifi-card-form></justifi-card-form>
+              <justifi-google-pay></justifi-google-pay>
               <button
                id="submit-button" 
                class="button"
-               style="padding:10px"
+               style="padding: 10px"
               >
                 Submit Checkout
               </button>
