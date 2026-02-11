@@ -18,7 +18,7 @@
     "docs:lint": "node scripts/run-docs-lint.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=@repo/docs^... && changeset publish"
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
@@ -30,7 +30,8 @@
   },
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "docs"
   ],
   "packageManager": "pnpm@10.6.5"
 }

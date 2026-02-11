@@ -9,6 +9,11 @@ packages/mockData/mockGrossVolumeReport.js
 /agent-os/*
 .claude/settings.local.json
 
+# Docs generated files
+docs/docs.json
+docs/component-tree.json
+docs/dist/
+
 # E2E tests outcome
 
 apps/component-examples/playwright-report/

@@ -1,5 +1,12 @@
 ### Changelog
 
+## 6.10.1
+
+### Patch Changes
+
+- 3406f47: Add messages for when the business is already provisioned and for when the onboarding is complete.
+- b37b70b: feat: add duplicate version detection for webcomponents
+
 ## 6.10.0
 
 ### Minor Changes

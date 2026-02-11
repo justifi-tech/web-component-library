@@ -1,28 +1,70 @@
 {
-  "name": "@repo/docs-site",
-  "version": "0.0.0",
+  "name": "@justifi/webcomponents-docs",
+  "version": "0.1.0",
+  "description": "Documentation package for JustiFi Web Components",
   "type": "module",
-  "private": true,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justifi-tech/web-component-library.git",
+    "directory": "docs"
+  },
+  "files": [
+    "dist/",
+    "mocks/",
+    "docs.json",
+    "component-tree.json",
+    "*.mdx",
+    "entities/",
+    "frameworks/",
+    "merchant-tools/",
+    "modular-checkout/",
+    "payment-facilitation/"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./helpers": "./dist/helpers/index.js",
+    "./docs.json": "./docs.json",
+    "./component-tree.json": "./component-tree.json",
+    "./*.mdx": "./*.mdx",
+    "./*/*.mdx": "./*/*.mdx",
+    "./*/*/*.mdx": "./*/*/*.mdx"
+  },
   "scripts": {
     "dev": "echo 'Dev server not configured yet'",
-    "build": "pnpm lint && echo 'Build not configured yet'",
-    "clean": "rm -rf .turbo && rm -rf node_modules",
-    "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs ."
+    "build": "pnpm build:docs",
+    "build:docs": "pnpm build:webcomponents && pnpm build:helpers && pnpm build:index",
+    "build:webcomponents": "pnpm --filter @justifi/webcomponents build:docs",
+    "build:helpers": "pnpm exec esbuild helpers/**/*.tsx helpers/**/*.jsx helpers/**/*.ts helpers/**/*.js --outdir=dist/helpers --format=esm --jsx=automatic --platform=node --target=es2020 && cp package.json dist/ && cp -r mocks dist/",
+    "build:index": "echo \"export * from './helpers/index.js';\" > dist/index.js",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs .",
+    "test": "node test/exports.test.mjs",
+    "prepublishOnly": "pnpm build:docs && pnpm test"
   },
   "dependencies": {
     "markdown-table": "^3.0.4",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.0",
-    "miragejs": "^0.1.48",
-    "@justifi/webcomponents": "6.7.3"
+    "miragejs": "^0.1.48"
   },
   "devDependencies": {
+    "@justifi/webcomponents": "workspace:*",
     "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^22.15.21",
+    "@types/react": "^18.3.0",
     "eslint": "^9.27.0",
     "eslint-plugin-mdx": "^3.1.5",
+    "esbuild": "^0.20.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remark-frontmatter": "^4.0.1"
+  },
+  "peerDependencies": {
+    "@justifi/webcomponents": ">=6.10.1",
+    "react": "^17.0.0 || ^18.0.0"
   }
 }

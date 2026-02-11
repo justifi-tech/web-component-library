@@ -1,14 +1,14 @@
-name: Publish components
+name: Publish packages
 on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
+  build-and-publish:
+    name: Build and Publish
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # Required for OIDC token request
-      contents: read # Required to read repository contents
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -30,10 +30,51 @@ jobs:
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
           echo "API_ORIGIN=${{ secrets.API_ORIGIN }}" >> .env
 
-      - name: Build packages
-        working-directory: ./packages/webcomponents
+      - name: Check if docs version exists on npm
+        id: docs_check
+        run: |
+          DOCS_VERSION=$(node -p "require('./docs/package.json').version")
+          WEBCOMPONENTS_VERSION=$(node -p "require('./packages/webcomponents/package.json').version")
+          echo "docs_version=$DOCS_VERSION" >> $GITHUB_OUTPUT
+          echo "webcomponents_version=$WEBCOMPONENTS_VERSION" >> $GITHUB_OUTPUT
+          if npm view @justifi/webcomponents-docs@$DOCS_VERSION version 2>/dev/null; then
+            echo "docs_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "docs_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build all packages
         run: pnpm build
 
+      - name: Verify docs build output
+        working-directory: ./docs
+        run: |
+          test -f docs.json || (echo "Error: docs.json not found" && exit 1)
+          test -f component-tree.json || (echo "Error: component-tree.json not found" && exit 1)
+          test -f dist/index.js || (echo "Error: dist/index.js not found" && exit 1)
+          test -d dist/helpers || (echo "Error: dist/helpers not found" && exit 1)
+          test -f introduction.mdx || (echo "Error: introduction.mdx not found" && exit 1)
+          test -f entities/entities.mdx || (echo "Error: entities/entities.mdx not found" && exit 1)
+          test -f frameworks/react.mdx || (echo "Error: frameworks/react.mdx not found" && exit 1)
+          echo "Build verification passed"
+
+      - name: Publish packages via changesets
+        run: pnpm release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
+
+      - name: Trigger public-docs workflow (if docs was published)
+        if: steps.docs_check.outputs.docs_exists == 'false'
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
+          repository: justifi-tech/public-docs
+          event-type: webcomponents-docs-published
+          client-payload: |
+            {
+              "webcomponents_version": "${{ steps.docs_check.outputs.webcomponents_version }}",
+              "docs_version": "${{ steps.docs_check.outputs.docs_version }}"
+            }
       - name: Detect version type
         id: version
         run: |
