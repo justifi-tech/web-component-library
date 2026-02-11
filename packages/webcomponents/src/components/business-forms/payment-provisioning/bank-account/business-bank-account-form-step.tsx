@@ -410,7 +410,6 @@ export class BusinessBankAccountFormStep {
             <form-control-tooltip helpText="This direct deposit account is the designated bank account where incoming funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />
-          {/* Show Plaid when: available AND user selected Plaid AND not in read-only view */}
           {shouldShowPlaidVerification && this.usePlaidVerification && !this.showReadOnlyView && (
             <div class="mt-3">
               <plaid-verification
@@ -423,7 +422,6 @@ export class BusinessBankAccountFormStep {
                   this.refreshBankAccountData();
                 }}
               />
-              {/* Toggle to Manual Entry */}
               <div class="mt-3">
                 <Button
                   type="button"
@@ -438,10 +436,8 @@ export class BusinessBankAccountFormStep {
             </div>
           )}
 
-          {/* Show Manual Entry when: Plaid not available OR user toggled to manual OR in read-only view */}
           {(!this.usePlaidVerification || this.showReadOnlyView) && (
             <div>
-              {/* Show toggle back to Plaid if available and not in read-only view */}
               {shouldShowPlaidVerification && !this.usePlaidVerification && !this.showReadOnlyView && (
                 <div class="mb-3">
                   <Button
@@ -456,7 +452,6 @@ export class BusinessBankAccountFormStep {
                 </div>
               )}
 
-              {/* Manual Bank Account Form Inputs */}
               {this.country === CountryCode.CAN ? (
                 <bank-account-form-inputs-canada
                   defaultValue={bankAccountDefaultValue}
