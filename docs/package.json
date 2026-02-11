@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents-docs",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Documentation package for JustiFi Web Components",
   "type": "module",
   "publishConfig": {
@@ -64,7 +64,7 @@
     "remark-frontmatter": "^4.0.1"
   },
   "peerDependencies": {
-    "@justifi/webcomponents": ">=6.0.0",
+    "@justifi/webcomponents": ">=6.10.1",
     "react": "^17.0.0 || ^18.0.0"
   }
 }
