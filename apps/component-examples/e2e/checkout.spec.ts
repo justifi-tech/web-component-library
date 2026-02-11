@@ -12,6 +12,9 @@ test.describe("Checkout Component", () => {
     await page.goto("/checkout");
     await page.waitForSelector("justifi-checkout");
 
+    // Wait for checkout data fetch and iframe initialization
+    await page.waitForTimeout(3000);
+
     await page.getByRole("radio", { name: "New credit or debit card" }).click();
 
     await fillIframeInput(page, "cardNumber", "4242424242424242");
@@ -20,6 +23,20 @@ test.describe("Checkout Component", () => {
     await fillIframeInput(page, "CVV", "123");
 
     await page.getByRole("textbox", { name: "Postal Code" }).fill("55114");
+
+    // Let iframe JS fully initialize before triggering tokenization
+    await page.waitForTimeout(2000);
+
+    const errorPromise = new Promise<string>((resolve) => {
+      page.on("console", (msg) => {
+        if (
+          msg.type() === "error" &&
+          msg.text().includes("[justifi-checkout] error-event")
+        ) {
+          resolve(msg.text());
+        }
+      });
+    });
 
     const completeResponsePromise = page.waitForResponse(
       (resp) =>
@@ -30,7 +47,21 @@ test.describe("Checkout Component", () => {
 
     await page.getByRole("button", { name: "Pay", exact: true }).click();
 
-    const completeResponse = await completeResponsePromise;
+    const result = await Promise.race([
+      completeResponsePromise.then((resp) => ({
+        type: "success" as const,
+        resp,
+      })),
+      errorPromise.then((err) => ({ type: "error" as const, err })),
+    ]);
+
+    if (result.type === "error") {
+      throw new Error(
+        `Checkout failed before /complete was called: ${result.err}`,
+      );
+    }
+
+    const completeResponse = result.resp;
     const body = await completeResponse.json();
 
     expect(completeResponse.status()).toBe(201);
