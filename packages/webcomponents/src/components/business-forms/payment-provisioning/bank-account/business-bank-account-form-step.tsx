@@ -27,6 +27,7 @@ export class BusinessBankAccountFormStep {
   @State() postDocument: Function;
   @State() bankAccountVerification: boolean = false;
   @State() platformAccountId: string | null = null;
+  @State() usePlaidVerification: boolean = true;
 
   @Prop() authToken!: string;
   @Prop() businessId!: string;
@@ -270,13 +271,25 @@ export class BusinessBankAccountFormStep {
   handleChangeBankAccount = () => {
     this.isAddingNewBankAccount = true;
     this.documentData = new EntityDocumentStorage();
+    // Reset to Plaid if available when changing bank account
+    this.usePlaidVerification = this.bankAccountVerification && !!this.platformAccountId;
     this.initializeFormController();
   }
 
   handleCancel = () => {
     this.isAddingNewBankAccount = false;
     this.documentData = new EntityDocumentStorage();
+    // Reset toggle state when canceling
+    this.usePlaidVerification = true;
     this.initializeFormController();
+  }
+
+  handleToggleToManualEntry = () => {
+    this.usePlaidVerification = false;
+  }
+
+  handleToggleToPlaidVerification = () => {
+    this.usePlaidVerification = true;
   }
 
   handleSaveBankAccount = async () => {
@@ -397,7 +410,8 @@ export class BusinessBankAccountFormStep {
             <form-control-tooltip helpText="This direct deposit account is the designated bank account where incoming funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />
-          {shouldShowPlaidVerification && (
+          {/* Show Plaid when: available AND user selected Plaid AND not in read-only view */}
+          {shouldShowPlaidVerification && this.usePlaidVerification && !this.showReadOnlyView && (
             <div class="mt-3">
               <plaid-verification
                 authToken={this.authToken}
@@ -409,22 +423,56 @@ export class BusinessBankAccountFormStep {
                   this.refreshBankAccountData();
                 }}
               />
+              {/* Toggle to Manual Entry */}
+              <div class="mt-3">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={this.handleToggleToManualEntry}
+                  disabled={this.isLoading}
+                  part={buttonSecondary}
+                >
+                  Enter bank account information
+                </Button>
+              </div>
             </div>
           )}
-          {this.country === CountryCode.CAN ? (
-            <bank-account-form-inputs-canada
-              defaultValue={bankAccountDefaultValue}
-              errors={this.errors}
-              inputHandler={this.inputHandler}
-              formDisabled={this.showReadOnlyView}
-            />
-          ) : (
-            <bank-account-form-inputs
-              defaultValue={bankAccountDefaultValue}
-              errors={this.errors}
-              inputHandler={this.inputHandler}
-              formDisabled={this.showReadOnlyView}
-            />
+
+          {/* Show Manual Entry when: Plaid not available OR user toggled to manual OR in read-only view */}
+          {(!this.usePlaidVerification || this.showReadOnlyView) && (
+            <div>
+              {/* Show toggle back to Plaid if available and not in read-only view */}
+              {shouldShowPlaidVerification && !this.usePlaidVerification && !this.showReadOnlyView && (
+                <div class="mb-3">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={this.handleToggleToPlaidVerification}
+                    disabled={this.isLoading}
+                    part={buttonSecondary}
+                  >
+                    Link bank account with Plaid instead
+                  </Button>
+                </div>
+              )}
+
+              {/* Manual Bank Account Form Inputs */}
+              {this.country === CountryCode.CAN ? (
+                <bank-account-form-inputs-canada
+                  defaultValue={bankAccountDefaultValue}
+                  errors={this.errors}
+                  inputHandler={this.inputHandler}
+                  formDisabled={this.showReadOnlyView}
+                />
+              ) : (
+                <bank-account-form-inputs
+                  defaultValue={bankAccountDefaultValue}
+                  errors={this.errors}
+                  inputHandler={this.inputHandler}
+                  formDisabled={this.showReadOnlyView}
+                />
+              )}
+            </div>
           )}
           {this.showReadOnlyView && (
             <div class="mt-3">
@@ -439,8 +487,8 @@ export class BusinessBankAccountFormStep {
               </Button>
             </div>
           )}
-         
-          {(!this.existingBankAccount || this.isAddingNewBankAccount) && (
+
+          {(!this.existingBankAccount || this.isAddingNewBankAccount) && !this.usePlaidVerification && (
             <div class="mt-3 d-flex gap-2">
               {this.isAddingNewBankAccount && (
                 <Button
@@ -465,19 +513,21 @@ export class BusinessBankAccountFormStep {
             </div>
           )}
         </fieldset>
-        <fieldset class="mt-4">
-          <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0" part={heading2}>Document Uploads</legend>
-            <form-control-tooltip helpText="One document (voided check or bank statement) is required for underwriting purposes. It needs to visibly show the name tied to the account and the account number. Various file formats such as PDF, DOC, DOCX, JPEG are accepted. Multiple files can be uploaded for each document category." />
-          </div>
-          <hr class="mt-2" />
-          <business-documents-on-file documents={this.existingDocuments} isLoading={this.isLoading} />
-          <bank-account-document-form-inputs
-            inputHandler={this.inputHandler}
-            errors={this.errors}
-            storeFiles={this.storeFiles}
-          />
-        </fieldset>
+        {(!this.usePlaidVerification || this.showReadOnlyView) && (
+          <fieldset class="mt-4">
+            <div class="d-flex align-items-center gap-2">
+              <legend class="mb-0" part={heading2}>Document Uploads</legend>
+              <form-control-tooltip helpText="One document (voided check or bank statement) is required for underwriting purposes. It needs to visibly show the name tied to the account and the account number. Various file formats such as PDF, DOC, DOCX, JPEG are accepted. Multiple files can be uploaded for each document category." />
+            </div>
+            <hr class="mt-2" />
+            <business-documents-on-file documents={this.existingDocuments} isLoading={this.isLoading} />
+            <bank-account-document-form-inputs
+              inputHandler={this.inputHandler}
+              errors={this.errors}
+              storeFiles={this.storeFiles}
+            />
+          </fieldset>
+        )}
       </form>
     );
   }

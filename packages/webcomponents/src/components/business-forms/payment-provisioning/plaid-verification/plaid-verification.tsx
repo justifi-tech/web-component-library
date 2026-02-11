@@ -9,7 +9,7 @@ import {
   PlaidError,
 } from '../../../../api/Plaid';
 import plaidLogoSvg from '../../../../assets/plaid-icon.svg';
-import { buttonSecondary } from '../../../../styles/parts';
+import { buttonPrimary } from '../../../../styles/parts';
 
 @Component({
   tag: 'plaid-verification',
@@ -422,13 +422,13 @@ export class PlaidVerification {
         <div>
           <div class="mb-3">
             <Button
-              variant="secondary"
+              variant="primary"
               type="button"
               onClick={(event) => { event.preventDefault(); this.openPlaidLink(); }}
               disabled={this.isLoading}
-              part={buttonSecondary}
+              part={buttonPrimary}
             >
-              Link Bank Account with {plaidLogo}
+              Link with Plaid {plaidLogo}
             </Button>
           </div>
           {renderErrorState()}
