@@ -6,7 +6,11 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "start": "npx nodemon ./examples/checkout.js",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "start": "npx nodemon ./server.js",
+    "start:server": "node ./server.js",
     "start:checkout": "npx nodemon ./examples/checkout.js",
     "start:checkout-with-insurance": "npx nodemon ./examples/checkout-with-insurance.js",
     "start:modular-checkout": "npx nodemon ./examples/modular-checkout.js",
@@ -35,11 +39,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@justifi/webcomponents": "workspace:*",
     "express": "^4.21.0",
-    "nodemon": "^3.1.4",
-    "@justifi/webcomponents": "workspace:*"
+    "nodemon": "^3.1.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.1",
     "dotenv": "^16.4.5"
   }
 }

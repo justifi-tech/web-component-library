@@ -1,71 +1,39 @@
-require('dotenv').config({ path: '../../.env' });
-const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
+const express = require("express");
+const crypto = require("crypto");
+const { API_PATHS } = require("../utils/api-paths");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { startStandaloneServer } = require("../utils/standalone-server");
 
-const app = express();
-const { v4: uuidv4 } = require('uuid');
-const port = process.env.PORT || 3000;
-const createPaymentEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.PAYMENTS}`;
-const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
-
-app.use(
-  '/scripts',
-  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
-);
-app.use('/styles', express.static(__dirname + '/../css/'));
-
-async function getToken() {
-  const requestBody = JSON.stringify({
-    client_id: clientId,
-    client_secret: clientSecret,
-  });
-
-  let response;
-  try {
-    response = await fetch(authTokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestBody,
-    });
-  } catch (error) {
-    console.log('ERROR:', error);
-  }
-
-  const { access_token } = await response.json();
-  return access_token;
-}
+const router = express.Router();
 
 async function createPayment(token) {
+  const createPaymentEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.PAYMENTS}`;
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
+
   const requestBody = JSON.stringify({
     amount: 1000,
-    currency: 'usd',
-    capture_strategy: 'automatic',
-    description: 'Test payment for refund example file',
+    currency: "usd",
+    capture_strategy: "automatic",
+    description: "Test payment for refund example file",
     payment_method: {
       card: {
-        name: 'Sylvia Fowles',
-        number: '4242424242424242',
-        verification: '123',
-        month: '3',
-        year: '2040',
-        address_postal_code: '55555',
+        name: "Sylvia Fowles",
+        number: "4242424242424242",
+        verification: "123",
+        month: "3",
+        year: "2040",
+        address_postal_code: "55555",
       },
     },
   });
 
   const response = await fetch(createPaymentEndpoint, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-      'sub-account': subAccountId,
-      'Idempotency-Key': uuidv4(),
+      "sub-account": subAccountId,
+      "Idempotency-Key": crypto.randomUUID(),
     },
     body: requestBody,
   });
@@ -73,26 +41,14 @@ async function createPayment(token) {
   return id;
 }
 
-async function getWebComponentToken(token) {
-  const response = await fetch(webComponentTokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      resources: [`write:account:${subAccountId}`],
-    }),
-  });
+router.get("/", async (req, res) => {
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
 
-  const { access_token } = await response.json();
-  return access_token;
-}
-
-app.get('/', async (req, res) => {
   const token = await getToken();
   const paymentId = await createPayment(token);
-  const webComponentToken = await getWebComponentToken(token);
+  const webComponentToken = await getWebComponentToken(token, [
+    `write:account:${subAccountId}`,
+  ]);
 
   const hideSubmitButton = false;
 
@@ -114,7 +70,7 @@ app.get('/', async (req, res) => {
             hide-submit-button="${hideSubmitButton}"
           >
           </justifi-refund-payment>
-          <button id="test-refund-button" ${hideSubmitButton ? '' : 'style="display: none;"'}>Refund</button>
+          <button id="test-refund-button" ${hideSubmitButton ? "" : 'style="display: none;"'}>Refund</button>
         </div>
         <div class="column-output" id="output-pane">
           <em>Refund output will appear here...</em>
@@ -154,6 +110,8 @@ app.get('/', async (req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = router;
+
+if (require.main === module) {
+  startStandaloneServer(router);
+}

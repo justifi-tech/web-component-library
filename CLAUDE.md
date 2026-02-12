@@ -9,7 +9,8 @@ JustiFi Web Component Library - A Stencil-based web components library for finte
 ## General Guidelines
 
 - In all interactions and commit messages, be extremely concise and to the point and sacrifice grammar for the sake of concision.
-- Do not run build, dev, start, test, lint, format, clean, or any other commands. Just answer the question or task.
+- Do not run build, dev, start, lint, format, clean, or any other commands. Just answer the question or task.
+- You're allowed to run test related commands only locally. The allowed commands are only `test` and `test:e2e`
 
 ## Plans
 
@@ -56,11 +57,11 @@ packages/webcomponents/src/
 ## Testing Patterns
 
 ```tsx
-import { h } from '@stencil/core';
-import { newSpecPage } from '@stencil/core/testing';
+import { h } from "@stencil/core";
+import { newSpecPage } from "@stencil/core/testing";
 
-describe('component-name', () => {
-  it('renders correctly', async () => {
+describe("component-name", () => {
+  it("renders correctly", async () => {
     const page = await newSpecPage({
       components: [MyComponent],
       template: () => <my-component prop="value" />,
