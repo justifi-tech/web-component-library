@@ -1,0 +1,47 @@
+name: Publish docs package (initial)
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-docs:
+    name: Publish @justifi/webcomponents-docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.7.5
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Create .env file
+        run: |
+          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
+          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
+          echo "API_ORIGIN=${{ secrets.API_ORIGIN }}" >> .env
+
+      - name: Build all packages
+        run: pnpm build
+
+      - name: Verify docs build output
+        working-directory: ./docs
+        run: |
+          test -f docs.json || (echo "Error: docs.json not found" && exit 1)
+          test -f component-tree.json || (echo "Error: component-tree.json not found" && exit 1)
+          test -f dist/index.js || (echo "Error: dist/index.js not found" && exit 1)
+          test -d dist/helpers || (echo "Error: dist/helpers not found" && exit 1)
+          echo "Build verification passed"
+
+      - name: Publish to npm
+        working-directory: ./docs
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TEMP_NPM_TOKEN }}
