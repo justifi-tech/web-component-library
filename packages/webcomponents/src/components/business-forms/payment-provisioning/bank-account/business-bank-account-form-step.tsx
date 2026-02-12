@@ -6,7 +6,7 @@ import { CountryCode } from '../../../../utils/country-codes';
 import { bankAccountSchemaByCountry } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStep } from '../../utils';
-import { heading2, buttonSecondary } from '../../../../styles/parts';
+import { heading2, buttonSecondary, buttonLink } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { Button } from '../../../../ui-components';
 
@@ -425,10 +425,10 @@ export class BusinessBankAccountFormStep {
               <div class="mt-3">
                 <Button
                   type="button"
-                  variant="secondary"
+                  variant="link"
                   onClick={this.handleToggleToManualEntry}
                   disabled={this.isLoading}
-                  part={buttonSecondary}
+                  part={buttonLink}
                 >
                   Enter bank details manually (document upload required)
                 </Button>
