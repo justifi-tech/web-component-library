@@ -430,7 +430,7 @@ export class BusinessBankAccountFormStep {
                   disabled={this.isLoading}
                   part={buttonSecondary}
                 >
-                  Enter bank account information
+                  Enter bank details manually (document upload required)
                 </Button>
               </div>
             </div>
