@@ -8,6 +8,7 @@ packages/mockData/mockGrossVolumeReport.js.map
 packages/mockData/mockGrossVolumeReport.js
 /agent-os/*
 .claude/settings.local.json
+packages/types/dist/
 
 # Docs generated files
 docs/docs.json
