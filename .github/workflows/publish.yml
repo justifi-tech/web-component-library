@@ -9,6 +9,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    env:
+      NPM_CONFIG_PROVENANCE: 'true'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -17,7 +19,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -60,15 +61,11 @@ jobs:
       - name: Publish packages via changesets
         if: steps.version.outputs.is_rc == 'false'
         run: pnpm release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
 
       - name: Publish RC to npm with next tag
         if: steps.version.outputs.is_rc == 'true'
         working-directory: ./packages/webcomponents
-        run: npm publish --tag next --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.JUSTIFI_SUPPORT_NPM_TOKEN }}
+        run: npm publish --tag next --access public --provenance
 
       - name: Trigger public-docs workflow (if docs was published)
         if: steps.docs_check.outputs.docs_exists == 'false'
