@@ -3,7 +3,7 @@ import { filterParams, propsParams, clearParams } from './payouts-list-params-st
 import { StyledHost } from '../../ui-components';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
 import { PayoutStatusesSafeNames } from '../../api';
-import { createdAfterPayoutsListFilterParam, createdBeforePayoutsListFilterParam, statusPayoutsListFilterParam, payoutsListFilterMenu } from '../../styles/parts';
+import { filterMenu, filterParam } from '../../styles/parts';
 @Component({
   tag: 'justifi-payouts-list-filters',
   shadow: true
@@ -53,7 +53,7 @@ export class PayoutsListFilters {
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={payoutsListFilterMenu}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={filterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-select
@@ -63,7 +63,7 @@ export class PayoutsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.status || filterParams.status || ''}
                 disabled={!!this.status}
-                part={statusPayoutsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -76,7 +76,7 @@ export class PayoutsListFilters {
                   convertToLocal(filterParams.created_after, { showInputDate: true })
                 }
                 disabled={!!this.createdAfter}
-                part={createdAfterPayoutsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -89,7 +89,7 @@ export class PayoutsListFilters {
                   convertToLocal(filterParams.created_before, { showInputDate: true })
                 }
                 disabled={!!this.createdBefore}
-                part={createdBeforePayoutsListFilterParam}
+                part={filterParam}
               />
             </div>
           </div>
