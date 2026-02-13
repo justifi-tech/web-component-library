@@ -23,7 +23,9 @@
   },
   "homepage": "https://storybook.justifi.ai/?path=/docs/introduction--docs",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
+    "provenance": true
   },
   "files": [
     "dist/"
