@@ -1,5 +1,6 @@
 {
   "name": "@justifi/types",
+  "private": true,
   "version": "0.0.1",
   "description": "JustiFi API Types, Interfaces, and Entity Classes",
   "type": "module",
