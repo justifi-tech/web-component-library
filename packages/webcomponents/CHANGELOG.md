@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.10.2
+
+### Patch Changes
+
+- bbb495f: Toggle manual bank account input and make some fields shorter in the form.
+
 ## 6.10.1
 
 ### Patch Changes
