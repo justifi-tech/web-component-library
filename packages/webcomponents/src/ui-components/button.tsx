@@ -3,7 +3,7 @@ import { ButtonSpinner } from './button-spinner';
 import { buttonLoading, buttonPrimary, buttonSecondary } from '../styles/parts';
 
 interface ButtonProps {
-  variant: 'primary' | 'secondary';
+  variant: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'link';
   isLoading?: boolean;
 }
 
