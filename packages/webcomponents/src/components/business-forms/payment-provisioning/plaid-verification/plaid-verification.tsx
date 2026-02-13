@@ -8,6 +8,7 @@ import {
   PLAID_ERROR_SEVERITY,
   PlaidError,
 } from '../../../../api/Plaid';
+import plaidLogoSvg from '../../../../assets/plaid-icon.svg';
 import { buttonPrimary } from '../../../../styles/parts';
 
 @Component({
@@ -394,6 +395,22 @@ export class PlaidVerification {
       return null;
     };
 
+    const plaidLogo = (
+      <img
+        class="plaid-logo-img"
+        src={plaidLogoSvg}
+        alt="Plaid"
+        title="Plaid"
+        style={{
+          display: 'inline',
+          width: '20px',
+          height: '20px',
+          marginLeft: '5px',
+          marginTop: '-2px',
+        }}
+      />
+    );
+
     return (
       <StyledHost>
         <script
@@ -411,7 +428,7 @@ export class PlaidVerification {
               disabled={this.isLoading}
               part={buttonPrimary}
             >
-              Connect with Plaid (instant verification) <b>*recommended</b>
+              Connect with Plaid {plaidLogo} (instant verification)
             </Button>
           </div>
           {renderErrorState()}
