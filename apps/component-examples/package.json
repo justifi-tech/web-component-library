@@ -34,7 +34,8 @@
     "start:payment-details": "npx nodemon ./examples/payment-details.js",
     "start:payout-details": "npx nodemon ./examples/payout-details.js",
     "start:payout-transactions-list": "npx nodemon ./examples/payout-transactions-list.js",
-    "start:payment-transactions-list": "npx nodemon ./examples/payment-transactions-list.js"
+    "start:payment-transactions-list": "npx nodemon ./examples/payment-transactions-list.js",
+    "start:modular-checkout-apple-pay": "npx nodemon ./examples/modular-checkout-apple-pay.js"
   },
   "author": "",
   "license": "ISC",

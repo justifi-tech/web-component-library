@@ -7,7 +7,7 @@ import {
   EventEmitter,
   Method,
 } from "@stencil/core";
-import { ApplePayService } from "../../../api/services/apple-pay.service";
+import { ApplePayService, ApplePayServiceErrorCode } from "../../../api/services/apple-pay.service";
 import {
   IApplePayConfig,
   IApplePayPaymentRequest,
@@ -190,14 +190,18 @@ export class ApplePay {
         });
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Payment failed";
-      this.error = errorMessage;
-      this.applePayError.emit({ error: errorMessage, code: ApplePay.ErrorCode.PAYMENT_FAILED });
-      this.applePayCompleted.emit({
-        success: false,
-        error: errorMessage,
-      });
+      if (error?.error?.code === ApplePayServiceErrorCode.USER_CANCELLED) {
+        this.applePayCancelled.emit();
+      } else {
+        const errorMessage =
+          error instanceof Error ? error.message : "Payment failed";
+        this.error = errorMessage;
+        this.applePayError.emit({ error: errorMessage, code: ApplePay.ErrorCode.PAYMENT_FAILED });
+        this.applePayCompleted.emit({
+          success: false,
+          error: errorMessage,
+        });
+      }
     } finally {
       this.isProcessing = false;
     }
