@@ -149,6 +149,7 @@ app.get('/', async (req, res) => {
       <script>
         const submitButton = document.getElementById('submit-button');
         const checkoutWrapper = document.querySelector('justifi-modular-checkout');
+        const applePay = document.querySelector('justifi-apple-pay');
 
         submitButton.addEventListener('click', async () => {
           await checkoutWrapper.submitCheckout({ address_postal_code: '12345' });
@@ -160,6 +161,10 @@ app.get('/', async (req, res) => {
 
         checkoutWrapper.addEventListener('error-event', (e) => {
           console.log('error-event: ', e);
+        });
+
+        applePay.addEventListener('applePayCancelled', (e) => {
+          console.log('applePayCancelled: ', e);
         });
       </script>
     </html>
