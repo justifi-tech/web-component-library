@@ -1,5 +1,11 @@
 # @repo/component-examples
 
+## 1.2.0
+
+### Minor Changes
+
+- 074d118: Fix applePayCancelled event was not being emitted
+
 ## 1.1.18
 
 ### Patch Changes
