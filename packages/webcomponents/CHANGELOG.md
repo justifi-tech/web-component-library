@@ -1,16 +1,11 @@
 ### Changelog
 
-## 6.10.3
-
-### Patch Changes
-
-- 074d118: Fix applePayCancelled event was not being emitted
-
 ## 6.10.2
 
 ### Patch Changes
 
 - bbb495f: Toggle manual bank account input and make some fields shorter in the form.
+- 074d118: Fix applePayCancelled event was not being emitted
 
 ## 6.10.1
 

@@ -6,11 +6,6 @@
 
 - 074d118: Fix applePayCancelled event was not being emitted
 
-### Patch Changes
-
-- Updated dependencies [074d118]
-  - @justifi/webcomponents@6.10.3
-
 ## 1.1.18
 
 ### Patch Changes
