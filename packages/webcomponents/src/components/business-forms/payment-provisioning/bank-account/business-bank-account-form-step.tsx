@@ -6,7 +6,7 @@ import { CountryCode } from '../../../../utils/country-codes';
 import { bankAccountSchemaByCountry } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStep } from '../../utils';
-import { heading2, buttonSecondary } from '../../../../styles/parts';
+import { heading2, buttonSecondary, buttonLink } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { Button } from '../../../../ui-components';
 
@@ -20,7 +20,7 @@ export class BusinessBankAccountFormStep {
   @State() existingDocuments: any = [];
   @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @State() isLoading: boolean = false;
-  @State() isAddingNewBankAccount: boolean = true;
+  @State() viewMode: 'readonly' | 'plaid' | 'manual' = 'manual';
   @State() getBusiness: Function;
   @State() postBankAccount: Function;
   @State() postDocumentRecord: Function;
@@ -50,11 +50,9 @@ export class BusinessBankAccountFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    if (this.existingBankAccount && !this.isAddingNewBankAccount) {
-      // If a bank account already exists and we're not adding a new one, skip bank account posting; proceed directly to document upload
+    if (this.viewMode === 'readonly') {
       this.sendData(onSuccess);
     } else {
-      // If bank account is new, validate form inputs (bank account fields), then proceed
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));
     }
   }
@@ -104,11 +102,10 @@ export class BusinessBankAccountFormStep {
 
   initializeFormController = () => {
     this.formController = new FormController(this.getSchema());
-    if (this.isAddingNewBankAccount) {
-      // Clear form when adding a new bank account
-      this.formController.setInitialValues({ business_id: this.businessId });
-    } else {
+    if (this.viewMode === 'readonly') {
       this.formController.setInitialValues({ ...this.bankAccount });
+    } else {
+      this.formController.setInitialValues({ business_id: this.businessId });
     }
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
@@ -139,27 +136,43 @@ export class BusinessBankAccountFormStep {
     return !!this.bankAccount?.id;
   }
 
-  get showReadOnlyView() {
-    return this.existingBankAccount && !this.isAddingNewBankAccount;
+  get plaidAvailable() {
+    return this.bankAccountVerification && !!this.platformAccountId;
+  }
+
+  get showCancel() {
+    return this.bankAccountVerification || this.existingBankAccount;
+  }
+
+  private processBusinessResponse(data: any) {
+    const { bank_accounts, documents, settings, platform_account_id } = data;
+    if (bank_accounts.length > 0) {
+      this.bankAccount = new BankAccount(bank_accounts[bank_accounts.length - 1]);
+    } else {
+      this.bankAccount = new BankAccount({});
+      this.bankAccount.business_id = this.businessId;
+    }
+    this.existingDocuments = documents;
+    this.bankAccountVerification = settings.bank_account_verification === true;
+    this.platformAccountId = platform_account_id;
+  }
+
+  private determineViewMode() {
+    if (this.existingBankAccount) {
+      this.viewMode = 'readonly';
+    } else if (this.plaidAvailable) {
+      this.viewMode = 'plaid';
+    } else {
+      this.viewMode = 'manual';
+    }
   }
 
   private getData = () => {
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
-        if (response.data.bank_accounts.length > 0) {
-          // Get the latest bank account (last in array)
-          const bankAccounts = response.data.bank_accounts;
-          const latestBankAccount = bankAccounts[bankAccounts.length - 1];
-          this.bankAccount = new BankAccount(latestBankAccount);
-          this.isAddingNewBankAccount = false;
-        } else {
-          this.bankAccount = new BankAccount({});
-          this.bankAccount.business_id = this.businessId;
-        }
-        this.existingDocuments = response.data.documents;
-        this.bankAccountVerification = response.data.settings.bank_account_verification === true;
-        this.platformAccountId = response.data.platform_account_id;
+        this.processBusinessResponse(response.data);
+        this.determineViewMode();
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -177,21 +190,16 @@ export class BusinessBankAccountFormStep {
 
   private async sendData(onSuccess: () => void) {
     try {
-      // Post bank account data if we're adding a new bank account
-      const bankAccountPosted = this.isAddingNewBankAccount ? await this.postBankAccountData() : true;
-      if (!bankAccountPosted) {
-        return;
+      if (this.viewMode === 'manual') {
+        const bankAccountPosted = await this.postBankAccountData();
+        if (!bankAccountPosted) return;
       }
 
-      // Post documents only after bank account was successfully created
       const documentsUploaded = await this.postBusinessDocuments();
-      if (!documentsUploaded) {
-        return;
-      }
+      if (!documentsUploaded) return;
 
-      // Refresh bank account data after successful save
-      if (this.isAddingNewBankAccount) {
-        this.isAddingNewBankAccount = false;
+      if (this.viewMode === 'manual') {
+        this.viewMode = 'readonly';
         await this.refreshBankAccountData();
       }
 
@@ -238,18 +246,8 @@ export class BusinessBankAccountFormStep {
       this.isLoading = true;
       this.getBusiness({
         onSuccess: (response) => {
-          const { data } = response;
-          const { bank_accounts, documents, settings, platform_account_id } = data;
-          if (bank_accounts.length > 0) {
-            // Get the latest bank account (last in array)
-            const bankAccounts = bank_accounts;
-            const latestBankAccount = bankAccounts[bankAccounts.length - 1];
-            this.bankAccount = new BankAccount(latestBankAccount);
-          }
-
-          this.existingDocuments = documents;
-          this.bankAccountVerification = settings.bank_account_verification === true;
-          this.platformAccountId = platform_account_id;
+          this.processBusinessResponse(response.data);
+          this.determineViewMode();
           this.initializeFormController();
         },
         onError: ({ error, code, severity }) => {
@@ -268,15 +266,23 @@ export class BusinessBankAccountFormStep {
   }
 
   handleChangeBankAccount = () => {
-    this.isAddingNewBankAccount = true;
+    this.viewMode = this.plaidAvailable ? 'plaid' : 'manual';
     this.documentData = new EntityDocumentStorage();
     this.initializeFormController();
   }
 
   handleCancel = () => {
-    this.isAddingNewBankAccount = false;
+    this.viewMode = this.existingBankAccount ? 'readonly' : 'plaid';
     this.documentData = new EntityDocumentStorage();
     this.initializeFormController();
+  }
+
+  handleToggleToManualEntry = () => {
+    this.viewMode = 'manual';
+  }
+
+  handleToggleToPlaidVerification = () => {
+    this.viewMode = 'plaid';
   }
 
   handleSaveBankAccount = async () => {
@@ -381,10 +387,134 @@ export class BusinessBankAccountFormStep {
     }
   }
 
-  render() {
-    const bankAccountDefaultValue = this.formController.getInitialValues();
-    const shouldShowPlaidVerification = this.bankAccountVerification && this.platformAccountId;
+  private renderBankAccountInputs(disabled: boolean) {
+    const defaultValue = this.formController.getInitialValues();
+    return this.country === CountryCode.CAN ? (
+      <bank-account-form-inputs-canada
+        defaultValue={defaultValue}
+        errors={this.errors}
+        inputHandler={this.inputHandler}
+        formDisabled={disabled}
+      />
+    ) : (
+      <bank-account-form-inputs
+        defaultValue={defaultValue}
+        errors={this.errors}
+        inputHandler={this.inputHandler}
+        formDisabled={disabled}
+      />
+    );
+  }
 
+  private renderReadonlyView() {
+    return (
+      <div>
+        {this.renderBankAccountInputs(true)}
+        <div class="mt-3">
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={this.handleChangeBankAccount}
+            disabled={this.isLoading}
+            part={buttonSecondary}
+          >
+            Change Bank Account
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  private renderPlaidView() {
+    return (
+      <div class="mt-3">
+        <plaid-verification
+          authToken={this.authToken}
+          accountId={this.platformAccountId}
+          businessId={this.businessId}
+          onPlaidVerificationSuccess={() => {
+            this.viewMode = 'readonly';
+            this.refreshBankAccountData();
+          }}
+        />
+        <div class="mt-3">
+          <Button
+            type="button"
+            variant="link"
+            className="p-0"
+            onClick={this.handleToggleToManualEntry}
+            disabled={this.isLoading}
+            part={buttonLink}
+          >
+            Enter bank details manually (document upload required)
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  private renderManualEntryView() {
+    return (
+      <div>
+        {this.plaidAvailable && (
+          <div class="mb-3">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={this.handleToggleToPlaidVerification}
+              disabled={this.isLoading}
+              part={buttonSecondary}
+            >
+              Link bank account with Plaid instead
+            </Button>
+          </div>
+        )}
+        {this.renderBankAccountInputs(false)}
+        <div class="mt-3 d-flex gap-2">
+          {this.showCancel && (
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={this.handleCancel}
+              disabled={this.isLoading}
+              part={buttonSecondary}
+            >
+              Cancel
+            </Button>
+          )}
+          <Button
+            variant="primary"
+            type="button"
+            onClick={this.handleSaveBankAccount}
+            disabled={this.isLoading}
+            isLoading={this.isLoading}
+          >
+            Save Bank Account
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  private renderDocumentUploads() {
+    return (
+      <fieldset class="mt-4">
+        <div class="d-flex align-items-center gap-2">
+          <legend class="mb-0" part={heading2}>Document Uploads</legend>
+          <form-control-tooltip helpText="One document (voided check or bank statement) is required for underwriting purposes. It needs to visibly show the name tied to the account and the account number. Various file formats such as PDF, DOC, DOCX, JPEG are accepted. Multiple files can be uploaded for each document category." />
+        </div>
+        <hr class="mt-2" />
+        <business-documents-on-file documents={this.existingDocuments} isLoading={this.isLoading} />
+        <bank-account-document-form-inputs
+          inputHandler={this.inputHandler}
+          errors={this.errors}
+          storeFiles={this.storeFiles}
+        />
+      </fieldset>
+    );
+  }
+
+  render() {
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
     }
@@ -397,87 +527,11 @@ export class BusinessBankAccountFormStep {
             <form-control-tooltip helpText="This direct deposit account is the designated bank account where incoming funds will be deposited. The name of this account must match the registered business name exactly. We are not able to accept personal accounts unless your business is a registered sole proprietorship." />
           </div>
           <hr class="mt-2" />
-          {shouldShowPlaidVerification && (
-            <div class="mt-3">
-              <plaid-verification
-                authToken={this.authToken}
-                accountId={this.platformAccountId}
-                businessId={this.businessId}
-                onPlaidVerificationSuccess={() => {
-                  // Refresh bank account data after successful Plaid verification
-                  this.isAddingNewBankAccount = false;
-                  this.refreshBankAccountData();
-                }}
-              />
-            </div>
-          )}
-          {this.country === CountryCode.CAN ? (
-            <bank-account-form-inputs-canada
-              defaultValue={bankAccountDefaultValue}
-              errors={this.errors}
-              inputHandler={this.inputHandler}
-              formDisabled={this.showReadOnlyView}
-            />
-          ) : (
-            <bank-account-form-inputs
-              defaultValue={bankAccountDefaultValue}
-              errors={this.errors}
-              inputHandler={this.inputHandler}
-              formDisabled={this.showReadOnlyView}
-            />
-          )}
-          {this.showReadOnlyView && (
-            <div class="mt-3">
-              <Button
-                variant="secondary"
-                type="button"
-                onClick={this.handleChangeBankAccount}
-                disabled={this.isLoading}
-                part={buttonSecondary}
-              >
-                Change Bank Account
-              </Button>
-            </div>
-          )}
-         
-          {(!this.existingBankAccount || this.isAddingNewBankAccount) && (
-            <div class="mt-3 d-flex gap-2">
-              {this.isAddingNewBankAccount && (
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={this.handleCancel}
-                  disabled={this.isLoading}
-                  part={buttonSecondary}
-                >
-                  Cancel
-                </Button>
-              )}
-              <Button
-                variant="primary"
-                type="button"
-                onClick={this.handleSaveBankAccount}
-                disabled={this.isLoading}
-                isLoading={this.isLoading}
-              >
-                Save Bank Account
-              </Button>
-            </div>
-          )}
+          {this.viewMode === 'readonly' && this.renderReadonlyView()}
+          {this.viewMode === 'plaid' && this.renderPlaidView()}
+          {this.viewMode === 'manual' && this.renderManualEntryView()}
         </fieldset>
-        <fieldset class="mt-4">
-          <div class="d-flex align-items-center gap-2">
-            <legend class="mb-0" part={heading2}>Document Uploads</legend>
-            <form-control-tooltip helpText="One document (voided check or bank statement) is required for underwriting purposes. It needs to visibly show the name tied to the account and the account number. Various file formats such as PDF, DOC, DOCX, JPEG are accepted. Multiple files can be uploaded for each document category." />
-          </div>
-          <hr class="mt-2" />
-          <business-documents-on-file documents={this.existingDocuments} isLoading={this.isLoading} />
-          <bank-account-document-form-inputs
-            inputHandler={this.inputHandler}
-            errors={this.errors}
-            storeFiles={this.storeFiles}
-          />
-        </fieldset>
+        {this.viewMode !== 'plaid' && this.renderDocumentUploads()}
       </form>
     );
   }

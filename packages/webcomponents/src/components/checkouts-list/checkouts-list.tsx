@@ -23,6 +23,7 @@ export class CheckoutsList {
   @Prop() accountId!: string;
   @Prop() authToken!: string;
   @Prop() columns?: string = defaultColumnsKeys;
+  @Prop() subAccountId?: string;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
@@ -40,6 +41,7 @@ export class CheckoutsList {
 
   @Watch('accountId')
   @Watch('authToken')
+  @Watch('subAccountId')
   propChanged() {
     this.initializeGetData();
   }
@@ -50,14 +52,15 @@ export class CheckoutsList {
   }
 
   private initializeGetCheckouts() {
-    if (this.accountId && this.authToken) {
+    const accountToUse = this.subAccountId || this.accountId;
+    if (accountToUse && this.authToken) {
       this.getCheckouts = makeGetCheckouts({
-        accountId: this.accountId,
+        accountId: accountToUse,
         authToken: this.authToken,
         service: new CheckoutService()
       });
     } else {
-      this.errorMessage = 'Account ID and Auth Token are required';
+      this.errorMessage = 'Account ID/Sub Account ID and Auth Token are required';
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: this.errorMessage,
@@ -69,7 +72,7 @@ export class CheckoutsList {
   private initializeGetSubAccounts() {
     if (this.accountId && this.authToken) {
       this.getSubAccounts = makeGetSubAccounts({
-        accountId: this.accountId,
+        primaryAccountId: this.accountId,
         authToken: this.authToken,
         service: new SubAccountService()
       });

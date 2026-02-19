@@ -188,6 +188,8 @@ export class BusinessOwnersFormStep {
   private handleRepresentativeIsOwnerChange = (value: boolean) => {
     this.representativeIsOwner = value;
     if (this.representativeIsOwner) {
+      this.formLoading.emit(true);
+      this.isLoading = true;
       this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== '');
       this.patchBusiness({
         payload: {
@@ -197,6 +199,10 @@ export class BusinessOwnersFormStep {
           this.getData();
           this.newFormOpen = false;
         },
+        finally: () => {
+          this.isLoading = false;
+          this.formLoading.emit(false);
+        }
       });
     }
   }

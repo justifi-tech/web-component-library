@@ -20,6 +20,79 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 ## Props
 
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>countryCode</code></td>
+      <td><code>string</code></td>
+      <td><code>"US"</code></td>
+      <td>ISO country code for the payment</td>
+    </tr>
+    <tr>
+      <td><code>merchantIdentifier</code></td>
+      <td><code>string</code></td>
+      <td><code>"merchant.com.staging-justifi.checkout-dev"</code></td>
+      <td>Apple Pay merchant ID registered with Apple</td>
+    </tr>
+    <tr>
+      <td><code>merchantDisplayName</code></td>
+      <td><code>string</code></td>
+      <td><code>"JustiFi Checkout"</code></td>
+      <td>Display name shown in Apple Pay sheet</td>
+    </tr>
+    <tr>
+      <td><code>initiativeContext</code></td>
+      <td><code>string</code></td>
+      <td><code>"dev-checkout.justifi-staging.com"</code></td>
+      <td>Initiative context domain for Apple Pay</td>
+    </tr>
+    <tr>
+      <td><code>buttonType</code></td>
+      <td><code>ApplePayButtonType</code></td>
+      <td><code>PLAIN</code></td>
+      <td>Button label type (<code>PLAIN</code>, <code>BUY</code>, <code>SET_UP</code>, <code>DONATE</code>, <code>CHECK_OUT</code>, <code>BOOK</code>, <code>SUBSCRIBE</code>)</td>
+    </tr>
+    <tr>
+      <td><code>buttonStyle</code></td>
+      <td><code>ApplePayButtonStyle</code></td>
+      <td><code>BLACK</code></td>
+      <td>Button color style (<code>BLACK</code>, <code>WHITE</code>, <code>WHITE_OUTLINE</code>)</td>
+    </tr>
+    <tr>
+      <td><code>disabled</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Disable the Apple Pay button</td>
+    </tr>
+    <tr>
+      <td><code>showSkeleton</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Show loading skeleton while initializing</td>
+    </tr>
+    <tr>
+      <td><code>width</code></td>
+      <td><code>string</code></td>
+      <td><code>"100%"</code></td>
+      <td>Button width</td>
+    </tr>
+    <tr>
+      <td><code>height</code></td>
+      <td><code>string</code></td>
+      <td><code>"48px"</code></td>
+      <td>Button height</td>
+    </tr>
+  </tbody>
+</table>
+
 ## Events
 
 - `applePayStarted`

@@ -1,0 +1,88 @@
+import { Meta, Source } from '@storybook/blocks';
+import {
+  ComponentBox,
+  Banner,
+} from '../../../../utils/documentation-components';
+import { setUpMocks } from '../../../../utils/mockAllServices';
+
+{setUpMocks()}
+
+<Meta
+  title="Modular Checkout/Sub-components/Google Pay"
+  Components="justifi-google-pay"
+/>
+
+# Google Pay
+
+---
+
+Renders a Google Pay button for eligible devices/browsers and orchestrates the Google Pay flow. Designed to be used within `justifi-modular-checkout`.
+
+## Props
+
+<table>
+  <thead>
+    <tr>
+      <th>Prop</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>environment</code></td>
+      <td><code>"TEST" | "PRODUCTION"</code></td>
+      <td><code>"TEST"</code></td>
+      <td>Google Pay environment</td>
+    </tr>
+    <tr>
+      <td><code>merchantName</code></td>
+      <td><code>string</code></td>
+      <td><code>undefined</code></td>
+      <td>Optional merchant name for Google Pay UI</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+- `googlePayCompleted`
+- `googlePayCancelled`
+
+### Event detail shapes
+
+- `googlePayCompleted`
+  - Detail (success): `{ success: true; paymentMethodId: string; cardNetwork: string; cardDetails: string }`
+  - Detail (error): `{ success: false; error: { code: string; message: string } }`
+- `googlePayCancelled`
+  - Detail: none
+
+### Listening for events
+
+```ts
+const googlePay = document.querySelector('justifi-google-pay');
+
+googlePay.addEventListener(
+  'googlePayCompleted',
+  (event: CustomEvent<{ success: boolean; paymentMethodId?: string; error?: { code: string; message: string } }>) => {
+    if (event.detail.success) {
+      console.log('Google Pay tokenized', event.detail.paymentMethodId);
+    } else {
+      console.error('Google Pay error', event.detail.error);
+    }
+  }
+);
+
+googlePay.addEventListener('googlePayCancelled', () => {
+  console.log('User cancelled Google Pay');
+});
+```
+
+## Supported Browsers
+
+- Chrome (Desktop & Android)
+- Safari (iOS 16+)
+- Other browsers with Google Pay support
+
+> **Note:** Browser support for Google Pay is determined by Google's implementation and may vary based on device capabilities.

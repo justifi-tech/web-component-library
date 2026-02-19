@@ -1,5 +1,66 @@
 ### Changelog
 
+## 6.10.4
+
+### Patch Changes
+
+- - Added new button variants for success, danger, warning, info, light, and dark.
+  - Updated button component to support outline variants.
+  - Replaced Plaid logo image with an SVG for better scalability and performance.
+  - Adjusted button classes in payout details for consistency with new styles.
+  - Fixed bank account form broken display by replacing conflicting boolean states with a single viewMode enum
+
+## 6.10.3
+
+### Patch Changes
+
+- Fix applePayCancelled event was not being emitted
+
+## 6.10.2
+
+### Patch Changes
+
+- bbb495f: Toggle manual bank account input and make some fields shorter in the form.
+
+## 6.10.1
+
+### Patch Changes
+
+- 3406f47: Add messages for when the business is already provisioned and for when the onboarding is complete.
+- b37b70b: feat: add duplicate version detection for webcomponents
+
+## 6.10.0
+
+### Minor Changes
+
+- 47b454f: Add iframe-based Google Pay component for modular checkout
+
+### Patch Changes
+
+- d69a93c: Fix payload of Payments provisioning where an empty tax_id was overriding the existing ID.
+- 3ef304c: Adds the Status filter to Payouts List
+- 8c2e3d1: Add JWT token validation when initializating the Payment Provisioning form
+- 05fb036: Add Payment Mode, Checkout ID and Account Holder filters to Payments List
+- ca0e302: Allow backend validation messages to also be shown on field errors
+- 2a5cbbe: Replaces the library jose to use native functions instead.
+
+## 6.9.0
+
+### Minor Changes
+
+- aea215b: Add optional subAccountId prop to checkouts-list component
+
+### Patch Changes
+
+- 79c1fac: Fix missing CSS ::part markup in dispute notification component for underReview, won, and lost states
+- aea215b: Add Created After and Created Before date filters to terminals list
+
+## 6.8.1
+
+### Patch Changes
+
+- 85a8312: Add translations for new payment transaction types: processing_fee, platform_fee, processing_fee_return, and platform_fee_return
+
 ## 6.8.0
 
 ### Minor Changes

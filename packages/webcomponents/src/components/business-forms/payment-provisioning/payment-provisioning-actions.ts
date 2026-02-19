@@ -45,6 +45,7 @@ export const makePatchBusiness = ({ authToken, businessId, service }) =>
           error: responseError,
           code,
           severity: ComponentErrorSeverity.ERROR,
+          rawError: response.error,
         });
       }
     } catch (error) {
@@ -53,6 +54,7 @@ export const makePatchBusiness = ({ authToken, businessId, service }) =>
         error: error.message || error,
         code,
         severity: ComponentErrorSeverity.ERROR,
+        rawError: error,
       });
     } finally {
       return final()

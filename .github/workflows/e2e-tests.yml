@@ -1,0 +1,120 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: CI
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Load environment variables
+        uses: ./.github/actions/load-env
+        with:
+          vars-json: "${{ toJSON(vars) }}"
+          secrets-json: '{"CLIENT_ID":"${{ secrets.CLIENT_ID }}","CLIENT_SECRET":"${{ secrets.CLIENT_SECRET }}"}'
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg IFRAME_ORIGIN \
+            --build-arg PROXY_API_ORIGIN \
+            --build-arg API_ORIGIN \
+            -t component-examples:test .
+
+      - name: Start component server
+        run: |
+          docker run -d \
+            --name component-examples \
+            -p 3000:3000 \
+            -e PORT=3000 \
+            -e API_ORIGIN \
+            -e CLIENT_ID \
+            -e CLIENT_SECRET \
+            -e SUB_ACCOUNT_ID \
+            -e PAYMENT_METHOD_GROUP_ID \
+            -e DISPUTE_ID \
+            -e BUSINESS_ID \
+            -e PAYMENT_ID \
+            -e PAYOUT_ID \
+            component-examples:test
+
+          echo "Container started, waiting for it to be ready..."
+
+      - name: Wait for component server
+        run: |
+          echo "Polling http://localhost:3000 until ready..."
+          max_attempts=60
+          attempt=0
+
+          while [ $attempt -lt $max_attempts ]; do
+            if curl -f http://localhost:3000 > /dev/null 2>&1; then
+              echo "Component server is ready!"
+              exit 0
+            fi
+
+            echo "Attempt $((attempt + 1))/$max_attempts - Service not ready yet, waiting..."
+            sleep 2
+            attempt=$((attempt + 1))
+          done
+
+          echo "Service failed to start within timeout"
+          docker logs component-examples
+          exit 1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'pnpm'
+
+      - name: Install test dependencies
+        run: pnpm install --frozen-lockfile --filter @repo/component-examples
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('apps/component-examples/package.json') }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter @repo/component-examples exec playwright install chromium --with-deps
+
+      - name: Install Playwright system deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm --filter @repo/component-examples exec playwright install-deps chromium
+
+      - name: Run E2E tests
+        run: pnpm test:e2e
+        env:
+          CI: true
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/component-examples/playwright-report/
+          retention-days: 7
+
+      - name: Stop and remove container
+        if: always()
+        run: |
+          docker stop component-examples || true
+          docker rm component-examples || true
