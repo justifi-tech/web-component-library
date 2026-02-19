@@ -42,6 +42,7 @@
     "test:file": "stencil test --spec --watch --"
   },
   "dependencies": {
+    "@justifi/types": "workspace:*",
     "@popperjs/core": "^2.11.8",
     "@stencil/core": "4.38.3",
     "@stencil/store": "^2.0.8",

@@ -25,6 +25,7 @@ This Turborepo includes the following packages and applications:
 **Publishable packages:**
 - `packages/webcomponents`: JustiFi component library (`@justifi/webcomponents`)
 - `docs/`: Documentation package for external consumption (`@justifi/webcomponents-docs`) - lives at repository root
+- `packages/types`: Shared TypeScript types and entity classes
 
 **Internal apps (not published):**
 - `apps/component-examples`: Simple component example files for local testing

@@ -170,6 +170,9 @@ importers:
 
   packages/webcomponents:
     dependencies:
+      '@justifi/types':
+        specifier: workspace:*
+        version: link:../types
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
