@@ -1,7 +1,6 @@
 {
   "name": "@justifi/types",
   "version": "0.0.1",
-  "public": true,
   "description": "JustiFi API Types, Interfaces, and Entity Classes",
   "type": "module",
   "main": "./dist/index.cjs",
