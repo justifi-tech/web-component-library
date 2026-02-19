@@ -207,6 +207,7 @@ export class Payment implements IPayment {
   public amount_disputed: number;
   public amount_refundable: number;
   public amount_refunded: number;
+  public amount_returned?: number;
   public balance: number;
   public captured: boolean;
   public capture_strategy: CaptureStrategy;
@@ -241,6 +242,7 @@ export class Payment implements IPayment {
     this.amount_disputed = payment.amount_disputed;
     this.amount_refundable = payment.amount_refundable;
     this.amount_refunded = payment.amount_refunded;
+    this.amount_returned = payment.amount_returned;
     this.balance = payment.balance;
     this.captured = payment.captured;
     this.capture_strategy = payment.capture_strategy;
