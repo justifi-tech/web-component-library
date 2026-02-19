@@ -35,34 +35,3 @@ export interface ITerminal {
 export enum TerminalProviders {
   verifone = 'verifone',
 }
-
-export class Terminal implements ITerminal {
-  public id: string;
-  public status?: ITerminalStatus;
-  public account_id: string;
-  public platform_account_id: string;
-  public provider?: TerminalProviders;
-  public provider_id: string;
-  public provider_serial_number: string;
-  public created_at: string;
-  public updated_at: string;
-  public verified_at: string;
-  public nickname: string;
-  public sub_account_name?: string;
-  public model_name?: TerminalModelName;
-
-  constructor(data: ITerminal) {
-    this.id = data.id || '';
-    this.status = data.status;
-    this.account_id = data.account_id || '';
-    this.platform_account_id = data.platform_account_id || '';
-    this.provider = data.provider || undefined;
-    this.provider_id = data.provider_id || '';
-    this.provider_serial_number = data.provider_serial_number || '';
-    this.created_at = data.created_at || '';
-    this.updated_at = data.updated_at || '';
-    this.verified_at = data.verified_at || '';
-    this.nickname = data.nickname || '';
-    this.model_name = data.model_name || undefined;
-  }
-}

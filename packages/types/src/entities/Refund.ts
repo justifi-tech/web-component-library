@@ -16,20 +16,6 @@ export interface IRefundPayload {
   metadata?: unknown;
 }
 
-export class RefundPayload implements IRefundPayload {
-  public amount?: number;
-  public reason?: RefundReasons;
-  public description?: string;
-  public metadata?: unknown;
-
-  constructor(refundPayload: IRefundPayload) {
-    this.amount = refundPayload.amount;
-    this.reason = refundPayload.reason;
-    this.description = refundPayload.description;
-    this.metadata = refundPayload.metadata;
-  }
-}
-
 export interface IRefund {
   amount: number;
   created_at: string;
@@ -40,28 +26,4 @@ export interface IRefund {
   reason: RefundReasons | null;
   status: RefundStatuses;
   updated_at: string;
-}
-
-export class Refund implements IRefund {
-  public amount: number;
-  public created_at: string;
-  public description: string;
-  public id: string;
-  public metadata: object | null;
-  public payment_id: string;
-  public reason: RefundReasons | null;
-  public status: RefundStatuses;
-  public updated_at: string;
-
-  constructor(refund: IRefund) {
-    this.amount = refund.amount;
-    this.created_at = refund.created_at;
-    this.description = refund.description;
-    this.id = refund.id;
-    this.metadata = refund.metadata;
-    this.payment_id = refund.payment_id;
-    this.reason = refund.reason;
-    this.status = refund.status;
-    this.updated_at = refund.updated_at;
-  }
 }

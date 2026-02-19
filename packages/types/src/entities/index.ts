@@ -1,4 +1,4 @@
-export { type IBankAccount, BankAccount } from './BankAccount';
+export { type IBankAccount } from './BankAccount';
 
 export {
   type ISavedPaymentMethod,
@@ -12,9 +12,7 @@ export {
   RefundStatuses,
   RefundReasons,
   type IRefundPayload,
-  RefundPayload,
   type IRefund,
-  Refund,
 } from './Refund';
 
 export {
@@ -22,15 +20,12 @@ export {
   AccountStatus,
   type RelatedAccounts,
   type ISubAccount,
-  SubAccount,
 } from './SubAccount';
 
 export {
   DisputeStatus,
   type IDispute,
-  Dispute,
   type IDisputeResponse,
-  DisputeResponse,
 } from './Dispute';
 
 export {
@@ -40,23 +35,18 @@ export {
   PaymentStatuses,
   CurrencyTypes,
   type IPaymentMethodData,
-  PaymentMethodData,
   type CardBrand,
   type IPaymentBankAccount,
-  PaymentBankAccount,
   type IPaymentCard,
-  PaymentCard,
   type IPaymentDispute,
   type IApplicationFee,
   type IPayment,
-  Payment,
   type PaymentsQueryParams,
 } from './Payment';
 
 export {
   PaymentBalanceTxnType,
   type IPaymentBalanceTransaction,
-  PaymentBalanceTransaction,
 } from './PaymentBalanceTransaction';
 
 export {
@@ -64,23 +54,19 @@ export {
   PayoutStatuses,
   PayoutStatusesSafeNames,
   type IPayout,
-  Payout,
 } from './Payout';
 
 export {
   PayoutBalanceTransactionType,
   type IPayoutBalanceTransaction,
-  PayoutBalanceTransaction,
 } from './PayoutBalanceTransaction';
 
 export {
   PAYMENT_METHOD_TYPES,
   type IBnpl,
   type ICompletion,
-  Completion,
   type ICheckoutPaymentSettings,
   type ICheckout,
-  Checkout,
   ICheckoutPaymentMode,
   ICheckoutPaymentModeParam,
   ICheckoutStatus,
@@ -98,7 +84,6 @@ export {
   ITerminalStatus,
   type ITerminal,
   TerminalProviders,
-  Terminal,
 } from './Terminal';
 
 export {
@@ -106,7 +91,6 @@ export {
   type ITerminalModel,
   type ITerminalModelApiResponse,
   type ITerminalModelsApiResponse,
-  TerminalModel,
 } from './TerminalModel';
 
 export {
@@ -116,5 +100,4 @@ export {
   type OrderedTerminal,
   type TerminalOrderItem,
   type ITerminalOrder,
-  TerminalOrder,
 } from './TerminalOrder';

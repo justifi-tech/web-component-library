@@ -22,44 +22,33 @@ export {
   type GrossVolumeReport,
   type IQuote,
 
-  // Business types
+  // Business types - interfaces and enums only (classes have local versions)
   type IAddress,
-  Address,
   type IDocument,
   type DocumentRecordData,
   EntityDocumentType,
   EntityDocumentStatus,
   type Identity,
-  Owner,
-  Representative,
   type IBusiness,
-  Business,
   BusinessClassification,
   type IAdditionalQuestions,
-  AdditionalQuestions,
   type ProductCategories,
   type ICoreBusinessInfo,
-  CoreBusinessInfo,
   BusinessFormServerErrors,
 
-  // Entity types - interfaces and enums only (classes have local versions with formatCurrency helper)
+  // Entity types - interfaces and enums only (classes have local versions)
   type IDispute,
-  Dispute,
   DisputeStatus,
   type ISubAccount,
-  SubAccount,
   AccountType,
   AccountStatus,
   type ITerminalModel,
-  TerminalModel,
   TerminalModelName,
   type ITerminal,
-  Terminal,
   TerminalProviders,
   ITerminalStatus,
   TerminalsQueryParams,
   type ITerminalOrder,
-  TerminalOrder,
   TerminalOrderStatus,
   TerminalOrderType,
   TerminalOrderQueryParams,
@@ -99,6 +88,10 @@ export * from './PaymentBalanceTransaction';
 export * from './PayoutBalanceTransaction';
 export * from './Refund';
 export * from './BankAccount';
+export * from './SubAccount';
+export * from './Terminal';
+export * from './TerminalModel';
+export * from './TerminalOrder';
 
 // Document exports - EntityDocument classes stay here (use browser APIs)
 export {
