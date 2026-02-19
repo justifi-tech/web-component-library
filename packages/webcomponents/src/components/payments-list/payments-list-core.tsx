@@ -1,6 +1,9 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payment, pagingDefaults } from '../../api';
-import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { Payment } from '@api/Payment';
+import { PagingInfo, pagingDefaults } from '@api/Pagination';
+import { TableEmptyState } from '@ui-components/table/table-empty-state';
+import { TableErrorState } from '@ui-components/table/table-error-state';
+import { TableLoadingState } from '@ui-components/table/table-loading-state';
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './payments-list-params-state';
@@ -15,7 +18,7 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-} from '../../ui-components';
+} from '@ui-components/table/table';
 
 @Component({
   tag: 'payments-list-core'

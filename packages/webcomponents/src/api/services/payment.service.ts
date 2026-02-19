@@ -1,4 +1,6 @@
-import { Api, IApiResponseCollection, IApiResponse, IPayment, IPaymentBalanceTransaction } from '..';
+import { Api, IApiResponseCollection, IApiResponse } from '../Api';
+import { type IPayment } from '../Payment';
+import { type IPaymentBalanceTransaction } from '../PaymentBalanceTransaction';
 
 const api = Api();
 

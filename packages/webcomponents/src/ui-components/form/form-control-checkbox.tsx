@@ -7,7 +7,8 @@ import {
   EventEmitter,
   State,
 } from '@stencil/core';
-import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
+import { FormControlHelpText } from '@ui-components/form/form-helpers/form-control-help-text';
+import { FormControlErrorText } from '@ui-components/form/form-helpers/form-control-error-text';
 import { inputCheckbox, inputCheckboxChecked, inputCheckboxCheckedFocused, inputCheckboxFocused, inputCheckboxInvalid, label } from '../../styles/parts';
 
 @Component({

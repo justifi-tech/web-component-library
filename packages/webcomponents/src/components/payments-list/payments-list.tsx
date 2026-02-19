@@ -4,7 +4,7 @@ import { makeGetPayments } from '../../actions/payment/get-payments';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { defaultColumnsKeys } from './payments-table';
 import { ComponentErrorEvent } from '@justifi/types';
 

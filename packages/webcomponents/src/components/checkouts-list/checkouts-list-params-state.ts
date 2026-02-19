@@ -1,5 +1,5 @@
 import { createStore } from '@stencil/store';
-import { CheckoutsQueryParams } from '../../api';
+import { CheckoutsQueryParams } from '@api/Checkout';
 
 const filterParamsInitialState = {};
 const propsParamsInitialState = {};

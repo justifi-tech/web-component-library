@@ -1,11 +1,13 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { Table } from '../../utils/table';
-import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
-import { ComponentClickEvent, ComponentErrorEvent, pagingDefaults, PagingInfo } from '../../api';
+import { TableEmptyState } from '@ui-components/table/table-empty-state';
+import { TableErrorState } from '@ui-components/table/table-error-state';
+import { TableLoadingState } from '@ui-components/table/table-loading-state';
+import { ComponentClickEvent, ComponentErrorEvent, TableClickActions } from '@justifi/types';
+import { pagingDefaults, PagingInfo } from '@api/Pagination';
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
-import { TerminalOrder } from '../../api';
+import { TerminalOrder } from '@api/TerminalOrder';
 import { getRequestParams, onQueryParamsChange } from './terminal-orders-list-params-state';
-import { TableClickActions } from '@justifi/types';
 import {
   TableWrapper,
   TableComponent,
@@ -16,7 +18,7 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-} from '../../ui-components';
+} from '@ui-components/table/table';
 
 @Component({
   tag: 'terminal-orders-list-core',

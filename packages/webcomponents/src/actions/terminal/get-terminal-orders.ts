@@ -1,4 +1,4 @@
-import { TerminalOrder } from '../../api';
+import { TerminalOrder } from '@api/TerminalOrder';
 import { ComponentErrorSeverity } from '@justifi/types';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 

@@ -9,7 +9,8 @@ import {
   Watch,
   State,
 } from '@stencil/core';
-import { FormControlErrorText, FormControlHelpText } from '../../ui-components';
+import { FormControlErrorText } from '@ui-components/form/form-helpers/form-control-error-text';
+import { FormControlHelpText } from '@ui-components/form/form-helpers/form-control-help-text';
 import { input, inputFocused, inputInvalid, inputInvalidAndFocused, label } from '../../styles/parts';
 
 @Component({

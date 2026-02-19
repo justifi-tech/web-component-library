@@ -2,7 +2,7 @@ import { Component, h } from "@stencil/core";
 import { text } from "../../../styles/parts";
 import { formatCurrency } from "../../../utils/utils";
 import { checkoutStore } from "../../../store/checkout.store";
-import { StyledHost } from "../../../ui-components";
+import { StyledHost } from "@ui-components/styled-host/styled-host";
 
 @Component({
   tag: 'justifi-checkout-summary',

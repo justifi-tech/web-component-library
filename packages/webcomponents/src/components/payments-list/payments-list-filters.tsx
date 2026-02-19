@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { debounce } from 'lodash';
 import { filterParams, propsParams, clearParams } from './payments-list-params-state';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
 import {
   paymentsListFilterMenu,

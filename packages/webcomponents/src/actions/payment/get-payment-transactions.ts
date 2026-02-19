@@ -1,4 +1,4 @@
-import { PaymentBalanceTransaction } from '../../api';
+import { PaymentBalanceTransaction } from '@api/PaymentBalanceTransaction';
 import { ComponentErrorSeverity } from '@justifi/types';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 

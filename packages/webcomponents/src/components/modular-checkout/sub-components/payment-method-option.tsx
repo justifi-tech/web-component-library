@@ -1,6 +1,6 @@
 import { Component, h, Prop } from "@stencil/core";
 import { radioListItem } from "../../../styles/parts";
-import { StyledHost } from "../../../ui-components";
+import { StyledHost } from "@ui-components/styled-host/styled-host";
 
 @Component({
   tag: 'payment-method-option',

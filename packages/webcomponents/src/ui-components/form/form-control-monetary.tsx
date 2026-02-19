@@ -8,7 +8,8 @@ import {
   Watch,
   State,
 } from '@stencil/core';
-import { FormControlErrorText, FormControlHelpText } from '..';
+import { FormControlErrorText } from './form-helpers/form-control-error-text';
+import { FormControlHelpText } from './form-helpers/form-control-help-text';
 import { input, inputDisabled, inputFocused, inputInvalid, label, inputAdornment } from '../../styles/parts';
 import { formatCurrency } from '../../utils/utils';
 

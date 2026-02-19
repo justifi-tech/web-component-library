@@ -5,7 +5,8 @@ import { newSpecPage } from '@stencil/core/testing';
 import { PaymentsListCore } from '../payments-list-core';
 import { PaginationMenu } from '../../../ui-components/pagination-menu/pagination-menu';
 import mockSuccessResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
-import { IApiResponseCollection, IPayment } from '../../../api';
+import type { IApiResponseCollection } from '@api/Api';
+import type { IPayment } from '@api/Payment';
 import { makeGetPayments } from '../../../actions/payment/get-payments';
 import { defaultColumnsKeys } from '../payments-table';
 

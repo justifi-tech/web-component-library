@@ -1,11 +1,14 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, Payout, SubAccount, pagingDefaults } from '../../api';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
-import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { Payout } from '@api/Payout';
+import { PagingInfo, pagingDefaults } from '@api/Pagination';
+import { SubAccount } from '@api/SubAccount';
+import { ComponentErrorCodes, ComponentErrorSeverity, ComponentClickEvent, ComponentErrorEvent, TableClickActions } from '@justifi/types';
+import { TableEmptyState } from '@ui-components/table/table-empty-state';
+import { TableErrorState } from '@ui-components/table/table-error-state';
+import { TableLoadingState } from '@ui-components/table/table-loading-state';
 import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './payouts-list-params-state';
-import { ComponentClickEvent, ComponentErrorEvent, TableClickActions } from '@justifi/types';
 import {
   TableWrapper,
   TableComponent,
@@ -16,7 +19,7 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-} from '../../ui-components';
+} from '@ui-components/table/table';
 
 @Component({
   tag: 'payouts-list-core',

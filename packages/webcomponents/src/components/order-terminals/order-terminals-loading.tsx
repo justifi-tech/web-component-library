@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { Skeleton } from '../../ui-components';
+import { Skeleton } from '@ui-components/skeleton';
 
 const FormBlock = () => (
   <div class="row gap-3">

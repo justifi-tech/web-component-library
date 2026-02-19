@@ -1,9 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Payout } from '../../api';
+import { Payout } from '@api/Payout';
 import { capitalizeFirstLetter, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
 import { ComponentErrorEvent, RecordClickEvent } from '@justifi/types';
-import { Button, StyledHost } from '../../ui-components';
+import { Button } from '@ui-components/button';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import PayoutDetailsLoading from './payout-details-loading';
 import { Badge, BadgeVariant } from '../../ui-components/badge/badge';

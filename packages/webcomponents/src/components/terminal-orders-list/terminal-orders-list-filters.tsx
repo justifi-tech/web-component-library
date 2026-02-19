@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { filterParams, propsParams, clearParams } from './terminal-orders-list-params-state';
-import { StyledHost } from '../../ui-components';
-import { TerminalOrderStatus, TerminalOrderType } from '../../api';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
+import { TerminalOrderStatus, TerminalOrderType } from '@api/TerminalOrder';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
 import {
   terminalOrdersListFilterMenu,

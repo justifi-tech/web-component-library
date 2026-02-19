@@ -1,4 +1,5 @@
-import { Api, IApiResponse, GrossVolumeReport } from '..';
+import { Api, IApiResponse } from '../Api';
+import { type GrossVolumeReport } from '../GrossVolume';
 
 const api = Api();
 export class ReportsService {

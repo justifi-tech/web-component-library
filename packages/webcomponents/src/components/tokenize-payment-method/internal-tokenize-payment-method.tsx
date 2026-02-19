@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Listen, Element } from '@stencil/core';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from '../../components';
@@ -9,7 +9,7 @@ import {
   ComponentErrorEvent,
   ComponentErrorCodes,
   ComponentErrorSeverity,
-} from '../../api';
+} from '@justifi/types';
 import { checkoutStore } from '../../store/checkout.store';
 import { PAYMENT_METHODS } from '@justifi/types';
 import type { SelectedPaymentMethod } from '@justifi/types';

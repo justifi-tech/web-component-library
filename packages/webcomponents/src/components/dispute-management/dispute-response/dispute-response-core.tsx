@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, State, Prop } from "@stencil/core";
-import { IApiResponse } from "../../../api";
+import type { IApiResponse } from "@api/Api";
 import { IDispute } from "../../../api/Dispute";
 import { DisputeEvidenceDocument } from "../../../api/DisputeEvidenceDocument";
 import {

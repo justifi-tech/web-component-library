@@ -6,7 +6,7 @@ import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { defaultColumnsKeys } from './checkouts-table';
 import { ComponentErrorEvent } from '@justifi/types';
 

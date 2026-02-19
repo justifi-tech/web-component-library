@@ -1,4 +1,5 @@
-import { Api, IApiResponseCollection, ITerminalOrder } from '..';
+import { Api, IApiResponseCollection } from '../Api';
+import { type ITerminalOrder } from '../TerminalOrder';
 
 const api = Api();
 

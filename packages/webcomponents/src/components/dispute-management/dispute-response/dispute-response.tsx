@@ -1,9 +1,9 @@
 import { Component, h, Watch, State, Prop, Event, EventEmitter } from "@stencil/core";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
-import { StyledHost } from "../../../ui-components";
+import { StyledHost } from "@ui-components/styled-host/styled-host";
 import { makeCreateDisputeEvidence, makeUpdateDisputeResponse, makeSubmitDisputeResponse } from "./dispute-response-actions";
 import { IDispute } from "../../../components";
-import { IApiResponse } from "../../../api";
+import type { IApiResponse } from "@api/Api";
 import JustifiAnalytics from "../../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { DisputeService } from "../../../api/services/dispute.service";

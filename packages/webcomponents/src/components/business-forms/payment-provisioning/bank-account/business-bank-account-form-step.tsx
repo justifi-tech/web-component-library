@@ -1,14 +1,15 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentErrorEvent, ComponentErrorCodes, ComponentErrorSeverity, ComponentFormStepCompleteEvent, BankAccount, IBankAccount, EntityDocument, EntityDocumentStorage, FileSelectEvent } from '../../../../api';
+import { ComponentErrorEvent, ComponentErrorCodes, ComponentErrorSeverity, ComponentFormStepCompleteEvent, BusinessFormStep } from '@justifi/types';
+import { BankAccount, IBankAccount } from '../../../../api/BankAccount';
+import { EntityDocument, EntityDocumentStorage, FileSelectEvent } from '../../../../api/Document';
 import { makeGetBusiness, makePostBankAccount, makePostDocumentRecord } from '../payment-provisioning-actions';
 import { BusinessService, BusinessBankAccountService, DocumentRecordService } from '../../../../api/services/business.service';
 import { CountryCode } from '../../../../utils/country-codes';
 import { bankAccountSchemaByCountry } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStep } from '@justifi/types';
 import { heading2, buttonSecondary, buttonLink } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { Button } from '../../../../ui-components';
+import { Button } from '@ui-components/button';
 
 @Component({
   tag: 'justifi-business-bank-account-form-step'

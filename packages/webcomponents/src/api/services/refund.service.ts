@@ -1,4 +1,5 @@
-import { Api, IApiResponse, IRefund, RefundPayload } from '..';
+import { Api, IApiResponse } from '../Api';
+import { type IRefund, RefundPayload } from '../Refund';
 
 const api = Api();
 

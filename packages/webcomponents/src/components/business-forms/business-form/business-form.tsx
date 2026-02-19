@@ -1,10 +1,12 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { businessFormSchema } from '../schemas/business-form-schema';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Business';
 import JustifiAnalytics from '../../../api/Analytics';
-import { Button, Header1, StyledHost } from '../../../ui-components';
+import { Button } from '@ui-components/button';
+import { Header1 } from '@ui-components/headers/header-1';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { CountryCode } from '../../../utils/country-codes';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { BusinessFormLoading } from './business-form-loading';

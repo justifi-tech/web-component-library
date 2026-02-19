@@ -6,7 +6,7 @@ import { CountryCode } from '../../../../utils/country-codes';
 import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from '../../schemas/business-core-info-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
-import { businessClassificationOptions } from '../../utils';
+import { businessClassificationOptions } from '../../utils/business-form-options';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';

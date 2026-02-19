@@ -3,7 +3,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '@justifi/types';
-import { Button } from '../../../../ui-components';
+import { Button } from '@ui-components/button';
 import { heading2, alert } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormClickActions, BusinessFormStep } from '@justifi/types';

@@ -1,5 +1,6 @@
-import { CardBrand, ICheckoutPaymentMethod } from '../../api';
+import { ICheckoutPaymentMethod } from '@api/Checkout';
 import {
+  type CheckoutCardBrand,
   PAYMENT_METHODS,
   type SavedPaymentMethod,
 } from '@justifi/types';
@@ -31,7 +32,7 @@ export class PaymentMethod implements SavedPaymentMethod {
   status: string;
   invalid_reason: null;
   name: string;
-  brand: CardBrand;
+  brand: CheckoutCardBrand;
   acct_last_four: string;
   account_type: string;
   month: string;
@@ -46,7 +47,7 @@ export class PaymentMethod implements SavedPaymentMethod {
     this.status = paymentMethod.status;
     this.invalid_reason = paymentMethod.invalid_reason;
     this.name = paymentMethod.name;
-    this.brand = paymentMethod.brand as CardBrand;
+    this.brand = paymentMethod.brand as CheckoutCardBrand;
     this.acct_last_four = paymentMethod.acct_last_four;
     this.account_type = paymentMethod.account_type;
     this.month = paymentMethod.month;

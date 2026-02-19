@@ -1,2 +1,2 @@
 export * from './components';
-export type { ICheckoutPaymentMethod } from './api';
+export type { ICheckoutPaymentMethod } from '@api/Checkout';

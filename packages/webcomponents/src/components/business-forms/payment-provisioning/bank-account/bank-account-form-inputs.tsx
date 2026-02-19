@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { bankAccountTypeOptions } from '../../utils';
+import { bankAccountTypeOptions } from '../../utils/business-form-options';
 import { numberOnlyHandler } from '../../../../ui-components/form/utils';
 
 @Component({

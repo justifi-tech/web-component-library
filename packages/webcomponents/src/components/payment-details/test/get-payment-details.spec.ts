@@ -1,4 +1,6 @@
-import { IApiResponse, IPayment, Payment } from '../../../api';
+import type { IApiResponse } from '@api/Api';
+import { Payment } from '@api/Payment';
+import type { IPayment } from '@api/Payment';
 import { PaymentService } from '../../../api/services/payment.service';
 import { makeGetPaymentDetails } from '../../../actions/payment/get-payment-details';
 import mockResponse from '../../../../../../mockData/mockPaymentDetailSuccess.json';

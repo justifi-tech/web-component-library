@@ -1,8 +1,8 @@
 import { Component, h, Prop } from '@stencil/core';
 import { debounce } from 'lodash';
-import { ICheckoutPaymentModeParam, ICheckoutStatus } from '../../api';
+import { ICheckoutPaymentModeParam, ICheckoutStatus } from '@api/Checkout';
 import { filterParams, propsParams, clearParams } from './checkouts-list-params-state';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
 import {
   checkoutsListFilterMenu,

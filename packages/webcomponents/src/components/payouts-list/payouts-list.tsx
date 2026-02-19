@@ -6,7 +6,7 @@ import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from '../../actions/payout/get-payouts';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
 import { SubAccountService } from '../../api/services/subaccounts.service';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { defaultColumnsKeys } from './payouts-table';
 import { ComponentErrorEvent } from '@justifi/types';
 import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';

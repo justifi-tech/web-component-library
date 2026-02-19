@@ -1,7 +1,7 @@
 import { Component, h, Method, Event, EventEmitter, State, Watch } from '@stencil/core';
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { checkoutStore, onChange } from '../../../store/checkout.store';
-import { StyledHost } from '../../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import plaidLogoSvg from '../../../assets/plaid-icon.svg';
 import { PlaidService } from '../../../api/services/plaid.service';
 import { ComponentErrorSeverity, PAYMENT_METHODS, PlaidErrorCodes, PlaidError } from '@justifi/types';

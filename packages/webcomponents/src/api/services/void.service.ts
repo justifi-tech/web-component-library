@@ -1,4 +1,5 @@
-import { Api, IApiResponse, IPayment } from '..';
+import { Api, IApiResponse } from '../Api';
+import { type IPayment } from '../Payment';
 
 const api = Api();
 

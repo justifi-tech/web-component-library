@@ -1,7 +1,9 @@
 import { CheckoutService } from '../../../api/services/checkout.service';
 import { makeGetCheckouts } from '../../../actions/checkout/get-checkouts';
 import mockResponse from '../../../../../../mockData/mockGetCheckoutsListSuccess.json';
-import { IApiResponseCollection, ICheckout, Checkout } from '../../../api';
+import type { IApiResponseCollection } from '@api/Api';
+import { Checkout } from '@api/Checkout';
+import type { ICheckout } from '@api/Checkout';
 
 // Mock the CheckoutService class
 jest.mock('../../../api/services/checkout.service');

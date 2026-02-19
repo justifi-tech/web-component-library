@@ -1,6 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Checkout, PagingInfo, SubAccount, pagingDefaults } from '../../api';
-import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { Checkout } from '@api/Checkout';
+import { PagingInfo, pagingDefaults } from '@api/Pagination';
+import { SubAccount } from '@api/SubAccount';
+import { TableEmptyState } from '@ui-components/table/table-empty-state';
+import { TableErrorState } from '@ui-components/table/table-error-state';
+import { TableLoadingState } from '@ui-components/table/table-loading-state';
 import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './checkouts-list-params-state';
@@ -15,7 +19,7 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-} from '../../ui-components';
+} from '@ui-components/table/table';
 
 @Component({
   tag: 'checkouts-list-core'

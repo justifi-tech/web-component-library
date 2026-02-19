@@ -15,7 +15,7 @@ import {
   ApplePayMerchantCapability,
 } from "../../../api/ApplePay";
 import { ApplePayButtonType, ApplePayButtonStyle, IApplePayToken } from "@justifi/types";
-import { StyledHost } from "../../../ui-components";
+import { StyledHost } from "@ui-components/styled-host/styled-host";
 import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
 import { checkoutStore } from "../../../store/checkout.store";

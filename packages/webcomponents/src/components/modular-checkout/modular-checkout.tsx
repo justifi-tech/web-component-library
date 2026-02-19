@@ -13,13 +13,9 @@ import type { CheckoutState, CheckoutChangedEventDetail, SelectedPaymentMethod, 
 import { PAYMENT_MODE, PAYMENT_METHODS } from "@justifi/types";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
-import {
-  ComponentErrorCodes,
-  ComponentErrorMessages,
-  ComponentErrorSeverity,
-  ICheckout,
-  ICheckoutStatus,
-} from "../../api";
+import { ComponentErrorCodes, ComponentErrorSeverity } from "@justifi/types";
+import { ComponentErrorMessages } from "@api/ComponentError";
+import { ICheckout, ICheckoutStatus } from "@api/Checkout";
 import {
   makeCheckoutComplete,
   makeGetCheckout,

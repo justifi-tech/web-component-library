@@ -1,5 +1,6 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { Button, StyledHost } from '../../../../ui-components';
+import { Button } from '@ui-components/button';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { PlaidService } from '../../../../api/services/plaid.service';
 import { ComponentErrorSeverity, PlaidErrorCodes, PlaidError } from '@justifi/types';
 import {

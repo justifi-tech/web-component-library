@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { Business } from '../../api/Business';
 import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentErrorEvent } from '@justifi/types';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { BusinessDetailsLoading } from './business-details-loading';
 
 enum RENDER_STATES {

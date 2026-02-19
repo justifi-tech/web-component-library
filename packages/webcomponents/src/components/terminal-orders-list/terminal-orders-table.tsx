@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
 import { convertToLocal } from '../../utils/utils';
-import { TerminalOrder, TerminalOrderType } from '../../api';
+import { TerminalOrder, TerminalOrderType } from '@api/TerminalOrder';
 import { MapTerminalOrderStatusToBadge } from './terminal-order-status';
 
 export const defaultColumnsKeys = 'created_at,updated_at,order_status,quantity';

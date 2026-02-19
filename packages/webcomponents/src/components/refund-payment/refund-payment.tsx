@@ -8,9 +8,13 @@ import {
   Method
 } from '@stencil/core';
 import RefundPaymentSchema from './refund-payment-schema';
-import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent, IApiResponse, IRefund, IRefundPayload, IPayment, Payment, RefundPayload } from '../../api';
+import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentSubmitEvent } from '@justifi/types';
+import type { IApiResponse } from '@api/Api';
+import { IRefund, IRefundPayload, RefundPayload } from '@api/Refund';
+import { IPayment, Payment } from '@api/Payment';
 import { FormController } from '../../ui-components/form/form';
-import { Button, StyledHost } from '../../ui-components';
+import { Button } from '@ui-components/button';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { formatCurrency } from '../../utils/utils';
 import refundReasonOptions from './refund-reason-options';
 import { PaymentService } from '../../api/services/payment.service';

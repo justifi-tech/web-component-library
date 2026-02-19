@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { EntityDocumentType, FileSelectEvent } from '../../../../api';
+import { EntityDocumentType, FileSelectEvent } from '../../../../api/Document';
 
 @Component({
   tag: 'bank-account-document-form-inputs'

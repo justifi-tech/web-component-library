@@ -2,7 +2,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { GrossPaymentChartCore } from '../gross-payment-chart-core';
 import { GrossVolumeReport } from '../../../api/GrossVolume';
-import { IApiResponse } from '../../../api';
+import type { IApiResponse } from '@api/Api';
 import mockSuccessResponse from '../../../../../../mockData/mockGrossVolumeReportSuccess.json';
 import { makeGetGrossPaymentChartData } from '../../../actions/gross-payment/get-gross-payment-chart-data';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';

@@ -1,5 +1,5 @@
 import { Component, h } from "@stencil/core";
-import { StyledHost } from '../../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';

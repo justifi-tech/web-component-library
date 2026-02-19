@@ -1,4 +1,5 @@
-import { Api, IApiResponse, IQuote } from '..';
+import { Api, IApiResponse } from '../Api';
+import { type IQuote } from '../Insurance';
 
 const api = Api();
 

@@ -1,4 +1,5 @@
-import { Api, IApiResponse, IApiResponseCollection, ITerminal } from '..';
+import { Api, IApiResponse, IApiResponseCollection } from '../Api';
+import { type ITerminal } from '../Terminal';
 
 const api = Api();
  export interface ITerminalService {

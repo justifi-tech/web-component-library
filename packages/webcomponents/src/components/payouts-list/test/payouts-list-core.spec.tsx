@@ -6,7 +6,9 @@ import { PaginationMenu } from '../../../ui-components/pagination-menu/paginatio
 import { PayoutsListCore } from '../payouts-list-core';
 import mockSuccessResponse from '../../../../../../mockData/mockPayoutsSuccess.json';
 import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
-import { IApiResponseCollection, IPayout, ISubAccount } from '../../../api';
+import type { IApiResponseCollection } from '@api/Api';
+import type { IPayout } from '@api/Payout';
+import type { ISubAccount } from '@api/SubAccount';
 import { makeGetPayouts } from '../../../actions/payout/get-payouts';
 import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';

@@ -1,5 +1,5 @@
 import { Component, h, State, Event, EventEmitter, Prop } from '@stencil/core';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { checkoutStore } from '../../store/checkout.store';
 
 @Component({

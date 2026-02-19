@@ -8,7 +8,7 @@ import { AdditionalQuestions, IAdditionalQuestions } from '../../../../api/Busin
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { businessServiceReceivedOptions } from '../../utils';
+import { businessServiceReceivedOptions } from '../../utils/business-form-options';
 
 @Component({
   tag: 'justifi-additional-questions-form-step',

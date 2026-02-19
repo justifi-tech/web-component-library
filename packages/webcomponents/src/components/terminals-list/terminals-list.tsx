@@ -5,7 +5,7 @@ import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { TerminalService } from '../../api/services/terminal.service';
 import { makeGetTerminals } from '../../actions/terminal/get-terminals';
 import { SubAccountService } from '../../api/services/subaccounts.service';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { defaultColumnsKeys } from './terminals-table';
 import { ComponentErrorEvent } from '@justifi/types';
 import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';

@@ -1,4 +1,5 @@
-import { ComponentErrorSeverity, TerminalModel } from '../../api';
+import { ComponentErrorSeverity } from '@justifi/types';
+import { TerminalModel } from '@api/TerminalModel';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetTerminalModels =

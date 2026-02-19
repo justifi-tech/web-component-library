@@ -1,7 +1,9 @@
 import { PaymentService } from '../../../api/services/payment.service';
 import { makeGetPayments } from '../../../actions/payment/get-payments';
 import mockResponse from '../../../../../../mockData/mockPaymentsSuccess.json';
-import { IApiResponseCollection, IPayment, Payment } from '../../../api';
+import type { IApiResponseCollection } from '@api/Api';
+import { Payment } from '@api/Payment';
+import type { IPayment } from '@api/Payment';
 
 // Mock the PaymentService class
 jest.mock('../../../api/services/payment.service');

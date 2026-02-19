@@ -2,7 +2,7 @@ import { Component, h, State, Prop, Method } from '@stencil/core';
 import { BillingFormFields, postalOnlySchema } from '../../checkout/billing-form/billing-form-schema';
 import { billingForm } from '../../../styles/parts';
 import { FormController } from '../../../ui-components/form/form';
-import { StyledHost } from '../../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 
 @Component({
   tag: 'justifi-card-billing-form-simple',

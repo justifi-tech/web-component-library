@@ -1,14 +1,18 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { ComponentClickEvent, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, pagingDefaults, PagingInfo, PayoutBalanceTransaction } from '../../api';
+import { ComponentClickEvent, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, TableClickActions } from '@justifi/types';
+import { pagingDefaults, PagingInfo } from '@api/Pagination';
+import { PayoutBalanceTransaction } from '@api/PayoutBalanceTransaction';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makeGetPayoutTransactions } from '../../actions/payout/get-payout-transactions';
 import { PayoutService } from '../../api/services/payout.service';
 import { Table } from '../../utils/table';
-import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
+import { TableEmptyState } from '@ui-components/table/table-empty-state';
+import { TableErrorState } from '@ui-components/table/table-error-state';
+import { TableLoadingState } from '@ui-components/table/table-loading-state';
 import { defaultColumnsKeys, payoutTransactionTableCells, payoutTransactionTableColumns } from './payout-transactions-table';
 import { configState } from '../config-provider/config-state';
-import { TableClickActions } from '@justifi/types';
 import {
   TableWrapper,
   TableComponent,
@@ -19,7 +23,7 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-} from '../../ui-components';
+} from '@ui-components/table/table';
 
 @Component({
   tag: 'justifi-payout-transactions-list',

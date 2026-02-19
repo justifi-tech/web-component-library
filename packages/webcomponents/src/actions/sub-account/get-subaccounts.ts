@@ -1,4 +1,5 @@
-import { ComponentErrorSeverity, SubAccount } from '../../api';
+import { ComponentErrorSeverity } from '@justifi/types';
+import { SubAccount } from '@api/SubAccount';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetSubAccounts =

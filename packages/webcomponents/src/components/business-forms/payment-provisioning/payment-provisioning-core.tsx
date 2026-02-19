@@ -1,7 +1,8 @@
 import { Component, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { checkProvisioningStatus } from '../utils/helpers';
-import { Header1, StyledHost } from '../../../ui-components';
+import { Header1 } from '@ui-components/headers/header-1';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { text } from '../../../styles/parts';
 import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '@justifi/types';
 import { BusinessFormClickActions } from '@justifi/types';

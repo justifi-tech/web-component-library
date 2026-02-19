@@ -2,8 +2,8 @@ import { Component, h, Prop } from '@stencil/core';
 import { debounce } from 'lodash';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
 import { filterParams, propsParams, clearParams } from './terminals-list-params-state';
-import { StyledHost } from '../../ui-components';
-import { ITerminalStatus } from '../../api';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
+import { ITerminalStatus } from '@api/Terminal';
 import {
   terminalsListFilterMenu,
   terminalIdTerminalsListFilterParam,

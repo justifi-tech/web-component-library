@@ -1,7 +1,9 @@
 import { TerminalOrderService } from '../../../api/services/terminal_orders.service';
 import { makeGetTerminalOrders } from '../../../actions/terminal/get-terminal-orders';
 import mockResponse from '../../../../../../mockData/mockTerminalOrdersListSuccess.json';
-import { IApiResponseCollection, ITerminalOrder, TerminalOrder } from '../../../api';
+import type { IApiResponseCollection } from '@api/Api';
+import { TerminalOrder } from '@api/TerminalOrder';
+import type { ITerminalOrder } from '@api/TerminalOrder';
 
 // Mock the TerminalOrderService class
 jest.mock('../../../api/services/terminal_orders.service');

@@ -37,6 +37,8 @@ export const config: Config = {
   testing: {
     setupFiles: ['./setupTests.js'],
     moduleNameMapper: {
+      '^@api/(.*)$': '<rootDir>/src/api/$1',
+      '^@ui-components/(.*)$': '<rootDir>/src/ui-components/$1',
       '\\.(svg|png|jpg|jpeg|gif|webp)$': '<rootDir>/src/__mocks__/fileMock.js',
     },
   },

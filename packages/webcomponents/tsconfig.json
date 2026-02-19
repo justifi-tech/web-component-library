@@ -13,7 +13,12 @@
     "jsx": "react",
     "jsxFactory": "h",
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["src/api/*"],
+      "@ui-components/*": ["src/ui-components/*"]
+    }
   },
   "include": ["src", "globals.d.ts"],
   "exclude": ["node_modules", "src/__mocks__"]

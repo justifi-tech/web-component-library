@@ -1,7 +1,8 @@
 import { Component, h, State, Prop, Method } from '@stencil/core';
 import { BillingFormFields, fullBillingSchema } from '../../checkout/billing-form/billing-form-schema';
 import { billingForm } from '../../../styles/parts';
-import { Header3, StyledHost } from '../../../ui-components';
+import { Header3 } from '@ui-components/headers/header-3';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import StateOptions from '../../../utils/state-options';
 import { FormController } from '../../../ui-components/form/form';
 

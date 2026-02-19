@@ -1,7 +1,7 @@
 import { Component, h, Host, Prop } from '@stencil/core';
 import { formatDate, formatTime, snakeCaseToHumanReadable } from '../../../../utils/utils';
 import { card, heading2, table, tableCell, tableHeadCell } from '../../../../styles/parts';
-import { Skeleton } from '../../../../ui-components';
+import { Skeleton } from '@ui-components/skeleton';
 
 @Component({
   tag: 'business-documents-on-file'

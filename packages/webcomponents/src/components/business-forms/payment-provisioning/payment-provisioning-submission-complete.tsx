@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { Header1 } from '../../../ui-components';
+import { Header1 } from '@ui-components/headers/header-1';
 import { text } from '../../../styles/parts';
 
 export const PaymentProvisioningSubmissionComplete = () => {

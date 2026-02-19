@@ -1,5 +1,5 @@
 import { createStore } from '@stencil/store';
-import { TerminalOrderQueryParams } from '../../api';
+import { TerminalOrderQueryParams } from '@api/TerminalOrder';
 
 const filterParamsInitialState = {};
 const propsParamsInitialState = {};

@@ -3,7 +3,7 @@ import { FormController } from '../../../ui-components/form/form';
 import { Identity, Owner } from '../../../api/Identity';
 import { ComponentClickEvent, ComponentErrorEvent } from '@justifi/types';
 import { identitySchemaByCountry } from '../schemas/business-identity-schema';
-import { Button } from '../../../ui-components';
+import { Button } from '@ui-components/button';
 import { heading3 } from '../../../styles/parts';
 import { BusinessFormClickActions } from '@justifi/types';
 import { CountryCode } from '../../../utils/country-codes';

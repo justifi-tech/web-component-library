@@ -1,6 +1,6 @@
 import { newSpecPage } from "@stencil/core/testing";
 import { PaginationMenu } from "../pagination-menu";
-import { ExtendedPagingDefaults, ExtendedPagingInfo } from "../../../api";
+import { ExtendedPagingDefaults, ExtendedPagingInfo } from "@api/Pagination";
 
 const mockExtendedPagingInfo: ExtendedPagingInfo = {
   has_previous: false,

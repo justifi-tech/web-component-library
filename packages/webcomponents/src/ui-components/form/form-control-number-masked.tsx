@@ -9,7 +9,7 @@ import {
   State,
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
-import { FormControlErrorText } from '../../ui-components';
+import { FormControlErrorText } from '@ui-components/form/form-helpers/form-control-error-text';
 import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../styles/parts';
 
 @Component({

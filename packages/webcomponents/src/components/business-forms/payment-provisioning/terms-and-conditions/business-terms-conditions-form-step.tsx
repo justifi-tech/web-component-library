@@ -2,7 +2,8 @@ import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil
 import { FormController } from '../../../../ui-components/form/form';
 import { BusinessFormStep, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentFormStepCompleteEvent } from '@justifi/types';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
-import { Api, IApiResponse } from '../../../../api';
+import { Api } from '../../../../api/Api';
+import type { IApiResponse } from '../../../../api/Api';
 import { IBusiness } from '../../../../api/Business';
 import { heading2 } from '../../../../styles/parts';
 

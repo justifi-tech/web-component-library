@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { convertToLocal } from '../../utils/utils';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
-import { PayoutBalanceTransaction } from '../../api';
+import { PayoutBalanceTransaction } from '@api/PayoutBalanceTransaction';
 
 export const defaultColumnsKeys = 'created_at,txn_type,description,amount,fee,net';
 

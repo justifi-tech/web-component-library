@@ -8,7 +8,8 @@ import { ComponentErrorEvent } from '@justifi/types';
 import { checkoutStore } from '../../../store/checkout.store';
 import { addAttribute, formatCurrency, processHTML, removeAttribute } from '../../../utils/utils';
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from '../insurance-state';
-import { StyledHost, Header2 } from '../../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
+import { Header2 } from '@ui-components/headers/header-2';
 import {
   text,
   textDanger

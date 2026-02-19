@@ -1,6 +1,6 @@
 import { Component, h, Method, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
-import { StyledHost } from "../../../ui-components";
+import { StyledHost } from "@ui-components/styled-host/styled-host";
 import JustifiAnalytics from "../../../api/Analytics";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
 import { generateTabId } from "../../../utils/utils";

@@ -1,5 +1,5 @@
 import { Fragment, h } from "@stencil/core";
-import { Skeleton } from "../../ui-components";
+import { Skeleton } from "@ui-components/skeleton";
 
 export const BusinessDetailsLoading = () => {
   const Block = () => (

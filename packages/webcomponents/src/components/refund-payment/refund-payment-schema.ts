@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 import { formatCurrency } from '../../utils/utils';
-import { RefundReasons } from '../../api';
+import { RefundReasons } from '@api/Refund';
 
 const amountValidation = (maxAmount: string) => {
   const max = +maxAmount;

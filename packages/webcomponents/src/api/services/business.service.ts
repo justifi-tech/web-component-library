@@ -1,4 +1,8 @@
-import { Api, DocumentRecordData, IApiResponse, IBankAccount, IBusiness, Identity } from '..';
+import { Api, IApiResponse } from '../Api';
+import { type DocumentRecordData } from '../Document';
+import { type IBankAccount } from '../BankAccount';
+import { type IBusiness } from '../Business';
+import { type Identity } from '../Identity';
 
 const api = Api();
 

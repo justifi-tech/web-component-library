@@ -1,5 +1,5 @@
 import { createStore } from '@stencil/store';
-import { PayoutsQueryParams } from '../../api';
+import { PayoutsQueryParams } from '@api/Payout';
 
 const filterParamsInitialState = {};
 const propsParamsInitialState = {};

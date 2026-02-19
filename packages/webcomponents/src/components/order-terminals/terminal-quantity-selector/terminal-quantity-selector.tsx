@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State } from "@stencil/core";
 import { buttonLink, card, image } from "../../../styles/parts";
-import { TerminalModelName } from "../../../api";
+import { TerminalModelName } from "@api/TerminalModel";
 
 @Component({
   tag: 'terminal-quantity-selector',

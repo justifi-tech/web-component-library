@@ -1,4 +1,5 @@
-import { Api, IApiResponseCollection, ISubAccount } from '..';
+import { Api, IApiResponseCollection } from '../Api';
+import { type ISubAccount } from '../SubAccount';
 
 const api = Api();
 

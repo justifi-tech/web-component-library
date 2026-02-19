@@ -1,12 +1,12 @@
 import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Listen } from '@stencil/core';
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from './billing-form/billing-form-schema';
-import { ICheckout, ILoadedEventResponse } from '../../api';
+import { ICheckout, ILoadedEventResponse } from '@api/Checkout';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '@justifi/types';
 import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import type { CheckoutState, CheckoutChangedEventDetail, Hook } from '@justifi/types';
 import { PAYMENT_METHODS } from '@justifi/types';
 

@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { defaultColumnsKeys } from './terminal-orders-table';
 import { makeGetTerminalOrders } from '../../actions/terminal/get-terminal-orders';
 import { TerminalOrderService } from '../../api/services/terminal_orders.service';
-import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity } from '../../api';
+import { ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../api/Analytics';
 
 @Component({

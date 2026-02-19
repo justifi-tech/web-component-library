@@ -1,10 +1,11 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { DisputeStatus, Payment, PaymentStatuses } from '../../api';
+import { Payment, PaymentStatuses } from '@api/Payment';
+import { DisputeStatus } from '@api/Dispute';
 import { formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
 import { ComponentErrorEvent } from '@justifi/types';
 import { MapPaymentStatusToBadge, PaymentStatusBadge } from '../payments-list/payments-status';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import PaymentDetailsLoading from './payment-details-loading';
 import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
 

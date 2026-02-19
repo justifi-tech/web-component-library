@@ -1,6 +1,6 @@
 import { formatCurrency } from '../utils/utils';
 import { DisputeStatus } from './Dispute';
-import { IRefund } from '.';
+import { IRefund } from './Refund';
 
 export enum CaptureStrategy {
   automatic = 'automatic',

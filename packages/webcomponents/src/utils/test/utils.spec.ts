@@ -1,4 +1,4 @@
-import { CurrencyTypes } from '../../api';
+import { CurrencyTypes } from '@api/Payment';
 import { formatCurrency } from '../utils';
 
 describe('helpers', () => {

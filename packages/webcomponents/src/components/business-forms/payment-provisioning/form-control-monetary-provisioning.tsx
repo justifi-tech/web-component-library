@@ -10,7 +10,8 @@ import {
 } from '@stencil/core';
 import IMask, { InputMask } from 'imask';
 import { CURRENCY_MASK } from '../../../utils/form-input-masks';
-import { FormControlErrorText, FormControlHelpText } from '../../../ui-components';
+import { FormControlErrorText } from '@ui-components/form/form-helpers/form-control-error-text';
+import { FormControlHelpText } from '@ui-components/form/form-helpers/form-control-help-text';
 import { inputAdornment, inputDisabled, inputFocused, inputGroup, inputInvalid, label } from '../../../styles/parts';
 
 @Component({

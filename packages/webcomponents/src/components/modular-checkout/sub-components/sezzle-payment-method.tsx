@@ -2,7 +2,7 @@ import { Component, h, Method, Event, EventEmitter, State } from '@stencil/core'
 import { formatCurrency } from '../../../utils/utils';
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { checkoutStore } from '../../../store/checkout.store';
-import { StyledHost } from '../../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { PAYMENT_METHODS } from '@justifi/types';
 
 const sezzleLogo = (

@@ -1,10 +1,5 @@
-import {
-  Api,
-  IApiResponse,
-  IApiResponseCollection,
-  ICheckout,
-  ICheckoutCompleteResponse,
-} from '..';
+import { Api, IApiResponse, IApiResponseCollection } from '../Api';
+import { type ICheckout, type ICheckoutCompleteResponse } from '../Checkout';
 
 const api = Api();
 

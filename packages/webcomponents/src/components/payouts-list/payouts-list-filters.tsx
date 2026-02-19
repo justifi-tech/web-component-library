@@ -1,8 +1,8 @@
 import { Component, h, Prop } from '@stencil/core';
 import { filterParams, propsParams, clearParams } from './payouts-list-params-state';
-import { StyledHost } from '../../ui-components';
+import { StyledHost } from '@ui-components/styled-host/styled-host';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
-import { PayoutStatusesSafeNames } from '../../api';
+import { PayoutStatusesSafeNames } from '@api/Payout';
 import { createdAfterPayoutsListFilterParam, createdBeforePayoutsListFilterParam, statusPayoutsListFilterParam, payoutsListFilterMenu } from '../../styles/parts';
 @Component({
   tag: 'justifi-payouts-list-filters',

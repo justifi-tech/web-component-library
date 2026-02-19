@@ -1,4 +1,5 @@
-import { IApiResponse, Payout } from '../../../api';
+import type { IApiResponse } from '@api/Api';
+import { Payout } from '@api/Payout';
 import { PayoutService } from '../../../api/services/payout.service';
 import { makeGetPayoutDetails } from '../../../actions/payout/get-payout-details';
 import mockResponse from '../../../../../../mockData/mockPayoutDetailsSuccess.json';

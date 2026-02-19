@@ -1,6 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { PagingInfo, SubAccount, Terminal, pagingDefaults } from '../../api';
-import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
+import { Terminal } from '@api/Terminal';
+import { PagingInfo, pagingDefaults } from '@api/Pagination';
+import { SubAccount } from '@api/SubAccount';
+import { TableEmptyState } from '@ui-components/table/table-empty-state';
+import { TableErrorState } from '@ui-components/table/table-error-state';
+import { TableLoadingState } from '@ui-components/table/table-loading-state';
 import { terminalTableColumns, terminalTableCells } from './terminals-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './terminals-list-params-state';
@@ -15,7 +19,7 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-} from '../../ui-components';
+} from '@ui-components/table/table';
 
 @Component({
   tag: 'terminals-list-core'

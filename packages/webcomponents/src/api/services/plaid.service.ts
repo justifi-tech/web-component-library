@@ -1,4 +1,4 @@
-import { Api, IApiResponse } from '..';
+import { Api, IApiResponse } from '../Api';
 
 const api = Api();
 

@@ -1,5 +1,5 @@
 import { Component, h, Method, State } from "@stencil/core";
-import { StyledHost } from "../../../ui-components";
+import { StyledHost } from "@ui-components/styled-host/styled-host";
 import BankAccountFormSkeleton from "./bank-account-skeleton";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
 import { generateTabId } from "../../../utils/utils";
