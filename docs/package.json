@@ -36,15 +36,9 @@
   },
   "scripts": {
     "dev": "echo 'Dev server not configured yet'",
-    "build": "pnpm build:docs",
-    "build:docs": "pnpm build:webcomponents && pnpm build:helpers && pnpm build:index",
-    "build:webcomponents": "pnpm --filter @justifi/webcomponents build:docs",
-    "build:helpers": "pnpm exec esbuild helpers/**/*.tsx helpers/**/*.jsx helpers/**/*.ts helpers/**/*.js --outdir=dist/helpers --format=esm --jsx=automatic --platform=node --target=es2020 && cp package.json dist/ && cp -r mocks dist/",
-    "build:index": "echo \"export * from './helpers/index.js';\" > dist/index.js",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs .",
-    "test": "node test/exports.test.mjs",
-    "prepublishOnly": "pnpm build:docs && pnpm test"
+    "build": "pnpm lint && echo 'Build not configured yet'",
+    "clean": "rm -rf .turbo && rm -rf node_modules",
+    "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs ."
   },
   "dependencies": {
     "markdown-table": "^3.0.4",
@@ -56,10 +50,8 @@
     "@justifi/webcomponents": "workspace:*",
     "@eslint/eslintrc": "^3.3.1",
     "@types/node": "^22.15.21",
-    "@types/react": "^18.3.0",
     "eslint": "^9.27.0",
     "eslint-plugin-mdx": "^3.1.5",
-    "esbuild": "^0.20.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remark-frontmatter": "^4.0.1"

@@ -1,10 +1,10 @@
-name: Publish packages
+name: Publish components
 on:
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
-    name: Build and Publish
+  build:
+    name: Build
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -31,20 +31,8 @@ jobs:
           echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
           echo "API_ORIGIN=${{ secrets.API_ORIGIN }}" >> .env
 
-      - name: Check if docs version exists on npm
-        id: docs_check
-        run: |
-          DOCS_VERSION=$(node -p "require('./docs/package.json').version")
-          WEBCOMPONENTS_VERSION=$(node -p "require('./packages/webcomponents/package.json').version")
-          echo "docs_version=$DOCS_VERSION" >> $GITHUB_OUTPUT
-          echo "webcomponents_version=$WEBCOMPONENTS_VERSION" >> $GITHUB_OUTPUT
-          if npm view @justifi/webcomponents-docs@$DOCS_VERSION version 2>/dev/null; then
-            echo "docs_exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "docs_exists=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Build all packages
+      - name: Build packages
+        working-directory: ./packages/webcomponents
         run: pnpm build
 
       - name: Detect version type

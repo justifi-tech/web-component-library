@@ -10,16 +10,6 @@
         "^build"
       ]
     },
-    "build:docs": {
-      "outputs": [
-        "dist/**",
-        "docs.json",
-        "component-tree.json"
-      ],
-      "dependsOn": [
-        "@justifi/webcomponents#build:docs"
-      ]
-    },
     "test": {
       "dependsOn": [
         "build"
