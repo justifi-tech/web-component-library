@@ -3,7 +3,7 @@ import { Chart, BarController, Colors, BarElement, CategoryScale, LinearScale, L
 import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
 import { ErrorState } from '../../ui-components/details/utils';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 import Spinner from '../../ui-components/spinner';
 
 Chart.register(

@@ -4,7 +4,7 @@ import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-co
 import { checkoutTableColumns, checkoutTableCells } from './checkouts-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './checkouts-list-params-state';
-import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentClickEvent, ComponentErrorEvent, TableClickActions } from '@justifi/types';
 import {
   TableWrapper,
   TableComponent,
@@ -15,7 +15,6 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-  TableClickActions
 } from '../../ui-components';
 
 @Component({

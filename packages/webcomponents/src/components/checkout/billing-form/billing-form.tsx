@@ -1,6 +1,6 @@
 import { Component, h, Prop, Method, Host } from '@stencil/core';
 import { BillingFormFields } from './billing-form-schema';
-import { PAYMENT_METHODS } from '../../..';
+import { PAYMENT_METHODS } from '@justifi/types';
 
 @Component({
   tag: 'justifi-billing-form',

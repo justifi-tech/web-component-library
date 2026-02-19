@@ -2,10 +2,10 @@ import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
 import { ErrorState } from '../../ui-components/details/utils';
 import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from '../../actions/business/get-business';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 
 @Component({
   tag: 'justifi-business-details',

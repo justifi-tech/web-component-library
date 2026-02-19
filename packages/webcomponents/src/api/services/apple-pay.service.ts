@@ -3,7 +3,6 @@ import {
   IApplePayConfig,
   IApplePayPaymentRequest,
   IApplePaySession,
-  IApplePayError,
   ApplePaySessionStatus,
   ApplePayHelpers,
   ApplePayConfig,
@@ -13,8 +12,8 @@ import {
   IApplePayPaymentProcessRequest,
   IApplePayPaymentResponse,
   IApplePayCancelEvent,
-  IApplePayToken,
 } from '../ApplePay';
+import { IApplePayError, IApplePayToken } from '@justifi/types';
 
 // Centralized error codes for Apple Pay service
 export enum ApplePayServiceErrorCode {

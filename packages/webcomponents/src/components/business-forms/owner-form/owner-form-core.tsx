@@ -1,11 +1,11 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { Identity, Owner } from '../../../api/Identity';
-import { ComponentClickEvent, ComponentErrorEvent } from '../../../api/ComponentEvents';
+import { ComponentClickEvent, ComponentErrorEvent } from '@justifi/types';
 import { identitySchemaByCountry } from '../schemas/business-identity-schema';
 import { Button } from '../../../ui-components';
 import { heading3 } from '../../../styles/parts';
-import { BusinessFormClickActions } from '../utils/event-types';
+import { BusinessFormClickActions } from '@justifi/types';
 import { CountryCode } from '../../../utils/country-codes';
 
 @Component({

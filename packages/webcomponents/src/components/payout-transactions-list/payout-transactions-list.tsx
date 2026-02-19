@@ -8,6 +8,7 @@ import { Table } from '../../utils/table';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { defaultColumnsKeys, payoutTransactionTableCells, payoutTransactionTableColumns } from './payout-transactions-table';
 import { configState } from '../config-provider/config-state';
+import { TableClickActions } from '@justifi/types';
 import {
   TableWrapper,
   TableComponent,
@@ -18,7 +19,6 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-  TableClickActions
 } from '../../ui-components';
 
 @Component({

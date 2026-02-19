@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { PayoutService } from '../../api/services/payout.service';
@@ -8,7 +8,7 @@ import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
 import { SubAccountService } from '../../api/services/subaccounts.service';
 import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './payouts-table';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
 
 @Component({

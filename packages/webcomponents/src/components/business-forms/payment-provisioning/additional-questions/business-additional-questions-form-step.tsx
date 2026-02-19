@@ -1,6 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { BusinessFormStep, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentFormStepCompleteEvent } from '@justifi/types';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
@@ -9,7 +8,7 @@ import { AdditionalQuestions, IAdditionalQuestions } from '../../../../api/Busin
 import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { BusinessFormStep, businessServiceReceivedOptions } from '../../utils';
+import { businessServiceReceivedOptions } from '../../utils';
 
 @Component({
   tag: 'justifi-additional-questions-form-step',

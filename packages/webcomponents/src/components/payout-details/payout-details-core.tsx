@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 import { Payout } from '../../api';
 import { capitalizeFirstLetter, formatDate, formatTime } from '../../utils/utils';
 import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadInfoItem, ErrorState } from '../../ui-components/details/utils';
-import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent, RecordClickEvent } from '@justifi/types';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import PayoutDetailsLoading from './payout-details-loading';

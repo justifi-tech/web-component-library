@@ -1,24 +1,14 @@
-import { PagingInfo } from "./Pagination";
+import { PagingInfo } from './Pagination';
+import {
+  ApplePayButtonType,
+  ApplePayButtonStyle,
+  type IApplePayTokenData,
+  type IApplePayTokenPaymentMethod,
+} from '@justifi/types';
 
 export enum ApplePaySessionStatus {
   STATUS_SUCCESS = 'STATUS_SUCCESS',
   STATUS_FAILURE = 'STATUS_FAILURE',
-}
-
-export enum ApplePayButtonType {
-  PLAIN = 'plain',
-  BUY = 'buy',
-  SET_UP = 'set-up',
-  DONATE = 'donate',
-  CHECK_OUT = 'check-out',
-  BOOK = 'book',
-  SUBSCRIBE = 'subscribe',
-}
-
-export enum ApplePayButtonStyle {
-  BLACK = 'black',
-  WHITE = 'white',
-  WHITE_OUTLINE = 'white-outline',
 }
 
 export enum ApplePayMerchantCapability {
@@ -64,7 +54,6 @@ export interface IApplePaySession {
   completeShippingMethodSelection(update: any): void;
   completePaymentMethodSelection(update: any): void;
 
-  // Event handlers
   onvalidatemerchant?: (event: IApplePayValidateEvent) => void;
   onpaymentmethodselected?: (event: IApplePayMethodSelectedEvent) => void;
   onshippingmethodselected?: () => void;
@@ -82,11 +71,6 @@ export interface IApplePayConfig {
   buttonLocale?: string;
 }
 
-export interface IApplePayError {
-  code: string;
-  message: string;
-}
-
 export interface IMerchantSession {
   displayName: string;
   domainName: string;
@@ -99,29 +83,6 @@ export interface IMerchantSession {
   pspId: string;
   retries: number;
   signature: string;
-}
-
-export interface IApplePayTokenData {
-  data: string;
-  header: {
-    publicKeyHash: string;
-    ephemeralPublicKey: string;
-    transactionId: string;
-  };
-  signature: string;
-  version: string;
-}
-
-export interface IApplePayTokenPaymentMethod {
-  displayName: string;
-  network: string;
-  type: string;
-}
-
-export interface IApplePayToken {
-  paymentData: IApplePayTokenData;
-  paymentMethod: IApplePayTokenPaymentMethod;
-  transactionIdentifier: string;
 }
 
 export interface IApplePayValidateEvent {
@@ -138,7 +99,6 @@ export interface IApplePayCancelEvent {
 export interface IApplePayMethodSelectedEvent {
   paymentMethod: IApplePayTokenPaymentMethod;
 }
-
 
 export interface IApplePayPaymentProcessRequest {
   paymentData: IApplePayTokenData;
@@ -159,16 +119,19 @@ export interface IApplePayPaymentResponse {
   data: {
     account_id: string;
     token: string;
-  }
+  };
 }
 
 export interface IApplePayService {
-  validateMerchant(authToken: string, accountId: string): Promise<IMerchantSession>;
+  validateMerchant(
+    authToken: string,
+    accountId: string,
+  ): Promise<IMerchantSession>;
 
   processPayment(
     authToken: string,
     accountId: string,
-    payload: IApplePayPaymentProcessRequest
+    payload: IApplePayPaymentProcessRequest,
   ): Promise<{ success: boolean; data: IApplePayPaymentResponse }>;
 }
 
@@ -253,7 +216,7 @@ export class ApplePayHelpers {
   }
 
   static async canMakePaymentsWithActiveCard(
-    merchantIdentifier: string
+    merchantIdentifier: string,
   ): Promise<boolean> {
     if (!this.isApplePaySupported()) {
       return false;
@@ -262,7 +225,7 @@ export class ApplePayHelpers {
     try {
       return (
         (await window.ApplePaySession?.canMakePaymentsWithActiveCard(
-          merchantIdentifier
+          merchantIdentifier,
         )) || false
       );
     } catch (error) {
@@ -282,7 +245,7 @@ export class ApplePayHelpers {
   static createLineItem(
     label: string,
     amount: number,
-    type: 'final' | 'pending' = 'final'
+    type: 'final' | 'pending' = 'final',
   ): IApplePayLineItem {
     return {
       label,
@@ -310,11 +273,11 @@ declare global {
     ApplePaySession?: {
       new (
         version: number,
-        paymentRequest: IApplePayPaymentRequest
+        paymentRequest: IApplePayPaymentRequest,
       ): IApplePaySession;
       canMakePayments(): boolean;
       canMakePaymentsWithActiveCard(
-        merchantIdentifier: string
+        merchantIdentifier: string,
       ): Promise<boolean>;
       supportsVersion(version: number): boolean;
       STATUS_SUCCESS: number;

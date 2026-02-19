@@ -31,6 +31,11 @@
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js",
       "require": "./dist/utils/index.cjs"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.cjs"
     }
   },
   "files": [

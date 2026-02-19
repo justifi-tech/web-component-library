@@ -3,11 +3,12 @@ import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from './billing-form/billing-form-schema';
 import { ICheckout, ILoadedEventResponse } from '../../api';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
-import { CheckoutState, checkoutStore } from '../../store/checkout.store';
+import { ComponentErrorEvent, ComponentSubmitEvent } from '@justifi/types';
+import { checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
 import { StyledHost } from '../../ui-components';
-import { CheckoutChangedEventDetail, Hook, PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
+import type { CheckoutState, CheckoutChangedEventDetail, Hook } from '@justifi/types';
+import { PAYMENT_METHODS } from '@justifi/types';
 
 /**
  * @part font-family - Controls the font family for the component.

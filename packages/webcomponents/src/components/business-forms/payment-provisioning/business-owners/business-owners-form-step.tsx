@@ -1,12 +1,12 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch, Listen } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '@justifi/types';
 import { Button } from '../../../../ui-components';
 import { heading2, alert } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
+import { BusinessFormClickActions, BusinessFormStep } from '@justifi/types';
 import { CountryCode } from '../../../../utils/country-codes';
 import { Representative } from '../../../../api/Identity';
 

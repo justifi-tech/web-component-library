@@ -1,15 +1,13 @@
 import { Component, Method, Prop, State, h, Event, EventEmitter, Watch } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { BusinessFormStep, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentFormStepCompleteEvent } from '@justifi/types';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { CountryCode } from '../../../../utils/country-codes';
 import { addressSchemaByCountry } from '../../schemas/business-address-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { Address, IAddress } from '../../../../api/Business';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-legal-address-form-step'

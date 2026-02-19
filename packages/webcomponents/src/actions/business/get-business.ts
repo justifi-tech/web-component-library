@@ -1,5 +1,5 @@
 import { Business } from '../../api/Business';
-import { ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorSeverity } from '@justifi/types';
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetBusiness =

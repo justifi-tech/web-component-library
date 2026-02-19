@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { PlaidPaymentMethod } from './plaid-payment-method';
 import { checkoutStore } from '../../../store/checkout.store';
-import { PAYMENT_METHODS } from '../ModularCheckout';
+import { PAYMENT_METHODS } from '@justifi/types';
 
 describe('justifi-plaid-payment-method', () => {
   beforeEach(() => {

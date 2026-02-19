@@ -1,4 +1,4 @@
-import { ComponentErrorCodes } from '../ComponentError';
+import { ComponentErrorCodes } from '@justifi/types';
 import { API_ERRORS } from '../shared';
 
 export const getErrorMessage = (error: any) => {

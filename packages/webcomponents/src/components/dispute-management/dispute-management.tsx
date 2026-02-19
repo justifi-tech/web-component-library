@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makeGetDispute } from '../../actions/dispute/dispute-actions';
 import { DisputeService } from '../../api/services/dispute.service';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 
 @Component({
   tag: 'justifi-dispute-management',

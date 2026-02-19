@@ -4,13 +4,10 @@ import { checkoutStore, onChange } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import plaidLogoSvg from '../../../assets/plaid-icon.svg';
 import { PlaidService } from '../../../api/services/plaid.service';
-import { ComponentErrorSeverity } from '../../../api/ComponentError';
-import { PAYMENT_METHODS } from '../ModularCheckout';
+import { ComponentErrorSeverity, PAYMENT_METHODS, PlaidErrorCodes, PlaidError } from '@justifi/types';
 import {
-  PlaidErrorCodes,
   PLAID_ERROR_MESSAGES,
   PLAID_ERROR_SEVERITY,
-  PlaidError,
 } from '../../../api/Plaid';
 
 @Component({

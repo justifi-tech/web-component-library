@@ -1,11 +1,11 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { PagingInfo, Payout, SubAccount, pagingDefaults } from '../../api';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { payoutTableCells, payoutTableColumns } from './payouts-table';
 import { Table } from '../../utils/table';
 import { getRequestParams, onQueryParamsChange } from './payouts-list-params-state';
-import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentClickEvent, ComponentErrorEvent, TableClickActions } from '@justifi/types';
 import {
   TableWrapper,
   TableComponent,
@@ -16,7 +16,6 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-  TableClickActions
 } from '../../ui-components';
 
 @Component({

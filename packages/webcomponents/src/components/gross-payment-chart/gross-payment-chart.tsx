@@ -2,10 +2,10 @@ import { Component, Event, EventEmitter, Prop, State, Watch, h } from '@stencil/
 import { ReportsService } from '../../api/services/reports.service';
 import { makeGetGrossPaymentChartData } from '../../actions/gross-payment/get-gross-payment-chart-data';
 import { ErrorState } from '../../ui-components/details/utils';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 
 @Component({
   tag: 'justifi-gross-payment-chart',

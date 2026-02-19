@@ -5,7 +5,7 @@ import { BusinessService, BusinessBankAccountService, DocumentRecordService } fr
 import { CountryCode } from '../../../../utils/country-codes';
 import { bankAccountSchemaByCountry } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
-import { BusinessFormStep } from '../../utils';
+import { BusinessFormStep } from '@justifi/types';
 import { heading2, buttonSecondary, buttonLink } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { Button } from '../../../../ui-components';

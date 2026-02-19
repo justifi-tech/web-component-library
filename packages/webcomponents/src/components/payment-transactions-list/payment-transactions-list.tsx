@@ -7,6 +7,7 @@ import { PaymentService } from '../../api/services/payment.service';
 import { Table } from '../../utils/table';
 import { StyledHost, TableEmptyState, TableErrorState, TableLoadingState } from '../../ui-components';
 import { defaultColumnsKeys, paymentTransactionTableCells, paymentTransactionTableColumns } from './payment-transactions-table';
+import { TableClickActions } from '@justifi/types';
 import {
   TableWrapper,
   TableComponent,
@@ -17,7 +18,6 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-  TableClickActions
 } from '../../ui-components';
 
 @Component({

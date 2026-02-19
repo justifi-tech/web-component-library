@@ -3,7 +3,8 @@ import { StyledHost } from '../../../ui-components';
 import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
-import { PAYMENT_METHODS, SavedPaymentMethod } from "../ModularCheckout";
+import { PAYMENT_METHODS } from "@justifi/types";
+import type { SavedPaymentMethod } from "@justifi/types";
 
 @Component({
   tag: 'justifi-saved-payment-methods',

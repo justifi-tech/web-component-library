@@ -5,9 +5,9 @@ import { makeCreateDisputeEvidence, makeUpdateDisputeResponse, makeSubmitDispute
 import { IDispute } from "../../../components";
 import { IApiResponse } from "../../../api";
 import JustifiAnalytics from "../../../api/Analytics";
-import { ComponentErrorCodes, ComponentErrorSeverity } from "../../../api/ComponentError";
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { DisputeService } from "../../../api/services/dispute.service";
-import { ComponentErrorEvent } from "../../../api/ComponentEvents";
+import { ComponentErrorEvent } from '@justifi/types';
 
 @Component({
   tag: 'justifi-dispute-response',

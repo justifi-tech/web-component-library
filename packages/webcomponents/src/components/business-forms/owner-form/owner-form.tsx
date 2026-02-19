@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
-import { ComponentErrorEvent } from '../../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 import { makeGetIdentity, makePatchIdentity, makePostIdentity } from '../payment-provisioning/payment-provisioning-actions';
 import { IdentityService } from '../../../api/services/business.service';
 import { CountryCode } from '../../../utils/country-codes';

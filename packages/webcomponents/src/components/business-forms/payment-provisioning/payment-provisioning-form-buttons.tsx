@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { BusinessFormClickActions } from '../utils';
+import { BusinessFormClickActions } from '@justifi/types';
 import { Button } from '../../../ui-components';
 
 @Component({

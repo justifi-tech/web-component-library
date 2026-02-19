@@ -6,8 +6,8 @@ import { heading4, text } from "../../styles/parts";
 import { Skeleton, Button, StyledHost } from "../../ui-components";
 import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
 import { DisputeService } from "../../api/services/dispute.service";
-import { ComponentClickEvent, ComponentSubmitEvent, ComponentErrorEvent } from "../../api/ComponentEvents";
-import { DisputeManagementClickActions } from "./event-types";
+import { ComponentClickEvent, ComponentSubmitEvent, ComponentErrorEvent } from '@justifi/types';
+import { DisputeManagementClickActions } from '@justifi/types';
 
 @Component({
   tag: 'justifi-dispute-notification',

@@ -7,6 +7,7 @@ export default defineConfig({
     'entities/index': 'src/entities/index.ts',
     'business/index': 'src/business/index.ts',
     'utils/index': 'src/utils/index.ts',
+    'components/index': 'src/components/index.ts',
   },
   format: ['esm', 'cjs'],
   dts: true,

@@ -2,11 +2,11 @@ import { Component, h, Prop, Watch, State, Event, EventEmitter } from '@stencil/
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayoutDetails } from '../../actions/payout/get-payout-details';
 import { ErrorState } from '../../ui-components/details/utils';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from './get-payout-csv';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 
 @Component({
   tag: 'justifi-payout-details',

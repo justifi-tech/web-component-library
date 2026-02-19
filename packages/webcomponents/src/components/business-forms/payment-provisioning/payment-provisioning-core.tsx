@@ -1,10 +1,10 @@
 import { Component, h, Prop, State, Event, EventEmitter, Listen } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { checkProvisioningStatus } from '../utils/helpers';
 import { Header1, StyledHost } from '../../../ui-components';
 import { text } from '../../../styles/parts';
-import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
-import { BusinessFormClickActions } from '../utils/event-types';
+import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '@justifi/types';
+import { BusinessFormClickActions } from '@justifi/types';
 import { CountryCode } from '../../../utils/country-codes';
 import { Business } from '../../../api/Business';
 import { PaymentProvisioningLoading } from './payment-provisioning-loading';

@@ -3,7 +3,7 @@ import { formatCurrency } from '../../../utils/utils';
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
-import { PAYMENT_METHODS } from '../ModularCheckout';
+import { PAYMENT_METHODS } from '@justifi/types';
 
 const sezzleLogo = (
   <img

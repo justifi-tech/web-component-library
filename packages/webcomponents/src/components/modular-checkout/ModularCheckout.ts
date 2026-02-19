@@ -1,15 +1,9 @@
 import { CardBrand, ICheckoutPaymentMethod } from '../../api';
+import {
+  PAYMENT_METHODS,
+  type SavedPaymentMethod,
+} from '@justifi/types';
 
-export type { CheckoutState } from '../../store/checkout.store';
-
-export enum PAYMENT_MODE {
-  ECOM = 'ecom',
-  BNPL = 'bnpl',
-  APPLE_PAY = 'apple_pay',
-  GOOGLE_PAY = 'google_pay',
-}
-
-// Maps the backend payment method types to the frontend payment method types
 export enum PAYMENT_METHOD_TYPES {
   CARD = 'card',
   BANK_ACCOUNT = 'bank_account',
@@ -18,42 +12,6 @@ export enum PAYMENT_METHOD_TYPES {
   SEZZLE = 'sezzle',
   PLAID = 'plaid',
 }
-
-// Available payment methods for the modular checkout component (differentiates between saved and new payment methods)
-export enum PAYMENT_METHODS {
-  SAVED_CARD = 'saved_card',
-  NEW_CARD = 'new_card',
-  SAVED_BANK_ACCOUNT = 'saved_bank_account',
-  NEW_BANK_ACCOUNT = 'new_bank_account',
-  APPLE_PAY = 'apple_pay',
-  GOOGLE_PAY = 'google_pay',
-  SEZZLE = 'sezzle',
-  PLAID = 'plaid',
-}
-
-export type SelectedPaymentMethod = { id?: string; type: PAYMENT_METHODS };
-
-export type SavedPaymentMethod = {
-  id: string;
-  type: PAYMENT_METHODS;
-  status: string;
-  invalid_reason: null;
-  name: string;
-  brand: CardBrand;
-  acct_last_four: string;
-  account_type: string;
-  month: string;
-  year: string;
-  address_line1_check: string;
-  address_postal_code_check: string;
-  bin_details: null;
-};
-
-export type Hook<T = any> = (
-  data: T,
-  resolve: (data: T) => void,
-  reject: () => void,
-) => void;
 
 const mapPaymentMethodType = (type: PAYMENT_METHOD_TYPES): PAYMENT_METHODS => {
   switch (type) {
@@ -97,11 +55,4 @@ export class PaymentMethod implements SavedPaymentMethod {
     this.address_postal_code_check = paymentMethod.address_postal_code_check;
     this.bin_details = paymentMethod.bin_details;
   }
-}
-
-// Event detail payload for the checkout-changed event
-export interface CheckoutChangedEventDetail {
-  availablePaymentMethodTypes: PAYMENT_METHODS[];
-  selectedPaymentMethod: SelectedPaymentMethod | undefined;
-  savedPaymentMethods: SavedPaymentMethod[];
 }

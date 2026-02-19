@@ -8,7 +8,9 @@ import {
   Method,
   Prop,
 } from "@stencil/core";
-import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes, getCheckoutState, CheckoutState } from "../../store/checkout.store";
+import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes, getCheckoutState } from "../../store/checkout.store";
+import type { CheckoutState, CheckoutChangedEventDetail, SelectedPaymentMethod, Hook } from "@justifi/types";
+import { PAYMENT_MODE, PAYMENT_METHODS } from "@justifi/types";
 import JustifiAnalytics from "../../api/Analytics";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import {
@@ -26,7 +28,7 @@ import { CheckoutService } from "../../api/services/checkout.service";
 import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
-import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod, Hook } from "./ModularCheckout";
+import { PaymentMethod } from "./ModularCheckout";
 
 @Component({
   tag: "justifi-modular-checkout",

@@ -1,5 +1,5 @@
 import { getErrorCode, getErrorMessage } from '../../api/services/utils';
-import { ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorSeverity } from '@justifi/types';
 
 export const makeGetQuote = ({ authToken, service }) =>
   async ({ payload, onSuccess, onError }) => {

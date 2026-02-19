@@ -1,14 +1,12 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { BusinessFormStep, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentFormStepCompleteEvent } from '@justifi/types';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 import { Identity, Representative } from '../../../../api/Identity';
 import { FormController } from '../../../../ui-components/form/form';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { identitySchemaByCountry } from '../../schemas/business-identity-schema';
 import { CountryCode } from '../../../../utils/country-codes';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
-import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-business-representative-form-step'

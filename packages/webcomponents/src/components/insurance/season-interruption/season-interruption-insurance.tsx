@@ -1,10 +1,10 @@
 import { Component, Event, EventEmitter, Method, Prop, State, h } from '@stencil/core';
 import { InsuranceService } from '../../../api/services/insurance.service';
 import { makeGetQuote, makeToggleCoverage } from '../../../actions/insurance/insurance-actions';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../../api/Analytics';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
-import { ComponentErrorEvent } from '../../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 import { checkoutStore } from '../../../store/checkout.store';
 import { addAttribute, formatCurrency, processHTML, removeAttribute } from '../../../utils/utils';
 import { insuranceValues, insuranceErrors, validateInsuranceValues } from '../insurance-state';

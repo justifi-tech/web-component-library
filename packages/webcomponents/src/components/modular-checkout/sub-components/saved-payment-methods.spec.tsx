@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { SavedPaymentMethods } from './saved-payment-methods';
 import { checkoutStore } from '../../../store/checkout.store';
-import { PAYMENT_METHODS } from '../ModularCheckout';
+import { PAYMENT_METHODS } from '@justifi/types';
 
 describe('justifi-saved-payment-methods', () => {
   beforeEach(() => {

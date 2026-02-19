@@ -8,8 +8,7 @@ import { Button, Header1, StyledHost } from '../../../ui-components';
 import { CountryCode } from '../../../utils/country-codes';
 import { checkPkgVersion } from '../../../utils/check-pkg-version';
 import { BusinessFormLoading } from './business-form-loading';
-import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
-import { BusinessFormClickActions } from '../utils';
+import { BusinessFormClickActions, ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '@justifi/types';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning/payment-provisioning-actions';
 import { BusinessService } from '../../../api/services/business.service';
 

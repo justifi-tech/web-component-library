@@ -22,38 +22,21 @@ export {
   type GrossVolumeReport,
   type IQuote,
 
-  // Business types - interfaces and enums only (classes have local versions)
-  type IAddress,
+  // Document types - not in any local export * file
   type IDocument,
   type DocumentRecordData,
   EntityDocumentType,
   EntityDocumentStatus,
-  type Identity,
-  type IBusiness,
-  BusinessClassification,
-  type IAdditionalQuestions,
-  type ProductCategories,
-  type ICoreBusinessInfo,
-  BusinessFormServerErrors,
 
-  // Entity types - interfaces and enums only (classes have local versions)
-  type IDispute,
-  DisputeStatus,
-  type ISubAccount,
+  // SubAccount enums - kept here to win over AccountType collision in ./Checkout
   AccountType,
   AccountStatus,
-  type ITerminalModel,
-  TerminalModelName,
-  type ITerminal,
-  TerminalProviders,
-  ITerminalStatus,
-  TerminalsQueryParams,
-  type ITerminalOrder,
-  TerminalOrderStatus,
-  TerminalOrderType,
-  TerminalOrderQueryParams,
+
+  // TerminalOrder item interfaces - not exported by local ./TerminalOrder
   type OrderedTerminal,
   type TerminalOrderItem,
+
+  // PaymentMethod interfaces - not in any local export * file
   type ISavedPaymentMethod,
   type IPaymentMethodCard,
   type IPaymentMethodBankAccount,
@@ -69,7 +52,6 @@ export { CheckoutAccountType as BankAccountType } from '@justifi/types';
 
 // Component-specific exports (these stay in webcomponents)
 export { Api } from './Api';
-export * from './ComponentEvents';
 export * from './ComponentError';
 export * from './ApplePay';
 export * from './Pagination';
@@ -88,7 +70,8 @@ export * from './PaymentBalanceTransaction';
 export * from './PayoutBalanceTransaction';
 export * from './Refund';
 export * from './BankAccount';
-export * from './SubAccount';
+// Selective SubAccount export to avoid AccountType collision with ./Checkout
+export { SubAccount, type ISubAccount, type RelatedAccounts } from './SubAccount';
 export * from './Terminal';
 export * from './TerminalModel';
 export * from './TerminalOrder';

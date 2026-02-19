@@ -2,9 +2,10 @@ import { createStore } from '@stencil/store';
 import { BillingFormFields } from '../components';
 import {
   PAYMENT_METHODS,
-  SavedPaymentMethod,
-  SelectedPaymentMethod,
-} from '../components/modular-checkout/ModularCheckout';
+  type SavedPaymentMethod,
+  type SelectedPaymentMethod,
+  type CheckoutState,
+} from '@justifi/types';
 
 interface IInitialState {
   accountId: string;
@@ -35,23 +36,6 @@ interface IInitialState {
   totalAmount: number;
   plaidPublicToken?: string;
   plaidLinkTokenId?: string;
-}
-
-export interface CheckoutState {
-  selectedPaymentMethod: SelectedPaymentMethod | undefined;
-  paymentAmount: number;
-  totalAmount: number;
-  paymentCurrency: string;
-  paymentDescription: string;
-  savedPaymentMethods: SavedPaymentMethod[];
-  savePaymentMethod: boolean;
-  bnplEnabled: boolean;
-  applePayEnabled: boolean;
-  insuranceEnabled: boolean;
-  disableBankAccount: boolean;
-  disableCreditCard: boolean;
-  disablePaymentMethodGroup: boolean;
-  paymentToken?: string;
 }
 
 const initialState: IInitialState = {
@@ -105,10 +89,10 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
     checkoutStore.paymentMethods?.length
   ) {
     const hasSavedCard = checkoutStore.paymentMethods.some(
-      (pm) => pm.type === PAYMENT_METHODS.SAVED_CARD
+      (pm) => pm.type === PAYMENT_METHODS.SAVED_CARD,
     );
     const hasSavedBank = checkoutStore.paymentMethods.some(
-      (pm) => pm.type === PAYMENT_METHODS.SAVED_BANK_ACCOUNT
+      (pm) => pm.type === PAYMENT_METHODS.SAVED_BANK_ACCOUNT,
     );
 
     if (hasSavedCard && !checkoutStore.disableCreditCard) {
@@ -178,7 +162,7 @@ export { checkoutStore as checkoutStore, onChange };
 // The callback is invoked for every key defined in the initial state whenever it changes.
 type StoreKey = keyof typeof initialState;
 export function onAnyChange(
-  callback: (key: StoreKey, value: (typeof initialState)[StoreKey]) => void
+  callback: (key: StoreKey, value: (typeof initialState)[StoreKey]) => void,
 ): void {
   (Object.keys(initialState) as StoreKey[]).forEach((key) => {
     // @ts-ignore - onChange is generically typed by stencil/store but not exported here

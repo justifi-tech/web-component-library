@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Prop, State } from "@stencil/core";
 import { StyledHost } from "../../ui-components";
 import { checkPkgVersion } from "../../utils/check-pkg-version";
 import JustifiAnalytics from "../../api/Analytics";
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import { BusinessService } from "../../api/services/business.service";
 import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";

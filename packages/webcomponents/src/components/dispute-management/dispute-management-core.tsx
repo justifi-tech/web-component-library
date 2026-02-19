@@ -1,7 +1,7 @@
 import { Component, Prop, Event, EventEmitter, h, Listen, State, Watch } from "@stencil/core";
-import { DisputeManagementClickActions } from "./event-types";
+import { DisputeManagementClickActions } from '@justifi/types';
 import { Dispute, DisputeStatus } from "../../api/Dispute";
-import { ComponentErrorEvent } from "../../api/ComponentEvents";
+import { ComponentErrorEvent } from '@justifi/types';
 
 @Component({
   tag: 'justifi-dispute-management-core',

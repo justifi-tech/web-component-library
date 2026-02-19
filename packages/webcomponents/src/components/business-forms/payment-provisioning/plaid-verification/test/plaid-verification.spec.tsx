@@ -2,8 +2,8 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { PlaidVerification } from '../plaid-verification';
 import { PlaidService } from '../../../../../api/services/plaid.service';
-import { PlaidErrorCodes, PLAID_ERROR_MESSAGES } from '../../../../../api/Plaid';
-import { ComponentErrorSeverity } from '../../../../../api/ComponentError';
+import { PLAID_ERROR_MESSAGES } from '../../../../../api/Plaid';
+import { ComponentErrorSeverity, PlaidErrorCodes } from '@justifi/types';
 
 // Mock PlaidService
 jest.mock('../../../../../api/services/plaid.service');

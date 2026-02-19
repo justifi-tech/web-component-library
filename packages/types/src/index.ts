@@ -9,3 +9,6 @@ export * from './business';
 
 // Entity Classes
 export * from './entities';
+
+// Component Types
+export * from './components';

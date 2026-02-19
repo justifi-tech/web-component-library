@@ -1,12 +1,12 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPayments } from '../../actions/payment/get-payments';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '@justifi/types';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { StyledHost } from '../../ui-components';
 import { defaultColumnsKeys } from './payments-table';
-import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { ComponentErrorEvent } from '@justifi/types';
 
 @Component({
   tag: 'justifi-payments-list',

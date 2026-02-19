@@ -7,8 +7,8 @@ import {
   ComponentFormStepCompleteEvent,
   ComponentSubmitEvent,
   ComponentErrorEvent
-} from "../../../api/ComponentEvents";
-import { DisputeManagementClickActions, DisputeResponseFormStep } from "../event-types";
+} from '@justifi/types';
+import { DisputeManagementClickActions, DisputeResponseFormStep } from '@justifi/types';
 import { heading4 } from "../../../styles/parts";
 import { Button } from "../../../ui-components/button";
 

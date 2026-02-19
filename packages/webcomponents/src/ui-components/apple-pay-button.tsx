@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from "@stencil/core";
-import { ApplePayButtonType, ApplePayButtonStyle } from "../api/ApplePay";
+import { ApplePayButtonType, ApplePayButtonStyle } from "@justifi/types";
 
 interface ApplePayButtonProps {
   buttonType?: ApplePayButtonType;

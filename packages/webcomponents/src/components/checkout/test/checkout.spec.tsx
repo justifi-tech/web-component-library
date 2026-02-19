@@ -3,7 +3,7 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 import { newSpecPage } from '@stencil/core/testing';
 import { Checkout } from '../checkout';
 import JustifiAnalytics from '../../../api/Analytics';
-import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
+import { PAYMENT_METHODS } from '@justifi/types';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements

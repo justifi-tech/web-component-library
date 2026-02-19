@@ -1,13 +1,12 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
+import { BusinessFormStep, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentFormStepCompleteEvent } from '@justifi/types';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
 import { CountryCode } from '../../../../utils/country-codes';
 import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from '../../schemas/business-core-info-schema';
 import { FormController } from '../../../../ui-components/form/form';
 import { CoreBusinessInfo, ICoreBusinessInfo } from '../../../../api/Business';
-import { BusinessFormStep, businessClassificationOptions } from '../../utils';
+import { businessClassificationOptions } from '../../utils';
 import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';

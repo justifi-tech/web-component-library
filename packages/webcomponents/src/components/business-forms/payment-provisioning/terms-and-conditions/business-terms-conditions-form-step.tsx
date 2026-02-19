@@ -1,12 +1,10 @@
 import { Component, h, Prop, State, Method, Event, EventEmitter } from '@stencil/core';
 import { FormController } from '../../../../ui-components/form/form';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { BusinessFormStep, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentFormStepCompleteEvent } from '@justifi/types';
 import { businessTermsConditionsSchema } from '../../schemas/business-terms-conditions-schema';
 import { Api, IApiResponse } from '../../../../api';
 import { IBusiness } from '../../../../api/Business';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { heading2 } from '../../../../styles/parts';
-import { BusinessFormStep } from '../../utils';
 
 @Component({
   tag: 'justifi-business-terms-conditions-form-step'

@@ -5,6 +5,7 @@ import { ComponentClickEvent, ComponentErrorEvent, pagingDefaults, PagingInfo } 
 import { terminalOrdersTableCells, terminalOrdersTableColumns } from './terminal-orders-table';
 import { TerminalOrder } from '../../api';
 import { getRequestParams, onQueryParamsChange } from './terminal-orders-list-params-state';
+import { TableClickActions } from '@justifi/types';
 import {
   TableWrapper,
   TableComponent,
@@ -15,7 +16,6 @@ import {
   TableFoot,
   TableFootRow,
   TableFootCell,
-  TableClickActions
 } from '../../ui-components';
 
 @Component({
