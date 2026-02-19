@@ -22,7 +22,14 @@ export const button = `button ${text}`;
 export const buttonPrimary = `button-primary ${button}`;
 export const buttonSecondary = `button-secondary ${button}`;
 export const buttonDanger = `button-danger ${button}`;
+export const buttonSuccess = `button-success ${button}`;
+export const buttonWarning = `button-warning ${button}`;
+export const buttonInfo = `button-info ${button}`;
+export const buttonLight = `button-light ${button}`;
+export const buttonDark = `button-dark ${button}`;
 export const buttonLink = `button-link ${button}`;
+export const buttonOutlinePrimary = `button-outline-primary ${button}`;
+export const buttonOutlineSecondary = `button-outline-secondary ${button}`;
 export const buttonLoading = `button-loading`;
 export const buttonDisabled = `button-disabled ${button}`;
 
@@ -135,6 +142,9 @@ export const paymentsListFilterParam = `payments-list-filter-param`;
 export const paymentIdPaymentsListFilterParam = `${paymentsListFilterParam} payment-id-payments-list-filter-param`;
 export const terminalIdPaymentsListFilterParam = `${paymentsListFilterParam} terminal-id-payments-list-filter-param`;
 export const paymentStatusPaymentsListFilterParam = `${paymentsListFilterParam} payment-status-payments-list-filter-param`;
+export const paymentModePaymentsListFilterParam = `${paymentsListFilterParam} payment-mode-payments-list-filter-param`;
+export const checkoutIdPaymentsListFilterParam = `${paymentsListFilterParam} checkout-id-payments-list-filter-param`;
+export const accountHolderPaymentsListFilterParam = `${paymentsListFilterParam} account-holder-payments-list-filter-param`;
 export const createdAfterPaymentsListFilterParam = `${paymentsListFilterParam} created-after-payments-list-filter-param`;
 export const createdBeforePaymentsListFilterParam = `${paymentsListFilterParam} created-before-payments-list-filter-param`;
 
@@ -142,6 +152,7 @@ export const createdBeforePaymentsListFilterParam = `${paymentsListFilterParam} 
 
 export const payoutsListFilterMenu = `${filterMenu} payouts-list-filter-menu`;
 export const payoutsListFilterParam = `payouts-list-filter-param`;
+export const statusPayoutsListFilterParam = `${payoutsListFilterParam} status-payouts-list-filter-param`;
 export const createdAfterPayoutsListFilterParam = `${payoutsListFilterParam} created-after-payouts-list-filter-param`;
 export const createdBeforePayoutsListFilterParam = `${payoutsListFilterParam} created-before-payouts-list-filter-param`;
 
@@ -160,6 +171,8 @@ export const terminalsListFilterParam = `terminals-list-filter-param`;
 export const terminalIdTerminalsListFilterParam = `${terminalsListFilterParam} terminal-id-terminals-list-filter-param`;
 export const terminalOrderIdTerminalsListFilterParam = `${terminalsListFilterParam} terminal-order-id-terminals-list-filter-param`;
 export const terminalStatusTerminalsListFilterParam = `${terminalsListFilterParam} terminal-status-terminals-list-filter-param`;
+export const createdAfterTerminalsListFilterParam = `${terminalsListFilterParam} created-after-terminals-list-filter-param`;
+export const createdBeforeTerminalsListFilterParam = `${terminalsListFilterParam} created-before-terminals-list-filter-param`;
 
 // Terminal Orders List Filters
 export const terminalOrdersListFilterMenu = `${filterMenu} terminal-orders-list-filter-menu`;

@@ -5,6 +5,7 @@ import { formatCurrency } from '../utils/utils';
 export interface PayoutsQueryParams {
   created_after?: string;
   created_before?: string;
+  status?: string;
 };
 
 export enum PayoutStatuses {

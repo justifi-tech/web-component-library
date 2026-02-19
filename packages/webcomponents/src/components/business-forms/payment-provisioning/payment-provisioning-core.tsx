@@ -8,6 +8,8 @@ import { BusinessFormClickActions } from '../utils/event-types';
 import { CountryCode } from '../../../utils/country-codes';
 import { Business } from '../../../api/Business';
 import { PaymentProvisioningLoading } from './payment-provisioning-loading';
+import { PaymentProvisioningAlreadyProvisioned } from './payment-provisioning-already-provisioned';
+import { PaymentProvisioningSubmissionComplete } from './payment-provisioning-submission-complete';
 
 @Component({
   tag: 'justifi-payment-provisioning-core',
@@ -16,6 +18,7 @@ export class PaymentProvisioningCore {
   @State() loading: boolean = false;
   @State() businessLoading: boolean = true;
   @State() businessProvisioned: boolean = false;
+  @State() formSubmitted: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
   @State() country: CountryCode = CountryCode.USA;
@@ -86,6 +89,7 @@ export class PaymentProvisioningCore {
   postProvisioningData = () => {
     this.postProvisioning({
       onSuccess: (response) => {
+        this.formSubmitted = true;
         this.submitEvent.emit({ response: response });
       },
       onError: ({ error, code, severity }) => {
@@ -151,6 +155,7 @@ export class PaymentProvisioningCore {
   }
 
   render() {
+    // State 1: Loading
     if (this.businessLoading) {
       return (
         <StyledHost>
@@ -159,6 +164,25 @@ export class PaymentProvisioningCore {
       );
     }
 
+    // State 2: Already Provisioned
+    if (this.businessProvisioned) {
+      return (
+        <StyledHost>
+          <PaymentProvisioningAlreadyProvisioned />
+        </StyledHost>
+      );
+    }
+
+    // State 3: Submission Complete
+    if (this.formSubmitted) {
+      return (
+        <StyledHost>
+          <PaymentProvisioningSubmissionComplete />
+        </StyledHost>
+      );
+    }
+
+    // State 4: Form Steps (default)
     return (
       <StyledHost>
         <div class='row gap-3'>

@@ -36,7 +36,7 @@ describe('terminals-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
+      primaryAccountId: '123',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -71,7 +71,7 @@ describe('terminals-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
+      primaryAccountId: '123',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -103,7 +103,7 @@ describe('terminals-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
+      primaryAccountId: '123',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -141,7 +141,7 @@ describe('terminals-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
+      primaryAccountId: '123',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -185,7 +185,7 @@ describe('terminals-list-core pagination', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: '123',
+      primaryAccountId: '123',
       authToken: '123',
       service: mockSubAccountsService
     });

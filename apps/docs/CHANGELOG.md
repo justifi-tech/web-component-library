@@ -1,5 +1,63 @@
 # @repo/docs
 
+## 0.4.20
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.10.4
+
+## 0.4.19
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.10.3
+
+## 0.4.18
+
+### Patch Changes
+
+- Updated dependencies [bbb495f]
+  - @justifi/webcomponents@6.10.2
+
+## 0.4.17
+
+### Patch Changes
+
+- Updated dependencies [3406f47]
+- Updated dependencies [b37b70b]
+  - @justifi/webcomponents@6.10.1
+
+## 0.4.16
+
+### Patch Changes
+
+- Updated dependencies [d69a93c]
+- Updated dependencies [3ef304c]
+- Updated dependencies [8c2e3d1]
+- Updated dependencies [47b454f]
+- Updated dependencies [05fb036]
+- Updated dependencies [ca0e302]
+- Updated dependencies [2a5cbbe]
+  - @justifi/webcomponents@6.10.0
+
+## 0.4.15
+
+### Patch Changes
+
+- Updated dependencies [79c1fac]
+- Updated dependencies [aea215b]
+- Updated dependencies [aea215b]
+  - @justifi/webcomponents@6.9.0
+
+## 0.4.14
+
+### Patch Changes
+
+- Updated dependencies [85a8312]
+  - @justifi/webcomponents@6.8.1
+
 ## 0.4.13
 
 ### Patch Changes

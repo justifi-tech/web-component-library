@@ -121,8 +121,15 @@ export class BusinessCoreInfoFormStep {
         // after successful patch, revert back to read-only for tax id
         this.isEditingTaxId = false;
       },
-      onError: ({ error, code, severity }) => {
+      onError: ({ error, code, severity, rawError }) => {
         submittedData = error;
+
+        // Set field-specific error if param exists
+        if (rawError && typeof rawError === 'object' && rawError.param) {
+          this.formController.setFieldError(rawError.param, rawError.message);
+        }
+
+        // Still emit component-level error
         this.errorEvent.emit({
           message: error,
           errorCode: code,
@@ -137,6 +144,11 @@ export class BusinessCoreInfoFormStep {
   }
 
   inputHandler = (name: string, value: string) => {
+    // Clear backend error when user edits field
+    if (this.errors[name]) {
+      this.formController.clearFieldError(name);
+    }
+
     this.formController.setValues({
       ...this.formController.values.getValue(),
       [name]: value,
@@ -158,7 +170,7 @@ export class BusinessCoreInfoFormStep {
           </div>
           <hr class="mt-2" />
           <div class="row gy-3">
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <form-control-text
                 name="legal_name"
                 label="Business Name"
@@ -168,7 +180,7 @@ export class BusinessCoreInfoFormStep {
                 helpText="Enter this exactly as it appears on your tax records (don't use acronyms or abbreviations unless you registered that way)."
               />
             </div>
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <form-control-text
                 name="doing_business_as"
                 label="Doing Business As (DBA)"

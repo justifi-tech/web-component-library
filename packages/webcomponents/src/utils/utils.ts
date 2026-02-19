@@ -243,3 +243,32 @@ export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+// JWT Token Utilities
+
+function decodeJwt(token: string): any {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      throw new Error('Invalid JWT');
+    }
+
+    const payload = parts[1];
+    const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+    return JSON.parse(decoded);
+  } catch (e) {
+    throw new Error('Invalid JWT');
+  }
+}
+export function isTokenExpired(token: string): boolean {
+  try {
+    const payload = decodeJwt(token);
+    if (!payload.exp) {
+      return true; // Treat missing exp as expired
+    }
+
+    return payload.exp * 1000 < Date.now();
+  } catch (e) {
+    return true; // Treat invalid token as expired
+  }
+}
+

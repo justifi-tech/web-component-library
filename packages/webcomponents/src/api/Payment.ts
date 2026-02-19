@@ -303,6 +303,9 @@ export interface PaymentsQueryParams {
   payment_id?: string;
   terminal_id?: string;
   payment_status?: PaymentStatuses;
+  payment_mode?: string;
+  checkout_id?: string;
+  account_holder?: string;
   created_after?: string;
   created_before?: string;
 }

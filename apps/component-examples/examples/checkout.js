@@ -1,66 +1,34 @@
-require('dotenv').config({ path: '../../.env' });
-const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
+const express = require("express");
+const { API_PATHS } = require("../utils/api-paths");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { startStandaloneServer } = require("../utils/standalone-server");
 
-const app = express();
-const port = process.env.PORT || 3000;
-const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
-const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
-const subAccountId = process.env.SUB_ACCOUNT_ID;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
-
-app.use(
-  '/scripts',
-  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
-);
-app.use('/styles', express.static(__dirname + '/../css/'));
-
-async function getToken() {
-  const requestBody = JSON.stringify({
-    client_id: clientId,
-    client_secret: clientSecret,
-  });
-
-  let response;
-  try {
-    response = await fetch(authTokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestBody,
-    });
-  } catch (error) {
-    console.log('ERROR:', error);
-  }
-
-  const responseJson = await response.json();
-  const { access_token } = responseJson;
-  return access_token;
-}
+const router = express.Router();
 
 async function makeCheckout(token) {
+  const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
+  const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
+  const port = process.env.PORT || 3000;
+
   let response;
   try {
     response = await fetch(checkoutEndpoint, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        'Sub-Account': subAccountId,
+        "Sub-Account": subAccountId,
       },
       body: JSON.stringify({
         amount: 1799,
-        description: 'One Chocolate Donut',
+        description: "One Chocolate Donut",
         payment_method_group_id: paymentMethodGroupId,
         origin_url: `localhost:${port}`,
       }),
     });
   } catch (error) {
-    console.log('ERROR:', error);
+    console.log("ERROR:", error);
   }
 
   const responseJson = await response.json();
@@ -68,30 +36,16 @@ async function makeCheckout(token) {
   return data;
 }
 
-async function getWebComponentToken(token, checkoutId) {
-  const response = await fetch(webComponentTokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      resources: [
-        `write:checkout:${checkoutId}`,
-        `write:tokenize:${subAccountId}`,
-      ],
-    }),
-  });
+router.get("/", async (req, res) => {
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
 
-  const responseJson = await response.json();
-  const { access_token } = responseJson;
-  return access_token;
-}
-
-app.get('/', async (req, res) => {
   const token = await getToken();
   const checkout = await makeCheckout(token);
-  const webComponentToken = await getWebComponentToken(token, checkout.id);
+  const resources = [
+    `write:checkout:${checkout.id}`,
+    `write:tokenize:${subAccountId}`,
+  ];
+  const webComponentToken = await getWebComponentToken(token, resources);
 
   const disableBankAccount = false;
   const disableCreditCard = false;
@@ -99,12 +53,12 @@ app.get('/', async (req, res) => {
   const hideBankAccountBillingForm = false;
 
   const billingFormFields = {
-    name: 'John Doe',
-    address_line1: 'Main St',
-    address_line2: 'Apt 1',
-    address_city: 'Beverly Hills',
-    address_state: 'CA',
-    address_postal_code: '90210',
+    name: "John Doe",
+    address_line1: "Main St",
+    address_line2: "Apt 1",
+    address_city: "Beverly Hills",
+    address_state: "CA",
+    address_postal_code: "90210",
   };
 
   res.send(`
@@ -118,8 +72,8 @@ app.get('/', async (req, res) => {
       </head>
       <body class="two-column-layout">
         <div class="column-preview">
-          <justifi-checkout 
-            auth-token="${webComponentToken}" 
+          <justifi-checkout
+            auth-token="${webComponentToken}"
             checkout-id="${checkout.id}"
             disable-bank-account="${disableBankAccount}"
             disable-credit-card="${disableCreditCard}"
@@ -131,6 +85,7 @@ app.get('/', async (req, res) => {
           <button id="test-validate-button" hidden>Test Validate</button>
         </div>
         <div class="column-output" id="output-pane"><em>Checkout output will appear here...</em></div>
+        <div id="checkout-changed-pane" hidden></div>
       </body>
       <script>
         const justifiCheckout = document.querySelector('justifi-checkout');
@@ -144,27 +99,27 @@ app.get('/', async (req, res) => {
         // Assign function as a DOM property (functions cannot be passed via HTML attributes)
         justifiCheckout.preCompleteHook = preCompleteHook;
 
-        function writeOutputToPage(event) {
-          document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
+        function writeOutputToPage(elementId, event) {
+          document.getElementById(elementId).innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
         }
 
         justifiCheckout.addEventListener('submit-event', (event) => {
           console.log(event);
-          writeOutputToPage(event);
+          writeOutputToPage('output-pane', event);
         });
 
         justifiCheckout.addEventListener('error-event', (event) => {
           console.log(event);
-          writeOutputToPage(event);
+          writeOutputToPage('output-pane', event);
         });
-        
+
         fillBillingFormButton.addEventListener('click', () => {
           justifiCheckout.fillBillingForm(${JSON.stringify(billingFormFields)});
         });
 
         justifiCheckout.addEventListener('checkout-changed', (event) => {
           console.log('Checkout changed', event);
-          writeOutputToPage(event);
+          writeOutputToPage('checkout-changed-pane', event);
         });
 
         testValidateButton.addEventListener('click', async () => {
@@ -176,6 +131,8 @@ app.get('/', async (req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = router;
+
+if (require.main === module) {
+  startStandaloneServer(router);
+}
