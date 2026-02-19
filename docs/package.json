@@ -65,7 +65,7 @@
     "remark-frontmatter": "^4.0.1"
   },
   "peerDependencies": {
-    "@justifi/webcomponents": ">=6.10.3",
+    "@justifi/webcomponents": ">=6.10.4",
     "react": "^17.0.0 || ^18.0.0"
   }
 }
