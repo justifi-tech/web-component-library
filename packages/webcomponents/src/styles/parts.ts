@@ -22,7 +22,14 @@ export const button = `button ${text}`;
 export const buttonPrimary = `button-primary ${button}`;
 export const buttonSecondary = `button-secondary ${button}`;
 export const buttonDanger = `button-danger ${button}`;
+export const buttonSuccess = `button-success ${button}`;
+export const buttonWarning = `button-warning ${button}`;
+export const buttonInfo = `button-info ${button}`;
+export const buttonLight = `button-light ${button}`;
+export const buttonDark = `button-dark ${button}`;
 export const buttonLink = `button-link ${button}`;
+export const buttonOutlinePrimary = `button-outline-primary ${button}`;
+export const buttonOutlineSecondary = `button-outline-secondary ${button}`;
 export const buttonLoading = `button-loading`;
 export const buttonDisabled = `button-disabled ${button}`;
 

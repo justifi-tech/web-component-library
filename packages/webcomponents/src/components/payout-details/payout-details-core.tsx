@@ -127,7 +127,7 @@ export class PayoutDetailsCore {
               />
               <EntityHeadInfoItem title="ID" value={this.payout.id} />
               <div class="m-4">
-                <Button variant="secondary" class="btn btn-outline-secondary d-flex align-items-center" onClick={this.downloadCSV}>
+                <Button variant="outline-secondary" class="btn btn-outline-secondary d-flex align-items-center" onClick={this.downloadCSV}>
                   Export CSV
                 </Button>
               </div>

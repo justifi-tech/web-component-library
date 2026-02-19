@@ -441,6 +441,7 @@ export class BusinessBankAccountFormStep {
           <Button
             type="button"
             variant="link"
+            className="p-0"
             onClick={this.handleToggleToManualEntry}
             disabled={this.isLoading}
             part={buttonLink}
