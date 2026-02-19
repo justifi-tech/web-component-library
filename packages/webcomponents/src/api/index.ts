@@ -46,22 +46,18 @@ export {
   type IDispute,
   Dispute,
   DisputeStatus,
-
   type ISubAccount,
   SubAccount,
   AccountType,
   AccountStatus,
-
   type ITerminalModel,
   TerminalModel,
   TerminalModelName,
-
   type ITerminal,
   Terminal,
   TerminalProviders,
   ITerminalStatus,
   TerminalsQueryParams,
-
   type ITerminalOrder,
   TerminalOrder,
   TerminalOrderStatus,
@@ -69,7 +65,6 @@ export {
   TerminalOrderQueryParams,
   type OrderedTerminal,
   type TerminalOrderItem,
-
   type ISavedPaymentMethod,
   type IPaymentMethodCard,
   type IPaymentMethodBankAccount,
@@ -88,7 +83,6 @@ export { Api } from './Api';
 export * from './ComponentEvents';
 export * from './ComponentError';
 export * from './ApplePay';
-export * from './GooglePay';
 export * from './Pagination';
 export * from './DisputeEvidenceDocument';
 export * from './Business';

@@ -4,6 +4,8 @@ export interface TerminalsQueryParams {
   terminal_id?: string;
   terminal_order_id?: string;
   status?: string;
+  created_after?: string;
+  created_before?: string;
 }
 
 export enum ITerminalStatus {
