@@ -4,14 +4,7 @@ import { ICheckoutPaymentModeParam, ICheckoutStatus } from '../../api';
 import { filterParams, propsParams, clearParams } from './checkouts-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
-import {
-  checkoutsListFilterMenu,
-  paymentModeCheckoutsListFilterParam,
-  statusCheckoutsListFilterParam,
-  checkoutIdCheckoutsListFilterParam,
-  createdAfterCheckoutsListFilterParam,
-  createdBeforeCheckoutsListFilterParam
-} from '../../styles/parts';
+import { filterMenu, filterParam } from '../../styles/parts';
 
 @Component({
   tag: 'justifi-checkouts-list-filters',
@@ -78,7 +71,7 @@ export class CheckoutsListFilters {
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={checkoutsListFilterMenu}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={filterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-text
@@ -87,7 +80,7 @@ export class CheckoutsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.checkoutId || filterParams.checkout_id}
                 disabled={!!this.checkoutId}
-                part={checkoutIdCheckoutsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -98,7 +91,7 @@ export class CheckoutsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.checkoutStatus || filterParams.status || ''}
                 disabled={!!this.checkoutStatus}
-                part={statusCheckoutsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -109,7 +102,7 @@ export class CheckoutsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.paymentMode || filterParams.payment_mode || ''}
                 disabled={!!this.paymentMode}
-                part={paymentModeCheckoutsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -123,7 +116,7 @@ export class CheckoutsListFilters {
                 }
                 showTime
                 disabled={!!this.createdAfter}
-                part={createdAfterCheckoutsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -137,7 +130,7 @@ export class CheckoutsListFilters {
                 }
                 showTime
                 disabled={!!this.createdBefore}
-                part={createdBeforeCheckoutsListFilterParam}
+                part={filterParam}
               />
             </div>
           </div>
