@@ -1,13 +1,13 @@
 import { Component, Prop, h } from '@stencil/core';
 import { DetailItem, DetailSectionTitle } from '../../../ui-components/details/utils';
 import { formatMediumDate, isEmptyObject } from '../../../utils/utils';
-import { Identity } from '../../../api/Identity';
+import { IIdentity } from '@justifi/types';
 
 @Component({
   tag: 'representative-details',
 })
 export class JustifiRepresentativeDetails {
-  @Prop() representative!: Identity;
+  @Prop() representative!: IIdentity;
 
   render() {
     if (!this.representative || isEmptyObject(this.representative)) return null;

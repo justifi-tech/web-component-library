@@ -2,7 +2,7 @@ import { Api, IApiResponse } from '../Api';
 import { type DocumentRecordData } from '../Document';
 import { type IBankAccount } from '../BankAccount';
 import { type IBusiness } from '../Business';
-import { type Identity } from '../Identity';
+import { type IIdentity } from '@justifi/types';
 
 const api = Api();
 
@@ -44,25 +44,25 @@ export interface IdentityService {
   fetchIdentity(
     identityId: string,
     authToken: string
-  ): Promise<IApiResponse<Identity>>;
+  ): Promise<IApiResponse<IIdentity>>;
 
   patchIdentity(
     authToken: string,
     identityId: string,
-    payload: Partial<Identity>
-  ): Promise<IApiResponse<Identity>>;
+    payload: Partial<IIdentity>
+  ): Promise<IApiResponse<IIdentity>>;
 
   postIdentity(
     authToken: string,
-    payload: Partial<Identity>
-  ): Promise<IApiResponse<Identity>>;
+    payload: Partial<IIdentity>
+  ): Promise<IApiResponse<IIdentity>>;
 }
 
 export class IdentityService implements IdentityService {
   async fetchIdentity(
     identityId: string,
     authToken: string
-  ): Promise<IApiResponse<Identity>> {
+  ): Promise<IApiResponse<IIdentity>> {
     const endpoint = `entities/identity/${identityId}`;
     return api.get({ endpoint, authToken });
   }
@@ -70,8 +70,8 @@ export class IdentityService implements IdentityService {
   async patchIdentity(
     authToken: string,
     identityId: string,
-    payload: Partial<Identity>
-  ): Promise<IApiResponse<Identity>> {
+    payload: Partial<IIdentity>
+  ): Promise<IApiResponse<IIdentity>> {
     const endpoint = `entities/identity/${identityId}`;
     const body = payload;
     return api.patch({ endpoint, body, authToken });
@@ -79,8 +79,8 @@ export class IdentityService implements IdentityService {
 
   async postIdentity(
     authToken: string,
-    payload: Partial<Identity>
-  ): Promise<IApiResponse<Identity>> {
+    payload: Partial<IIdentity>
+  ): Promise<IApiResponse<IIdentity>> {
     const endpoint = `entities/identity`;
     const body = payload;
     return api.post({ endpoint, body, authToken });

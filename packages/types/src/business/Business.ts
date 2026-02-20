@@ -1,4 +1,4 @@
-import { Identity } from './Identity';
+import { IIdentity } from './Identity';
 import { IDocument } from './Document';
 import { IAddress } from './Address';
 import { CountryCode } from '../utils/country-codes';
@@ -64,11 +64,11 @@ export interface IBusiness {
   legal_address?: IAddress | null;
   legal_name: string;
   metadata: unknown;
-  owners: Identity[];
+  owners: IIdentity[];
   phone: string;
   platform_account_id: string;
   product_categories: ProductCategories;
-  representative?: Identity | null;
+  representative?: IIdentity | null;
   tax_id: string;
   tax_id_last4: string;
   terms_conditions_accepted: boolean;

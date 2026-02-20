@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property              | Attribute | Description | Type         | Default     |
-| --------------------- | --------- | ----------- | ------------ | ----------- |
-| `owners` _(required)_ | --        |             | `Identity[]` | `undefined` |
+| Property              | Attribute | Description | Type          | Default     |
+| --------------------- | --------- | ----------- | ------------- | ----------- |
+| `owners` _(required)_ | --        |             | `IIdentity[]` | `undefined` |
 
 
 ## Dependencies

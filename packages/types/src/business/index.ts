@@ -7,7 +7,7 @@ export {
   type DocumentRecordData,
 } from './Document';
 
-export { type Identity } from './Identity';
+export { type IIdentity } from './Identity';
 
 export {
   BusinessFormServerErrors,

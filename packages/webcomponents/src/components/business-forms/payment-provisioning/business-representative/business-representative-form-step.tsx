@@ -2,7 +2,8 @@ import { Component, h, Prop, State, Method, Event, EventEmitter, Watch } from '@
 import { BusinessFormStep, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, ComponentFormStepCompleteEvent } from '@justifi/types';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { Identity, Representative } from '../../../../api/Identity';
+import { IIdentity } from '@justifi/types';
+import { Representative } from '../../../../api/Identity';
 import { FormController } from '../../../../ui-components/form/form';
 import { identitySchemaByCountry } from '../../schemas/business-identity-schema';
 import { CountryCode } from '../../../../utils/country-codes';
@@ -16,7 +17,7 @@ export class BusinessRepresentativeFormStep {
   @State() patchBusiness: Function;
   @State() formController: FormController;
   @State() errors: any = {};
-  @State() representative: Identity = {};
+  @State() representative: IIdentity = {};
   @State() isLoading: boolean = false;
 
   @Prop() authToken!: string;

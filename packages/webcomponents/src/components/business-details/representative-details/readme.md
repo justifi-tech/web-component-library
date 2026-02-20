@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property                      | Attribute | Description | Type       | Default     |
-| ----------------------------- | --------- | ----------- | ---------- | ----------- |
-| `representative` _(required)_ | --        |             | `Identity` | `undefined` |
+| Property                      | Attribute | Description | Type        | Default     |
+| ----------------------------- | --------- | ----------- | ----------- | ----------- |
+| `representative` _(required)_ | --        |             | `IIdentity` | `undefined` |
 
 
 ## Dependencies

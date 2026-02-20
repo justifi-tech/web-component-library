@@ -4,13 +4,13 @@ import {
   DetailSectionTitle,
 } from "../../../ui-components/details/utils";
 import { formatMediumDate } from "../../../utils/utils";
-import { Identity } from "../../../api/Identity";
+import { IIdentity } from '@justifi/types';
 
 @Component({
   tag: "owner-details",
 })
 export class OwnerDetails {
-  @Prop() owners!: Identity[];
+  @Prop() owners!: IIdentity[];
 
   render() {
     if (!this?.owners?.length) return null;

@@ -1,7 +1,7 @@
 import { IAddress } from './Address';
 import { IDocument } from './Document';
 
-export interface Identity {
+export interface IIdentity {
   address?: IAddress;
   created_at?: string;
   dob_day?: string;
@@ -17,6 +17,7 @@ export interface Identity {
   phone?: string;
   platform_account_id?: string;
   identification_number?: string;
+  ownership_percentage?: string;
   ssn_last4?: string;
   title?: string;
   updated_at?: string;

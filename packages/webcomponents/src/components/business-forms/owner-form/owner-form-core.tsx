@@ -1,6 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
-import { Identity, Owner } from '../../../api/Identity';
+import { IIdentity } from '@justifi/types';
+import { Owner } from '../../../api/Identity';
 import { ComponentClickEvent, ComponentErrorEvent } from '@justifi/types';
 import { identitySchemaByCountry } from '../schemas/business-identity-schema';
 import { Button } from '@ui-components/button';
@@ -176,7 +177,7 @@ export class BusinessOwnerFormCore {
     });
   }
 
-  instantiateOwner = async (data: Identity) => {
+  instantiateOwner = async (data: IIdentity) => {
     this.owner = { ...new Owner(data) } as Owner;
     await this.formController.setInitialValues(this.owner);
   }

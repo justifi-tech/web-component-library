@@ -1,4 +1,5 @@
-import { Identity, Representative } from './Identity';
+import { IIdentity } from '@justifi/types';
+import { Representative } from './Identity';
 import { IDocument } from './Document';
 import { IBankAccount } from './BankAccount';
 import { getStateAbbreviation } from '../components/business-forms/utils/helpers';
@@ -204,11 +205,11 @@ export interface IBusiness {
   legal_address?: IAddress | null;
   legal_name: string;
   metadata: any;
-  owners: Identity[];
+  owners: IIdentity[];
   phone: string;
   platform_account_id: string;
   product_categories: ProductCategories;
-  representative?: Identity | null;
+  representative?: IIdentity | null;
   tax_id: string;
   tax_id_last4: string;
   terms_conditions_accepted: boolean;
@@ -233,10 +234,10 @@ export class Business implements IBusiness {
   public legal_address?: Address | null;
   public legal_name: string;
   public metadata: any;
-  public owners: Identity[];
+  public owners: IIdentity[];
   public phone: string;
   public platform_account_id: string;
-  public representative?: Identity | null;
+  public representative?: IIdentity | null;
   public tax_id: string;
   public tax_id_last4: string;
   public terms_conditions_accepted: boolean;
