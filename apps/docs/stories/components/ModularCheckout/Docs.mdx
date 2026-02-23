@@ -142,11 +142,30 @@ The hook receives three parameters:
 ```javascript
 const checkout = document.querySelector('justifi-modular-checkout');
 
+/**
+ * CheckoutState example (shape):
+ * {
+ *   selectedPaymentMethod: { id?: string, type: 'new_card' | 'apple_pay' | 'google_pay' | ... } | undefined,
+ *   paymentAmount: 5000,
+ *   totalAmount: 5000,
+ *   paymentCurrency: 'USD',
+ *   paymentDescription: 'Order #123',
+ *   savedPaymentMethods: [],
+ *   savePaymentMethod: false,
+ *   bnplEnabled: false,
+ *   applePayEnabled: true,
+ *   insuranceEnabled: false,
+ *   disableBankAccount: false,
+ *   disableCreditCard: false,
+ *   disablePaymentMethodGroup: false,
+ *   paymentToken: 'pm_123' // tokenized payment method id; Apple Pay, Google Pay and Plaid set this too (paymentMethodId)
+ * }
+ */
 checkout.preCompleteHook = (state, resolve, reject) => {
   // Example: Require confirmation for large payments
   if (state.totalAmount > 100000) {
     const confirmed = confirm(
-      `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`
+      `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`,
     );
     if (confirmed) {
       resolve(state);
