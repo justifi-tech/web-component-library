@@ -151,6 +151,12 @@ app.get('/', async (req, res) => {
         const checkoutWrapper = document.querySelector('justifi-modular-checkout');
         const applePay = document.querySelector('justifi-apple-pay');
 
+        checkoutWrapper.preCompleteHook = (state, resolve, reject) => {
+          console.log('preCompleteHook state: ', state);
+          console.log('Apple Pay payment method ID: ', state.paymentToken);
+          reject(new Error('Checkout cancelled by preCompleteHook'));
+        };
+
         submitButton.addEventListener('click', async () => {
           await checkoutWrapper.submitCheckout({ address_postal_code: '12345' });
         });
