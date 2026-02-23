@@ -158,14 +158,14 @@ const checkout = document.querySelector('justifi-modular-checkout');
  *   disableBankAccount: false,
  *   disableCreditCard: false,
  *   disablePaymentMethodGroup: false,
- *   paymentToken: 'pm_123' // tokenized payment method id; Apple Pay + Google Pay set this too (paymentMethodId)
+ *   paymentToken: 'pm_123' // tokenized payment method id; Apple Pay, Google Pay and Plaid set this too (paymentMethodId)
  * }
  */
 checkout.preCompleteHook = (state, resolve, reject) => {
   // Example: Require confirmation for large payments
   if (state.totalAmount > 100000) {
     const confirmed = confirm(
-      `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`
+      `Confirm payment of $${(state.totalAmount / 100).toFixed(2)}?`,
     );
     if (confirmed) {
       resolve(state);
