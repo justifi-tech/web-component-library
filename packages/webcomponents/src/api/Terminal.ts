@@ -4,6 +4,7 @@ export interface TerminalsQueryParams {
   terminal_id?: string;
   terminal_order_id?: string;
   provider_id?: string;
+  serial_number?: string;
   status?: string;
   created_after?: string;
   created_before?: string;
@@ -25,7 +26,7 @@ export interface ITerminal {
   gateway_ref_id?: string | null;
   provider?: TerminalProviders | null;
   provider_id?: string | null;
-  provider_serial_number?: string | null;
+  serial_number?: string | null;
   created_at?: string | null;
   updated_at?: string | null;
   verified_at?: string | null;
@@ -59,7 +60,7 @@ export class Terminal implements ITerminal {
     this.platform_account_id = data.platform_account_id || '';
     this.provider = data.provider || null;
     this.provider_id = data.provider_id || '';
-    this.provider_serial_number = data.provider_serial_number || '';
+    this.provider_serial_number = data.serial_number || '';
     this.created_at = data.created_at || '';
     this.updated_at = data.updated_at || '';
     this.verified_at = data.verified_at || '';
