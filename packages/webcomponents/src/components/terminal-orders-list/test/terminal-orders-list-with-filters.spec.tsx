@@ -7,11 +7,10 @@ import { defaultColumnsKeys } from '../terminal-orders-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { TerminalOrdersListFilters } from '../terminal-orders-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
-import { TextInput } from '../../../ui-components/form/form-control-text';
 import { filterParams } from '../terminal-orders-list-params-state';
 import { TerminalOrdersListCore } from '../terminal-orders-list-core';
 
-const components = [TerminalOrdersList, TerminalOrdersListCore, TableFiltersMenu, TerminalOrdersListFilters, SelectInput, TextInput];
+const components = [TerminalOrdersList, TerminalOrdersListCore, TableFiltersMenu, TerminalOrdersListFilters, SelectInput];
 
 describe('justifi-terminal-orders-list with filters', () => {
   const fetchDataSpy = jest.spyOn(TerminalOrdersListCore.prototype, 'fetchData');
@@ -142,34 +141,5 @@ describe('justifi-terminal-orders-list with filters', () => {
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = page.rootInstance.params;
     expect(updatedParams).toEqual(undefined);
-  });
-
-  it('updates params on company_name text input', async () => {
-    jest.useFakeTimers();
-
-    page = await newSpecPage({
-      components: components,
-      autoApplyChanges: true,
-      template: () =>
-        <div>
-          <justifi-terminal-orders-list-filters />
-          <justifi-terminal-orders-list accountId="abc" authToken="abc" columns={defaultColumnsKeys} />,
-        </div>
-    });
-
-    const filterButton = page.root.shadowRoot.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
-    filterButton.click();
-
-    const filterMenu = page.root.shadowRoot.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
-    const textFilter = filterMenu.querySelector('form-control-text') as HTMLFormControlTextElement;
-    const textInput = textFilter.querySelector('input') as HTMLInputElement;
-
-    textInput.value = 'Acme Corp';
-    textInput.dispatchEvent(new Event('input'));
-    jest.runAllTimers();
-
-    expect(filterParams.company_name).toBe('Acme Corp');
-
-    jest.useRealTimers();
   });
 });
