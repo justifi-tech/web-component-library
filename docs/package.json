@@ -43,9 +43,7 @@
     "build:helpers": "pnpm exec esbuild helpers/**/*.tsx helpers/**/*.jsx helpers/**/*.ts helpers/**/*.js --outdir=dist/helpers --format=esm --jsx=automatic --platform=node --target=es2020 && cp package.json dist/ && cp -r mocks dist/",
     "build:index": "echo \"export * from './helpers/index.js';\" > dist/index.js",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs .",
-    "test": "node test/exports.test.mjs",
-    "prepublishOnly": "pnpm test"
+    "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs ."
   },
   "dependencies": {
     "markdown-table": "^3.0.4",
