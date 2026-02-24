@@ -6,6 +6,7 @@ export interface TerminalOrderQueryParams {
   order_type?: TerminalOrderType;
   created_after?: string;
   created_before?: string;
+  company_name?: string;
 }
 
 export enum TerminalOrderType {
