@@ -2,6 +2,7 @@
   "private": true,
   "name": "web-component-library",
   "scripts": {
+    "postinstall": "pnpm --filter @repo/component-examples exec playwright install chromium",
     "build": "turbo run build",
     "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/docs dev'",
     "dev:server": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:server'",
