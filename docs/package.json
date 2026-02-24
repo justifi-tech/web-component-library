@@ -45,7 +45,7 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs .",
     "test": "node test/exports.test.mjs",
-    "prepublishOnly": "pnpm build:docs && pnpm test"
+    "prepublishOnly": "pnpm test"
   },
   "dependencies": {
     "markdown-table": "^3.0.4",

@@ -75,6 +75,7 @@ jobs:
           token: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
           repository: justifi-tech/public-docs
           event-type: webcomponents-docs-published
+          # webcomponents_version and docs_version to be consumed by the public-docs workflow
           client-payload: |
             {
               "webcomponents_version": "${{ steps.docs_check.outputs.webcomponents_version }}",
