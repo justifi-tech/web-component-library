@@ -127,10 +127,10 @@ exports[`justifi-business-core-info-form-step-core Form component behavior uses 
       </div>
       <hr class="mt-2">
       <div class="gy-3 row">
-        <div class="col-12">
+        <div class="col-12 col-md-6">
           <form-control-text helptext="Enter this exactly as it appears on your tax records (don't use acronyms or abbreviations unless you registered that way)." label="Business Name" name="legal_name"></form-control-text>
         </div>
-        <div class="col-12">
+        <div class="col-12 col-md-6">
           <form-control-text helptext="Enter this exactly as it appears on your tax records (leave blank if you don't have a registered DBA/trade name)" label="Doing Business As (DBA)" name="doing_business_as"></form-control-text>
         </div>
         <div class="col-12 col-md-8">

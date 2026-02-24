@@ -128,4 +128,13 @@ This project offers the ability to render the components in simple example files
 
 1. Clone this project to your local machine
 2. Once installed, run `pnpm install && pnpm build` to build the component library's latest version.
-3. Component example files can be loaded by using `pnpm dev` with a corresponding file name - such as `pnpm dev:checkout`
+
+You can verify the full components documentation by executing
+
+`pnpm dev`
+
+Or you can try them out by executing
+
+`pnpm dev:server`
+
+See the full documentation of the tests components [here](https://github.com/justifi-tech/web-component-library/blob/main/apps/component-examples/README.md)

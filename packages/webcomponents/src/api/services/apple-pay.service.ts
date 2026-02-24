@@ -59,12 +59,12 @@ export class ApplePayService implements IApplePayService {
           'Sub-Account': accountId,
         },
         body: {
-          domain: window.location.host,
+          domain: window.location.hostname,
           display_name: this.applePayConfig.displayName
         }
       });
 
-      return response;
+      return response
     } catch (error) {
       console.error('Backend validation failed:', error);
       throw new Error('Merchant validation failed');

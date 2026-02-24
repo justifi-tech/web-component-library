@@ -4,14 +4,7 @@ import { convertToLocal, convertToUTC } from '../../utils/utils';
 import { filterParams, propsParams, clearParams } from './terminals-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { ITerminalStatus } from '../../api';
-import {
-  terminalsListFilterMenu,
-  terminalIdTerminalsListFilterParam,
-  terminalOrderIdTerminalsListFilterParam,
-  terminalStatusTerminalsListFilterParam,
-  createdAfterTerminalsListFilterParam,
-  createdBeforeTerminalsListFilterParam
-} from '../../styles/parts';
+import { filterMenu, filterParam } from '../../styles/parts';
 
 @Component({
   tag: 'justifi-terminals-list-filters',
@@ -70,7 +63,7 @@ export class TerminalsListFilters {
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={terminalsListFilterMenu}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={filterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-text
@@ -79,7 +72,7 @@ export class TerminalsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.terminalId || filterParams.terminal_id}
                 disabled={!!this.terminalId}
-                part={terminalIdTerminalsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -89,7 +82,7 @@ export class TerminalsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.terminalOrderId || filterParams.terminal_order_id}
                 disabled={!!this.terminalOrderId}
-                part={terminalOrderIdTerminalsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -100,7 +93,7 @@ export class TerminalsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.terminalStatus || filterParams.status || ''}
                 disabled={!!this.terminalStatus}
-                part={terminalStatusTerminalsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -113,7 +106,7 @@ export class TerminalsListFilters {
                 }
                 showTime
                 disabled={!!this.createdAfter}
-                part={createdAfterTerminalsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -126,7 +119,7 @@ export class TerminalsListFilters {
                 }
                 showTime
                 disabled={!!this.createdBefore}
-                part={createdBeforeTerminalsListFilterParam}
+                part={filterParam}
               />
             </div>
           </div>

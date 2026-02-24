@@ -1,12 +1,16 @@
 {
   "name": "@repo/component-examples",
-  "version": "1.1.16",
+  "version": "1.2.2",
   "description": "",
   "main": "index.js",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "start": "npx nodemon ./examples/checkout.js",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "start": "npx nodemon ./server.js",
+    "start:server": "node ./server.js",
     "start:checkout": "npx nodemon ./examples/checkout.js",
     "start:checkout-with-insurance": "npx nodemon ./examples/checkout-with-insurance.js",
     "start:modular-checkout": "npx nodemon ./examples/modular-checkout.js",
@@ -30,16 +34,18 @@
     "start:payment-details": "npx nodemon ./examples/payment-details.js",
     "start:payout-details": "npx nodemon ./examples/payout-details.js",
     "start:payout-transactions-list": "npx nodemon ./examples/payout-transactions-list.js",
-    "start:payment-transactions-list": "npx nodemon ./examples/payment-transactions-list.js"
+    "start:payment-transactions-list": "npx nodemon ./examples/payment-transactions-list.js",
+    "start:modular-checkout-apple-pay": "npx nodemon ./examples/modular-checkout-apple-pay.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@justifi/webcomponents": "workspace:*",
     "express": "^4.21.0",
-    "nodemon": "^3.1.4",
-    "@justifi/webcomponents": "workspace:*"
+    "nodemon": "^3.1.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.1",
     "dotenv": "^16.4.5"
   }
 }

@@ -170,7 +170,7 @@ export class BusinessCoreInfoFormStep {
           </div>
           <hr class="mt-2" />
           <div class="row gy-3">
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <form-control-text
                 name="legal_name"
                 label="Business Name"
@@ -180,7 +180,7 @@ export class BusinessCoreInfoFormStep {
                 helpText="Enter this exactly as it appears on your tax records (don't use acronyms or abbreviations unless you registered that way)."
               />
             </div>
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <form-control-text
                 name="doing_business_as"
                 label="Doing Business As (DBA)"

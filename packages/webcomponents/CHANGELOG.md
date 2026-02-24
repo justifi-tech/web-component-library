@@ -1,5 +1,34 @@
 ### Changelog
 
+## 6.10.4
+
+### Patch Changes
+
+- - Added new button variants for success, danger, warning, info, light, and dark.
+  - Updated button component to support outline variants.
+  - Replaced Plaid logo image with an SVG for better scalability and performance.
+  - Adjusted button classes in payout details for consistency with new styles.
+  - Fixed bank account form broken display by replacing conflicting boolean states with a single viewMode enum
+
+## 6.10.3
+
+### Patch Changes
+
+- Fix applePayCancelled event was not being emitted
+
+## 6.10.2
+
+### Patch Changes
+
+- bbb495f: Toggle manual bank account input and make some fields shorter in the form.
+
+## 6.10.1
+
+### Patch Changes
+
+- 3406f47: Add messages for when the business is already provisioned and for when the onboarding is complete.
+- b37b70b: feat: add duplicate version detection for webcomponents
+
 ## 6.10.0
 
 ### Minor Changes

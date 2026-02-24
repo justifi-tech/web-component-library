@@ -1,5 +1,40 @@
 # @repo/component-examples
 
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.10.4
+
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.10.3
+
+## 1.2.0
+
+### Minor Changes
+
+- 074d118: Fix applePayCancelled event was not being emitted
+
+## 1.1.18
+
+### Patch Changes
+
+- Updated dependencies [bbb495f]
+  - @justifi/webcomponents@6.10.2
+
+## 1.1.17
+
+### Patch Changes
+
+- Updated dependencies [3406f47]
+- Updated dependencies [b37b70b]
+  - @justifi/webcomponents@6.10.1
+
 ## 1.1.16
 
 ### Patch Changes
