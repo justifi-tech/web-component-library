@@ -235,6 +235,7 @@ export interface CheckoutsQueryParams {
   status?: ICheckoutStatus;
   payment_mode?: ICheckoutPaymentMode;
   checkout_id?: string;
+  successful_payment_id?: string;
   created_after?: string;
   created_before?: string;
 }

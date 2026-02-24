@@ -14,6 +14,7 @@ export class CheckoutsListFilters {
   @Prop() checkoutStatus?: ICheckoutStatus;
   @Prop() paymentMode?: ICheckoutPaymentModeParam;
   @Prop() checkoutId?: string;
+  @Prop() successfulPaymentId?: string;
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;
 
@@ -27,6 +28,7 @@ export class CheckoutsListFilters {
       status: this.checkoutStatus,
       payment_mode: this.paymentMode,
       checkout_id: this.checkoutId,
+      successful_payment_id: this.successfulPaymentId,
       created_after: this.createdAfter,
       created_before: this.createdBefore
     };
@@ -80,6 +82,16 @@ export class CheckoutsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.checkoutId || filterParams.checkout_id}
                 disabled={!!this.checkoutId}
+                part={filterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-text
+                name="successful_payment_id"
+                label="Successful Payment ID"
+                inputHandler={this.debouncedSetParamsOnChange}
+                defaultValue={this.successfulPaymentId || filterParams.successful_payment_id}
+                disabled={!!this.successfulPaymentId}
                 part={filterParam}
               />
             </div>

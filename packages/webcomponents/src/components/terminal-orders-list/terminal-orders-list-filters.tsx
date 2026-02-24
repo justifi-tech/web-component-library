@@ -1,4 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
+import { debounce } from 'lodash';
 import { filterParams, propsParams, clearParams } from './terminal-orders-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { TerminalOrderStatus, TerminalOrderType } from '../../api';
@@ -14,13 +15,19 @@ export class TerminalOrdersListFilters {
   @Prop() orderType?: TerminalOrderType;
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;
+  @Prop() companyName?: string;
+
+  private debouncedSetParamsOnChange: (name: string, value: string) => void;
 
   componentWillLoad() {
+    this.debouncedSetParamsOnChange = debounce(this.setParamsOnChange, 300);
+
     const propsToSet = {
       order_status: this.orderStatus,
       order_type: this.orderType,
       created_after: this.createdAfter,
-      created_before: this.createdBefore
+      created_before: this.createdBefore,
+      company_name: this.companyName
     };
 
     Object.entries(propsToSet).forEach(([key, value]) => {
@@ -113,6 +120,16 @@ export class TerminalOrdersListFilters {
                 }
                 showTime
                 disabled={!!this.createdBefore}
+                part={filterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-text
+                name="company_name"
+                label="Company Name"
+                inputHandler={this.debouncedSetParamsOnChange}
+                defaultValue={this.companyName || filterParams.company_name}
+                disabled={!!this.companyName}
                 part={filterParam}
               />
             </div>

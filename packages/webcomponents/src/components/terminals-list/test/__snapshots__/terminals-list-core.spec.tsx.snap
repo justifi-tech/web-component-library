@@ -96,9 +96,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
           <td part="table-cell-even table-cell text color font-family background-color">
             Terminal 2
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color">
-            807-075-625
-          </td>
+          <td part="table-cell-even table-cell text color font-family background-color"></td>
           <td part="table-cell-even table-cell text color font-family background-color">
             <span class="badge bg-danger" part="badge font-family badge-danger" title="This terminal is disconnected">
               Disconnected
@@ -109,9 +107,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
           <td part="table-cell-odd table-cell text color font-family background-color">
             Terminal 3
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color">
-            450-060-752
-          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color"></td>
           <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-success" part="badge font-family badge-success" title="This terminal is connected">
               Connected
@@ -122,9 +118,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
           <td part="table-cell-even table-cell text color font-family background-color">
             Terminal 4
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color">
-            453-760-515
-          </td>
+          <td part="table-cell-even table-cell text color font-family background-color"></td>
           <td part="table-cell-even table-cell text color font-family background-color">
             <span class="badge bg-warning" part="badge font-family badge-warning" title="This terminal is pending configuration">
               Pending configuration
@@ -135,9 +129,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
           <td part="table-cell-odd table-cell text color font-family background-color">
             Terminal 5
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color">
-            807-075-625
-          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color"></td>
           <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-warning" part="badge font-family badge-warning" title="This terminal is pending configuration">
               Pending configuration
@@ -148,9 +140,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
           <td part="table-cell-even table-cell text color font-family background-color">
             Terminal 6
           </td>
-          <td part="table-cell-even table-cell text color font-family background-color">
-            450-060-752
-          </td>
+          <td part="table-cell-even table-cell text color font-family background-color"></td>
           <td part="table-cell-even table-cell text color font-family background-color">
             <span class="badge bg-danger" part="badge font-family badge-danger" title="This terminal is disconnected">
               Disconnected
@@ -161,9 +151,7 @@ exports[`terminals-list-core renders properly with fetched data 1`] = `
           <td part="table-cell-odd table-cell text color font-family background-color">
             Terminal 7
           </td>
-          <td part="table-cell-odd table-cell text color font-family background-color">
-            438-128-999
-          </td>
+          <td part="table-cell-odd table-cell text color font-family background-color"></td>
           <td part="table-cell-odd table-cell text color font-family background-color">
             <span class="badge bg-secondary" part="badge font-family badge-secondary" title="This terminal is archived">
               Archived
