@@ -13,6 +13,7 @@ import { filterMenu, filterParam } from '../../styles/parts';
 export class TerminalsListFilters {
   @Prop() terminalId?: string;
   @Prop() terminalOrderId?: string;
+  @Prop() providerId?: string;
   @Prop() terminalStatus?: ITerminalStatus;
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;
@@ -27,6 +28,7 @@ export class TerminalsListFilters {
       terminal_id: this.terminalId,
       status: this.terminalStatus,
       terminal_order_id: this.terminalOrderId,
+      provider_id: this.providerId,
       created_after: this.createdAfter,
       created_before: this.createdBefore
     };
@@ -82,6 +84,16 @@ export class TerminalsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.terminalOrderId || filterParams.terminal_order_id}
                 disabled={!!this.terminalOrderId}
+                part={filterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-text
+                name="provider_id"
+                label="Device ID"
+                inputHandler={this.debouncedSetParamsOnChange}
+                defaultValue={this.providerId || filterParams.provider_id}
+                disabled={!!this.providerId}
                 part={filterParam}
               />
             </div>

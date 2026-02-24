@@ -8,10 +8,11 @@ import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { TerminalsListFilters } from '../terminals-list-filters';
 import { SelectInput } from '../../../ui-components/form/form-control-select';
 import { DateInput } from '../../../ui-components/form/form-control-date';
+import { TextInput } from '../../../ui-components/form/form-control-text';
 import { filterParams } from '../terminals-list-params-state';
 import { TerminalsListCore } from '../terminals-list-core';
 
-const components = [TerminalsList, TerminalsListCore, TableFiltersMenu, TerminalsListFilters, SelectInput, DateInput];
+const components = [TerminalsList, TerminalsListCore, TableFiltersMenu, TerminalsListFilters, SelectInput, DateInput, TextInput];
 
 describe('justifi-terminals-list with filters', () => {
   const fetchDataSpy = jest.spyOn(TerminalsListCore.prototype, 'fetchData');
@@ -310,6 +311,47 @@ describe('justifi-terminals-list with filters', () => {
     expect(fetchDataSpy).toHaveBeenCalled();
     const updatedParams = filterParams;
     expect(updatedParams).toEqual({});
+  });
+
+  it('updates params and refetches data on provider_id filter interaction', async () => {
+
+    page = await newSpecPage({
+      components: components,
+      autoApplyChanges: true,
+      template: () =>
+        <div>
+          <justifi-terminals-list-filters />
+          <justifi-terminals-list
+            accountId="abc"
+            authToken="abc"
+            columns={defaultColumnsKeys}
+          />,
+        </div>
+    });
+
+    expect(fetchDataSpy).toHaveBeenCalled();
+
+    const filterButton = page.root.shadowRoot.querySelector('[data-test-id="open-filters-button"]') as HTMLElement;
+    filterButton.click();
+
+    const filterMenu = page.root.shadowRoot.querySelector('[data-test-id="filter-menu"]') as HTMLElement;
+    expect(filterMenu).not.toBeNull();
+
+    const textFilters = filterMenu.querySelectorAll('form-control-text');
+    const providerIdFilter = Array.from(textFilters).find(
+      (el) => el.getAttribute('name') === 'provider_id'
+    ) as HTMLFormControlTextElement;
+    expect(providerIdFilter).not.toBeNull();
+
+    const textInput = providerIdFilter.querySelector('input') as HTMLInputElement;
+    expect(textInput).not.toBeNull();
+
+    textInput.value = 'device-123';
+    textInput.dispatchEvent(new Event('input'));
+
+    expect(fetchDataSpy).toHaveBeenCalled();
+    const updatedParams = filterParams;
+    expect(updatedParams.provider_id).toBe('device-123');
   });
 
   it('initializes with createdAfter and createdBefore props', async () => {
