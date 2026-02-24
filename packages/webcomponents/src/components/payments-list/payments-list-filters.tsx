@@ -3,14 +3,7 @@ import { debounce } from 'lodash';
 import { filterParams, propsParams, clearParams } from './payments-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
-import {
-  paymentsListFilterMenu,
-  createdAfterPaymentsListFilterParam,
-  createdBeforePaymentsListFilterParam,
-  paymentIdPaymentsListFilterParam,
-  paymentStatusPaymentsListFilterParam,
-  terminalIdPaymentsListFilterParam
-} from '../../styles/parts';
+import { filterMenu, filterParam } from '../../styles/parts';
 
 @Component({
   tag: 'justifi-payments-list-filters',
@@ -20,6 +13,9 @@ export class PaymentsListFilters {
   @Prop() paymentId?: string;
   @Prop() terminalId?: string;
   @Prop() paymentStatus?: string;
+  @Prop() paymentMode?: string;
+  @Prop() checkoutId?: string;
+  @Prop() accountHolder?: string;
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;
 
@@ -33,6 +29,9 @@ export class PaymentsListFilters {
       payment_id: this.paymentId,
       terminal_id: this.terminalId,
       payment_status: this.paymentStatus,
+      payment_mode: this.paymentMode,
+      checkout_id: this.checkoutId,
+      account_holder: this.accountHolder,
       created_after: this.createdAfter,
       created_before: this.createdBefore
     };
@@ -65,12 +64,21 @@ export class PaymentsListFilters {
     ]
   }
 
+  get paymentModeOptions() {
+    return [
+      { label: 'All', value: '' },
+      { label: 'E-commerce', value: 'ecom' },
+      { label: 'ACH', value: 'ach' },
+      { label: 'Card Present', value: 'card_present' }
+    ]
+  }
+
   render() {
     const filterMenuParams = { ...filterParams }
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={paymentsListFilterMenu}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={filterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
             <div class="p-2">
               <form-control-text
@@ -79,7 +87,7 @@ export class PaymentsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.paymentId || filterParams.payment_id}
                 disabled={!!this.paymentId}
-                part={paymentIdPaymentsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -89,7 +97,7 @@ export class PaymentsListFilters {
                 inputHandler={this.debouncedSetParamsOnChange}
                 defaultValue={this.terminalId || filterParams.terminal_id}
                 disabled={!!this.terminalId}
-                part={terminalIdPaymentsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -100,7 +108,38 @@ export class PaymentsListFilters {
                 inputHandler={this.setParamsOnChange}
                 defaultValue={this.paymentStatus || filterParams.payment_status || ''}
                 disabled={!!this.paymentStatus}
-                part={paymentStatusPaymentsListFilterParam}
+                part={filterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-select
+                name="payment_mode"
+                label="Payment Mode"
+                options={this.paymentModeOptions}
+                inputHandler={this.setParamsOnChange}
+                defaultValue={this.paymentMode || filterParams.payment_mode || ''}
+                disabled={!!this.paymentMode}
+                part={filterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-text
+                name="checkout_id"
+                label="Checkout ID"
+                inputHandler={this.debouncedSetParamsOnChange}
+                defaultValue={this.checkoutId || filterParams.checkout_id}
+                disabled={!!this.checkoutId}
+                part={filterParam}
+              />
+            </div>
+            <div class="p-2">
+              <form-control-text
+                name="account_holder"
+                label="Account Holder"
+                inputHandler={this.debouncedSetParamsOnChange}
+                defaultValue={this.accountHolder || filterParams.account_holder}
+                disabled={!!this.accountHolder}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -114,7 +153,7 @@ export class PaymentsListFilters {
                 }
                 showTime
                 disabled={!!this.createdAfter}
-                part={createdAfterPaymentsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -128,7 +167,7 @@ export class PaymentsListFilters {
                 }
                 showTime
                 disabled={!!this.createdBefore}
-                part={createdBeforePaymentsListFilterParam}
+                part={filterParam}
               />
             </div>
           </div>

@@ -36,7 +36,7 @@ describe('checkouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -71,7 +71,7 @@ describe('checkouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -103,7 +103,7 @@ describe('checkouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -142,7 +142,7 @@ describe('checkouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });
@@ -183,7 +183,7 @@ describe('checkouts-list-core', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService,
     });
@@ -235,7 +235,7 @@ describe('checkouts-list-core pagination', () => {
     };
 
     const getSubAccounts = makeGetSubAccounts({
-      accountId: 'mock_id',
+      primaryAccountId: 'mock_id',
       authToken: '123',
       service: mockSubAccountsService
     });

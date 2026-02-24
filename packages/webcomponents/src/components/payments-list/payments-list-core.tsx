@@ -50,6 +50,7 @@ export class PaymentsListCore {
 
     onQueryParamsChange('set', () => {
       this.pagingParams = {};
+      this.errorMessage = '';
     });
 
     onQueryParamsChange('reset', () => {

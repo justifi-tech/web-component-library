@@ -2,17 +2,20 @@ import { Component, h, Prop } from '@stencil/core';
 import { filterParams, propsParams, clearParams } from './payouts-list-params-state';
 import { StyledHost } from '../../ui-components';
 import { convertToLocal, convertToUTC } from '../../utils/utils';
-import { createdAfterPayoutsListFilterParam, createdBeforePayoutsListFilterParam, payoutsListFilterMenu } from '../../styles/parts';
+import { PayoutStatusesSafeNames } from '../../api';
+import { filterMenu, filterParam } from '../../styles/parts';
 @Component({
   tag: 'justifi-payouts-list-filters',
   shadow: true
 })
 export class PayoutsListFilters {
+  @Prop() status?: string;
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;
 
   componentWillLoad() {
     const propsToSet = {
+      status: this.status,
       created_after: this.createdAfter,
       created_before: this.createdBefore
     };
@@ -33,13 +36,36 @@ export class PayoutsListFilters {
     this.setParamsOnChange(name, utcDate);
   }
 
+  get statusOptions() {
+    return [
+      { label: 'All', value: '' },
+      { label: PayoutStatusesSafeNames.paid, value: 'paid' },
+      { label: PayoutStatusesSafeNames.failed, value: 'failed' },
+      { label: PayoutStatusesSafeNames.forwarded, value: 'forwarded' },
+      { label: PayoutStatusesSafeNames.scheduled, value: 'scheduled' },
+      { label: PayoutStatusesSafeNames.in_transit, value: 'in_transit' },
+      { label: PayoutStatusesSafeNames.canceled, value: 'canceled' }
+    ]
+  }
+
   render() {
     const filterMenuParams = { ...filterParams }
 
     return (
       <StyledHost>
-        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={payoutsListFilterMenu}>
+        <table-filters-menu params={filterMenuParams} clearParams={clearParams} part={filterMenu}>
           <div class="grid-cols-2 gap-3 p-1">
+            <div class="p-2">
+              <form-control-select
+                name="status"
+                label="Status"
+                options={this.statusOptions}
+                inputHandler={this.setParamsOnChange}
+                defaultValue={this.status || filterParams.status || ''}
+                disabled={!!this.status}
+                part={filterParam}
+              />
+            </div>
             <div class="p-2">
               <form-control-date
                 name="created_after"
@@ -50,7 +76,7 @@ export class PayoutsListFilters {
                   convertToLocal(filterParams.created_after, { showInputDate: true })
                 }
                 disabled={!!this.createdAfter}
-                part={createdAfterPayoutsListFilterParam}
+                part={filterParam}
               />
             </div>
             <div class="p-2">
@@ -63,7 +89,7 @@ export class PayoutsListFilters {
                   convertToLocal(filterParams.created_before, { showInputDate: true })
                 }
                 disabled={!!this.createdBefore}
-                part={createdBeforePayoutsListFilterParam}
+                part={filterParam}
               />
             </div>
           </div>

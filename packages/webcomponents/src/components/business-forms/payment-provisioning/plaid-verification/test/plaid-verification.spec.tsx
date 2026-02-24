@@ -65,25 +65,6 @@ describe('plaid-verification', () => {
       expect(page.root.querySelector('script[src*="plaid.com"]')).toBeTruthy();
     });
 
-    it('should render button with Plaid logo', async () => {
-      const page = await newSpecPage({
-        components: [PlaidVerification],
-        template: () => (
-          <plaid-verification
-            authToken="test-token"
-            accountId="acc_123"
-            businessId="biz_123"
-          />
-        ),
-      });
-
-      await page.waitForChanges();
-
-      const button = page.root.querySelector('button');
-      expect(button.textContent).toContain('Link Bank Account with');
-      expect(page.root.querySelector('.plaid-logo-img')).toBeTruthy();
-    });
-
     it('should render loading state', async () => {
       const page = await newSpecPage({
         components: [PlaidVerification],

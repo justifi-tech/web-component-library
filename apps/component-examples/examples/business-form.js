@@ -1,53 +1,18 @@
-require('dotenv').config({ path: '../../.env' });
-const express = require('express');
-const { API_PATHS } = require('../utils/api-paths');
+const express = require("express");
+const { API_PATHS } = require("../utils/api-paths");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { generateRandomLegalName } = require("../utils/random-business-names");
+const { startStandaloneServer } = require("../utils/standalone-server");
 
-const app = express();
-const { generateRandomLegalName } = require('../utils/random-business-names');
-const port = process.env.PORT || 3000;
-const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
-const webComponentTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.WEB_COMPONENT_TOKEN}`;
-const businessEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.BUSINESS}`;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
-
-app.use(
-  '/scripts',
-  express.static(__dirname + '/../node_modules/@justifi/webcomponents/dist/')
-);
-app.use('/styles', express.static(__dirname + '/../css/'));
-
-async function getToken() {
-  const requestBody = JSON.stringify({
-    client_id: clientId,
-    client_secret: clientSecret,
-  });
-
-  let response;
-  try {
-    response = await fetch(authTokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestBody,
-    });
-  } catch (error) {
-    console.log('ERROR:', error);
-  }
-
-  const { access_token } = await response.json();
-  console.log('response from getToken', access_token);
-
-  return access_token;
-}
+const router = express.Router();
 
 async function createBusiness(token) {
+  const businessEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.BUSINESS}`;
   const randomLegalName = generateRandomLegalName();
   const response = await fetch(businessEndpoint, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -55,33 +20,16 @@ async function createBusiness(token) {
     }),
   });
   const res = await response.json();
-  console.log('response from createBusiness', res);
+  console.log("response from createBusiness", res);
   return res.id;
 }
 
-async function getWebComponentToken(token, businessId) {
-  const response = await fetch(webComponentTokenEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        resources: [`write:business:${businessId}`],
-      }),
-    }
-  );
-
-  const res = await response.json();
-  console.log('response from getWebComponentToken', res);
-
-  return res.access_token;
-}
-
-app.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   const token = await getToken();
   const businessId = await createBusiness(token);
-  const webComponentToken = await getWebComponentToken(token, businessId);
+  const webComponentToken = await getWebComponentToken(token, [
+    `write:business:${businessId}`,
+  ]);
 
   res.send(`
     <!DOCTYPE html>
@@ -107,7 +55,7 @@ app.get('/', async (req, res) => {
           justifiBusinessForm.addEventListener('submit-event', (event) => console.log(event));
 
           justifiBusinessForm.addEventListener('click-event', (event) => console.log(event));
-          
+
           justifiBusinessForm.addEventListener('error-event', (event) => console.log(event));
         </script>
       </body>
@@ -115,6 +63,8 @@ app.get('/', async (req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = router;
+
+if (require.main === module) {
+  startStandaloneServer(router);
+}

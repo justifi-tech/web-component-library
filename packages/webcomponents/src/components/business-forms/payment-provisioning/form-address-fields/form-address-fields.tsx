@@ -47,7 +47,7 @@ export class FormAddressFields {
               errorText={this.errors?.city}
             />
           </div>
-          <div class="col-12">
+          <div class="col-12 col-md-6">
             <form-control-select
               name="state"
               label={labels.stateLabel}
@@ -57,7 +57,7 @@ export class FormAddressFields {
               errorText={this.errors?.state}
             />
           </div>
-          <div class="col-12">
+          <div class="col-12 col-md-6">
             <form-control-text
               name="postal_code"
               label={labels.postalLabel}
