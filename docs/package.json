@@ -15,6 +15,7 @@
   },
   "files": [
     "dist/",
+    "helpers/",
     "mocks/",
     "docs.json",
     "component-tree.json",
