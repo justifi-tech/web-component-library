@@ -1,5 +1,18 @@
 ### Changelog
 
+## 6.11.0
+
+### Minor Changes
+
+- e20f910: Replace component-specific CSS filter parts with generic `filter-menu` and `filter-param`. Removes `::part()` selectors like `payments-list-filter-menu` and `payment-id-payments-list-filter-param` in favor of `filter-menu` and `filter-param`.
+
+### Patch Changes
+
+- 9829d87: Add new filters for Terminals (Device ID, Serial Number), Terminals Orders (Company name) and Checkouts list (Successful Payment ID).
+- b2c1aa0: Docs: expand `preCompleteHook` guidance/examples for `justifi-checkout` and `justifi-modular-checkout`.
+
+  Fix: Apple Pay merchant validation now uses `window.location.hostname` (drops port) when sending the `domain` value.
+
 ## 6.10.4
 
 ### Patch Changes
