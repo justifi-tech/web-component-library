@@ -2,7 +2,6 @@ import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Listen, 
 import { StyledHost } from '../../ui-components';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import JustifiAnalytics from '../../api/Analytics';
-import { BillingFormFields } from '../../components';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
 import {
   ComponentSubmitEvent,
@@ -95,11 +94,6 @@ export class InternalTokenizePaymentMethod {
   handleRadioClick(event: CustomEvent<string>) {
     this.selectedPaymentMethod = event.detail as PAYMENT_METHODS;
     checkoutStore.selectedPaymentMethod = { type: event.detail as PAYMENT_METHODS };
-  }
-
-  @Method()
-  async fillBillingForm(fields: BillingFormFields) {
-    this.billingFormRef?.fill(fields);
   }
 
   @Method()

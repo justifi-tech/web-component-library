@@ -108,7 +108,6 @@ export class Checkout {
   @Method()
   async fillBillingForm(fields: BillingFormFields) {
     checkoutStore.billingFormFields = fields;
-    this.tokenizePaymentMethodRef?.fillBillingForm(fields);
   }
 
   @Method()

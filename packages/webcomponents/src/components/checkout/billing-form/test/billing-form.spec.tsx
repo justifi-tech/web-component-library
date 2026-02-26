@@ -3,9 +3,24 @@ import { BillingForm } from '../billing-form';
 import { BillingFormFull } from '../../../modular-checkout/sub-components/billing-form-full';
 import { CardBillingFormSimple } from '../../../modular-checkout/sub-components/card-billing-form-simple';
 import { BankAccountBillingFormSimple } from '../../../modular-checkout/sub-components/bank-account-billing-form-simple';
+import { checkoutStore } from '../../../../store/checkout.store';
+
+const fullBillingFields = {
+  name: 'John Doe',
+  address_line1: 'Street Address',
+  address_line2: 'Apartment Address',
+  address_city: 'New York',
+  address_state: 'NY',
+  address_postal_code: '10000',
+};
 
 describe('billing-form', () => {
+  beforeEach(() => {
+    checkoutStore.billingFormFields = { address_postal_code: '' };
+  });
   it('fills the form', async () => {
+    checkoutStore.billingFormFields = fullBillingFields;
+
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form></justifi-billing-form>`,
@@ -14,25 +29,14 @@ describe('billing-form', () => {
     const instance: any = page.rootInstance;
     await page.waitForChanges();
 
-    // Wait for component to be fully rendered
-    await page.waitForChanges();
-
-    const fields = {
-      name: 'John Doe',
-      address_line1: 'Street Address',
-      address_line2: 'Apartment Address',
-      address_city: 'New York',
-      address_state: 'NY',
-      address_postal_code: '10000',
-    };
-
-    await instance.fill(fields);
     const values = await instance.getValues();
 
-    expect(values).toEqual(fields);
+    expect(values).toEqual(fullBillingFields);
   });
 
   it('validates the form', async () => {
+    checkoutStore.billingFormFields = fullBillingFields;
+
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form></justifi-billing-form>`,
@@ -41,25 +45,14 @@ describe('billing-form', () => {
     const instance: any = page.rootInstance;
     await page.waitForChanges();
 
-    // Wait for component to be fully rendered
-    await page.waitForChanges();
-
-    const fields = {
-      name: 'John Doe',
-      address_line1: 'Street Address',
-      address_line2: 'Apartment Address',
-      address_city: 'New York',
-      address_state: 'NY',
-      address_postal_code: '10000',
-    };
-
-    await instance.fill(fields);
     const { isValid } = await instance.validate();
 
     expect(isValid).toBe(true); // Assuming provided fields pass the validation
   });
 
   it('gets values of the form', async () => {
+    checkoutStore.billingFormFields = fullBillingFields;
+
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form></justifi-billing-form>`,
@@ -68,22 +61,9 @@ describe('billing-form', () => {
     const instance: any = page.rootInstance;
     await page.waitForChanges();
 
-    // Wait for component to be fully rendered
-    await page.waitForChanges();
-
-    const fields = {
-      name: 'John Doe',
-      address_line1: 'Street Address',
-      address_line2: 'Apartment Address',
-      address_city: 'New York',
-      address_state: 'NY',
-      address_postal_code: '10000',
-    };
-
-    await instance.fill(fields);
     const values = await instance.getValues();
 
-    expect(values).toEqual(fields);
+    expect(values).toEqual(fullBillingFields);
   });
 
   it('should show simple card billing form when hideCardBillingForm is true and paymentMethodType is card', async () => {
@@ -265,6 +245,8 @@ describe('billing-form', () => {
   });
 
   it('should handle form methods correctly in postal-only mode', async () => {
+    checkoutStore.billingFormFields = { address_postal_code: '12345' };
+
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
@@ -272,10 +254,6 @@ describe('billing-form', () => {
 
     const instance: any = page.rootInstance;
     await page.waitForChanges();
-
-    // Form methods should still work even in postal-only mode
-    const testData = { address_postal_code: '12345' };
-    await instance.fill(testData);
 
     const values = await instance.getValues();
     expect(values.address_postal_code).toBe('12345');
@@ -286,6 +264,8 @@ describe('billing-form', () => {
   });
 
   it('should handle form methods correctly in name-only mode', async () => {
+    checkoutStore.billingFormFields = { name: 'John Doe' };
+
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></justifi-billing-form>`,
@@ -293,10 +273,6 @@ describe('billing-form', () => {
 
     const instance: any = page.rootInstance;
     await page.waitForChanges();
-
-    // Form methods should still work in name-only mode
-    const testData = { name: 'John Doe' };
-    await instance.fill(testData);
 
     const values = await instance.getValues();
     expect(values.name).toBe('John Doe');

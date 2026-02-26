@@ -4,6 +4,7 @@ import { billingForm } from '../../../styles/parts';
 import { Header3, StyledHost } from '../../../ui-components';
 import StateOptions from '../../../utils/state-options';
 import { FormController } from '../../../ui-components/form/form';
+import { checkoutStore, onChange } from '../../../store/checkout.store';
 
 @Component({
   tag: 'justifi-billing-form-full',
@@ -16,8 +17,14 @@ export class BillingFormFull {
 
   @Prop({ mutable: true }) legend?: string;
 
+  private unsubscribeFromStore?: () => void;
+
   componentWillLoad() {
     this.formController = new FormController(fullBillingSchema());
+    const fields = checkoutStore.billingFormFields;
+    if (fields && Object.keys(fields).some((k) => (fields as any)[k])) {
+      this.formController.setInitialValues(fields);
+    }
 
     // Set up subscriptions here to avoid warnings about setting state during componentDidLoad
     this.formController.values.subscribe(values =>
@@ -26,6 +33,16 @@ export class BillingFormFull {
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
+  }
+
+  componentDidLoad() {
+    this.unsubscribeFromStore = onChange('billingFormFields', (newValue) => {
+      this.formController.setInitialValues(newValue);
+    });
+  }
+
+  disconnectedCallback() {
+    this.unsubscribeFromStore?.();
   }
 
   inputHandler = (name: string, value: string) => {
@@ -38,11 +55,6 @@ export class BillingFormFull {
   @Method()
   async getValues(): Promise<BillingFormFields> {
     return this.formController.values.getValue();
-  }
-
-  @Method()
-  async fill(fields: BillingFormFields) {
-    this.formController.setInitialValues(fields);
   }
 
   @Method()

@@ -81,7 +81,13 @@ router.get("/", async (req, res) => {
             hide-card-billing-form="${hideCardBillingForm}"
           >
           </justifi-checkout>
-          <button id="fill-billing-form-button" hidden>Test Fill Billing Form</button>
+          <button
+            id="fill-billing-form-button"
+            data-testid="fill-billing-form-button"
+            class="btn btn-primary mt-3 w-100"
+          >
+            Fill Billing Form
+          </button>
           <button id="test-validate-button" hidden>Test Validate</button>
         </div>
         <div class="column-output" id="output-pane"><em>Checkout output will appear here...</em></div>

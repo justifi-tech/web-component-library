@@ -1,7 +1,7 @@
-const express = require("express");
-const { API_PATHS } = require("../utils/api-paths");
-const { getToken, getWebComponentToken } = require("../utils/auth");
-const { startStandaloneServer } = require("../utils/standalone-server");
+const express = require('express');
+const { API_PATHS } = require('../utils/api-paths');
+const { getToken, getWebComponentToken } = require('../utils/auth');
+const { startStandaloneServer } = require('../utils/standalone-server');
 
 const router = express.Router();
 
@@ -14,21 +14,21 @@ async function makeCheckout(token) {
   let response;
   try {
     response = await fetch(checkoutEndpoint, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        "Sub-Account": subAccountId,
+        'Sub-Account': subAccountId,
       },
       body: JSON.stringify({
         amount: 1799,
-        description: "One Chocolate Donut",
+        description: 'One Chocolate Donut',
         payment_method_group_id: paymentMethodGroupId,
         origin_url: `localhost:${port}`,
       }),
     });
   } catch (error) {
-    console.log("ERROR:", error);
+    console.log('ERROR:', error);
   }
 
   const responseJson = await response.json();
@@ -36,7 +36,7 @@ async function makeCheckout(token) {
   return data;
 }
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   const subAccountId = process.env.SUB_ACCOUNT_ID;
 
   const token = await getToken();
@@ -53,12 +53,12 @@ router.get("/", async (req, res) => {
   const hideBankAccountBillingForm = false;
 
   const billingFormFields = {
-    name: "Jane Doe",
-    address_line1: "456 Oak Ave",
-    address_line2: "Suite 2",
-    address_city: "Los Angeles",
-    address_state: "CA",
-    address_postal_code: "90210",
+    name: 'Jane Doe',
+    address_line1: '456 Oak Ave',
+    address_line2: 'Suite 2',
+    address_city: 'Los Angeles',
+    address_state: 'CA',
+    address_postal_code: '90210',
   };
 
   res.send(`
@@ -82,7 +82,11 @@ router.get("/", async (req, res) => {
             hide-card-billing-form="${hideCardBillingForm}"
           >
           </justifi-checkout>
-          <button id="fill-billing-form-button" data-testid="fill-billing-form-button">Fill Billing Form</button>
+          <button 
+            id="fill-billing-form-button" 
+            data-testid="fill-billing-form-button" 
+            class="btn btn-primary mt-3 w-100"
+          >Fill Billing Form</button>
         </div>
         <div class="column-output" id="output-pane"><em>Checkout output will appear here...</em></div>
       </body>
