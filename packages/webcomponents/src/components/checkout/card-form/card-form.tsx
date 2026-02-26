@@ -1,7 +1,8 @@
-import { Component, h, Host, Method, State } from "@stencil/core";
+import { Component, h, Method, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
+import { StyledHost } from "../../../ui-components";
 
 @Component({
   tag: "card-form",
@@ -49,11 +50,15 @@ export class CardForm {
   }
 
   @Method()
-  async tokenize(
+  async tokenize({
+    clientId,
+    paymentMethodMetadata,
+    account,
+  }: {
     clientId: string,
     paymentMethodMetadata: any,
     account?: string,
-  ) {
+  }) {
     return this.cardNumberIframeElement.tokenize(
       clientId,
       paymentMethodMetadata,
@@ -63,7 +68,8 @@ export class CardForm {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
+        <hidden-input />
         <CardFormSkeleton isReady={this.isReady} />
         <div class="container-fluid p-0" style={{
           opacity: this.isReady ? '1' : '0',
@@ -104,7 +110,7 @@ export class CardForm {
             </div>
           </div>
         </div>
-      </Host>
+      </StyledHost>
     );
   }
 }
