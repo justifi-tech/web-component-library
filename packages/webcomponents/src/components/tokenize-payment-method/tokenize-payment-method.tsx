@@ -1,6 +1,7 @@
 import { Component, h, Prop, Method } from '@stencil/core';
 import { BillingFormFields } from '../checkout/billing-form/billing-form-schema';
 import { PaymentMethodPayload } from '../../components';
+import { checkoutStore } from '../../store/checkout.store';
 @Component({
   tag: 'justifi-tokenize-payment-method',
   shadow: true,
@@ -26,7 +27,7 @@ export class TokenizePaymentMethod {
 
   @Method()
   async fillBillingForm(fields: BillingFormFields): Promise<void> {
-    return this.tokenizePaymentMethodRef.fillBillingForm(fields);
+    checkoutStore.billingFormFields = fields;
   }
 
   @Method()

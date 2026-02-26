@@ -32,6 +32,7 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 - [Providing Billing Information](#providing-billing-information)
   - [Card Form Billing](#card-form-billing)
   - [Bank Account Form Billing](#bank-account-form-billing)
+- [Pre-filling Billing Information](#pre-filling-billing-information)
 - [Completing Checkout](#completing-checkout)
 - [Pre-Complete Hook](#pre-complete-hook)
 - [Validation](#validation)
@@ -111,6 +112,35 @@ When using `<justifi-bank-account-form />`, billing information **must be provid
 - `<justifi-billing-form-full />` sub component for complete billing address
 - `<justifi-bank-account-billing-form-simple />` sub component for account owner name only
 - Passing the full `billingInformation` object directly to the `submitCheckout` method
+
+## Pre-filling Billing Information
+
+Use `fillBillingForm()` to programmatically pre-populate billing fields, e.g. from saved customer data. Values persist when the user switches between payment methods.
+
+```javascript
+const modularCheckout = document.querySelector('justifi-modular-checkout');
+
+modularCheckout.fillBillingForm({
+  name: 'John Doe',
+  address_line1: '123 Main St',
+  address_city: 'Anytown',
+  address_state: 'NY',
+  address_postal_code: '12345',
+});
+```
+
+All fields are optional except `address_postal_code`:
+
+```typescript
+interface BillingFormFields {
+  name?: string;
+  address_line1?: string;
+  address_line2?: string;
+  address_city?: string;
+  address_state?: string;
+  address_postal_code: string; // required
+}
+```
 
 ## Completing Checkout
 
@@ -273,6 +303,11 @@ The `justifi-modular-checkout` wrapper component automatically integrates the `j
   Detail shape: `{ availablePaymentMethodTypes: PAYMENT_METHODS[]; selectedPaymentMethod: { id?: string; type: PAYMENT_METHODS }; savedPaymentMethods: SavedPaymentMethod[] }`
 
 ### Methods
+
+- `fillBillingForm(fields)` – Pre-populate billing form fields from saved customer data.
+- `submitCheckout(billingInformation?)` – Validate, tokenize, and complete the checkout. Optionally accepts a `billingInformation` object.
+- `validate()` – Validate all sub-component form fields; returns a promise resolving to `boolean`.
+- `setSelectedPaymentMethod(method)` – Programmatically set the active payment method.
 
 ## Public Types
 

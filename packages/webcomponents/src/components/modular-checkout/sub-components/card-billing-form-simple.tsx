@@ -3,6 +3,7 @@ import { BillingFormFields, postalOnlySchema } from '../../checkout/billing-form
 import { billingForm } from '../../../styles/parts';
 import { FormController } from '../../../ui-components/form/form';
 import { StyledHost } from '../../../ui-components';
+import { checkoutStore, onChange } from '../../../store/checkout.store';
 
 @Component({
   tag: 'justifi-card-billing-form-simple',
@@ -15,8 +16,14 @@ export class CardBillingFormSimple {
 
   @Prop({ mutable: true }) legend?: string;
 
+  private unsubscribeFromStore?: () => void;
+
   componentWillLoad() {
     this.formController = new FormController(postalOnlySchema());
+    const fields = checkoutStore.billingFormFields;
+    if (fields && Object.keys(fields).some((k) => (fields as any)[k])) {
+      this.formController.setInitialValues(fields);
+    }
   }
 
   componentDidLoad() {
@@ -26,6 +33,13 @@ export class CardBillingFormSimple {
     this.formController.errors.subscribe(errors => {
       this.errors = { ...errors };
     });
+    this.unsubscribeFromStore = onChange('billingFormFields', (newValue) => {
+      this.formController.setInitialValues(newValue);
+    });
+  }
+
+  disconnectedCallback() {
+    this.unsubscribeFromStore?.();
   }
 
   inputHandler = (name: string, value: string) => {
@@ -38,11 +52,6 @@ export class CardBillingFormSimple {
   @Method()
   async getValues(): Promise<BillingFormFields> {
     return this.formController.values.getValue();
-  }
-
-  @Method()
-  async fill(fields: BillingFormFields) {
-    this.formController.setInitialValues(fields);
   }
 
   @Method()

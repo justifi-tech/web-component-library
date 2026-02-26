@@ -119,7 +119,7 @@ Hide the built-in submit button and control tokenization externally:
 
 ## Pre-filling Billing Information
 
-You can programmatically fill the billing form:
+Use `fillBillingForm()` to programmatically pre-populate billing fields, e.g. from saved customer data. Values persist when the user switches between payment methods.
 
 ```javascript
 const tokenizer = document.querySelector('justifi-tokenize-payment-method');
@@ -131,6 +131,19 @@ tokenizer.fillBillingForm({
   address_state: 'NY',
   address_postal_code: '12345',
 });
+```
+
+All fields are optional except `address_postal_code`:
+
+```typescript
+interface BillingFormFields {
+  name?: string;
+  address_line1?: string;
+  address_line2?: string;
+  address_city?: string;
+  address_state?: string;
+  address_postal_code: string; // required
+}
 ```
 
 # Integration with Modular Checkout

@@ -27,11 +27,6 @@ export class BillingForm {
   }
 
   @Method()
-  async fill(fields: BillingFormFields) {
-    this.selectedFormRef?.fill(fields);
-  }
-
-  @Method()
   async validate(): Promise<{ isValid: boolean, errors: any }> {
     return this.selectedFormRef?.validate();
   }

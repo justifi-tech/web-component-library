@@ -345,6 +345,11 @@ export class ModularCheckout {
     return tokenizeResult.id;
   }
 
+  @Method()
+  async fillBillingForm(fields: BillingFormFields): Promise<void> {
+    checkoutStore.billingFormFields = fields;
+  }
+
   // set the selected payment method to the checkout store from outside the component
   @Method()
   async setSelectedPaymentMethod(paymentMethod: SelectedPaymentMethod) {

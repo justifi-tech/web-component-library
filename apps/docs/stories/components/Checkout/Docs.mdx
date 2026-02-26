@@ -34,19 +34,54 @@ You will need to first create a checkout via [Checkout API](https://docs.justifi
 ---
 
 - [Props, events and methods](#props-events-and-methods)
+- [Pre-filling Billing Information](#pre-filling-billing-information)
+- [Pre-Complete Hook](#pre-complete-hook)
+- [Payment methods](#payment-methods)
 - [Authorization](#authorization)
 - [Security](#security)
 - [Example usage](#example-usage)
-
-- [Pre-Complete Hook](#pre-complete-hook)
-
-- [Payment methods](#payment-methods)
 
 # Props, events and methods
 
 ---
 
 <ArgTypes exclude={['Theme']} />
+
+## Methods
+
+- `fillBillingForm(fields)` – Pre-populate billing form fields from saved customer data.
+- `validate()` – Validate all form fields; returns `{ isValid: boolean }`.
+
+# Pre-filling Billing Information
+
+---
+
+Use `fillBillingForm()` to programmatically pre-populate billing fields, e.g. from saved customer data. Values persist when the user switches between payment methods.
+
+```javascript
+const checkout = document.querySelector('justifi-checkout');
+
+checkout.fillBillingForm({
+  name: 'John Doe',
+  address_line1: '123 Main St',
+  address_city: 'Anytown',
+  address_state: 'NY',
+  address_postal_code: '12345',
+});
+```
+
+All fields are optional except `address_postal_code`:
+
+```typescript
+interface BillingFormFields {
+  name?: string;
+  address_line1?: string;
+  address_line2?: string;
+  address_city?: string;
+  address_state?: string;
+  address_postal_code: string; // required
+}
+```
 
 # Pre-Complete Hook
 
