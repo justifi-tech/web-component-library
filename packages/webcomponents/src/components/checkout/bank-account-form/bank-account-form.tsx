@@ -1,7 +1,8 @@
-import { Component, h, Host, Method, State } from "@stencil/core";
+import { Component, h, Method, State } from "@stencil/core";
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
+import { StyledHost } from "../../../ui-components";
 
 @Component({
   tag: "bank-account-form",
@@ -43,11 +44,11 @@ export class BankAccountForm {
   }
 
   @Method()
-  async tokenize(
+  async tokenize({ clientId, paymentMethodMetadata, account }: {
     clientId: string,
     paymentMethodMetadata: any,
     account?: string,
-  ) {
+  }) {
     return this.accountNumberIframeElement.tokenize(
       clientId,
       paymentMethodMetadata,
@@ -58,7 +59,8 @@ export class BankAccountForm {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
+        <hidden-input />
         <BankAccountFormSkeleton isReady={this.isReady} />
         <div class="container-fluid p-0" style={{
           opacity: this.isReady ? '1' : '0',
@@ -81,7 +83,7 @@ export class BankAccountForm {
             />
           </div>
         </div>
-      </Host>
+      </StyledHost>
     );
   }
 }
