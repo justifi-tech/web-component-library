@@ -4,6 +4,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Checkout } from '../checkout';
 import JustifiAnalytics from '../../../api/Analytics';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
+import { checkoutStore } from '../../../store/checkout.store';
 
 beforeEach(() => {
   // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
@@ -44,5 +45,24 @@ describe('justifi-checkout', () => {
     // Ensure the Apple Pay component is rendered
     const el = page.root?.querySelector('justifi-apple-pay');
     expect(el).not.toBeNull();
+  });
+
+  it('fillBillingForm writes to checkoutStore.billingFormFields (store-only, no ref delegation needed)', async () => {
+    checkoutStore.billingFormFields = { address_postal_code: '' };
+
+    const page = await newSpecPage({
+      components: [Checkout],
+      html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+    });
+
+    await page.waitForChanges();
+
+    const fields = { name: 'Store Test', address_postal_code: '55114' };
+    try {
+      await (page.root as any).fillBillingForm(fields);
+    } catch {
+      // Ref may throw if internal component not ready; store is written first
+    }
+    expect(checkoutStore.billingFormFields).toEqual(fields);
   });
 });

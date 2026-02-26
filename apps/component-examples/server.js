@@ -13,6 +13,7 @@ app.use('/styles', express.static(path.join(__dirname, 'css/')));
 const routes = [
   '/checkout',
   '/checkout-with-insurance',
+  '/fill-billing-form',
   '/modular-checkout',
   '/dispute',
   '/business-form',

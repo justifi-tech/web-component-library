@@ -6,6 +6,8 @@ import { CardBillingFormSimple } from '../../modular-checkout/sub-components/car
 import { BankAccountBillingFormSimple } from '../../modular-checkout/sub-components/bank-account-billing-form-simple';
 import { SaveNewPaymentMethod } from '../../checkout/save-new-payment-method';
 import { InternalTokenizePaymentMethod } from '../internal-tokenize-payment-method';
+import { checkoutStore } from '../../../store/checkout.store';
+import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
 
 describe('tokenize-payment-method', () => {
   it('should pass hideCardBillingForm prop to payment method options', async () => {
@@ -166,4 +168,48 @@ describe('tokenize-payment-method', () => {
     expect((checkbox as any).label).toBe('Save New Payment Method');
   });
 
+  describe('fillBillingForm', () => {
+    beforeEach(() => {
+      checkoutStore.billingFormFields = { address_postal_code: '' };
+    });
+
+    it('writes fields to checkoutStore.billingFormFields', async () => {
+      const page = await newSpecPage({
+        components: [TokenizePaymentMethod, InternalTokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+        html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+      });
+
+      await page.waitForChanges();
+
+      const fields = { name: 'Jane Doe', address_postal_code: '90210' };
+      await (page.root as any).fillBillingForm(fields);
+
+      expect(checkoutStore.billingFormFields).toEqual(fields);
+    });
+
+    it('billing data persists when payment method type is toggled', async () => {
+      const page = await newSpecPage({
+        components: [TokenizePaymentMethod, InternalTokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+        html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" disable-bank-account="false" disable-credit-card="false"></justifi-tokenize-payment-method>`,
+      });
+
+      await page.waitForChanges();
+
+      const fields = { name: 'Jane Doe', address_postal_code: '90210' };
+      await (page.root as any).fillBillingForm(fields);
+
+      expect(checkoutStore.billingFormFields).toEqual(fields);
+
+      // Simulate toggle: dispatch radio-click to switch from card to bank account
+      const internalEl = page.root?.querySelector('internal-tokenize-payment-method');
+      internalEl?.dispatchEvent(new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_BANK_ACCOUNT }));
+      await page.waitForChanges();
+
+      // New form (bank-account-billing-form-simple) should have the data from store
+      const bankForm = page.root?.querySelector('justifi-bank-account-billing-form-simple') as any;
+      expect(bankForm).toBeTruthy();
+      const values = await bankForm?.getValues?.();
+      expect(values?.name).toBe('Jane Doe');
+    });
+  });
 });

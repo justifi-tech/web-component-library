@@ -435,6 +435,29 @@ describe('justifi-modular-checkout', () => {
     });
   });
 
+  describe('fillBillingForm', () => {
+    beforeEach(() => {
+      checkoutStore.billingFormFields = { address_postal_code: '' };
+    });
+
+    it('exists and writes to checkoutStore.billingFormFields', async () => {
+      const page = await newSpecPage({
+        components: [ModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      const instance: any = page.rootInstance;
+      expect(typeof instance.fillBillingForm).toBe('function');
+
+      const fields = { name: 'Test', address_postal_code: '12345' };
+      await instance.fillBillingForm(fields);
+
+      expect(checkoutStore.billingFormFields).toEqual(fields);
+    });
+  });
+
   describe('getCheckoutState shape', () => {
     it('returns expected fields including optional paymentToken', () => {
       // Reset and populate store
