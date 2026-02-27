@@ -44,7 +44,7 @@ interface TokenizeConfig {
 export class InternalTokenizePaymentMethod {
   analytics: JustifiAnalytics;
   private billingFormRef?: HTMLJustifiBillingFormElement;
-  private paymentMethodFormRef?: HTMLJustifiCardFormElement | HTMLJustifiBankAccountFormElement;
+  private paymentMethodFormRef?: HTMLCardFormElement | HTMLBankAccountFormElement;
   private unsubscribeFromStore?: () => void;
 
   @Element() host: HTMLElement;
@@ -356,9 +356,9 @@ export class InternalTokenizePaymentMethod {
 
   private renderPaymentMethodForm(paymentMethodType: string) {
     return paymentMethodType === PAYMENT_METHODS.NEW_CARD ? (
-      <justifi-card-form ref={(el) => (this.paymentMethodFormRef = el)} />
+      <card-form ref={(el) => (this.paymentMethodFormRef = el)} />
     ) : (
-      <justifi-bank-account-form ref={(el) => (this.paymentMethodFormRef = el)} />
+      <bank-account-form ref={(el) => (this.paymentMethodFormRef = el)} />
     );
   }
 
