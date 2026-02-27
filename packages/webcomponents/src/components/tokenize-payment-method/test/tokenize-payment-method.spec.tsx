@@ -5,7 +5,6 @@ import { BillingFormFull } from '../../modular-checkout/sub-components/billing-f
 import { CardBillingFormSimple } from '../../modular-checkout/sub-components/card-billing-form-simple';
 import { BankAccountBillingFormSimple } from '../../modular-checkout/sub-components/bank-account-billing-form-simple';
 import { SaveNewPaymentMethod } from '../../checkout/save-new-payment-method';
-import { InternalTokenizePaymentMethod } from '../internal-tokenize-payment-method';
 import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
 
@@ -144,8 +143,8 @@ describe('tokenize-payment-method', () => {
 
   it('forwards savePaymentMethodLabel to justifi-save-new-payment-method', async () => {
     const page = await newSpecPage({
-      components: [InternalTokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<internal-tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123" save-payment-method-label="Keep this on file"></justifi-tokenize-payment-method>`,
+      components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123" save-payment-method-label="Keep this on file"></justifi-tokenize-payment-method>`,
     });
 
     await page.waitForChanges();
@@ -157,8 +156,8 @@ describe('tokenize-payment-method', () => {
 
   it('uses default save checkbox label when savePaymentMethodLabel is not provided', async () => {
     const page = await newSpecPage({
-      components: [InternalTokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<internal-tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123"></justifi-tokenize-payment-method>`,
+      components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      html: `<tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123"></justifi-tokenize-payment-method>`,
     });
 
     await page.waitForChanges();
@@ -175,7 +174,7 @@ describe('tokenize-payment-method', () => {
 
     it('writes fields to checkoutStore.billingFormFields', async () => {
       const page = await newSpecPage({
-        components: [TokenizePaymentMethod, InternalTokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+        components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
         html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
       });
 
@@ -189,7 +188,7 @@ describe('tokenize-payment-method', () => {
 
     it('billing data persists when payment method type is toggled', async () => {
       const page = await newSpecPage({
-        components: [TokenizePaymentMethod, InternalTokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+        components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
         html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" disable-bank-account="false" disable-credit-card="false"></justifi-tokenize-payment-method>`,
       });
 
@@ -201,7 +200,7 @@ describe('tokenize-payment-method', () => {
       expect(checkoutStore.billingFormFields).toEqual(fields);
 
       // Simulate toggle: dispatch radio-click to switch from card to bank account
-      const internalEl = page.root?.shadowRoot?.querySelector('internal-tokenize-payment-method') ?? page.root?.querySelector('internal-tokenize-payment-method');
+      const internalEl = page.root?.shadowRoot?.querySelector('tokenize-payment-method') ?? page.root?.querySelector('tokenize-payment-method');
       internalEl?.dispatchEvent(new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_BANK_ACCOUNT }));
       await page.waitForChanges();
 
