@@ -163,6 +163,11 @@ export class JustifiTokenizePaymentMethod {
   }
 
   @Method()
+  async getValues(): Promise<BillingFormFields> {
+    return this.billingFormRef.getValues();
+  }
+
+  @Method()
   async tokenize() {
     try {
       const billingFormFieldValues = await this.billingFormRef.getValues();

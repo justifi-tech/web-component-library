@@ -37,11 +37,13 @@ export class JustifiModularCheckout {
   private observer?: MutationObserver;
   private paymentMethodFormRef?:
     | HTMLJustifiCardFormElement
-    | HTMLJustifiBankAccountFormElement;
+    | HTMLJustifiBankAccountFormElement
+    | HTMLJustifiTokenizePaymentMethodElement;
   private billingFormRef?:
     | HTMLJustifiBillingFormElement
     | HTMLJustifiBankAccountBillingFormSimpleElement
-    | HTMLJustifiCardBillingFormSimpleElement;
+    | HTMLJustifiCardBillingFormSimpleElement
+    | HTMLJustifiTokenizePaymentMethodElement;
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private applePayRef?: HTMLJustifiApplePayElement;
   private googlePayRef?: HTMLJustifiGooglePayElement;
@@ -188,7 +190,7 @@ export class JustifiModularCheckout {
 
   private queryFormRefs() {
     this.billingFormRef = this.hostEl.querySelector(
-      "justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full"
+      "justifi-billing-form, justifi-bank-account-billing-form-simple, justifi-card-billing-form-simple, justifi-billing-form-full, justifi-tokenize-payment-method"
     );
     this.applePayRef = this.hostEl.querySelector("justifi-apple-pay");
     this.googlePayRef = this.hostEl.querySelector("justifi-google-pay");
