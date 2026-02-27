@@ -99,14 +99,12 @@ export class TokenizePaymentMethod {
 
   @Method()
   async tokenizePaymentMethod(event?: MouseEvent): Promise<PaymentMethodPayload> {
-    console.log('[internal-tokenize-payment-method] tokenizePaymentMethod called');
     event?.preventDefault();
     this.validateRequiredProps();
     this.isLoading = true;
 
     try {
       const validation = await this.validate();
-      console.log('[internal-tokenize-payment-method] validation result', validation);
       if (!validation.isValid) {
         this.errorEvent.emit({
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -173,9 +171,7 @@ export class TokenizePaymentMethod {
         account: this.accountId || checkoutStore.accountId,
         paymentMethodMetadata: this.buildPaymentMethodMetadata(billingFormFieldValues),
       };
-      console.log('[internal-tokenize-payment-method] tokenize config', config);
       const result = await this.paymentMethodFormRef.tokenize(config);
-      console.log('[internal-tokenize-payment-method] tokenize raw response', result);
       return result;
     } catch (error) {
       return error as any;
@@ -271,14 +267,12 @@ export class TokenizePaymentMethod {
   }
 
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    console.log('[internal-tokenize-payment-method] resolvePaymentMethod called', { insuranceValidation });
     if (!this.areFormsReady()) {
       return this.createErrorResponse('form_not_ready' as ComponentErrorCodes, ERROR_MESSAGES.FORM_NOT_READY);
     }
 
     try {
       const validation = await this.validate();
-      console.log('[internal-tokenize-payment-method] validation result', validation);
 
       if (!validation.isValid || !insuranceValidation.isValid) {
         const errorMessage = Object.values(validation.errors)[0] || ERROR_MESSAGES.VALIDATION_ERROR;
@@ -300,9 +294,7 @@ export class TokenizePaymentMethod {
   }
 
   private async performTokenization(): Promise<PaymentMethodPayload> {
-    console.log('[internal-tokenize-payment-method] performTokenization called');
     const tokenizeResponse = await this.tokenize();
-    console.log('[internal-tokenize-payment-method] tokenize raw response', tokenizeResponse);
 
     if (tokenizeResponse.error) {
       return { error: tokenizeResponse.error };
@@ -313,7 +305,7 @@ export class TokenizePaymentMethod {
       token: tokenizeResponseData.card?.token || tokenizeResponseData.bank_account?.token,
       data: tokenizeResponseData,
     };
-    console.log('[internal-tokenize-payment-method] performTokenization result', result);
+
     return result;
   }
 
