@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property                      | Attribute         | Description | Type                                 | Default     |
-| ----------------------------- | ----------------- | ----------- | ------------------------------------ | ----------- |
-| `country` _(required)_        | `country`         |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
-| `formController` _(required)_ | `form-controller` |             | `FormController`                     | `undefined` |
+| Property                      | Attribute | Description | Type                                 | Default     |
+| ----------------------------- | --------- | ----------- | ------------------------------------ | ----------- |
+| `country` _(required)_        | `country` |             | `CountryCode.CAN \| CountryCode.USA` | `undefined` |
+| `formController` _(required)_ | --        |             | `FormController`                     | `undefined` |
 
 
 ## Dependencies
