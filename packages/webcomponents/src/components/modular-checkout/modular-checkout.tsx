@@ -314,11 +314,9 @@ export class ModularCheckout {
   private async tokenizePaymentMethod(
     tokenizeArgs: BillingFormFields
   ): Promise<any> {
-    console.log('[justifi-modular-checkout] tokenizePaymentMethod called', { tokenizeArgs });
     const billingInfoValues = (await this.billingFormRef?.getValues()) ?? {};
 
     const combinedBillingInfo = { ...tokenizeArgs, ...billingInfoValues };
-    console.log('[justifi-modular-checkout] billingFormValues', combinedBillingInfo);
 
     const paymentMethodMetadata = {
       accountId: checkoutStore.accountId,
@@ -332,20 +330,17 @@ export class ModularCheckout {
     }
 
 
-    console.log('[justifi-modular-checkout] tokenize config', { clientId: this.authToken, paymentMethodMetadata, account: checkoutStore.accountId });
     const tokenizeResult = await this.paymentMethodFormRef?.tokenize({
       clientId: this.authToken,
       paymentMethodMetadata,
       account: checkoutStore.accountId,
     });
-    console.log('[justifi-modular-checkout] tokenize result', tokenizeResult);
 
     if (tokenizeResult.error) {
       return tokenizeResult;
     }
 
     checkoutStore.paymentToken = tokenizeResult.id;
-    console.log('[justifi-modular-checkout] paymentToken set', tokenizeResult.id);
 
     return tokenizeResult.id;
   }
@@ -412,12 +407,9 @@ export class ModularCheckout {
 
   @Method()
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
-    console.log('[justifi-modular-checkout] submitCheckout called', { submitCheckoutArgs });
     const isValid = await this.validate();
-    console.log('[justifi-modular-checkout] validation result', isValid);
 
     if (!checkoutStore.selectedPaymentMethod) {
-      console.warn('[justifi-modular-checkout] no payment method selected');
       this.errorEvent.emit({
         message: 'No payment method selected.',
         errorCode: ComponentErrorCodes.VALIDATION_ERROR,
@@ -434,7 +426,6 @@ export class ModularCheckout {
     const isPlaid = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
 
     const shouldTokenize = isNewCard || isNewBankAccount;
-    console.log('[justifi-modular-checkout] selectedPaymentMethod', { type: checkoutStore.selectedPaymentMethod?.type }, 'shouldTokenize', shouldTokenize);
 
     if (shouldTokenize) {
       const tokenizeResult = await this.tokenizePaymentMethod(submitCheckoutArgs);
@@ -453,7 +444,6 @@ export class ModularCheckout {
     if (isPlaid && !checkoutStore.paymentToken) {
       const publicToken = checkoutStore.plaidPublicToken;
       const linkTokenId = checkoutStore.plaidLinkTokenId;
-      console.log('[justifi-modular-checkout] Plaid tokenize', { publicToken, linkTokenId });
 
       if (!publicToken) {
         this.errorEvent.emit({
@@ -484,7 +474,6 @@ export class ModularCheckout {
 
         const paymentMethod = response?.data;
         const token = paymentMethod?.bank_account?.token || paymentMethod?.token || paymentMethod?.id;
-        console.log('[justifi-modular-checkout] Plaid tokenize result', response);
         checkoutStore.paymentToken = token;
       } catch (err) {
         this.errorEvent.emit({
@@ -542,7 +531,6 @@ export class ModularCheckout {
 
     if (this.preCompleteHook) {
       const state = getCheckoutState();
-      console.log('[justifi-modular-checkout] running preCompleteHook with state', state);
 
       try {
         await new Promise<void>((resolve, reject) => {
@@ -558,18 +546,15 @@ export class ModularCheckout {
       }
     }
 
-    console.log('[justifi-modular-checkout] completing checkout', payment);
     this.completeCheckout({
       payment,
       onSuccess: ({ checkout }) => {
-        console.log('[justifi-modular-checkout] checkout complete success', { checkout });
         this.submitEvent.emit({
           checkout,
           message: "Checkout completed successfully",
         });
       },
       onError: (error) => {
-        console.log('[justifi-modular-checkout] checkout complete error', { error });
         this.errorEvent.emit({
           message: error.message,
           errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,
