@@ -1,7 +1,8 @@
-import { Component, h, Host, Method, State } from "@stencil/core";
+import { Component, h, Method, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
+import { StyledHost } from "../../../ui-components";
 
 @Component({
   tag: "card-form",
@@ -49,11 +50,15 @@ export class CardForm {
   }
 
   @Method()
-  async tokenize(
-    clientId: string,
-    paymentMethodMetadata: any,
-    account?: string,
-  ) {
+  async tokenize({
+    clientId,
+    paymentMethodMetadata,
+    account,
+  }: {
+    clientId: string;
+    paymentMethodMetadata: any;
+    account?: string;
+  }) {
     return this.cardNumberIframeElement.tokenize(
       clientId,
       paymentMethodMetadata,
@@ -63,8 +68,9 @@ export class CardForm {
 
   render() {
     return (
-      <Host>
+      <StyledHost>
         <CardFormSkeleton isReady={this.isReady} />
+        <hidden-input />
         <div class="container-fluid p-0" style={{
           opacity: this.isReady ? '1' : '0',
           height: this.isReady ? 'auto' : '0',
@@ -77,24 +83,24 @@ export class CardForm {
               iframeOrigin={`${this.iframeOrigin}/v2/cardNumber?tabId=${this.tabId}`}
             />
           </div>
-          <div class="d-flex align-items-start">
-            <div class="flex-fill me-3">
+          <div class="row">
+            <div class="col-4 align-content-end">
               <iframe-input
                 inputId="expirationMonth"
                 ref={(el) => (this.expirationMonthIframeElement = el as HTMLIframeInputElement)}
-                label="Exp. Month"
+                label="Expiration"
                 iframeOrigin={`${this.iframeOrigin}/v2/expirationMonth?tabId=${this.tabId}`}
               />
             </div>
-            <div class="flex-fill me-3">
+            <div class="col-4 align-content-end">
               <iframe-input
                 inputId="expirationYear"
                 ref={(el) => (this.expirationYearIframeElement = el as HTMLIframeInputElement)}
-                label="Exp. Year"
+                label=""
                 iframeOrigin={`${this.iframeOrigin}/v2/expirationYear?tabId=${this.tabId}`}
               />
             </div>
-            <div class="flex-fill">
+            <div class="col-4 align-content-end">
               <iframe-input
                 inputId="CVV"
                 ref={(el) => (this.cvvIframeElement = el as HTMLIframeInputElement)}
@@ -104,7 +110,7 @@ export class CardForm {
             </div>
           </div>
         </div>
-      </Host>
+      </StyledHost>
     );
   }
 }
