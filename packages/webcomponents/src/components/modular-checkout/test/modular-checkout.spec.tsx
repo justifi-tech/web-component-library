@@ -2,6 +2,8 @@ import { newSpecPage } from '@stencil/core/testing';
 import { JustifiModularCheckout } from '../modular-checkout';
 import { checkoutStore, getCheckoutState } from '../../../store/checkout.store';
 import { JustifiSavedPaymentMethods } from '../sub-components/saved-payment-methods';
+import { JustifiCardForm } from '../sub-components/card-form';
+import { JustifiBankAccountForm } from '../sub-components/bank-account';
 import { PAYMENT_METHODS, SavedPaymentMethod } from '../ModularCheckout';
 
 describe('justifi-modular-checkout', () => {
@@ -123,6 +125,53 @@ describe('justifi-modular-checkout', () => {
       expect(detail.availablePaymentMethodTypes).toEqual(
         expect.arrayContaining(['saved_card', 'saved_bank_account', 'new_card', 'new_bank_account', 'sezzle', 'apple_pay'])
       );
+    });
+  });
+
+  describe('queryFormRefs auto-selects payment method from DOM', () => {
+    beforeEach(() => {
+      checkoutStore.selectedPaymentMethod = undefined;
+    });
+
+    it('sets selectedPaymentMethod to NEW_CARD when justifi-card-form is present', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout, JustifiCardForm],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123">
+          <justifi-card-form></justifi-card-form>
+        </justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.NEW_CARD });
+    });
+
+    it('sets selectedPaymentMethod to NEW_BANK_ACCOUNT when justifi-bank-account-form is present', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout, JustifiBankAccountForm],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123">
+          <justifi-bank-account-form></justifi-bank-account-form>
+        </justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.NEW_BANK_ACCOUNT });
+    });
+
+    it('does not override already-set selectedPaymentMethod', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout, JustifiCardForm],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123">
+          <justifi-card-form></justifi-card-form>
+        </justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' });
     });
   });
 
