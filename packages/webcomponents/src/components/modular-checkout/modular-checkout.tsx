@@ -195,6 +195,15 @@ export class ModularCheckout {
     this.paymentMethodFormRef =
       this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form, justifi-tokenize-payment-method');
 
+    if (!checkoutStore.selectedPaymentMethod && this.paymentMethodFormRef) {
+      const tag = this.paymentMethodFormRef.tagName.toLowerCase();
+      if (tag === 'justifi-card-form') {
+        checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD };
+      } else if (tag === 'justifi-bank-account-form') {
+        checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_BANK_ACCOUNT };
+      }
+    }
+
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
   }
 
