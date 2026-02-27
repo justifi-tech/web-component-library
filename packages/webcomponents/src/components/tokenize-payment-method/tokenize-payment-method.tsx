@@ -355,7 +355,7 @@ export class JustifiTokenizePaymentMethod {
         {this.renderPaymentMethodForm(paymentMethodType)}
         <div class="mt-4">
           <billing-form
-            ref={(el) => (this.billingFormRef = el)}
+            ref={(el) => { if (el) this.billingFormRef = el; }}
             hideCardBillingForm={this.hideCardBillingForm}
             hideBankAccountBillingForm={this.hideBankAccountBillingForm}
             paymentMethodType={paymentMethodType}
@@ -370,9 +370,9 @@ export class JustifiTokenizePaymentMethod {
 
   private renderPaymentMethodForm(paymentMethodType: string) {
     return paymentMethodType === PAYMENT_METHODS.NEW_CARD ? (
-      <card-form ref={(el) => (this.paymentMethodFormRef = el)} />
+      <card-form ref={(el) => { if (el) this.paymentMethodFormRef = el; }} />
     ) : (
-      <bank-account-form ref={(el) => (this.paymentMethodFormRef = el)} />
+      <bank-account-form ref={(el) => { if (el) this.paymentMethodFormRef = el; }} />
     );
   }
 

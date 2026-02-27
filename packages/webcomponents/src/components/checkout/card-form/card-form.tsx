@@ -48,8 +48,7 @@ export class CardForm {
     const expirationMonthIsValid = await this.expirationMonthIframeElement.validate();
     const expirationYearIsValid = await this.expirationYearIframeElement.validate();
     const cvvIsValid = await this.cvvIframeElement.validate();
-    const result = cardNumberIsValid && expirationMonthIsValid && expirationYearIsValid && cvvIsValid;
-    return result;
+    return cardNumberIsValid && expirationMonthIsValid && expirationYearIsValid && cvvIsValid;
   }
 
   @Method()
