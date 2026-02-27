@@ -15,7 +15,7 @@ interface ownerPayloadItem { id: string; }
 @Component({
   tag: 'justifi-business-owners-form-step'
 })
-export class BusinessOwnersFormStep {
+export class JustifiBusinessOwnersFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
   @State() ownersPayload: ownerPayloadItem[] = [];

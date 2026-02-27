@@ -9,7 +9,7 @@ import { countryLabels } from '../../utils/country-config';
 @Component({
   tag: 'justifi-business-representative'
 })
-export class BusinessRepresentative {
+export class JustifiBusinessRepresentative {
   @Prop() formController!: FormController;
   @State() errors: any = {};
   @State() representative: any = {};

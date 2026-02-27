@@ -17,7 +17,7 @@ import { countryLabels } from '../../utils/country-config';
 @Component({
   tag: 'justifi-business-core-info'
 })
-export class BusinessCoreInfo {
+export class JustifiBusinessCoreInfo {
   @Prop() formController!: FormController;
   @Prop() country!: CountryCode;
   @State() errors: any = {};

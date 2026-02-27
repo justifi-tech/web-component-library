@@ -9,7 +9,7 @@ import fileInputHandler from "./file-input-handler";
 @Component({
   tag: 'justifi-product-or-service',
 })
-export class ProductOrService {
+export class JustifiProductOrService {
   @Prop() disputeResponse!: any;
   @Prop() documentErrors: any = {};
 

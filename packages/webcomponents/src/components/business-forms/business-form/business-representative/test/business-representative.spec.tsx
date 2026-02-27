@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessRepresentative } from '../business-representative';
+import { JustifiBusinessRepresentative } from '../business-representative';
 import { FormController } from '../../../../../ui-components/form/form';
 import { identitySchemaUSA, identitySchemaCAN } from '../../../schemas/business-identity-schema';
 import { CountryCode } from '../../../../../utils/country-codes';
@@ -17,7 +17,7 @@ describe('justifi-business-representative', () => {
       const formController = mockFormController();
       
       const page = await newSpecPage({
-        components: [BusinessRepresentative],
+        components: [JustifiBusinessRepresentative],
         template: () => (
           <justifi-business-representative
             formController={formController}
@@ -34,7 +34,7 @@ describe('justifi-business-representative', () => {
       formController.setInitialValues({ representative: {} });
       
       const page = await newSpecPage({
-        components: [BusinessRepresentative],
+        components: [JustifiBusinessRepresentative],
         template: () => (
           <justifi-business-representative
             formController={formController}
@@ -57,7 +57,7 @@ describe('justifi-business-representative', () => {
       });
       
       const page = await newSpecPage({
-        components: [BusinessRepresentative],
+        components: [JustifiBusinessRepresentative],
         template: () => (
           <justifi-business-representative
             formController={formController}
@@ -78,7 +78,7 @@ describe('justifi-business-representative', () => {
       });
       
       const page = await newSpecPage({
-        components: [BusinessRepresentative],
+        components: [JustifiBusinessRepresentative],
         template: () => (
           <justifi-business-representative
             formController={formController}
@@ -102,7 +102,7 @@ describe('justifi-business-representative', () => {
       });
       
       const page = await newSpecPage({
-        components: [BusinessRepresentative],
+        components: [JustifiBusinessRepresentative],
         template: () => (
           <justifi-business-representative
             formController={formController}
@@ -123,7 +123,7 @@ describe('justifi-business-representative', () => {
       const formController = mockFormController();
       
       const page = await newSpecPage({
-        components: [BusinessRepresentative],
+        components: [JustifiBusinessRepresentative],
         template: () => (
           <justifi-business-representative
             formController={formController}

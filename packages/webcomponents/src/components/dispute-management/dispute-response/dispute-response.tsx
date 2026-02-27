@@ -3,7 +3,7 @@ import { checkPkgVersion } from "../../../utils/check-pkg-version";
 import { StyledHost } from "../../../ui-components";
 import { makeCreateDisputeEvidence, makeUpdateDisputeResponse, makeSubmitDisputeResponse } from "./dispute-response-actions";
 import { IDispute } from "../../../components";
-import { IApiResponse } from "../../../api";
+import { DisputeResponse, IApiResponse } from "../../../api";
 import JustifiAnalytics from "../../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from "../../../api/ComponentError";
 import { DisputeService } from "../../../api/services/dispute.service";
@@ -13,7 +13,7 @@ import { ComponentErrorEvent } from "../../../api/ComponentEvents";
   tag: 'justifi-dispute-response',
   shadow: true
 })
-export class DisputeResponse {
+export class JustifiDisputeResponse {
   @State() updateDisputeResponse: (args: {
     payload: any,
     onSuccess: (disputeResponse: any) => void,

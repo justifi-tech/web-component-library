@@ -5,7 +5,7 @@ import { ErrorState } from './utils';
   tag: 'justifi-details',
 })
 
-export class Details {
+export class JustifiDetails {
   @Prop() errorMessage!: string;
 
   render() {

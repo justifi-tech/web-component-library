@@ -9,7 +9,7 @@ import fileInputHandler from "./file-input-handler";
 @Component({
   tag: 'justifi-refund-policy',
 })
-export class RefundPolicy {
+export class JustifiRefundPolicy {
   @Prop() disputeResponse!: any;
   @Prop() documentErrors: any = {};
 

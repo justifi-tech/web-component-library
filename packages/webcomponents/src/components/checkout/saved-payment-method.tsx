@@ -6,7 +6,7 @@ import { radioListItem } from '../../styles/parts';
 @Component({
   tag: 'justifi-saved-payment-method',
 })
-export class SavedPaymentMethod {
+export class JustifiSavedPaymentMethod {
   @Prop() paymentMethodOption!: PaymentMethodOption;
   @Prop() isSelected!: boolean;
 

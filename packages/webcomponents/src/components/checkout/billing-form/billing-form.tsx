@@ -1,66 +1,40 @@
-import { Component, h, Prop, Method, Host } from '@stencil/core';
+import { Component, h, Prop, Method } from '@stencil/core';
 import { BillingFormFields } from './billing-form-schema';
-import { PAYMENT_METHODS } from '../../..';
+import { StyledHost } from '../../../ui-components';
 
 @Component({
   tag: 'justifi-billing-form',
+  shadow: true,
 })
-export class BillingForm {
+export class JustifiBillingForm {
+  private billingFormRef?: HTMLBillingFormElement;
+
   @Prop({ mutable: true }) legend?: string;
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideBankAccountBillingForm?: boolean;
   @Prop() paymentMethodType?: string;
 
-  private selectedFormRef?: any;
-
-  private get showSimpleCardBillingForm() {
-    return this.paymentMethodType === PAYMENT_METHODS.NEW_CARD && this.hideCardBillingForm;
-  }
-
-  private get showSimpleBankAccountBillingForm() {
-    return this.paymentMethodType === PAYMENT_METHODS.NEW_BANK_ACCOUNT && this.hideBankAccountBillingForm;
-  }
-
   @Method()
   async getValues(): Promise<BillingFormFields> {
-    return this.selectedFormRef?.getValues();
+    return this.billingFormRef?.getValues() ?? ({} as BillingFormFields);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean, errors: any }> {
-    return this.selectedFormRef?.validate();
+    return this.billingFormRef?.validate() ?? { isValid: false, errors: {} };
   }
 
   render() {
-    if (this.showSimpleBankAccountBillingForm) {
-      return (
-        <Host>
-          <justifi-bank-account-billing-form-simple
-            legend={this.legend}
-            ref={(el: any) => (this.selectedFormRef = el)}
-          />
-        </Host>
-      );
-    }
-
-    if (this.showSimpleCardBillingForm) {
-      return (
-        <Host>
-          <justifi-card-billing-form-simple
-            legend={this.legend}
-            ref={(el: any) => (this.selectedFormRef = el)}
-          />
-        </Host>
-      );
-    }
-
     return (
-      <Host>
-        <justifi-billing-form-full
+      <StyledHost>
+        <billing-form
           legend={this.legend}
-          ref={(el) => (this.selectedFormRef = el)}
+          hideCardBillingForm={this.hideCardBillingForm}
+          hideBankAccountBillingForm={this.hideBankAccountBillingForm}
+          paymentMethodType={this.paymentMethodType}
+          ref={(el) => (this.billingFormRef = el as HTMLBillingFormElement)}
         />
-      </Host>
+      </StyledHost>
     );
   }
 }

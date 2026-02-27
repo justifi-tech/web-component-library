@@ -11,7 +11,7 @@ import { BusinessFormStep } from '../../utils';
 @Component({
   tag: 'justifi-business-terms-conditions-form-step'
 })
-export class BusinessTermsConditionsFormStep {
+export class JustifiBusinessTermsConditionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() acceptedTermsBefore: boolean;

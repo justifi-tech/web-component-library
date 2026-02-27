@@ -28,7 +28,7 @@ enum GooglePayEventTypes {
   tag: "justifi-google-pay",
   shadow: true,
 })
-export class GooglePay {
+export class JustifiGooglePay {
   private iframeElement: HTMLIFrameElement;
 
   @Prop() environment: "TEST" | "PRODUCTION" = "TEST";

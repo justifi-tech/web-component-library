@@ -7,7 +7,7 @@ import { CountryCode } from '../../../utils/country-codes';
 @Component({
   tag: 'justifi-owner-form'
 })
-export class BusinessOwnerForm {
+export class JustifiOwnerForm {
   coreComponent: HTMLOwnerFormCoreElement;
 
   @State() getOwner: Function;

@@ -14,7 +14,7 @@ import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../s
 @Component({
   tag: 'form-control-select'
 })
-export class SelectInput {
+export class FormControlSelect {
   selectElement!: HTMLSelectElement;
 
   @State() isFocused: boolean = false;

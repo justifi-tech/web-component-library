@@ -14,7 +14,7 @@ import { BusinessFormStep } from '../../utils';
 @Component({
   tag: 'justifi-legal-address-form-step'
 })
-export class LegalAddressFormStep {
+export class JustifiLegalAddressFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
   @State() formController: FormController;

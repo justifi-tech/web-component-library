@@ -13,7 +13,7 @@ import { BusinessFormStep } from '../../utils';
 @Component({
   tag: 'justifi-business-representative-form-step'
 })
-export class BusinessRepresentativeFormStep {
+export class JustifiBusinessRepresentativeFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
   @State() formController: FormController;

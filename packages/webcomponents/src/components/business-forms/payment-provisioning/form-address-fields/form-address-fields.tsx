@@ -6,7 +6,7 @@ import { countryLabels, countryOptions } from '../../utils/country-config';
 @Component({
   tag: 'justifi-form-address-fields'
 })
-export class FormAddressFields {
+export class JustifiFormAddressFields {
   @Prop() country: CountryCode = CountryCode.USA;
   @Prop() errors!: any;
   @Prop() defaultValues!: any;

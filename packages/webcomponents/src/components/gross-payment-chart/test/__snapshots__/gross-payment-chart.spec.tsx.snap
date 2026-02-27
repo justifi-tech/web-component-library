@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GrossPaymentChart renders an error when no accountId and authToken is passed 1`] = `
+exports[`JustifiGrossPaymentChart renders an error when no accountId and authToken is passed 1`] = `
 <justifi-gross-payment-chart>
   <template shadowrootmode="open">
     <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
@@ -12,7 +12,7 @@ exports[`GrossPaymentChart renders an error when no accountId and authToken is p
 </justifi-gross-payment-chart>
 `;
 
-exports[`GrossPaymentChart renders an error when no accountId is passed 1`] = `
+exports[`JustifiGrossPaymentChart renders an error when no accountId is passed 1`] = `
 <justifi-gross-payment-chart>
   <template shadowrootmode="open">
     <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">
@@ -24,7 +24,7 @@ exports[`GrossPaymentChart renders an error when no accountId is passed 1`] = `
 </justifi-gross-payment-chart>
 `;
 
-exports[`GrossPaymentChart renders an error when no authToken is passed 1`] = `
+exports[`JustifiGrossPaymentChart renders an error when no authToken is passed 1`] = `
 <justifi-gross-payment-chart>
   <template shadowrootmode="open">
     <main class="d-flex justify-content-center p-4 text-center" style="font-size: 1.2rem;">

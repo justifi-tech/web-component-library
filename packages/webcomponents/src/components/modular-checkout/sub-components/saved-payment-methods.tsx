@@ -9,7 +9,7 @@ import { PAYMENT_METHODS, SavedPaymentMethod } from "../ModularCheckout";
   tag: 'justifi-saved-payment-methods',
   shadow: true,
 })
-export class SavedPaymentMethods {
+export class JustifiSavedPaymentMethods {
   componentWillLoad() {
     if (!checkoutStore.paymentMethods.length) {
       console.warn('No saved payment methods available.');

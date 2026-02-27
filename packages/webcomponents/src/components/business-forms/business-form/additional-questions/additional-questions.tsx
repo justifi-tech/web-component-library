@@ -11,7 +11,7 @@ import { heading2 } from '../../../../styles/parts';
 @Component({
   tag: 'justifi-additional-questions',
 })
-export class AdditionalQuestions {
+export class JustifiAdditionalQuestions {
   @Prop() formController!: FormController;
   @State() errors: any = {};
   @State() additional_questions: any = {};

@@ -10,7 +10,7 @@ import { filterMenu, filterParam } from '../../styles/parts';
   tag: 'justifi-terminals-list-filters',
   shadow: true
 })
-export class TerminalsListFilters {
+export class JustifiTerminalsListFilters {
   @Prop() terminalId?: string;
   @Prop() terminalOrderId?: string;
   @Prop() providerId?: string;

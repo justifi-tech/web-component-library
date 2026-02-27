@@ -23,7 +23,7 @@ const sezzleLogo = (
   tag: 'justifi-sezzle-payment-method',
   shadow: true
 })
-export class SezzlePaymentMethod {
+export class JustifiSezzlePaymentMethod {
   @State() installmentPlan: any;
   @State() sezzleCheckout: any;
   @State() sezzlePromise: Promise<PaymentMethodPayload>;

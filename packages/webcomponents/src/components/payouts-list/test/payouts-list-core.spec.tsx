@@ -10,8 +10,8 @@ import { IApiResponseCollection, IPayout, ISubAccount } from '../../../api';
 import { makeGetPayouts } from '../../../actions/payout/get-payouts';
 import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { PayoutsListFilters } from '../payouts-list-filters';
-import { DateInput } from '../../../ui-components/form/form-control-date';
+import { JustifiPayoutsListFilters } from '../payouts-list-filters';
+import { FormControlDate } from '../../../ui-components/form/form-control-date';
 import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';
 
 const mockPayoutsResponse = mockSuccessResponse as IApiResponseCollection<IPayout[]>;
@@ -110,7 +110,7 @@ describe('payouts-list-core', () => {
     const errorSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, JustifiPayoutsListFilters, FormControlDate],
       template: () => <payouts-list-core getPayouts={getPayouts} getPayoutCSV={() => { }} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} onError-event={errorSpy} />,
     });
 
@@ -147,7 +147,7 @@ describe('payouts-list-core', () => {
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, JustifiPayoutsListFilters, FormControlDate],
       template: () => <payouts-list-core getPayouts={getPayouts} getPayoutCSV={() => { }} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
 
@@ -188,7 +188,7 @@ describe('payouts-list-core pagination', () => {
     });
 
     const page = await newSpecPage({
-      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput],
+      components: [PayoutsListCore, PaginationMenu, TableFiltersMenu, JustifiPayoutsListFilters, FormControlDate],
       template: () => <payouts-list-core getPayouts={getPayouts} getPayoutCSV={() => { }} getSubAccounts={getSubAccounts} columns={defaultColumnsKeys} />,
     });
     await page.waitForChanges();

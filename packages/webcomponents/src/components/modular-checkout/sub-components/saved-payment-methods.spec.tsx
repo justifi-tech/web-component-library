@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { SavedPaymentMethods } from './saved-payment-methods';
+import { JustifiSavedPaymentMethods } from './saved-payment-methods';
 import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../ModularCheckout';
 
@@ -20,7 +20,7 @@ describe('justifi-saved-payment-methods', () => {
     ];
 
     const page = await newSpecPage({
-      components: [SavedPaymentMethods],
+      components: [JustifiSavedPaymentMethods],
       html: `<justifi-saved-payment-methods></justifi-saved-payment-methods>`,
     });
 
@@ -42,7 +42,7 @@ describe('justifi-saved-payment-methods', () => {
     ];
 
     const page = await newSpecPage({
-      components: [SavedPaymentMethods],
+      components: [JustifiSavedPaymentMethods],
       html: `<justifi-saved-payment-methods></justifi-saved-payment-methods>`,
     });
 
@@ -58,7 +58,7 @@ describe('justifi-saved-payment-methods', () => {
     ];
 
     const page = await newSpecPage({
-      components: [SavedPaymentMethods],
+      components: [JustifiSavedPaymentMethods],
       html: `<justifi-saved-payment-methods></justifi-saved-payment-methods>`,
     });
 

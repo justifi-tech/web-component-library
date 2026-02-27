@@ -4,7 +4,7 @@ import { CountryCode } from '../../../utils/country-codes';
 @Component({
   tag: 'justifi-payment-provisioning-form-steps'
 })
-export class PaymentProvisioningFormSteps {
+export class JustifiPaymentProvisioningFormSteps {
   @Prop() businessId!: string;
   @Prop() authToken!: string;
   @Prop() refs!: any[];

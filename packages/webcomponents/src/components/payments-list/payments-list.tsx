@@ -13,7 +13,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   shadow: true
 })
 
-export class PaymentsList {
+export class JustifiPaymentsList {
   @State() getPayments: Function;
   @State() errorMessage: string = null;
 

@@ -13,7 +13,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   shadow: true,
 })
 
-export class PayoutDetails {
+export class JustifiPayoutDetails {
   @Prop() payoutId!: string;
   @Prop() authToken!: string;
   @Prop() enableRecordClick: boolean = false;

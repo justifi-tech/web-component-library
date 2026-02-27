@@ -8,7 +8,7 @@ import { StyledHost } from "../../../ui-components";
   tag: "justifi-bank-account-form",
   shadow: true,
 })
-export class BankAccountForm {
+export class JustifiBankAccountForm {
   private bankAccountFormElement!: HTMLBankAccountFormElement;
 
   analytics: JustifiAnalytics;

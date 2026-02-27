@@ -1,92 +1,34 @@
-import { Component, h, State, Prop, Method } from '@stencil/core';
-import { BillingFormFields, nameOnlySchema } from '../../checkout/billing-form/billing-form-schema';
-import { billingForm } from '../../../styles/parts';
-import { FormController } from '../../../ui-components/form/form';
+import { Component, h, Prop, Method } from '@stencil/core';
+import { BillingFormFields } from '../../checkout/billing-form/billing-form-schema';
 import { StyledHost } from '../../../ui-components';
-import { checkoutStore, onChange } from '../../../store/checkout.store';
 
 @Component({
   tag: 'justifi-bank-account-billing-form-simple',
   shadow: true,
 })
-export class BankAccountBillingFormSimple {
-  @State() formController: FormController;
-  @State() billingInfo: {}
-  @State() errors: any = {};
+export class JustifiBankAccountBillingFormSimple {
+  private bankAccountBillingFormSimpleRef?: HTMLBankAccountBillingFormSimpleElement;
 
   @Prop({ mutable: true }) legend?: string;
 
-  private unsubscribeFromStore?: () => void;
-
-  componentWillLoad() {
-    this.formController = new FormController(nameOnlySchema());
-    const fields = checkoutStore.billingFormFields;
-    if (fields && Object.keys(fields).some((k) => (fields as any)[k])) {
-      this.formController.setInitialValues(fields);
-    }
-  }
-
-  componentDidLoad() {
-    this.formController.values.subscribe(values =>
-      this.billingInfo = { ...values }
-    );
-    this.formController.errors.subscribe(errors => {
-      this.errors = { ...errors };
-    });
-    this.unsubscribeFromStore = onChange('billingFormFields', (newValue) => {
-      this.formController.setInitialValues(newValue);
-    });
-  }
-
-  disconnectedCallback() {
-    this.unsubscribeFromStore?.();
-  }
-
-  inputHandler = (name: string, value: string) => {
-    this.formController.setValues({
-      ...this.formController.values.getValue(),
-      [name]: value,
-    });
-  }
-
   @Method()
   async getValues(): Promise<BillingFormFields> {
-    return this.formController.values.getValue();
+    return this.bankAccountBillingFormSimpleRef?.getValues() ?? ({} as BillingFormFields);
   }
 
   @Method()
   async validate(): Promise<{ isValid: boolean, errors: any }> {
-    const isValid: boolean = await this.formController.validate();
-    const errors = this.formController.errors.getValue();
-    return { isValid, errors };
+    return this.bankAccountBillingFormSimpleRef?.validate() ?? { isValid: false, errors: {} };
   }
 
   render() {
-    const billingFormDefaultValue = this.formController.getInitialValues();
-
     return (
       <StyledHost>
-        <div part={billingForm} class="mt-4">
-          <form>
-            <fieldset>
-              {this.legend && (
-                <legend>{this.legend}</legend>
-              )}
-              <div class="row gy-3">
-                <div class="col-12">
-                  <form-control-text
-                    name='name'
-                    label='Full Name'
-                    defaultValue={billingFormDefaultValue.name}
-                    errorText={this.errors.name}
-                    inputHandler={this.inputHandler}
-                  />
-                </div>
-              </div>
-            </fieldset>
-          </form>
-        </div>
-      </StyledHost >
+        <bank-account-billing-form-simple
+          legend={this.legend}
+          ref={(el) => (this.bankAccountBillingFormSimpleRef = el as HTMLBankAccountBillingFormSimpleElement)}
+        />
+      </StyledHost>
     );
   }
 }

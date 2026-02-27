@@ -5,7 +5,7 @@ import { Button } from '../../../ui-components';
 @Component({
   tag: 'justifi-payment-provisioning-form-buttons'
 })
-export class PaymentProvisioningFormButtons {
+export class JustifiPaymentProvisioningFormButtons {
   @Prop() currentStep!: number;
   @Prop() totalSteps!: number;
   @Prop() formLoading!: boolean;

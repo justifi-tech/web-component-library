@@ -15,7 +15,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   shadow: true
 })
 
-export class CheckoutsList {
+export class JustifiCheckoutsList {
   @State() getCheckouts: Function;
   @State() getSubAccounts: Function;
   @State() errorMessage: string = null;

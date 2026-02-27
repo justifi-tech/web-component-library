@@ -17,7 +17,7 @@ import {
   tag: 'justifi-plaid-payment-method',
   shadow: true
 })
-export class PlaidPaymentMethod {
+export class JustifiPlaidPaymentMethod {
   @State() isAuthenticating: boolean = false;
   @State() publicToken: string | null = null;
   @State() linkToken: string | null = null;
@@ -602,7 +602,7 @@ export class PlaidPaymentMethod {
     if (checkoutStore.bankAccountVerification !== true) {
       if (!this.hasLoggedDisabledWarning) {
         // Log once per component lifecycle
-        console.warn('[PlaidPaymentMethod] bank_account_verification is disabled. Component will not render.');
+        console.warn('[JustifiPlaidPaymentMethod] bank_account_verification is disabled. Component will not render.');
         this.hasLoggedDisabledWarning = true;
       }
       return null;

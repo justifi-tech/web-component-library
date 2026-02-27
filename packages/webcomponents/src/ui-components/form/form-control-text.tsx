@@ -15,7 +15,7 @@ import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../s
 @Component({
   tag: 'form-control-text'
 })
-export class TextInput {
+export class FormControlText {
   @Element() el: HTMLElement;
 
   @State() isFocused: boolean = false;

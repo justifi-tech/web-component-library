@@ -4,12 +4,12 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import mockPaymentDetailsResponse from '../../../../../../mockData/mockPaymentDetailSuccess.json';
 import { PaymentDetailsCore } from '../payment-details-core';
-import { Details } from '../../../ui-components/details/details';
+import { JustifiDetails } from '../../../ui-components/details/details';
 import { makeGetPaymentDetails } from '../../../actions/payment/get-payment-details';
 import { API_NOT_AUTHENTICATED_ERROR } from '../../../api/shared';
 
 describe('payment-details-core', () => {
-  const components = [PaymentDetailsCore, Details];
+  const components = [PaymentDetailsCore, JustifiDetails];
   it('it renders properly with fetched data', async () => {
     const mockPaymentService = {
       fetchPayment: jest.fn().mockResolvedValue(mockPaymentDetailsResponse),

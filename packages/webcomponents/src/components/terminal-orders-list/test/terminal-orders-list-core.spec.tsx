@@ -7,13 +7,13 @@ import { PaginationMenu } from '../../../ui-components/pagination-menu/paginatio
 import mockSuccessResponse from '../../../../../../mockData/mockTerminalOrdersListSuccess.json';
 import { IApiResponseCollection, ITerminalOrder } from '../../../api';
 import { makeGetTerminalOrders } from '../../../actions/terminal/get-terminal-orders';
-import { TerminalOrdersListFilters } from '../terminal-orders-list-filters';
+import { JustifiTerminalOrdersListFilters } from '../terminal-orders-list-filters';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../terminal-orders-table';
 
 const mockOrdersResponse = mockSuccessResponse as IApiResponseCollection<ITerminalOrder[]>;
-const components = [TerminalOrdersListCore, PaginationMenu, TableFiltersMenu, TerminalOrdersListFilters, SelectInput];
+const components = [TerminalOrdersListCore, PaginationMenu, TableFiltersMenu, JustifiTerminalOrdersListFilters, FormControlSelect];
 
 describe('terminal-orders-list-core', () => {
 

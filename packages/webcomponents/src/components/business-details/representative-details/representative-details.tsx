@@ -6,7 +6,7 @@ import { Identity } from '../../../api/Identity';
 @Component({
   tag: 'representative-details',
 })
-export class JustifiRepresentativeDetails {
+export class RepresentativeDetails {
   @Prop() representative!: Identity;
 
   render() {

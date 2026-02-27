@@ -9,7 +9,7 @@ import fileInputHandler from "./file-input-handler";
 @Component({
   tag: 'justifi-cancellation-policy',
 })
-export class CancellationPolicy {
+export class JustifiCancellationPolicy {
   @Prop() disputeResponse!: any;
   @Prop() documentErrors: any = {};
 

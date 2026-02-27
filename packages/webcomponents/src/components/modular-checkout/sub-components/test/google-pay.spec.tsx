@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { GooglePay } from '../google-pay';
+import { JustifiGooglePay } from '../google-pay';
 import { checkoutStore } from '../../../../store/checkout.store';
 
 // Mock configState
@@ -29,7 +29,7 @@ describe('justifi-google-pay', () => {
       checkoutStore.googlePayEnabled = false;
 
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -38,7 +38,7 @@ describe('justifi-google-pay', () => {
 
     it('shows skeleton when isReadyToPay is false', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -55,7 +55,7 @@ describe('justifi-google-pay', () => {
 
     it('shows iframe when isReadyToPay is true', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -71,7 +71,7 @@ describe('justifi-google-pay', () => {
   describe('message handling', () => {
     it('ignores messages from wrong origin', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -91,7 +91,7 @@ describe('justifi-google-pay', () => {
 
     it('sets iframeReady on ready event', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -110,7 +110,7 @@ describe('justifi-google-pay', () => {
 
     it('sets sdkLoaded and calls sendInitialize on sdkLoaded event', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -131,7 +131,7 @@ describe('justifi-google-pay', () => {
 
     it('sets isReadyToPay from initializeResult event', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -153,7 +153,7 @@ describe('justifi-google-pay', () => {
 
     it('calls sendStartPayment on buttonClicked event', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -173,7 +173,7 @@ describe('justifi-google-pay', () => {
 
     it('emits googlePayCompleted with success on paymentSuccess event', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -207,7 +207,7 @@ describe('justifi-google-pay', () => {
 
     it('emits googlePayCancelled on paymentCanceled event', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -229,7 +229,7 @@ describe('justifi-google-pay', () => {
 
     it('emits googlePayCompleted with error on paymentError event', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -260,7 +260,7 @@ describe('justifi-google-pay', () => {
   describe('postMessage communication', () => {
     it('sendInitialize sends correct config to iframe', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => (
           <justifi-google-pay
             environment="TEST"
@@ -299,7 +299,7 @@ describe('justifi-google-pay', () => {
       checkoutStore.paymentCurrency = 'EUR';
 
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -328,7 +328,7 @@ describe('justifi-google-pay', () => {
 
     it('sendInitialize does nothing if iframe not available', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -340,7 +340,7 @@ describe('justifi-google-pay', () => {
 
     it('sendStartPayment does nothing if iframe not available', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -354,7 +354,7 @@ describe('justifi-google-pay', () => {
   describe('lifecycle', () => {
     it('componentDidLoad sets up handleMessage as event handler', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 
@@ -376,7 +376,7 @@ describe('justifi-google-pay', () => {
 
     it('disconnectedCallback can be called without error', async () => {
       const page = await newSpecPage({
-        components: [GooglePay],
+        components: [JustifiGooglePay],
         template: () => <justifi-google-pay />,
       });
 

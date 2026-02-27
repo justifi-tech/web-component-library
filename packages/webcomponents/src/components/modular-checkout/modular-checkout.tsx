@@ -32,7 +32,7 @@ import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMEN
   tag: "justifi-modular-checkout",
   shadow: false,
 })
-export class ModularCheckout {
+export class JustifiModularCheckout {
   analytics: JustifiAnalytics;
   private observer?: MutationObserver;
   private paymentMethodFormRef?:

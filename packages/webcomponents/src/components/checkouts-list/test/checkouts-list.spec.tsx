@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { CheckoutsList } from '../checkouts-list';
+import { JustifiCheckoutsList } from '../checkouts-list';
 import { CheckoutsListCore } from '../checkouts-list-core';
 import { CheckoutService } from '../../../api/services/checkout.service';
 import { SubAccountService } from '../../../api/services/subaccounts.service';
@@ -19,7 +19,7 @@ describe('checkouts-list', () => {
   it('emit an error event when accountId and authToken are not provided', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => <justifi-checkouts-list accountId="" authToken="" onError-event={errorEvent} />,
     });
     await page.waitForChanges();
@@ -31,7 +31,7 @@ describe('checkouts-list', () => {
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId="abc"
@@ -59,7 +59,7 @@ describe('checkouts-list with subAccountId', () => {
     CheckoutService.prototype.fetchCheckouts = mockFetchCheckouts;
 
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId="acc_123"
@@ -79,7 +79,7 @@ describe('checkouts-list with subAccountId', () => {
     CheckoutService.prototype.fetchCheckouts = mockFetchCheckouts;
 
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId="acc_123"
@@ -98,7 +98,7 @@ describe('checkouts-list with subAccountId', () => {
     CheckoutService.prototype.fetchCheckouts = mockFetchCheckouts;
 
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId="acc_123"
@@ -117,7 +117,7 @@ describe('checkouts-list with subAccountId', () => {
   it('emits error when only subAccountId is provided without authToken', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId=""
@@ -146,7 +146,7 @@ describe('checkouts-list with subAccountId', () => {
     SubAccountService.prototype.fetchSubAccounts = mockFetchSubAccounts;
 
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId="acc_123"
@@ -166,7 +166,7 @@ describe('checkouts-list with subAccountId', () => {
     CheckoutService.prototype.fetchCheckouts = mockFetchCheckouts;
 
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId=""
@@ -186,7 +186,7 @@ describe('checkouts-list with subAccountId', () => {
     CheckoutService.prototype.fetchCheckouts = mockFetchCheckouts;
 
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId="acc_123"
@@ -212,7 +212,7 @@ describe('checkouts-list with subAccountId', () => {
     CheckoutService.prototype.fetchCheckouts = mockFetchCheckouts;
 
     const page = await newSpecPage({
-      components: [CheckoutsList, CheckoutsListCore],
+      components: [JustifiCheckoutsList, CheckoutsListCore],
       template: () => (
         <justifi-checkouts-list
           accountId="acc_123"

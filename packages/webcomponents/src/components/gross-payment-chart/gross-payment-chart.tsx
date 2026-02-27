@@ -11,7 +11,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   tag: 'justifi-gross-payment-chart',
   shadow: true,
 })
-export class GrossPaymentChart {
+export class JustifiGrossPaymentChart {
   @Prop() accountId!: string;
   @Prop() authToken!: string;
 

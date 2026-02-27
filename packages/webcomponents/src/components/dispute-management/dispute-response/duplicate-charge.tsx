@@ -9,7 +9,7 @@ import fileInputHandler from "./file-input-handler";
 @Component({
   tag: 'justifi-duplicate-charge',
 })
-export class DuplicateCharge {
+export class JustifiDuplicateCharge {
   @Prop() disputeResponse!: any;
   @Prop() documentErrors: any = {};
 

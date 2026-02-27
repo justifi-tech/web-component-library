@@ -13,7 +13,7 @@ import { DisputeManagementClickActions } from "./event-types";
   tag: 'justifi-dispute-notification',
   shadow: true
 })
-export class DisputeNotification {
+export class JustifiDisputeNotification {
   @Prop() dispute!: Dispute;
   @Prop() authToken!: string;
   @Prop() isLoading!: boolean;

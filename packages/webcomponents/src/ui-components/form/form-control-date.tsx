@@ -14,7 +14,7 @@ import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../s
 @Component({
   tag: 'form-control-date'
 })
-export class DateInput {
+export class FormControlDate {
   dateInput!: HTMLInputElement;
 
   @State() isFocused: boolean = false;

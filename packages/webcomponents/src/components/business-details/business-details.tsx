@@ -11,7 +11,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
   tag: 'justifi-business-details',
   shadow: true,
 })
-export class BusinessDetails {
+export class JustifiBusinessDetails {
   @Prop() businessId!: string;
   @Prop() authToken!: string;
 

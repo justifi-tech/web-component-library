@@ -16,7 +16,7 @@ import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
   shadow: true,
 })
 
-export class PayoutsList {
+export class JustifiPayoutsList {
   @State() getPayouts: Function;
   @State() getPayoutCSV: Function;
   @State() getSubAccounts: Function;

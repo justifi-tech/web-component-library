@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { PayoutsList } from "../payouts-list";
+import { JustifiPayoutsList } from "../payouts-list";
 import { PayoutsListCore } from "../payouts-list-core";
 import { PayoutService } from '../../../api/services/payout.service';
 import JustifiAnalytics from "../../../api/Analytics";
@@ -18,7 +18,7 @@ describe('payouts-list', () => {
     const errorEvent = jest.fn();
 
     const page = await newSpecPage({
-      components: [PayoutsList, PayoutsListCore],
+      components: [JustifiPayoutsList, PayoutsListCore],
       template: () => <justifi-payouts-list accountId="" authToken="" onError-event={errorEvent} />,
     });
 
@@ -41,7 +41,7 @@ describe('payouts-list', () => {
     const onErrorSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [PayoutsList, PayoutsListCore],
+      components: [JustifiPayoutsList, PayoutsListCore],
       template: () => (
         <justifi-payouts-list
           accountId="abc"

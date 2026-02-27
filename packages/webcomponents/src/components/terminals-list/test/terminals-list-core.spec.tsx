@@ -8,15 +8,15 @@ import mockTerminalSuccessResponse from '../../../../../../mockData/mockTerminal
 import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
 import { IApiResponseCollection, ISubAccount, ITerminal } from '../../../api';
 import { makeGetTerminals } from '../../../actions/terminal/get-terminals';
-import { TerminalsListFilters } from '../terminals-list-filters';
+import { JustifiTerminalsListFilters } from '../terminals-list-filters';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../terminals-table';
 import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';
 
 const mockTerminalsResponse = mockTerminalSuccessResponse as IApiResponseCollection<ITerminal[]>;
 const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
-const components = [TerminalsListCore, PaginationMenu, TableFiltersMenu, TerminalsListFilters, SelectInput];
+const components = [TerminalsListCore, PaginationMenu, TableFiltersMenu, JustifiTerminalsListFilters, FormControlSelect];
 
 describe('terminals-list-core', () => {
 

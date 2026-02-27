@@ -1,13 +1,13 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { IdentityAddressForm } from '../identity-address-form';
+import { JustifiIdentityAddressForm } from '../identity-address-form';
 import { IAddress } from '../../../../../api/Business';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 describe('identity-address', () => {
   it('should render IdentityAddressForm component', async () => {
     const page = await newSpecPage({
-      components: [IdentityAddressForm],
+      components: [JustifiIdentityAddressForm],
       template: () => (
         <justifi-identity-address-form country={CountryCode.USA} defaultValues={{}} errors={{}} handleFormUpdate={() => { }}></justifi-identity-address-form>
       ),
@@ -28,7 +28,7 @@ describe('identity-address', () => {
       country: 'Country',
     } as IAddress;
     const page = await newSpecPage({
-      components: [IdentityAddressForm],
+      components: [JustifiIdentityAddressForm],
       template: () => (
         <justifi-identity-address-form
           country={CountryCode.USA}

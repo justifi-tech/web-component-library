@@ -15,7 +15,7 @@ import { makeGetSubAccounts } from '../../actions/sub-account/get-subaccounts';
   shadow: true
 })
 
-export class TerminalsList {
+export class JustifiTerminalsList {
   @State() getTerminals: Function;
   @State() getSubAccounts: Function;
   @State() errorMessage: string = null;

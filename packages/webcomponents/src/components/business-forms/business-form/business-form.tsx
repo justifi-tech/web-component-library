@@ -17,7 +17,7 @@ import { BusinessService } from '../../../api/services/business.service';
   tag: 'justifi-business-form',
   shadow: true
 })
-export class BusinessForm {
+export class JustifiBusinessForm {
   @State() isLoading: boolean = false;
   @State() isSaving: boolean = false;
   @State() errorMessage: BusinessFormServerErrors;

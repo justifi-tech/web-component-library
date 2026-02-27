@@ -7,7 +7,7 @@ import { CountryCode } from '../../../../utils/country-codes';
 @Component({
   tag: 'justifi-legal-address-form'
 })
-export class LegalAddressForm {
+export class JustifiLegalAddressForm {
   @Prop() formController!: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress;

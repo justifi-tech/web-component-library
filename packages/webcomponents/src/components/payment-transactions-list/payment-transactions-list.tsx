@@ -24,7 +24,7 @@ import {
   tag: 'justifi-payment-transactions-list',
   shadow: true
 })
-export class PaymentTransactionsList {
+export class JustifiPaymentTransactionsList {
   @State() balanceTransactions: PaymentBalanceTransaction[] = [];
   @State() transactionsTable: Table<PaymentBalanceTransaction>;
   @State() isLoading: boolean = true;

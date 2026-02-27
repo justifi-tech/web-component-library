@@ -27,7 +27,7 @@ import { RefundLoading } from './refund-loading';
   tag: 'justifi-refund-payment',
   shadow: true,
 })
-export class RefundPayment {
+export class JustifiRefundPayment {
   @State() formController: FormController;
   @State() refundPayload: IRefundPayload = {};
   @State() displayAmount: string = '';

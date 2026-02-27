@@ -20,7 +20,7 @@ import { formatPhoneNumber } from "../../utils/utils";
   tag: 'justifi-order-terminals',
   shadow: true,
 })
-export class OrderTerminals {
+export class JustifiOrderTerminals {
   @Prop() businessId!: string;
   @Prop() authToken!: string;
   @Prop() accountId!: string;

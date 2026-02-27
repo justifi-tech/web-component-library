@@ -12,7 +12,7 @@ import JustifiAnalytics from '../../api/Analytics';
   shadow: true
 })
 
-export class TerminalOrdersList {
+export class JustifiTerminalOrdersList {
   @State() getTerminalOrders: Function;
   @State() errorMessage: string = null;
 

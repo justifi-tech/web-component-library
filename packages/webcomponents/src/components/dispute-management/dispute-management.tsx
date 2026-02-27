@@ -9,7 +9,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 @Component({
   tag: 'justifi-dispute-management',
 })
-export class DisputeManagement {
+export class JustifiDisputeManagement {
   @Prop() disputeId!: string;
   @Prop() authToken!: string;
 

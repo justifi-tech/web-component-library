@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { RepresentativeFormInputs } from '../business-representative-form-inputs';
+import { JustifiBusinessRepresentativeFormInputs } from '../business-representative-form-inputs';
 import { FormController } from '../../../../../ui-components/form/form';
 import { identitySchemaUSA, identitySchemaCAN } from '../../../schemas/business-identity-schema';
 import { CountryCode } from '../../../../../utils/country-codes';
@@ -16,7 +16,7 @@ describe('justifi-business-representative-form-inputs', () => {
       const representativeData = { identification_number: '', ssn_last4: null };
       
       const page = await newSpecPage({
-        components: [RepresentativeFormInputs],
+        components: [JustifiBusinessRepresentativeFormInputs],
         template: () => (
           <justifi-business-representative-form-inputs
             formController={formController}
@@ -37,7 +37,7 @@ describe('justifi-business-representative-form-inputs', () => {
       const representativeData = { identification_number: '', ssn_last4: null };
       
       const page = await newSpecPage({
-        components: [RepresentativeFormInputs],
+        components: [JustifiBusinessRepresentativeFormInputs],
         template: () => (
           <justifi-business-representative-form-inputs
             formController={formController}
@@ -63,7 +63,7 @@ describe('justifi-business-representative-form-inputs', () => {
       };
       
       const page = await newSpecPage({
-        components: [RepresentativeFormInputs],
+        components: [JustifiBusinessRepresentativeFormInputs],
         template: () => (
           <justifi-business-representative-form-inputs
             formController={formController}
@@ -87,7 +87,7 @@ describe('justifi-business-representative-form-inputs', () => {
       };
       
       const page = await newSpecPage({
-        components: [RepresentativeFormInputs],
+        components: [JustifiBusinessRepresentativeFormInputs],
         template: () => (
           <justifi-business-representative-form-inputs
             formController={formController}
@@ -110,7 +110,7 @@ describe('justifi-business-representative-form-inputs', () => {
       const representativeData = {};
       
       const page = await newSpecPage({
-        components: [RepresentativeFormInputs],
+        components: [JustifiBusinessRepresentativeFormInputs],
         template: () => (
           <justifi-business-representative-form-inputs
             formController={formController}

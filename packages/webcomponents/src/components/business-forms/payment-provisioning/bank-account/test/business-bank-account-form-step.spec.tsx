@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessBankAccountFormStep } from '../business-bank-account-form-step';
+import { JustifiBusinessBankAccountFormStep } from '../business-bank-account-form-step';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 const mockBusinessResponse = (overrides: {
@@ -37,7 +37,7 @@ async function setupComponent(businessResponse: any) {
   });
 
   const page = await newSpecPage({
-    components: [BusinessBankAccountFormStep],
+    components: [JustifiBusinessBankAccountFormStep],
     template: () => (
       <justifi-business-bank-account-form-step
         authToken="test-token"

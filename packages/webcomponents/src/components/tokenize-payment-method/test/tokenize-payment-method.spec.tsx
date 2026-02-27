@@ -1,17 +1,34 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { TokenizePaymentMethod } from '../tokenize-payment-method';
-import { BillingForm } from '../../checkout/billing-form/billing-form';
-import { BillingFormFull } from '../../modular-checkout/sub-components/billing-form-full';
-import { CardBillingFormSimple } from '../../modular-checkout/sub-components/card-billing-form-simple';
-import { BankAccountBillingFormSimple } from '../../modular-checkout/sub-components/bank-account-billing-form-simple';
-import { SaveNewPaymentMethod } from '../../checkout/save-new-payment-method';
+import { JustifiTokenizePaymentMethod } from '../tokenize-payment-method';
+import { BillingForm } from '../../checkout/billing-form/billing-form-inner';
+import { BillingFormFull } from '../../checkout/billing-form/billing-form-full';
+import { CardBillingFormSimple } from '../../checkout/billing-form/card-billing-form-simple';
+import { BankAccountBillingFormSimple } from '../../checkout/billing-form/bank-account-billing-form-simple';
+import { SaveNewPaymentMethod } from '../../checkout/save-new-payment-method/save-new-payment-method';
+import { RadioListItem } from '../../../ui-components/radio-list-item';
+import { InternalButton } from '../../../ui-components/internal-button';
+import { CardForm } from '../../checkout/card-form/card-form';
+import { BankAccountForm } from '../../checkout/bank-account-form/bank-account-form';
 import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
+
+const tokenizeComponents = [
+  JustifiTokenizePaymentMethod,
+  SaveNewPaymentMethod,
+  BillingForm,
+  BillingFormFull,
+  CardBillingFormSimple,
+  BankAccountBillingFormSimple,
+  RadioListItem,
+  InternalButton,
+  CardForm,
+  BankAccountForm,
+];
 
 describe('tokenize-payment-method', () => {
   it('should pass hideCardBillingForm prop to payment method options', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      components: tokenizeComponents,
       html: `<justifi-tokenize-payment-method hide-card-billing-form="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
     });
 
@@ -23,7 +40,7 @@ describe('tokenize-payment-method', () => {
 
   it('should pass hideBankAccountBillingForm prop to payment method options', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      components: tokenizeComponents,
       html: `<justifi-tokenize-payment-method hide-bank-account-billing-form="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
     });
 
@@ -35,7 +52,7 @@ describe('tokenize-payment-method', () => {
 
   it('should pass hideCardBillingForm prop to billing form through the chain', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      components: tokenizeComponents,
       html: `<justifi-tokenize-payment-method hide-card-billing-form="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
     });
 
@@ -47,7 +64,7 @@ describe('tokenize-payment-method', () => {
 
   it('should pass hideBankAccountBillingForm prop to billing form through the chain', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      components: tokenizeComponents,
       html: `<justifi-tokenize-payment-method hide-bank-account-billing-form="true" disable-credit-card="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
     });
 
@@ -58,111 +75,77 @@ describe('tokenize-payment-method', () => {
   });
 
   it('should not render billing form fields except postal_code when hideCardBillingForm is true', async () => {
-    // Test the billing form behavior directly (since integration tests have shadow DOM complexities)
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
+      html: `<billing-form hide-card-billing-form="true" payment-method-type="new_card"></billing-form>`,
     });
 
     await page.waitForChanges();
 
     const instance: any = page.rootInstance;
 
-    // Verify the component is configured correctly for postal-only mode
     expect(instance.hideCardBillingForm).toBe(true);
     expect(instance.paymentMethodType).toBe('new_card');
     expect(instance.showSimpleCardBillingForm).toBe(true);
     expect(instance.showSimpleBankAccountBillingForm).toBe(false);
 
-    // Verify only ZIP field is rendered
-    // CardBillingFormSimple uses shadow DOM, so we need to access the shadow root
-    const cardBillingFormSimpleElement = page.root?.querySelector('justifi-card-billing-form-simple');
-    const shadowRoot = cardBillingFormSimpleElement?.shadowRoot;
+    const cardBillingFormSimpleElement = page.root?.querySelector('card-billing-form-simple');
+    const nameField = cardBillingFormSimpleElement?.querySelector('[name="name"]');
+    const addressField = cardBillingFormSimpleElement?.querySelector('[name="address_line1"]');
+    const postalCodeField = cardBillingFormSimpleElement?.querySelector('[name="address_postal_code"]');
 
-    if (shadowRoot) {
-      const nameField = shadowRoot.querySelector('[name="name"]');
-      const addressField = shadowRoot.querySelector('[name="address_line1"]');
-      const postalCodeField = shadowRoot.querySelector('[name="address_postal_code"]');
-
-      expect(nameField).toBeFalsy(); // Should not be in DOM
-      expect(addressField).toBeFalsy(); // Should not be in DOM  
-      expect(postalCodeField).toBeTruthy(); // Should be in DOM
-    } else {
-      // Fallback to direct querying if no shadow root
-      const nameField = page.root?.querySelector('[name="name"]');
-      const addressField = page.root?.querySelector('[name="address_line1"]');
-      const postalCodeField = page.root?.querySelector('[name="address_postal_code"]');
-
-      expect(nameField).toBeFalsy(); // Should not be in DOM
-      expect(addressField).toBeFalsy(); // Should not be in DOM  
-      expect(postalCodeField).toBeTruthy(); // Should be in DOM
-    }
+    expect(nameField).toBeFalsy();
+    expect(addressField).toBeFalsy();
+    expect(postalCodeField).toBeTruthy();
   });
 
   it('should render only name field when hideBankAccountBillingForm is true', async () => {
-    // Test the billing form behavior directly (since integration tests have shadow DOM complexities)
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<justifi-billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></justifi-billing-form>`,
+      html: `<billing-form hide-bank-account-billing-form="true" payment-method-type="new_bank_account"></billing-form>`,
     });
 
     await page.waitForChanges();
 
     const instance: any = page.rootInstance;
 
-    // Verify the component is configured correctly for name-only mode
     expect(instance.hideBankAccountBillingForm).toBe(true);
     expect(instance.paymentMethodType).toBe('new_bank_account');
     expect(instance.showSimpleCardBillingForm).toBe(false);
     expect(instance.showSimpleBankAccountBillingForm).toBe(true);
 
-    // Verify only name field is rendered
-    // BankAccountBillingFormSimple uses shadow DOM, so we need to access the shadow root
-    const bankAccountBillingFormSimpleElement = page.root?.querySelector('justifi-bank-account-billing-form-simple');
-    const shadowRoot = bankAccountBillingFormSimpleElement?.shadowRoot;
+    const bankAccountBillingFormSimpleElement = page.root?.querySelector('bank-account-billing-form-simple');
+    const nameField = bankAccountBillingFormSimpleElement?.querySelector('[name="name"]');
+    const addressField = bankAccountBillingFormSimpleElement?.querySelector('[name="address_line1"]');
+    const postalCodeField = bankAccountBillingFormSimpleElement?.querySelector('[name="address_postal_code"]');
 
-    if (shadowRoot) {
-      const nameField = shadowRoot.querySelector('[name="name"]');
-      const addressField = shadowRoot.querySelector('[name="address_line1"]');
-      const postalCodeField = shadowRoot.querySelector('[name="address_postal_code"]');
-
-      expect(nameField).toBeTruthy(); // Should be in DOM
-      expect(addressField).toBeFalsy(); // Should not be in DOM
-      expect(postalCodeField).toBeFalsy(); // Should not be in DOM
-    } else {
-      // Fallback to direct querying if no shadow root
-      const nameField = page.root?.querySelector('[name="name"]');
-      const addressField = page.root?.querySelector('[name="address_line1"]');
-      const postalCodeField = page.root?.querySelector('[name="address_postal_code"]');
-
-      expect(nameField).toBeTruthy(); // Should be in DOM
-      expect(addressField).toBeFalsy(); // Should not be in DOM
-      expect(postalCodeField).toBeFalsy(); // Should not be in DOM
-    }
+    expect(nameField).toBeTruthy();
+    expect(addressField).toBeFalsy();
+    expect(postalCodeField).toBeFalsy();
   });
 
-  it('forwards savePaymentMethodLabel to justifi-save-new-payment-method', async () => {
+  it('forwards savePaymentMethodLabel to save-new-payment-method', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      components: tokenizeComponents,
       html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123" save-payment-method-label="Keep this on file"></justifi-tokenize-payment-method>`,
     });
 
     await page.waitForChanges();
 
-    const checkbox = page.root?.shadowRoot?.querySelector('justifi-save-new-payment-method') as any;
+    const checkbox = page.root?.shadowRoot?.querySelector('save-new-payment-method') as any;
     expect(checkbox).toBeTruthy();
     expect((checkbox as any).label).toBe('Keep this on file');
   });
 
   it('uses default save checkbox label when savePaymentMethodLabel is not provided', async () => {
     const page = await newSpecPage({
-      components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+      components: tokenizeComponents,
       html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123"></justifi-tokenize-payment-method>`,
     });
 
     await page.waitForChanges();
 
-    const checkbox = page.root?.shadowRoot?.querySelector('justifi-save-new-payment-method') as any;
+    const checkbox = page.root?.shadowRoot?.querySelector('save-new-payment-method') as any;
     expect(checkbox).toBeTruthy();
     expect((checkbox as any).label).toBe('Save New Payment Method');
   });
@@ -174,7 +157,7 @@ describe('tokenize-payment-method', () => {
 
     it('writes fields to checkoutStore.billingFormFields', async () => {
       const page = await newSpecPage({
-        components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+        components: tokenizeComponents,
         html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
       });
 
@@ -188,7 +171,7 @@ describe('tokenize-payment-method', () => {
 
     it('billing data persists when payment method type is toggled', async () => {
       const page = await newSpecPage({
-        components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
+        components: tokenizeComponents,
         html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" disable-bank-account="false" disable-credit-card="false"></justifi-tokenize-payment-method>`,
       });
 
@@ -200,7 +183,7 @@ describe('tokenize-payment-method', () => {
       expect(checkoutStore.billingFormFields).toEqual(fields);
 
       // Simulate toggle: dispatch radio-click to switch from card to bank account
-      const internalEl = page.root?.shadowRoot?.querySelector('tokenize-payment-method') ?? page.root?.querySelector('tokenize-payment-method');
+      const internalEl = page.root?.shadowRoot?.querySelector('justifi-tokenize-payment-method') ?? page.root?.querySelector('justifi-tokenize-payment-method');
       internalEl?.dispatchEvent(new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_BANK_ACCOUNT }));
       await page.waitForChanges();
 

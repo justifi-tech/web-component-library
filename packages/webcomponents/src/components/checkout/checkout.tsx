@@ -9,29 +9,10 @@ import { checkoutSummary } from '../../styles/parts';
 import { StyledHost } from '../../ui-components';
 import { CheckoutChangedEventDetail, Hook, PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
-/**
- * @part font-family - Controls the font family for the component.
- * @part color - Controls the text color.
- * @part background-color - Controls the background color.
- * @part button - Button styles.
- * @part button-disabled - Disabled button styles.
- * @part input - Input field styles.
- * @part input-focused - Input styles when focused.
- * @part input-invalid - Input styles when invalid.
- * @part input-invalid-and-focused - Input styles when invalid and focused.
- * @part input-radio - Radio input styles.
- * @part input-checkbox - Checkbox input styles.
- * @part input-checkbox-checked - Checkbox input styles when checked.
- * @part input-checkbox-checked-focused - Checkbox input styles when checked and focused.
- * @part input-checkbox-focused - Checkbox input styles when focused.
- * @part button-primary - Primary button styles.
- * @part radio-list-item - Radio list item styles.
- * @part checkout-summary - Summary section of the checkout component.
- */
 @Component({
   tag: 'justifi-checkout',
 })
-export class Checkout {
+export class JustifiCheckout {
   analytics: JustifiAnalytics;
   modularCheckoutRef?: HTMLJustifiModularCheckoutElement;
   tokenizePaymentMethodRef?: HTMLJustifiTokenizePaymentMethodElement;

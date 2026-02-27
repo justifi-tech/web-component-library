@@ -5,7 +5,7 @@ import { setConfigState } from './config-state';
   tag: 'justifi-config-provider',
   shadow: false
 })
-export class ConfigProvider {
+export class JustifiConfigProvider {
   @Prop() apiOrigin?: string = PROXY_API_ORIGIN;
   @Prop() iframeOrigin?: string = IFRAME_ORIGIN;
   @Prop() accountId?: string = '';

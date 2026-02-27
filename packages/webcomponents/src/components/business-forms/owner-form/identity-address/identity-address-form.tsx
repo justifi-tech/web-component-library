@@ -5,7 +5,7 @@ import { IAddress } from '../../../../api/Business';
 @Component({
   tag: 'justifi-identity-address-form'
 })
-export class IdentityAddressForm {
+export class JustifiIdentityAddressForm {
   @Prop() handleFormUpdate!: (values: any) => void;
   @Prop() errors!: any;
   @Prop() defaultValues!: any;

@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { PaymentsList } from "../payments-list";
+import { JustifiPaymentsList } from "../payments-list";
 import { PaymentsListCore } from "../payments-list-core";
 import { PaymentService } from '../../../api/services/payment.service';
 import JustifiAnalytics from "../../../api/Analytics";
@@ -17,7 +17,7 @@ describe('payments-list', () => {
   it('emit an error event when accountId and authToken are not provided', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [PaymentsList, PaymentsListCore],
+      components: [JustifiPaymentsList, PaymentsListCore],
       template: () => <justifi-payments-list accountId="" authToken="" onError-event={errorEvent} />,
     });
     await page.waitForChanges();
@@ -37,7 +37,7 @@ describe('payments-list', () => {
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [PaymentsList, PaymentsListCore],
+      components: [JustifiPaymentsList, PaymentsListCore],
       template: () => (
         <justifi-payments-list
           accountId="abc"

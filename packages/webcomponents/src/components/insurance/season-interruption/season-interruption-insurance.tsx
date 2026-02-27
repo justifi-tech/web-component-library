@@ -19,7 +19,7 @@ import SeasonInterruptionInsuranceLoading from './season-interruption-insurance-
   tag: 'justifi-season-interruption-insurance',
   shadow: true,
 })
-export class SeasonInterruptionInsurance {
+export class JustifiSeasonInterruptionInsurance {
   @Prop() authToken?: string;
   @Prop() checkoutId?: string;
   @Prop() primaryIdentityFirstName!: string;

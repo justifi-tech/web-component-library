@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { SezzlePaymentMethod } from './sezzle-payment-method';
+import { JustifiSezzlePaymentMethod } from './sezzle-payment-method';
 import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../ModularCheckout';
 
@@ -17,7 +17,7 @@ describe('justifi-sezzle-payment-method', () => {
     checkoutStore.bnplEnabled = false;
 
     const page = await newSpecPage({
-      components: [SezzlePaymentMethod],
+      components: [JustifiSezzlePaymentMethod],
       html: `<justifi-sezzle-payment-method></justifi-sezzle-payment-method>`,
     });
 
@@ -26,7 +26,7 @@ describe('justifi-sezzle-payment-method', () => {
 
   it('emits selection and sets store when handleSelectionClick called', async () => {
     const page = await newSpecPage({
-      components: [SezzlePaymentMethod],
+      components: [JustifiSezzlePaymentMethod],
       html: `<justifi-sezzle-payment-method></justifi-sezzle-payment-method>`,
     });
 

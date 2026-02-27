@@ -12,7 +12,7 @@ import { isTokenExpired } from '../../../utils/utils';
   tag: 'justifi-payment-provisioning',
   shadow: true,
 })
-export class PaymentProvisioning {
+export class JustifiPaymentProvisioning {
   @State() postProvisioning: Function;
   @State() getBusiness: Function;
 

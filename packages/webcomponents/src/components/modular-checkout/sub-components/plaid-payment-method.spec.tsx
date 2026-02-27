@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { PlaidPaymentMethod } from './plaid-payment-method';
+import { JustifiPlaidPaymentMethod } from './plaid-payment-method';
 import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../ModularCheckout';
 
@@ -18,12 +18,12 @@ describe('justifi-plaid-payment-method', () => {
     checkoutStore.bankAccountVerification = false;
 
     const page = await newSpecPage({
-      components: [PlaidPaymentMethod],
+      components: [JustifiPlaidPaymentMethod],
       html: `<justifi-plaid-payment-method></justifi-plaid-payment-method>`,
     });
 
     expect(console.warn).toHaveBeenCalledWith(
-      '[PlaidPaymentMethod] bank_account_verification is disabled. Component will not render.'
+      '[JustifiPlaidPaymentMethod] bank_account_verification is disabled. Component will not render.'
     );
     expect(page.root).toBeTruthy();
     expect(page.root?.shadowRoot?.innerHTML).toBe('');
@@ -33,7 +33,7 @@ describe('justifi-plaid-payment-method', () => {
     checkoutStore.bankAccountVerification = true;
 
     const page = await newSpecPage({
-      components: [PlaidPaymentMethod],
+      components: [JustifiPlaidPaymentMethod],
       html: `<justifi-plaid-payment-method></justifi-plaid-payment-method>`,
     });
 
@@ -48,11 +48,11 @@ describe('justifi-plaid-payment-method', () => {
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID } as any;
 
       const page = await newSpecPage({
-        components: [PlaidPaymentMethod],
+        components: [JustifiPlaidPaymentMethod],
         html: '<justifi-plaid-payment-method></justifi-plaid-payment-method>',
       });
 
-      const instance = page.rootInstance as any as PlaidPaymentMethod;
+      const instance = page.rootInstance as any as JustifiPlaidPaymentMethod;
       expect((instance as any).isSelected).toBe(true);
     });
   });
@@ -60,11 +60,11 @@ describe('justifi-plaid-payment-method', () => {
   describe('Component Methods', () => {
     it('isCurrentlySelected returns true when selected', async () => {
       const page = await newSpecPage({
-        components: [PlaidPaymentMethod],
+        components: [JustifiPlaidPaymentMethod],
         html: '<justifi-plaid-payment-method></justifi-plaid-payment-method>',
       });
 
-      const instance = page.rootInstance as any as PlaidPaymentMethod;
+      const instance = page.rootInstance as any as JustifiPlaidPaymentMethod;
       (instance as any).isSelected = true;
       const result = await instance.isCurrentlySelected();
       expect(result).toBe(true);
@@ -72,11 +72,11 @@ describe('justifi-plaid-payment-method', () => {
 
     it('reset clears publicToken and error', async () => {
       const page = await newSpecPage({
-        components: [PlaidPaymentMethod],
+        components: [JustifiPlaidPaymentMethod],
         html: '<justifi-plaid-payment-method></justifi-plaid-payment-method>',
       });
 
-      const instance = page.rootInstance as any as PlaidPaymentMethod;
+      const instance = page.rootInstance as any as JustifiPlaidPaymentMethod;
       (instance as any).publicToken = 'tok';
       (instance as any).error = {
         code: 'plaid-sdk-load-failed',
@@ -96,12 +96,12 @@ describe('justifi-plaid-payment-method', () => {
   describe('Plaid success flow', () => {
     it('stores public token in store and does not set payment token', async () => {
       const page = await newSpecPage({
-        components: [PlaidPaymentMethod],
+        components: [JustifiPlaidPaymentMethod],
         html: '<justifi-plaid-payment-method></justifi-plaid-payment-method>',
       });
 
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID } as any;
-      const instance = page.rootInstance as any as PlaidPaymentMethod;
+      const instance = page.rootInstance as any as JustifiPlaidPaymentMethod;
 
       (instance as any).handlePlaidSuccess('public-sandbox-xyz', {});
       await page.waitForChanges();

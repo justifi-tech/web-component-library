@@ -9,7 +9,7 @@ import { filterMenu, filterParam } from '../../styles/parts';
   tag: 'justifi-payments-list-filters',
   shadow: true
 })
-export class PaymentsListFilters {
+export class JustifiPaymentsListFilters {
   @Prop() paymentId?: string;
   @Prop() terminalId?: string;
   @Prop() paymentStatus?: string;

@@ -8,7 +8,7 @@ import { StyledHost } from "../../../ui-components";
   tag: 'justifi-checkout-summary',
   shadow: true,
 })
-export class Summary {
+export class JustifiCheckoutSummary {
   render() {
     return (
       <StyledHost>

@@ -12,7 +12,7 @@ import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents
   shadow: true,
 })
 
-export class PaymentDetails {
+export class JustifiPaymentDetails {
   @Prop() paymentId!: string;
   @Prop() authToken!: string;
 

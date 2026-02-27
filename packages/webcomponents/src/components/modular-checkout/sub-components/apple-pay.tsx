@@ -22,14 +22,11 @@ import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
 import { checkoutStore } from "../../../store/checkout.store";
 
-/**
- * @part skeleton - Skeleton for the Apple Pay button.
- */
 @Component({
   tag: "justifi-apple-pay",
   shadow: true,
 })
-export class ApplePay {
+export class JustifiApplePay {
   private applePayService: ApplePayService;
   @Prop() countryCode: string = "US";
   @Prop() merchantIdentifier: string =
@@ -89,7 +86,7 @@ export class ApplePay {
           hasAuthToken: Boolean(checkoutStore.authToken),
           accountId: checkoutStore.accountId,
         });
-        this.applePayError.emit({ error: this.error, code: ApplePay.ErrorCode.CONFIG_ERROR });
+        this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.CONFIG_ERROR });
         this.isLoading = false;
         return;
       }
@@ -100,7 +97,7 @@ export class ApplePay {
       if (!this.isAvailable) {
         this.error = "Apple Pay is not supported on this device";
         console.error(this.error);
-        this.applePayError.emit({ error: this.error, code: ApplePay.ErrorCode.NOT_SUPPORTED });
+        this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.NOT_SUPPORTED });
         this.isLoading = false;
         return;
       }
@@ -108,7 +105,7 @@ export class ApplePay {
       if (!this.canMakePayments) {
         this.error = "Apple Pay is not available";
         console.error(this.error);
-        this.applePayError.emit({ error: this.error, code: ApplePay.ErrorCode.NOT_AVAILABLE });
+        this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.NOT_AVAILABLE });
         this.isLoading = false;
         return;
       }
@@ -136,7 +133,7 @@ export class ApplePay {
         error instanceof Error
           ? error.message
           : "Failed to initialize Apple Pay";
-      this.applePayError.emit({ error: this.error, code: ApplePay.ErrorCode.INITIALIZATION_ERROR });
+      this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.INITIALIZATION_ERROR });
     } finally {
       this.isLoading = false;
     }
@@ -186,7 +183,7 @@ export class ApplePay {
         });
         this.applePayError.emit({
           error: result.error?.message || "Payment failed",
-          code: result.error?.code || ApplePay.ErrorCode.PAYMENT_FAILED,
+          code: result.error?.code || JustifiApplePay.ErrorCode.PAYMENT_FAILED,
         });
       }
     } catch (error) {
@@ -196,7 +193,7 @@ export class ApplePay {
         const errorMessage =
           error instanceof Error ? error.message : "Payment failed";
         this.error = errorMessage;
-        this.applePayError.emit({ error: errorMessage, code: ApplePay.ErrorCode.PAYMENT_FAILED });
+        this.applePayError.emit({ error: errorMessage, code: JustifiApplePay.ErrorCode.PAYMENT_FAILED });
         this.applePayCompleted.emit({
           success: false,
           error: errorMessage,

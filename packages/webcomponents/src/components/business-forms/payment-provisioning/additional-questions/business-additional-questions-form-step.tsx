@@ -14,7 +14,7 @@ import { BusinessFormStep, businessServiceReceivedOptions } from '../../utils';
 @Component({
   tag: 'justifi-additional-questions-form-step',
 })
-export class AdditionalQuestionsFormStep {
+export class JustifiAdditionalQuestionsFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
   @State() formController: FormController;

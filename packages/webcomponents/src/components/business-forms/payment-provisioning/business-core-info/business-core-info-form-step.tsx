@@ -16,7 +16,7 @@ import { countryLabels } from '../../utils/country-config';
 @Component({
   tag: 'justifi-business-core-info-form-step'
 })
-export class BusinessCoreInfoFormStep {
+export class JustifiBusinessCoreInfoFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
   @State() formController: FormController;

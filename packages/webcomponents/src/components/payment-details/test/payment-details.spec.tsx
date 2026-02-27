@@ -1,8 +1,8 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { PaymentDetails } from "../payment-details";
+import { JustifiPaymentDetails } from "../payment-details";
 import { PaymentDetailsCore } from "../payment-details-core";
-import { Details } from "../../../ui-components/details/details";
+import { JustifiDetails } from "../../../ui-components/details/details";
 import { PaymentService } from '../../../api/services/payment.service';
 import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";
 import JustifiAnalytics from "../../../api/Analytics";
@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 describe('payment-details', () => {
-  const components = [PaymentDetails, PaymentDetailsCore, Details];
+  const components = [JustifiPaymentDetails, PaymentDetailsCore, JustifiDetails];
   it('renders an error message when paymentId and authToken are not provided', async () => {
     const page = await newSpecPage({
       components,

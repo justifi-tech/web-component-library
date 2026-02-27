@@ -9,7 +9,7 @@ import fileInputHandler from "./file-input-handler";
 @Component({
   tag: 'justifi-electronic-evidence',
 })
-export class ElectronicEvidence {
+export class JustifiElectronicEvidence {
   @Prop() disputeResponse!: any;
   @Prop() documentErrors: any = {};
 

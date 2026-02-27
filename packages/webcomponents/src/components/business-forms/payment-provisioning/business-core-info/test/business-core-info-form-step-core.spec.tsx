@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessCoreInfoFormStep } from '../business-core-info-form-step';
+import { JustifiBusinessCoreInfoFormStep } from '../business-core-info-form-step';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 describe('justifi-business-core-info-form-step-core', () => {
@@ -15,7 +15,7 @@ describe('justifi-business-core-info-form-step-core', () => {
   describe('Country-specific tax ID label', () => {
     test('renders USA tax ID label and help text', async () => {
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStep],
+        components: [JustifiBusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"
@@ -30,7 +30,7 @@ describe('justifi-business-core-info-form-step-core', () => {
 
     test('renders CAN Business Number (BN) label and help text', async () => {
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStep],
+        components: [JustifiBusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"
@@ -49,7 +49,7 @@ describe('justifi-business-core-info-form-step-core', () => {
       mockGetBusiness.mockImplementation(({ final }) => final?.());
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStep],
+        components: [JustifiBusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"
@@ -88,7 +88,7 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStep],
+        components: [JustifiBusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"
@@ -119,7 +119,7 @@ describe('justifi-business-core-info-form-step-core', () => {
       mockGetBusiness.mockImplementation(({ final }) => final?.());
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStep],
+        components: [JustifiBusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"
@@ -162,7 +162,7 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStep],
+        components: [JustifiBusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"
@@ -204,7 +204,7 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
 
       const page = await newSpecPage({
-        components: [BusinessCoreInfoFormStep],
+        components: [JustifiBusinessCoreInfoFormStep],
         template: () => (
           <justifi-business-core-info-form-step
             businessId="biz_123"

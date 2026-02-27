@@ -9,7 +9,7 @@ import fileInputHandler from "./file-input-handler";
 @Component({
   tag: 'justifi-additional-statement',
 })
-export class AdditionalStatement {
+export class JustifiAdditionalStatement {
   @Prop() disputeResponse!: any;
   @Prop() documentErrors: any = {};
 

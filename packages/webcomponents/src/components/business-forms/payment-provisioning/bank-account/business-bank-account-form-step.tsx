@@ -13,7 +13,7 @@ import { Button } from '../../../../ui-components';
 @Component({
   tag: 'justifi-business-bank-account-form-step'
 })
-export class BusinessBankAccountFormStep {
+export class JustifiBusinessBankAccountFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() bankAccount: IBankAccount = {};

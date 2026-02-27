@@ -8,7 +8,7 @@ import { filterMenu, filterParam } from '../../styles/parts';
   tag: 'justifi-payouts-list-filters',
   shadow: true
 })
-export class PayoutsListFilters {
+export class JustifiPayoutsListFilters {
   @Prop() status?: string;
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;

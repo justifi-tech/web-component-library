@@ -11,7 +11,7 @@ import {
 } from '../../api';
 import { checkoutStore } from '../../store/checkout.store';
 import { PAYMENT_METHODS, SelectedPaymentMethod } from '../modular-checkout/ModularCheckout';
-import { BillingFormFields } from '../../components';
+import { BillingFormFields } from '../checkout/billing-form/billing-form-schema';
 
 // Constants
 const PAYMENT_METHOD_TYPE_LABELS = {
@@ -42,9 +42,9 @@ interface TokenizeConfig {
   tag: 'justifi-tokenize-payment-method',
   shadow: true,
 })
-export class TokenizePaymentMethod {
+export class JustifiTokenizePaymentMethod {
   analytics: JustifiAnalytics;
-  private billingFormRef?: HTMLJustifiBillingFormElement;
+  private billingFormRef?: HTMLBillingFormElement;
   private paymentMethodFormRef?: HTMLCardFormElement | HTMLBankAccountFormElement;
   private unsubscribeFromStore?: () => void;
 
@@ -332,7 +332,7 @@ export class TokenizePaymentMethod {
 
     return (
       <div class="payment-method">
-        <justifi-radio-list-item
+        <radio-list-item
           name="paymentMethodType"
           value={paymentMethodType}
           checked={isSelected}
@@ -349,7 +349,7 @@ export class TokenizePaymentMethod {
       <div class="mt-4 pb-4">
         {this.renderPaymentMethodForm(paymentMethodType)}
         <div class="mt-4">
-          <justifi-billing-form
+          <billing-form
             ref={(el) => (this.billingFormRef = el)}
             hideCardBillingForm={this.hideCardBillingForm}
             hideBankAccountBillingForm={this.hideBankAccountBillingForm}
@@ -357,7 +357,7 @@ export class TokenizePaymentMethod {
           />
         </div>
         <div class="mt-4">
-          <justifi-save-new-payment-method hidden={!this.paymentMethodGroupID} label={this.savePaymentMethodLabel} />
+          <save-new-payment-method hidden={!this.paymentMethodGroupID} label={this.savePaymentMethodLabel} />
         </div>
       </div>
     );
@@ -381,7 +381,7 @@ export class TokenizePaymentMethod {
                 {this.availablePaymentMethods.map((method: PAYMENT_METHODS) => this.renderPaymentMethodOption(method))}
               </div>
               <div class="col-12">
-                <justifi-button
+                <internal-button
                   text={this.submitButtonText}
                   variant="primary"
                   type="submit"
