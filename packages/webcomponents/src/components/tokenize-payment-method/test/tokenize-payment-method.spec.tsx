@@ -149,7 +149,7 @@ describe('tokenize-payment-method', () => {
 
     await page.waitForChanges();
 
-    const checkbox = page.root?.querySelector('justifi-save-new-payment-method') as any;
+    const checkbox = page.root?.shadowRoot?.querySelector('justifi-save-new-payment-method') as any;
     expect(checkbox).toBeTruthy();
     expect((checkbox as any).label).toBe('Keep this on file');
   });
@@ -157,12 +157,12 @@ describe('tokenize-payment-method', () => {
   it('uses default save checkbox label when savePaymentMethodLabel is not provided', async () => {
     const page = await newSpecPage({
       components: [TokenizePaymentMethod, SaveNewPaymentMethod, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],
-      html: `<tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123"></justifi-tokenize-payment-method>`,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account" payment-method-group-id="pmg_123"></justifi-tokenize-payment-method>`,
     });
 
     await page.waitForChanges();
 
-    const checkbox = page.root?.querySelector('justifi-save-new-payment-method') as any;
+    const checkbox = page.root?.shadowRoot?.querySelector('justifi-save-new-payment-method') as any;
     expect(checkbox).toBeTruthy();
     expect((checkbox as any).label).toBe('Save New Payment Method');
   });

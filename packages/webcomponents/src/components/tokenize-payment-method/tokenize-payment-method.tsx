@@ -11,6 +11,7 @@ import {
 } from '../../api';
 import { checkoutStore } from '../../store/checkout.store';
 import { PAYMENT_METHODS, SelectedPaymentMethod } from '../modular-checkout/ModularCheckout';
+import { BillingFormFields } from '../../components';
 
 // Constants
 const PAYMENT_METHOD_TYPE_LABELS = {
@@ -138,6 +139,11 @@ export class TokenizePaymentMethod {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  @Method()
+  async fillBillingForm(fields: BillingFormFields): Promise<void> {
+    checkoutStore.billingFormFields = fields;
   }
 
   @Method()
