@@ -20,6 +20,7 @@ The `country` prop must only be defaulted in `payment-provisioning-core`. Child 
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property                         | Attribute               | Description | Type                                 | Default           |
@@ -32,11 +33,12 @@ The `country` prop must only be defaulted in `payment-provisioning-core`. Child 
 | `handleFormLoading` _(required)_ | --                      |             | `(e: CustomEvent<any>) => void`      | `undefined`       |
 | `refs` _(required)_              | --                      |             | `any[]`                              | `undefined`       |
 
+
 ## Dependencies
 
 ### Used by
 
-- [justifi-payment-provisioning-core](.)
+ - [justifi-payment-provisioning-core](.)
 
 ### Depends on
 
@@ -49,7 +51,6 @@ The `country` prop must only be defaulted in `payment-provisioning-core`. Child 
 - [justifi-business-terms-conditions-form-step](terms-and-conditions)
 
 ### Graph
-
 ```mermaid
 graph TD;
   justifi-payment-provisioning-form-steps --> justifi-business-core-info-form-step
@@ -92,10 +93,10 @@ graph TD;
   owner-form-inputs --> form-control-date
   owner-form-inputs --> form-control-number
   owner-form-inputs --> justifi-identity-address-form
-  justifi-business-bank-account-form-step --> form-control-tooltip
-  justifi-business-bank-account-form-step --> plaid-verification
   justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
   justifi-business-bank-account-form-step --> bank-account-form-inputs
+  justifi-business-bank-account-form-step --> plaid-verification
+  justifi-business-bank-account-form-step --> form-control-tooltip
   justifi-business-bank-account-form-step --> business-documents-on-file
   justifi-business-bank-account-form-step --> bank-account-document-form-inputs
   bank-account-form-inputs-canada --> bank-account-read-only-value
@@ -111,6 +112,6 @@ graph TD;
   style justifi-payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*
