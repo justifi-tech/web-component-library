@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessCoreInfoFormStep } from '../business-core-info-form-step';
+import { JustifiBusinessCoreInfoFormStep } from '../justifi-business-core-info-form-step';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 describe('justifi-business-core-info-form-step-core', () => {

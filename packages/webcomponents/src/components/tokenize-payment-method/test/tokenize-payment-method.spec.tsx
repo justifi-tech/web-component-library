@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiTokenizePaymentMethod } from '../tokenize-payment-method';
-import { BillingForm } from '../../checkout/billing-form/billing-form-inner';
+import { JustifiTokenizePaymentMethod } from '../justifi-tokenize-payment-method';
+import { BillingForm } from '../../checkout/billing-form/billing-form';
 import { BillingFormFull } from '../../checkout/billing-form/billing-form-full';
 import { CardBillingFormSimple } from '../../checkout/billing-form/card-billing-form-simple';
 import { BankAccountBillingFormSimple } from '../../checkout/billing-form/bank-account-billing-form-simple';

@@ -1,9 +1,9 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiModularCheckout } from '../modular-checkout';
+import { JustifiModularCheckout } from '../justifi-modular-checkout';
 import { checkoutStore, getCheckoutState } from '../../../store/checkout.store';
-import { JustifiSavedPaymentMethods } from '../sub-components/saved-payment-methods';
-import { JustifiCardForm } from '../sub-components/card-form';
-import { JustifiBankAccountForm } from '../sub-components/bank-account';
+import { JustifiSavedPaymentMethods } from '../sub-components/justifi-saved-payment-methods';
+import { JustifiCardForm } from '../sub-components/justifi-card-form';
+import { JustifiBankAccountForm } from '../sub-components/justifi-bank-account-form';
 import { PAYMENT_METHODS, SavedPaymentMethod } from '../ModularCheckout';
 
 describe('justifi-modular-checkout', () => {

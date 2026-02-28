@@ -7,7 +7,7 @@ import { PaginationMenu } from '../../../ui-components/pagination-menu/paginatio
 import mockSuccessResponse from '../../../../../../mockData/mockTerminalOrdersListSuccess.json';
 import { IApiResponseCollection, ITerminalOrder } from '../../../api';
 import { makeGetTerminalOrders } from '../../../actions/terminal/get-terminal-orders';
-import { JustifiTerminalOrdersListFilters } from '../terminal-orders-list-filters';
+import { JustifiTerminalOrdersListFilters } from '../justifi-terminal-orders-list-filters';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../terminal-orders-table';

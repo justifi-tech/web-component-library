@@ -8,7 +8,7 @@ import mockTerminalSuccessResponse from '../../../../../../mockData/mockTerminal
 import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAccountsListSuccess.json';
 import { IApiResponseCollection, ISubAccount, ITerminal } from '../../../api';
 import { makeGetTerminals } from '../../../actions/terminal/get-terminals';
-import { JustifiTerminalsListFilters } from '../terminals-list-filters';
+import { JustifiTerminalsListFilters } from '../justifi-terminals-list-filters';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../terminals-table';

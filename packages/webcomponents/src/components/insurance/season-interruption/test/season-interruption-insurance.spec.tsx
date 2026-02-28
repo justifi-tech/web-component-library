@@ -2,7 +2,7 @@ jest.mock('../../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiSeasonInterruptionInsurance } from '../season-interruption-insurance';
+import { JustifiSeasonInterruptionInsurance } from '../justifi-season-interruption-insurance';
 import { insuranceValuesStore, insuranceErrorsStore } from '../../insurance-state';
 import { checkoutStore } from '../../../../store/checkout.store';
 

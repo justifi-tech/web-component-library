@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiGooglePay } from '../google-pay';
+import { JustifiGooglePay } from '../justifi-google-pay';
 import { checkoutStore } from '../../../../store/checkout.store';
 
 // Mock configState

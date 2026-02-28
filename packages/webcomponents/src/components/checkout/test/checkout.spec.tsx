@@ -1,7 +1,7 @@
 jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiCheckout } from '../checkout';
+import { JustifiCheckout } from '../justifi-checkout';
 import JustifiAnalytics from '../../../api/Analytics';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
 import { checkoutStore } from '../../../store/checkout.store';

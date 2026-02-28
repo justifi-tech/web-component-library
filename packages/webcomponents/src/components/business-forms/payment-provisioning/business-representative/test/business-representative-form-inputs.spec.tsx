@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessRepresentativeFormInputs } from '../business-representative-form-inputs';
+import { JustifiBusinessRepresentativeFormInputs } from '../justifi-business-representative-form-inputs';
 import { FormController } from '../../../../../ui-components/form/form';
 import { identitySchemaUSA, identitySchemaCAN } from '../../../schemas/business-identity-schema';
 import { CountryCode } from '../../../../../utils/country-codes';

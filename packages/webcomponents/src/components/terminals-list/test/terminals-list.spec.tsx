@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { JustifiTerminalsList } from "../terminals-list";
+import { JustifiTerminalsList } from "../justifi-terminals-list";
 import { TerminalsListCore } from "../terminals-list-core";
 import { TerminalService } from '../../../api/services/terminal.service';
 import JustifiAnalytics from "../../../api/Analytics";

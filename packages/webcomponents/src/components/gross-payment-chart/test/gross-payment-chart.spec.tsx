@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { JustifiGrossPaymentChart } from "../gross-payment-chart";
+import { JustifiGrossPaymentChart } from "../justifi-gross-payment-chart";
 import { GrossPaymentChartCore } from "../gross-payment-chart-core";
 import { ReportsService } from "../../../api/services/reports.service";
 import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";

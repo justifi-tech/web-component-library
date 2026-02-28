@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessBankAccountFormStep } from '../business-bank-account-form-step';
+import { JustifiBusinessBankAccountFormStep } from '../justifi-business-bank-account-form-step';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 const mockBusinessResponse = (overrides: {

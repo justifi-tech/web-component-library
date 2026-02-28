@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { JustifiPayoutsList } from "../payouts-list";
+import { JustifiPayoutsList } from "../justifi-payouts-list";
 import { PayoutsListCore } from "../payouts-list-core";
 import { PayoutService } from '../../../api/services/payout.service';
 import JustifiAnalytics from "../../../api/Analytics";

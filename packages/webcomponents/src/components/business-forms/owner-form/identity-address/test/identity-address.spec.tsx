@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiIdentityAddressForm } from '../identity-address-form';
+import { JustifiIdentityAddressForm } from '../justifi-identity-address-form';
 import { IAddress } from '../../../../../api/Business';
 import { CountryCode } from '../../../../../utils/country-codes';
 

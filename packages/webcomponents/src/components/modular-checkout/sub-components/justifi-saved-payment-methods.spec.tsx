@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiSavedPaymentMethods } from './saved-payment-methods';
+import { JustifiSavedPaymentMethods } from './justifi-saved-payment-methods';
 import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../ModularCheckout';
 

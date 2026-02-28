@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiCheckoutsList } from '../checkouts-list';
+import { JustifiCheckoutsList } from '../justifi-checkouts-list';
 import { CheckoutsListCore } from '../checkouts-list-core';
 import { CheckoutService } from '../../../api/services/checkout.service';
 import { SubAccountService } from '../../../api/services/subaccounts.service';

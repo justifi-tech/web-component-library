@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessForm } from '../business-form';
+import { JustifiBusinessForm } from '../justifi-business-form';
 import JustifiAnalytics from '../../../../api/Analytics';
 
 beforeEach(() => {

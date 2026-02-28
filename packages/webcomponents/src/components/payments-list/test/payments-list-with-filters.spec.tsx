@@ -2,10 +2,10 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiPaymentsList } from '../payments-list';
+import { JustifiPaymentsList } from '../justifi-payments-list';
 import { defaultColumnsKeys } from '../payments-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { JustifiPaymentsListFilters } from '../payments-list-filters';
+import { JustifiPaymentsListFilters } from '../justifi-payments-list-filters';
 import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { filterParams } from '../payments-list-params-state';
 import { PaymentsListCore } from '../payments-list-core';

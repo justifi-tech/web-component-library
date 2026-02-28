@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiPaymentProvisioning } from '../payment-provisioning';
+import { JustifiPaymentProvisioning } from '../justifi-payment-provisioning';
 import { JustifiPaymentProvisioningCore } from '../payment-provisioning-core';
 import { BusinessService } from '../../../../api/services/business.service';
 import { ProvisionService } from '../../../../api/services/provision.service';

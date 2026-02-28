@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiCardBillingFormSimple } from '../card-billing-form-simple';
-import { JustifiBankAccountBillingFormSimple } from '../bank-account-billing-form-simple';
-import { JustifiBillingFormFull } from '../billing-form-full';
+import { JustifiCardBillingFormSimple } from '../justifi-card-billing-form-simple';
+import { JustifiBankAccountBillingFormSimple } from '../justifi-bank-account-billing-form-simple';
+import { JustifiBillingFormFull } from '../justifi-billing-form-full';
 import { CardBillingFormSimple } from '../../../checkout/billing-form/card-billing-form-simple';
 import { BankAccountBillingFormSimple } from '../../../checkout/billing-form/bank-account-billing-form-simple';
 import { BillingFormFull } from '../../../checkout/billing-form/billing-form-full';

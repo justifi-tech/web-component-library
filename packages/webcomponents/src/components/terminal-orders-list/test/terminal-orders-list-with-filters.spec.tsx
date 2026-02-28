@@ -2,10 +2,10 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiTerminalOrdersList } from '../terminal-orders-list';
+import { JustifiTerminalOrdersList } from '../justifi-terminal-orders-list';
 import { defaultColumnsKeys } from '../terminal-orders-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { JustifiTerminalOrdersListFilters } from '../terminal-orders-list-filters';
+import { JustifiTerminalOrdersListFilters } from '../justifi-terminal-orders-list-filters';
 import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { filterParams } from '../terminal-orders-list-params-state';
 import { TerminalOrdersListCore } from '../terminal-orders-list-core';

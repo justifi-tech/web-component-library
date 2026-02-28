@@ -1,13 +1,13 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessCoreInfoFormStep } from '../business-core-info/business-core-info-form-step';
-import { JustifiLegalAddressFormStep } from '../legal-address-form/legal-address-form-step';
-import { JustifiBusinessBankAccountFormStep } from '../bank-account/business-bank-account-form-step';
-import { JustifiFormAddressFields } from '../form-address-fields/form-address-fields';
-import { JustifiBusinessOwnersFormStep } from '../business-owners/business-owners-form-step';
+import { JustifiBusinessCoreInfoFormStep } from '../business-core-info/justifi-business-core-info-form-step';
+import { JustifiLegalAddressFormStep } from '../legal-address-form/justifi-legal-address-form-step';
+import { JustifiBusinessBankAccountFormStep } from '../bank-account/justifi-business-bank-account-form-step';
+import { JustifiFormAddressFields } from '../form-address-fields/justifi-form-address-fields';
+import { JustifiBusinessOwnersFormStep } from '../business-owners/justifi-business-owners-form-step';
 import { CountryCode } from '../../../../utils/country-codes';
 import { getNormalizedCountry } from './mockBusiness';
-import { JustifiBusinessRepresentativeFormStep } from '../business-representative/business-representative-form-step';
+import { JustifiBusinessRepresentativeFormStep } from '../business-representative/justifi-business-representative-form-step';
 
 describe('Payment Provisioning step components country differences', () => {
   const baseProps = {

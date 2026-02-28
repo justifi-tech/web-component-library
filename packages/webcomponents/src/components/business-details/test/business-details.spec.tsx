@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessDetails } from '../business-details';
+import { JustifiBusinessDetails } from '../justifi-business-details';
 import { BusinessDetailsCore } from '../business-details-core';
 import JustifiAnalytics from '../../../api/Analytics';
 

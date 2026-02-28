@@ -2,7 +2,7 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiCheckoutsList } from '../checkouts-list';
+import { JustifiCheckoutsList } from '../justifi-checkouts-list';
 import { CheckoutsListCore } from '../checkouts-list-core';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { JustifiCheckoutsListFilters } from '../checkouts-list-filters';

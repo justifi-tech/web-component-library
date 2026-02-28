@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiPlaidPaymentMethod } from './plaid-payment-method';
+import { JustifiPlaidPaymentMethod } from './justifi-plaid-payment-method';
 import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../ModularCheckout';
 

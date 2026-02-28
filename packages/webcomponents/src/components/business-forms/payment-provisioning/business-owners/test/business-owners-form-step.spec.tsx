@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessOwnersFormStep } from '../business-owners-form-step';
+import { JustifiBusinessOwnersFormStep } from '../justifi-business-owners-form-step';
 
 describe.skip('justifi-business-owners-form-step', () => {
   let consoleSpy;

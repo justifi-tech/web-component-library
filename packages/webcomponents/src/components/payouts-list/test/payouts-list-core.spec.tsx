@@ -10,7 +10,7 @@ import { IApiResponseCollection, IPayout, ISubAccount } from '../../../api';
 import { makeGetPayouts } from '../../../actions/payout/get-payouts';
 import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { JustifiPayoutsListFilters } from '../payouts-list-filters';
+import { JustifiPayoutsListFilters } from '../justifi-payouts-list-filters';
 import { FormControlDate } from '../../../ui-components/form/form-control-date';
 import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';
 

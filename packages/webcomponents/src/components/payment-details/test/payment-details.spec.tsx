@@ -1,8 +1,8 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { JustifiPaymentDetails } from "../payment-details";
+import { JustifiPaymentDetails } from "../justifi-payment-details";
 import { PaymentDetailsCore } from "../payment-details-core";
-import { JustifiDetails } from "../../../ui-components/details/details";
+import { JustifiDetails } from "../../../ui-components/details/justifi-details";
 import { PaymentService } from '../../../api/services/payment.service';
 import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";
 import JustifiAnalytics from "../../../api/Analytics";

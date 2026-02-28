@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBillingForm } from '../billing-form';
-import { BillingForm } from '../billing-form-inner';
+import { JustifiBillingForm } from '../justifi-billing-form';
+import { BillingForm } from '../billing-form';
 import { BillingFormFull } from '../billing-form-full';
 import { CardBillingFormSimple } from '../card-billing-form-simple';
 import { BankAccountBillingFormSimple } from '../bank-account-billing-form-simple';

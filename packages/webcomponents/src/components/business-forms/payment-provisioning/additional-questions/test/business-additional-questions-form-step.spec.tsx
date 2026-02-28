@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiAdditionalQuestionsFormStep } from '../business-additional-questions-form-step';
+import { JustifiAdditionalQuestionsFormStep } from '../justifi-additional-questions-form-step';
 
 describe.skip('justifi-additional-questions-form-step', () => {
   let consoleSpy;

@@ -1,8 +1,8 @@
-const express = require("express");
-const { API_PATHS } = require("../utils/api-paths");
-const { getToken, getWebComponentToken } = require("../utils/auth");
-const { generateRandomLegalName } = require("../utils/random-business-names");
-const { startStandaloneServer } = require("../utils/standalone-server");
+const express = require('express');
+const { API_PATHS } = require('../utils/api-paths');
+const { getToken, getWebComponentToken } = require('../utils/auth');
+const { generateRandomLegalName } = require('../utils/random-business-names');
+const { startStandaloneServer } = require('../utils/standalone-server');
 
 const router = express.Router();
 
@@ -10,24 +10,25 @@ async function createBusiness(token) {
   const businessEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.BUSINESS}`;
   const randomLegalName = generateRandomLegalName();
   const response = await fetch(businessEndpoint, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       legal_name: randomLegalName,
-      country_of_establishment: "USA",
+      country_of_establishment: 'USA',
     }),
   });
   const res = await response.json();
-  console.log("response from createBusiness", res);
+  console.log('response from createBusiness', res);
   return res.id;
 }
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   const token = await getToken();
-  const businessId = "biz_4G7XkdwIXbm1I3Bmy0ixld"; //await createBusiness(token);
+  // const businessId = "biz_4G7XkdwIXbm1I3Bmy0ixld";
+  const businessId = await createBusiness(token);
   const webComponentToken = await getWebComponentToken(token, [
     `write:business:${businessId}`,
   ]);
