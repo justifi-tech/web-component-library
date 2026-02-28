@@ -44,6 +44,11 @@ export const TEST_DATA = {
     expiration: '11/30',
     cvv: '123',
   },
+  bankAccount: {
+    accountNumber: '1111222233331111',
+    routingNumber: '021000021',
+    accountOwnerName: 'Test User',
+  },
   postalCodes: {
     minneapolis: '55114',
     newYork: '10001',
@@ -58,3 +63,18 @@ export const TEST_DATA = {
     country: 'US',
   },
 } as const;
+
+/** Fill card form iframe inputs and postal code. */
+export async function fillCardForm(page: Page) {
+  await fillIframeInput(page, 'cardNumber', TEST_DATA.card.number);
+  await fillIframeInput(
+    page,
+    'expirationMonth',
+    TEST_DATA.card.expirationMonth,
+  );
+  await fillIframeInput(page, 'expirationYear', TEST_DATA.card.expirationYear);
+  await fillIframeInput(page, 'CVV', TEST_DATA.card.cvv);
+  await page
+    .getByRole('textbox', { name: 'Postal Code' })
+    .fill(TEST_DATA.postalCodes.minneapolis);
+}
