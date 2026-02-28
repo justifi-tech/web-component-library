@@ -1,9 +1,9 @@
 import { Component, h, Prop, Method, Host } from '@stencil/core';
 import { BillingFormFields } from './billing-form-schema';
-import { PAYMENT_METHODS } from '../../..';
+import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
 
 @Component({
-  tag: 'justifi-billing-form',
+  tag: 'billing-form',
 })
 export class BillingForm {
   @Prop({ mutable: true }) legend?: string;
@@ -35,7 +35,7 @@ export class BillingForm {
     if (this.showSimpleBankAccountBillingForm) {
       return (
         <Host>
-          <justifi-bank-account-billing-form-simple
+          <bank-account-billing-form-simple
             legend={this.legend}
             ref={(el: any) => (this.selectedFormRef = el)}
           />
@@ -46,7 +46,7 @@ export class BillingForm {
     if (this.showSimpleCardBillingForm) {
       return (
         <Host>
-          <justifi-card-billing-form-simple
+          <card-billing-form-simple
             legend={this.legend}
             ref={(el: any) => (this.selectedFormRef = el)}
           />
@@ -56,7 +56,7 @@ export class BillingForm {
 
     return (
       <Host>
-        <justifi-billing-form-full
+        <billing-form-full
           legend={this.legend}
           ref={(el) => (this.selectedFormRef = el)}
         />

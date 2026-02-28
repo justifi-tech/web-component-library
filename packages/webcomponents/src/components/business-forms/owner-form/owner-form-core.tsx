@@ -11,7 +11,7 @@ import { CountryCode } from '../../../utils/country-codes';
 @Component({
   tag: 'owner-form-core'
 })
-export class BusinessOwnerFormCore {
+export class OwnerFormCore {
   @State() isLoading: boolean = false;
   @State() formController: FormController;
   @State() errors: any = {};

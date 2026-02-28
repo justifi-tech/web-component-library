@@ -15,7 +15,7 @@ import { Button } from "../../../ui-components/button";
 @Component({
   tag: 'justifi-dispute-response-core',
 })
-export class DisputeResponseCore {
+export class JustifiDisputeResponseCore {
   @Prop() updateDisputeResponse: (args: {
     payload: any,
     onSuccess: (disputeResponse: any) => void,

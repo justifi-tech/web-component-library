@@ -1,9 +1,9 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { ModularCheckout } from '../modular-checkout';
+import { JustifiModularCheckout } from '../justifi-modular-checkout';
 import { checkoutStore, getCheckoutState } from '../../../store/checkout.store';
-import { SavedPaymentMethods } from '../sub-components/saved-payment-methods';
-import { JustifiCardForm } from '../sub-components/card-form';
-import { BankAccountForm } from '../sub-components/bank-account';
+import { JustifiSavedPaymentMethods } from '../sub-components/justifi-saved-payment-methods';
+import { JustifiCardForm } from '../sub-components/justifi-card-form';
+import { JustifiBankAccountForm } from '../sub-components/justifi-bank-account-form';
 import { PAYMENT_METHODS, SavedPaymentMethod } from '../ModularCheckout';
 
 describe('justifi-modular-checkout', () => {
@@ -17,7 +17,7 @@ describe('justifi-modular-checkout', () => {
 
   it('uses saved payment method without billing validation or tokenization', async () => {
     const page = await newSpecPage({
-      components: [ModularCheckout, SavedPaymentMethods],
+      components: [JustifiModularCheckout, JustifiSavedPaymentMethods],
       html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123">
         <justifi-saved-payment-methods></justifi-saved-payment-methods>
       </justifi-modular-checkout>`,
@@ -58,7 +58,7 @@ describe('justifi-modular-checkout', () => {
 
   it('sets bankAccountVerification from checkout.payment_settings', async () => {
     const page = await newSpecPage({
-      components: [ModularCheckout],
+      components: [JustifiModularCheckout],
       html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
     });
 
@@ -98,7 +98,7 @@ describe('justifi-modular-checkout', () => {
 
     it('emits checkout-changed with availablePaymentMethodTypes on store updates', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
       });
 
@@ -135,7 +135,7 @@ describe('justifi-modular-checkout', () => {
 
     it('sets selectedPaymentMethod to NEW_CARD when justifi-card-form is present', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout, JustifiCardForm],
+        components: [JustifiModularCheckout, JustifiCardForm],
         html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123">
           <justifi-card-form></justifi-card-form>
         </justifi-modular-checkout>`,
@@ -148,7 +148,7 @@ describe('justifi-modular-checkout', () => {
 
     it('sets selectedPaymentMethod to NEW_BANK_ACCOUNT when justifi-bank-account-form is present', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout, BankAccountForm],
+        components: [JustifiModularCheckout, JustifiBankAccountForm],
         html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123">
           <justifi-bank-account-form></justifi-bank-account-form>
         </justifi-modular-checkout>`,
@@ -163,7 +163,7 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' };
 
       const page = await newSpecPage({
-        components: [ModularCheckout, JustifiCardForm],
+        components: [JustifiModularCheckout, JustifiCardForm],
         html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123">
           <justifi-card-form></justifi-card-form>
         </justifi-modular-checkout>`,
@@ -189,7 +189,7 @@ describe('justifi-modular-checkout', () => {
 
     it('emits error when submit called without selected payment method', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -208,7 +208,7 @@ describe('justifi-modular-checkout', () => {
 
     it('maps payment mode correctly for different payment methods', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -236,7 +236,7 @@ describe('justifi-modular-checkout', () => {
 
     it('handles Apple Pay completed event success by setting token and submitting', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -258,7 +258,7 @@ describe('justifi-modular-checkout', () => {
 
     it('handles Apple Pay error by emitting error-event', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -275,7 +275,7 @@ describe('justifi-modular-checkout', () => {
 
     it('handles Google Pay completed event success by setting token and submitting', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -297,7 +297,7 @@ describe('justifi-modular-checkout', () => {
 
     it('handles Google Pay error by emitting error-event', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -322,7 +322,7 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
 
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -348,7 +348,7 @@ describe('justifi-modular-checkout', () => {
 
     it('proceeds with submission when hook calls resolve()', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -368,7 +368,7 @@ describe('justifi-modular-checkout', () => {
 
     it('cancels submission when hook calls reject()', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -388,7 +388,7 @@ describe('justifi-modular-checkout', () => {
 
     it('proceeds with submission when no hook is provided', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -402,7 +402,7 @@ describe('justifi-modular-checkout', () => {
 
     it('passes full CheckoutState (including paymentToken) to hook for saved method', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -454,7 +454,7 @@ describe('justifi-modular-checkout', () => {
 
     it('provides paymentToken in hook state after tokenization for new card', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 
@@ -491,7 +491,7 @@ describe('justifi-modular-checkout', () => {
 
     it('exists and writes to checkoutStore.billingFormFields', async () => {
       const page = await newSpecPage({
-        components: [ModularCheckout],
+        components: [JustifiModularCheckout],
         html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
       });
 

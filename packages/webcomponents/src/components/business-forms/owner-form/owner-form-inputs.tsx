@@ -9,7 +9,7 @@ import { label, inputDisabled, buttonSecondary } from '../../../styles/parts';
 @Component({
   tag: 'owner-form-inputs'
 })
-export class BusinessOwnerFormInputs {
+export class OwnerFormInputs {
   @Prop() ownerDefaultValue!: any;
   @Prop() errors!: any;
   @Prop() formController!: FormController;

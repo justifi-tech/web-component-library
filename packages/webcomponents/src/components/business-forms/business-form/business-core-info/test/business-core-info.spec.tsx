@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessCoreInfo } from '../business-core-info';
+import { JustifiBusinessCoreInfo } from '../justifi-business-core-info';
 import { FormController } from '../../../../../ui-components/form/form';
 import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from '../../../schemas/business-core-info-schema';
 import { CountryCode } from '../../../../../utils/country-codes';
@@ -11,7 +11,7 @@ describe('justifi-business-core-info', () => {
       const formController = new FormController(businessCoreInfoSchemaUSA());
       
       const page = await newSpecPage({
-        components: [BusinessCoreInfo],
+        components: [JustifiBusinessCoreInfo],
         template: () => (
           <justifi-business-core-info
             formController={formController}
@@ -27,7 +27,7 @@ describe('justifi-business-core-info', () => {
       const formController = new FormController(businessCoreInfoSchemaCAN());
       
       const page = await newSpecPage({
-        components: [BusinessCoreInfo],
+        components: [JustifiBusinessCoreInfo],
         template: () => (
           <justifi-business-core-info
             formController={formController}
@@ -47,7 +47,7 @@ describe('justifi-business-core-info', () => {
       const formController = new FormController(businessCoreInfoSchemaUSA());
       
       const page = await newSpecPage({
-        components: [BusinessCoreInfo],
+        components: [JustifiBusinessCoreInfo],
         template: () => (
           <justifi-business-core-info
             formController={formController}
@@ -68,7 +68,7 @@ describe('justifi-business-core-info', () => {
       formController.setInitialValues({ tax_id: '', tax_id_last4: null });
       
       const page = await newSpecPage({
-        components: [BusinessCoreInfo],
+        components: [JustifiBusinessCoreInfo],
         template: () => (
           <justifi-business-core-info
             formController={formController}
@@ -88,7 +88,7 @@ describe('justifi-business-core-info', () => {
       formController.setInitialValues({ tax_id: '123456789', tax_id_last4: '6789' });
       
       const page = await newSpecPage({
-        components: [BusinessCoreInfo],
+        components: [JustifiBusinessCoreInfo],
         template: () => (
           <justifi-business-core-info
             formController={formController}

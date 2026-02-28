@@ -20,7 +20,7 @@ exports[`justifi-checkout renders loading 1`] = `
           <section>
             <div>
               <justifi-saved-payment-methods></justifi-saved-payment-methods>
-              <internal-tokenize-payment-method accountid="" hidesubmitbutton=""></internal-tokenize-payment-method>
+              <justifi-tokenize-payment-method accountid="" hidesubmitbutton=""></justifi-tokenize-payment-method>
             </div>
           </section>
         </div>

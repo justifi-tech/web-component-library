@@ -2,16 +2,16 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { TerminalsList } from '../terminals-list';
+import { JustifiTerminalsList } from '../justifi-terminals-list';
 import { defaultColumnsKeys } from '../terminals-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { TerminalsListFilters } from '../terminals-list-filters';
-import { SelectInput } from '../../../ui-components/form/form-control-select';
-import { DateInput } from '../../../ui-components/form/form-control-date';
+import { JustifiTerminalsListFilters } from '../justifi-terminals-list-filters';
+import { FormControlSelect } from '../../../ui-components/form/form-control-select';
+import { FormControlDate } from '../../../ui-components/form/form-control-date';
 import { filterParams } from '../terminals-list-params-state';
 import { TerminalsListCore } from '../terminals-list-core';
 
-const components = [TerminalsList, TerminalsListCore, TableFiltersMenu, TerminalsListFilters, SelectInput, DateInput];
+const components = [JustifiTerminalsList, TerminalsListCore, TableFiltersMenu, JustifiTerminalsListFilters, FormControlSelect, FormControlDate];
 
 describe('justifi-terminals-list with filters', () => {
   const fetchDataSpy = jest.spyOn(TerminalsListCore.prototype, 'fetchData');
@@ -315,7 +315,7 @@ describe('justifi-terminals-list with filters', () => {
   it('initializes with createdAfter and createdBefore props', async () => {
 
     page = await newSpecPage({
-      components: [TerminalsListFilters],
+      components: [JustifiTerminalsListFilters],
       autoApplyChanges: true,
       template: () =>
         <justifi-terminals-list-filters

@@ -13,7 +13,7 @@ import { inputCheckbox, inputCheckboxChecked, inputCheckboxCheckedFocused, input
 @Component({
   tag: 'form-control-checkbox',
 })
-export class CheckboxInput {
+export class FormControlCheckbox {
   checkboxElement!: HTMLInputElement;
 
   @State() isFocused: boolean = false;

@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { PayoutDetails } from "../payout-details";
+import { JustifiPayoutDetails } from "../justifi-payout-details";
 import { PayoutDetailsCore } from "../payout-details-core";
 import { PayoutService } from "../../../api/services/payout.service";
 import JustifiAnalytics from "../../../api/Analytics";
@@ -16,7 +16,7 @@ beforeEach(() => {
 describe('payout-details', () => {
   it('renders error state when no payoutId or authToken', async () => {
     const page = await newSpecPage({
-      components: [PayoutDetails, PayoutDetailsCore],
+      components: [JustifiPayoutDetails, PayoutDetailsCore],
       template: () => <justifi-payout-details payoutId="" authToken="" />,
     });
     await page.waitForChanges();
@@ -27,7 +27,7 @@ describe('payout-details', () => {
     const eventSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [PayoutDetails, PayoutDetailsCore],
+      components: [JustifiPayoutDetails, PayoutDetailsCore],
       template: () => <justifi-payout-details payoutId="" authToken="token" onError-event={eventSpy} />,
     });
     await page.waitForChanges();
@@ -44,7 +44,7 @@ describe('payout-details', () => {
     const eventSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [PayoutDetails, PayoutDetailsCore],
+      components: [JustifiPayoutDetails, PayoutDetailsCore],
       template: () => <justifi-payout-details payoutId="payoutId" authToken="" onError-event={eventSpy} />,
     });
     await page.waitForChanges();
@@ -63,7 +63,7 @@ describe('payout-details', () => {
     const onErrorSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [PayoutDetails, PayoutDetailsCore],
+      components: [JustifiPayoutDetails, PayoutDetailsCore],
       template: () => <justifi-payout-details payoutId="payoutId" authToken="authToken" onError-event={onErrorSpy} />,
     });
 

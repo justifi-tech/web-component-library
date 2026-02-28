@@ -1,12 +1,12 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
 import { CURRENCY_MASK } from "../../../../utils/form-input-masks";
-import { MonetaryInputProvisioning } from "../form-control-monetary-provisioning";
+import { FormControlMonetaryProvisioning } from "../form-control-monetary-provisioning";
 import { FormControlErrorText } from '../../../../ui-components/form/form-helpers/form-control-error-text';
 import { FormControlHelpText } from '../../../../ui-components/form/form-helpers/form-control-help-text';
 
 describe('form-control-monetary-provisioning', () => {
-  const components = [MonetaryInputProvisioning, FormControlErrorText, FormControlHelpText];
+  const components = [FormControlMonetaryProvisioning, FormControlErrorText, FormControlHelpText];
   const mockInputHandler = jest.fn();
 
   it('renders correctly with default props', async () => {
