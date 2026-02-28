@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { PaymentProvisioning } from '../payment-provisioning';
-import { PaymentProvisioningCore } from '../payment-provisioning-core';
+import { JustifiPaymentProvisioning } from '../justifi-payment-provisioning';
+import { JustifiPaymentProvisioningCore } from '../payment-provisioning-core';
 import { BusinessService } from '../../../../api/services/business.service';
 import { ProvisionService } from '../../../../api/services/provision.service';
 import JustifiAnalytics from '../../../../api/Analytics';
@@ -48,7 +48,7 @@ describe('justifi-payment-provisioning', () => {
   it('should emit error-event when authToken is missing', async () => {
     const errorEvent = jest.fn();
     await newSpecPage({
-      components: [PaymentProvisioning],
+      components: [JustifiPaymentProvisioning],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -72,7 +72,7 @@ describe('justifi-payment-provisioning', () => {
   it('should emit error-event when businessId is missing', async () => {
     const errorEvent = jest.fn();
     await newSpecPage({
-      components: [PaymentProvisioning],
+      components: [JustifiPaymentProvisioning],
       template: () => (
         <justifi-payment-provisioning
           businessId=""
@@ -96,7 +96,7 @@ describe('justifi-payment-provisioning', () => {
   it('should emit error-event when authToken is expired', async () => {
     const errorEvent = jest.fn();
     await newSpecPage({
-      components: [PaymentProvisioning],
+      components: [JustifiPaymentProvisioning],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -126,7 +126,7 @@ describe('justifi-payment-provisioning', () => {
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [PaymentProvisioning, PaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -155,7 +155,7 @@ describe('justifi-payment-provisioning', () => {
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [PaymentProvisioning, PaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -185,7 +185,7 @@ describe('justifi-payment-provisioning', () => {
       .mockResolvedValue(mockBusinessResponse);
 
     const page = await newSpecPage({
-      components: [PaymentProvisioning, PaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -214,7 +214,7 @@ describe('justifi-payment-provisioning', () => {
 
     const submitEvent = jest.fn();
     const page = await newSpecPage({
-      components: [PaymentProvisioning, PaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -257,7 +257,7 @@ describe('justifi-payment-provisioning', () => {
     const errorEvent = jest.fn();
     const submitEvent = jest.fn();
     const page = await newSpecPage({
-      components: [PaymentProvisioning, PaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"

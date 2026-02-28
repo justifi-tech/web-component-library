@@ -1,7 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CardBillingFormSimple } from '../card-billing-form-simple';
-import { BankAccountBillingFormSimple } from '../bank-account-billing-form-simple';
-import { BillingFormFull } from '../billing-form-full';
+import { JustifiCardBillingFormSimple } from '../justifi-card-billing-form-simple';
+import { JustifiBankAccountBillingFormSimple } from '../justifi-bank-account-billing-form-simple';
+import { JustifiBillingFormFull } from '../justifi-billing-form-full';
+import { CardBillingFormSimple } from '../../../checkout/billing-form/card-billing-form-simple';
+import { BankAccountBillingFormSimple } from '../../../checkout/billing-form/bank-account-billing-form-simple';
+import { BillingFormFull } from '../../../checkout/billing-form/billing-form-full';
 import { checkoutStore } from '../../../../store/checkout.store';
 
 describe('billing-form-store-sync', () => {
@@ -15,7 +18,7 @@ describe('billing-form-store-sync', () => {
     };
 
     const page = await newSpecPage({
-      components: [CardBillingFormSimple],
+      components: [JustifiCardBillingFormSimple, CardBillingFormSimple],
       html: `<justifi-card-billing-form-simple></justifi-card-billing-form-simple>`,
     });
 
@@ -33,7 +36,7 @@ describe('billing-form-store-sync', () => {
     };
 
     const page = await newSpecPage({
-      components: [BankAccountBillingFormSimple],
+      components: [JustifiBankAccountBillingFormSimple, BankAccountBillingFormSimple],
       html: `<justifi-bank-account-billing-form-simple></justifi-bank-account-billing-form-simple>`,
     });
 
@@ -54,7 +57,7 @@ describe('billing-form-store-sync', () => {
     };
 
     const page = await newSpecPage({
-      components: [BillingFormFull],
+      components: [JustifiBillingFormFull, BillingFormFull],
       html: `<justifi-billing-form-full></justifi-billing-form-full>`,
     });
 
@@ -71,7 +74,7 @@ describe('billing-form-store-sync', () => {
     checkoutStore.billingFormFields = { address_postal_code: '11111' };
 
     const page = await newSpecPage({
-      components: [CardBillingFormSimple],
+      components: [JustifiCardBillingFormSimple, CardBillingFormSimple],
       html: `<justifi-card-billing-form-simple></justifi-card-billing-form-simple>`,
     });
 

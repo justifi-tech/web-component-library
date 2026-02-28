@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { SelectInput } from '../form-control-select';
+import { FormControlSelect } from '../form-control-select';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
+import { FormControlTooltip } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-select', () => {
-  const components = [SelectInput, FormControlErrorText, TooltipComponent];
+  const components = [FormControlSelect, FormControlErrorText, FormControlTooltip];
   const mockInputHandler = jest.fn();
   const options = [
     { label: 'Pickup', value: 'pickup' },

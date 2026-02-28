@@ -2,7 +2,7 @@ jest.mock('../../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { SeasonInterruptionInsurance } from '../season-interruption-insurance';
+import { JustifiSeasonInterruptionInsurance } from '../justifi-season-interruption-insurance';
 import { insuranceValuesStore, insuranceErrorsStore } from '../../insurance-state';
 import { checkoutStore } from '../../../../store/checkout.store';
 
@@ -12,7 +12,7 @@ describe('justifi-season-interruption-insurance', () => {
 
   it('should display loading state correctly', async () => {
     const page = await newSpecPage({
-      components: [SeasonInterruptionInsurance],
+      components: [JustifiSeasonInterruptionInsurance],
       template: () => <justifi-season-interruption-insurance authToken="123" policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
     });
 
@@ -23,7 +23,7 @@ describe('justifi-season-interruption-insurance', () => {
 
   it('loads and sets the quote to state correctly', async () => {
     const page = await newSpecPage({
-      components: [SeasonInterruptionInsurance],
+      components: [JustifiSeasonInterruptionInsurance],
       template: () => <justifi-season-interruption-insurance authToken="123" policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
     });
 
@@ -36,7 +36,7 @@ describe('justifi-season-interruption-insurance', () => {
     const errorSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [SeasonInterruptionInsurance],
+      components: [JustifiSeasonInterruptionInsurance],
       template: () => <justifi-season-interruption-insurance authToken="" onError-event={errorSpy} policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
     });
 
@@ -56,7 +56,7 @@ describe('justifi-season-interruption-insurance', () => {
 
   it('validates that a selection was made', async () => {
     const page = await newSpecPage({
-      components: [SeasonInterruptionInsurance],
+      components: [JustifiSeasonInterruptionInsurance],
       template: () => <justifi-season-interruption-insurance authToken="123" policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
     });
 
@@ -76,7 +76,7 @@ describe('justifi-season-interruption-insurance', () => {
     checkoutStore.insuranceEnabled = false;
 
     const page = await newSpecPage({
-      components: [SeasonInterruptionInsurance],
+      components: [JustifiSeasonInterruptionInsurance],
       template: () => <justifi-season-interruption-insurance authToken="123" policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
     });
 

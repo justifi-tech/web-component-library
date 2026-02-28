@@ -1,7 +1,7 @@
 jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { newSpecPage } from '@stencil/core/testing';
-import { Checkout } from '../checkout';
+import { JustifiCheckout } from '../justifi-checkout';
 import JustifiAnalytics from '../../../api/Analytics';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
 import { checkoutStore } from '../../../store/checkout.store';
@@ -16,7 +16,7 @@ beforeEach(() => {
 describe('justifi-checkout', () => {
   it('renders loading', async () => {
     const page = await newSpecPage({
-      components: [Checkout],
+      components: [JustifiCheckout],
       html: '<justifi-checkout></justifi-checkout>',
     });
 
@@ -26,7 +26,7 @@ describe('justifi-checkout', () => {
 
   it('renders Apple Pay when availablePaymentMethods includes APPLE_PAY', async () => {
     const page = await newSpecPage({
-      components: [Checkout],
+      components: [JustifiCheckout],
       html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
     });
 
@@ -51,7 +51,7 @@ describe('justifi-checkout', () => {
     checkoutStore.billingFormFields = { address_postal_code: '' };
 
     const page = await newSpecPage({
-      components: [Checkout],
+      components: [JustifiCheckout],
       html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
     });
 

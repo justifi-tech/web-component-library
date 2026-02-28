@@ -1,6 +1,5 @@
 import { Component, Prop, h, Event, EventEmitter } from "@stencil/core";
 import { StyledHost } from "../styled-host/styled-host";
-import { radioListItem } from "../../styles/parts";
 
 @Component({
   tag: 'justifi-radio-list-item',
@@ -16,27 +15,18 @@ export class JustifiRadioListItem {
 
   @Event({ eventName: 'radio-click' }) radioClick: EventEmitter<string>;
 
-  handleClick = () => {
-    this.radioClick.emit(this.value);
-  };
-
   render() {
     return (
       <StyledHost>
-        <div
-          class={`radio-list-item p-3 ${this.class || ''}`}
-          part={radioListItem}
-          onClick={this.handleClick}
+        <radio-list-item
+          name={this.name}
+          value={this.value}
+          label={this.label}
+          checked={this.checked}
           hidden={this.hidden}
-        >
-          <form-control-radio
-            name={this.name}
-            value={this.value}
-            checked={this.checked}
-            label={this.label}
-            inputHandler={() => null}
-          />
-        </div>
+          class={this.class}
+          onRadio-click={(e: CustomEvent<string>) => this.radioClick.emit(e.detail)}
+        />
       </StyledHost>
     );
   }

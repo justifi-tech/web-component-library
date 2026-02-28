@@ -14,7 +14,7 @@ import { PaymentProvisioningSubmissionComplete } from './payment-provisioning-su
 @Component({
   tag: 'justifi-payment-provisioning-core',
 })
-export class PaymentProvisioningCore {
+export class JustifiPaymentProvisioningCore {
   @State() loading: boolean = false;
   @State() businessLoading: boolean = true;
   @State() businessProvisioned: boolean = false;

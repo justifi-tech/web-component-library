@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessForm } from '../business-form';
+import { JustifiBusinessForm } from '../justifi-business-form';
 import JustifiAnalytics from '../../../../api/Analytics';
 
 beforeEach(() => {
@@ -26,7 +26,7 @@ describe('justifi-business-form', () => {
   it('emit an error event when accountId and authToken are not provided', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [BusinessForm],
+      components: [JustifiBusinessForm],
       template: () => <justifi-business-form businessId="" authToken="" onError-event={errorEvent} />,
     });
     await page.waitForChanges();
@@ -43,7 +43,7 @@ describe('justifi-business-form', () => {
 
   it('should not log a warning if an authToken is provided', async () => {
     await newSpecPage({
-      components: [BusinessForm],
+      components: [JustifiBusinessForm],
       html: `<justifi-business-form business-id="biz_123" auth-token="some-token"></justifi-business-form>`,
     });
 

@@ -2,15 +2,15 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { CheckoutsList } from '../checkouts-list';
+import { JustifiCheckoutsList } from '../justifi-checkouts-list';
 import { CheckoutsListCore } from '../checkouts-list-core';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { CheckoutsListFilters } from '../checkouts-list-filters';
-import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { JustifiCheckoutsListFilters } from '../checkouts-list-filters';
+import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { defaultColumnsKeys } from '../checkouts-table';
 import { filterParams } from '../checkouts-list-params-state';
 
-const components = [CheckoutsList, CheckoutsListCore, TableFiltersMenu, CheckoutsListFilters, SelectInput];
+const components = [JustifiCheckoutsList, CheckoutsListCore, TableFiltersMenu, JustifiCheckoutsListFilters, FormControlSelect];
 
 describe('justifi-checkouts-list with filters', () => {
   const fetchDataSpy = jest.spyOn(CheckoutsListCore.prototype, 'fetchData');

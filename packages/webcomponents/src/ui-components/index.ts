@@ -7,6 +7,6 @@ export * from './headers/header-2';
 export * from './headers/header-3';
 export * from './form/form-helpers/form-control-help-text';
 export * from './form/form-helpers/form-control-error-text';
-export * from './details/details';
+export * from './details/justifi-details';
 export * from './table';
 export * from './shadow-dom-components/justifi-radio-list-item';

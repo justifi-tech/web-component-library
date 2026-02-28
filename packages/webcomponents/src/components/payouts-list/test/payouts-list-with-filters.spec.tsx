@@ -2,17 +2,17 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { PayoutsList } from '../payouts-list';
+import { JustifiPayoutsList } from '../justifi-payouts-list';
 import { PaginationMenu } from '../../../ui-components/pagination-menu/pagination-menu';
 import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { PayoutsListFilters } from '../payouts-list-filters';
+import { JustifiPayoutsListFilters } from '../justifi-payouts-list-filters';
 import { filterParams } from '../payouts-list-params-state';
 import { PayoutsListCore } from '../payouts-list-core';
-import { DateInput } from '../../../ui-components/form/form-control-date';
-import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { FormControlDate } from '../../../ui-components/form/form-control-date';
+import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 
-const components = [PayoutsList, PayoutsListCore, PaginationMenu, TableFiltersMenu, PayoutsListFilters, DateInput, SelectInput];
+const components = [JustifiPayoutsList, PayoutsListCore, PaginationMenu, TableFiltersMenu, JustifiPayoutsListFilters, FormControlDate, FormControlSelect];
 
 describe('justifi-payouts-list filters', () => {
   const fetchDataSpy = jest.spyOn(PayoutsListCore.prototype, 'fetchData');

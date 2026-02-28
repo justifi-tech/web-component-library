@@ -19,7 +19,7 @@ import {
 @Component({
   tag: 'form-control-radio',
 })
-export class RadioInput {
+export class FormControlRadio {
   radioElement!: HTMLInputElement;
 
   @State() isFocused: boolean = false;
