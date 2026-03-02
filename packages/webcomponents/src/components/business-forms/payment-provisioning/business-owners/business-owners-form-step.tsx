@@ -251,7 +251,7 @@ export class BusinessOwnersFormStep {
           <div class='row gy-3'>
             {this.ownersPayload.map((owner) => {
               return (
-                <justifi-owner-form
+                <owner-form
                   key={owner.id}
                   authToken={this.authToken}
                   businessId={this.businessId}

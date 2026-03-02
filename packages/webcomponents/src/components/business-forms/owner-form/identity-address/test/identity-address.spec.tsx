@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiIdentityAddressForm } from '../justifi-identity-address-form';
+import { IdentityAddressForm } from '../identity-address-form';
 import { IAddress } from '../../../../../api/Business';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 describe('identity-address', () => {
   it('should render IdentityAddressForm component', async () => {
     const page = await newSpecPage({
-      components: [JustifiIdentityAddressForm],
+      components: [IdentityAddressForm],
       template: () => (
-        <justifi-identity-address-form country={CountryCode.USA} defaultValues={{}} errors={{}} handleFormUpdate={() => { }}></justifi-identity-address-form>
+        <identity-address-form country={CountryCode.USA} defaultValues={{}} errors={{}} handleFormUpdate={() => { }}></identity-address-form>
       ),
     });
     await page.waitForChanges();
@@ -28,14 +28,14 @@ describe('identity-address', () => {
       country: 'Country',
     } as IAddress;
     const page = await newSpecPage({
-      components: [JustifiIdentityAddressForm],
+      components: [IdentityAddressForm],
       template: () => (
-        <justifi-identity-address-form
+        <identity-address-form
           country={CountryCode.USA}
           defaultValues={businessAddress}
           errors={{}}
           handleFormUpdate={() => { }}
-        ></justifi-identity-address-form>
+        ></identity-address-form>
       ),
     });
     await page.waitForChanges();

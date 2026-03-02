@@ -61,8 +61,8 @@ graph TD;
   business-representative --> form-control-text
   business-representative --> form-control-number-masked
   business-representative --> form-control-date
-  business-representative --> justifi-identity-address-form
-  justifi-identity-address-form --> form-address-fields
+  business-representative --> identity-address-form
+  identity-address-form --> form-address-fields
   style justifi-business-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

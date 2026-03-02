@@ -61,12 +61,12 @@ graph TD;
   business-representative-form-inputs --> form-control-text
   business-representative-form-inputs --> form-control-number-masked
   business-representative-form-inputs --> form-control-date
-  business-representative-form-inputs --> justifi-identity-address-form
+  business-representative-form-inputs --> identity-address-form
   form-control-tooltip --> custom-popper
   form-control-text --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
   form-control-date --> form-control-tooltip
-  justifi-identity-address-form --> form-address-fields
+  identity-address-form --> form-address-fields
   form-address-fields --> form-control-text
   form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip

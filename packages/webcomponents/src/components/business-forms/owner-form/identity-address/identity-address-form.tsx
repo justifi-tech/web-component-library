@@ -3,9 +3,9 @@ import { CountryCode } from '../../../../utils/country-codes';
 import { IAddress } from '../../../../api/Business';
 
 @Component({
-  tag: 'justifi-identity-address-form'
+  tag: 'identity-address-form'
 })
-export class JustifiIdentityAddressForm {
+export class IdentityAddressForm {
   @Prop() handleFormUpdate!: (values: any) => void;
   @Prop() errors!: any;
   @Prop() defaultValues!: any;

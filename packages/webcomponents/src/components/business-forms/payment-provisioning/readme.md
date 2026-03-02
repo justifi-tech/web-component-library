@@ -82,17 +82,17 @@ graph TD;
   business-representative-form-inputs --> form-control-text
   business-representative-form-inputs --> form-control-number-masked
   business-representative-form-inputs --> form-control-date
-  business-representative-form-inputs --> justifi-identity-address-form
-  justifi-identity-address-form --> form-address-fields
+  business-representative-form-inputs --> identity-address-form
+  identity-address-form --> form-address-fields
   business-owners-form-step --> form-control-tooltip
-  business-owners-form-step --> justifi-owner-form
-  justifi-owner-form --> owner-form-core
+  business-owners-form-step --> owner-form
+  owner-form --> owner-form-core
   owner-form-core --> owner-form-inputs
   owner-form-inputs --> form-control-text
   owner-form-inputs --> form-control-number-masked
   owner-form-inputs --> form-control-date
   owner-form-inputs --> form-control-number
-  owner-form-inputs --> justifi-identity-address-form
+  owner-form-inputs --> identity-address-form
   business-bank-account-form-step --> bank-account-form-inputs-canada
   business-bank-account-form-step --> bank-account-form-inputs
   business-bank-account-form-step --> plaid-verification

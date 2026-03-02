@@ -129,7 +129,7 @@ export class BusinessRepresentativeFormInputs {
               )}
             </div>
             <div class="col-12">
-              <justifi-identity-address-form
+              <identity-address-form
                 errors={this.errors.address}
                 defaultValues={this.representativeDefaultValue?.address}
                 handleFormUpdate={this.onAddressFormUpdate}

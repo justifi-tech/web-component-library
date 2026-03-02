@@ -30,16 +30,16 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-identity-address-form --> form-address-fields
+  identity-address-form --> form-address-fields
   form-address-fields --> form-control-text
   form-address-fields --> form-control-select
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
-  business-representative --> justifi-identity-address-form
-  business-representative-form-inputs --> justifi-identity-address-form
-  owner-form-inputs --> justifi-identity-address-form
-  style justifi-identity-address-form fill:#f9f,stroke:#333,stroke-width:4px
+  business-representative --> identity-address-form
+  business-representative-form-inputs --> identity-address-form
+  owner-form-inputs --> identity-address-form
+  style identity-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
