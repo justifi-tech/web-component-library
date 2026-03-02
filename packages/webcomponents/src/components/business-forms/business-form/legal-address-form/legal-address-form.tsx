@@ -5,9 +5,9 @@ import { heading2 } from '../../../../styles/parts';
 import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
-  tag: 'justifi-legal-address-form'
+  tag: 'legal-address-form'
 })
-export class JustifiLegalAddressForm {
+export class LegalAddressForm {
   @Prop() formController!: FormController;
   @State() errors: any = {};
   @State() legal_address: IAddress;

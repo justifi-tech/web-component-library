@@ -19,7 +19,7 @@
 
 ### Used by
 
- - [justifi-business-representative](../../business-form/business-representative)
+ - [business-representative](../../business-form/business-representative)
  - [justifi-business-representative-form-inputs](../../payment-provisioning/business-representative)
  - [owner-form-inputs](..)
 
@@ -36,7 +36,7 @@ graph TD;
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
-  justifi-business-representative --> justifi-identity-address-form
+  business-representative --> justifi-identity-address-form
   justifi-business-representative-form-inputs --> justifi-identity-address-form
   owner-form-inputs --> justifi-identity-address-form
   style justifi-identity-address-form fill:#f9f,stroke:#333,stroke-width:4px

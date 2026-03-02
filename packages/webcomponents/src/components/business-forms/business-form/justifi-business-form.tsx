@@ -149,16 +149,16 @@ export class JustifiBusinessForm {
             <Header1 text={this.title} />
             <form-alert text={this.errorMessage} hideAlert={this.hideErrors} />
             <div class="col-12 mb-4">
-              <justifi-business-core-info formController={this.formController} country={this.country} />
+              <business-core-info formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-legal-address-form formController={this.formController} country={this.country} />
+              <legal-address-form formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-additional-questions formController={this.formController} />
+              <additional-questions formController={this.formController} />
             </div>
             <div class="col-12 mb-4">
-              <justifi-business-representative formController={this.formController} country={this.country} />
+              <business-representative formController={this.formController} country={this.country} />
             </div>
             <div class="col-12 d-flex flex-row-reverse">
               <Button

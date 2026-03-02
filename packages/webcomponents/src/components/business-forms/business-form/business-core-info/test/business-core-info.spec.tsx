@@ -1,19 +1,19 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessCoreInfo } from '../justifi-business-core-info';
+import { BusinessCoreInfo } from '../business-core-info';
 import { FormController } from '../../../../../ui-components/form/form';
 import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from '../../../schemas/business-core-info-schema';
 import { CountryCode } from '../../../../../utils/country-codes';
 
-describe('justifi-business-core-info', () => {
+describe('business-core-info', () => {
   describe('Country-specific tax ID label and help text', () => {
     test('renders USA tax ID label and help text', async () => {
       const formController = new FormController(businessCoreInfoSchemaUSA());
       
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfo],
+        components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.USA}
           />
@@ -27,9 +27,9 @@ describe('justifi-business-core-info', () => {
       const formController = new FormController(businessCoreInfoSchemaCAN());
       
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfo],
+        components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.CAN}
           />
@@ -47,9 +47,9 @@ describe('justifi-business-core-info', () => {
       const formController = new FormController(businessCoreInfoSchemaUSA());
       
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfo],
+        components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.USA}
           />
@@ -68,9 +68,9 @@ describe('justifi-business-core-info', () => {
       formController.setInitialValues({ tax_id: '', tax_id_last4: null });
       
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfo],
+        components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.USA}
           />
@@ -88,9 +88,9 @@ describe('justifi-business-core-info', () => {
       formController.setInitialValues({ tax_id: '123456789', tax_id_last4: '6789' });
       
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfo],
+        components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.USA}
           />

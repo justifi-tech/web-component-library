@@ -9,9 +9,9 @@ import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { heading2 } from '../../../../styles/parts';
 
 @Component({
-  tag: 'justifi-additional-questions',
+  tag: 'additional-questions',
 })
-export class JustifiAdditionalQuestions {
+export class AdditionalQuestions {
   @Prop() formController!: FormController;
   @State() errors: any = {};
   @State() additional_questions: any = {};

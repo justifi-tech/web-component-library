@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`justifi-business-representative Country-specific identification number label renders CAN SIN label and help text 1`] = `
-<justifi-business-representative>
+exports[`business-representative Country-specific identification number label renders CAN SIN label and help text 1`] = `
+<business-representative>
   <fieldset>
     <legend part="heading-2 heading text color font-family">
       Representative
@@ -30,11 +30,11 @@ exports[`justifi-business-representative Country-specific identification number 
       </div>
     </div>
   </fieldset>
-</justifi-business-representative>
+</business-representative>
 `;
 
-exports[`justifi-business-representative Country-specific identification number label renders USA SSN label and help text 1`] = `
-<justifi-business-representative>
+exports[`business-representative Country-specific identification number label renders USA SSN label and help text 1`] = `
+<business-representative>
   <fieldset>
     <legend part="heading-2 heading text color font-family">
       Representative
@@ -63,11 +63,11 @@ exports[`justifi-business-representative Country-specific identification number 
       </div>
     </div>
   </fieldset>
-</justifi-business-representative>
+</business-representative>
 `;
 
-exports[`justifi-business-representative Form component behavior uses toggleable-field instead of form-control-number-masked 1`] = `
-<justifi-business-representative>
+exports[`business-representative Form component behavior uses toggleable-field instead of form-control-number-masked 1`] = `
+<business-representative>
   <fieldset>
     <legend part="heading-2 heading text color font-family">
       Representative
@@ -96,5 +96,5 @@ exports[`justifi-business-representative Form component behavior uses toggleable
       </div>
     </div>
   </fieldset>
-</justifi-business-representative>
+</business-representative>
 `;
