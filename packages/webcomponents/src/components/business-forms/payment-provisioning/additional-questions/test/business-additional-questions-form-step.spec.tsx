@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { AdditionalQuestionsFormStep } from '../additional-questions-form-step';
 
-describe.skip('additional-questions-form-step', () => {
+describe('additional-questions-form-step', () => {
   let consoleSpy;
 
   // Initialize the spy in the beforeEach
