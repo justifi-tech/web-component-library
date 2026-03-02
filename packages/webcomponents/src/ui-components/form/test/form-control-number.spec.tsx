@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
-import { NumberInput } from "../form-control-number";
+import { FormControlNumber } from "../form-control-number";
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
 import { FormControlHelpText } from '../form-helpers/form-control-help-text';
 
 describe('form-control-number', () => {
-  const components = [NumberInput, FormControlErrorText, FormControlHelpText];
+  const components = [FormControlNumber, FormControlErrorText, FormControlHelpText];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {

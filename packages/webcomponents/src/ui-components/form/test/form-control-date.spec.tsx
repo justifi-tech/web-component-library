@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
-import { DateInput } from "../form-control-date";
+import { FormControlDate } from "../form-control-date";
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
+import { FormControlTooltip } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-date', () => {
-  const components = [DateInput, FormControlErrorText, TooltipComponent];
+  const components = [FormControlDate, FormControlErrorText, FormControlTooltip];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {

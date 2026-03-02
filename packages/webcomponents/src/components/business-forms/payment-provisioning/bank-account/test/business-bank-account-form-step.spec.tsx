@@ -39,7 +39,7 @@ async function setupComponent(businessResponse: any) {
   const page = await newSpecPage({
     components: [BusinessBankAccountFormStep],
     template: () => (
-      <justifi-business-bank-account-form-step
+      <business-bank-account-form-step
         authToken="test-token"
         businessId="biz_123"
         country={CountryCode.USA}
@@ -55,7 +55,7 @@ async function setupComponent(businessResponse: any) {
   return { page, mockGetBusiness };
 }
 
-describe('justifi-business-bank-account-form-step', () => {
+describe('business-bank-account-form-step', () => {
   describe('render modes via determineViewMode', () => {
     it('renders manual mode when bank_account_verification is false and no existing account', async () => {
       const { page } = await setupComponent(

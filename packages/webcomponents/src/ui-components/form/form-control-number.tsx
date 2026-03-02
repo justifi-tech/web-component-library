@@ -15,7 +15,7 @@ import { input, inputFocused, inputInvalid, inputInvalidAndFocused, label } from
 @Component({
   tag: 'form-control-number'
 })
-export class NumberInput {
+export class FormControlNumber {
   @Element() el: HTMLElement;
 
   @State() isFocused: boolean = false;

@@ -9,7 +9,7 @@ describe('identity-address', () => {
     const page = await newSpecPage({
       components: [IdentityAddressForm],
       template: () => (
-        <justifi-identity-address-form country={CountryCode.USA} defaultValues={{}} errors={{}} handleFormUpdate={() => { }}></justifi-identity-address-form>
+        <identity-address-form country={CountryCode.USA} defaultValues={{}} errors={{}} handleFormUpdate={() => { }}></identity-address-form>
       ),
     });
     await page.waitForChanges();
@@ -30,12 +30,12 @@ describe('identity-address', () => {
     const page = await newSpecPage({
       components: [IdentityAddressForm],
       template: () => (
-        <justifi-identity-address-form
+        <identity-address-form
           country={CountryCode.USA}
           defaultValues={businessAddress}
           errors={{}}
           handleFormUpdate={() => { }}
-        ></justifi-identity-address-form>
+        ></identity-address-form>
       ),
     });
     await page.waitForChanges();

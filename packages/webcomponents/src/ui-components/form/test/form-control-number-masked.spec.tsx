@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from "@stencil/core/testing";
-import { NumberInputMasked } from "../form-control-number-masked";
+import { FormControlNumberMasked } from "../form-control-number-masked";
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
+import { FormControlTooltip } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-number-masked', () => {
-  const components = [NumberInputMasked, FormControlErrorText, TooltipComponent];
+  const components = [FormControlNumberMasked, FormControlErrorText, FormControlTooltip];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {

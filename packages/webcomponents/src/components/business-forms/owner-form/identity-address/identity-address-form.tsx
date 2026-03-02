@@ -3,7 +3,7 @@ import { CountryCode } from '../../../../utils/country-codes';
 import { IAddress } from '../../../../api/Business';
 
 @Component({
-  tag: 'justifi-identity-address-form'
+  tag: 'identity-address-form'
 })
 export class IdentityAddressForm {
   @Prop() handleFormUpdate!: (values: any) => void;
@@ -25,7 +25,7 @@ export class IdentityAddressForm {
   render() {
     return (
       <Host>
-        <justifi-form-address-fields
+        <form-address-fields
           country={this.country}
           errors={this.errors}
           defaultValues={this.defaultValues}

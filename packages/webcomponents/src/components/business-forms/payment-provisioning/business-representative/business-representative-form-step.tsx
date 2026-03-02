@@ -11,7 +11,7 @@ import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormStep } from '../../utils';
 
 @Component({
-  tag: 'justifi-business-representative-form-step'
+  tag: 'business-representative-form-step'
 })
 export class BusinessRepresentativeFormStep {
   @State() getBusiness: Function;
@@ -154,7 +154,7 @@ export class BusinessRepresentativeFormStep {
     }
 
     return (
-      <justifi-business-representative-form-inputs
+      <business-representative-form-inputs
         representativeDefaultValue={this.formController.getInitialValues()}
         errors={this.errors}
         formController={this.formController}

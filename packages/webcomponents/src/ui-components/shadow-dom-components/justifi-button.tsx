@@ -1,6 +1,5 @@
 import { Component, Prop, h } from "@stencil/core";
 import { StyledHost } from "../styled-host/styled-host";
-import { Button } from "../button";
 
 @Component({
   tag: 'justifi-button',
@@ -15,22 +14,22 @@ export class JustifiButton {
   @Prop() type?: 'button' | 'submit' | 'reset' = 'button';
   @Prop() class?: string;
   @Prop() customStyle?: string | { [key: string]: string };
-
+  @Prop() hidden?: boolean;
 
   render() {
     return (
       <StyledHost>
-        <Button
+        <internal-button
+          text={this.text}
           variant={this.variant}
           isLoading={this.isLoading}
           clickHandler={this.clickHandler}
-          class={this.class}
           type={this.type}
           disabled={this.disabled}
-          style={this.customStyle}
-        >
-          {this.text}
-        </Button>
+          class={this.class}
+          customStyle={this.customStyle}
+          hidden={this.hidden}
+        />
       </StyledHost>
     );
   }

@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { BusinessDetails } from '../business-details';
+import { JustifiBusinessDetails } from '../justifi-business-details';
 import { BusinessDetailsCore } from '../business-details-core';
 import JustifiAnalytics from '../../../api/Analytics';
 
@@ -14,7 +14,7 @@ beforeEach(() => {
 describe('justifi-business-details', () => {
   it('initializes getBusiness on load with valid props', async () => {
     const page = await newSpecPage({
-      components: [BusinessDetails],
+      components: [JustifiBusinessDetails],
       template: () => <justifi-business-details businessId="123" authToken="token" />,
     });
 
@@ -26,7 +26,7 @@ describe('justifi-business-details', () => {
 
   it('sets an error message with invalid props', async () => {
     const page = await newSpecPage({
-      components: [BusinessDetails],
+      components: [JustifiBusinessDetails],
       template: () => <justifi-business-details businessId="" authToken="" />, // No props provided
     });
 
@@ -37,7 +37,7 @@ describe('justifi-business-details', () => {
 
   it('renders the error state when there is an error message', async () => {
     const page = await newSpecPage({
-      components: [BusinessDetails, BusinessDetailsCore],
+      components: [JustifiBusinessDetails, BusinessDetailsCore],
       template: () => <justifi-business-details businessId="" authToken="" />,
     });
 
@@ -49,7 +49,7 @@ describe('justifi-business-details', () => {
 
   it('renders business-details-core when there is no error message', async () => {
     const page = await newSpecPage({
-      components: [BusinessDetails, BusinessDetailsCore],
+      components: [JustifiBusinessDetails, BusinessDetailsCore],
       template: () => <justifi-business-details businessId="123" authToken="token" />,
     });
 
@@ -63,7 +63,7 @@ describe('justifi-business-details', () => {
     const errorSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [BusinessDetails],
+      components: [JustifiBusinessDetails],
       template: () => <justifi-business-details businessId="123" authToken="" onError-event={errorSpy} />,
     });
 

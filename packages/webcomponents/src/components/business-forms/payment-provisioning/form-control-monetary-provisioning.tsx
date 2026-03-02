@@ -16,7 +16,7 @@ import { inputAdornment, inputDisabled, inputFocused, inputGroup, inputInvalid, 
 @Component({
   tag: 'form-control-monetary-provisioning'
 })
-export class MonetaryInputProvisioning {
+export class FormControlMonetaryProvisioning {
   textInput!: HTMLInputElement;
   private imask: InputMask<any> | null = null;
 

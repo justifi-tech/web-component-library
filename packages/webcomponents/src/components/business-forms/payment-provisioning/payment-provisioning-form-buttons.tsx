@@ -3,7 +3,7 @@ import { BusinessFormClickActions } from '../utils';
 import { Button } from '../../../ui-components';
 
 @Component({
-  tag: 'justifi-payment-provisioning-form-buttons'
+  tag: 'payment-provisioning-form-buttons'
 })
 export class PaymentProvisioningFormButtons {
   @Prop() currentStep!: number;

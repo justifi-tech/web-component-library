@@ -9,7 +9,7 @@ import { heading2 } from '../../../../styles/parts';
 import { BusinessFormStep } from '../../utils';
 
 @Component({
-  tag: 'justifi-business-terms-conditions-form-step'
+  tag: 'business-terms-conditions-form-step'
 })
 export class BusinessTermsConditionsFormStep {
   @State() formController: FormController;

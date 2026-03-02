@@ -10,7 +10,7 @@ import { filterMenu, filterParam } from '../../styles/parts';
   tag: 'justifi-checkouts-list-filters',
   shadow: true
 })
-export class CheckoutsListFilters {
+export class JustifiCheckoutsListFilters {
   @Prop() checkoutStatus?: ICheckoutStatus;
   @Prop() paymentMode?: ICheckoutPaymentModeParam;
   @Prop() checkoutId?: string;

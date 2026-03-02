@@ -24,7 +24,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -38,7 +38,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />
@@ -54,7 +54,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [LegalAddressFormStep],
         template: () => (
-          <justifi-legal-address-form-step
+          <legal-address-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -68,7 +68,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [LegalAddressFormStep],
         template: () => (
-          <justifi-legal-address-form-step-core
+          <legal-address-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />
@@ -84,7 +84,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [FormAddressFields],
         template: () => (
-          <justifi-form-address-fields
+          <form-address-fields
             country={CountryCode.USA}
             errors={{}}
             defaultValues={{}}
@@ -100,7 +100,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [FormAddressFields],
         template: () => (
-          <justifi-form-address-fields
+          <form-address-fields
             country={CountryCode.CAN}
             errors={{}}
             defaultValues={{}}
@@ -118,7 +118,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [BusinessRepresentativeFormStep],
         template: () => (
-          <justifi-business-representative-form-step
+          <business-representative-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -132,7 +132,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [BusinessRepresentativeFormStep],
         template: () => (
-          <justifi-business-representative-form-step
+          <business-representative-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />
@@ -148,7 +148,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [BusinessOwnersFormStep],
         template: () => (
-          <justifi-business-owners-form-step
+          <business-owners-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -162,7 +162,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [BusinessOwnersFormStep],
         template: () => (
-          <justifi-business-owners-form-step
+          <business-owners-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />
@@ -178,7 +178,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [BusinessBankAccountFormStep],
         template: () => (
-          <justifi-business-bank-account-form-step
+          <business-bank-account-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -192,7 +192,7 @@ describe('Payment Provisioning step components country differences', () => {
       const page = await newSpecPage({
         components: [BusinessBankAccountFormStep],
         template: () => (
-          <justifi-business-bank-account-form-step
+          <business-bank-account-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />

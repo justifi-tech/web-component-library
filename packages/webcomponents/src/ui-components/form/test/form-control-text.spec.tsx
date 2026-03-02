@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { TextInput } from '../form-control-text';
+import { FormControlText } from '../form-control-text';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
+import { FormControlTooltip } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 
 describe('form-control-text', () => {
-  const components = [TextInput, FormControlErrorText, TooltipComponent];
+  const components = [FormControlText, FormControlErrorText, FormControlTooltip];
   const mockInputHandler = jest.fn();
   const mockKeyDownHandler = jest.fn();
 

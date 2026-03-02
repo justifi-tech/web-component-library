@@ -14,7 +14,7 @@ import { input, inputDisabled, inputFocused, inputInvalid, inputInvalidAndFocuse
 @Component({
   tag: 'form-control-textarea'
 })
-export class TextInput {
+export class FormControlTextarea {
   @Element() el: HTMLElement;
 
   @State() isFocused: boolean = false;

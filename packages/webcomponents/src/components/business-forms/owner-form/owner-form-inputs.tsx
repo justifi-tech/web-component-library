@@ -9,7 +9,7 @@ import { label, inputDisabled, buttonSecondary } from '../../../styles/parts';
 @Component({
   tag: 'owner-form-inputs'
 })
-export class BusinessOwnerFormInputs {
+export class OwnerFormInputs {
   @Prop() ownerDefaultValue!: any;
   @Prop() errors!: any;
   @Prop() formController!: FormController;
@@ -131,7 +131,7 @@ export class BusinessOwnerFormInputs {
           )}
         </div>
         <div class="col-12">
-          <justifi-identity-address-form
+          <identity-address-form
             errors={this.errors.address}
             defaultValues={this.ownerDefaultValue.address}
             handleFormUpdate={this.onAddressFormUpdate}

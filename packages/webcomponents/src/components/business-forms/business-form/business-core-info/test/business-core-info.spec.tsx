@@ -5,7 +5,7 @@ import { FormController } from '../../../../../ui-components/form/form';
 import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from '../../../schemas/business-core-info-schema';
 import { CountryCode } from '../../../../../utils/country-codes';
 
-describe('justifi-business-core-info', () => {
+describe('business-core-info', () => {
   describe('Country-specific tax ID label and help text', () => {
     test('renders USA tax ID label and help text', async () => {
       const formController = new FormController(businessCoreInfoSchemaUSA());
@@ -13,7 +13,7 @@ describe('justifi-business-core-info', () => {
       const page = await newSpecPage({
         components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.USA}
           />
@@ -29,7 +29,7 @@ describe('justifi-business-core-info', () => {
       const page = await newSpecPage({
         components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.CAN}
           />
@@ -49,7 +49,7 @@ describe('justifi-business-core-info', () => {
       const page = await newSpecPage({
         components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.USA}
           />
@@ -70,7 +70,7 @@ describe('justifi-business-core-info', () => {
       const page = await newSpecPage({
         components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.USA}
           />
@@ -90,7 +90,7 @@ describe('justifi-business-core-info', () => {
       const page = await newSpecPage({
         components: [BusinessCoreInfo],
         template: () => (
-          <justifi-business-core-info
+          <business-core-info
             formController={formController}
             country={CountryCode.USA}
           />

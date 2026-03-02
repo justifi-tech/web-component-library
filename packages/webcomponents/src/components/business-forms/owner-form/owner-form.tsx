@@ -5,9 +5,9 @@ import { IdentityService } from '../../../api/services/business.service';
 import { CountryCode } from '../../../utils/country-codes';
 
 @Component({
-  tag: 'justifi-owner-form'
+  tag: 'owner-form'
 })
-export class BusinessOwnerForm {
+export class OwnerForm {
   coreComponent: HTMLOwnerFormCoreElement;
 
   @State() getOwner: Function;

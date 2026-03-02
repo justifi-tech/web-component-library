@@ -1,7 +1,8 @@
-import { Component, h, Host, Method, State } from "@stencil/core";
+import { Component, h, Method, State } from "@stencil/core";
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
+import { checkPkgVersion } from "../../../utils/check-pkg-version";
 
 @Component({
   tag: "bank-account-form",
@@ -18,6 +19,8 @@ export class BankAccountForm {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
     this.tabId = generateTabId();
+
+    checkPkgVersion();
   }
 
   componentDidRender() {
@@ -43,23 +46,28 @@ export class BankAccountForm {
   }
 
   @Method()
-  async tokenize(
+  async tokenize({
+    clientId,
+    paymentMethodMetadata,
+    account
+  }: {
     clientId: string,
     paymentMethodMetadata: any,
     account?: string,
-  ) {
-    return this.accountNumberIframeElement.tokenize(
+  }) {
+    const result = await this.accountNumberIframeElement.tokenize(
       clientId,
       paymentMethodMetadata,
       account,
     );
+    return result;
   }
-
 
   render() {
     return (
-      <Host>
+      <div>
         <BankAccountFormSkeleton isReady={this.isReady} />
+        <hidden-input />
         <div class="container-fluid p-0" style={{
           opacity: this.isReady ? '1' : '0',
           height: this.isReady ? 'auto' : '0',
@@ -81,7 +89,7 @@ export class BankAccountForm {
             />
           </div>
         </div>
-      </Host>
+      </div>
     );
   }
 }

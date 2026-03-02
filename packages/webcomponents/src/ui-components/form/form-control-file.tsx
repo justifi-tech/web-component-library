@@ -15,7 +15,7 @@ import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../s
 @Component({
   tag: 'form-control-file',
 })
-export class FileInput {
+export class FormControlFile {
   @Element() el: HTMLElement;
   fileInput: HTMLInputElement;
 

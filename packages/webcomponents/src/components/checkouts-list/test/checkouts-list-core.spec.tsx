@@ -9,14 +9,14 @@ import mockSubAccountSuccessResponse from '../../../../../../mockData/mockSubAcc
 import { IApiResponseCollection, ICheckout, ISubAccount } from '../../../api';
 import { makeGetCheckouts } from '../../../actions/checkout/get-checkouts';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { CheckoutsListFilters } from '../checkouts-list-filters';
-import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { JustifiCheckoutsListFilters } from '../checkouts-list-filters';
+import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { makeGetSubAccounts } from '../../../actions/sub-account/get-subaccounts';
 import { defaultColumnsKeys } from '../checkouts-table';
 
 const mockCheckoutsListResponse = mockCheckoutsSuccess as IApiResponseCollection<ICheckout[]>;
 const mockSubAccountsResponse = mockSubAccountSuccessResponse as IApiResponseCollection<ISubAccount[]>;
-const components = [CheckoutsListCore, PaginationMenu, TableFiltersMenu, CheckoutsListFilters, SelectInput];
+const components = [CheckoutsListCore, PaginationMenu, TableFiltersMenu, JustifiCheckoutsListFilters, FormControlSelect];
 
 describe('checkouts-list-core', () => {
 
