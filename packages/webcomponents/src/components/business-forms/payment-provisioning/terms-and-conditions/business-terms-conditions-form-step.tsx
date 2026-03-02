@@ -9,9 +9,9 @@ import { heading2 } from '../../../../styles/parts';
 import { BusinessFormStep } from '../../utils';
 
 @Component({
-  tag: 'justifi-business-terms-conditions-form-step'
+  tag: 'business-terms-conditions-form-step'
 })
-export class JustifiBusinessTermsConditionsFormStep {
+export class BusinessTermsConditionsFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() acceptedTermsBefore: boolean;

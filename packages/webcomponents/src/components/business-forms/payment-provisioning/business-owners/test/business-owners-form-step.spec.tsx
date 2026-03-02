@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessOwnersFormStep } from '../justifi-business-owners-form-step';
+import { BusinessOwnersFormStep } from '../business-owners-form-step';
 
-describe.skip('justifi-business-owners-form-step', () => {
+describe.skip('business-owners-form-step', () => {
   let consoleSpy;
 
   // Initialize the spy in the beforeEach
@@ -16,32 +16,32 @@ describe.skip('justifi-business-owners-form-step', () => {
 
   it('should log a warning if no authToken is provided', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step></business-owners-form-step>`,
     });
 
   });
 
   it('should log a warning if no businessId is provided', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step></business-owners-form-step>`,
     });
 
   });
 
   it('should emit server error event if server error when fetching data', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should emit server error event if server error when patching data', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
@@ -49,80 +49,80 @@ describe.skip('justifi-business-owners-form-step', () => {
 
   it('should render', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should call fetchData if rendered with valid props', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should populate inputs with data from fetchData', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should instantiate new Form Controller on load', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should fire form controller validation when called', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should only call submit after validate returns true', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should call sendData when submit is called', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should send correct data payload', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should emit submitted event when sendData resolves', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });
 
   it('should emit formLoading event when data is being sent or fetched', async () => {
     await newSpecPage({
-      components: [JustifiBusinessOwnersFormStep],
-      html: `<justifi-business-owners-form-step business-id="biz_123" auth-token="some-token"></justifi-business-owners-form-step>`,
+      components: [BusinessOwnersFormStep],
+      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
     });
 
   });

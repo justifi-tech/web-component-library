@@ -47,25 +47,25 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning-form-steps](..)
+ - [payment-provisioning-form-steps](..)
 
 ### Depends on
 
 - [form-control-tooltip](../../../../ui-components/form/form-helpers/form-control-tooltip)
-- [justifi-form-address-fields](../form-address-fields)
+- [form-address-fields](../form-address-fields)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-legal-address-form-step --> form-control-tooltip
-  justifi-legal-address-form-step --> justifi-form-address-fields
+  legal-address-form-step --> form-control-tooltip
+  legal-address-form-step --> form-address-fields
   form-control-tooltip --> custom-popper
-  justifi-form-address-fields --> form-control-text
-  justifi-form-address-fields --> form-control-select
+  form-address-fields --> form-control-text
+  form-address-fields --> form-control-select
   form-control-text --> form-control-tooltip
   form-control-select --> form-control-tooltip
-  justifi-payment-provisioning-form-steps --> justifi-legal-address-form-step
-  style justifi-legal-address-form-step fill:#f9f,stroke:#333,stroke-width:4px
+  payment-provisioning-form-steps --> legal-address-form-step
+  style legal-address-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

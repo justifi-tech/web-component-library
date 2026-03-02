@@ -2,9 +2,9 @@ import { Component, h, Prop } from '@stencil/core';
 import { CountryCode } from '../../../utils/country-codes';
 
 @Component({
-  tag: 'justifi-payment-provisioning-form-steps'
+  tag: 'payment-provisioning-form-steps'
 })
-export class JustifiPaymentProvisioningFormSteps {
+export class PaymentProvisioningFormSteps {
   @Prop() businessId!: string;
   @Prop() authToken!: string;
   @Prop() refs!: any[];
@@ -18,48 +18,48 @@ export class JustifiPaymentProvisioningFormSteps {
   }
 
   componentStepMapping = {
-    0: () => <justifi-business-core-info-form-step
+    0: () => <business-core-info-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[0] = el}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
-    1: () => <justifi-legal-address-form-step
+    1: () => <legal-address-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[1] = el}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
-    2: () => <justifi-additional-questions-form-step
+    2: () => <additional-questions-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[2] = el}
       allowOptionalFields={this.allowOptionalFields}
     />,
-    3: () => <justifi-business-representative-form-step
+    3: () => <business-representative-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[3] = el}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
-    4: () => <justifi-business-owners-form-step
+    4: () => <business-owners-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[4] = el}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
-    5: () => <justifi-business-bank-account-form-step
+    5: () => <business-bank-account-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[5] = el}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
-    6: () => <justifi-business-terms-conditions-form-step
+    6: () => <business-terms-conditions-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[6] = el}

@@ -25,7 +25,7 @@ export class JustifiIdentityAddressForm {
   render() {
     return (
       <Host>
-        <justifi-form-address-fields
+        <form-address-fields
           country={this.country}
           errors={this.errors}
           defaultValues={this.defaultValues}

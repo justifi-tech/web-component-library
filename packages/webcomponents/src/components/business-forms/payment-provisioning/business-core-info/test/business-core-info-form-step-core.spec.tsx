@@ -1,9 +1,9 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessCoreInfoFormStep } from '../justifi-business-core-info-form-step';
+import { BusinessCoreInfoFormStep } from '../business-core-info-form-step';
 import { CountryCode } from '../../../../../utils/country-codes';
 
-describe('justifi-business-core-info-form-step-core', () => {
+describe('business-core-info-form-step-core', () => {
   const mockGetBusiness = jest.fn();
   const mockPatchBusiness = jest.fn();
 
@@ -15,9 +15,9 @@ describe('justifi-business-core-info-form-step-core', () => {
   describe('Country-specific tax ID label', () => {
     test('renders USA tax ID label and help text', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             businessId="biz_123"
             authToken="test-token"
             country={CountryCode.USA}
@@ -30,9 +30,9 @@ describe('justifi-business-core-info-form-step-core', () => {
 
     test('renders CAN Business Number (BN) label and help text', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             businessId="biz_123"
             authToken="test-token"
             country={CountryCode.CAN}
@@ -49,9 +49,9 @@ describe('justifi-business-core-info-form-step-core', () => {
       mockGetBusiness.mockImplementation(({ final }) => final?.());
 
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             businessId="biz_123"
             authToken="test-token"
             country={CountryCode.USA}
@@ -88,9 +88,9 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
 
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             businessId="biz_123"
             authToken="test-token"
             country={CountryCode.USA}
@@ -119,9 +119,9 @@ describe('justifi-business-core-info-form-step-core', () => {
       mockGetBusiness.mockImplementation(({ final }) => final?.());
 
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             businessId="biz_123"
             authToken="test-token"
             country={CountryCode.USA}
@@ -162,9 +162,9 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
 
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             businessId="biz_123"
             authToken="test-token"
             country={CountryCode.USA}
@@ -204,9 +204,9 @@ describe('justifi-business-core-info-form-step-core', () => {
       });
 
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             businessId="biz_123"
             authToken="test-token"
             country={CountryCode.USA}

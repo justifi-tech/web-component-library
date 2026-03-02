@@ -42,50 +42,50 @@ The `country` prop must only be defaulted in `payment-provisioning-core`. Child 
 
 ### Depends on
 
-- [justifi-business-core-info-form-step](business-core-info)
-- [justifi-legal-address-form-step](legal-address-form)
-- [justifi-additional-questions-form-step](additional-questions)
-- [justifi-business-representative-form-step](business-representative)
-- [justifi-business-owners-form-step](business-owners)
-- [justifi-business-bank-account-form-step](bank-account)
-- [justifi-business-terms-conditions-form-step](terms-and-conditions)
+- [business-core-info-form-step](business-core-info)
+- [legal-address-form-step](legal-address-form)
+- [additional-questions-form-step](additional-questions)
+- [business-representative-form-step](business-representative)
+- [business-owners-form-step](business-owners)
+- [business-bank-account-form-step](bank-account)
+- [business-terms-conditions-form-step](terms-and-conditions)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-payment-provisioning-form-steps --> justifi-business-core-info-form-step
-  justifi-payment-provisioning-form-steps --> justifi-legal-address-form-step
-  justifi-payment-provisioning-form-steps --> justifi-additional-questions-form-step
-  justifi-payment-provisioning-form-steps --> justifi-business-representative-form-step
-  justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
-  justifi-payment-provisioning-form-steps --> justifi-business-bank-account-form-step
-  justifi-payment-provisioning-form-steps --> justifi-business-terms-conditions-form-step
-  justifi-business-core-info-form-step --> form-control-text
-  justifi-business-core-info-form-step --> form-control-select
-  justifi-business-core-info-form-step --> form-control-date
-  justifi-business-core-info-form-step --> form-control-number-masked
+  payment-provisioning-form-steps --> business-core-info-form-step
+  payment-provisioning-form-steps --> legal-address-form-step
+  payment-provisioning-form-steps --> additional-questions-form-step
+  payment-provisioning-form-steps --> business-representative-form-step
+  payment-provisioning-form-steps --> business-owners-form-step
+  payment-provisioning-form-steps --> business-bank-account-form-step
+  payment-provisioning-form-steps --> business-terms-conditions-form-step
+  business-core-info-form-step --> form-control-text
+  business-core-info-form-step --> form-control-select
+  business-core-info-form-step --> form-control-date
+  business-core-info-form-step --> form-control-number-masked
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
   form-control-date --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
-  justifi-legal-address-form-step --> form-control-tooltip
-  justifi-legal-address-form-step --> justifi-form-address-fields
-  justifi-form-address-fields --> form-control-text
-  justifi-form-address-fields --> form-control-select
-  justifi-additional-questions-form-step --> form-control-tooltip
-  justifi-additional-questions-form-step --> form-control-monetary-provisioning
-  justifi-additional-questions-form-step --> form-control-text
-  justifi-additional-questions-form-step --> form-control-select
-  justifi-business-representative-form-step --> justifi-business-representative-form-inputs
-  justifi-business-representative-form-inputs --> form-control-tooltip
-  justifi-business-representative-form-inputs --> form-control-text
-  justifi-business-representative-form-inputs --> form-control-number-masked
-  justifi-business-representative-form-inputs --> form-control-date
-  justifi-business-representative-form-inputs --> justifi-identity-address-form
-  justifi-identity-address-form --> justifi-form-address-fields
-  justifi-business-owners-form-step --> form-control-tooltip
-  justifi-business-owners-form-step --> justifi-owner-form
+  legal-address-form-step --> form-control-tooltip
+  legal-address-form-step --> form-address-fields
+  form-address-fields --> form-control-text
+  form-address-fields --> form-control-select
+  additional-questions-form-step --> form-control-tooltip
+  additional-questions-form-step --> form-control-monetary-provisioning
+  additional-questions-form-step --> form-control-text
+  additional-questions-form-step --> form-control-select
+  business-representative-form-step --> business-representative-form-inputs
+  business-representative-form-inputs --> form-control-tooltip
+  business-representative-form-inputs --> form-control-text
+  business-representative-form-inputs --> form-control-number-masked
+  business-representative-form-inputs --> form-control-date
+  business-representative-form-inputs --> justifi-identity-address-form
+  justifi-identity-address-form --> form-address-fields
+  business-owners-form-step --> form-control-tooltip
+  business-owners-form-step --> justifi-owner-form
   justifi-owner-form --> owner-form-core
   owner-form-core --> owner-form-inputs
   owner-form-inputs --> form-control-text
@@ -93,12 +93,12 @@ graph TD;
   owner-form-inputs --> form-control-date
   owner-form-inputs --> form-control-number
   owner-form-inputs --> justifi-identity-address-form
-  justifi-business-bank-account-form-step --> bank-account-form-inputs-canada
-  justifi-business-bank-account-form-step --> bank-account-form-inputs
-  justifi-business-bank-account-form-step --> plaid-verification
-  justifi-business-bank-account-form-step --> form-control-tooltip
-  justifi-business-bank-account-form-step --> business-documents-on-file
-  justifi-business-bank-account-form-step --> bank-account-document-form-inputs
+  business-bank-account-form-step --> bank-account-form-inputs-canada
+  business-bank-account-form-step --> bank-account-form-inputs
+  business-bank-account-form-step --> plaid-verification
+  business-bank-account-form-step --> form-control-tooltip
+  business-bank-account-form-step --> business-documents-on-file
+  business-bank-account-form-step --> bank-account-document-form-inputs
   bank-account-form-inputs-canada --> bank-account-read-only-value
   bank-account-form-inputs-canada --> form-control-text
   bank-account-form-inputs-canada --> form-control-select
@@ -107,9 +107,9 @@ graph TD;
   bank-account-form-inputs --> form-control-select
   bank-account-document-form-inputs --> form-control-file
   form-control-file --> form-control-tooltip
-  justifi-business-terms-conditions-form-step --> form-control-checkbox
-  justifi-payment-provisioning-core --> justifi-payment-provisioning-form-steps
-  style justifi-payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
+  business-terms-conditions-form-step --> form-control-checkbox
+  justifi-payment-provisioning-core --> payment-provisioning-form-steps
+  style payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

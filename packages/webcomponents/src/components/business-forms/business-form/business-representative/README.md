@@ -37,9 +37,9 @@ graph TD;
   form-control-tooltip --> custom-popper
   form-control-number-masked --> form-control-tooltip
   form-control-date --> form-control-tooltip
-  justifi-identity-address-form --> justifi-form-address-fields
-  justifi-form-address-fields --> form-control-text
-  justifi-form-address-fields --> form-control-select
+  justifi-identity-address-form --> form-address-fields
+  form-address-fields --> form-control-text
+  form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
   justifi-business-form --> business-representative
   style business-representative fill:#f9f,stroke:#333,stroke-width:4px

@@ -1,13 +1,13 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiBusinessCoreInfoFormStep } from '../business-core-info/justifi-business-core-info-form-step';
-import { JustifiLegalAddressFormStep } from '../legal-address-form/justifi-legal-address-form-step';
-import { JustifiBusinessBankAccountFormStep } from '../bank-account/justifi-business-bank-account-form-step';
-import { JustifiFormAddressFields } from '../form-address-fields/justifi-form-address-fields';
-import { JustifiBusinessOwnersFormStep } from '../business-owners/justifi-business-owners-form-step';
+import { BusinessCoreInfoFormStep } from '../business-core-info/business-core-info-form-step';
+import { LegalAddressFormStep } from '../legal-address-form/legal-address-form-step';
+import { BusinessBankAccountFormStep } from '../bank-account/business-bank-account-form-step';
+import { FormAddressFields } from '../form-address-fields/form-address-fields';
+import { BusinessOwnersFormStep } from '../business-owners/business-owners-form-step';
 import { CountryCode } from '../../../../utils/country-codes';
 import { getNormalizedCountry } from './mockBusiness';
-import { JustifiBusinessRepresentativeFormStep } from '../business-representative/justifi-business-representative-form-step';
+import { BusinessRepresentativeFormStep } from '../business-representative/business-representative-form-step';
 
 describe('Payment Provisioning step components country differences', () => {
   const baseProps = {
@@ -22,9 +22,9 @@ describe('Payment Provisioning step components country differences', () => {
   describe('Business Core Info step snapshots', () => {
     test('renders USA tax ID label and help text', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -36,9 +36,9 @@ describe('Payment Provisioning step components country differences', () => {
 
     test('renders CAN Business Number (BN) label and help text', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessCoreInfoFormStep],
+        components: [BusinessCoreInfoFormStep],
         template: () => (
-          <justifi-business-core-info-form-step
+          <business-core-info-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />
@@ -52,9 +52,9 @@ describe('Payment Provisioning step components country differences', () => {
   describe('Legal Address step snapshots', () => {
     test('renders USA State and Zip Code labels', async () => {
       const page = await newSpecPage({
-        components: [JustifiLegalAddressFormStep],
+        components: [LegalAddressFormStep],
         template: () => (
-          <justifi-legal-address-form-step
+          <legal-address-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -66,9 +66,9 @@ describe('Payment Provisioning step components country differences', () => {
 
     test('renders CAN Province and Postal Code labels', async () => {
       const page = await newSpecPage({
-        components: [JustifiLegalAddressFormStep],
+        components: [LegalAddressFormStep],
         template: () => (
-          <justifi-legal-address-form-step-core
+          <legal-address-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />
@@ -82,9 +82,9 @@ describe('Payment Provisioning step components country differences', () => {
   describe('Form Address Fields component snapshots', () => {
     test('renders USA address fields with State/Zip labels', async () => {
       const page = await newSpecPage({
-        components: [JustifiFormAddressFields],
+        components: [FormAddressFields],
         template: () => (
-          <justifi-form-address-fields
+          <form-address-fields
             country={CountryCode.USA}
             errors={{}}
             defaultValues={{}}
@@ -98,9 +98,9 @@ describe('Payment Provisioning step components country differences', () => {
 
     test('renders CAN address fields with Province/Postal Code labels', async () => {
       const page = await newSpecPage({
-        components: [JustifiFormAddressFields],
+        components: [FormAddressFields],
         template: () => (
-          <justifi-form-address-fields
+          <form-address-fields
             country={CountryCode.CAN}
             errors={{}}
             defaultValues={{}}
@@ -116,9 +116,9 @@ describe('Payment Provisioning step components country differences', () => {
   describe('Representative step snapshots', () => {
     test('renders USA SSN labels and help text', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessRepresentativeFormStep],
+        components: [BusinessRepresentativeFormStep],
         template: () => (
-          <justifi-business-representative-form-step
+          <business-representative-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -130,9 +130,9 @@ describe('Payment Provisioning step components country differences', () => {
 
     test('renders CAN SIN labels and help text', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessRepresentativeFormStep],
+        components: [BusinessRepresentativeFormStep],
         template: () => (
-          <justifi-business-representative-form-step
+          <business-representative-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />
@@ -146,9 +146,9 @@ describe('Payment Provisioning step components country differences', () => {
   describe('Owners step snapshots', () => {
     test('renders USA SSN labels in owner forms', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessOwnersFormStep],
+        components: [BusinessOwnersFormStep],
         template: () => (
-          <justifi-business-owners-form-step
+          <business-owners-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -160,9 +160,9 @@ describe('Payment Provisioning step components country differences', () => {
 
     test('renders CAN SIN labels in owner forms', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessOwnersFormStep],
+        components: [BusinessOwnersFormStep],
         template: () => (
-          <justifi-business-owners-form-step
+          <business-owners-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />
@@ -176,9 +176,9 @@ describe('Payment Provisioning step components country differences', () => {
   describe('Bank Account step snapshots', () => {
     test('renders USA bank account fields', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessBankAccountFormStep],
+        components: [BusinessBankAccountFormStep],
         template: () => (
-          <justifi-business-bank-account-form-step
+          <business-bank-account-form-step
             {...baseProps}
             country={CountryCode.USA}
           />
@@ -190,9 +190,9 @@ describe('Payment Provisioning step components country differences', () => {
 
     test('renders CAN bank account fields', async () => {
       const page = await newSpecPage({
-        components: [JustifiBusinessBankAccountFormStep],
+        components: [BusinessBankAccountFormStep],
         template: () => (
-          <justifi-business-bank-account-form-step
+          <business-bank-account-form-step
             {...baseProps}
             country={CountryCode.CAN}
           />

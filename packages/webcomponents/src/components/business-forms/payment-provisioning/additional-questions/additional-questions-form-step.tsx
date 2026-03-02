@@ -12,9 +12,9 @@ import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormStep, businessServiceReceivedOptions } from '../../utils';
 
 @Component({
-  tag: 'justifi-additional-questions-form-step',
+  tag: 'additional-questions-form-step',
 })
-export class JustifiAdditionalQuestionsFormStep {
+export class AdditionalQuestionsFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
   @State() formController: FormController;

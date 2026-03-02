@@ -47,7 +47,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning-form-steps](..)
+ - [payment-provisioning-form-steps](..)
 
 ### Depends on
 
@@ -59,17 +59,17 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-core-info-form-step --> form-control-text
-  justifi-business-core-info-form-step --> form-control-select
-  justifi-business-core-info-form-step --> form-control-date
-  justifi-business-core-info-form-step --> form-control-number-masked
+  business-core-info-form-step --> form-control-text
+  business-core-info-form-step --> form-control-select
+  business-core-info-form-step --> form-control-date
+  business-core-info-form-step --> form-control-number-masked
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
   form-control-date --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
-  justifi-payment-provisioning-form-steps --> justifi-business-core-info-form-step
-  style justifi-business-core-info-form-step fill:#f9f,stroke:#333,stroke-width:4px
+  payment-provisioning-form-steps --> business-core-info-form-step
+  style business-core-info-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

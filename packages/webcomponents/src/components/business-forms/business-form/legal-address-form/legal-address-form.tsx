@@ -44,7 +44,7 @@ export class LegalAddressForm {
       <Host>
         <fieldset>
           <legend part={heading2}>Business Legal Address</legend>
-          <justifi-form-address-fields
+          <form-address-fields
             country={this.country}
             errors={this.errors?.legal_address}
             defaultValues={legalAddressDefaultValue}

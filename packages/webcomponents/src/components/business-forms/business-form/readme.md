@@ -52,9 +52,9 @@ graph TD;
   form-control-select --> form-control-tooltip
   form-control-date --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
-  legal-address-form --> justifi-form-address-fields
-  justifi-form-address-fields --> form-control-text
-  justifi-form-address-fields --> form-control-select
+  legal-address-form --> form-address-fields
+  form-address-fields --> form-control-text
+  form-address-fields --> form-control-select
   additional-questions --> form-control-monetary-provisioning
   additional-questions --> form-control-select
   additional-questions --> form-control-text
@@ -62,7 +62,7 @@ graph TD;
   business-representative --> form-control-number-masked
   business-representative --> form-control-date
   business-representative --> justifi-identity-address-form
-  justifi-identity-address-form --> justifi-form-address-fields
+  justifi-identity-address-form --> form-address-fields
   style justifi-business-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

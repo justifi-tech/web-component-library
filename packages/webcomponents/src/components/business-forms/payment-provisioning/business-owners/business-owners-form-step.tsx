@@ -13,9 +13,9 @@ import { Representative } from '../../../../api/Identity';
 interface ownerPayloadItem { id: string; }
 
 @Component({
-  tag: 'justifi-business-owners-form-step'
+  tag: 'business-owners-form-step'
 })
-export class JustifiBusinessOwnersFormStep {
+export class BusinessOwnersFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
   @State() ownersPayload: ownerPayloadItem[] = [];

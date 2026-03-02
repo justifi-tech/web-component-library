@@ -48,7 +48,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [justifi-payment-provisioning-form-steps](..)
+ - [payment-provisioning-form-steps](..)
 
 ### Depends on
 
@@ -58,8 +58,8 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-owners-form-step --> form-control-tooltip
-  justifi-business-owners-form-step --> justifi-owner-form
+  business-owners-form-step --> form-control-tooltip
+  business-owners-form-step --> justifi-owner-form
   form-control-tooltip --> custom-popper
   justifi-owner-form --> owner-form-core
   owner-form-core --> owner-form-inputs
@@ -71,12 +71,12 @@ graph TD;
   form-control-text --> form-control-tooltip
   form-control-number-masked --> form-control-tooltip
   form-control-date --> form-control-tooltip
-  justifi-identity-address-form --> justifi-form-address-fields
-  justifi-form-address-fields --> form-control-text
-  justifi-form-address-fields --> form-control-select
+  justifi-identity-address-form --> form-address-fields
+  form-address-fields --> form-control-text
+  form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
-  justifi-payment-provisioning-form-steps --> justifi-business-owners-form-step
-  style justifi-business-owners-form-step fill:#f9f,stroke:#333,stroke-width:4px
+  payment-provisioning-form-steps --> business-owners-form-step
+  style business-owners-form-step fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

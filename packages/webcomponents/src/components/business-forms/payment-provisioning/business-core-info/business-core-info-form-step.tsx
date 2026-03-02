@@ -14,9 +14,9 @@ import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { countryLabels } from '../../utils/country-config';
 
 @Component({
-  tag: 'justifi-business-core-info-form-step'
+  tag: 'business-core-info-form-step'
 })
-export class JustifiBusinessCoreInfoFormStep {
+export class BusinessCoreInfoFormStep {
   @State() getBusiness: Function;
   @State() patchBusiness: Function;
   @State() formController: FormController;
