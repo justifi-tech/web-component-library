@@ -27,7 +27,6 @@ async function createBusiness(token) {
 
 router.get('/', async (req, res) => {
   const token = await getToken();
-  // const businessId = "biz_4G7XkdwIXbm1I3Bmy0ixld";
   const businessId = await createBusiness(token);
   const webComponentToken = await getWebComponentToken(token, [
     `write:business:${businessId}`,
