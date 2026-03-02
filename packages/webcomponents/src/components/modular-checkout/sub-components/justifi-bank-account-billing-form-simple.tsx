@@ -1,4 +1,7 @@
 import { Component, h, Prop, Method } from '@stencil/core';
+import JustifiAnalytics from '../../../api/Analytics';
+import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { waitForConfig } from '../../config-provider/config-state';
 import { BillingFormFields } from '../../checkout/billing-form/billing-form-schema';
 import { StyledHost } from '../../../ui-components';
 
@@ -9,7 +12,20 @@ import { StyledHost } from '../../../ui-components';
 export class JustifiBankAccountBillingFormSimple {
   private bankAccountBillingFormSimpleRef?: HTMLBankAccountBillingFormSimpleElement;
 
+  analytics: JustifiAnalytics;
+
   @Prop({ mutable: true }) legend?: string;
+
+  async componentWillLoad() {
+    await waitForConfig();
+
+    checkPkgVersion();
+    this.analytics = new JustifiAnalytics(this);
+  }
+
+  disconnectedCallback() {
+    this.analytics?.cleanup();
+  }
 
   @Method()
   async getValues(): Promise<BillingFormFields> {
