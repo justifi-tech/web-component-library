@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessRepresentativeFormStep } from '../business-representative-form-step';
 
-describe.skip('business-representative-form-step', () => {
+describe('business-representative-form-step', () => {
   let consoleSpy;
 
   // Initialize the spy in the beforeEach
