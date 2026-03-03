@@ -11,7 +11,7 @@ import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { Button } from '../../../../ui-components';
 
 @Component({
-  tag: 'justifi-business-bank-account-form-step'
+  tag: 'business-bank-account-form-step'
 })
 export class BusinessBankAccountFormStep {
   @State() formController: FormController;

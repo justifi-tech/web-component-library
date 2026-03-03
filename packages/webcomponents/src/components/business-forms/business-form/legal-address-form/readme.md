@@ -21,19 +21,19 @@
 
 ### Depends on
 
-- [justifi-form-address-fields](../../payment-provisioning/form-address-fields)
+- [form-address-fields](../../payment-provisioning/form-address-fields)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-legal-address-form --> justifi-form-address-fields
-  justifi-form-address-fields --> form-control-text
-  justifi-form-address-fields --> form-control-select
+  legal-address-form --> form-address-fields
+  form-address-fields --> form-control-text
+  form-address-fields --> form-control-select
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-select --> form-control-tooltip
-  justifi-business-form --> justifi-legal-address-form
-  style justifi-legal-address-form fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-form --> legal-address-form
+  style legal-address-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

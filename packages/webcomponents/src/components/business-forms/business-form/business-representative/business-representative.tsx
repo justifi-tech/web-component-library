@@ -7,7 +7,7 @@ import { CountryCode } from '../../../../utils/country-codes';
 import { countryLabels } from '../../utils/country-config';
 
 @Component({
-  tag: 'justifi-business-representative'
+  tag: 'business-representative'
 })
 export class BusinessRepresentative {
   @Prop() formController!: FormController;
@@ -171,7 +171,7 @@ export class BusinessRepresentative {
               )}
             </div>
             <div class="col-12">
-              <justifi-identity-address-form
+              <identity-address-form
                 errors={this.errors.address}
                 defaultValues={representativeDefaultValue?.address}
                 handleFormUpdate={this.onAddressFormUpdate}

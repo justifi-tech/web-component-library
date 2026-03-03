@@ -5,7 +5,7 @@ import { FormController } from '../../../../../ui-components/form/form';
 import { identitySchemaUSA, identitySchemaCAN } from '../../../schemas/business-identity-schema';
 import { CountryCode } from '../../../../../utils/country-codes';
 
-describe('justifi-business-representative', () => {
+describe('business-representative', () => {
   const mockFormController = (initialValues = {}) => {
     const formController = new FormController(identitySchemaUSA('representative'));
     formController.setInitialValues({ representative: initialValues });
@@ -19,7 +19,7 @@ describe('justifi-business-representative', () => {
       const page = await newSpecPage({
         components: [BusinessRepresentative],
         template: () => (
-          <justifi-business-representative
+          <business-representative
             formController={formController}
             country={CountryCode.USA}
           />
@@ -36,7 +36,7 @@ describe('justifi-business-representative', () => {
       const page = await newSpecPage({
         components: [BusinessRepresentative],
         template: () => (
-          <justifi-business-representative
+          <business-representative
             formController={formController}
             country={CountryCode.CAN}
           />
@@ -59,7 +59,7 @@ describe('justifi-business-representative', () => {
       const page = await newSpecPage({
         components: [BusinessRepresentative],
         template: () => (
-          <justifi-business-representative
+          <business-representative
             formController={formController}
             country={CountryCode.USA}
           />
@@ -80,7 +80,7 @@ describe('justifi-business-representative', () => {
       const page = await newSpecPage({
         components: [BusinessRepresentative],
         template: () => (
-          <justifi-business-representative
+          <business-representative
             formController={formController}
             country={CountryCode.USA}
           />
@@ -104,7 +104,7 @@ describe('justifi-business-representative', () => {
       const page = await newSpecPage({
         components: [BusinessRepresentative],
         template: () => (
-          <justifi-business-representative
+          <business-representative
             formController={formController}
             country={CountryCode.USA}
           />
@@ -125,7 +125,7 @@ describe('justifi-business-representative', () => {
       const page = await newSpecPage({
         components: [BusinessRepresentative],
         template: () => (
-          <justifi-business-representative
+          <business-representative
             formController={formController}
             country={CountryCode.USA}
           />

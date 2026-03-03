@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { CheckboxInput } from '../form-control-checkbox';
+import { FormControlCheckbox } from '../form-control-checkbox';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
 import { FormControlHelpText } from '../form-helpers/form-control-help-text';
 
 describe('form-control-checkbox', () => {
-  const components = [CheckboxInput, FormControlErrorText, FormControlHelpText];
+  const components = [FormControlCheckbox, FormControlErrorText, FormControlHelpText];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {

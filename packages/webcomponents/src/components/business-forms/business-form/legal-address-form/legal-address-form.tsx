@@ -5,7 +5,7 @@ import { heading2 } from '../../../../styles/parts';
 import { CountryCode } from '../../../../utils/country-codes';
 
 @Component({
-  tag: 'justifi-legal-address-form'
+  tag: 'legal-address-form'
 })
 export class LegalAddressForm {
   @Prop() formController!: FormController;
@@ -44,7 +44,7 @@ export class LegalAddressForm {
       <Host>
         <fieldset>
           <legend part={heading2}>Business Legal Address</legend>
-          <justifi-form-address-fields
+          <form-address-fields
             country={this.country}
             errors={this.errors?.legal_address}
             defaultValues={legalAddressDefaultValue}

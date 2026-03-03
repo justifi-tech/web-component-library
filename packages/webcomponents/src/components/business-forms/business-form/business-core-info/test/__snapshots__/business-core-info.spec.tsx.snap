@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`justifi-business-core-info Country-specific tax ID label and help text renders CAN Business Number (BN) label and help text 1`] = `
-<justifi-business-core-info>
+exports[`business-core-info Country-specific tax ID label and help text renders CAN Business Number (BN) label and help text 1`] = `
+<business-core-info>
   <fieldset>
     <legend part="heading-2 heading text color font-family">
       General Info
@@ -36,11 +36,11 @@ exports[`justifi-business-core-info Country-specific tax ID label and help text 
       </div>
     </div>
   </fieldset>
-</justifi-business-core-info>
+</business-core-info>
 `;
 
-exports[`justifi-business-core-info Country-specific tax ID label and help text renders USA tax ID label and help text 1`] = `
-<justifi-business-core-info>
+exports[`business-core-info Country-specific tax ID label and help text renders USA tax ID label and help text 1`] = `
+<business-core-info>
   <fieldset>
     <legend part="heading-2 heading text color font-family">
       General Info
@@ -75,11 +75,11 @@ exports[`justifi-business-core-info Country-specific tax ID label and help text 
       </div>
     </div>
   </fieldset>
-</justifi-business-core-info>
+</business-core-info>
 `;
 
-exports[`justifi-business-core-info Form component behavior uses toggleable-field instead of form-control-text 1`] = `
-<justifi-business-core-info>
+exports[`business-core-info Form component behavior uses toggleable-field instead of form-control-text 1`] = `
+<business-core-info>
   <fieldset>
     <legend part="heading-2 heading text color font-family">
       General Info
@@ -114,5 +114,5 @@ exports[`justifi-business-core-info Form component behavior uses toggleable-fiel
       </div>
     </div>
   </fieldset>
-</justifi-business-core-info>
+</business-core-info>
 `;

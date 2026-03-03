@@ -14,7 +14,7 @@ import { PaymentProvisioningSubmissionComplete } from './payment-provisioning-su
 @Component({
   tag: 'justifi-payment-provisioning-core',
 })
-export class PaymentProvisioningCore {
+export class JustifiPaymentProvisioningCore {
   @State() loading: boolean = false;
   @State() businessLoading: boolean = true;
   @State() businessProvisioned: boolean = false;
@@ -187,7 +187,7 @@ export class PaymentProvisioningCore {
       <StyledHost>
         <div class='row gap-3'>
           <Header1 text={this.formTitle} />
-          <justifi-payment-provisioning-form-steps
+          <payment-provisioning-form-steps
             businessId={this.businessId}
             authToken={this.authToken}
             refs={this.refs}
@@ -200,7 +200,7 @@ export class PaymentProvisioningCore {
             <div class='d-flex align-items-center' part={text}>
               {this.stepCounter}
             </div>
-            <justifi-payment-provisioning-form-buttons
+            <payment-provisioning-form-buttons
               currentStep={this.currentStep}
               totalSteps={this.totalSteps}
               formLoading={this.loading}

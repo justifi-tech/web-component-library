@@ -2,15 +2,15 @@ jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { TerminalOrdersList } from '../terminal-orders-list';
+import { JustifiTerminalOrdersList } from '../justifi-terminal-orders-list';
 import { defaultColumnsKeys } from '../terminal-orders-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
-import { TerminalOrdersListFilters } from '../terminal-orders-list-filters';
-import { SelectInput } from '../../../ui-components/form/form-control-select';
+import { JustifiTerminalOrdersListFilters } from '../justifi-terminal-orders-list-filters';
+import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { filterParams } from '../terminal-orders-list-params-state';
 import { TerminalOrdersListCore } from '../terminal-orders-list-core';
 
-const components = [TerminalOrdersList, TerminalOrdersListCore, TableFiltersMenu, TerminalOrdersListFilters, SelectInput];
+const components = [JustifiTerminalOrdersList, TerminalOrdersListCore, TableFiltersMenu, JustifiTerminalOrdersListFilters, FormControlSelect];
 
 describe('justifi-terminal-orders-list with filters', () => {
   const fetchDataSpy = jest.spyOn(TerminalOrdersListCore.prototype, 'fetchData');

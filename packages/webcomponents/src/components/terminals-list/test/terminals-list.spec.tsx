@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { TerminalsList } from "../terminals-list";
+import { JustifiTerminalsList } from "../justifi-terminals-list";
 import { TerminalsListCore } from "../terminals-list-core";
 import { TerminalService } from '../../../api/services/terminal.service';
 import JustifiAnalytics from "../../../api/Analytics";
@@ -17,7 +17,7 @@ describe('terminals-list', () => {
   it('emit an error event when accountId and authToken are not provided', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [TerminalsList, TerminalsListCore],
+      components: [JustifiTerminalsList, TerminalsListCore],
       template: () => <justifi-terminals-list accountId="" authToken="" onError-event={errorEvent} />,
     });
     await page.waitForChanges();
@@ -29,7 +29,7 @@ describe('terminals-list', () => {
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [TerminalsList, TerminalsListCore],
+      components: [JustifiTerminalsList, TerminalsListCore],
       template: () => (
         <justifi-terminals-list
           accountId="abc"

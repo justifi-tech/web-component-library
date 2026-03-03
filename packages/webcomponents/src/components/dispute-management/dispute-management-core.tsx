@@ -6,7 +6,7 @@ import { ComponentErrorEvent } from "../../api/ComponentEvents";
 @Component({
   tag: 'justifi-dispute-management-core',
 })
-export class DisputeManagementCore {
+export class JustifiDisputeManagementCore {
   @Prop() getDispute!: Function;
   @Prop() disputeId!: string;
   @Prop() authToken!: string;

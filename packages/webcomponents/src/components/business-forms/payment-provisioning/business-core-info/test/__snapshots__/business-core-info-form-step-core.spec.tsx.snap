@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`justifi-business-core-info-form-step-core Country-specific tax ID label renders CAN Business Number (BN) label and help text 1`] = `
-<justifi-business-core-info-form-step>
+exports[`business-core-info-form-step-core Country-specific tax ID label renders CAN Business Number (BN) label and help text 1`] = `
+<business-core-info-form-step>
   <div class="gap-5 row">
     <div class="col-12">
       <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
@@ -55,11 +55,11 @@ exports[`justifi-business-core-info-form-step-core Country-specific tax ID label
       </div>
     </div>
   </div>
-</justifi-business-core-info-form-step>
+</business-core-info-form-step>
 `;
 
-exports[`justifi-business-core-info-form-step-core Country-specific tax ID label renders USA tax ID label and help text 1`] = `
-<justifi-business-core-info-form-step>
+exports[`business-core-info-form-step-core Country-specific tax ID label renders USA tax ID label and help text 1`] = `
+<business-core-info-form-step>
   <div class="gap-5 row">
     <div class="col-12">
       <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 40%; height: 40px;"></div>
@@ -113,11 +113,11 @@ exports[`justifi-business-core-info-form-step-core Country-specific tax ID label
       </div>
     </div>
   </div>
-</justifi-business-core-info-form-step>
+</business-core-info-form-step>
 `;
 
-exports[`justifi-business-core-info-form-step-core Form component behavior uses toggleable-field instead of form-control-text 1`] = `
-<justifi-business-core-info-form-step>
+exports[`business-core-info-form-step-core Form component behavior uses toggleable-field instead of form-control-text 1`] = `
+<business-core-info-form-step>
   <form>
     <fieldset>
       <div class="align-items-center d-flex gap-2">
@@ -157,5 +157,5 @@ exports[`justifi-business-core-info-form-step-core Form component behavior uses 
       </div>
     </fieldset>
   </form>
-</justifi-business-core-info-form-step>
+</business-core-info-form-step>
 `;

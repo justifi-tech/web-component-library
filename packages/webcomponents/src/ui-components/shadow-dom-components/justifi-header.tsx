@@ -8,7 +8,7 @@ import { Header3 } from "../headers/header-3";
   tag: 'justifi-header',
   shadow: true,
 })
-export class Header {
+export class JustifiHeader {
   levels = {
     h1: Header1,
     h2: Header2,

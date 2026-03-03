@@ -15,7 +15,7 @@ import { input, inputDisabled, inputFocused, inputInvalid, label } from '../../s
 @Component({
   tag: 'form-control-number-masked'
 })
-export class NumberInputMasked {
+export class FormControlNumberMasked {
   textInput!: HTMLInputElement;
   private imask: InputMask<any> | null = null;
 

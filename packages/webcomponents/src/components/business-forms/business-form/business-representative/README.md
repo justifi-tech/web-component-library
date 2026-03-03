@@ -24,25 +24,25 @@
 - [form-control-text](../../../../ui-components/form)
 - [form-control-number-masked](../../../../ui-components/form)
 - [form-control-date](../../../../ui-components/form)
-- [justifi-identity-address-form](../../owner-form/identity-address)
+- [identity-address-form](../../owner-form/identity-address)
 
 ### Graph
 ```mermaid
 graph TD;
-  justifi-business-representative --> form-control-text
-  justifi-business-representative --> form-control-number-masked
-  justifi-business-representative --> form-control-date
-  justifi-business-representative --> justifi-identity-address-form
+  business-representative --> form-control-text
+  business-representative --> form-control-number-masked
+  business-representative --> form-control-date
+  business-representative --> identity-address-form
   form-control-text --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-number-masked --> form-control-tooltip
   form-control-date --> form-control-tooltip
-  justifi-identity-address-form --> justifi-form-address-fields
-  justifi-form-address-fields --> form-control-text
-  justifi-form-address-fields --> form-control-select
+  identity-address-form --> form-address-fields
+  form-address-fields --> form-control-text
+  form-address-fields --> form-control-select
   form-control-select --> form-control-tooltip
-  justifi-business-form --> justifi-business-representative
-  style justifi-business-representative fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-form --> business-representative
+  style business-representative fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

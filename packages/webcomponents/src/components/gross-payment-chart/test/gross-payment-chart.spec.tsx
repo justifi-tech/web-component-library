@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
-import { GrossPaymentChart } from "../gross-payment-chart";
+import { JustifiGrossPaymentChart } from "../justifi-gross-payment-chart";
 import { GrossPaymentChartCore } from "../gross-payment-chart-core";
 import { ReportsService } from "../../../api/services/reports.service";
 import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";
@@ -14,10 +14,10 @@ beforeEach(() => {
   JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
 });
 
-describe('GrossPaymentChart', () => {
+describe('JustifiGrossPaymentChart', () => {
   it('renders an error when no accountId and authToken is passed', async () => {
     const page = await newSpecPage({
-      components: [GrossPaymentChart, GrossPaymentChartCore],
+      components: [JustifiGrossPaymentChart, GrossPaymentChartCore],
       template: () => <justifi-gross-payment-chart accountId="" authToken="" />,
     });
 
@@ -27,7 +27,7 @@ describe('GrossPaymentChart', () => {
 
   it('renders an error when no accountId is passed', async () => {
     const page = await newSpecPage({
-      components: [GrossPaymentChart, GrossPaymentChartCore],
+      components: [JustifiGrossPaymentChart, GrossPaymentChartCore],
       template: () => <justifi-gross-payment-chart authToken="abc" accountId="" />,
     });
 
@@ -37,7 +37,7 @@ describe('GrossPaymentChart', () => {
 
   it('renders an error when no authToken is passed', async () => {
     const page = await newSpecPage({
-      components: [GrossPaymentChart, GrossPaymentChartCore],
+      components: [JustifiGrossPaymentChart, GrossPaymentChartCore],
       template: () => <justifi-gross-payment-chart accountId="abc" authToken="" />,
     });
 
@@ -48,7 +48,7 @@ describe('GrossPaymentChart', () => {
   it('emits an error event when no accountId and authToken is passed', async () => {
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [GrossPaymentChart, GrossPaymentChartCore],
+      components: [JustifiGrossPaymentChart, GrossPaymentChartCore],
       template: () => <justifi-gross-payment-chart onError-event={errorEvent} accountId="" authToken="" />,
     });
 
@@ -70,7 +70,7 @@ describe('GrossPaymentChart', () => {
     const errorEvent = jest.fn();
 
     const page = await newSpecPage({
-      components: [GrossPaymentChart, GrossPaymentChartCore],
+      components: [JustifiGrossPaymentChart, GrossPaymentChartCore],
       template: () => (
         <justifi-gross-payment-chart
           accountId="abc"
@@ -100,7 +100,7 @@ describe('GrossPaymentChart', () => {
     const errorEvent = jest.fn();
 
     const page = await newSpecPage({
-      components: [GrossPaymentChart, GrossPaymentChartCore],
+      components: [JustifiGrossPaymentChart, GrossPaymentChartCore],
       template: () => (
         <justifi-gross-payment-chart
           accountId="abc"

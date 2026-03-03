@@ -1,5 +1,18 @@
 ### Changelog
 
+## 6.12.0
+
+### Minor Changes
+
+- 7a9db8b: Add `fillBillingForm` method to `justifi-modular-checkout` and `justifi-tokenize-payment-method` to support pre-filling billing form fields via the checkout store
+
+### Patch Changes
+
+- fa5b6ec: Fix modular checkout failing when no saved payment methods component is present by auto-selecting the payment method from the slotted form element
+- f7db618: fix: CSS parts not working in card-form in checkouts
+  fix: Validation bug when toggling between bank-account and card-form
+  fix: Unselected payment method on modular checkout
+
 ## 6.11.0
 
 ### Minor Changes

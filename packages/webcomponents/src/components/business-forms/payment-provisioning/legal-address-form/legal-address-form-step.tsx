@@ -12,7 +12,7 @@ import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormStep } from '../../utils';
 
 @Component({
-  tag: 'justifi-legal-address-form-step'
+  tag: 'legal-address-form-step'
 })
 export class LegalAddressFormStep {
   @State() getBusiness: Function;
@@ -154,7 +154,7 @@ export class LegalAddressFormStep {
             <form-control-tooltip helpText="No PO Boxes." />
           </div>
           <hr class="mt-2" />
-          <justifi-form-address-fields
+          <form-address-fields
             country={this.country}
             errors={this.errors}
             defaultValues={legalAddressDefaultValue}

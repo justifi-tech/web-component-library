@@ -13,7 +13,7 @@ import { Representative } from '../../../../api/Identity';
 interface ownerPayloadItem { id: string; }
 
 @Component({
-  tag: 'justifi-business-owners-form-step'
+  tag: 'business-owners-form-step'
 })
 export class BusinessOwnersFormStep {
   @State() getBusiness: Function;
@@ -251,7 +251,7 @@ export class BusinessOwnersFormStep {
           <div class='row gy-3'>
             {this.ownersPayload.map((owner) => {
               return (
-                <justifi-owner-form
+                <owner-form
                   key={owner.id}
                   authToken={this.authToken}
                   businessId={this.businessId}

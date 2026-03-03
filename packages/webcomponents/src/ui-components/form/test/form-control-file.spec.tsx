@@ -1,12 +1,12 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { FileInput } from '../form-control-file';
+import { FormControlFile } from '../form-control-file';
 import { FormControlErrorText } from '../form-helpers/form-control-error-text';
-import { TooltipComponent } from '../form-helpers/form-control-tooltip/form-control-tooltip';
+import { FormControlTooltip } from '../form-helpers/form-control-tooltip/form-control-tooltip';
 import { EntityDocumentType } from '../../../api/Document';
 
 describe('form-control-file', () => {
-  const components = [FileInput, FormControlErrorText, TooltipComponent];
+  const components = [FormControlFile, FormControlErrorText, FormControlTooltip];
   const mockInputHandler = jest.fn();
 
   it('Renders with default props', async () => {

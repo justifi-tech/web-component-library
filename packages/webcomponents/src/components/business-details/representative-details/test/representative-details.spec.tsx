@@ -2,14 +2,14 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Business, IBusiness } from "../../../../api/Business";
 import mockedBusinessDetails from '../../../../../../../mockData/mockBusinessDetails.json';
-import { JustifiRepresentativeDetails } from "../representative-details";
+import { RepresentativeDetails } from "../representative-details";
 
 describe('RepresentativeDetails', () => {
   it('should render', async () => {
     const businessDetails = new Business(mockedBusinessDetails.data as unknown as IBusiness);
 
     const page = await newSpecPage({
-      components: [JustifiRepresentativeDetails],
+      components: [RepresentativeDetails],
       template: () => (
         <representative-details representative={businessDetails.representative}></representative-details>
       ),

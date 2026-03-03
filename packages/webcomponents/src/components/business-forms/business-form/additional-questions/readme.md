@@ -27,14 +27,14 @@
 ### Graph
 ```mermaid
 graph TD;
-  justifi-additional-questions --> form-control-monetary-provisioning
-  justifi-additional-questions --> form-control-select
-  justifi-additional-questions --> form-control-text
+  additional-questions --> form-control-monetary-provisioning
+  additional-questions --> form-control-select
+  additional-questions --> form-control-text
   form-control-select --> form-control-tooltip
   form-control-tooltip --> custom-popper
   form-control-text --> form-control-tooltip
-  justifi-business-form --> justifi-additional-questions
-  style justifi-additional-questions fill:#f9f,stroke:#333,stroke-width:4px
+  justifi-business-form --> additional-questions
+  style additional-questions fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -4,7 +4,7 @@ import { tooltip, tooltipIcon, tooltipInner } from '../../../../styles/parts';
 @Component({
   tag: 'form-control-tooltip'
 })
-export class TooltipComponent {
+export class FormControlTooltip {
   @State() anchorIcon: SVGElement;
   @State() tooltip: HTMLElement;
 

@@ -7,9 +7,9 @@ import { CountryCode } from '../../../../utils/country-codes';
 import { countryLabels } from '../../utils/country-config';
 
 @Component({
-  tag: 'justifi-business-representative-form-inputs',
+  tag: 'business-representative-form-inputs',
 })
-export class RepresentativeFormInputs {
+export class BusinessRepresentativeFormInputs {
   @Prop() representativeDefaultValue!: any;
   @Prop() errors!: any;
   @Prop() formController!: FormController;
@@ -33,7 +33,7 @@ export class RepresentativeFormInputs {
         <fieldset>
           <div class="d-flex align-items-center gap-2">
             <legend class="mb-0" part={heading2}>Representative</legend>
-            <form-control-tooltip helpText="The representative for your business needs to be someone who has significant control over managing your business’s finance. You will have an opportunity to add owners later in the form." />
+            <form-control-tooltip helpText="The representative for your business needs to be someone who has significant control over managing your business's finance. You will have an opportunity to add owners later in the form." />
           </div>
           <hr class="mt-2" />
           <div class="row gy-3">
@@ -129,7 +129,7 @@ export class RepresentativeFormInputs {
               )}
             </div>
             <div class="col-12">
-              <justifi-identity-address-form
+              <identity-address-form
                 errors={this.errors.address}
                 defaultValues={this.representativeDefaultValue?.address}
                 handleFormUpdate={this.onAddressFormUpdate}

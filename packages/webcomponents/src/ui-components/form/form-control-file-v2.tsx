@@ -13,7 +13,7 @@ import { FormControlErrorText } from './form-helpers/form-control-error-text';
 @Component({
   tag: 'form-control-file-v2',
 })
-export class FileInput {
+export class FormControlFileV2 {
   @Element() el: HTMLElement;
 
   @State() files: File[];
