@@ -44,6 +44,10 @@ export const TEST_DATA = {
     expiration: '11/30',
     cvv: '123',
   },
+  bankAccount: {
+    routingNumber: '110000000',
+    accountNumber: '000123456789',
+  },
   postalCodes: {
     minneapolis: '55114',
     newYork: '10001',
