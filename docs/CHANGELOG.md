@@ -1,5 +1,11 @@
 # @justifi/webcomponents-docs
 
+## 1.1.1
+
+### Patch Changes
+
+- 1ee8cef: Fix export and dist issues
+
 ## 2.0.0
 
 ### Patch Changes
