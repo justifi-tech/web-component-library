@@ -29,6 +29,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./helpers": "./dist/helpers/index.js",
+    "./package.json": "./package.json",
     "./docs.json": "./docs.json",
     "./component-tree.json": "./component-tree.json",
     "./*.mdx": "./*.mdx",
