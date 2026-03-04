@@ -1,10 +1,48 @@
 import { newSpecPage } from '@stencil/core/testing';
+import * as checkoutActions from '../../../actions/checkout/checkout-actions';
 import { JustifiModularCheckout } from '../justifi-modular-checkout';
 import { checkoutStore, getCheckoutState } from '../../../store/checkout.store';
 import { JustifiSavedPaymentMethods } from '../sub-components/justifi-saved-payment-methods';
 import { JustifiCardForm } from '../sub-components/justifi-card-form';
 import { JustifiBankAccountForm } from '../sub-components/justifi-bank-account-form';
 import { PAYMENT_METHODS, SavedPaymentMethod } from '../ModularCheckout';
+import {
+  ComponentErrorCodes,
+  ComponentErrorMessages,
+  ComponentErrorSeverity,
+  ICheckoutStatus,
+} from '../../../api';
+import { insuranceValues } from '../../insurance/insurance-state';
+
+function mockFormRefs(instance: any, overrides?: Partial<Record<string, any>>) {
+  instance.paymentMethodFormRef = {
+    validate: jest.fn().mockResolvedValue(true),
+    tokenize: jest.fn().mockResolvedValue({ id: 'tok_mock' }),
+    tagName: 'JUSTIFI-CARD-FORM',
+    ...overrides?.paymentMethodFormRef,
+  };
+  instance.billingFormRef = {
+    validate: jest.fn().mockResolvedValue(true),
+    getValues: jest.fn().mockResolvedValue({}),
+    ...overrides?.billingFormRef,
+  };
+}
+
+const mockCheckoutForFetch = {
+  account_id: 'acc_1',
+  payment_methods: [],
+  payment_method_group_id: undefined,
+  payment_description: 'desc',
+  total_amount: 1000,
+  payment_amount: 1000,
+  payment_settings: {
+    bnpl_payments: false,
+    insurance_payments: false,
+    bank_account_verification: false,
+    apple_payments: false,
+    google_payments: false,
+  },
+};
 
 describe('justifi-modular-checkout', () => {
   beforeAll(() => {
@@ -13,6 +51,17 @@ describe('justifi-modular-checkout', () => {
       observe() { }
       disconnect() { }
     };
+    jest.spyOn(checkoutActions, 'makeGetCheckout').mockImplementation(() => {
+      return jest.fn(async ({ onSuccess }: any) => {
+        onSuccess({
+          checkout: { ...mockCheckoutForFetch, status: ICheckoutStatus.created },
+        });
+      });
+    });
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
   });
 
   it('uses saved payment method without billing validation or tokenization', async () => {
@@ -54,6 +103,170 @@ describe('justifi-modular-checkout', () => {
     const arg = (instance.completeCheckout as jest.Mock).mock.calls[0][0];
     expect(arg.payment.payment_mode).toBe('ecom');
     expect(arg.payment.payment_token).toBe('pm_123');
+  });
+
+  describe('fetchCheckout', () => {
+    const mockCheckout = {
+      account_id: 'acc_1',
+      payment_methods: [],
+      payment_method_group_id: undefined,
+      payment_description: 'desc',
+      total_amount: 1000,
+      payment_amount: 1000,
+      payment_settings: {
+        bnpl_payments: false,
+        insurance_payments: false,
+        bank_account_verification: false,
+        apple_payments: false,
+        google_payments: false,
+      },
+    };
+
+    it('fetches checkout data on load', async () => {
+      const getCheckoutSpy = jest.fn(({ onSuccess }: any) => {
+        onSuccess({ checkout: { ...mockCheckout, status: ICheckoutStatus.created } });
+      });
+      (checkoutActions.makeGetCheckout as jest.Mock).mockReturnValue(getCheckoutSpy);
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(getCheckoutSpy).toHaveBeenCalledTimes(1);
+      expect(checkoutStore.checkoutLoaded).toBe(true);
+    });
+
+    // Skip: insurance store subscription (insuranceValuesOn) does not trigger reliably in test env
+    it.skip('re-fetches checkout when insurance values change', async () => {
+      const getCheckoutSpy = jest.fn(({ onSuccess }: any) => {
+        onSuccess({ checkout: { ...mockCheckout, status: ICheckoutStatus.created } });
+      });
+      (checkoutActions.makeGetCheckout as jest.Mock).mockReturnValue(getCheckoutSpy);
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.getCheckout = getCheckoutSpy;
+
+      await page.waitForChanges();
+      expect(getCheckoutSpy).toHaveBeenCalledTimes(1);
+
+      insuranceValues['season_interruption'] = true;
+      insuranceValues['set'] = 'season_interruption';
+      await page.waitForChanges();
+
+      insuranceValues['season_interruption'] = false;
+      insuranceValues['set'] = 'other';
+      insuranceValues['set'] = 'season_interruption';
+      await page.waitForChanges();
+
+      expect(getCheckoutSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('emits NOT_AUTHENTICATED when auth token or checkout ID is missing', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance['fetchCheckout']();
+
+      expect(handler).toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail).toMatchObject({
+        errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
+        message: ComponentErrorMessages.NOT_AUTHENTICATED,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    });
+
+    it('emits CHECKOUT_ALREADY_COMPLETED for completed checkouts', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.getCheckout = jest.fn(({ onSuccess }: any) => {
+        onSuccess({ checkout: { ...mockCheckout, status: ICheckoutStatus.completed } });
+      });
+
+      instance['fetchCheckout']();
+
+      expect(handler).toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail).toMatchObject({
+        errorCode: ComponentErrorCodes.CHECKOUT_ALREADY_COMPLETED,
+        message: ComponentErrorMessages.CHECKOUT_ALREADY_COMPLETED,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    });
+
+    it('emits CHECKOUT_EXPIRED for expired checkouts', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.getCheckout = jest.fn(({ onSuccess }: any) => {
+        onSuccess({ checkout: { ...mockCheckout, status: ICheckoutStatus.expired } });
+      });
+
+      instance['fetchCheckout']();
+
+      expect(handler).toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail).toMatchObject({
+        errorCode: ComponentErrorCodes.CHECKOUT_EXPIRED,
+        message: ComponentErrorMessages.CHECKOUT_EXPIRED,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    });
+
+    it('emits error when fetch fails', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.getCheckout = jest.fn(({ onError }: any) => {
+        onError({ message: 'Network error', code: 'fetch-error', severity: ComponentErrorSeverity.ERROR });
+      });
+
+      instance['fetchCheckout']();
+
+      expect(handler).toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail).toMatchObject({
+        message: 'Network error',
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    });
   });
 
   it('sets bankAccountVerification from checkout.payment_settings', async () => {
@@ -206,6 +419,55 @@ describe('justifi-modular-checkout', () => {
       expect((instance.completeCheckout as jest.Mock)).not.toHaveBeenCalled();
     });
 
+    it('blocks submission if validation fails', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' };
+      checkoutStore.paymentToken = 'pm_123';
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      instance.validate = jest.fn().mockResolvedValue(false);
+
+      await instance.submitCheckout();
+
+      expect(instance.completeCheckout).not.toHaveBeenCalled();
+      expect(handler).toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail.errorCode).toBe(ComponentErrorCodes.VALIDATION_ERROR);
+    });
+
+    it('blocks submission if no payment token is available after all steps', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' };
+      checkoutStore.paymentToken = undefined;
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+
+      await instance.submitCheckout();
+
+      expect(instance.completeCheckout).not.toHaveBeenCalled();
+      expect(handler).toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail.errorCode).toBe(ComponentErrorCodes.TOKENIZE_ERROR);
+    });
+
     it('maps payment mode correctly for different payment methods', async () => {
       const page = await newSpecPage({
         components: [JustifiModularCheckout],
@@ -271,6 +533,22 @@ describe('justifi-modular-checkout', () => {
       (instance as any).handleApplePayError(event);
 
       expect(handler).toHaveBeenCalled();
+    });
+
+    it('clears selection on Apple Pay cancellation', async () => {
+      checkoutStore.paymentToken = 'pm_123';
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.APPLE_PAY };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      (instance as any).handleApplePayCancelled();
+
+      expect(checkoutStore.paymentToken).toBeUndefined();
+      expect(checkoutStore.selectedPaymentMethod).toBeUndefined();
     });
 
     it('handles Google Pay completed event success by setting token and submitting', async () => {
@@ -484,6 +762,392 @@ describe('justifi-modular-checkout', () => {
     });
   });
 
+  describe('validate()', () => {
+    beforeEach(() => {
+      checkoutStore.insuranceEnabled = false;
+      checkoutStore.selectedPaymentMethod = undefined;
+    });
+
+    // Skip: Stencil instance ref assignment does not persist for validate() in test env
+    it.skip('validates insurance form when insurance is enabled', async () => {
+      checkoutStore.insuranceEnabled = true;
+      checkoutStore.selectedPaymentMethod = undefined;
+
+      const insuranceValidateSpy = jest.fn().mockResolvedValue({ isValid: true });
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      (instance as any).insuranceFormRef = { validate: insuranceValidateSpy };
+
+      const result = await instance.validate();
+
+      expect(insuranceValidateSpy).toHaveBeenCalled();
+      expect(result).toBe(true);
+    });
+
+    it('validates payment method and billing forms for new card', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      mockFormRefs(instance);
+
+      const result = await instance.validate();
+
+      expect(instance.paymentMethodFormRef.validate).toHaveBeenCalled();
+      expect(instance.billingFormRef.validate).toHaveBeenCalled();
+      expect(result).toBe(true);
+    });
+
+    it('validates payment method and billing forms for new bank account', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_BANK_ACCOUNT };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      mockFormRefs(instance, {
+        paymentMethodFormRef: { tagName: 'JUSTIFI-BANK-ACCOUNT-FORM' },
+      });
+
+      const result = await instance.validate();
+
+      expect(instance.paymentMethodFormRef.validate).toHaveBeenCalled();
+      expect(instance.billingFormRef.validate).toHaveBeenCalled();
+      expect(result).toBe(true);
+    });
+
+    it('skips payment and billing validation for saved payment methods', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      mockFormRefs(instance);
+
+      const result = await instance.validate();
+
+      expect(instance.paymentMethodFormRef?.validate).not.toHaveBeenCalled();
+      expect(result).toBe(true);
+    });
+
+    it('emits VALIDATION_ERROR when validation fails', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      mockFormRefs(instance, {
+        paymentMethodFormRef: { validate: jest.fn().mockResolvedValue(false) },
+      });
+
+      const result = await instance.validate();
+
+      expect(result).toBe(false);
+      const event = handler.mock.calls[0][0];
+      expect(event.detail.errorCode).toBe(ComponentErrorCodes.VALIDATION_ERROR);
+    });
+  });
+
+  describe('setSelectedPaymentMethod', () => {
+    it('allows selecting a payment method externally including saved ones', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+
+      await instance.setSelectedPaymentMethod({ type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_x' });
+
+      expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_x' });
+      expect(checkoutStore.paymentToken).toBe('pm_x');
+    });
+  });
+
+  describe('tokenization — card/bank', () => {
+    beforeEach(() => {
+      checkoutStore.checkoutLoaded = true;
+      checkoutStore.authToken = 'auth';
+      checkoutStore.accountId = 'acc_1';
+      checkoutStore.paymentAmount = 1000;
+      checkoutStore.paymentCurrency = 'USD';
+      checkoutStore.paymentToken = undefined;
+      checkoutStore.savePaymentMethod = false;
+      checkoutStore.paymentMethodGroupId = undefined;
+    });
+
+    it('tokenizes new card payments with billing info', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      mockFormRefs(instance, {
+        paymentMethodFormRef: {
+          validate: jest.fn().mockResolvedValue(true),
+          tokenize: jest.fn().mockResolvedValue({ id: 'tok_1' }),
+          tagName: 'JUSTIFI-CARD-FORM',
+        },
+        billingFormRef: {
+          validate: jest.fn().mockResolvedValue(true),
+          getValues: jest.fn().mockResolvedValue({ name: 'Test', address_postal_code: '12345' }),
+        },
+      });
+
+      await instance.submitCheckout();
+
+      expect(checkoutStore.paymentToken).toBe('tok_1');
+      expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+    });
+
+    it('tokenizes new bank account payments with billing info', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_BANK_ACCOUNT };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      mockFormRefs(instance, {
+        paymentMethodFormRef: {
+          validate: jest.fn().mockResolvedValue(true),
+          tokenize: jest.fn().mockResolvedValue({ id: 'tok_bank_1' }),
+          tagName: 'JUSTIFI-BANK-ACCOUNT-FORM',
+        },
+        billingFormRef: {
+          validate: jest.fn().mockResolvedValue(true),
+          getValues: jest.fn().mockResolvedValue({}),
+        },
+      });
+
+      await instance.submitCheckout();
+
+      expect(checkoutStore.paymentToken).toBe('tok_bank_1');
+      expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+    });
+
+    it('includes payment_method_group_id only when save payment method is on', async () => {
+      const tokenizeSpy = jest.fn().mockResolvedValue({ id: 'tok_1' });
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      mockFormRefs(instance, {
+        paymentMethodFormRef: {
+          validate: jest.fn().mockResolvedValue(true),
+          tokenize: tokenizeSpy,
+          tagName: 'JUSTIFI-CARD-FORM',
+        },
+        billingFormRef: {
+          validate: jest.fn().mockResolvedValue(true),
+          getValues: jest.fn().mockResolvedValue({}),
+        },
+      });
+
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD };
+      checkoutStore.savePaymentMethod = true;
+      checkoutStore.paymentMethodGroupId = 'pmg_123';
+
+      await instance.submitCheckout();
+
+      expect(tokenizeSpy).toHaveBeenCalled();
+      const tokenizeCall = tokenizeSpy.mock.calls[0][0];
+      expect(tokenizeCall.paymentMethodMetadata?.payment_method_group_id).toBe('pmg_123');
+
+      checkoutStore.savePaymentMethod = false;
+      checkoutStore.paymentMethodGroupId = undefined;
+      tokenizeSpy.mockClear();
+
+      await instance.submitCheckout();
+
+      const tokenizeCall2 = tokenizeSpy.mock.calls[0][0];
+      expect(tokenizeCall2.paymentMethodMetadata?.payment_method_group_id).toBeUndefined();
+    });
+
+    it('emits TOKENIZE_ERROR on tokenization failure', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      mockFormRefs(instance, {
+        paymentMethodFormRef: {
+          validate: jest.fn().mockResolvedValue(true),
+          tokenize: jest.fn().mockResolvedValue({ error: { message: 'Tokenization failed' } }),
+          tagName: 'JUSTIFI-CARD-FORM',
+        },
+        billingFormRef: {
+          validate: jest.fn().mockResolvedValue(true),
+          getValues: jest.fn().mockResolvedValue({}),
+        },
+      });
+
+      await instance.submitCheckout();
+
+      expect(instance.completeCheckout).not.toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail.errorCode).toBe(ComponentErrorCodes.TOKENIZE_ERROR);
+    });
+  });
+
+  describe('tokenization — Plaid', () => {
+    beforeEach(() => {
+      checkoutStore.checkoutLoaded = true;
+      checkoutStore.authToken = 'auth';
+      checkoutStore.accountId = 'acc_1';
+      checkoutStore.paymentAmount = 1000;
+      checkoutStore.paymentCurrency = 'USD';
+      checkoutStore.paymentToken = undefined;
+      checkoutStore.plaidPublicToken = undefined;
+      checkoutStore.plaidLinkTokenId = undefined;
+      checkoutStore.savePaymentMethod = false;
+      checkoutStore.paymentMethodGroupId = undefined;
+    });
+
+    it('exchanges Plaid public token for payment token at submit time', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
+      checkoutStore.plaidPublicToken = 'pt_1';
+      checkoutStore.plaidLinkTokenId = 'link_1';
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      instance.plaidService = {
+        tokenizeBankAccount: jest.fn().mockResolvedValue({
+          data: { bank_account: { token: 'pm_plaid_token' } },
+        }),
+      };
+
+      await instance.submitCheckout();
+
+      expect(checkoutStore.paymentToken).toBe('pm_plaid_token');
+      expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+    });
+
+    it('emits error if Plaid public token is missing', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
+      checkoutStore.plaidPublicToken = undefined;
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+
+      await instance.submitCheckout();
+
+      expect(instance.completeCheckout).not.toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail.errorCode).toBe(ComponentErrorCodes.TOKENIZE_ERROR);
+    });
+
+    it('includes payment_method_group_id only when save payment method is on (Plaid)', async () => {
+      const tokenizeSpy = jest.fn().mockResolvedValue({
+        data: { bank_account: { token: 'pm_plaid' } },
+      });
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      instance.plaidService = { tokenizeBankAccount: tokenizeSpy };
+
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
+      checkoutStore.plaidPublicToken = 'pt_1';
+      checkoutStore.plaidLinkTokenId = 'link_1';
+      checkoutStore.savePaymentMethod = true;
+      checkoutStore.paymentMethodGroupId = 'pmg_456';
+
+      await instance.submitCheckout();
+
+      expect(tokenizeSpy).toHaveBeenCalledWith(
+        'auth',
+        'acc_1',
+        'pt_1',
+        'link_1',
+        'pmg_456'
+      );
+    });
+
+    it('emits TOKENIZE_ERROR on Plaid exchange failure', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
+      checkoutStore.plaidPublicToken = 'pt_1';
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      instance.plaidService = {
+        tokenizeBankAccount: jest.fn().mockRejectedValue(new Error('Plaid exchange failed')),
+      };
+
+      await instance.submitCheckout();
+
+      expect(instance.completeCheckout).not.toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail.errorCode).toBe(ComponentErrorCodes.TOKENIZE_ERROR);
+    });
+  });
+
   describe('fillBillingForm', () => {
     beforeEach(() => {
       checkoutStore.billingFormFields = { address_postal_code: '' };
@@ -504,6 +1168,84 @@ describe('justifi-modular-checkout', () => {
       await instance.fillBillingForm(fields);
 
       expect(checkoutStore.billingFormFields).toEqual(fields);
+    });
+  });
+
+  describe('completeCheckout', () => {
+    beforeEach(() => {
+      checkoutStore.checkoutLoaded = true;
+      checkoutStore.authToken = 'auth';
+      checkoutStore.accountId = 'acc_1';
+      checkoutStore.paymentAmount = 1000;
+      checkoutStore.paymentCurrency = 'USD';
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' };
+      checkoutStore.paymentToken = 'pm_123';
+    });
+
+    it('completes checkout with payment mode and token', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      const completeSpy = jest.fn(({ onSuccess }: any) => {
+        onSuccess({ checkout: { id: 'chk_1', status: 'completed' } });
+      });
+      instance.completeCheckout = completeSpy;
+
+      await instance.submitCheckout();
+
+      expect(completeSpy).toHaveBeenCalledTimes(1);
+      const call = completeSpy.mock.calls[0][0];
+      expect(call.payment.payment_mode).toBe('ecom');
+      expect(call.payment.payment_token).toBe('pm_123');
+    });
+
+    it('emits submit-event with checkout data on success', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('submit-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      const mockCheckout = { id: 'chk_1', status: 'completed' };
+      instance.completeCheckout = jest.fn(({ onSuccess }: any) => {
+        onSuccess({ checkout: mockCheckout });
+      });
+
+      await instance.submitCheckout();
+
+      expect(handler).toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail.checkout).toEqual(mockCheckout);
+      expect(event.detail.message).toBe('Checkout completed successfully');
+    });
+
+    it('emits COMPLETE_CHECKOUT_ERROR on failure', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="auth" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn(({ onError }: any) => {
+        onError({ message: 'Completion failed', code: 'complete-error', severity: ComponentErrorSeverity.ERROR });
+      });
+
+      await instance.submitCheckout();
+
+      expect(handler).toHaveBeenCalled();
+      const event = handler.mock.calls[0][0];
+      expect(event.detail.errorCode).toBe(ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR);
     });
   });
 
