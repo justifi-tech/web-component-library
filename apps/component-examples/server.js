@@ -15,6 +15,7 @@ const routes = [
   '/checkout-with-insurance',
   '/fill-billing-form',
   '/modular-checkout',
+  '/modular-checkout-fill-billing',
   '/dispute',
   '/business-form',
   '/business-details',
