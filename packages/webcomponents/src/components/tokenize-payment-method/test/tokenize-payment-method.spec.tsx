@@ -11,6 +11,9 @@ import { CardForm } from '../../checkout/card-form/card-form';
 import { BankAccountForm } from '../../checkout/bank-account-form/bank-account-form';
 import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
+import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
+
+jest.mock('../../../utils/check-pkg-version', () => ({ checkPkgVersion: jest.fn() }));
 
 const tokenizeComponents = [
   JustifiTokenizePaymentMethod,
@@ -26,6 +29,15 @@ const tokenizeComponents = [
 ];
 
 describe('tokenize-payment-method', () => {
+  beforeEach(() => {
+    checkoutStore.authToken = '';
+    checkoutStore.accountId = '';
+    checkoutStore.savePaymentMethod = false;
+    checkoutStore.paymentMethodGroupId = undefined;
+    checkoutStore.selectedPaymentMethod = undefined;
+    checkoutStore.billingFormFields = { address_postal_code: '' };
+  });
+
   it('should pass hideCardBillingForm prop to payment method options', async () => {
     const page = await newSpecPage({
       components: tokenizeComponents,
@@ -148,6 +160,282 @@ describe('tokenize-payment-method', () => {
     const checkbox = page.root?.shadowRoot?.querySelector('save-new-payment-method') as any;
     expect(checkbox).toBeTruthy();
     expect((checkbox as any).label).toBe('Save New Payment Method');
+  });
+
+  it('disableBankAccount hides bank radio/form and hides radio when only card available', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method disable-bank-account="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const root = page.root as HTMLElement;
+    const shadowRoot = root.shadowRoot!;
+    const bankRadio = shadowRoot.querySelector('radio-list-item[value="new_bank_account"]');
+    const cardForm = shadowRoot.querySelector('card-form');
+    const bankForm = shadowRoot.querySelector('bank-account-form');
+
+    expect(bankRadio).toBeFalsy();
+    expect(cardForm).toBeTruthy();
+    expect(bankForm).toBeFalsy();
+    expect((page.rootInstance as any).shouldHideRadioInput).toBe(true);
+  });
+
+  it('disableCreditCard hides card radio/form and hides radio when only bank available', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method disable-credit-card="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const root = page.root as HTMLElement;
+    const shadowRoot = root.shadowRoot!;
+    const cardRadio = shadowRoot.querySelector('radio-list-item[value="new_card"]');
+    const bankForm = shadowRoot.querySelector('bank-account-form');
+    const cardForm = shadowRoot.querySelector('card-form');
+
+    expect(cardRadio).toBeFalsy();
+    expect(bankForm).toBeTruthy();
+    expect(cardForm).toBeFalsy();
+    expect((page.rootInstance as any).shouldHideRadioInput).toBe(true);
+  });
+
+  it('hideSubmitButton hides the submit button when true', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method hide-submit-button="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const button = page.root?.shadowRoot?.querySelector('internal-button[data-testid="submit-button"]') as any;
+    expect(button).toBeTruthy();
+    expect(button.hidden).toBe(true);
+  });
+
+  it('submit button is visible when hideSubmitButton not set', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const button = page.root?.shadowRoot?.querySelector('internal-button[data-testid="submit-button"]') as any;
+    expect(button).toBeTruthy();
+    expect(button.hidden).toBe(false);
+  });
+
+  it('submitButtonText prop sets button label', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method submit-button-text="Pay Now" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const button = page.root?.shadowRoot?.querySelector('internal-button[data-testid="submit-button"]') as any;
+    expect(button.text).toBe('Pay Now');
+  });
+
+  it('submitButtonText defaults to Submit', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const button = page.root?.shadowRoot?.querySelector('internal-button[data-testid="submit-button"]') as any;
+    expect(button.text).toBe('Submit');
+  });
+
+  it('paymentMethodGroupId shows save-new-payment-method when set', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method payment-method-group-id="pmg_123" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const saveCheckbox = page.root?.shadowRoot?.querySelector('save-new-payment-method') as any;
+    expect(saveCheckbox).toBeTruthy();
+    expect(saveCheckbox.hidden).toBe(false);
+  });
+
+  it('save-new-payment-method hidden when paymentMethodGroupId absent', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const saveCheckbox = page.root?.shadowRoot?.querySelector('save-new-payment-method') as any;
+    expect(saveCheckbox).toBeTruthy();
+    expect(saveCheckbox.hidden).toBe(true);
+  });
+
+  it('emits error-event when authToken and accountId missing', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const errors: any[] = [];
+    page.root?.addEventListener('error-event', (e: CustomEvent) => {
+      errors.push((e as CustomEvent).detail);
+    });
+
+    await (page.root as any).tokenizePaymentMethod();
+
+    expect(errors.length).toBeGreaterThanOrEqual(1);
+    expect(errors.some((e) => e.errorCode === ComponentErrorCodes.TOKENIZE_ERROR)).toBe(true);
+    expect(errors.some((e) => e.severity === ComponentErrorSeverity.ERROR)).toBe(true);
+  });
+
+  it('getValues returns billing form values from store', async () => {
+    checkoutStore.billingFormFields = { address_postal_code: '90210', name: 'Jane' };
+
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method hide-card-billing-form="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const values = await (page.root as any).getValues();
+    expect(values).toBeDefined();
+    expect(values.address_postal_code).toBe('90210');
+  });
+
+  it('first available method selected by default when both enabled', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const instance = page.rootInstance as any;
+    expect(instance.selectedPaymentMethod).toBe(PAYMENT_METHODS.NEW_CARD);
+  });
+
+  it('single available method auto-selected and radios hidden', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method disable-credit-card="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const instance = page.rootInstance as any;
+
+    expect(instance.selectedPaymentMethod).toBe(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
+    expect((page.rootInstance as any).shouldHideRadioInput).toBe(true);
+  });
+
+  it('disableCreditCard/disableBankAccount prop changes update available methods', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const instance = page.rootInstance as any;
+    expect(instance.selectedPaymentMethod).toBe(PAYMENT_METHODS.NEW_CARD);
+
+    instance.selectedPaymentMethod = undefined;
+    instance.disableCreditCard = true;
+    await page.waitForChanges();
+
+    expect(instance.selectedPaymentMethod).toBe(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
+    const shadowRoot = (page.root as HTMLElement).shadowRoot!;
+    const bankForm = shadowRoot.querySelector('bank-account-form');
+    const cardForm = shadowRoot.querySelector('card-form');
+    expect(bankForm).toBeTruthy();
+    expect(cardForm).toBeFalsy();
+  });
+
+  it('card-form rendered by default, bank-account-form after radio-click', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    let shadowRoot = (page.root as HTMLElement).shadowRoot!;
+    expect(shadowRoot.querySelector('card-form')).toBeTruthy();
+    expect(shadowRoot.querySelector('bank-account-form')).toBeFalsy();
+
+    page.root?.dispatchEvent(new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_BANK_ACCOUNT, bubbles: true }));
+    await page.waitForChanges();
+
+    shadowRoot = (page.root as HTMLElement).shadowRoot!;
+    expect(shadowRoot.querySelector('bank-account-form')).toBeTruthy();
+    expect(shadowRoot.querySelector('card-form')).toBeFalsy();
+  });
+
+  it('buildPaymentMethodMetadata includes payment_method_group_id when paymentMethodGroupId set', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method payment-method-group-id="pmg_xyz" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const instance = page.rootInstance as any;
+    const metadata = (instance as any).buildPaymentMethodMetadata({ name: 'X' });
+    expect(metadata.payment_method_group_id).toBe('pmg_xyz');
+  });
+
+  it('buildPaymentMethodMetadata omits payment_method_group_id when not set', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const instance = page.rootInstance as any;
+    const metadata = (instance as any).buildPaymentMethodMetadata({ name: 'X' });
+    expect(metadata.payment_method_group_id).toBeUndefined();
+  });
+
+  it('submit button auto-hides when slotted in justifi-modular-checkout', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-modular-checkout><justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method></justifi-modular-checkout>`,
+    });
+
+    await page.waitForChanges();
+
+    const tokenizeEl = page.root?.querySelector('justifi-tokenize-payment-method') ?? page.root;
+    const shadowRoot = (tokenizeEl as HTMLElement)?.shadowRoot ?? (page.root as HTMLElement)?.shadowRoot;
+    const button = shadowRoot?.querySelector('internal-button[data-testid="submit-button"]') as any;
+
+    expect(button?.hidden).toBe(true);
+  });
+
+  it('hideSubmitButton prop overrides modular checkout auto-detection', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-modular-checkout><justifi-tokenize-payment-method hide-submit-button="false" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method></justifi-modular-checkout>`,
+    });
+
+    await page.waitForChanges();
+
+    const tokenizeEl = page.root?.querySelector('justifi-tokenize-payment-method') ?? page.root;
+    const shadowRoot = (tokenizeEl as HTMLElement)?.shadowRoot ?? (page.root as HTMLElement)?.shadowRoot;
+    const button = shadowRoot?.querySelector('internal-button[data-testid="submit-button"]') as any;
+
+    expect(button?.hidden).toBe(false);
   });
 
   describe('fillBillingForm', () => {
