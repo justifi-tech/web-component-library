@@ -6,16 +6,19 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Shared static assets
-app.use('/scripts', express.static(path.join(__dirname, 'node_modules/@justifi/webcomponents/dist/')));
+app.use(
+  '/scripts',
+  express.static(
+    path.join(__dirname, 'node_modules/@justifi/webcomponents/dist/'),
+  ),
+);
 app.use('/styles', express.static(path.join(__dirname, 'css/')));
 
 // All component routes
 const routes = [
   '/checkout',
   '/checkout-with-insurance',
-  '/fill-billing-form',
   '/modular-checkout',
-  '/modular-checkout-fill-billing',
   '/dispute',
   '/business-form',
   '/business-details',

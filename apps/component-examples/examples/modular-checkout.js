@@ -1,7 +1,7 @@
-const express = require("express");
-const { API_PATHS } = require("../utils/api-paths");
-const { getToken, getWebComponentToken } = require("../utils/auth");
-const { startStandaloneServer } = require("../utils/standalone-server");
+const express = require('express');
+const { API_PATHS } = require('../utils/api-paths');
+const { getToken, getWebComponentToken } = require('../utils/auth');
+const { startStandaloneServer } = require('../utils/standalone-server');
 
 const router = express.Router();
 
@@ -12,15 +12,15 @@ async function makeCheckout(token) {
   const port = process.env.PORT || 3000;
 
   const response = await fetch(checkoutEndpoint, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      "Sub-Account": subAccountId,
+      'Sub-Account': subAccountId,
     },
     body: JSON.stringify({
       amount: 1799,
-      description: "One Chocolate Donut",
+      description: 'One Chocolate Donut',
       payment_method_group_id: paymentMethodGroupId,
       origin_url: `localhost:${port}`,
     }),
@@ -29,7 +29,7 @@ async function makeCheckout(token) {
   return data;
 }
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   const subAccountId = process.env.SUB_ACCOUNT_ID;
 
   const token = await getToken();
@@ -40,11 +40,20 @@ router.get("/", async (req, res) => {
   ];
   const webComponentToken = await getWebComponentToken(token, resources);
 
+  const billingFormFields = {
+    name: 'Jane Doe',
+    address_line1: '456 Oak Ave',
+    address_line2: 'Suite 2',
+    address_city: 'Los Angeles',
+    address_state: 'CA',
+    address_postal_code: '90210',
+  };
+
   res.send(`
     <!DOCTYPE html>
     <html>
       <head>
-        <title>JustiFi Checkout Wrapper</title>
+        <title>JustiFi Modular Checkout</title>
         <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
         <link rel="stylesheet" href="/styles/theme.css">
         <link rel="stylesheet" href="/styles/example.css">
@@ -56,10 +65,17 @@ router.get("/", async (req, res) => {
               <justifi-summary></justifi-summary>
               <justifi-card-form></justifi-card-form>
               <justifi-google-pay></justifi-google-pay>
+              <justifi-apple-pay></justifi-apple-pay>
+              <justifi-billing-form-full></justifi-billing-form-full>
               <button
-               id="submit-button"
-               class="button"
-               style="padding: 10px"
+                id="fill-billing-form-button"
+                data-testid="fill-billing-form-button"
+                class="btn btn-primary mt-3 w-100"
+              >Fill Billing Form</button>
+              <button
+                id="submit-button"
+                class="button"
+                style="padding: 10px"
               >
                 Submit Checkout
               </button>
@@ -70,9 +86,14 @@ router.get("/", async (req, res) => {
       <script>
         const submitButton = document.getElementById('submit-button');
         const checkoutWrapper = document.querySelector('justifi-modular-checkout');
+        const fillBillingFormButton = document.getElementById('fill-billing-form-button');
 
         submitButton.addEventListener('click', async () => {
           await checkoutWrapper.submitCheckout({ address_postal_code: '12345' });
+        });
+
+        fillBillingFormButton.addEventListener('click', () => {
+          checkoutWrapper.fillBillingForm(${JSON.stringify(billingFormFields)});
         });
 
         checkoutWrapper.addEventListener('submit-event', (e) => {
