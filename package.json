@@ -19,7 +19,8 @@
     "docs:lint": "node scripts/run-docs-lint.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "install-skills": "npx -y skills experimental_install -y"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
