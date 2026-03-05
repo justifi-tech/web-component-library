@@ -16,7 +16,7 @@ This component supports both USA and CAN (Canada) countries. The country is dete
 
 ### Important Constraint
 
-The `country` prop must only be defaulted in `payment-provisioning-core`. Child components must receive `country` via props and must NOT fall back to a default locally.
+The `country` prop must only be defaulted in `justifi-payment-provisioning`. Child components must receive `country` via props and must NOT fall back to a default locally.
 
 <!-- Auto Generated Below -->
 
@@ -38,7 +38,7 @@ The `country` prop must only be defaulted in `payment-provisioning-core`. Child 
 
 ### Used by
 
- - [justifi-payment-provisioning-core](.)
+ - [justifi-payment-provisioning](.)
 
 ### Depends on
 
@@ -108,7 +108,7 @@ graph TD;
   bank-account-document-form-inputs --> form-control-file
   form-control-file --> form-control-tooltip
   business-terms-conditions-form-step --> form-control-checkbox
-  justifi-payment-provisioning-core --> payment-provisioning-form-steps
+  justifi-payment-provisioning --> payment-provisioning-form-steps
   style payment-provisioning-form-steps fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
