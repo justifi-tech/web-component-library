@@ -5,6 +5,7 @@
 - Always verify tests pass and lint is clean before marking work complete.
 - When working on E2E tests, **always read** `apps/component-examples/e2e/README.md` first.
 
-## Documentation
+## API Documentation
 
 - [JustiFi API](https://developer.justifi.ai/)
+- [API Spec](https://docs.justifi.tech/api-spec)
