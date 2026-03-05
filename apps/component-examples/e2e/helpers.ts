@@ -35,6 +35,17 @@ export function listenForErrorEvent(
   });
 }
 
+/** Returns a promise that resolves when a console submit-event is logged. */
+export function listenForSubmitEvent(page: Page): Promise<string> {
+  return new Promise((resolve) => {
+    page.on('console', (msg) => {
+      if (msg.text().includes('Response data from submit-event')) {
+        resolve(msg.text());
+      }
+    });
+  });
+}
+
 /** Test data constants for E2E tests */
 export const TEST_DATA = {
   card: {
