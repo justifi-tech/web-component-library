@@ -8,4 +8,3 @@
 ## Documentation
 
 - [JustiFi API](https://developer.justifi.ai/)
-- [Web Component Docs](https://storybook.justifi.ai/?path=/docs/introduction--docs)

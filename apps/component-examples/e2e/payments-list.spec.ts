@@ -2,32 +2,6 @@ import { test, expect } from '@playwright/test';
 import { waitForComponent } from './helpers';
 
 test.describe('Payments List Component', () => {
-  test('should render table with payment data', async ({ page }) => {
-    await page.goto('/payments-list');
-    await waitForComponent(page, 'justifi-payments-list');
-
-    const headers = page.locator('justifi-payments-list th');
-    await expect(headers.first()).toBeVisible();
-
-    const expectedHeaders = [
-      'Date',
-      'Amount',
-      'Status',
-      'Type',
-      'Description',
-      'Account Holder',
-      'Payment Method',
-      'Card Brand',
-    ];
-
-    for (const header of expectedHeaders) {
-      await expect(headers.filter({ hasText: header })).toHaveCount(1);
-    }
-
-    const rows = page.locator('justifi-payments-list tbody tr');
-    await expect(rows).not.toHaveCount(0);
-  });
-
   test('should paginate forward with Next button', async ({ page }) => {
     await page.goto('/payments-list');
     await waitForComponent(page, 'justifi-payments-list');
@@ -67,35 +41,6 @@ test.describe('Payments List Component', () => {
     const backText = await firstRow.textContent();
     expect(backText).toBe(firstPageText);
   });
-
-  test('should emit click-event when a row is clicked', async ({ page }) => {
-    await page.goto('/payments-list');
-    await waitForComponent(page, 'justifi-payments-list');
-
-    const clickEventPromise = new Promise<string>((resolve) => {
-      page.on('console', (msg) => {
-        if (msg.type() === 'log' && msg.text().includes('CustomEvent')) {
-          resolve(msg.text());
-        }
-      });
-    });
-
-    await page.locator('justifi-payments-list tbody tr:first-child').click();
-
-    const event = await clickEventPromise;
-    expect(event).toContain('CustomEvent');
-  });
-
-  test.fixme(
-    'Previous button should be disabled on the first page',
-    async ({ page }) => {
-      await page.goto('/payments-list');
-      await waitForComponent(page, 'justifi-payments-list');
-
-      const prevButton = page.getByRole('button', { name: '«Previous' });
-      await expect(prevButton).toBeDisabled();
-    },
-  );
 
   test.fixme(
     'should not skip pages on rapid Next clicks',

@@ -270,7 +270,8 @@ Due to iframe initialization and async component loading, explicit waits are nec
 
 ## Writing New Tests Checklist
 
-1. Identify the example page route (check `apps/component-examples/examples/`)
+1. **Determine if the test belongs here or as a unit test.** E2E tests should cover cross-boundary interactions (API calls, navigation, iframe communication, multi-component flows). If the behavior can be verified by rendering the component in isolation (e.g., checking rendered output, emitted events, disabled states), write a unit test in the component's own `spec` file instead.
+2. Identify the example page route (check `apps/component-examples/examples/`)
 2. Use `waitForComponent()` after navigation
 3. Use `fillIframeInput()` for PCI fields, regular locators for other fields
 4. Use `TEST_DATA` constants for test values
