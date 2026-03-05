@@ -1,7 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { JustifiPaymentProvisioning } from '../justifi-payment-provisioning';
-import { JustifiPaymentProvisioningCore } from '../payment-provisioning-core';
 import { BusinessService } from '../../../../api/services/business.service';
 import { ProvisionService } from '../../../../api/services/provision.service';
 import JustifiAnalytics from '../../../../api/Analytics';
@@ -126,7 +125,7 @@ describe('justifi-payment-provisioning', () => {
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -155,7 +154,7 @@ describe('justifi-payment-provisioning', () => {
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
-      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -185,7 +184,7 @@ describe('justifi-payment-provisioning', () => {
       .mockResolvedValue(mockBusinessResponse);
 
     const page = await newSpecPage({
-      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -196,10 +195,10 @@ describe('justifi-payment-provisioning', () => {
 
     await page.waitForChanges();
 
-    const coreComponent = page.root.shadowRoot.querySelector(
-      'justifi-payment-provisioning-core'
+    const formSteps = page.root.shadowRoot.querySelector(
+      'payment-provisioning-form-steps'
     );
-    expect(coreComponent).not.toBeNull();
+    expect(formSteps).not.toBeNull();
   });
 
   it('should emit submit-event after successful provisioning', async () => {
@@ -214,7 +213,7 @@ describe('justifi-payment-provisioning', () => {
 
     const submitEvent = jest.fn();
     const page = await newSpecPage({
-      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -226,11 +225,7 @@ describe('justifi-payment-provisioning', () => {
 
     await page.waitForChanges();
 
-    // Trigger the formCompleted event to simulate form completion
-    const coreComponent = page.root.shadowRoot.querySelector(
-      'justifi-payment-provisioning-core'
-    );
-    coreComponent.dispatchEvent(new CustomEvent('formCompleted'));
+    page.root.dispatchEvent(new CustomEvent('formCompleted'));
 
     await page.waitForChanges();
 
@@ -257,7 +252,7 @@ describe('justifi-payment-provisioning', () => {
     const errorEvent = jest.fn();
     const submitEvent = jest.fn();
     const page = await newSpecPage({
-      components: [JustifiPaymentProvisioning, JustifiPaymentProvisioningCore],
+      components: [JustifiPaymentProvisioning],
       template: () => (
         <justifi-payment-provisioning
           businessId="biz_123"
@@ -270,11 +265,7 @@ describe('justifi-payment-provisioning', () => {
 
     await page.waitForChanges();
 
-    // Trigger the formCompleted event
-    const coreComponent = page.root.shadowRoot.querySelector(
-      'justifi-payment-provisioning-core'
-    );
-    coreComponent.dispatchEvent(new CustomEvent('formCompleted'));
+    page.root.dispatchEvent(new CustomEvent('formCompleted'));
 
     await page.waitForChanges();
 
