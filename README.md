@@ -166,7 +166,3 @@ To add a new skill:
 ```bash
 npx skills add <github-repo-url> --skill <skill-name> -y
 ```
-
-### Playwright MCP Server
-
-The project includes a shared [Playwright MCP](https://github.com/microsoft/playwright-mcp) configuration at `.claude/settings.json`. This enables AI agents to interact with browsers for testing and debugging. No additional setup needed — it's auto-configured for Claude Code users.
