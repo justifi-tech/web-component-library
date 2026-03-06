@@ -19,7 +19,7 @@ beforeEach(() => {
 describe('justifi-refund-payment', () => {
   const components = [JustifiRefundPayment];
 
-  const setupMockPaymentService = (responseOverrides?: Partial<typeof mockPaymentDetailsResponse>) => {
+  const setupMockPaymentService = (responseOverrides?: Partial<(typeof mockPaymentDetailsResponse)['data']>) => {
     const response = responseOverrides
       ? { ...mockPaymentDetailsResponse, data: { ...mockPaymentDetailsResponse.data, ...responseOverrides } }
       : mockPaymentDetailsResponse;

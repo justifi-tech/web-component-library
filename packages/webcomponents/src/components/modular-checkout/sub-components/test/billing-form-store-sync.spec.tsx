@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+import { AnalyticsService } from '../../../../api/services/analytics.service';
 import { JustifiCardBillingFormSimple } from '../justifi-card-billing-form-simple';
 import { JustifiBankAccountBillingFormSimple } from '../justifi-bank-account-billing-form-simple';
 import { JustifiBillingFormFull } from '../justifi-billing-form-full';
@@ -10,6 +11,7 @@ import { checkoutStore } from '../../../../store/checkout.store';
 describe('billing-form-store-sync', () => {
   beforeEach(() => {
     checkoutStore.billingFormFields = { address_postal_code: '' };
+    AnalyticsService.prototype.record = jest.fn().mockResolvedValue(undefined);
   });
 
   it('card-billing-form-simple reads checkoutStore.billingFormFields on mount', async () => {
