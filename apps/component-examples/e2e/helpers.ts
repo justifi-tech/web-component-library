@@ -35,15 +35,38 @@ export function listenForErrorEvent(
   });
 }
 
-/** Returns a promise that resolves when a console submit-event is logged. */
+/** Returns a promise that resolves when submit-event is logged (e.g. from example page listener). */
 export function listenForSubmitEvent(page: Page): Promise<string> {
   return new Promise((resolve) => {
     page.on('console', (msg) => {
-      if (msg.text().includes('Response data from submit-event')) {
-        resolve(msg.text());
+      const text = msg.text();
+      if (text.includes('submit-event')) {
+        resolve(text);
       }
     });
   });
+}
+
+/** Fill card iframe fields + billing via fill-billing-form button. */
+export async function fillCardForm(page: Page) {
+  await fillIframeInput(page, 'cardNumber', TEST_DATA.card.number);
+  await fillIframeInput(page, 'expirationMonth', TEST_DATA.card.expirationMonth);
+  await fillIframeInput(page, 'expirationYear', TEST_DATA.card.expirationYear);
+  await fillIframeInput(page, 'CVV', TEST_DATA.card.cvv);
+  await fillBillingFormViaButton(page);
+}
+
+/** Fill bank account iframe fields + billing via fill-billing-form button. */
+export async function fillBankAccountForm(page: Page) {
+  await fillIframeInput(page, 'routingNumber', TEST_DATA.bankAccount.routingNumber);
+  await fillIframeInput(page, 'accountNumber', TEST_DATA.bankAccount.accountNumber);
+  await fillBillingFormViaButton(page);
+}
+
+/** Clicks fill-billing-form button to populate billing fields. */
+export async function fillBillingFormViaButton(page: Page) {
+  await page.locator('#fill-billing-form-button').click();
+  await page.waitForTimeout(500);
 }
 
 /** Test data constants for E2E tests */
