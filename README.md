@@ -138,3 +138,31 @@ Or you can try them out by executing
 `pnpm dev:server`
 
 See the full documentation of the tests components [here](https://github.com/justifi-tech/web-component-library/blob/main/apps/component-examples/README.md)
+
+## AI Agent Skills
+
+This project includes [agent skills](https://skills.sh) to help AI coding assistants (Claude Code, Cursor, Codex, etc.) follow best practices.
+
+### Installed Skills
+
+| Skill | Source | Purpose |
+|---|---|---|
+| `dogfood` | [vercel-labs/agent-browser](https://skills.sh/vercel-labs/agent-browser/dogfood) | Systematic web app exploration and issue detection |
+| `javascript-testing-patterns` | [wshobson/agents](https://skills.sh/wshobson/agents/javascript-testing-patterns) | JS/TS testing strategies and patterns |
+| `webapp-testing` | [anthropics/skills](https://skills.sh/anthropics/skills/webapp-testing) | Web app testing with Playwright |
+
+### Installing Skills
+
+Skills are tracked via `skills-lock.json` (like a lock file) and restored on demand — the actual skill files are gitignored.
+
+After cloning, restore skills:
+
+```bash
+pnpm install-skills
+```
+
+To add a new skill:
+
+```bash
+npx skills add <github-repo-url> --skill <skill-name> -y
+```

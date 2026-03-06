@@ -8,6 +8,11 @@ packages/mockData/mockGrossVolumeReport.js.map
 packages/mockData/mockGrossVolumeReport.js
 /agent-os/*
 .claude/settings.local.json
+.kiro/
+.crush/
+.agents/skills/
+.claude/skills/
+dogfood-output/
 
 # Docs generated files
 docs/docs.json

@@ -1,9 +1,11 @@
-## General Guidelines
+## Rules
 
-- In all interactions and commit messages, be extremely concise and to the point and sacrifice grammar for the sake of concision.
-- Do not run build, dev, start, lint, format, clean, or any other commands. Just answer the question or task.
-- You're allowed to run test related commands only locally. The allowed commands are only `test` and `test:e2e`
+- Be extremely concise in interactions and commit messages. Sacrifice grammar for concision.
+- **Do not run** `build`, `dev`, `start`, `format`, `clean`. Only `test`, `test:e2e`, and `lint` commands are allowed.
+- Always verify tests pass and lint is clean before marking work complete.
+- When working on E2E tests, **always read** `apps/component-examples/e2e/README.md` first.
 
-## Documentation
+## API Documentation
 
-- [JustiFi API Documentation](https://developer.justifi.ai/)
+- [JustiFi API](https://developer.justifi.ai/)
+- [API Spec](https://docs.justifi.tech/api-spec)
