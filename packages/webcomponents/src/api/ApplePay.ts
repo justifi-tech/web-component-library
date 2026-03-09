@@ -211,6 +211,7 @@ export class ApplePayPaymentRequest implements IApplePayPaymentRequest {
   public shippingMethods?: IApplePayShippingMethod[];
   public applicationData?: string;
   public supportedCountries?: string[];
+  public requiredBillingContactFields?: string[];
 
   constructor(data: IApplePayPaymentRequest) {
     this.countryCode = data.countryCode;
@@ -222,6 +223,7 @@ export class ApplePayPaymentRequest implements IApplePayPaymentRequest {
     this.shippingMethods = data.shippingMethods;
     this.applicationData = data.applicationData;
     this.supportedCountries = data.supportedCountries;
+    this.requiredBillingContactFields = data.requiredBillingContactFields;
   }
 
   public get isValid(): boolean {
@@ -302,6 +304,10 @@ export class ApplePayHelpers {
       ApplePayMerchantCapability.SUPPORTS_CREDIT,
       ApplePayMerchantCapability.SUPPORTS_DEBIT,
     ];
+  }
+
+  static getDefaultBillingContactFields(): string[] {
+    return ['name']
   }
 }
 

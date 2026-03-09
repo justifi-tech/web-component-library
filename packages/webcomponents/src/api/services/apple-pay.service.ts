@@ -451,6 +451,7 @@ export class ApplePayService implements IApplePayService {
       merchantCapabilities: ApplePayHelpers.getDefaultMerchantCapabilities(),
       supportedNetworks: ApplePayHelpers.getDefaultSupportedNetworks(),
       total: ApplePayHelpers.createLineItem(label, amount),
+      requiredBillingContactFields: ApplePayHelpers.getDefaultBillingContactFields(),
     };
   }
 
