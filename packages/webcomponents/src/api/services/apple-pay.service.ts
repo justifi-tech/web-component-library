@@ -299,6 +299,9 @@ export class ApplePayService implements IApplePayService {
 
         const paymentPayload: IApplePayPaymentProcessRequest = {
           ...payment.token,
+          billing_info: {
+            name: payment?.billingContact?.givenName
+          },
           product_details: {
             name: this.currentPaymentRequest!.total.label,
             price: ApplePayHelpers.parseAmount(

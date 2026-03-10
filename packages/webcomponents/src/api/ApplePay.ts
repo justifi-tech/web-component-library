@@ -141,10 +141,15 @@ export interface IApplePayMethodSelectedEvent {
 }
 
 
+export interface IApplePayBillingContact {
+  name?: string;
+}
+
 export interface IApplePayPaymentProcessRequest {
   paymentData: IApplePayTokenData;
   paymentMethod: IApplePayTokenPaymentMethod;
   transactionIdentifier: string;
+  billing_contact?: IApplePayBillingContact;
   product_details?: {
     name: string;
     price: number;
