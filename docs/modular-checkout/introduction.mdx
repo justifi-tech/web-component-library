@@ -42,13 +42,14 @@ Optional:
 
 ## Providing Billing Information
 
-Billing information **is required** for checkout completion and can be provided in one of the following ways:
+Billing information is **required when collecting a new card or bank account** and can be provided in one of the following ways:
 
 - Using the `<justifi-billing-form-full />` sub component for complete billing address collection
 - Using the `<justifi-card-billing-form-simple />` sub component for ZIP code only (card payments)
 - Using the `<justifi-bank-account-billing-form-simple />` sub component for account owner name only (ACH payments)
 - Passing a `billingInformation` object directly to the `submitCheckout` method
 
+For checkouts that use a saved payment method or a wallet/BNPL sub component (for example, `<justifi-saved-payment-methods />`, `<justifi-apple-pay />`, `<justifi-sezzle-payment-method />`, or `<justifi-plaid-payment-method />`), billing information is optional and is not validated by the modular checkout flow.
 The `billingInformation` object can take one of two forms:
 
 **Full billing address:**
