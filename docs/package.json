@@ -34,7 +34,9 @@
     "./component-tree.json": "./component-tree.json",
     "./*.mdx": "./*.mdx",
     "./*/*.mdx": "./*/*.mdx",
-    "./*/*/*.mdx": "./*/*/*.mdx"
+    "./*/*/*.mdx": "./*/*/*.mdx",
+    "./*/*.css": "./*/*.css",
+    "./*/*/*.css": "./*/*/*.css"
   },
   "scripts": {
     "dev": "echo 'Dev server not configured yet'",

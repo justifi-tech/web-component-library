@@ -3,7 +3,7 @@ id: introduction
 title: Modular Checkout
 sidebar_label: Introduction
 description: Layout manager that composes payment, summary, and confirmation subcomponents into a cohesive flow.
-sidebar_position: 21
+sidebar_position: 1
 ---
 
 import {
@@ -18,6 +18,119 @@ import docsJson from '../docs.json';
 
 The `justifi-modular-checkout` wrapper component serves as a container for checkout-related sub components. It manages the tokenization of payment methods, billing information, insurance, and overall form submission to complete the checkout. It also supports saving a payment method to a payment method group for future use.
 
+## Supported sub components
+
+Required for checkout completion (add at least one of the following sub components):
+
+- [justifi-card-form](./sub-components/card-form)
+- [justifi-bank-account-form](./sub-components/bank-account-form)
+- [justifi-saved-payment-methods](./sub-components/saved-payment-methods)
+- [justifi-sezzle-payment-method](./sub-components/sezzle-payment-method)
+- [justifi-plaid-payment-method](./sub-components/plaid-payment-method)
+
+Optional:
+
+- [justifi-checkout-summary](./sub-components/summary)
+- [justifi-season-interruption-insurance](./sub-components/season-interruption-insurance)
+- [justifi-billing-form-full](./sub-components/billing-form-full)
+- [justifi-card-billing-form-simple](./sub-components/card-billing-form-simple)
+- [justifi-bank-account-billing-form-simple](./sub-components/bank-account-billing-form-simple)
+- [justifi-apple-pay](./sub-components/apple-pay)
+- [justifi-google-pay](./sub-components/google-pay)
+
+> **Note:** In addition to the supported sub components, you can add any custom HTML elements or markup inside the justifi-modular-checkout. This allows you to render headings, descriptions, disclaimers, or other layout elements as needed.
+
+## Providing Billing Information
+
+Billing information is **required when collecting a new card or bank account** and can be provided in one of the following ways:
+
+- Using the `<justifi-billing-form-full />` sub component for complete billing address collection
+- Using the `<justifi-card-billing-form-simple />` sub component for ZIP code only (card payments)
+- Using the `<justifi-bank-account-billing-form-simple />` sub component for account owner name only (ACH payments)
+- Passing a `billingInformation` object directly to the `submitCheckout` method
+
+For checkouts that use a saved payment method or a wallet/BNPL sub component (for example, `<justifi-saved-payment-methods />`, `<justifi-apple-pay />`, `<justifi-sezzle-payment-method />`, or `<justifi-plaid-payment-method />`), billing information is optional and is not validated by the modular checkout flow.
+The `billingInformation` object can take one of two forms:
+
+**Full billing address:**
+
+```javascript
+{
+  name: string;
+  address_line1: string;
+  address_line2?: string;
+  address_city: string;
+  address_state: string;
+  address_postal_code: string;
+}
+```
+
+**Only postal code:**
+
+```javascript
+{
+  address_postal_code: string;
+}
+```
+
+### Card Form Billing Information
+
+When using `<justifi-card-form />`, billing information **must be provided** through either:
+
+- `<justifi-billing-form-full />` sub component for complete billing address
+- `<justifi-card-billing-form-simple />` sub component for ZIP code only
+- Passing the full `billingInformation` object directly to the `submitCheckout` method
+- Passing the `billingInformation` object with only `address_postal_code` to the `submitCheckout` method
+
+### Bank Account Form Billing Information
+
+When using `<justifi-bank-account-form />`, billing information **must be provided** through either:
+
+- `<justifi-billing-form-full />` sub component for complete billing address
+- `<justifi-bank-account-billing-form-simple />` sub component for account owner name only
+- Passing the full `billingInformation` object directly to the `submitCheckout` method
+
+## Pre-filling Billing Information
+
+Use `fillBillingForm()` to programmatically pre-populate billing fields, e.g. from saved customer data. Values persist when the user switches between payment methods.
+
+```javascript
+const modularCheckout = document.querySelector('justifi-modular-checkout');
+
+modularCheckout.fillBillingForm({
+  name: 'John Doe',
+  address_line1: '123 Main St',
+  address_city: 'Anytown',
+  address_state: 'NY',
+  address_postal_code: '12345',
+});
+```
+
+All fields are optional except `address_postal_code`:
+
+```typescript
+interface BillingFormFields {
+  name?: string;
+  address_line1?: string;
+  address_line2?: string;
+  address_city?: string;
+  address_state?: string;
+  address_postal_code: string; // required
+}
+```
+
+## Completing Checkout
+
+To finalize the checkout process, include a submit button that calls the `submitCheckout` method on the `justifi-modular-checkout` wrapper component. This method:
+
+- handles validation, form submission and payment method tokenization
+- optionally accepts a `billingInformation` object (useful when not using a billing component)
+- executes `preCompleteHook` (if provided) after validation and tokenization (including Plaid exchange) and before checkout completion
+- emits a `submit-event` when the submission is successful
+- returns a promise (`Promise<void>`) and you should listen for `submit-event` to handle completion
+
+> If you passed a `payment_method_group_id` to the [create checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-modular-checkout`. This will automatically save the payment method to that payment method group after successful checkout.
+
 ## Props, Events & Methods
 
 <PropsMarkdownTable
@@ -26,15 +139,16 @@ The `justifi-modular-checkout` wrapper component serves as a container for check
 
 ### Events
 
-- `error-event`: Emitted when validation fails, tokenization errors occur, or any other error happens during checkout processing. The event detail includes `message`, `errorCode`, and `severity`.
-- `submit-event`: Fired when checkout is successfully completed. The event detail includes the `checkout` object and a success `message`.
-- `checkout-changed`: Emitted whenever the checkout state changes (e.g., payment method selection, available payment methods). The event detail includes `availablePaymentMethodTypes`, `selectedPaymentMethod`, and `savedPaymentMethods`.
+- **`error-event`**: Emitted when validation fails or an error occurs. Detail shape: `{ message: string; errorCode: string; severity?: 'info' | 'warning' | 'error' }`. When the error originates from `justifi-apple-pay`, `errorCode` will be prefixed with `APPLE_PAY_` (e.g. `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_PAYMENT_FAILED`).
+- **`submit-event`**: Emitted when checkout completes successfully. Detail shape: `{ checkout: any; message: string }`.
+- **`checkout-changed`**: Emitted when checkout state changes. Detail shape: `{ availablePaymentMethodTypes: PAYMENT_METHODS[]; selectedPaymentMethod: { id?: string; type: PAYMENT_METHODS }; savedPaymentMethods: SavedPaymentMethod[] }`.
 
 ### Public methods
 
-1. `submitCheckout(submitCheckoutArgs?)` – Programmatically trigger the checkout submission. Validates forms, tokenizes payment methods if needed, and completes the checkout. Optionally accepts billing form fields as arguments.
-2. `validate()` – Validates all nested forms (payment method, billing, insurance) and returns a boolean indicating if validation passed. Emits `error-event` if validation fails.
-3. `setSelectedPaymentMethod(paymentMethod)` – Sets the selected payment method programmatically on the checkout.
+1. `fillBillingForm(fields)` – Pre-populate billing form fields from saved customer data.
+2. `submitCheckout(billingInformation?)` – Validate, tokenize, and complete the checkout. Optionally accepts a `billingInformation` object.
+3. `validate()` – Validate all sub-component form fields; returns a promise resolving to `boolean`.
+4. `setSelectedPaymentMethod(method)` – Programmatically set the active payment method.
 
 ## Pre-Complete Hook
 
@@ -91,11 +205,96 @@ checkout.preCompleteHook = (state, resolve, reject) => {
 
 See the `CheckoutState` type definition in the [Public Types](#public-types) section below for the complete structure of the state object.
 
+## Validation
+
+When `submitCheckout` is called, the `justifi-modular-checkout` wrapper component automatically validates all included sub components. If any required fields are missing or invalid, submission is blocked and validation errors will appear inline.
+
+You can also trigger validation manually by calling the `validate` method on the `justifi-modular-checkout` wrapper component. This returns a promise that resolves to a `boolean` indicating whether the form is valid.
+
+## Setting Payment Method Programmatically
+
+You can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method accepts either a saved payment method object or an object with a `type` field.
+
+> Important: The wrapper does not automatically select a default payment method. If you want a default to be selected (for example, the first saved method or a new card), explicitly call `setSelectedPaymentMethod` after initialization (e.g., on the first `checkout-changed` event).
+
+```javascript
+import { PAYMENT_METHODS } from '@justifi/webcomponents';
+
+const modularCheckout = document.querySelector('justifi-modular-checkout');
+
+// Set to new card payment method
+modularCheckout.setSelectedPaymentMethod({ type: PAYMENT_METHODS.NEW_CARD });
+
+// Set to new bank account payment method
+modularCheckout.setSelectedPaymentMethod({
+  type: PAYMENT_METHODS.NEW_BANK_ACCOUNT,
+});
+
+// Set to a saved payment method by id
+modularCheckout.setSelectedPaymentMethod({
+  id: 'pm_123',
+  type: PAYMENT_METHODS.SAVED_CARD,
+});
+```
+
+## Checkout Changed Event
+
+The `justifi-modular-checkout` wrapper component emits a `checkout-changed` event whenever any internal checkout state changes. The event detail includes `availablePaymentMethodTypes`, `selectedPaymentMethod`, and `savedPaymentMethods`.
+
+```javascript
+const modularCheckout = document.querySelector('justifi-modular-checkout');
+modularCheckout.addEventListener('checkout-changed', (event) => {
+  const {
+    availablePaymentMethodTypes,
+    selectedPaymentMethod,
+    savedPaymentMethods,
+  } = event.detail;
+  console.log('Available:', availablePaymentMethodTypes);
+  console.log('Selected:', selectedPaymentMethod);
+  console.log('Saved methods:', savedPaymentMethods);
+});
+```
+
+`availablePaymentMethodTypes` includes:
+
+- `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group` (respects disabling flags).
+- `new_card`, `new_bank_account`: Entry forms for new payment methods (respects disabling flags).
+- `sezzle`: BNPL is available when enabled by the account and not disabled.
+- `plaid`: Plaid is available when bank account verification is enabled for the checkout.
+
+## Insurance Integration
+
+The `justifi-modular-checkout` wrapper component automatically integrates the `justifi-season-interruption-insurance` component.
+
+- **Automatic Refresh**: When insurance values change the checkout data is automatically refreshed when insurance values are updated
+- **Feature Flag**: If the checkout's `payment_settings.insurance_payments` is `false`, the wrapper will skip validating the insurance component. The `justifi-season-interruption-insurance` component will also render nothing and log a console warning indicating that insurance is disabled for the checkout.
+
+```html
+<justifi-modular-checkout auth-token="123xyz" checkout-id="cho_1234567890">
+  <justifi-checkout-summary />
+  <justifi-card-form />
+  <justifi-billing-form-full />
+  <justifi-season-interruption-insurance />
+</justifi-modular-checkout>
+```
+
 ## Public Types
 
 ```ts
-import type { CheckoutState } from '@justifi/webcomponents';
+import { PAYMENT_METHODS } from '@justifi/webcomponents';
+import type {
+  SelectedPaymentMethod,
+  SavedPaymentMethod,
+  CheckoutChangedEventDetail,
+  CheckoutState,
+} from '@justifi/webcomponents';
 ```
+
+## Authorization
+
+Authorization is performed by passing a web component token as `auth-token`.
+
+- **Web Component Token**: These tokens are generated by your backend services using the [Web Component Tokens API](https://docs.justifi.tech/api-spec#tag/Web-Component-Tokens/operation/CreateWebComponentToken). Each token can be scoped to perform a set number of actions and is active for 60 minutes. When creating a web component token for this specific component you'll need to use the roles: `write:checkout:checkout_id` and `write:tokenize:account_id`. Make sure the value for `account_id` matches the account associated with the checkout.
 
 ---
 

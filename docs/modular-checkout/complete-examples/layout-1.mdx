@@ -1,0 +1,298 @@
+---
+id: layout-1
+title: Layout 1 — Donation Form
+sidebar_label: Donation Form Example
+sidebar_position: 1
+description: Donation payment flow with Card, Bank account, and Apple Pay toggle.
+---
+
+import {
+  ComponentBox,
+  setUpMocks,
+  getWebcomponentsVersion,
+} from '../../helpers';
+import '@justifi/webcomponents/dist/module/justifi-modular-checkout';
+import '@justifi/webcomponents/dist/module/justifi-card-form';
+import '@justifi/webcomponents/dist/module/justifi-bank-account-form';
+import '@justifi/webcomponents/dist/module/justifi-card-billing-form-simple';
+import './layout-1.css';
+
+{setUpMocks()}
+
+A complete checkout form example that demonstrates a donation payment flow with a clean, modern design. This example showcases how to combine the `justifi-modular-checkout` wrapper with `justifi-card-form`, `justifi-bank-account-form`, and `justifi-card-billing-form-simple` components to create a professional payment experience.
+
+The layout includes:
+
+- A donation total header
+- A main payment form container
+- Payment method selection buttons (Card, Bank account, Apple Pay) with toggle functionality
+- Card form with secure iframe inputs
+- Bank account form for ACH payments
+- Country dropdown and ZIP code form (using justifi-card-billing-form-simple)
+- A prominent "Donate Now" submit button
+
+This example uses CSS parts to style the web components consistently with the overall design theme. The payment method cards allow users to switch between card and bank account payment methods, with the Apple Pay option available for future implementation.
+
+## Example Usage
+
+<ComponentBox>
+  <justifi-modular-checkout auth-token="authToken" checkout-id="cho_123">
+    <div
+      dangerouslySetInnerHTML={{
+        __html: `
+    <div class="donation-container">
+      <div class="donation-header">
+        <span>Donation Total</span>
+        <span>$10.00</span>
+      </div>
+      <div class="payment-form-container">
+        <div class="payment-method-selection">
+          <div class="payment-method-card selected" data-payment-method="card">
+            <div class="payment-method-text">Card</div>
+          </div>
+          <div class="payment-method-card" data-payment-method="bank">
+            <div class="payment-method-text">Bank account</div>
+          </div>
+          <div class="payment-method-card dark" data-payment-method="apple">
+            <div class="payment-method-text">Apple Pay</div>
+          </div>
+        </div>
+        <div class="card-form-container" data-form-type="card">
+          <justifi-card-form></justifi-card-form>
+        </div>
+        <div class="bank-account-form-container" data-form-type="bank" style="display: none;">
+          <justifi-bank-account-form></justifi-bank-account-form>
+        </div>
+        <div class="country-zip-container">
+          <div class="country-field">
+            <label class="form-label">Country</label>
+            <select class="form-select">
+              <option>United States</option>
+              <option>Canada</option>
+            </select>
+          </div>
+          <div class="zip-field">
+            <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
+          </div>
+        </div>
+      </div>
+      <button class="submit-button">
+        <span>Donate Now</span>
+      </button>
+    </div>
+    `,
+      }}
+    />
+  </justifi-modular-checkout>
+</ComponentBox>
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-modular-checkout</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+    .donation-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: sans-serif;
+      color: #333;
+    }
+    .donation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #666;
+    }
+    .payment-form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background-color: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .payment-method-selection {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .payment-method-card {
+      flex: 1;
+      border: 2px solid #007bff;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      background-color: white;
+      cursor: pointer;
+    }
+    .payment-method-card.dark {
+      background-color: #333;
+    }
+    .payment-method-card.dark .payment-method-text {
+      color: white;
+      font-weight: 600;
+    }
+    .payment-method-card.selected {
+      border: 2px solid #007bff;
+    }
+    .payment-method-card:not(.selected) {
+      border: 1px solid #e0e0e0;
+    }
+    .payment-method-text {
+      font-size: 14px;
+      color: #333;
+    }
+    .card-form-container { margin-bottom: 20px; }
+    .bank-account-form-container { margin-bottom: 20px; }
+    .country-zip-container { display: flex; gap: 15px; }
+    .country-field, .zip-field { flex: 1; }
+    .form-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #333;
+      font-weight: 500;
+    }
+    .form-select {
+      width: 100%;
+      padding: 0.475rem 0.75rem;
+      padding-right: 2.5rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 1rem;
+      background-color: white;
+      color: #333;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      font-family: inherit;
+      line-height: 1.5;
+      outline: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1em;
+    }
+    .form-select::-ms-expand { display: none; }
+    .submit-button {
+      width: 100%;
+      padding: 15px;
+      background-color: #28a745;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+
+<body>
+  <justifi-modular-checkout auth-token="authToken" checkout-id="cho_123">
+    <div class="donation-container">
+      <div class="donation-header">
+        <span>Donation Total</span>
+        <span>$10.00</span>
+      </div>
+      <div class="payment-form-container">
+        <div class="payment-method-selection">
+          <div class="payment-method-card selected" data-payment-method="card">
+            <div class="payment-method-text">Card</div>
+          </div>
+          <div class="payment-method-card" data-payment-method="bank">
+            <div class="payment-method-text">Bank account</div>
+          </div>
+          <justifi-apple-pay></justifi-apple-pay>
+        </div>
+        <div class="card-form-container" data-form-type="card">
+          <justifi-card-form></justifi-card-form>
+        </div>
+        <div
+          class="bank-account-form-container"
+          data-form-type="bank"
+          style="display: none;"
+        >
+          <justifi-bank-account-form></justifi-bank-account-form>
+        </div>
+        <div class="country-zip-container">
+          <div class="country-field">
+            <label class="form-label">Country</label>
+            <select class="form-select">
+              <option>United States</option>
+              <option>Canada</option>
+            </select>
+          </div>
+          <div class="zip-field">
+            <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
+          </div>
+        </div>
+      </div>
+      <button class="submit-button">
+        <span>Donate Now</span>
+      </button>
+    </div>
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function() {
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
+    const submitButton = document.querySelector('.submit-button');
+    const container = document.querySelector('.donation-container');
+    if (container) {
+      const paymentMethodCards = container.querySelectorAll('.payment-method-card');
+      const cardFormContainer = container.querySelector('[data-form-type="card"]');
+      const bankFormContainer = container.querySelector('[data-form-type="bank"]');
+      paymentMethodCards.forEach((card) => {
+        card.addEventListener('click', () => {
+          const paymentMethod = card.getAttribute('data-payment-method');
+          if (paymentMethod === 'apple') return;
+          paymentMethodCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          if (paymentMethod === 'card') {
+            cardFormContainer?.setAttribute('style', 'display: block;');
+            bankFormContainer?.setAttribute('style', 'display: none;');
+          } else if (paymentMethod === 'bank') {
+            cardFormContainer?.setAttribute('style', 'display: none;');
+            bankFormContainer?.setAttribute('style', 'display: block;');
+          }
+        });
+      });
+    }
+    submitButton.addEventListener('click', async () => {
+      await modularCheckout.submitCheckout();
+    });
+    modularCheckout.addEventListener('submit-event', (event) => {
+      console.log('Checkout completed successfully!', event.detail);
+    });
+    modularCheckout.addEventListener('error-event', (event) => {
+      console.error('Checkout error:', event.detail);
+    });
+    modularCheckout.addEventListener('checkout-changed', (event) => {
+      console.log('Checkout changed:', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>
