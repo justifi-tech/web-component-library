@@ -139,7 +139,7 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 ### Events
 
-- **`error-event`**: Emitted when validation fails or an error occurs. Detail shape: `{ message: string; errorCode: string; severity: 'error' | 'warning' }`. When the error originates from `justifi-apple-pay`, `errorCode` will be prefixed with `APPLE_PAY_` (e.g. `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_PAYMENT_FAILED`).
+- **`error-event`**: Emitted when validation fails or an error occurs. Detail shape: `{ message: string; errorCode: string; severity?: 'info' | 'warning' | 'error' }`. When the error originates from `justifi-apple-pay`, `errorCode` will be prefixed with `APPLE_PAY_` (e.g. `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_PAYMENT_FAILED`).
 - **`submit-event`**: Emitted when checkout completes successfully. Detail shape: `{ checkout: any; message: string }`.
 - **`checkout-changed`**: Emitted when checkout state changes. Detail shape: `{ availablePaymentMethodTypes: PAYMENT_METHODS[]; selectedPaymentMethod: { id?: string; type: PAYMENT_METHODS }; savedPaymentMethods: SavedPaymentMethod[] }`.
 
