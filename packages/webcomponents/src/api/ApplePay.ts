@@ -313,7 +313,7 @@ export class ApplePayHelpers {
   }
 
   static getDefaultBillingContactFields(): string[] {
-    return ['name']
+    return ['name', 'postalAddress']
   }
 }
 
