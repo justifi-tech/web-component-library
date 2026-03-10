@@ -162,6 +162,7 @@ export class JustifiApplePay {
           checkoutStore.paymentDescription,
           checkoutStore.paymentAmount
         ),
+        requiredBillingContactFields: ApplePayHelpers.getDefaultBillingContactFields(),
       };
 
       const result = await this.applePayService.startPaymentSession(

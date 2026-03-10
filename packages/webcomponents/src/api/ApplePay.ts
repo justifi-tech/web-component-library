@@ -51,6 +51,7 @@ export interface IApplePayPaymentRequest {
   shippingMethods?: IApplePayShippingMethod[];
   applicationData?: string;
   supportedCountries?: string[];
+  requiredBillingContactFields?: string[];
 }
 
 export interface IApplePaySession {
@@ -314,7 +315,7 @@ export class ApplePayHelpers {
 declare global {
   interface Window {
     ApplePaySession?: {
-      new (
+      new(
         version: number,
         paymentRequest: IApplePayPaymentRequest
       ): IApplePaySession;
