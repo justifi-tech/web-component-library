@@ -297,6 +297,8 @@ export class ApplePayService implements IApplePayService {
       try {
         const payment = event.payment;
 
+        console.log(payment);
+
         const paymentPayload: IApplePayPaymentProcessRequest = {
           ...payment.token,
           billing_info: {
