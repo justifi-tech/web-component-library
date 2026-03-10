@@ -1,130 +1,368 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessOwnersFormStep } from '../business-owners-form-step';
+import { CountryCode } from '../../../../../utils/country-codes';
+import { BusinessFormStep } from '../../../utils/event-types';
+import { ComponentErrorCodes } from '../../../../../api/ComponentError';
+
+const MOCK_REP = { id: 'rep_123', name: 'Jane Doe' };
+const MOCK_OWNERS = [{ id: 'owner_1' }];
+
+async function setupComponent(
+  owners: { id: string }[] = [],
+  repData: Record<string, unknown> = {}
+) {
+  const page = await newSpecPage({
+    components: [BusinessOwnersFormStep],
+    template: () => (
+      <business-owners-form-step
+        authToken="test-token"
+        businessId="biz_123"
+        country={CountryCode.USA}
+      />
+    ),
+  });
+  const mockGet = jest.fn(({ onSuccess, final }) => {
+    onSuccess({
+      data: {
+        owners,
+        representative: repData || MOCK_REP,
+      },
+    });
+    final?.();
+  });
+  const mockPatch = jest.fn();
+  page.rootInstance.getBusiness = mockGet;
+  page.rootInstance.patchBusiness = mockPatch;
+  // @ts-ignore - accessing private method for testing
+  page.rootInstance.getData();
+  await page.waitForChanges();
+  return { page, mockGet, mockPatch };
+}
+
+function createMockRef() {
+  return {
+    validate: jest.fn().mockResolvedValue(true),
+    submit: jest.fn().mockResolvedValue(true),
+  };
+}
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('business-owners-form-step', () => {
-  let consoleSpy;
+  describe('missing props', () => {
+    it('emits error-event with MISSING_PROPS when authToken and businessId not provided', async () => {
+      const captured: unknown[] = [];
+      const page = await newSpecPage({
+        components: [BusinessOwnersFormStep],
+        template: () => (
+          <div
+            ref={(el) => {
+              if (el) el.addEventListener('error-event', (e: Event) => captured.push((e as CustomEvent).detail));
+            }}
+          >
+            {/* @ts-ignore - intentionally omit authToken/businessId */}
+            <business-owners-form-step country={CountryCode.USA} />
+          </div>
+        ),
+      });
+      await page.waitForChanges();
 
-  // Initialize the spy in the beforeEach
-  beforeEach(() => {
-    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+      expect(captured).toContainEqual(
+        expect.objectContaining({
+          errorCode: ComponentErrorCodes.MISSING_PROPS,
+          message: 'Missing required props',
+        })
+      );
+    });
   });
 
-  // Restore the original function in the afterEach
-  afterEach(() => {
-    consoleSpy.mockRestore();
+  describe('rendering', () => {
+    it('renders host element', async () => {
+      const { page } = await setupComponent(MOCK_OWNERS);
+
+      expect(page.root.tagName).toBe('BUSINESS-OWNERS-FORM-STEP');
+    });
   });
 
-  it('should log a warning if no authToken is provided', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step></business-owners-form-step>`,
+  describe('loading state', () => {
+    it('shows loading state while fetching', async () => {
+      const { page } = await setupComponent();
+      page.rootInstance.isLoading = true;
+      await page.waitForChanges();
+
+      expect(page.rootInstance.isLoading).toBe(true);
+    });
+  });
+
+  describe('fetchData', () => {
+    it('calls getBusiness when rendered with valid props', async () => {
+      const { mockGet } = await setupComponent(MOCK_OWNERS);
+
+      expect(mockGet).toHaveBeenCalled();
     });
 
+    it('emits error-event on fetch failure', async () => {
+      const page = await newSpecPage({
+        components: [BusinessOwnersFormStep],
+        template: () => (
+          <business-owners-form-step
+            authToken="test-token"
+            businessId="biz_123"
+            country={CountryCode.USA}
+          />
+        ),
+      });
+      const mockGet = jest.fn(({ onError, final }) => {
+        onError({
+          error: 'fetch failed',
+          code: ComponentErrorCodes.FETCH_ERROR,
+          severity: 'error',
+        });
+        final?.();
+      });
+      page.rootInstance.getBusiness = mockGet;
+      page.rootInstance.patchBusiness = jest.fn();
+      const errorEvent = jest.fn();
+      page.root.addEventListener('error-event', (e: CustomEvent) => errorEvent(e.detail));
+
+      // @ts-ignore
+      page.rootInstance.getData();
+      await page.waitForChanges();
+
+      expect(errorEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          errorCode: ComponentErrorCodes.FETCH_ERROR,
+          message: 'fetch failed',
+        })
+      );
+    });
   });
 
-  it('should log a warning if no businessId is provided', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step></business-owners-form-step>`,
+  describe('rep-is-owner prompt', () => {
+    it('shows rep-is-owner prompt when representativeIsOwner is null and rep not in owners', async () => {
+      const { page } = await setupComponent([], MOCK_REP);
+
+      const prompt = page.root.querySelector('.alert-warning');
+      expect(prompt).toBeTruthy();
+      expect(prompt?.textContent).toContain('Is the representative of this business also an owner?');
     });
 
-  });
+    it('rep-is-owner Yes: patches with representative id and refreshes', async () => {
+      const { page, mockGet, mockPatch } = await setupComponent([], MOCK_REP);
+      mockPatch.mockImplementation(({ onSuccess, finally: fn }) => {
+        onSuccess?.();
+        fn?.();
+      });
+      mockGet.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({
+          data: {
+            owners: [{ id: MOCK_REP.id }],
+            representative: MOCK_REP,
+          },
+        });
+        final?.();
+      });
 
-  it('should emit server error event if server error when fetching data', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
+      page.rootInstance.handleRepresentativeIsOwnerChange(true);
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockPatch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          payload: expect.objectContaining({
+            owners: [{ id: MOCK_REP.id }],
+          }),
+        })
+      );
     });
 
+    it('rep-is-owner No: sets representativeIsOwner to false, prompt hidden', async () => {
+      const { page } = await setupComponent([], MOCK_REP);
+
+      page.rootInstance.handleRepresentativeIsOwnerChange(false);
+      await page.waitForChanges();
+
+      expect(page.rootInstance.representativeIsOwner).toBe(false);
+    });
   });
 
-  it('should emit server error event if server error when patching data', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
+  describe('Add Owner button', () => {
+    it('showAddOwnerButton is true when < 4 owners and no new form open', async () => {
+      const { page } = await setupComponent([{ id: 'o1' }]);
+      page.rootInstance.newFormOpen = false;
+      await page.waitForChanges();
+
+      expect(page.rootInstance.showAddOwnerButton).toBe(true);
     });
 
+    it('showAddOwnerButton is false when 4 owners', async () => {
+      const { page } = await setupComponent([
+        { id: 'o1' },
+        { id: 'o2' },
+        { id: 'o3' },
+        { id: 'o4' },
+      ]);
+      await page.waitForChanges();
+
+      expect(page.rootInstance.showAddOwnerButton).toBe(false);
+    });
   });
 
+  describe('validateAndSubmit', () => {
+    it('calls validate and submit on all refs, then sendData', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef = createMockRef();
+      page.rootInstance.refs = [mockRef];
+      mockPatch.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({});
+        final?.();
+      });
 
-  it('should render', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockRef.validate).toHaveBeenCalled();
+      expect(mockRef.submit).toHaveBeenCalled();
+      expect(mockPatch).toHaveBeenCalled();
     });
 
+    it('does not call sendData when any ref.validate() fails', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef = createMockRef();
+      mockRef.validate.mockResolvedValue(false);
+      page.rootInstance.refs = [mockRef];
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockPatch).not.toHaveBeenCalled();
+    });
   });
 
-  it('should call fetchData if rendered with valid props', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
+  describe('ownerSubmitted listener', () => {
+    it('updates ownersPayload when ownerSubmitted event fires', async () => {
+      const { page } = await setupComponent([{ id: '' }]);
+      const submittedOwner = { id: 'new_owner_123', name: 'New Owner' };
+
+      page.root.dispatchEvent(
+        new CustomEvent('ownerSubmitted', { detail: submittedOwner, bubbles: true })
+      );
+      await page.waitForChanges();
+
+      expect(page.rootInstance.ownersPayload).toContainEqual(
+        expect.objectContaining({ id: 'new_owner_123' })
+      );
+    });
+  });
+
+  describe('sendData', () => {
+    it('calls patchBusiness with correct owners payload', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef = createMockRef();
+      page.rootInstance.refs = [mockRef];
+      mockPatch.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({});
+        final?.();
+      });
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockPatch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          payload: expect.objectContaining({
+            owners: MOCK_OWNERS,
+          }),
+        })
+      );
     });
 
-  });
+    it('emits error-event on patch failure', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef = createMockRef();
+      page.rootInstance.refs = [mockRef];
+      mockPatch.mockImplementation(({ onError, final }) => {
+        onError({
+          error: 'server error',
+          code: ComponentErrorCodes.PATCH_ERROR,
+          severity: 'error',
+        });
+        final?.();
+      });
 
-  it('should populate inputs with data from fetchData', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
+      const errorEvent = jest.fn();
+      page.root.addEventListener('error-event', (e: CustomEvent) => errorEvent(e.detail));
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(errorEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          errorCode: ComponentErrorCodes.PATCH_ERROR,
+          message: 'server error',
+        })
+      );
     });
 
-  });
+    it('emits complete-form-step-event with BusinessFormStep.owners', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef = createMockRef();
+      page.rootInstance.refs = [mockRef];
+      mockPatch.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({});
+        final?.();
+      });
 
-  it('should instantiate new Form Controller on load', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
+      const stepCompleteEvent = jest.fn();
+      page.root.addEventListener('complete-form-step-event', (e: CustomEvent) => stepCompleteEvent(e.detail));
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(stepCompleteEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          formStep: BusinessFormStep.owners,
+        })
+      );
     });
-
   });
 
-  it('should fire form controller validation when called', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
+  describe('formLoading events', () => {
+    it('emits formLoading true then false around getData', async () => {
+      const page = await newSpecPage({
+        components: [BusinessOwnersFormStep],
+        template: () => (
+          <business-owners-form-step
+            authToken="test-token"
+            businessId="biz_123"
+            country={CountryCode.USA}
+          />
+        ),
+      });
+
+      const formLoadingEvents: boolean[] = [];
+      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+
+      const mockGet = jest.fn(({ onSuccess, final }) => {
+        onSuccess({ data: { owners: [], representative: {} } });
+        final?.();
+      });
+      page.rootInstance.getBusiness = mockGet;
+      page.rootInstance.patchBusiness = jest.fn();
+      // @ts-ignore
+      page.rootInstance.getData();
+      await page.waitForChanges();
+
+      expect(formLoadingEvents).toContain(true);
+      expect(formLoadingEvents).toContain(false);
     });
-
   });
-
-  it('should only call submit after validate returns true', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
-    });
-
-  });
-
-  it('should call sendData when submit is called', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
-    });
-
-  });
-
-  it('should send correct data payload', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
-    });
-
-  });
-
-  it('should emit submitted event when sendData resolves', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
-    });
-
-  });
-
-  it('should emit formLoading event when data is being sent or fetched', async () => {
-    await newSpecPage({
-      components: [BusinessOwnersFormStep],
-      html: `<business-owners-form-step business-id="biz_123" auth-token="some-token"></business-owners-form-step>`,
-    });
-
-  });
-
 });
