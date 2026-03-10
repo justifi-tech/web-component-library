@@ -1,0 +1,102 @@
+---
+id: billing-form-full
+title: Billing Form Full
+description: Full billing address sub-component for Modular Checkout (name, address, city, state, postal code).
+sidebar_position: 29
+---
+
+import {
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getWebcomponentsVersion,
+  getComponentParts,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
+import componentTreeJson from '../../component-tree.json';
+
+## Overview
+
+Renders a form for collecting a complete billing address (name, address line 1 & 2, city, state, postal code) as part of a checkout flow.
+
+This component is **designed to be used within** the `justifi-modular-checkout` and works with both card and bank account payment methods. The wrapper component reads billing values during `submitCheckout` validation and tokenization.
+
+**Authorization** and business context are handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
+
+## Usage
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-billing-form-full</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+<style>
+  /** These are the available parts for styling the component. */
+  ::part(billing-form){' '}
+  {
+    /* billing form wrapper styles */
+  }
+  ::part(label){' '}
+  {
+    /* label styles */
+  }
+  ::part(input){' '}
+  {
+    /* input styles */
+  }
+</style>
+
+</head>
+
+<body>
+  <justifi-modular-checkout auth-token="authToken" checkout-id="ch_123">
+    <justifi-card-form />
+    <justifi-billing-form-full />
+    <button id="submit-button">Submit Checkout</button>
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function() {
+    const checkoutWrapper = document.querySelector('justifi-modular-checkout');
+    const submitButton = document.querySelector('#submit-button');
+
+    submitButton.addEventListener('click', () => {
+      checkoutWrapper.submitCheckout();
+    });
+
+    checkoutWrapper.addEventListener('error-event', (event) => {
+      console.error(event.detail);
+    });
+
+    checkoutWrapper.addEventListener('submit-event', (event) => {
+      console.log('Checkout completed successfully!', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>
+
+## Props, Events & Methods
+
+<PropsMarkdownTable props={getPropsFromDocs('justifi-billing-form-full', docsJson)} />
+
+### Events
+
+All submit and error events bubble through the parent `<justifi-modular-checkout>`, so no additional listeners are required on the billing form.
+
+## Theming & Layout
+
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-billing-form-full', componentTreeJson)}
+/>

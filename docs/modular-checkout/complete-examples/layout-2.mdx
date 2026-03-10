@@ -1,0 +1,498 @@
+---
+id: layout-2
+title: Layout 2 — E-commerce Checkout
+sidebar_label: E-commerce Checkout Example
+sidebar_position: 2
+description: Two-column e-commerce page with header, shipping, payment, and cart summary.
+---
+
+import {
+  ComponentBox,
+  setUpMocks,
+  getWebcomponentsVersion,
+} from '../../helpers';
+import '@justifi/webcomponents/dist/module/justifi-modular-checkout';
+import '@justifi/webcomponents/dist/module/justifi-card-form';
+import '@justifi/webcomponents/dist/module/justifi-card-billing-form-simple';
+import './layout-2.css';
+
+{setUpMocks()}
+
+A complete checkout page example featuring a modern e-commerce layout with a two-column design. This example demonstrates how to integrate the modular checkout components within a full page layout including header, shipping information, payment methods, and shopping cart summary.
+
+The layout includes:
+
+- **Header**: Brand logo and navigation with shopping cart icon
+- **Shipping Section**: Pre-filled shipping information with edit functionality
+- **Payment Method Section**: Apple Pay button and credit card form with postal code
+- **Shopping Cart**: Order summary with item details and totals
+
+This example uses the `justifi-card-form` and `justifi-card-billing-form-simple` components within the `justifi-modular-checkout` wrapper, styled with CSS parts to match the design system.
+
+## Example Usage
+
+<ComponentBox>
+  <justifi-modular-checkout auth-token="authToken" checkout-id="cho_123">
+    <div
+      dangerouslySetInnerHTML={{
+        __html: `
+    <div class="checkout-page">
+      <div class="checkout-header">
+        <div class="checkout-brand">
+          <span class="checkout-brand-primary">JustiFi</span>
+          <span class="checkout-brand-secondary">BREW</span>
+        </div>
+        <div class="checkout-nav">
+          <a href="#" class="checkout-nav-link">SHOP</a>
+          <a href="#" class="checkout-nav-link">LEARN</a>
+          <div class="checkout-cart-icon">
+            🛒
+            <div class="checkout-cart-badge">1</div>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-main">
+        <div class="checkout-left-column">
+          <h1 class="checkout-title">Checkout</h1>
+          <hr class="checkout-divider" />
+          <div class="checkout-section">
+            <div class="checkout-section-header">
+              <h2 class="checkout-section-title">Shipping</h2>
+              <a href="#" class="checkout-edit-link">Edit</a>
+            </div>
+            <div class="checkout-shipping-info">
+              <div>John Doe</div>
+              <div>123 Main St, Anytown, USA</div>
+              <div>Standard Shipping: Free</div>
+              <div class="checkout-shipping-arrival">Arrive Thursday, October 31st</div>
+            </div>
+          </div>
+          <hr class="checkout-divider" />
+          <div class="checkout-section">
+            <h2 class="checkout-section-title">Payment Method</h2>
+            <button class="checkout-apple-pay-button">
+              <span>Apple Pay</span>
+            </button>
+            <div class="checkout-or-divider">
+              <div class="checkout-or-line left"></div>
+              <span class="checkout-or-text">or</span>
+              <div class="checkout-or-line right"></div>
+            </div>
+            <div class="checkout-form-container">
+              <justifi-card-form></justifi-card-form>
+              <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
+            </div>
+            <button class="checkout-submit-button" id="submit-button">
+              PLACE ORDER
+            </button>
+            <div class="checkout-terms">
+              By clicking Place Order you agree to the <a href="#" class="checkout-terms-link">Terms & Conditions.</a>
+            </div>
+          </div>
+        </div>
+        <div class="checkout-right-column">
+          <div class="checkout-cart-container">
+            <div class="checkout-cart-header">
+              <h2 class="checkout-cart-title">Shopping Cart</h2>
+              <a href="#" class="checkout-edit-link">Edit</a>
+            </div>
+            <div class="checkout-summary">
+              <div class="checkout-summary-row">
+                <span>Subtotal</span>
+                <span>$38.00</span>
+              </div>
+              <div class="checkout-summary-row">
+                <span>Shipping Fee</span>
+                <span>Free</span>
+              </div>
+              <div class="checkout-summary-row">
+                <span>Tax</span>
+                <span>$4.00</span>
+              </div>
+              <div class="checkout-summary-total">
+                <span>Order Total</span>
+                <span>$42.00</span>
+              </div>
+            </div>
+            <div class="checkout-items-section">
+              <div class="checkout-items-header">
+                <span>ITEM</span>
+                <span class="checkout-items-header-qty">QTY</span>
+                <span class="checkout-items-header-price">PRICE</span>
+              </div>
+              <div class="checkout-item">
+                <div>
+                  <div class="checkout-item-name">Drip Coffee Funnel</div>
+                  <div class="checkout-item-description">8 cups / 64 ounces</div>
+                </div>
+                <div class="checkout-item-qty">1</div>
+                <div class="checkout-item-price">$38.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `,
+      }}
+    />
+  </justifi-modular-checkout>
+</ComponentBox>
+
+<pre><code className="language-html">{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-modular-checkout</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+    .checkout-page {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    .checkout-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .checkout-brand { font-size: 24px; font-weight: bold; }
+    .checkout-brand-primary { color: #2d5a27; }
+    .checkout-brand-secondary { color: #4a7c59; }
+    .checkout-nav { display: flex; align-items: center; gap: 30px; }
+    .checkout-nav-link {
+      text-decoration: none;
+      color: #000000;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    .checkout-cart-icon { position: relative; cursor: pointer; }
+    .checkout-cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #000000;
+      color: #ffffff;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .checkout-main {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      gap: 40px;
+    }
+    .checkout-left-column { flex: 2; }
+    .checkout-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #000000;
+    }
+    .checkout-divider {
+      margin: 30px 0;
+      border: none;
+      border-top: 1px solid #e0e0e0;
+    }
+    .checkout-section { margin-bottom: 30px; }
+    .checkout-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .checkout-section-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000000;
+    }
+    .checkout-edit-link {
+      color: #2d5a27;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .checkout-shipping-info { line-height: 1.6; color: #000000; }
+    .checkout-shipping-arrival { font-weight: bold; }
+    .checkout-apple-pay-button {
+      width: 100%;
+      background-color: #000;
+      border: none;
+      padding: 15px;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .checkout-or-divider {
+      text-align: center;
+      margin: 20px 0;
+      position: relative;
+    }
+    .checkout-or-line {
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      background-color: #e0e0e0;
+      width: 30%;
+    }
+    .checkout-or-line.left { left: 15%; }
+    .checkout-or-line.right { right: 15%; }
+    .checkout-or-text {
+      background-color: #ffffff;
+      padding: 0 15px;
+      color: #666666;
+      font-size: 14px;
+    }
+    .checkout-form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .checkout-submit-button {
+      width: 100%;
+      background-color: #2d5a27;
+      border: none;
+      padding: 15px;
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .checkout-terms {
+      font-size: 12px;
+      color: #666666;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .checkout-terms-link { color: #2d5a27; text-decoration: none; }
+    .checkout-right-column { flex: 1; }
+    .checkout-cart-container {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 20px;
+      background-color: #ffffff;
+    }
+    .checkout-cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .checkout-cart-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000000;
+    }
+    .checkout-summary { margin-bottom: 20px; }
+    .checkout-summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .checkout-summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      font-size: 16px;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+    .checkout-items-section {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 15px;
+    }
+    .checkout-items-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: #666666;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .checkout-items-header-qty { text-align: center; }
+    .checkout-items-header-price { text-align: right; }
+    .checkout-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .checkout-item-name { font-weight: 500; color: #000000; }
+    .checkout-item-description {
+      font-size: 12px;
+      color: #666666;
+      margin-top: 2px;
+    }
+    .checkout-item-qty { text-align: center; color: #000000; }
+    .checkout-item-price { text-align: right; color: #000000; }
+  </style>
+
+</head>
+
+<body>
+  <justifi-modular-checkout auth-token="authToken" checkout-id="cho_123">
+    <div class="checkout-page">
+      <div class="checkout-header">
+        <div class="checkout-brand">
+          <span class="checkout-brand-primary">JustiFi</span>
+          <span class="checkout-brand-secondary">BREW</span>
+        </div>
+        <div class="checkout-nav">
+          <a href="#" class="checkout-nav-link">
+            SHOP
+          </a>
+          <a href="#" class="checkout-nav-link">
+            LEARN
+          </a>
+          <div class="checkout-cart-icon">
+            🛒
+            <div class="checkout-cart-badge">1</div>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-main">
+        <div class="checkout-left-column">
+          <h1 class="checkout-title">Checkout</h1>
+          <hr class="checkout-divider" />
+          <div class="checkout-section">
+            <div class="checkout-section-header">
+              <h2 class="checkout-section-title">Shipping</h2>
+              <a href="#" class="checkout-edit-link">
+                Edit
+              </a>
+            </div>
+            <div class="checkout-shipping-info">
+              <div>John Doe</div>
+              <div>123 Main St, Anytown, USA</div>
+              <div>Standard Shipping: Free</div>
+              <div class="checkout-shipping-arrival">
+                Arrive Thursday, October 31st
+              </div>
+            </div>
+          </div>
+          <hr class="checkout-divider" />
+          <div class="checkout-section">
+            <h2 class="checkout-section-title">Payment Method</h2>
+            <justifi-apple-pay></justifi-apple-pay>
+            <div class="checkout-or-divider">
+              <div class="checkout-or-line left"></div>
+              <span class="checkout-or-text">or</span>
+              <div class="checkout-or-line right"></div>
+            </div>
+            <div class="checkout-form-container">
+              <justifi-card-form></justifi-card-form>
+              <justifi-card-billing-form-simple></justifi-card-billing-form-simple>
+            </div>
+            <button class="checkout-submit-button" id="submit-button">
+              PLACE ORDER
+            </button>
+            <div class="checkout-terms">
+              By clicking Place Order you agree to the{' '}
+              <a href="#" class="checkout-terms-link">
+                Terms & Conditions.
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="checkout-right-column">
+          <div class="checkout-cart-container">
+            <div class="checkout-cart-header">
+              <h2 class="checkout-cart-title">Shopping Cart</h2>
+              <a href="#" class="checkout-edit-link">
+                Edit
+              </a>
+            </div>
+            <div class="checkout-summary">
+              <div class="checkout-summary-row">
+                <span>Subtotal</span>
+                <span>$38.00</span>
+              </div>
+              <div class="checkout-summary-row">
+                <span>Shipping Fee</span>
+                <span>Free</span>
+              </div>
+              <div class="checkout-summary-row">
+                <span>Tax</span>
+                <span>$4.00</span>
+              </div>
+              <div class="checkout-summary-total">
+                <span>Order Total</span>
+                <span>$42.00</span>
+              </div>
+            </div>
+            <div class="checkout-items-section">
+              <div class="checkout-items-header">
+                <span>ITEM</span>
+                <span class="checkout-items-header-qty">QTY</span>
+                <span class="checkout-items-header-price">PRICE</span>
+              </div>
+              <div class="checkout-item">
+                <div>
+                  <div class="checkout-item-name">Drip Coffee Funnel</div>
+                  <div class="checkout-item-description">
+                    8 cups / 64 ounces
+                  </div>
+                </div>
+                <div class="checkout-item-qty">1</div>
+                <div class="checkout-item-price">$38.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </justifi-modular-checkout>
+</body>
+
+<script>
+  (function() {
+    const modularCheckout = document.querySelector('justifi-modular-checkout');
+    const submitButton = document.querySelector('#submit-button');
+    submitButton.addEventListener('click', async () => {
+      await modularCheckout.submitCheckout();
+    });
+    modularCheckout.addEventListener('submit-event', (event) => {
+      console.log('Checkout completed successfully!', event.detail);
+    });
+    modularCheckout.addEventListener('error-event', (event) => {
+      console.error('Checkout error:', event.detail);
+    });
+    modularCheckout.addEventListener('checkout-changed', (event) => {
+      console.log('Checkout changed:', event.detail);
+    });
+  })();
+</script>
+
+</html>`}</code></pre>
