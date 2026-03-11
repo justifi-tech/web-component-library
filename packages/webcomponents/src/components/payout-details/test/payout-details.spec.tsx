@@ -1,7 +1,6 @@
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
 import { JustifiPayoutDetails } from "../justifi-payout-details";
-import { PayoutDetailsCore } from "../payout-details-core";
 import { PayoutService } from "../../../api/services/payout.service";
 import JustifiAnalytics from "../../../api/Analytics";
 jest.mock("../../../api/services/payout.service");
@@ -16,7 +15,7 @@ beforeEach(() => {
 describe('payout-details', () => {
   it('renders error state when no payoutId or authToken', async () => {
     const page = await newSpecPage({
-      components: [JustifiPayoutDetails, PayoutDetailsCore],
+      components: [JustifiPayoutDetails],
       template: () => <justifi-payout-details payoutId="" authToken="" />,
     });
     await page.waitForChanges();
@@ -27,7 +26,7 @@ describe('payout-details', () => {
     const eventSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [JustifiPayoutDetails, PayoutDetailsCore],
+      components: [JustifiPayoutDetails],
       template: () => <justifi-payout-details payoutId="" authToken="token" onError-event={eventSpy} />,
     });
     await page.waitForChanges();
@@ -44,7 +43,7 @@ describe('payout-details', () => {
     const eventSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [JustifiPayoutDetails, PayoutDetailsCore],
+      components: [JustifiPayoutDetails],
       template: () => <justifi-payout-details payoutId="payoutId" authToken="" onError-event={eventSpy} />,
     });
     await page.waitForChanges();
@@ -57,13 +56,13 @@ describe('payout-details', () => {
     }));
   });
 
-  it('emits an error event when fetch fails', async () => {
+  it('emits an error error event when fetch fails', async () => {
     PayoutService.prototype.fetchPayout = jest.fn().mockRejectedValueOnce(new Error('Failed to fetch'));
 
     const onErrorSpy = jest.fn();
 
     const page = await newSpecPage({
-      components: [JustifiPayoutDetails, PayoutDetailsCore],
+      components: [JustifiPayoutDetails],
       template: () => <justifi-payout-details payoutId="payoutId" authToken="authToken" onError-event={onErrorSpy} />,
     });
 
