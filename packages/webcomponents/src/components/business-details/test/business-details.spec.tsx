@@ -1,7 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { JustifiBusinessDetails } from '../justifi-business-details';
-import { BusinessDetailsCore } from '../business-details-core';
 import JustifiAnalytics from '../../../api/Analytics';
 
 beforeEach(() => {
@@ -21,13 +20,13 @@ describe('justifi-business-details', () => {
     page.waitForChanges();
 
     expect(page.rootInstance.getBusiness).toBeDefined();
-    expect(page.rootInstance.errorMessage).toBeNull();
+    expect(page.rootInstance.errorMessage).toBeUndefined();
   });
 
   it('sets an error message with invalid props', async () => {
     const page = await newSpecPage({
       components: [JustifiBusinessDetails],
-      template: () => <justifi-business-details businessId="" authToken="" />, // No props provided
+      template: () => <justifi-business-details businessId="" authToken="" />,
     });
 
     page.waitForChanges();
@@ -37,7 +36,7 @@ describe('justifi-business-details', () => {
 
   it('renders the error state when there is an error message', async () => {
     const page = await newSpecPage({
-      components: [JustifiBusinessDetails, BusinessDetailsCore],
+      components: [JustifiBusinessDetails],
       template: () => <justifi-business-details businessId="" authToken="" />,
     });
 
@@ -47,16 +46,15 @@ describe('justifi-business-details', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('renders business-details-core when there is no error message', async () => {
+  it('renders loading state initially with valid props', async () => {
     const page = await newSpecPage({
-      components: [JustifiBusinessDetails, BusinessDetailsCore],
+      components: [JustifiBusinessDetails],
       template: () => <justifi-business-details businessId="123" authToken="token" />,
     });
 
     page.waitForChanges();
 
-    const core = page.root.shadowRoot.querySelector('business-details-core');
-    expect(core).not.toBeNull();
+    expect(page.rootInstance.loading).toBe(true);
   });
 
   it('emits an error event when there is no auth token', async () => {
