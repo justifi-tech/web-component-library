@@ -8,12 +8,11 @@ import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { JustifiPaymentsListFilters } from '../justifi-payments-list-filters';
 import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { filterParams } from '../payments-list-params-state';
-import { PaymentsListCore } from '../payments-list-core';
 
-const components = [JustifiPaymentsList, PaymentsListCore, TableFiltersMenu, JustifiPaymentsListFilters, FormControlSelect];
+const components = [JustifiPaymentsList, TableFiltersMenu, JustifiPaymentsListFilters, FormControlSelect];
 
 describe('justifi-payments-list filters', () => {
-  const fetchDataSpy = jest.spyOn(PaymentsListCore.prototype, 'fetchData');
+  const fetchDataSpy = jest.spyOn(JustifiPaymentsList.prototype, 'fetchData');
   let page;
 
   afterEach(() => {
