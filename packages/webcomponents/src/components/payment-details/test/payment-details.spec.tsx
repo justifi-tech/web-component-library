@@ -1,11 +1,13 @@
+jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
+
 import { h } from "@stencil/core";
 import { newSpecPage } from "@stencil/core/testing";
 import { JustifiPaymentDetails } from "../justifi-payment-details";
-import { PaymentDetailsCore } from "../payment-details-core";
 import { JustifiDetails } from "../../../ui-components/details/justifi-details";
 import { PaymentService } from '../../../api/services/payment.service';
 import { API_NOT_AUTHENTICATED_ERROR } from "../../../api/shared";
 import JustifiAnalytics from "../../../api/Analytics";
+import mockPaymentDetailsResponse from '../../../../../../mockData/mockPaymentDetailSuccess.json';
 
 jest.mock('../../../api/services/payment.service');
 
@@ -17,7 +19,8 @@ beforeEach(() => {
 });
 
 describe('payment-details', () => {
-  const components = [JustifiPaymentDetails, PaymentDetailsCore, JustifiDetails];
+  const components = [JustifiPaymentDetails, JustifiDetails];
+
   it('renders an error message when paymentId and authToken are not provided', async () => {
     const page = await newSpecPage({
       components,
@@ -123,6 +126,65 @@ describe('payment-details', () => {
         severity: 'error'
       }
     }));
+  });
+
+  it('renders properly with fetched data', async () => {
+    PaymentService.prototype.fetchPayment = jest.fn().mockResolvedValue(mockPaymentDetailsResponse);
+
+    const page = await newSpecPage({
+      components,
+      template: () => <justifi-payment-details paymentId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.rootInstance.payment).toEqual(expect.objectContaining({ id: mockPaymentDetailsResponse.data.id }));
+    expect(PaymentService.prototype.fetchPayment).toHaveBeenCalled();
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('displays an error state on failed data fetch', async () => {
+    PaymentService.prototype.fetchPayment = jest.fn().mockRejectedValue(new Error('Fetch error'));
+
+    const page = await newSpecPage({
+      components,
+      template: () => <justifi-payment-details paymentId="some-id" authToken="some-auth-token" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('renders Dispute Lost badge when payment is disputed and a dispute was lost', async () => {
+    const disputedLostResponse = JSON.parse(JSON.stringify(mockPaymentDetailsResponse));
+
+    disputedLostResponse.data.status = 'disputed';
+    disputedLostResponse.data.disputed = true;
+    disputedLostResponse.data.disputes = [
+      {
+        amount_cents: 1000,
+        created_at: disputedLostResponse.data.created_at,
+        currency: disputedLostResponse.data.currency,
+        gateway_ref_id: 'gw_test_1',
+        id: 'dp_test_1',
+        payment_id: disputedLostResponse.data.id,
+        reason: null,
+        status: 'lost',
+        updated_at: disputedLostResponse.data.updated_at,
+      },
+    ];
+
+    PaymentService.prototype.fetchPayment = jest.fn().mockResolvedValue(disputedLostResponse);
+
+    const page = await newSpecPage({
+      components,
+      template: () => <justifi-payment-details paymentId="123" authToken="123" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
   });
 });
 
