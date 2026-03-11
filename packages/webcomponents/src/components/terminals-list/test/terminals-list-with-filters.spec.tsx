@@ -9,12 +9,11 @@ import { JustifiTerminalsListFilters } from '../justifi-terminals-list-filters';
 import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { FormControlDate } from '../../../ui-components/form/form-control-date';
 import { filterParams } from '../terminals-list-params-state';
-import { TerminalsListCore } from '../terminals-list-core';
 
-const components = [JustifiTerminalsList, TerminalsListCore, TableFiltersMenu, JustifiTerminalsListFilters, FormControlSelect, FormControlDate];
+const components = [JustifiTerminalsList, TableFiltersMenu, JustifiTerminalsListFilters, FormControlSelect, FormControlDate];
 
 describe('justifi-terminals-list with filters', () => {
-  const fetchDataSpy = jest.spyOn(TerminalsListCore.prototype, 'fetchData');
+  const fetchDataSpy = jest.spyOn(JustifiTerminalsList.prototype, 'fetchData');
   let page;
 
   afterEach(() => {
