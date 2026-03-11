@@ -23,7 +23,6 @@ POPULATED BY: /specd:audit command, /specd:review-intake command, and humans dur
 
 ### Phase 2 — List components
 - Merge `payments-list`: combine `justifi-payments-list` and `payments-list-core` into single component with `StyledHost`, delete core files, update tests
-- Merge `payouts-list`: combine `justifi-payouts-list` and `payouts-list-core` into single component with `StyledHost`, delete core files, update tests
 - Merge `terminals-list`: combine `justifi-terminals-list` and `terminals-list-core` into single component with `StyledHost`, delete core files, update tests
 - Merge `terminal-orders-list`: combine `justifi-terminal-orders-list` and `terminal-orders-list-core` into single component with `StyledHost`, delete core files, update tests
 
