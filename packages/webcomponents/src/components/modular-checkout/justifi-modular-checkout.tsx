@@ -212,6 +212,10 @@ export class JustifiModularCheckout {
   private setupApplePayListeners() {
     if (this.applePayRef) {
       this.applePayRef.addEventListener(
+        "applePayStarted",
+        this.handleApplePayStarted
+      );
+      this.applePayRef.addEventListener(
         "applePayCompleted",
         this.handleApplePayCompleted
       );
@@ -228,6 +232,10 @@ export class JustifiModularCheckout {
 
   private removeApplePayListeners() {
     if (this.applePayRef) {
+      this.applePayRef.removeEventListener(
+        "applePayStarted",
+        this.handleApplePayStarted
+      );
       this.applePayRef.removeEventListener(
         "applePayCompleted",
         this.handleApplePayCompleted
@@ -246,6 +254,10 @@ export class JustifiModularCheckout {
   private setupGooglePayListeners() {
     if (this.googlePayRef) {
       this.googlePayRef.addEventListener(
+        "googlePayStarted",
+        this.handleGooglePayStarted
+      );
+      this.googlePayRef.addEventListener(
         "googlePayCompleted",
         this.handleGooglePayCompleted
       );
@@ -259,6 +271,10 @@ export class JustifiModularCheckout {
   private removeGooglePayListeners() {
     if (this.googlePayRef) {
       this.googlePayRef.removeEventListener(
+        "googlePayStarted",
+        this.handleGooglePayStarted
+      );
+      this.googlePayRef.removeEventListener(
         "googlePayCompleted",
         this.handleGooglePayCompleted
       );
@@ -269,13 +285,23 @@ export class JustifiModularCheckout {
     }
   }
 
+  private handleApplePayStarted = () => {
+    checkoutStore.isWalletProcessing = true;
+  };
+
+  private handleGooglePayStarted = () => {
+    checkoutStore.isWalletProcessing = true;
+  };
+
   private handleGooglePayCompleted = (event: CustomEvent) => {
     const { success, paymentMethodId, error } = event.detail || {};
     if (success && paymentMethodId) {
+      checkoutStore.isWalletProcessing = false;
       checkoutStore.paymentToken = paymentMethodId;
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.GOOGLE_PAY };
       this.submitCheckout();
     } else {
+      checkoutStore.isWalletProcessing = false;
       this.errorEvent.emit({
         message: (error && error.message) || "Google Pay payment failed",
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -285,6 +311,7 @@ export class JustifiModularCheckout {
   };
 
   private handleGooglePayCancelled = () => {
+    checkoutStore.isWalletProcessing = false;
     checkoutStore.paymentToken = undefined;
     checkoutStore.selectedPaymentMethod = undefined;
   };
@@ -293,10 +320,12 @@ export class JustifiModularCheckout {
     const { success, token, paymentMethodId, error } = event.detail;
 
     if (success && token) {
+      checkoutStore.isWalletProcessing = false;
       checkoutStore.paymentToken = paymentMethodId;
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.APPLE_PAY };
       this.submitCheckout();
     } else {
+      checkoutStore.isWalletProcessing = false;
       console.error("Apple Pay completed but failed:", error);
       this.errorEvent.emit({
         message: error?.message || "Apple Pay payment failed",
@@ -307,6 +336,7 @@ export class JustifiModularCheckout {
   };
 
   private handleApplePayError = (event: CustomEvent) => {
+    checkoutStore.isWalletProcessing = false;
     const { error, code } = event.detail;
     console.error("Apple Pay error:", error);
     this.errorEvent.emit({
@@ -318,6 +348,7 @@ export class JustifiModularCheckout {
   };
 
   private handleApplePayCancelled = () => {
+    checkoutStore.isWalletProcessing = false;
     checkoutStore.paymentToken = undefined;
     checkoutStore.selectedPaymentMethod = undefined;
   };
@@ -418,9 +449,13 @@ export class JustifiModularCheckout {
 
   @Method()
   async submitCheckout(submitCheckoutArgs?: BillingFormFields): Promise<void> {
+    if (checkoutStore.isSubmitting) return;
+    checkoutStore.isSubmitting = true;
+
     const isValid = await this.validate();
 
     if (!checkoutStore.selectedPaymentMethod) {
+      checkoutStore.isSubmitting = false;
       this.errorEvent.emit({
         message: 'No payment method selected.',
         errorCode: ComponentErrorCodes.VALIDATION_ERROR,
@@ -442,6 +477,7 @@ export class JustifiModularCheckout {
       const tokenizeResult = await this.tokenizePaymentMethod(submitCheckoutArgs);
 
       if ((tokenizeResult as any)?.error) {
+        checkoutStore.isSubmitting = false;
         this.errorEvent.emit({
           message: (tokenizeResult as any).error.message,
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -457,6 +493,7 @@ export class JustifiModularCheckout {
       const linkTokenId = checkoutStore.plaidLinkTokenId;
 
       if (!publicToken) {
+        checkoutStore.isSubmitting = false;
         this.errorEvent.emit({
           message: 'Missing Plaid public token. Please connect your bank.',
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -475,6 +512,7 @@ export class JustifiModularCheckout {
         );
 
         if (response?.error) {
+          checkoutStore.isSubmitting = false;
           this.errorEvent.emit({
             message: typeof response.error === 'string' ? response.error : response.error.message || 'Failed to tokenize bank account',
             errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -487,6 +525,7 @@ export class JustifiModularCheckout {
         const token = paymentMethod?.bank_account?.token || paymentMethod?.token || paymentMethod?.id;
         checkoutStore.paymentToken = token;
       } catch (err) {
+        checkoutStore.isSubmitting = false;
         this.errorEvent.emit({
           message: (err as any)?.message || 'Plaid exchange error',
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -497,6 +536,7 @@ export class JustifiModularCheckout {
     }
 
     if (!isValid) {
+      checkoutStore.isSubmitting = false;
       this.errorEvent.emit({
         message: "Please fill in all required fields.",
         errorCode: ComponentErrorCodes.VALIDATION_ERROR,
@@ -506,6 +546,7 @@ export class JustifiModularCheckout {
     }
 
     if (!checkoutStore.paymentToken) {
+      checkoutStore.isSubmitting = false;
       this.errorEvent.emit({
         message: 'Payment token not found.',
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
@@ -552,6 +593,7 @@ export class JustifiModularCheckout {
           );
         });
       } catch (error) {
+        checkoutStore.isSubmitting = false;
         console.log('Checkout cancelled by preCompleteHook', error);
         return;
       }
@@ -560,12 +602,14 @@ export class JustifiModularCheckout {
     this.completeCheckout({
       payment,
       onSuccess: ({ checkout }) => {
+        checkoutStore.isSubmitting = false;
         this.submitEvent.emit({
           checkout,
           message: "Checkout completed successfully",
         });
       },
       onError: (error) => {
+        checkoutStore.isSubmitting = false;
         this.errorEvent.emit({
           message: error.message,
           errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,

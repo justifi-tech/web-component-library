@@ -11,6 +11,8 @@ interface IInitialState {
   authToken: string;
   billingFormFields: BillingFormFields;
   bnplEnabled: boolean;
+  isSubmitting: boolean;
+  isWalletProcessing: boolean;
   applePayEnabled: boolean;
   googlePayEnabled: boolean;
   insuranceEnabled: boolean;
@@ -61,6 +63,8 @@ const initialState: IInitialState = {
     address_postal_code: '',
   },
   bnplEnabled: false,
+  isSubmitting: false,
+  isWalletProcessing: false,
   applePayEnabled: false,
   googlePayEnabled: false,
   insuranceEnabled: false,
