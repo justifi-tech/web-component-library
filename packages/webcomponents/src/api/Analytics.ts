@@ -77,7 +77,10 @@ class JustifiAnalytics {
         const boundHandler = (event: any) =>
           this.handleCustomEvent({
             event_type: eventName,
-            data: { ...this.basicData, error: event.detail },
+            data: {
+              ...this.basicData,
+              ...(eventName === 'error-event' && { error: event.detail }),
+            },
           });
 
         this.eventListeners.set(eventName, boundHandler);
