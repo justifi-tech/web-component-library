@@ -1,33 +1,36 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { AdditionalQuestionsFormStep } from '../additional-questions-form-step';
+import { LegalAddressFormStep } from '../legal-address-form-step';
 import { BusinessFormStep } from '../../../utils';
 import { ComponentErrorCodes } from '../../../../../api/ComponentError';
+import { CountryCode } from '../../../../../utils/country-codes';
 
-const VALID_FORM_DATA = {
-  business_revenue: '100000',
-  business_payment_volume: '50000',
-  business_average_transaction_amount: '500',
-  business_when_service_received: 'Within 7 days',
-  business_other_payment_details: 'Notes here',
+const VALID_ADDRESS_DATA = {
+  line1: '123 Main St',
+  line2: 'Suite 100',
+  city: 'New York',
+  state: 'NY',
+  postal_code: '10001',
 };
 
 async function setupComponent(
-  data: Record<string, unknown> = {},
-  opts: { allowOptionalFields?: boolean } = {}
+  addressData: Record<string, unknown> = {},
+  opts: { country?: CountryCode; allowOptionalFields?: boolean } = {}
 ) {
+  const country = opts.country ?? CountryCode.USA;
   const page = await newSpecPage({
-    components: [AdditionalQuestionsFormStep],
+    components: [LegalAddressFormStep],
     template: () => (
-      <additional-questions-form-step
+      <legal-address-form-step
         authToken="test-token"
         businessId="biz_123"
+        country={country}
         allowOptionalFields={opts.allowOptionalFields}
       />
     ),
   });
   const mockGet = jest.fn(({ onSuccess, final }) => {
-    onSuccess({ data: { additional_questions: data } });
+    onSuccess({ data: { legal_address: addressData } });
     final?.();
   });
   const mockPatch = jest.fn();
@@ -43,20 +46,20 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('additional-questions-form-step', () => {
+describe('legal-address-form-step', () => {
   describe('missing props', () => {
     it('emits error-event with MISSING_PROPS when authToken and businessId not provided', async () => {
       const captured: unknown[] = [];
       const page = await newSpecPage({
-        components: [AdditionalQuestionsFormStep],
+        components: [LegalAddressFormStep],
         template: () => (
           <div
             ref={(el) => {
               if (el) el.addEventListener('error-event', (e: Event) => captured.push((e as CustomEvent).detail));
             }}
           >
-            {/* @ts-ignore - intentionally omit authToken/businessId */}
-            <additional-questions-form-step />
+            {/* @ts-ignore - intentionally omit authToken/businessId; country required so schemaFactory does not crash */}
+            <legal-address-form-step country={CountryCode.USA} />
           </div>
         ),
       });
@@ -72,20 +75,28 @@ describe('additional-questions-form-step', () => {
   });
 
   describe('rendering', () => {
-    it('renders all 5 form fields with correct names', async () => {
+    it('renders form-address-fields with correct country prop', async () => {
+      const { page } = await setupComponent({}, { country: CountryCode.USA });
+
+      const formAddressFields = page.root.querySelector('form-address-fields');
+      expect(formAddressFields).toBeTruthy();
+      expect(formAddressFields.getAttribute('country')).toBe(CountryCode.USA);
+    });
+
+    it('renders form-control-tooltip with "No PO Boxes."', async () => {
       const { page } = await setupComponent();
 
-      const revenue = page.root.querySelector('form-control-monetary-provisioning[name="business_revenue"]');
-      const paymentVolume = page.root.querySelector('form-control-monetary-provisioning[name="business_payment_volume"]');
-      const avgTransaction = page.root.querySelector('form-control-text[name="business_average_transaction_amount"]');
-      const whenServiceReceived = page.root.querySelector('form-control-select[name="business_when_service_received"]');
-      const otherDetails = page.root.querySelector('form-control-text[name="business_other_payment_details"]');
+      const tooltip = page.root.querySelector('form-control-tooltip');
+      expect(tooltip).toBeTruthy();
+      expect(tooltip.getAttribute('helptext')).toBe('No PO Boxes.');
+    });
 
-      expect(revenue).toBeTruthy();
-      expect(paymentVolume).toBeTruthy();
-      expect(avgTransaction).toBeTruthy();
-      expect(whenServiceReceived).toBeTruthy();
-      expect(otherDetails).toBeTruthy();
+    it('renders form-address-fields with CAN country', async () => {
+      const { page } = await setupComponent({}, { country: CountryCode.CAN });
+
+      const formAddressFields = page.root.querySelector('form-address-fields');
+      expect(formAddressFields).toBeTruthy();
+      expect(formAddressFields.getAttribute('country')).toBe(CountryCode.CAN);
     });
   });
 
@@ -95,18 +106,19 @@ describe('additional-questions-form-step', () => {
       page.rootInstance.isLoading = true;
       await page.waitForChanges();
 
-      expect(page.rootInstance.isLoading).toBe(true);
+      expect(page.root.querySelector('form')).toBeFalsy();
+      expect(page.root.querySelector('form-address-fields')).toBeFalsy();
     });
   });
 
   describe('pre-population', () => {
-    it('pre-populates fields from fetched business data', async () => {
-      const { page } = await setupComponent(VALID_FORM_DATA);
+    it('pre-populates from response.data.legal_address', async () => {
+      const { page } = await setupComponent(VALID_ADDRESS_DATA);
 
-      expect(page.rootInstance.additional_questions.business_revenue).toBe('100000');
-      expect(page.rootInstance.additional_questions.business_payment_volume).toBe('50000');
-      expect(page.rootInstance.additional_questions.business_average_transaction_amount).toBe('500');
-      expect(page.rootInstance.additional_questions.business_when_service_received).toBe('Within 7 days');
+      expect(page.rootInstance.legal_address.line1).toBe('123 Main St');
+      expect(page.rootInstance.legal_address.city).toBe('New York');
+      expect(page.rootInstance.legal_address.state).toBe('NY');
+      expect(page.rootInstance.legal_address.postal_code).toBe('10001');
     });
   });
 
@@ -118,18 +130,18 @@ describe('additional-questions-form-step', () => {
     });
   });
 
-  describe('validation', () => {
+  describe('validation (USA)', () => {
     it('shows validation errors for required fields when empty', async () => {
-      const { page } = await setupComponent({});
+      const { page } = await setupComponent({}, { country: CountryCode.USA });
 
       const onSuccess = jest.fn();
       await page.rootInstance.validateAndSubmit({ onSuccess });
       await page.waitForChanges();
 
-      expect(page.rootInstance.errors.business_revenue).toBeTruthy();
-      expect(page.rootInstance.errors.business_payment_volume).toBeTruthy();
-      expect(page.rootInstance.errors.business_average_transaction_amount).toBeTruthy();
-      expect(page.rootInstance.errors.business_when_service_received).toBeTruthy();
+      expect(page.rootInstance.errors.line1).toBeTruthy();
+      expect(page.rootInstance.errors.city).toBeTruthy();
+      expect(page.rootInstance.errors.state).toBeTruthy();
+      expect(page.rootInstance.errors.postal_code).toBeTruthy();
       expect(onSuccess).not.toHaveBeenCalled();
     });
 
@@ -150,6 +162,17 @@ describe('additional-questions-form-step', () => {
     });
   });
 
+  describe('validation (CAN)', () => {
+    it('state error message is "Select province"', async () => {
+      const { page } = await setupComponent({}, { country: CountryCode.CAN });
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+
+      expect(page.rootInstance.errors.state).toContain('Select province');
+    });
+  });
+
   describe('fetchData', () => {
     it('calls getBusiness when rendered with valid props', async () => {
       const { mockGet } = await setupComponent();
@@ -157,17 +180,15 @@ describe('additional-questions-form-step', () => {
       expect(mockGet).toHaveBeenCalled();
     });
 
-    it('populates inputs from fetched data', async () => {
-      const { page } = await setupComponent(VALID_FORM_DATA);
-
-      expect(page.rootInstance.additional_questions.business_revenue).toBe('100000');
-    });
-
     it('emits error-event on fetch failure', async () => {
       const page = await newSpecPage({
-        components: [AdditionalQuestionsFormStep],
+        components: [LegalAddressFormStep],
         template: () => (
-          <additional-questions-form-step authToken="test-token" businessId="biz_123" />
+          <legal-address-form-step
+            authToken="test-token"
+            businessId="biz_123"
+            country={CountryCode.USA}
+          />
         ),
       });
       const mockGet = jest.fn(({ onError, final }) => {
@@ -194,21 +215,49 @@ describe('additional-questions-form-step', () => {
         })
       );
     });
+
+    it('emits formLoading true then false around getData', async () => {
+      const page = await newSpecPage({
+        components: [LegalAddressFormStep],
+        template: () => (
+          <legal-address-form-step
+            authToken="test-token"
+            businessId="biz_123"
+            country={CountryCode.USA}
+          />
+        ),
+      });
+
+      const formLoadingEvents: boolean[] = [];
+      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+
+      const mockGet = jest.fn(({ onSuccess, final }) => {
+        onSuccess({ data: { legal_address: {} } });
+        final?.();
+      });
+      page.rootInstance.getBusiness = mockGet;
+      page.rootInstance.patchBusiness = jest.fn();
+      // @ts-ignore
+      page.rootInstance.getData();
+      await page.waitForChanges();
+
+      expect(formLoadingEvents).toContain(true);
+      expect(formLoadingEvents).toContain(false);
+    });
   });
 
   describe('sendData', () => {
-    it('calls patchBusiness with correct payload structure', async () => {
-      const { page, mockPatch } = await setupComponent(VALID_FORM_DATA);
+    it('calls patchBusiness with payload wrapped as { legal_address: formValues }', async () => {
+      const { page, mockPatch } = await setupComponent(VALID_ADDRESS_DATA);
       mockPatch.mockImplementation(({ onSuccess, final }) => {
         onSuccess({});
         final?.();
       });
 
-      page.rootInstance.inputHandler('business_revenue', '100000');
-      page.rootInstance.inputHandler('business_payment_volume', '50000');
-      page.rootInstance.inputHandler('business_average_transaction_amount', '500');
-      page.rootInstance.inputHandler('business_when_service_received', 'Within 7 days');
-      page.rootInstance.inputHandler('business_other_payment_details', 'Notes');
+      page.rootInstance.inputHandler('line1', '123 Main St');
+      page.rootInstance.inputHandler('city', 'New York');
+      page.rootInstance.inputHandler('state', 'NY');
+      page.rootInstance.inputHandler('postal_code', '10001');
       await page.waitForChanges();
 
       await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
@@ -218,9 +267,11 @@ describe('additional-questions-form-step', () => {
       expect(mockPatch).toHaveBeenCalledWith(
         expect.objectContaining({
           payload: expect.objectContaining({
-            additional_questions: expect.objectContaining({
-              business_revenue: '100000',
-              business_when_service_received: 'Within 7 days',
+            legal_address: expect.objectContaining({
+              line1: '123 Main St',
+              city: 'New York',
+              state: 'NY',
+              postal_code: '10001',
             }),
           }),
         })
@@ -228,7 +279,7 @@ describe('additional-questions-form-step', () => {
     });
 
     it('emits error-event on patch failure', async () => {
-      const { page, mockPatch } = await setupComponent(VALID_FORM_DATA);
+      const { page, mockPatch } = await setupComponent(VALID_ADDRESS_DATA);
       mockPatch.mockImplementation(({ onError, final }) => {
         onError({
           error: 'server error',
@@ -238,10 +289,10 @@ describe('additional-questions-form-step', () => {
         final?.();
       });
 
-      page.rootInstance.inputHandler('business_revenue', '100000');
-      page.rootInstance.inputHandler('business_payment_volume', '50000');
-      page.rootInstance.inputHandler('business_average_transaction_amount', '500');
-      page.rootInstance.inputHandler('business_when_service_received', 'Within 7 days');
+      page.rootInstance.inputHandler('line1', '123 Main St');
+      page.rootInstance.inputHandler('city', 'New York');
+      page.rootInstance.inputHandler('state', 'NY');
+      page.rootInstance.inputHandler('postal_code', '10001');
       await page.waitForChanges();
 
       const errorEvent = jest.fn();
@@ -259,17 +310,17 @@ describe('additional-questions-form-step', () => {
       );
     });
 
-    it('emits complete-form-step-event with BusinessFormStep.additionalQuestions', async () => {
-      const { page, mockPatch } = await setupComponent(VALID_FORM_DATA);
+    it('emits complete-form-step-event with BusinessFormStep.legalAddress', async () => {
+      const { page, mockPatch } = await setupComponent(VALID_ADDRESS_DATA);
       mockPatch.mockImplementation(({ onSuccess, final }) => {
         onSuccess({});
         final?.();
       });
 
-      page.rootInstance.inputHandler('business_revenue', '100000');
-      page.rootInstance.inputHandler('business_payment_volume', '50000');
-      page.rootInstance.inputHandler('business_average_transaction_amount', '500');
-      page.rootInstance.inputHandler('business_when_service_received', 'Within 7 days');
+      page.rootInstance.inputHandler('line1', '123 Main St');
+      page.rootInstance.inputHandler('city', 'New York');
+      page.rootInstance.inputHandler('state', 'NY');
+      page.rootInstance.inputHandler('postal_code', '10001');
       await page.waitForChanges();
 
       const stepCompleteEvent = jest.fn();
@@ -281,49 +332,22 @@ describe('additional-questions-form-step', () => {
 
       expect(stepCompleteEvent).toHaveBeenCalledWith(
         expect.objectContaining({
-          formStep: BusinessFormStep.additionalQuestions,
+          formStep: BusinessFormStep.legalAddress,
         })
       );
     });
-  });
-
-  describe('formLoading events', () => {
-    it('emits formLoading true then false around getData', async () => {
-      const page = await newSpecPage({
-        components: [AdditionalQuestionsFormStep],
-        template: () => (
-          <additional-questions-form-step authToken="test-token" businessId="biz_123" />
-        ),
-      });
-
-      const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
-
-      const mockGet = jest.fn(({ onSuccess, final }) => {
-        onSuccess({ data: { additional_questions: {} } });
-        final?.();
-      });
-      page.rootInstance.getBusiness = mockGet;
-      page.rootInstance.patchBusiness = jest.fn();
-      // @ts-ignore
-      page.rootInstance.getData();
-      await page.waitForChanges();
-
-      expect(formLoadingEvents).toContain(true);
-      expect(formLoadingEvents).toContain(false);
-    });
 
     it('emits formLoading true then false around sendData', async () => {
-      const { page, mockPatch } = await setupComponent(VALID_FORM_DATA);
+      const { page, mockPatch } = await setupComponent(VALID_ADDRESS_DATA);
       mockPatch.mockImplementation(({ onSuccess, final }) => {
         onSuccess({});
         final?.();
       });
 
-      page.rootInstance.inputHandler('business_revenue', '100000');
-      page.rootInstance.inputHandler('business_payment_volume', '50000');
-      page.rootInstance.inputHandler('business_average_transaction_amount', '500');
-      page.rootInstance.inputHandler('business_when_service_received', 'Within 7 days');
+      page.rootInstance.inputHandler('line1', '123 Main St');
+      page.rootInstance.inputHandler('city', 'New York');
+      page.rootInstance.inputHandler('state', 'NY');
+      page.rootInstance.inputHandler('postal_code', '10001');
       await page.waitForChanges();
 
       const formLoadingEvents: boolean[] = [];

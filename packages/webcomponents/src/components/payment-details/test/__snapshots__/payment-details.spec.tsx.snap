@@ -41,7 +41,7 @@ exports[`payment-details renders Dispute Lost badge when payment is disputed and
                   Updated At
                 </span>
                 <span class="pe-2 ps-2 pt-2" part="text color font-family">
-                  Dec 27, 2023 6:53pm
+                  Dec 27, 2023 9:53pm
                 </span>
               </div>
               <div class="border-1 border-end d-flex flex-column">
@@ -49,7 +49,7 @@ exports[`payment-details renders Dispute Lost badge when payment is disputed and
                   Created At
                 </span>
                 <span class="pe-2 ps-2 pt-2" part="text color font-family">
-                  Dec 27, 2023 6:52pm
+                  Dec 27, 2023 9:52pm
                 </span>
               </div>
               <div class="d-flex flex-column undefined">
@@ -351,7 +351,7 @@ exports[`payment-details renders properly with fetched data 1`] = `
                   Updated At
                 </span>
                 <span class="pe-2 ps-2 pt-2" part="text color font-family">
-                  Dec 27, 2023 6:53pm
+                  Dec 27, 2023 9:53pm
                 </span>
               </div>
               <div class="border-1 border-end d-flex flex-column">
@@ -359,7 +359,7 @@ exports[`payment-details renders properly with fetched data 1`] = `
                   Created At
                 </span>
                 <span class="pe-2 ps-2 pt-2" part="text color font-family">
-                  Dec 27, 2023 6:52pm
+                  Dec 27, 2023 9:52pm
                 </span>
               </div>
               <div class="d-flex flex-column undefined">

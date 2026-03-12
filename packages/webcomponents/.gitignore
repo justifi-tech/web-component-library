@@ -7,6 +7,9 @@ build/
 docs.d.ts
 src/components.d.ts
 src/components/**/readme.md
+src/components/**/README.md
+src/ui-components/**/readme.md
+src/ui-components/**/README.md
 
 
 *~
