@@ -1,5 +1,13 @@
 # @justifi/webcomponents-docs
 
+## 1.1.2
+
+### Patch Changes
+
+- d17d163: add modular checkout complete examples
+- Updated dependencies [bd81b03]
+  - @justifi/webcomponents@6.12.1
+
 ## 1.1.1
 
 ### Patch Changes
