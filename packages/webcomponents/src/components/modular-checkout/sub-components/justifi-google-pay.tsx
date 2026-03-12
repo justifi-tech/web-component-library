@@ -39,6 +39,7 @@ export class JustifiGooglePay {
   @State() sdkLoaded: boolean = false;
   @State() isReadyToPay: boolean = false;
 
+  @Event() googlePayStarted: EventEmitter<void>;
   @Event() googlePayCompleted: EventEmitter<{
     success: boolean;
     paymentMethodId?: string;
@@ -82,6 +83,7 @@ export class JustifiGooglePay {
         console.error("Google Pay error:", data);
         break;
       case GooglePayEventTypes.buttonClicked:
+        this.googlePayStarted.emit();
         this.sendStartPayment();
         break;
       case GooglePayEventTypes.paymentSuccess:

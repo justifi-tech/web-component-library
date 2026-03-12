@@ -13,6 +13,8 @@ function resetStore() {
   checkoutStore.disableCreditCard = false;
   checkoutStore.disableBankAccount = false;
   checkoutStore.disablePaymentMethodGroup = false;
+  checkoutStore.isSubmitting = false;
+  checkoutStore.isWalletProcessing = false;
 }
 
 beforeEach(() => {
@@ -385,11 +387,13 @@ describe('justifi-checkout', () => {
       await page.waitForChanges();
 
       const instance = page.rootInstance as any;
-      instance.modularCheckoutRef = { submitCheckout: jest.fn() };
+      instance.modularCheckoutRef = {
+        submitCheckout: jest.fn(() => { checkoutStore.isSubmitting = true; }),
+      };
       instance.submit({ preventDefault: () => {} });
       await page.waitForChanges();
 
-      expect(instance.isSubmitting).toBe(true);
+      expect(checkoutStore.isSubmitting).toBe(true);
     });
 
     it('submit-event resets isSubmitting to false', async () => {
@@ -399,15 +403,14 @@ describe('justifi-checkout', () => {
       });
       await page.waitForChanges();
 
-      const instance = page.rootInstance as any;
-      instance.isSubmitting = true;
+      checkoutStore.isSubmitting = true;
       await page.waitForChanges();
 
       const ev = new CustomEvent('submit-event', { detail: {}, bubbles: true, composed: true });
       page.root?.dispatchEvent(ev);
       await page.waitForChanges();
 
-      expect(instance.isSubmitting).toBe(false);
+      expect(checkoutStore.isSubmitting).toBe(false);
     });
 
     it('error-event resets isSubmitting to false', async () => {
@@ -418,29 +421,42 @@ describe('justifi-checkout', () => {
       });
       await page.waitForChanges();
 
-      const instance = page.rootInstance as any;
-      instance.isSubmitting = true;
+      checkoutStore.isSubmitting = true;
       await page.waitForChanges();
 
       const ev = new CustomEvent('error-event', { detail: {}, bubbles: true, composed: true });
       page.root?.dispatchEvent(ev);
       await page.waitForChanges();
 
-      expect(instance.isSubmitting).toBe(false);
+      expect(checkoutStore.isSubmitting).toBe(false);
       consoleSpy.mockRestore();
     });
   });
 
-  describe('submit button reflects isSubmitting', () => {
-    it('justifi-button receives disabled and isLoading when isSubmitting is true', async () => {
+  describe('submit button reflects store flags', () => {
+    it('justifi-button receives disabled and isLoading when checkoutStore.isSubmitting is true', async () => {
       const page = await newSpecPage({
         components: [JustifiCheckout],
         html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
       });
       await page.waitForChanges();
 
-      const instance = page.rootInstance as any;
-      instance.isSubmitting = true;
+      checkoutStore.isSubmitting = true;
+      await page.waitForChanges();
+
+      const btn = page.root?.querySelector('justifi-button');
+      expect(btn?.getAttribute('disabled')).toBe('');
+      expect(btn?.getAttribute('isloading')).toBe('');
+    });
+
+    it('justifi-button receives disabled and isLoading when checkoutStore.isWalletProcessing is true', async () => {
+      const page = await newSpecPage({
+        components: [JustifiCheckout],
+        html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+      });
+      await page.waitForChanges();
+
+      checkoutStore.isWalletProcessing = true;
       await page.waitForChanges();
 
       const btn = page.root?.querySelector('justifi-button');

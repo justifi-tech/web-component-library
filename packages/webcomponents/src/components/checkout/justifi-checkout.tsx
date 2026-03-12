@@ -24,7 +24,6 @@ export class JustifiCheckout {
   @State() complete: Function;
   @State() errorMessage: string = '';
   @State() insuranceToggled: boolean = false;
-  @State() isSubmitting: boolean = false; // This is used to prevent multiple submissions and is different from loading state
   @State() serverError: string;
 
   @Prop() authToken!: string;
@@ -67,13 +66,13 @@ export class JustifiCheckout {
 
   @Listen('submit-event')
   checkoutComplete(_event: CustomEvent<any>) {
-    this.isSubmitting = false;
+    checkoutStore.isSubmitting = false;
   }
 
   @Listen('error-event')
   checkoutError(_event: CustomEvent<any>) {
     console.error('[justifi-checkout] error-event received', _event?.detail);
-    this.isSubmitting = false;
+    checkoutStore.isSubmitting = false;
   }
 
   @Listen('checkout-changed')
@@ -106,7 +105,6 @@ export class JustifiCheckout {
   }
 
   private async submit(_event) {
-    this.isSubmitting = true;
     this.modularCheckoutRef?.submitCheckout(checkoutStore.billingFormFields);
   }
 
@@ -202,8 +200,8 @@ export class JustifiCheckout {
                 type="submit"
                 variant="primary"
                 clickHandler={(e) => this.submit(e)}
-                disabled={this.isSubmitting}
-                isLoading={this.isSubmitting}
+                disabled={checkoutStore.isSubmitting || checkoutStore.isWalletProcessing}
+                isLoading={checkoutStore.isSubmitting || checkoutStore.isWalletProcessing}
                 customStyle={{ width: '100%', textAlign: "center" }}
               />
             </div>
