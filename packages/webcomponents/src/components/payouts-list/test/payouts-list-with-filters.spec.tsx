@@ -8,14 +8,13 @@ import { defaultColumnsKeys } from '../payouts-table';
 import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { JustifiPayoutsListFilters } from '../justifi-payouts-list-filters';
 import { filterParams } from '../payouts-list-params-state';
-import { PayoutsListCore } from '../payouts-list-core';
 import { FormControlDate } from '../../../ui-components/form/form-control-date';
 import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 
-const components = [JustifiPayoutsList, PayoutsListCore, PaginationMenu, TableFiltersMenu, JustifiPayoutsListFilters, FormControlDate, FormControlSelect];
+const components = [JustifiPayoutsList, PaginationMenu, TableFiltersMenu, JustifiPayoutsListFilters, FormControlDate, FormControlSelect];
 
 describe('justifi-payouts-list filters', () => {
-  const fetchDataSpy = jest.spyOn(PayoutsListCore.prototype, 'fetchData');
+  const fetchDataSpy = jest.spyOn(JustifiPayoutsList.prototype, 'fetchData');
   let page;
 
   afterEach(() => {
