@@ -136,11 +136,14 @@ describe('JustifiAnalytics', () => {
       await submitHandler(mockEvent);
 
       // Verify handleCustomEvent was called through AnalyticsService.record
+      // submit-event only sends basicData, no error key
       expect(AnalyticsService.prototype.record).toHaveBeenCalledWith(
         expect.objectContaining({
           event_type: 'submit-event',
           data: expect.objectContaining({
-            error: { test: 'data' },
+            component_name: 'test-component',
+            component_version: expect.any(String),
+            resource_id: 'test-account-123',
           }),
         })
       );
