@@ -5,13 +5,14 @@ import { PAYMENT_METHODS } from '../ModularCheckout';
 
 describe('justifi-plaid-payment-method', () => {
   beforeEach(() => {
-    // Reset store flag before each test
     checkoutStore.bankAccountVerification = undefined;
+    checkoutStore.checkoutLoaded = false;
     jest.spyOn(console, 'warn').mockImplementation(() => { });
   });
 
   afterEach(() => {
     (console.warn as jest.Mock).mockRestore();
+    document.querySelector('script[src*="link-initialize"]')?.remove();
   });
 
   it('does not render and warns when bankAccountVerification is false', async () => {
@@ -29,18 +30,19 @@ describe('justifi-plaid-payment-method', () => {
     expect(page.root?.shadowRoot?.innerHTML).toBe('');
   });
 
-  it('renders normally when bankAccountVerification is true', async () => {
+  it('loads Plaid script into document.head when bankAccountVerification and checkoutLoaded are true', async () => {
     checkoutStore.bankAccountVerification = true;
+    checkoutStore.checkoutLoaded = true;
 
     const page = await newSpecPage({
       components: [JustifiPlaidPaymentMethod],
       html: `<justifi-plaid-payment-method></justifi-plaid-payment-method>`,
     });
 
-    // Should include the Plaid script tag in shadow DOM
     expect(page.root).toBeTruthy();
-    const script = page.root?.shadowRoot?.querySelector('script[src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"]');
+    const script = document.querySelector('script[src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"]');
     expect(script).not.toBeNull();
+    expect(script?.parentElement).toBe(document.head);
   });
 
   describe('Store Integration', () => {

@@ -28,7 +28,7 @@ export class JustifiPlaidPaymentMethod {
   @State() retryCount: number = 0;
   @State() isRetrying: boolean = false;
 
-  private scriptRef: HTMLScriptElement;
+  private sdkLoaded = false;
   private plaidService = new PlaidService();
   private unsubscribeFromStore: () => void;
   private maxRetries = 3;
@@ -60,16 +60,30 @@ export class JustifiPlaidPaymentMethod {
     }
   }
 
-  componentDidRender() {
-    if (!this.scriptRef) return;
+  componentWillLoad() {
+    this.isSelected = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
 
-    this.scriptRef.onload = () => {
-      // Wait for store to be populated before initializing
-      this.waitForStoreAndInitialize();
-    };
+    if (checkoutStore.bankAccountVerification !== true) return;
 
-    // Add error handler for script loading failures
-    this.scriptRef.onerror = () => {
+    if (checkoutStore.checkoutLoaded) {
+      this.loadPlaidSDK();
+    } else {
+      onChange('checkoutLoaded', (loaded) => {
+        if (loaded && checkoutStore.bankAccountVerification === true) {
+          this.loadPlaidSDK();
+        }
+      });
+    }
+  }
+
+  private loadPlaidSDK() {
+    if (this.sdkLoaded) return;
+    this.sdkLoaded = true;
+    const script = document.createElement('script');
+    script.src = 'https://cdn.plaid.com/link/v2/stable/link-initialize.js';
+    script.async = true;
+    script.onload = () => this.initializePlaidLink();
+    script.onerror = () => {
       this.handleError({
         code: PlaidErrorCodes.PLAID_SDK_LOAD_FAILED,
         message: PLAID_ERROR_MESSAGES[PlaidErrorCodes.PLAID_SDK_LOAD_FAILED],
@@ -78,11 +92,7 @@ export class JustifiPlaidPaymentMethod {
         userAction: 'Refresh the page and try again'
       });
     };
-  }
-
-  componentWillLoad() {
-    // Initialize selection state based on store
-    this.isSelected = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
+    document.head.appendChild(script);
   }
 
   waitForStoreAndInitialize = () => {
@@ -679,12 +689,6 @@ export class JustifiPlaidPaymentMethod {
 
     return (
       <StyledHost class="payment-method">
-        <script
-          src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"
-          async={true}
-          ref={(el) => (this.scriptRef = el)}>
-        </script>
-
         <div title="Pay with Plaid">
           <div onClick={(event) => { event.preventDefault(); this.handleSelectionClick(); }}>Pay with Bank Account {plaidLogo} </div>
           {renderErrorState()}

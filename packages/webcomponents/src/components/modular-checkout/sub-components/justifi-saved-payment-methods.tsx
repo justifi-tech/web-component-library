@@ -11,12 +11,14 @@ import { PAYMENT_METHODS, SavedPaymentMethod } from "../ModularCheckout";
 })
 export class JustifiSavedPaymentMethods {
   componentWillLoad() {
-    if (!checkoutStore.paymentMethods.length) {
-      console.warn('No saved payment methods available.');
-    }
+    if (checkoutStore.checkoutLoaded) {
+      if (!checkoutStore.paymentMethods.length) {
+        console.warn('No saved payment methods available.');
+      }
 
-    if (checkoutStore.disablePaymentMethodGroup) {
-      console.warn('Payment method group is disabled.');
+      if (checkoutStore.disablePaymentMethodGroup) {
+        console.warn('Payment method group is disabled.');
+      }
     }
   }
 
