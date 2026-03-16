@@ -171,11 +171,11 @@ export async function fillBankAccountManual(
   data: BankAccountData,
   voidedCheckPath: string = VOIDED_CHECK_FIXTURE,
 ): Promise<void> {
-  const manualLink = page.getByRole('link', {
+  const manualButton = page.getByRole('button', {
     name: 'Enter bank details manually (document upload required)',
   });
-  if (await manualLink.isVisible()) {
-    await manualLink.click();
+  if (await manualButton.isVisible()) {
+    await manualButton.click();
     await page.waitForTimeout(500);
   }
   await page.getByLabel('Bank Name').fill(data.bank_name);
@@ -184,7 +184,8 @@ export async function fillBankAccountManual(
   await page.getByLabel('Account Type').selectOption(data.account_type);
   await page.getByLabel('Account Number').fill(data.account_number);
   await page.getByLabel('Routing Number').fill(data.routing_number);
-  const fileInput = page.getByLabel('Voided Check');
+  const comp = page.locator('justifi-payment-provisioning');
+  const fileInput = comp.locator('input[name="voided_check"]');
   await fileInput.setInputFiles(voidedCheckPath);
 }
 
@@ -222,7 +223,12 @@ export async function waitForStep(
   const selector = stepSelectors[stepNumber];
   if (selector) {
     const selectors = Array.isArray(selector) ? selector : [selector];
-    await expect(page.getByText(selectors[0])).toBeVisible({ timeout });
+    await expect(async () => {
+      for (const sel of selectors) {
+        if (await page.getByText(sel).isVisible()) return;
+      }
+      throw new Error(`None of steps selectors found: ${selectors.join(', ')}`);
+    }).toPass({ timeout });
   }
 }
 

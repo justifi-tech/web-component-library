@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
         <script>
           const justifiPaymentProvisioning = document.querySelector('justifi-payment-provisioning');
 
-          justifiPaymentProvisioning.addEventListener('submit-event', (event) => console.log(event));
+          justifiPaymentProvisioning.addEventListener('submit-event', (event) => console.log('submit-event', event.detail));
 
           justifiPaymentProvisioning.addEventListener('complete-form-step-event', (event) => console.log(event));
 
