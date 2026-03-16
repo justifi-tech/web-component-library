@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.1",
+    "@types/node": "^22.15.21",
     "dotenv": "^16.4.5"
   }
 }
