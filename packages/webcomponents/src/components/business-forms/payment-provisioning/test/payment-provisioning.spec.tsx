@@ -5,6 +5,7 @@ import { BusinessService } from '../../../../api/services/business.service';
 import { ProvisionService } from '../../../../api/services/provision.service';
 import JustifiAnalytics from '../../../../api/Analytics';
 import { createMockBusinessData } from './mockBusiness';
+import { BusinessFormClickActions } from '../../utils/event-types';
 
 // Helper to create a valid JWT token
 const createMockToken = (expInSeconds: number) => {
@@ -277,5 +278,243 @@ describe('justifi-payment-provisioning', () => {
         }),
       })
     );
+  });
+
+  describe('step orchestration', () => {
+    beforeEach(() => {
+      BusinessService.prototype.fetchBusiness = jest
+        .fn()
+        .mockResolvedValue(mockBusinessResponse);
+    });
+
+    it('should display step counter "Step 1 of 7" on initial load', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      expect(page.root.shadowRoot?.textContent).toContain('Step 1 of 7');
+    });
+
+    it('should increment step from 0 to 1', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      page.rootInstance.incrementSteps();
+      await page.waitForChanges();
+
+      expect(page.rootInstance.currentStep).toBe(1);
+    });
+
+    it('should not increment past step 6', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      page.rootInstance.currentStep = 6;
+      page.rootInstance.incrementSteps();
+      await page.waitForChanges();
+
+      expect(page.rootInstance.currentStep).toBe(6);
+    });
+
+    it('should decrement step from 1 to 0', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      page.rootInstance.currentStep = 1;
+      page.rootInstance.decrementSteps();
+      await page.waitForChanges();
+
+      expect(page.rootInstance.currentStep).toBe(0);
+    });
+
+    it('should not decrement below step 0', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      page.rootInstance.currentStep = 0;
+      page.rootInstance.decrementSteps();
+      await page.waitForChanges();
+
+      expect(page.rootInstance.currentStep).toBe(0);
+    });
+
+    it('should call validateAndSubmit on current step ref when nextStepButtonOnClick', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      const mockValidateAndSubmit = jest.fn();
+      page.rootInstance.refs[0] = {
+        validateAndSubmit: mockValidateAndSubmit,
+      };
+
+      page.rootInstance.nextStepButtonOnClick(
+        { preventDefault: jest.fn() },
+        BusinessFormClickActions.nextStep
+      );
+
+      expect(mockValidateAndSubmit).toHaveBeenCalledWith({
+        onSuccess: page.rootInstance.incrementSteps,
+      });
+    });
+
+    it('should emit click-event with previousStep and decrement on previousStepButtonOnClick', async () => {
+      const clickEvent = jest.fn();
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+            onClick-event={clickEvent}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      page.rootInstance.currentStep = 2;
+      page.rootInstance.previousStepButtonOnClick();
+      await page.waitForChanges();
+
+      expect(clickEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: { name: BusinessFormClickActions.previousStep },
+        })
+      );
+      expect(page.rootInstance.currentStep).toBe(1);
+    });
+
+    it('should update loading state when formLoading event fires', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      page.root.dispatchEvent(
+        new CustomEvent('formLoading', { detail: true, bubbles: false })
+      );
+      await page.waitForChanges();
+
+      expect(page.rootInstance.loading).toBe(true);
+
+      page.root.dispatchEvent(
+        new CustomEvent('formLoading', { detail: false, bubbles: false })
+      );
+      await page.waitForChanges();
+
+      expect(page.rootInstance.loading).toBe(false);
+    });
+
+    it('should re-initialize API when authToken changes', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      const spy = jest.spyOn(
+        page.rootInstance as unknown as { initializeApi: () => void },
+        'initializeApi'
+      );
+
+      page.root.authToken = createMockToken(
+        Math.floor(Date.now() / 1000) + 7200
+      );
+      await page.waitForChanges();
+
+      expect(spy).toHaveBeenCalled();
+      spy.mockRestore();
+    });
+
+    it('should re-initialize API when businessId changes', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      const spy = jest.spyOn(
+        page.rootInstance as unknown as { initializeApi: () => void },
+        'initializeApi'
+      );
+
+      page.root.businessId = 'biz_456';
+      await page.waitForChanges();
+
+      expect(spy).toHaveBeenCalled();
+      spy.mockRestore();
+    });
   });
 });

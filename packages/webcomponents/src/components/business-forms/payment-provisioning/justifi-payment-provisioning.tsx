@@ -193,8 +193,10 @@ export class JustifiPaymentProvisioning {
     }
   };
 
-  decrementSteps = () => {
-    return this.currentStep--;
+  decrementSteps = (): void => {
+    if (this.currentStep > 0) {
+      this.currentStep -= 1;
+    }
   };
 
   previousStepButtonOnClick = () => {
