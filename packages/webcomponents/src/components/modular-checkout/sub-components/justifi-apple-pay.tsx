@@ -20,7 +20,7 @@ import {
 import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
-import { checkoutStore } from "../../../store/checkout.store";
+import { checkoutStore, onChange } from "../../../store/checkout.store";
 
 @Component({
   tag: "justifi-apple-pay",
@@ -28,6 +28,7 @@ import { checkoutStore } from "../../../store/checkout.store";
 })
 export class JustifiApplePay {
   private applePayService: ApplePayService;
+  private sdkLoaded = false;
   @Prop() countryCode: string = "US";
   @Prop() merchantIdentifier: string =
     "merchant.com.staging-justifi.checkout-dev";
@@ -66,6 +67,31 @@ export class JustifiApplePay {
     PAYMENT_FAILED: 'PAYMENT_FAILED',
   } as const;
 
+  componentWillLoad() {
+    this.isAvailable = ApplePayHelpers.isApplePaySupported();
+    if (!this.isAvailable) {
+      this.isLoading = false;
+      return;
+    }
+    if (checkoutStore.checkoutLoaded) {
+      this.loadApplePaySDK();
+    } else {
+      onChange('checkoutLoaded', (loaded) => {
+        if (loaded) this.loadApplePaySDK();
+      });
+    }
+  }
+
+  private loadApplePaySDK() {
+    if (this.sdkLoaded) return;
+    this.sdkLoaded = true;
+    const script = document.createElement('script');
+    script.src = 'https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js';
+    script.async = true;
+    script.onload = () => this.initializeApplePay();
+    document.head.appendChild(script);
+  }
+
   private async initializeApplePay() {
     try {
       this.isLoading = true;
@@ -80,12 +106,6 @@ export class JustifiApplePay {
       if (!hasRequiredConfig) {
         this.error = "Missing required Apple Pay configuration";
         this.isConfigValid = false;
-        console.error("Apple Pay config error: missing required values", {
-          paymentAmount: checkoutStore.paymentAmount,
-          paymentCurrency: checkoutStore.paymentCurrency,
-          hasAuthToken: Boolean(checkoutStore.authToken),
-          accountId: checkoutStore.accountId,
-        });
         this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.CONFIG_ERROR });
         this.isLoading = false;
         return;
@@ -96,7 +116,6 @@ export class JustifiApplePay {
 
       if (!this.isAvailable) {
         this.error = "Apple Pay is not supported on this device";
-        console.error(this.error);
         this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.NOT_SUPPORTED });
         this.isLoading = false;
         return;
@@ -104,7 +123,6 @@ export class JustifiApplePay {
 
       if (!this.canMakePayments) {
         this.error = "Apple Pay is not available";
-        console.error(this.error);
         this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.NOT_AVAILABLE });
         this.isLoading = false;
         return;
@@ -128,7 +146,6 @@ export class JustifiApplePay {
         console.warn("No Apple Pay cards available, but continuing...");
       }
     } catch (error) {
-      console.error("Apple Pay initialization error:", error);
       this.error =
         error instanceof Error
           ? error.message
@@ -219,7 +236,7 @@ export class JustifiApplePay {
 
   @Method()
   async abort(): Promise<void> {
-    this.applePayService.abortPaymentSession();
+    this.applePayService?.abortPaymentSession();
     this.isProcessing = false;
     this.applePayCancelled.emit();
   }
@@ -227,6 +244,9 @@ export class JustifiApplePay {
   render() {
     if (!checkoutStore.applePayEnabled) {
       // Render nothing when Apple Pay is disabled at the checkout settings level
+      return null;
+    }
+    if (!this.isAvailable) {
       return null;
     }
 
@@ -238,15 +258,6 @@ export class JustifiApplePay {
 
     return (
       <StyledHost>
-        {checkoutStore.checkoutLoaded && (
-          <script
-            async
-            src='https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js'
-            onLoad={() => {
-              this.initializeApplePay();
-            }}
-          ></script>
-        )}
         <div class='apple-pay-container'>
           <ApplePaySkeleton isLoading={this.isLoading} />
 

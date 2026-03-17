@@ -145,6 +145,9 @@ export class JustifiGooglePay {
   }
 
   render() {
+    if (!checkoutStore.checkoutLoaded) {
+      return null;
+    }
     if (!checkoutStore.googlePayEnabled) {
       console.warn("Google Pay is not enabled for this checkout");
       return null;
@@ -156,6 +159,7 @@ export class JustifiGooglePay {
         <iframe
           ref={(el) => (this.iframeElement = el)}
           src={`${this.iframeOrigin}/v2/googlePay`}
+          allow="payment"
           style={{
             border: "none",
             width: "100%",

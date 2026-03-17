@@ -71,7 +71,6 @@ export class JustifiCheckout {
 
   @Listen('error-event')
   checkoutError(_event: CustomEvent<any>) {
-    console.error('[justifi-checkout] error-event received', _event?.detail);
     checkoutStore.isSubmitting = false;
   }
 

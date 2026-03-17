@@ -13,6 +13,7 @@ describe('justifi-google-pay', () => {
   const IFRAME_ORIGIN = 'https://test-iframe.justifi.ai';
 
   beforeEach(() => {
+    checkoutStore.checkoutLoaded = true;
     checkoutStore.googlePayEnabled = true;
     checkoutStore.accountId = 'acc_123';
     checkoutStore.authToken = 'auth_token';
@@ -25,6 +26,17 @@ describe('justifi-google-pay', () => {
   });
 
   describe('rendering', () => {
+    it('returns null when checkoutLoaded is false', async () => {
+      checkoutStore.checkoutLoaded = false;
+
+      const page = await newSpecPage({
+        components: [JustifiGooglePay],
+        template: () => <justifi-google-pay />,
+      });
+
+      expect(page.root?.shadowRoot?.innerHTML).toBe('');
+    });
+
     it('returns null when googlePayEnabled is false', async () => {
       checkoutStore.googlePayEnabled = false;
 
