@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.12.2
+
+### Patch Changes
+
+- 489a6dc: Fix SDK loading and console errors in payment method components (Google Pay, Apple Pay, Plaid, Saved Payment Methods)
+
 ## 6.12.1
 
 ### Patch Changes
