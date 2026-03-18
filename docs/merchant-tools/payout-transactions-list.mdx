@@ -6,6 +6,7 @@ sidebar_position: 42
 ---
 
 import {
+  CodeBlock,
   PropsMarkdownTable,
   PartsMarkdownTable,
   getPropsFromDocs,
@@ -26,13 +27,11 @@ Component to display a list of payout transactions for a specific payout.
 
 ## Usage
 
-<pre>
-  <code className="language-html">{`<justifi-payout-transactions-list
+<CodeBlock>{`<justifi-payout-transactions-list
   account-id="acc_123"
   auth-token="wct_reporting"
   payout-id="po_456"
-/>`}</code>
-</pre>
+/>`}</CodeBlock>
 
 ## Props, Events & Methods
 
@@ -64,7 +63,7 @@ Component to display a list of payout transactions for a specific payout.
 
 ---
 
-<pre><code className="language-html">{`<!DOCTYPE html>
+<CodeBlock>{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -118,4 +117,4 @@ Component to display a list of payout transactions for a specific payout.
   })();
 </script>
 
-</html>`}</code></pre>
+</html>`}</CodeBlock>

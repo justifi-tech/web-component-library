@@ -4,7 +4,7 @@ title: Vue 3
 description: Consume the JustiFi web components inside modern Vue applications.
 ---
 
-import { getWebcomponentsVersion } from '../helpers';
+import { CodeBlock, getWebcomponentsVersion } from '../helpers';
 
 Vue treats the JustiFi custom elements like native HTML tags. Load the script, import what you need, and wire up refs/events.
 
@@ -12,13 +12,13 @@ Vue treats the JustiFi custom elements like native HTML tags. Load the script, i
 
 ### Load the components
 
-<pre><code className="language-html">{`<head>
+<CodeBlock>{`<head>
   <script
     type="module"
     src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
   ></script>
 
-</head>`}</code></pre>
+</head>`}</CodeBlock>
 
 Or install locally and import the desired module:
 

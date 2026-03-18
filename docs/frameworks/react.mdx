@@ -5,7 +5,7 @@ description: How to consume JustiFi web components inside React applications.
 sidebar_position: 1
 ---
 
-import { getWebcomponentsVersion } from '../helpers';
+import { CodeBlock, getWebcomponentsVersion } from '../helpers';
 
 React treats JustiFi web components like any other custom element. Load the bundle, optionally declare types, and use refs for method calls or event wiring.
 
@@ -13,14 +13,14 @@ React treats JustiFi web components like any other custom element. Load the bund
 
 ### Load the components
 
-<pre><code className="language-html">{`<head>
+<CodeBlock>{`<head>
   <script
     async
     type="module"
     src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"
   ></script>
 
-</head>`}</code></pre>
+</head>`}</CodeBlock>
 
 Or install the package:
 

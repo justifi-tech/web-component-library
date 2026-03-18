@@ -6,6 +6,7 @@ sidebar_position: 32
 ---
 
 import {
+  CodeBlock,
   PropsMarkdownTable,
   PartsMarkdownTable,
   getPropsFromDocs,
@@ -26,13 +27,11 @@ Component to display a list of payment transactions for a specific payment.
 
 ## Usage
 
-<pre>
-  <code className="language-html">{`<justifi-payment-transactions-list
+<CodeBlock>{`<justifi-payment-transactions-list
   account-id="acc_123"
   auth-token="wct_reporting"
   filters='{"payment_id":"pay_456"}'
-/>`}</code>
-</pre>
+/>`}</CodeBlock>
 
 ## Props, Events & Methods
 
@@ -64,7 +63,7 @@ Component to display a list of payment transactions for a specific payment.
 
 ---
 
-<pre><code className="language-html">{`<!DOCTYPE html>
+<CodeBlock>{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -121,4 +120,4 @@ Component to display a list of payment transactions for a specific payment.
   })();
 </script>
 
-</html>`}</code></pre>
+</html>`}</CodeBlock>
