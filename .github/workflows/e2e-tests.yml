@@ -23,7 +23,7 @@ jobs:
         uses: ./.github/actions/load-env
         with:
           vars-json: "${{ toJSON(vars) }}"
-          secrets-json: '{"CLIENT_ID":"${{ secrets.CLIENT_ID }}","CLIENT_SECRET":"${{ secrets.CLIENT_SECRET }}"}'
+          secrets-json: '{"CLIENT_ID":"${{ secrets.CLIENT_ID }}","CLIENT_SECRET":"${{ secrets.CLIENT_SECRET }}","CAN_CLIENT_ID":"${{ secrets.CAN_CLIENT_ID }}","CAN_CLIENT_SECRET":"${{ secrets.CAN_CLIENT_SECRET }}"}'
 
       - name: Build Docker image
         run: |
@@ -42,6 +42,8 @@ jobs:
             -e API_ORIGIN \
             -e CLIENT_ID \
             -e CLIENT_SECRET \
+            -e CAN_CLIENT_ID \
+            -e CAN_CLIENT_SECRET \
             -e SUB_ACCOUNT_ID \
             -e PAYMENT_METHOD_GROUP_ID \
             -e DISPUTE_ID \
