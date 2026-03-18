@@ -29,13 +29,9 @@ async function createBusiness(token, country = 'USA', accountId = null) {
 router.get('/', async (req, res) => {
   const country = req.query.country || 'USA';
   const isCanada = country === 'CAN';
-  console.log('isCanada', isCanada);
-  console.log('process.env.CAN_CLIENT_ID', process.env.CAN_CLIENT_ID);
-  console.log('process.env.CAN_CLIENT_SECRET', process.env.CAN_CLIENT_SECRET);
   const token = isCanada
     ? await getToken(process.env.CAN_CLIENT_ID, process.env.CAN_CLIENT_SECRET)
     : await getToken();
-  console.log('token', token);
   const accountId = isCanada ? process.env.CAN_ACCOUNT_ID : null;
   const businessId = await createBusiness(token, country, accountId);
   const webComponentToken = await getWebComponentToken(token, [
