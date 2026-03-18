@@ -62,15 +62,70 @@ export const TEST_BUSINESS_DATA = {
       account_number: '000123456789',
     },
   },
+  can: {
+    coreInfo: {
+      legal_name: `Acme Canada Inc ${Date.now()}`,
+      doing_business_as: 'Acme CA',
+      classification: 'limited',
+      date_of_incorporation: '2020-01-01',
+      industry: 'Software',
+      tax_id: '862397791',
+      website_url: 'https://acme-ca-test.com',
+      email: 'test@acme-ca-test.com',
+      phone: '4165551234',
+    },
+    legalAddress: {
+      line1: '123 King St W',
+      city: 'Toronto',
+      province: 'ON',
+      postal_code: 'M5H 1J9',
+    },
+    additionalQuestions: {
+      business_revenue: '100000',
+      business_payment_volume: '50000',
+      business_average_transaction_amount: '100',
+      business_when_service_received: 'Within 7 days',
+    },
+    representative: {
+      name: 'Jean Tremblay',
+      title: 'CEO',
+      email: 'jean@acme-ca-test.com',
+      phone: '4165551234',
+      dob_full: '1980-01-15',
+      identification_number: '046454286',
+      address: {
+        line1: '456 Bay St',
+        city: 'Toronto',
+        province: 'ON',
+        postal_code: 'M5J 2T3',
+      },
+    },
+    owner: {
+      name: 'Jean Tremblay',
+      email: 'jean@acme-ca-test.com',
+    },
+    bankAccount: {
+      bank_name: 'Test Bank CA',
+      nickname: 'Main Account CA',
+      account_owner_name: 'Acme Canada Inc',
+      account_type: 'checking',
+      account_number: '000123456789',
+      institution_number: '001',
+      transit_number: '12345',
+    },
+  },
 };
 
 export type CoreInfoData = (typeof TEST_BUSINESS_DATA.usa)['coreInfo'];
 export type LegalAddressData = (typeof TEST_BUSINESS_DATA.usa)['legalAddress'];
+export type LegalAddressDataCAN = (typeof TEST_BUSINESS_DATA.can)['legalAddress'];
 export type AdditionalQuestionsData =
   (typeof TEST_BUSINESS_DATA.usa)['additionalQuestions'];
 export type RepresentativeData = (typeof TEST_BUSINESS_DATA.usa)['representative'];
+export type RepresentativeDataCAN = (typeof TEST_BUSINESS_DATA.can)['representative'];
 export type OwnerData = (typeof TEST_BUSINESS_DATA.usa)['owner'];
 export type BankAccountData = (typeof TEST_BUSINESS_DATA.usa)['bankAccount'];
+export type BankAccountDataCAN = (typeof TEST_BUSINESS_DATA.can)['bankAccount'];
 
 export async function fillBusinessCoreInfo(
   page: Page,
@@ -99,6 +154,16 @@ export async function fillLegalAddress(
   await page.getByLabel('City').fill(data.city);
   await page.getByLabel('State').selectOption(data.state);
   await page.getByLabel('Zip Code').fill(data.postal_code);
+}
+
+export async function fillLegalAddressCAN(
+  page: Page,
+  data: LegalAddressDataCAN,
+): Promise<void> {
+  await page.getByLabel('Street Address').fill(data.line1);
+  await page.getByLabel('City').fill(data.city);
+  await page.getByLabel('Province').selectOption(data.province);
+  await page.getByLabel('Postal Code').fill(data.postal_code);
 }
 
 export async function fillAdditionalQuestions(
@@ -140,6 +205,23 @@ export async function fillRepresentative(
   await page.getByLabel('City').fill(addr.city);
   await page.getByLabel('State').selectOption(addr.state);
   await page.getByLabel('Zip Code').fill(addr.postal_code);
+}
+
+export async function fillRepresentativeCAN(
+  page: Page,
+  data: RepresentativeDataCAN,
+): Promise<void> {
+  await page.getByLabel('Full Name').fill(data.name);
+  await page.getByLabel('Title').fill(data.title);
+  await page.getByLabel('Email Address').fill(data.email);
+  await page.getByLabel('Phone Number').fill(data.phone);
+  await page.getByLabel('Birth Date').fill(data.dob_full);
+  await page.getByLabel('SIN').fill(data.identification_number);
+  const addr = data.address;
+  await page.getByLabel('Street Address').fill(addr.line1);
+  await page.getByLabel('City').fill(addr.city);
+  await page.getByLabel('Province').selectOption(addr.province);
+  await page.getByLabel('Postal Code').fill(addr.postal_code);
 }
 
 export async function fillOwners(
@@ -184,6 +266,30 @@ export async function fillBankAccountManual(
   await page.getByLabel('Account Type').selectOption(data.account_type);
   await page.getByLabel('Account Number').fill(data.account_number);
   await page.getByLabel('Routing Number').fill(data.routing_number);
+  const comp = page.locator('justifi-payment-provisioning');
+  const fileInput = comp.locator('input[name="voided_check"]');
+  await fileInput.setInputFiles(voidedCheckPath);
+}
+
+export async function fillBankAccountManualCAN(
+  page: Page,
+  data: BankAccountDataCAN,
+  voidedCheckPath: string = VOIDED_CHECK_FIXTURE,
+): Promise<void> {
+  const manualButton = page.getByRole('button', {
+    name: 'Enter bank details manually (document upload required)',
+  });
+  if (await manualButton.isVisible()) {
+    await manualButton.click();
+    await page.waitForTimeout(500);
+  }
+  await page.getByLabel('Bank Name').fill(data.bank_name);
+  await page.getByLabel('Nickname').fill(data.nickname);
+  await page.getByLabel('Account Owner Name').fill(data.account_owner_name);
+  await page.getByLabel('Account Type').selectOption(data.account_type);
+  await page.getByLabel('Account Number').fill(data.account_number);
+  await page.getByLabel('Institution Number').fill(data.institution_number);
+  await page.getByLabel('Transit Number').fill(data.transit_number);
   const comp = page.locator('justifi-payment-provisioning');
   const fileInput = comp.locator('input[name="voided_check"]');
   await fileInput.setInputFiles(voidedCheckPath);

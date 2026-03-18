@@ -1,7 +1,9 @@
 const { API_PATHS } = require('./api-paths');
 
-async function getToken() {
+async function getToken(clientId, clientSecret) {
   const authTokenEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.AUTH_TOKEN}`;
+  const id = clientId ?? process.env.CLIENT_ID;
+  const secret = clientSecret ?? process.env.CLIENT_SECRET;
 
   let response;
   try {
@@ -11,8 +13,8 @@ async function getToken() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET,
+        client_id: id,
+        client_secret: secret,
       }),
     });
   } catch (error) {

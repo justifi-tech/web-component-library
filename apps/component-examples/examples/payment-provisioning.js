@@ -6,7 +6,7 @@ const { startStandaloneServer } = require('../utils/standalone-server');
 
 const router = express.Router();
 
-async function createBusiness(token) {
+async function createBusiness(token, country = 'USA', accountId = null) {
   const businessEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.BUSINESS}`;
   const randomLegalName = generateRandomLegalName();
   const response = await fetch(businessEndpoint, {
@@ -14,10 +14,11 @@ async function createBusiness(token) {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      ...(accountId && { 'Sub-Account': accountId }),
     },
     body: JSON.stringify({
       legal_name: randomLegalName,
-      country_of_establishment: 'USA',
+      country_of_establishment: country,
     }),
   });
   const res = await response.json();
@@ -26,8 +27,17 @@ async function createBusiness(token) {
 }
 
 router.get('/', async (req, res) => {
-  const token = await getToken();
-  const businessId = await createBusiness(token);
+  const country = req.query.country || 'USA';
+  const isCanada = country === 'CAN';
+  console.log('isCanada', isCanada);
+  console.log('process.env.CAN_CLIENT_ID', process.env.CAN_CLIENT_ID);
+  console.log('process.env.CAN_CLIENT_SECRET', process.env.CAN_CLIENT_SECRET);
+  const token = isCanada
+    ? await getToken(process.env.CAN_CLIENT_ID, process.env.CAN_CLIENT_SECRET)
+    : await getToken();
+  console.log('token', token);
+  const accountId = isCanada ? process.env.CAN_ACCOUNT_ID : null;
+  const businessId = await createBusiness(token, country, accountId);
   const webComponentToken = await getWebComponentToken(token, [
     `write:business:${businessId}`,
   ]);
