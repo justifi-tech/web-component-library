@@ -1,5 +1,13 @@
 # @justifi/webcomponents-docs
 
+## 1.1.3
+
+### Patch Changes
+
+- 47a6204: Fix broken relative links in modular-checkout sub-components index page
+- Updated dependencies [489a6dc]
+  - @justifi/webcomponents@6.12.2
+
 ## 1.1.2
 
 ### Patch Changes
