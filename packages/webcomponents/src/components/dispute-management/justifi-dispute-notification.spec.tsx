@@ -28,7 +28,7 @@ describe('justifi-dispute-notification', () => {
   it('isLoading=true renders skeleton placeholders, no dispute content', async () => {
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading></justifi-dispute-notification>',
+      html: '<justifi-dispute-notification auth-token="tok" is-loading></justifi-dispute-notification>',
     });
     (page.root as any).isLoading = true;
     await page.waitForChanges();
@@ -43,7 +43,7 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<justifi-dispute-notification auth-token="tok" is-loading="false"></justifi-dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
@@ -61,7 +61,7 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<justifi-dispute-notification auth-token="tok" is-loading="false"></justifi-dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
