@@ -1,3 +1,4 @@
+export { CodeBlock } from './CodeBlock.jsx';
 export { getWebcomponentsVersion } from './version.js';
 export { PartsMarkdownTable } from './PartsMarkdownTable.jsx';
 export { getComponentParts } from './getComponentParts.js';

@@ -6,6 +6,7 @@ sidebar_position: 43
 ---
 
 import {
+  CodeBlock,
   PropsMarkdownTable,
   PartsMarkdownTable,
   getPropsFromDocs,
@@ -28,14 +29,12 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ### Chart monthly volume
 
-<pre>
-  <code className="language-html">{`<justifi-gross-payment-chart
+<CodeBlock>{`<justifi-gross-payment-chart
   account-id="acc_123"
   auth-token="wct_reporting"
   interval="month"
   range="12m"
-/>`}</code>
-</pre>
+/>`}</CodeBlock>
 
 ## Props, Events & Methods
 
@@ -63,7 +62,7 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ---
 
-<pre><code className="language-html">{`<!DOCTYPE html>
+<CodeBlock>{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -112,4 +111,4 @@ Component to render chart displaying last 30 days of gross payment data.
   })();
 </script>
 
-</html>`}</code></pre>
+</html>`}</CodeBlock>

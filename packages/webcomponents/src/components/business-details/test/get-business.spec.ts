@@ -26,13 +26,14 @@ describe('makeGetBusiness', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     const getBusiness = makeGetBusiness({
       id,
       authToken,
       service: mockService,
     });
-    await getBusiness({ onSuccess, onError });
+    await getBusiness({ onSuccess, onError, final });
 
     expect(onSuccess).toHaveBeenCalledWith({
       business: new Business(mockResponse.data as unknown as IBusiness),
@@ -45,13 +46,14 @@ describe('makeGetBusiness', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     const getBusiness = makeGetBusiness({
       id,
       authToken,
       service: mockService,
     });
-    await getBusiness({ onSuccess, onError });
+    await getBusiness({ onSuccess, onError, final });
 
     expect(onError).toHaveBeenCalledWith({
       error: 'Not Authenticated',
@@ -66,13 +68,14 @@ describe('makeGetBusiness', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
+    const final = jest.fn();
 
     const getBusiness = makeGetBusiness({
       id,
       authToken,
       service: mockService,
     });
-    await getBusiness({ onSuccess, onError });
+    await getBusiness({ onSuccess, onError, final });
 
     expect(onError).toHaveBeenCalledWith({
       error: error.message,

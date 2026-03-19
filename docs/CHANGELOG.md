@@ -1,5 +1,13 @@
 # @justifi/webcomponents-docs
 
+## 1.1.4
+
+### Patch Changes
+
+- 4d25f63: Add CodeBlock component for syntax-highlighted code snippets; refactor all documentation pages to use CodeBlock instead of raw pre/code tags; add react-syntax-highlighter and prismjs dependencies
+- Updated dependencies [b9b5e47]
+  - @justifi/webcomponents@6.12.3
+
 ## 1.1.3
 
 ### Patch Changes

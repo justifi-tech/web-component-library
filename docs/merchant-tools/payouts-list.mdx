@@ -6,6 +6,7 @@ sidebar_position: 40
 ---
 
 import {
+  CodeBlock,
   PropsMarkdownTable,
   PartsMarkdownTable,
   getPropsFromDocs,
@@ -26,13 +27,11 @@ Component to render a formated list of payouts for the requested account.
 
 ## Usage
 
-<pre>
-  <code className="language-html">{`<justifi-payouts-list
+<CodeBlock>{`<justifi-payouts-list
   account-id="acc_123"
   auth-token="wct_reporting"
   columns="created_at,amount,destination,status"
-/>`}</code>
-</pre>
+/>`}</CodeBlock>
 
 ## Props, Events & Methods
 
@@ -61,7 +60,7 @@ Component to render a formated list of payouts for the requested account.
 
 ---
 
-<pre><code className="language-html">{`<!DOCTYPE html>
+<CodeBlock>{`<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -115,4 +114,4 @@ Component to render a formated list of payouts for the requested account.
   })();
 </script>
 
-</html>`}</code></pre>
+</html>`}</CodeBlock>
