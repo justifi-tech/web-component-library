@@ -85,12 +85,13 @@ export class JustifiOrderTerminals {
     })({
       onSuccess: ({ business }) => {
         this.business = new Business(business);
-        this.loading.business = false;
       },
       onError: ({ error, code, severity }) => {
         this.handleError(error, code, severity);
+      },
+      final: () => {
         this.loading.business = false;
-      }
+      },
     });
   }
 
