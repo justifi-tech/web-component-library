@@ -6,7 +6,7 @@ class MockFile {
   type: string;
   private _content: ArrayBuffer;
 
-  constructor(bits: BlobPart[], name: string, options?: FilePropertyBag) {
+  constructor(_bits: BlobPart[], name: string, options?: FilePropertyBag) {
     this.name = name;
     this.type = options?.type || '';
     this._content = new ArrayBuffer(8);
