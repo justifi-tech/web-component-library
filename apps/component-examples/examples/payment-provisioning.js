@@ -28,7 +28,6 @@ async function createBusiness(token, country = 'USA', accountId = null) {
 
 router.get('/', async (req, res) => {
   const country = req.query.country || 'USA';
-  const allowOptional = req.query.allow_optional_fields === 'true';
   const isCanada = country === 'CAN';
   const token = isCanada
     ? await getToken(process.env.CAN_CLIENT_ID, process.env.CAN_CLIENT_SECRET)
@@ -52,8 +51,7 @@ router.get('/', async (req, res) => {
         <div style="margin:0 auto;max-width:700px;">
           <justifi-payment-provisioning
             business-id="${businessId}"
-            auth-token="${webComponentToken}"
-            ${allowOptional ? 'allow-optional-fields' : ''}>
+            auth-token="${webComponentToken}">
           </justifi-payment-provisioning>
         </div>
 

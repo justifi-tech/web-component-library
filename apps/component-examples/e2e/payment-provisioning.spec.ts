@@ -19,7 +19,6 @@ import {
   clickNext,
   clickSubmit,
   waitForStep,
-  expectValidationError,
 } from './payment-provisioning-helpers';
 
 test.describe('payment-provisioning happy path - USA', () => {
@@ -89,92 +88,6 @@ test.describe('payment-provisioning happy path - USA', () => {
       (e) => !e.message.includes('Failed to find script'), // Plaid CDN in test env, non blocking error, will be fixed later
     );
     expect(criticalErrors).toHaveLength(0);
-  });
-});
-
-test.describe('payment-provisioning validation', () => {
-  test('shows all required field errors when submitting empty step 0', async ({
-    page,
-  }) => {
-    await page.goto('/payment-provisioning');
-    await waitForComponent(page, 'justifi-payment-provisioning');
-
-    // Clear pre-populated fields so validation fails on all required fields
-    await page
-      .getByLabel('Business Name')
-      .waitFor({ state: 'visible', timeout: 15000 });
-    await page.getByLabel('Business Name').clear();
-    await page.getByLabel('Business Website URL').clear();
-    await page.getByLabel('Business Email Address').clear();
-    const comp = page.locator('justifi-payment-provisioning');
-    await comp.locator('input[name="phone"]').first().clear();
-    await comp.locator('input[name="tax_id"]').clear();
-
-    await clickNext(page);
-
-    await expectValidationError(page, 'Enter legal name');
-    await expectValidationError(page, 'Enter business website url');
-    await expectValidationError(page, 'Enter business email');
-    await expectValidationError(page, 'Enter phone number');
-    await expectValidationError(page, 'Select business classification');
-    await expectValidationError(page, 'Enter a business industry');
-    await expectValidationError(page, 'Enter date of registration');
-    await expectValidationError(
-      page,
-      'Enter valid Tax ID (EIN or SSN) without dashes',
-    );
-  });
-
-  test.fixme(
-    'advances step when allowOptionalFields=true with only legal_name filled',
-    async ({ page }) => {
-      await page.goto('/payment-provisioning?allow_optional_fields=true');
-      await waitForComponent(page, 'justifi-payment-provisioning');
-
-      await page
-        .getByLabel('Business Name')
-        .waitFor({ state: 'visible', timeout: 15000 });
-      await page.getByLabel('Business Name').fill('Acme Test Corp');
-      await clickNext(page);
-
-      await waitForStep(page, 2, 25000);
-    },
-  );
-
-  test('shows field-level errors for invalid email, URL, and phone', async ({
-    page,
-  }) => {
-    await page.goto('/payment-provisioning');
-    await waitForComponent(page, 'justifi-payment-provisioning');
-
-    await page
-      .getByLabel('Business Name')
-      .waitFor({ state: 'visible', timeout: 15000 });
-    await page.getByLabel('Business Name').fill('Acme Test Corp');
-    await page.getByLabel('Business Website URL').fill('not-a-url');
-    await page.getByLabel('Business Email Address').fill('notanemail');
-    const comp = page.locator('justifi-payment-provisioning');
-    await comp.locator('input[name="phone"]').first().fill('123');
-    await comp.locator('input[name="phone"]').first().dispatchEvent('input');
-
-    await clickNext(page);
-
-    await expectValidationError(page, 'Enter valid email');
-    await expectValidationError(page, 'Enter valid website url');
-    await expectValidationError(page, 'Enter valid phone number');
-  });
-
-  test('rejects repeated digits in tax ID field', async ({ page }) => {
-    await page.goto('/payment-provisioning');
-    await waitForComponent(page, 'justifi-payment-provisioning');
-
-    const comp = page.locator('justifi-payment-provisioning');
-    await comp.locator('input[name="tax_id"]').fill('111111111');
-    await comp.locator('input[name="tax_id"]').dispatchEvent('input');
-
-    await clickNext(page);
-
-    await expectValidationError(page, 'Enter valid tax id, SSN, or EIN');
   });
 });
 

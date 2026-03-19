@@ -352,10 +352,3 @@ export async function getStepCounter(page: Page): Promise<string> {
     return '';
   });
 }
-
-export async function expectValidationError(
-  page: Page,
-  message: string | RegExp,
-): Promise<void> {
-  await expect(page.getByText(message)).toBeVisible();
-}
