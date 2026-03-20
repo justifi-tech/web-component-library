@@ -11,7 +11,7 @@ const baseDispute = {
   currency: 'usd',
   payment_id: 'py_1',
   reason: 'fraudulent',
-  due_date: '2026-04-01',
+  due_date: '2099-04-01',
   status: DisputeStatus.needsResponse,
   metadata: null,
   created_at: '2026-01-01T00:00:00Z',
@@ -28,7 +28,7 @@ describe('justifi-dispute-notification', () => {
   it('isLoading=true renders skeleton placeholders, no dispute content', async () => {
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading></justifi-dispute-notification>',
+      html: '<justifi-dispute-notification auth-token="tok" is-loading></justifi-dispute-notification>',
     });
     (page.root as any).isLoading = true;
     await page.waitForChanges();
@@ -39,11 +39,11 @@ describe('justifi-dispute-notification', () => {
   });
 
   it('needs_response + future due_date shows amount, reason, due date, both action buttons', async () => {
-    const dispute = makeDispute({ status: DisputeStatus.needsResponse, due_date: '2026-04-01' });
+    const dispute = makeDispute({ status: DisputeStatus.needsResponse, due_date: '2099-04-01' });
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<justifi-dispute-notification auth-token="tok" is-loading="false"></justifi-dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
@@ -51,7 +51,7 @@ describe('justifi-dispute-notification', () => {
     const host = page.root.shadowRoot;
     expect(host.textContent).toContain('$10.00');
     expect(host.textContent).toContain('fraudulent');
-    expect(host.textContent).toContain('2026-04-01');
+    expect(host.textContent).toContain('2099-04-01');
     expect(host.textContent).toContain('Counter dispute');
     expect(host.textContent).toContain('Accept dispute');
   });
@@ -61,7 +61,7 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<justifi-dispute-notification auth-token="tok" is-loading="false"></justifi-dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
