@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiCancellationPolicy } from './justifi-cancellation-policy';
+import { CancellationPolicy } from './cancellation-policy';
 import { DisputeResponseFormStep } from './dispute-response-form-types';
 
-describe('justifi-cancellation-policy', () => {
-  const components = [JustifiCancellationPolicy];
+describe('cancellation-policy', () => {
+  const components = [CancellationPolicy];
 
   it('renders all fields for the step', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-cancellation-policy disputeResponse={{}} documentErrors={{}} />,
+      template: () => <cancellation-policy disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -22,22 +22,22 @@ describe('justifi-cancellation-policy', () => {
     const disputeResponse = { cancellation_policy_disclosure: 'Policy text' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-cancellation-policy disputeResponse={disputeResponse} documentErrors={{}} />,
+      template: () => <cancellation-policy disputeResponse={disputeResponse} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiCancellationPolicy).disputeResponse).toEqual(disputeResponse);
+    expect((page.rootInstance as CancellationPolicy).disputeResponse).toEqual(disputeResponse);
   });
 
   it('validateAndSubmit calls onSuccess with correct formData shape', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-cancellation-policy disputeResponse={{}} documentErrors={{}} />,
+      template: () => <cancellation-policy disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiCancellationPolicy).validateAndSubmit(onSuccess);
+    await (page.rootInstance as CancellationPolicy).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -48,12 +48,12 @@ describe('justifi-cancellation-policy', () => {
   it('validateAndSubmit succeeds when all fields empty (nullable schema)', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-cancellation-policy disputeResponse={{}} documentErrors={{}} />,
+      template: () => <cancellation-policy disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiCancellationPolicy).validateAndSubmit(onSuccess);
+    await (page.rootInstance as CancellationPolicy).validateAndSubmit(onSuccess);
     await new Promise((r) => setTimeout(r, 200));
     expect(onSuccess).toHaveBeenCalled();
   });
@@ -61,7 +61,7 @@ describe('justifi-cancellation-policy', () => {
   it('renders file input for cancellation_policy', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-cancellation-policy disputeResponse={{}} documentErrors={{}} />,
+      template: () => <cancellation-policy disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -72,10 +72,10 @@ describe('justifi-cancellation-policy', () => {
     const documentErrors = { cancellation_policy: 'Upload failed' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-cancellation-policy disputeResponse={{}} documentErrors={documentErrors} />,
+      template: () => <cancellation-policy disputeResponse={{}} documentErrors={documentErrors} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiCancellationPolicy).documentErrors).toEqual(documentErrors);
+    expect((page.rootInstance as CancellationPolicy).documentErrors).toEqual(documentErrors);
   });
 });

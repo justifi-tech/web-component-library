@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiAdditionalStatement } from './justifi-additional-statement';
+import { AdditionalStatement } from './additional-statement';
 import { DisputeResponseFormStep } from './dispute-response-form-types';
 
-describe('justifi-additional-statement', () => {
-  const components = [JustifiAdditionalStatement];
+describe('additional-statement', () => {
+  const components = [AdditionalStatement];
 
   it('renders all fields for the step', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-additional-statement disputeResponse={{}} documentErrors={{}} />,
+      template: () => <additional-statement disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -21,22 +21,22 @@ describe('justifi-additional-statement', () => {
     const disputeResponse = { additional_statement: 'Additional info' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-additional-statement disputeResponse={disputeResponse} documentErrors={{}} />,
+      template: () => <additional-statement disputeResponse={disputeResponse} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiAdditionalStatement).disputeResponse).toEqual(disputeResponse);
+    expect((page.rootInstance as AdditionalStatement).disputeResponse).toEqual(disputeResponse);
   });
 
   it('validateAndSubmit calls onSuccess with correct formData shape', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-additional-statement disputeResponse={{}} documentErrors={{}} />,
+      template: () => <additional-statement disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiAdditionalStatement).validateAndSubmit(onSuccess);
+    await (page.rootInstance as AdditionalStatement).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -47,12 +47,12 @@ describe('justifi-additional-statement', () => {
   it('validateAndSubmit succeeds when all fields empty (nullable schema)', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-additional-statement disputeResponse={{}} documentErrors={{}} />,
+      template: () => <additional-statement disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiAdditionalStatement).validateAndSubmit(onSuccess);
+    await (page.rootInstance as AdditionalStatement).validateAndSubmit(onSuccess);
     await new Promise((r) => setTimeout(r, 200));
     expect(onSuccess).toHaveBeenCalled();
   });
@@ -60,7 +60,7 @@ describe('justifi-additional-statement', () => {
   it('renders file input for uncategorized_file', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-additional-statement disputeResponse={{}} documentErrors={{}} />,
+      template: () => <additional-statement disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -71,10 +71,10 @@ describe('justifi-additional-statement', () => {
     const documentErrors = { uncategorized_file: 'Upload failed' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-additional-statement disputeResponse={{}} documentErrors={documentErrors} />,
+      template: () => <additional-statement disputeResponse={{}} documentErrors={documentErrors} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiAdditionalStatement).documentErrors).toEqual(documentErrors);
+    expect((page.rootInstance as AdditionalStatement).documentErrors).toEqual(documentErrors);
   });
 });

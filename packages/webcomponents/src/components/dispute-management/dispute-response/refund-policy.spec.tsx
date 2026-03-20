@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiRefundPolicy } from './justifi-refund-policy';
+import { RefundPolicy } from './refund-policy';
 import { DisputeResponseFormStep } from './dispute-response-form-types';
 
-describe('justifi-refund-policy', () => {
-  const components = [JustifiRefundPolicy];
+describe('refund-policy', () => {
+  const components = [RefundPolicy];
 
   it('renders all fields for the step', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-refund-policy disputeResponse={{}} documentErrors={{}} />,
+      template: () => <refund-policy disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -23,22 +23,22 @@ describe('justifi-refund-policy', () => {
     const disputeResponse = { refund_policy_disclosure: 'Refund policy' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-refund-policy disputeResponse={disputeResponse} documentErrors={{}} />,
+      template: () => <refund-policy disputeResponse={disputeResponse} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiRefundPolicy).disputeResponse).toEqual(disputeResponse);
+    expect((page.rootInstance as RefundPolicy).disputeResponse).toEqual(disputeResponse);
   });
 
   it('validateAndSubmit calls onSuccess with correct formData shape', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-refund-policy disputeResponse={{}} documentErrors={{}} />,
+      template: () => <refund-policy disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiRefundPolicy).validateAndSubmit(onSuccess);
+    await (page.rootInstance as RefundPolicy).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -49,12 +49,12 @@ describe('justifi-refund-policy', () => {
   it('validateAndSubmit succeeds when all fields empty (nullable schema)', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-refund-policy disputeResponse={{}} documentErrors={{}} />,
+      template: () => <refund-policy disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiRefundPolicy).validateAndSubmit(onSuccess);
+    await (page.rootInstance as RefundPolicy).validateAndSubmit(onSuccess);
     await new Promise((r) => setTimeout(r, 200));
     expect(onSuccess).toHaveBeenCalled();
   });
@@ -62,7 +62,7 @@ describe('justifi-refund-policy', () => {
   it('renders file inputs for refund_policy and receipt', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-refund-policy disputeResponse={{}} documentErrors={{}} />,
+      template: () => <refund-policy disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -74,10 +74,10 @@ describe('justifi-refund-policy', () => {
     const documentErrors = { refund_policy: 'Invalid file' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-refund-policy disputeResponse={{}} documentErrors={documentErrors} />,
+      template: () => <refund-policy disputeResponse={{}} documentErrors={documentErrors} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiRefundPolicy).documentErrors).toEqual(documentErrors);
+    expect((page.rootInstance as RefundPolicy).documentErrors).toEqual(documentErrors);
   });
 });

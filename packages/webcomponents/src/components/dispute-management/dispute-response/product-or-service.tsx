@@ -7,9 +7,10 @@ import { heading5 } from "../../../styles/parts";
 import fileInputHandler from "./file-input-handler";
 
 @Component({
-  tag: 'justifi-product-or-service',
+  tag: 'product-or-service',
+  shadow: false,
 })
-export class JustifiProductOrService {
+export class ProductOrService {
   @Prop() disputeResponse!: any;
   @Prop() documentErrors: any = {};
 

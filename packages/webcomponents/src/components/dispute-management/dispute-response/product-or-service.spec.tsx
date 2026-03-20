@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiProductOrService } from './justifi-product-or-service';
+import { ProductOrService } from './product-or-service';
 import { DisputeResponseFormStep } from './dispute-response-form-types';
 
-describe('justifi-product-or-service', () => {
-  const components = [JustifiProductOrService];
+describe('product-or-service', () => {
+  const components = [ProductOrService];
 
   it('renders all fields for the step', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-product-or-service disputeResponse={{}} documentErrors={{}} />,
+      template: () => <product-or-service disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -22,11 +22,11 @@ describe('justifi-product-or-service', () => {
     const disputeResponse = { product_description: 'Widget', service_date: '2026-01-15' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-product-or-service disputeResponse={disputeResponse} documentErrors={{}} />,
+      template: () => <product-or-service disputeResponse={disputeResponse} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiProductOrService).disputeResponse).toEqual(disputeResponse);
+    expect((page.rootInstance as ProductOrService).disputeResponse).toEqual(disputeResponse);
     expect(page.root.querySelector('form-control-text[name="product_description"]')).toBeTruthy();
     expect(page.root.querySelector('form-control-date[name="service_date"]')).toBeTruthy();
   });
@@ -34,12 +34,12 @@ describe('justifi-product-or-service', () => {
   it('validateAndSubmit calls onSuccess with correct formData shape', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-product-or-service disputeResponse={{}} documentErrors={{}} />,
+      template: () => <product-or-service disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiProductOrService).validateAndSubmit(onSuccess);
+    await (page.rootInstance as ProductOrService).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -52,12 +52,12 @@ describe('justifi-product-or-service', () => {
   it('validateAndSubmit succeeds when all fields empty (nullable schema)', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-product-or-service disputeResponse={{}} documentErrors={{}} />,
+      template: () => <product-or-service disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiProductOrService).validateAndSubmit(onSuccess);
+    await (page.rootInstance as ProductOrService).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -66,7 +66,7 @@ describe('justifi-product-or-service', () => {
   it('renders file input for service_documentation', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-product-or-service disputeResponse={{}} documentErrors={{}} />,
+      template: () => <product-or-service disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -78,11 +78,11 @@ describe('justifi-product-or-service', () => {
     const documentErrors = { service_documentation: 'Upload failed' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-product-or-service disputeResponse={{}} documentErrors={documentErrors} />,
+      template: () => <product-or-service disputeResponse={{}} documentErrors={documentErrors} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiProductOrService).documentErrors).toEqual(documentErrors);
+    expect((page.rootInstance as ProductOrService).documentErrors).toEqual(documentErrors);
     expect(page.root.querySelector('form-control-file-v2[name="service_documentation"]')).toBeTruthy();
   });
 });

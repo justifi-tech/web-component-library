@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.13.0
+
+### Minor Changes
+
+- Dispute management: merge `dispute-management-core` and `dispute-response-core` into `justifi-dispute-management` and `dispute-response`. Rename internal dispute subcomponents to unprefixed custom element names (`dispute-notification`, `dispute-response`, `product-or-service`, …), `shadow: false` on those internals; only `justifi-dispute-management` stays shadowed with `StyledHost`. **Breaking** for consumers that embedded the old `justifi-dispute-notification`, `justifi-dispute-response`, or `justifi-*` step tags directly; public props and events on `justifi-dispute-management` are unchanged.
+
 ## 6.12.2
 
 ### Patch Changes
