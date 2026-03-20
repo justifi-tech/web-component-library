@@ -4,7 +4,7 @@ import { getErrorCode, getErrorMessage } from '../../api/services/utils';
 
 export const makeGetBusiness =
   ({ id, authToken, service }) =>
-  async ({ onSuccess, onError }) => {
+  async ({ onSuccess, onError, final }) => {
     try {
       const response = await service.fetchBusiness(id, authToken);
 
@@ -26,5 +26,7 @@ export const makeGetBusiness =
         code,
         severity: ComponentErrorSeverity.ERROR,
       });
+    } finally {
+      final();
     }
   };
