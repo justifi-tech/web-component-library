@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { BusinessBankAccountFormStep } from '../business-bank-account-form-step';
+import { ComponentErrorCodes } from '../../../../../api';
 import { CountryCode } from '../../../../../utils/country-codes';
 
 const mockBusinessResponse = (overrides: {
@@ -454,6 +455,79 @@ describe('business-bank-account-form-step', () => {
       await step.sendData(onSuccess);
       expect(mockPost).not.toHaveBeenCalled();
       expect(onSuccess).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('validateAndSubmit when postBankAccount fails', () => {
+    it('emits error-event and does not call onSuccess', async () => {
+      const mockGetBusiness = jest.fn(({ onSuccess, final }) => {
+        onSuccess(
+          mockBusinessResponse({
+            bank_account_verification: false,
+            documents: [{ document_type: 'voided_check', id: 'd1' }],
+          }),
+        );
+        final?.();
+      });
+
+      const mockPostBankAccount = jest.fn(({ onError, final }) => {
+        onError({
+          error: 'Bank save failed',
+          code: ComponentErrorCodes.POST_ERROR,
+          severity: 'error',
+        });
+        final?.();
+      });
+
+      const page = await newSpecPage({
+        components: [BusinessBankAccountFormStep],
+        template: () => (
+          <business-bank-account-form-step
+            authToken="test-token"
+            businessId="biz_123"
+            country={CountryCode.USA}
+          />
+        ),
+      });
+
+      page.rootInstance.getBusiness = mockGetBusiness;
+      page.rootInstance.postBankAccount = mockPostBankAccount;
+      // @ts-ignore
+      page.rootInstance.getData();
+      await page.waitForChanges();
+
+      page.rootInstance.formController.setValues({
+        business_id: 'biz_123',
+        bank_name: 'Test Bank',
+        nickname: 'Main Acct',
+        account_owner_name: 'Acme Test Corp',
+        account_type: 'checking',
+        account_number: '1234567890',
+        routing_number: '110000000',
+      });
+
+      const errorEvent = jest.fn();
+      page.root.addEventListener('error-event', (e: CustomEvent) =>
+        errorEvent(e.detail),
+      );
+      const onSuccess = jest.fn();
+      const step = page.rootInstance as unknown as {
+        sendData: (cb: () => void) => Promise<void>;
+      };
+      await page.rootInstance.formController.validateAndSubmit(async () => {
+        await step.sendData(onSuccess);
+      });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(errorEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          errorCode: ComponentErrorCodes.POST_ERROR,
+          message: 'Bank save failed',
+        }),
+      );
+      expect(onSuccess).not.toHaveBeenCalled();
+      expect(page.rootInstance.viewMode).toBe('manual');
     });
   });
 });
