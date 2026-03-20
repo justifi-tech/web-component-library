@@ -153,3 +153,68 @@ test.describe('payment-provisioning happy path - CAN', () => {
     expect(criticalErrors).toHaveLength(0);
   });
 });
+
+test.describe('payment-provisioning USA — rep not owner', () => {
+  test('completes full 7-step flow when owner is not the representative', async ({
+    page,
+  }) => {
+    const pageErrors: Error[] = [];
+    page.on('pageerror', (err) => pageErrors.push(err));
+
+    await page.goto('/payment-provisioning');
+    await waitForComponent(page, 'justifi-payment-provisioning');
+
+    await fillBusinessCoreInfo(page, TEST_BUSINESS_DATA.usa.coreInfo);
+    await clickNext(page);
+    await waitForStep(page, 2);
+
+    await fillLegalAddress(page, TEST_BUSINESS_DATA.usa.legalAddress);
+    await clickNext(page);
+    await waitForStep(page, 3);
+
+    await fillAdditionalQuestions(
+      page,
+      TEST_BUSINESS_DATA.usa.additionalQuestions,
+    );
+    await clickNext(page);
+    await waitForStep(page, 4);
+
+    await fillRepresentative(page, TEST_BUSINESS_DATA.usa.representative);
+    await clickNext(page);
+    await waitForStep(page, 5);
+
+    await fillOwners(page, TEST_BUSINESS_DATA.usa.owner, {
+      representativeIsOwner: false,
+    });
+    await clickNext(page);
+    await waitForStep(page, 6);
+
+    await waitForStep(page, 6, 20000);
+    await fillBankAccountManual(page, TEST_BUSINESS_DATA.usa.bankAccount);
+    await clickNext(page);
+    await waitForStep(page, 7);
+
+    await acceptTerms(page);
+    const submitPromise = listenForSubmitEvent(page);
+    const errorPromise = listenForErrorEvent(
+      page,
+      'justifi-payment-provisioning',
+    );
+    await clickSubmit(page);
+
+    const result = await Promise.race([
+      submitPromise.then((text) => ({ type: 'submit' as const, text })),
+      errorPromise.then((err) => ({ type: 'error' as const, err })),
+    ]);
+
+    if (result.type === 'error') {
+      throw new Error(`Provisioning failed: ${result.err}`);
+    }
+
+    await expect(page.getByText(/You're all set for now/i)).toBeVisible();
+    const criticalErrors = pageErrors.filter(
+      (e) => !e.message.includes('Failed to find script'),
+    );
+    expect(criticalErrors).toHaveLength(0);
+  });
+});
