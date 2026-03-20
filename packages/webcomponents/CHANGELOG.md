@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.12.3
+
+### Patch Changes
+
+- b9b5e47: Fix infinite loading state on the business details component.
+
 ## 6.12.2
 
 ### Patch Changes

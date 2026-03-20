@@ -105,21 +105,69 @@ describe('business-core-info-form-step', () => {
   });
 
   describe('validation errors on empty required fields', () => {
-    it('shows validation errors for each required field when empty', async () => {
+    it('shows expected messages for each required field when empty', async () => {
       const { page } = await setupComponent({});
 
       const onSuccess = jest.fn();
       await page.rootInstance.validateAndSubmit({ onSuccess });
       await page.waitForChanges();
 
-      expect(page.rootInstance.errors.legal_name).toBeTruthy();
-      expect(page.rootInstance.errors.email).toBeTruthy();
-      expect(page.rootInstance.errors.phone).toBeTruthy();
-      expect(page.rootInstance.errors.classification).toBeTruthy();
-      expect(page.rootInstance.errors.industry).toBeTruthy();
-      expect(page.rootInstance.errors.website_url).toBeTruthy();
-      expect(page.rootInstance.errors.date_of_incorporation).toBeTruthy();
-      expect(page.rootInstance.errors.tax_id).toBeTruthy();
+      expect(page.rootInstance.errors.legal_name).toBe('Enter legal name');
+      expect(page.rootInstance.errors.website_url).toBe('Enter business website url');
+      expect(page.rootInstance.errors.email).toBe('Enter business email');
+      expect(page.rootInstance.errors.phone).toBe('Enter phone number');
+      expect(page.rootInstance.errors.classification).toBe('Select business classification');
+      expect(page.rootInstance.errors.industry).toBe('Enter a business industry');
+      expect(page.rootInstance.errors.date_of_incorporation).toBe('Enter date of registration');
+      expect(page.rootInstance.errors.tax_id).toBe(
+        'Enter valid Tax ID (EIN or SSN) without dashes',
+      );
+      expect(onSuccess).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('validation for invalid field formats (USA)', () => {
+    it('sets format errors for invalid email, website url, and phone', async () => {
+      const { page } = await setupComponent({});
+
+      page.rootInstance.inputHandler('legal_name', 'Acme Corp');
+      page.rootInstance.inputHandler('classification', BusinessClassification.limited);
+      page.rootInstance.inputHandler('industry', 'Technology');
+      page.rootInstance.inputHandler('date_of_incorporation', '2020-01-15');
+      page.rootInstance.inputHandler('tax_id', '987654321');
+      page.rootInstance.inputHandler('website_url', 'not-a-url');
+      page.rootInstance.inputHandler('email', 'notanemail');
+      page.rootInstance.inputHandler('phone', '123');
+      await page.waitForChanges();
+
+      const onSuccess = jest.fn();
+      await page.rootInstance.validateAndSubmit({ onSuccess });
+      await page.waitForChanges();
+
+      expect(page.rootInstance.errors.email).toBe('Enter valid email');
+      expect(page.rootInstance.errors.website_url).toBe('Enter valid website url');
+      expect(page.rootInstance.errors.phone).toBe('Enter valid phone number');
+      expect(onSuccess).not.toHaveBeenCalled();
+    });
+
+    it('rejects repeated digits in tax_id', async () => {
+      const { page } = await setupComponent({});
+
+      page.rootInstance.inputHandler('legal_name', 'Acme Corp');
+      page.rootInstance.inputHandler('classification', BusinessClassification.limited);
+      page.rootInstance.inputHandler('industry', 'Technology');
+      page.rootInstance.inputHandler('date_of_incorporation', '2020-01-15');
+      page.rootInstance.inputHandler('tax_id', '111111111');
+      page.rootInstance.inputHandler('website_url', 'https://acme.example.com');
+      page.rootInstance.inputHandler('email', 'contact@acme.example.com');
+      page.rootInstance.inputHandler('phone', '5555555555');
+      await page.waitForChanges();
+
+      const onSuccess = jest.fn();
+      await page.rootInstance.validateAndSubmit({ onSuccess });
+      await page.waitForChanges();
+
+      expect(page.rootInstance.errors.tax_id).toBe('Enter valid tax id, SSN, or EIN');
       expect(onSuccess).not.toHaveBeenCalled();
     });
   });
