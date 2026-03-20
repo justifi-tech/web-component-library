@@ -8,12 +8,11 @@ import { TableFiltersMenu } from '../../filters/table-filters-menu';
 import { JustifiTerminalOrdersListFilters } from '../justifi-terminal-orders-list-filters';
 import { FormControlSelect } from '../../../ui-components/form/form-control-select';
 import { filterParams } from '../terminal-orders-list-params-state';
-import { TerminalOrdersListCore } from '../terminal-orders-list-core';
 
-const components = [JustifiTerminalOrdersList, TerminalOrdersListCore, TableFiltersMenu, JustifiTerminalOrdersListFilters, FormControlSelect];
+const components = [JustifiTerminalOrdersList, TableFiltersMenu, JustifiTerminalOrdersListFilters, FormControlSelect];
 
 describe('justifi-terminal-orders-list with filters', () => {
-  const fetchDataSpy = jest.spyOn(TerminalOrdersListCore.prototype, 'fetchData');
+  const fetchDataSpy = jest.spyOn(JustifiTerminalOrdersList.prototype, 'fetchData');
   let page;
 
   afterEach(() => {
