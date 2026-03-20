@@ -34,7 +34,7 @@ const components = [
   JustifiAdditionalStatement,
 ];
 
-const baseDispute = {
+const disputeNeedsResponse = {
   id: 'dp_1',
   amount: 1000,
   currency: 'usd',
@@ -47,15 +47,25 @@ const baseDispute = {
   updated_at: '2026-01-01T00:00:00Z',
 };
 
+const disputeUnderReview = { ...disputeNeedsResponse, status: DisputeStatus.underReview };
+
+function makeGetDispute(responses: object | object[]) {
+  const queue = Array.isArray(responses) ? responses : [responses];
+  let callCount = 0;
+  return jest.fn(({ onSuccess }: { onSuccess: (r: { dispute: object }) => void }) => {
+    const idx = Math.min(callCount, queue.length - 1);
+    callCount++;
+    onSuccess({ dispute: queue[idx] });
+  });
+}
+
 beforeEach(() => {
   (JustifiAnalytics.prototype as any).trackCustomEvents = jest.fn();
 });
 
 describe('justifi-dispute-management-core', () => {
   it('calls getDispute on componentWillLoad', async () => {
-    const getDispute = jest.fn(({ onSuccess }) => {
-      onSuccess({ dispute: baseDispute });
-    });
+    const getDispute = makeGetDispute(disputeNeedsResponse);
 
     await newSpecPage({
       components,
@@ -72,9 +82,7 @@ describe('justifi-dispute-management-core', () => {
   });
 
   it('renders justifi-dispute-notification by default', async () => {
-    const getDispute = jest.fn(({ onSuccess }) => {
-      onSuccess({ dispute: baseDispute });
-    });
+    const getDispute = makeGetDispute(disputeNeedsResponse);
 
     const page = await newSpecPage({
       components,
@@ -97,9 +105,7 @@ describe('justifi-dispute-management-core', () => {
   });
 
   it('click-event respondToDispute switches to justifi-dispute-response', async () => {
-    const getDispute = jest.fn(({ onSuccess }) => {
-      onSuccess({ dispute: baseDispute });
-    });
+    const getDispute = makeGetDispute(disputeNeedsResponse);
 
     const page = await newSpecPage({
       components,
@@ -128,9 +134,7 @@ describe('justifi-dispute-management-core', () => {
   });
 
   it('click-event cancelDispute switches back to notification', async () => {
-    const getDispute = jest.fn(({ onSuccess }) => {
-      onSuccess({ dispute: baseDispute });
-    });
+    const getDispute = makeGetDispute(disputeNeedsResponse);
 
     const page = await newSpecPage({
       components,
@@ -164,9 +168,7 @@ describe('justifi-dispute-management-core', () => {
   });
 
   it('submit-event re-fetches dispute via getDispute', async () => {
-    const getDispute = jest.fn(({ onSuccess }) => {
-      onSuccess({ dispute: baseDispute });
-    });
+    const getDispute = makeGetDispute(disputeNeedsResponse);
 
     const page = await newSpecPage({
       components,
@@ -192,12 +194,7 @@ describe('justifi-dispute-management-core', () => {
   });
 
   it('after re-fetch hides form if status is no longer needs_response', async () => {
-    const disputeUnderReview = { ...baseDispute, status: DisputeStatus.underReview };
-    let callCount = 0;
-    const getDispute = jest.fn(({ onSuccess }) => {
-      callCount++;
-      onSuccess({ dispute: callCount === 1 ? baseDispute : disputeUnderReview });
-    });
+    const getDispute = makeGetDispute([disputeNeedsResponse, disputeUnderReview]);
 
     const page = await newSpecPage({
       components,
@@ -230,9 +227,7 @@ describe('justifi-dispute-management-core', () => {
   });
 
   it('propagates error-event from children', async () => {
-    const getDispute = jest.fn(({ onSuccess }) => {
-      onSuccess({ dispute: baseDispute });
-    });
+    const getDispute = makeGetDispute(disputeNeedsResponse);
     const errorSpy = jest.fn();
 
     const page = await newSpecPage({
