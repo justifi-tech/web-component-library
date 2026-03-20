@@ -92,11 +92,7 @@ test.describe('payment-provisioning happy path - USA', () => {
 });
 
 test.describe('payment-provisioning happy path - CAN', () => {
-  test('completes full 7-step flow', async ({ page }, testInfo) => {
-    testInfo.skip(
-      !process.env.CAN_CLIENT_ID || !process.env.CAN_ACCOUNT_ID,
-      'CAN_CLIENT_ID or CAN_ACCOUNT_ID not configured — skipping CAN flow',
-    );
+  test('completes full 7-step flow', async ({ page }, _testInfo) => {
     const pageErrors: Error[] = [];
     page.on('pageerror', (err) => pageErrors.push(err));
 

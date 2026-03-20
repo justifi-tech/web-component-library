@@ -303,6 +303,32 @@ describe('justifi-payment-provisioning', () => {
       expect(page.root.shadowRoot?.textContent).toContain('Step 1 of 7');
     });
 
+    it.each([
+      ['Step 1 of 7', 0],
+      ['Step 4 of 7', 3],
+      ['Step 7 of 7', 6],
+    ])(
+      'should display step counter "%s" when currentStep is %i',
+      async (expectedText, currentStep) => {
+        const page = await newSpecPage({
+          components: [JustifiPaymentProvisioning],
+          template: () => (
+            <justifi-payment-provisioning
+              businessId="biz_123"
+              authToken={validToken}
+            />
+          ),
+        });
+
+        await page.waitForChanges();
+
+        page.rootInstance.currentStep = currentStep;
+        await page.waitForChanges();
+
+        expect(page.root.shadowRoot?.textContent).toContain(expectedText);
+      }
+    );
+
     it('should increment step from 0 to 1', async () => {
       const page = await newSpecPage({
         components: [JustifiPaymentProvisioning],
@@ -410,6 +436,34 @@ describe('justifi-payment-provisioning', () => {
       });
     });
 
+    it('should not advance step when validateAndSubmit does not call onSuccess', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      page.rootInstance.refs[0] = {
+        validateAndSubmit: (_opts: { onSuccess: () => void }) => {
+          /* intentionally not calling onSuccess - simulates validation failure */
+        },
+      };
+
+      page.rootInstance.nextStepButtonOnClick(
+        { preventDefault: jest.fn() },
+        BusinessFormClickActions.nextStep
+      );
+      await page.waitForChanges();
+
+      expect(page.rootInstance.currentStep).toBe(0);
+    });
+
     it('should emit click-event with previousStep and decrement on previousStepButtonOnClick', async () => {
       const clickEvent = jest.fn();
       const page = await newSpecPage({
@@ -463,6 +517,35 @@ describe('justifi-payment-provisioning', () => {
       await page.waitForChanges();
 
       expect(page.rootInstance.loading).toBe(false);
+    });
+
+    it('should set formDisabled when formLoading is true', async () => {
+      const page = await newSpecPage({
+        components: [JustifiPaymentProvisioning],
+        template: () => (
+          <justifi-payment-provisioning
+            businessId="biz_123"
+            authToken={validToken}
+          />
+        ),
+      });
+
+      await page.waitForChanges();
+
+      page.root.dispatchEvent(
+        new CustomEvent('formLoading', { detail: true, bubbles: false })
+      );
+      await page.waitForChanges();
+
+      expect(page.rootInstance.loading).toBe(true);
+      expect(page.rootInstance.formDisabled).toBe(true);
+
+      page.root.dispatchEvent(
+        new CustomEvent('formLoading', { detail: false, bubbles: false })
+      );
+      await page.waitForChanges();
+
+      expect(page.rootInstance.formDisabled).toBe(false);
     });
 
     it('should re-initialize API when authToken changes', async () => {
