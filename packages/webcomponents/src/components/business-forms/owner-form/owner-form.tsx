@@ -1,9 +1,9 @@
-import { Component, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { FormController } from '../../../ui-components/form/form';
 import { Identity, Owner } from '../../../api/Identity';
 import { ComponentClickEvent, ComponentErrorEvent } from '../../../api/ComponentEvents';
 import { identitySchemaByCountry } from '../schemas/business-identity-schema';
-import { Button, StyledHost } from '../../../ui-components';
+import { Button } from '../../../ui-components';
 import { heading3 } from '../../../styles/parts';
 import { BusinessFormClickActions } from '../utils/event-types';
 import { CountryCode } from '../../../utils/country-codes';
@@ -12,7 +12,7 @@ import { IdentityService } from '../../../api/services/business.service';
 
 @Component({
   tag: 'owner-form',
-  shadow: true,
+  shadow: false,
 })
 export class OwnerForm {
   @State() isLoading: boolean = false;
@@ -218,7 +218,7 @@ export class OwnerForm {
 
   render() {
     return (
-      <StyledHost>
+      <Host style={{ display: 'block' }}>
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
             <legend class="fw-semibold fs-5" part={heading3}>
@@ -249,7 +249,7 @@ export class OwnerForm {
             <hr />
           </fieldset>
         </form>
-      </StyledHost>
+      </Host>
     );
   }
 }
