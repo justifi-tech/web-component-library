@@ -177,6 +177,7 @@ describe('business-owners-form-step', () => {
           }),
         })
       );
+      expect(page.rootInstance.ownersPayload.some((o) => o.id === MOCK_REP.id)).toBe(true);
     });
 
     it('rep-is-owner No: sets representativeIsOwner to false, prompt hidden', async () => {
@@ -186,6 +187,41 @@ describe('business-owners-form-step', () => {
       await page.waitForChanges();
 
       expect(page.rootInstance.representativeIsOwner).toBe(false);
+      expect(page.root.querySelector('.alert-warning')).toBeNull();
+    });
+
+    it('rep-is-owner No: keeps blank owner row for manual entry', async () => {
+      const { page } = await setupComponent([], MOCK_REP);
+
+      expect(page.rootInstance.ownersPayload).toEqual([{ id: '' }]);
+
+      page.rootInstance.handleRepresentativeIsOwnerChange(false);
+      await page.waitForChanges();
+
+      expect(page.rootInstance.ownersPayload).toEqual([{ id: '' }]);
+    });
+  });
+
+  describe('removeOwnerForm', () => {
+    it('removes owner id from ownersPayload', async () => {
+      const { page } = await setupComponent([{ id: 'a' }, { id: 'b' }]);
+
+      page.rootInstance.removeOwnerForm('a');
+      await page.waitForChanges();
+
+      expect(page.rootInstance.ownersPayload).toEqual([{ id: 'b' }]);
+    });
+
+    it('clears newFormOpen when removing blank owner row', async () => {
+      const { page } = await setupComponent([{ id: 'owner_1' }, { id: '' }]);
+      page.rootInstance.newFormOpen = true;
+      await page.waitForChanges();
+
+      page.rootInstance.removeOwnerForm('');
+      await page.waitForChanges();
+
+      expect(page.rootInstance.newFormOpen).toBe(false);
+      expect(page.rootInstance.ownersPayload).toEqual([{ id: 'owner_1' }]);
     });
   });
 
@@ -208,6 +244,20 @@ describe('business-owners-form-step', () => {
       await page.waitForChanges();
 
       expect(page.rootInstance.showAddOwnerButton).toBe(false);
+    });
+
+    it('hides Add Owner button in DOM when 4 owners', async () => {
+      const { page } = await setupComponent([
+        { id: 'o1' },
+        { id: 'o2' },
+        { id: 'o3' },
+        { id: 'o4' },
+      ]);
+      await page.waitForChanges();
+
+      const buttons = Array.from(page.root.querySelectorAll('button'));
+      const addOwner = buttons.find((b) => b.textContent?.trim() === 'Add Owner');
+      expect(addOwner?.hasAttribute('hidden')).toBe(true);
     });
   });
 

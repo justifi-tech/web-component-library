@@ -13,7 +13,10 @@ export const VOIDED_CHECK_FIXTURE = path.join(
 export const TEST_BUSINESS_DATA = {
   usa: {
     coreInfo: {
-      legal_name: `Acme Test Corp ${Date.now()}`,
+      /** Fresh each read so parallel/serial E2E runs do not reuse the same legal name. */
+      get legal_name() {
+        return `Acme Test Corp ${Date.now()}`;
+      },
       doing_business_as: 'Acme',
       classification: 'limited',
       date_of_incorporation: '2020-01-01',
@@ -50,8 +53,18 @@ export const TEST_BUSINESS_DATA = {
       },
     },
     owner: {
-      name: 'Jane Doe',
-      email: 'jane@acme-test.com',
+      name: 'Robert Owner',
+      title: 'Partner',
+      email: 'bob.owner@acme-test.com',
+      phone: '6125559991',
+      dob_full: '1983-07-22',
+      identification_number: '217651516',
+      address: {
+        line1: '100 Owner Ln',
+        city: 'Duluth',
+        state: 'MN',
+        postal_code: '55802',
+      },
     },
     bankAccount: {
       bank_name: 'Test Bank',
@@ -64,7 +77,9 @@ export const TEST_BUSINESS_DATA = {
   },
   can: {
     coreInfo: {
-      legal_name: `Acme Canada Inc ${Date.now()}`,
+      get legal_name() {
+        return `Acme Canada Inc ${Date.now()}`;
+      },
       doing_business_as: 'Acme CA',
       classification: 'limited',
       date_of_incorporation: '2020-01-01',
@@ -102,7 +117,17 @@ export const TEST_BUSINESS_DATA = {
     },
     owner: {
       name: 'Jean Tremblay',
+      title: 'Director',
       email: 'jean@acme-ca-test.com',
+      phone: '4165551234',
+      dob_full: '1980-01-15',
+      identification_number: '046454286',
+      address: {
+        line1: '200 Owner Ave',
+        city: 'Toronto',
+        province: 'ON',
+        postal_code: 'M5V 2T6',
+      },
     },
     bankAccount: {
       bank_name: 'Test Bank CA',
@@ -241,10 +266,32 @@ export async function fillOwners(
     await page.getByRole('button', { name: 'No' }).click();
     await page.waitForTimeout(500);
   }
-  const nameInput = page.getByLabel('Full Name').first();
-  if (await nameInput.isVisible()) {
-    await nameInput.fill(data.name);
-    await page.getByLabel('Email Address').first().fill(data.email);
+
+  const comp = page.locator('justifi-payment-provisioning');
+  const nameInput = comp.getByLabel('Full Name');
+  await nameInput.waitFor({ state: 'visible', timeout: 15000 });
+  await nameInput.fill(data.name);
+
+  if ('title' in data && data.title !== undefined) {
+    await comp.getByLabel('Title').fill(data.title);
+    await comp.getByLabel('Email Address').fill(data.email);
+    await comp.getByLabel('Phone Number').fill(data.phone);
+    await comp.getByLabel('Birth Date').fill(data.dob_full);
+    const idLabel =
+      (await comp.getByLabel('SSN').count()) > 0 ? 'SSN' : 'SIN';
+    await comp.getByLabel(idLabel).fill(data.identification_number);
+    const addr = data.address;
+    await comp.getByLabel('Street Address').fill(addr.line1);
+    await comp.getByLabel('City').fill(addr.city);
+    if ('state' in addr && addr.state) {
+      await comp.getByLabel('State').selectOption(addr.state);
+      await comp.getByLabel('Zip Code').fill(addr.postal_code);
+    } else if ('province' in addr && addr.province) {
+      await comp.getByLabel('Province').selectOption(addr.province);
+      await comp.getByLabel('Postal Code').fill(addr.postal_code);
+    }
+  } else {
+    await comp.getByLabel('Email Address').fill(data.email);
   }
 }
 
