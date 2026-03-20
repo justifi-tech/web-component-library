@@ -348,4 +348,112 @@ describe('business-bank-account-form-step', () => {
       expect(page.rootInstance.showCancel).toBe(true);
     });
   });
+
+  describe('validateAndSubmit and sendData success paths', () => {
+    async function setupManualWithVoidedDocOnFile() {
+      const bankAfterPost = {
+        id: 'ba_new',
+        account_owner_name: 'Acme Test Corp',
+        account_type: 'checking',
+        account_number: '1234567890',
+        routing_number: '110000000',
+        bank_name: 'Test Bank',
+        nickname: 'Main Acct',
+        business_id: 'biz_123',
+      };
+
+      let loadCount = 0;
+      const mockGetBusiness = jest.fn(({ onSuccess, final }) => {
+        loadCount += 1;
+        if (loadCount === 1) {
+          onSuccess(
+            mockBusinessResponse({
+              bank_account_verification: false,
+              documents: [{ document_type: 'voided_check', id: 'd1' }],
+            }),
+          );
+        } else {
+          onSuccess(
+            mockBusinessResponse({
+              bank_account_verification: false,
+              bank_accounts: [bankAfterPost],
+              documents: [{ document_type: 'voided_check', id: 'd1' }],
+            }),
+          );
+        }
+        final?.();
+      });
+
+      const mockPostBankAccount = jest.fn(({ onSuccess, final }) => {
+        onSuccess({ data: bankAfterPost });
+        final?.();
+      });
+
+      const page = await newSpecPage({
+        components: [BusinessBankAccountFormStep],
+        template: () => (
+          <business-bank-account-form-step
+            authToken="test-token"
+            businessId="biz_123"
+            country={CountryCode.USA}
+          />
+        ),
+      });
+
+      page.rootInstance.getBusiness = mockGetBusiness;
+      page.rootInstance.postBankAccount = mockPostBankAccount;
+      // @ts-ignore
+      page.rootInstance.getData();
+      await page.waitForChanges();
+
+      return { page, mockGetBusiness, mockPostBankAccount };
+    }
+
+    it('manual validateAndSubmit posts bank account, refreshes, and lands in readonly', async () => {
+      const { page, mockGetBusiness, mockPostBankAccount } =
+        await setupManualWithVoidedDocOnFile();
+
+      page.rootInstance.formController.setValues({
+        business_id: 'biz_123',
+        bank_name: 'Test Bank',
+        nickname: 'Main Acct',
+        account_owner_name: 'Acme Test Corp',
+        account_type: 'checking',
+        account_number: '1234567890',
+        routing_number: '110000000',
+      });
+
+      const onSuccess = jest.fn();
+      const step = page.rootInstance as unknown as {
+        sendData: (cb: () => void) => Promise<void>;
+      };
+      await page.rootInstance.formController.validateAndSubmit(async () => {
+        await step.sendData(onSuccess);
+      });
+      await page.waitForChanges();
+
+      expect(mockPostBankAccount).toHaveBeenCalled();
+      expect(mockGetBusiness).toHaveBeenCalledTimes(2);
+      expect(page.rootInstance.viewMode).toBe('readonly');
+      expect(onSuccess).toHaveBeenCalled();
+    });
+
+    it('sendData in readonly skips postBankAccount and invokes onSuccess', async () => {
+      const { page } = await setupComponent(
+        mockBusinessResponse({
+          bank_accounts: [existingBankAccount],
+          bank_account_verification: false,
+        }),
+      );
+      const mockPost = jest.fn();
+      page.rootInstance.postBankAccount = mockPost;
+      const onSuccess = jest.fn();
+      const step = page.rootInstance as unknown as {
+        sendData: (cb: () => void) => Promise<void>;
+      };
+      await step.sendData(onSuccess);
+      expect(mockPost).not.toHaveBeenCalled();
+      expect(onSuccess).toHaveBeenCalledTimes(1);
+    });
+  });
 });
