@@ -7,9 +7,10 @@ import { heading5 } from "../../../styles/parts";
 import fileInputHandler from "./file-input-handler";
 
 @Component({
-  tag: 'justifi-electronic-evidence',
+  tag: 'electronic-evidence',
+  shadow: false,
 })
-export class JustifiElectronicEvidence {
+export class ElectronicEvidence {
   @Prop() disputeResponse!: any;
   @Prop() documentErrors: any = {};
 

@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiCustomerDetails } from './justifi-customer-details';
+import { CustomerDetails } from './customer-details';
 import { DisputeResponseFormStep } from './dispute-response-form-types';
 
-describe('justifi-customer-details', () => {
-  const components = [JustifiCustomerDetails];
+describe('customer-details', () => {
+  const components = [CustomerDetails];
 
   it('renders all fields for the step', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-customer-details disputeResponse={{}} documentErrors={{}} />,
+      template: () => <customer-details disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -24,22 +24,22 @@ describe('justifi-customer-details', () => {
     const disputeResponse = { customer_name: 'Jane', customer_email_address: 'jane@example.com' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-customer-details disputeResponse={disputeResponse} documentErrors={{}} />,
+      template: () => <customer-details disputeResponse={disputeResponse} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiCustomerDetails).disputeResponse).toEqual(disputeResponse);
+    expect((page.rootInstance as CustomerDetails).disputeResponse).toEqual(disputeResponse);
   });
 
   it('validateAndSubmit calls onSuccess with correct formData shape', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-customer-details disputeResponse={{}} documentErrors={{}} />,
+      template: () => <customer-details disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiCustomerDetails).validateAndSubmit(onSuccess);
+    await (page.rootInstance as CustomerDetails).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -50,12 +50,12 @@ describe('justifi-customer-details', () => {
   it('validateAndSubmit succeeds when all fields empty (nullable schema)', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-customer-details disputeResponse={{}} documentErrors={{}} />,
+      template: () => <customer-details disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiCustomerDetails).validateAndSubmit(onSuccess);
+    await (page.rootInstance as CustomerDetails).validateAndSubmit(onSuccess);
     await new Promise((r) => setTimeout(r, 200));
     expect(onSuccess).toHaveBeenCalled();
   });
@@ -63,7 +63,7 @@ describe('justifi-customer-details', () => {
   it('renders file inputs for customer_signature and customer_communication', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-customer-details disputeResponse={{}} documentErrors={{}} />,
+      template: () => <customer-details disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -75,10 +75,10 @@ describe('justifi-customer-details', () => {
     const documentErrors = { customer_signature: 'Invalid file' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-customer-details disputeResponse={{}} documentErrors={documentErrors} />,
+      template: () => <customer-details disputeResponse={{}} documentErrors={documentErrors} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiCustomerDetails).documentErrors).toEqual(documentErrors);
+    expect((page.rootInstance as CustomerDetails).documentErrors).toEqual(documentErrors);
   });
 });

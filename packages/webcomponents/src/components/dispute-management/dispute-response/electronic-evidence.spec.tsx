@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiElectronicEvidence } from './justifi-electronic-evidence';
+import { ElectronicEvidence } from './electronic-evidence';
 import { DisputeResponseFormStep } from './dispute-response-form-types';
 
-describe('justifi-electronic-evidence', () => {
-  const components = [JustifiElectronicEvidence];
+describe('electronic-evidence', () => {
+  const components = [ElectronicEvidence];
 
   it('renders all fields for the step', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-electronic-evidence disputeResponse={{}} documentErrors={{}} />,
+      template: () => <electronic-evidence disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -21,22 +21,22 @@ describe('justifi-electronic-evidence', () => {
     const disputeResponse = { customer_purchase_ip_address: '192.168.1.1' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-electronic-evidence disputeResponse={disputeResponse} documentErrors={{}} />,
+      template: () => <electronic-evidence disputeResponse={disputeResponse} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiElectronicEvidence).disputeResponse).toEqual(disputeResponse);
+    expect((page.rootInstance as ElectronicEvidence).disputeResponse).toEqual(disputeResponse);
   });
 
   it('validateAndSubmit calls onSuccess with correct formData shape', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-electronic-evidence disputeResponse={{}} documentErrors={{}} />,
+      template: () => <electronic-evidence disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiElectronicEvidence).validateAndSubmit(onSuccess);
+    await (page.rootInstance as ElectronicEvidence).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -47,12 +47,12 @@ describe('justifi-electronic-evidence', () => {
   it('validateAndSubmit succeeds when all fields empty (nullable schema)', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-electronic-evidence disputeResponse={{}} documentErrors={{}} />,
+      template: () => <electronic-evidence disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiElectronicEvidence).validateAndSubmit(onSuccess);
+    await (page.rootInstance as ElectronicEvidence).validateAndSubmit(onSuccess);
     await new Promise((r) => setTimeout(r, 200));
     expect(onSuccess).toHaveBeenCalled();
   });
@@ -60,7 +60,7 @@ describe('justifi-electronic-evidence', () => {
   it('renders file input for activity_log', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-electronic-evidence disputeResponse={{}} documentErrors={{}} />,
+      template: () => <electronic-evidence disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -71,10 +71,10 @@ describe('justifi-electronic-evidence', () => {
     const documentErrors = { activity_log: 'Upload failed' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-electronic-evidence disputeResponse={{}} documentErrors={documentErrors} />,
+      template: () => <electronic-evidence disputeResponse={{}} documentErrors={documentErrors} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiElectronicEvidence).documentErrors).toEqual(documentErrors);
+    expect((page.rootInstance as ElectronicEvidence).documentErrors).toEqual(documentErrors);
   });
 });

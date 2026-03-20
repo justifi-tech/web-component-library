@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiShippingDetails } from './justifi-shipping-details';
+import { ShippingDetails } from './shipping-details';
 import { DisputeResponseFormStep } from './dispute-response-form-types';
 
-describe('justifi-shipping-details', () => {
-  const components = [JustifiShippingDetails];
+describe('shipping-details', () => {
+  const components = [ShippingDetails];
 
   it('renders all fields for the step', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-shipping-details disputeResponse={{}} documentErrors={{}} />,
+      template: () => <shipping-details disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -24,22 +24,22 @@ describe('justifi-shipping-details', () => {
     const disputeResponse = { shipping_carrier: 'UPS', shipping_tracking_number: '1Z999' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-shipping-details disputeResponse={disputeResponse} documentErrors={{}} />,
+      template: () => <shipping-details disputeResponse={disputeResponse} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiShippingDetails).disputeResponse).toEqual(disputeResponse);
+    expect((page.rootInstance as ShippingDetails).disputeResponse).toEqual(disputeResponse);
   });
 
   it('validateAndSubmit calls onSuccess with correct formData shape', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-shipping-details disputeResponse={{}} documentErrors={{}} />,
+      template: () => <shipping-details disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiShippingDetails).validateAndSubmit(onSuccess);
+    await (page.rootInstance as ShippingDetails).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -50,12 +50,12 @@ describe('justifi-shipping-details', () => {
   it('validateAndSubmit succeeds when all fields empty (nullable schema)', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-shipping-details disputeResponse={{}} documentErrors={{}} />,
+      template: () => <shipping-details disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiShippingDetails).validateAndSubmit(onSuccess);
+    await (page.rootInstance as ShippingDetails).validateAndSubmit(onSuccess);
     await new Promise((r) => setTimeout(r, 200));
     expect(onSuccess).toHaveBeenCalled();
   });
@@ -63,7 +63,7 @@ describe('justifi-shipping-details', () => {
   it('renders file input for shipping_documentation', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-shipping-details disputeResponse={{}} documentErrors={{}} />,
+      template: () => <shipping-details disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -74,10 +74,10 @@ describe('justifi-shipping-details', () => {
     const documentErrors = { shipping_documentation: 'Upload failed' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-shipping-details disputeResponse={{}} documentErrors={documentErrors} />,
+      template: () => <shipping-details disputeResponse={{}} documentErrors={documentErrors} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiShippingDetails).documentErrors).toEqual(documentErrors);
+    expect((page.rootInstance as ShippingDetails).documentErrors).toEqual(documentErrors);
   });
 });
