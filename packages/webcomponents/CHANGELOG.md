@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.12.4
+
+### Patch Changes
+
+- Fix Terminal constructor reading wrong API field name for provider_serial_number
+
 ## 6.12.3
 
 ### Patch Changes
