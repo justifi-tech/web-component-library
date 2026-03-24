@@ -1,6 +1,24 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Modular Checkout', () => {
+  test('renders Google Pay button when enabled', async ({ page }) => {
+    // Intercept checkout GET to ensure google_payments is enabled
+    await page.route('**/v1/checkouts/*', async (route, request) => {
+      if (request.method() !== 'GET') return route.continue();
+      const response = await route.fetch();
+      const json = await response.json();
+      json.data.payment_settings.google_payments = true;
+      await route.fulfill({ response, json });
+    });
+
+    await page.goto('/modular-checkout');
+    await page.waitForSelector('justifi-modular-checkout');
+    await page.waitForTimeout(3000);
+
+    const gpayIframe = page.locator('justifi-google-pay iframe[src*="googlePay"]');
+    await expect(gpayIframe).toBeAttached();
+  });
+
   test('allows pre-filling billing form fields externally (fillBillingForm())', async ({
     page,
   }) => {

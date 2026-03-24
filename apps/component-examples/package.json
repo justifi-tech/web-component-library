@@ -9,6 +9,7 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
+    "test:e2e:browserstack": "playwright test --config playwright-browserstack.config.ts",
     "start": "npx nodemon ./server.js",
     "start:server": "node ./server.js",
     "start:checkout": "npx nodemon ./examples/checkout.js",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@playwright/test": "^1.58.1",
     "@types/node": "^22.15.21",
+    "browserstack-local": "^1.5.5",
     "dotenv": "^16.4.5"
   }
 }
