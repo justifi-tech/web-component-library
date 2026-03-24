@@ -23,10 +23,12 @@ Using Turborepo simplifies managing your design system monorepo, as you can have
 This Turborepo includes the following packages and applications:
 
 **Publishable packages:**
+
 - `packages/webcomponents`: JustiFi component library (`@justifi/webcomponents`)
 - `docs/`: Documentation package for external consumption (`@justifi/webcomponents-docs`) - lives at repository root
 
 **Internal apps (not published):**
+
 - `apps/component-examples`: Simple component example files for local testing
 - `apps/docs`: Storybook documentation site (deprecated, will be removed)
 
@@ -107,7 +109,9 @@ Before creating a PR with changes, run `pnpm changeset` locally:
 
 ### Publishing
 
-Publishing is done via the **Publish packages** GitHub workflow (`publish.yml`):
+Before publishing, you need to run `pnpm version-packages` to update the versions of the packages in the `package.json` files and open a PR with the changes.
+
+Once the PR is merged, publishing is done via the **Publish packages** GitHub workflow (`publish.yml`):
 
 1. Navigate to Actions > "Publish packages" in GitHub
 2. Click "Run workflow" on the main branch
@@ -145,11 +149,11 @@ This project includes [agent skills](https://skills.sh) to help AI coding assist
 
 ### Installed Skills
 
-| Skill | Source | Purpose |
-|---|---|---|
-| `dogfood` | [vercel-labs/agent-browser](https://skills.sh/vercel-labs/agent-browser/dogfood) | Systematic web app exploration and issue detection |
-| `javascript-testing-patterns` | [wshobson/agents](https://skills.sh/wshobson/agents/javascript-testing-patterns) | JS/TS testing strategies and patterns |
-| `webapp-testing` | [anthropics/skills](https://skills.sh/anthropics/skills/webapp-testing) | Web app testing with Playwright |
+| Skill                         | Source                                                                           | Purpose                                            |
+| ----------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `dogfood`                     | [vercel-labs/agent-browser](https://skills.sh/vercel-labs/agent-browser/dogfood) | Systematic web app exploration and issue detection |
+| `javascript-testing-patterns` | [wshobson/agents](https://skills.sh/wshobson/agents/javascript-testing-patterns) | JS/TS testing strategies and patterns              |
+| `webapp-testing`              | [anthropics/skills](https://skills.sh/anthropics/skills/webapp-testing)          | Web app testing with Playwright                    |
 
 ### Installing Skills
 
