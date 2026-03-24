@@ -1,15 +1,15 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiDuplicateCharge } from './justifi-duplicate-charge';
+import { DuplicateCharge } from './duplicate-charge';
 import { DisputeResponseFormStep } from './dispute-response-form-types';
 
-describe('justifi-duplicate-charge', () => {
-  const components = [JustifiDuplicateCharge];
+describe('duplicate-charge', () => {
+  const components = [DuplicateCharge];
 
   it('renders all fields for the step', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-duplicate-charge disputeResponse={{}} documentErrors={{}} />,
+      template: () => <duplicate-charge disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -22,22 +22,22 @@ describe('justifi-duplicate-charge', () => {
     const disputeResponse = { duplicate_charge_original_payment_id: 'py_123' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-duplicate-charge disputeResponse={disputeResponse} documentErrors={{}} />,
+      template: () => <duplicate-charge disputeResponse={disputeResponse} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiDuplicateCharge).disputeResponse).toEqual(disputeResponse);
+    expect((page.rootInstance as DuplicateCharge).disputeResponse).toEqual(disputeResponse);
   });
 
   it('validateAndSubmit calls onSuccess with correct formData shape', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-duplicate-charge disputeResponse={{}} documentErrors={{}} />,
+      template: () => <duplicate-charge disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiDuplicateCharge).validateAndSubmit(onSuccess);
+    await (page.rootInstance as DuplicateCharge).validateAndSubmit(onSuccess);
     await page.waitForChanges();
 
     expect(onSuccess).toHaveBeenCalled();
@@ -48,12 +48,12 @@ describe('justifi-duplicate-charge', () => {
   it('validateAndSubmit succeeds when all fields empty (nullable schema)', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-duplicate-charge disputeResponse={{}} documentErrors={{}} />,
+      template: () => <duplicate-charge disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
     const onSuccess = jest.fn();
-    await (page.rootInstance as JustifiDuplicateCharge).validateAndSubmit(onSuccess);
+    await (page.rootInstance as DuplicateCharge).validateAndSubmit(onSuccess);
     await new Promise((r) => setTimeout(r, 200));
     expect(onSuccess).toHaveBeenCalled();
   });
@@ -61,7 +61,7 @@ describe('justifi-duplicate-charge', () => {
   it('renders file input for duplicate_charge_documentation', async () => {
     const page = await newSpecPage({
       components,
-      template: () => <justifi-duplicate-charge disputeResponse={{}} documentErrors={{}} />,
+      template: () => <duplicate-charge disputeResponse={{}} documentErrors={{}} />,
     });
     await page.waitForChanges();
 
@@ -72,10 +72,10 @@ describe('justifi-duplicate-charge', () => {
     const documentErrors = { duplicate_charge_documentation: 'Upload failed' };
     const page = await newSpecPage({
       components,
-      template: () => <justifi-duplicate-charge disputeResponse={{}} documentErrors={documentErrors} />,
+      template: () => <duplicate-charge disputeResponse={{}} documentErrors={documentErrors} />,
     });
     await page.waitForChanges();
 
-    expect((page.rootInstance as JustifiDuplicateCharge).documentErrors).toEqual(documentErrors);
+    expect((page.rootInstance as DuplicateCharge).documentErrors).toEqual(documentErrors);
   });
 });

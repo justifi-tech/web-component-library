@@ -3,17 +3,17 @@ import { Component, h, Event, EventEmitter, Prop } from "@stencil/core";
 import { Dispute } from "../../api/Dispute";
 import { formatCurrency } from "../../utils/utils";
 import { heading4, text } from "../../styles/parts";
-import { Skeleton, Button, StyledHost } from "../../ui-components";
+import { Skeleton, Button } from "../../ui-components";
 import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-actions";
 import { DisputeService } from "../../api/services/dispute.service";
 import { ComponentClickEvent, ComponentSubmitEvent, ComponentErrorEvent } from "../../api/ComponentEvents";
 import { DisputeManagementClickActions } from "./event-types";
 
 @Component({
-  tag: 'justifi-dispute-notification',
-  shadow: true
+  tag: 'dispute-notification',
+  shadow: false,
 })
-export class JustifiDisputeNotification {
+export class DisputeNotification {
   @Prop() dispute!: Dispute;
   @Prop() authToken!: string;
   @Prop() isLoading!: boolean;
@@ -65,7 +65,7 @@ export class JustifiDisputeNotification {
 
   render() {
     return (
-      <StyledHost>
+      <div class="dispute-notification-root">
         {this.isLoading && (
           <div style={{ marginBottom: '8px' }}>
             <Skeleton height={'28px'} width={'70%'} styles={{ marginBottom: '16px' }} />
@@ -140,7 +140,7 @@ export class JustifiDisputeNotification {
             <p>The cardholder disputed this payment and the card issuer has settled it in their favor.</p>
           </div>
         )}
-      </StyledHost>
+      </div>
     );
   }
 };

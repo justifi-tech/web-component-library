@@ -131,10 +131,10 @@
 
   ```js
   // With .js extension
-  import "@justifi/webcomponents/dist/module/justifi-checkout.js";
+  import '@justifi/webcomponents/dist/module/justifi-checkout.js';
 
   // Without .js extension
-  import "@justifi/webcomponents/dist/module/justifi-checkout";
+  import '@justifi/webcomponents/dist/module/justifi-checkout';
   ```
 
 ## 6.7.3

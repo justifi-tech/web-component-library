@@ -1,7 +1,7 @@
 jest.mock('../../ui-components/styled-host/styled-host.css', () => '');
 
 import { newSpecPage } from '@stencil/core/testing';
-import { JustifiDisputeNotification } from './justifi-dispute-notification';
+import { DisputeNotification } from './dispute-notification';
 import { Dispute, DisputeStatus } from '../../api/Dispute';
 import { DisputeService } from '../../api/services/dispute.service';
 
@@ -22,18 +22,18 @@ function makeDispute(overrides: Partial<typeof baseDispute> = {}) {
   return new Dispute({ ...baseDispute, ...overrides });
 }
 
-describe('justifi-dispute-notification', () => {
-  const components = [JustifiDisputeNotification];
+describe('dispute-notification', () => {
+  const components = [DisputeNotification];
 
   it('isLoading=true renders skeleton placeholders, no dispute content', async () => {
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" is-loading></justifi-dispute-notification>',
+      html: '<dispute-notification auth-token="tok" is-loading></dispute-notification>',
     });
     (page.root as any).isLoading = true;
     await page.waitForChanges();
 
-    const host = page.root.shadowRoot;
+    const host = page.root;
     expect(host.innerHTML).toContain('skeleton');
     expect(host.textContent).not.toContain('This payment is disputed');
   });
@@ -43,12 +43,12 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" is-loading="false"></justifi-dispute-notification>',
+      html: '<dispute-notification auth-token="tok" is-loading="false"></dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
 
-    const host = page.root.shadowRoot;
+    const host = page.root;
     expect(host.textContent).toContain('$10.00');
     expect(host.textContent).toContain('fraudulent');
     expect(host.textContent).toContain('2099-04-01');
@@ -61,12 +61,12 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" is-loading="false"></justifi-dispute-notification>',
+      html: '<dispute-notification auth-token="tok" is-loading="false"></dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
 
-    const host = page.root.shadowRoot;
+    const host = page.root;
     expect(host.textContent).toContain('due date');
     expect(host.textContent).toContain('has passed');
     expect(host.textContent).toContain('You can no longer submit evidence');
@@ -79,12 +79,12 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<dispute-notification auth-token="tok" isLoading="false"></dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
 
-    const host = page.root.shadowRoot;
+    const host = page.root;
     expect(host.textContent).toContain('under review');
     expect(host.textContent).toContain('counter dispute has been submitted');
   });
@@ -94,12 +94,12 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<dispute-notification auth-token="tok" isLoading="false"></dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
 
-    const host = page.root.shadowRoot;
+    const host = page.root;
     expect(host.textContent).toContain('settled it in your favor');
   });
 
@@ -108,12 +108,12 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<dispute-notification auth-token="tok" isLoading="false"></dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
 
-    const host = page.root.shadowRoot;
+    const host = page.root;
     expect(host.textContent).toContain('settled it in their favor');
   });
 
@@ -123,13 +123,13 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<dispute-notification auth-token="tok" isLoading="false"></dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     page.root.addEventListener('click-event', clickSpy);
     await page.waitForChanges();
 
-    const counterBtn = page.root.shadowRoot.querySelector('button[class*="primary"]') as HTMLButtonElement;
+    const counterBtn = page.root.querySelector('button[class*="primary"]') as HTMLButtonElement;
     counterBtn?.click();
     await page.waitForChanges();
 
@@ -146,12 +146,12 @@ describe('justifi-dispute-notification', () => {
 
     const page = await newSpecPage({
       components,
-      html: '<justifi-dispute-notification auth-token="tok" isLoading="false"></justifi-dispute-notification>',
+      html: '<dispute-notification auth-token="tok" isLoading="false"></dispute-notification>',
     });
     (page.root as any).dispute = dispute;
     await page.waitForChanges();
 
-    const acceptBtn = page.root.shadowRoot.querySelector('button[class*="secondary"]') as HTMLButtonElement;
+    const acceptBtn = page.root.querySelector('button[class*="secondary"]') as HTMLButtonElement;
     acceptBtn?.click();
     await page.waitForChanges();
     await new Promise((r) => setTimeout(r, 0));
