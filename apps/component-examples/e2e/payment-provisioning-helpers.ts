@@ -149,6 +149,7 @@ export type AdditionalQuestionsData =
 export type RepresentativeData = (typeof TEST_BUSINESS_DATA.usa)['representative'];
 export type RepresentativeDataCAN = (typeof TEST_BUSINESS_DATA.can)['representative'];
 export type OwnerData = (typeof TEST_BUSINESS_DATA.usa)['owner'];
+export type OwnerDataCAN = (typeof TEST_BUSINESS_DATA.can)['owner'];
 export type BankAccountData = (typeof TEST_BUSINESS_DATA.usa)['bankAccount'];
 export type BankAccountDataCAN = (typeof TEST_BUSINESS_DATA.can)['bankAccount'];
 
@@ -251,7 +252,7 @@ export async function fillRepresentativeCAN(
 
 export async function fillOwners(
   page: Page,
-  data: OwnerData,
+  data: OwnerData | OwnerDataCAN,
   options?: { representativeIsOwner?: boolean },
 ): Promise<void> {
   const repIsOwnerBanner = page.getByText(
