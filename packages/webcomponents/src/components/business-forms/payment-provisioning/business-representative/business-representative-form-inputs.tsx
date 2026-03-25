@@ -90,7 +90,9 @@ export class BusinessRepresentativeFormInputs {
               {(!this.representativeDefaultValue?.ssn_last4 || this.isEditingIdentification) ? (
                 <form-control-number-masked
                   name="identification_number"
-                  label={countryLabels[this.country].idNumberLabel}
+                  label={this.country === CountryCode.CAN
+                    ? countryLabels[this.country].idNumberLabelOptional
+                    : countryLabels[this.country].idNumberLabel}
                   defaultValue={this.isEditingIdentification ? '' : this.representativeDefaultValue?.identification_number}
                   errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
@@ -100,7 +102,9 @@ export class BusinessRepresentativeFormInputs {
               ) : (
                 <div>
                   <label class="form-label" part={label}>
-                    {countryLabels[this.country].idNumberLabel}
+                    {this.country === CountryCode.CAN
+                      ? countryLabels[this.country].idNumberLabelOptional
+                      : countryLabels[this.country].idNumberLabel}
                   </label>
                   <div class="input-group mb-3">
                     <input

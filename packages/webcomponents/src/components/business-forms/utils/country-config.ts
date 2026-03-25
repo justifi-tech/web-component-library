@@ -18,7 +18,7 @@ export const countryLabels = {
 		postalLabel: 'Postal Code',
 		idNumberLabel: 'SIN',
 		idNumberLabelOptional: 'SIN (optional)',
-		identityHelpText: 'Enter your full Social Insurance Number.',
+		identityHelpText: 'Enter your full Social Insurance Number, if available.',
 		taxIdLabel: 'Business Number (BN)',
 		taxIdHelpText: 'Business Numbers (BN) are nine digits. Enter value without spaces or dashes.',
 	},

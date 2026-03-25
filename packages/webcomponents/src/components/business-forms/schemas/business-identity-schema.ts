@@ -62,7 +62,7 @@ const strictSchemaCAN = (role: string) =>
     phone: phoneValidation.required('Enter phone number'),
     dob_full: dobValidation(role).required('Enter date of birth'),
     ssn_last4: string().nullable(),
-    identification_number: makeIdentityNumberValidation(CountryCode.CAN),
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN).nullable(),
     ownership_percentage: ownershipPercentageValidation.nullable(),
     address: addressSchemaCAN(false),
   });
