@@ -41,6 +41,7 @@ const routes = [
   '/payment-transactions-list',
   '/payout-transactions-list',
   '/qr-terminal',
+  '/checkout-qr-code',
 ];
 
 routes.forEach((route) => {
