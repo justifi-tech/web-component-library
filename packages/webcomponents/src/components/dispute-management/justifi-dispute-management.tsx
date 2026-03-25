@@ -1,24 +1,60 @@
-import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Event, EventEmitter, Listen } from '@stencil/core';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { checkPkgVersion } from '../../utils/check-pkg-version';
 import { makeGetDispute } from '../../actions/dispute/dispute-actions';
 import { DisputeService } from '../../api/services/dispute.service';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
+import { DisputeManagementClickActions } from './event-types';
+import { Dispute, DisputeStatus } from '../../api/Dispute';
+import { StyledHost } from '../../ui-components';
 
 @Component({
   tag: 'justifi-dispute-management',
+  shadow: true,
 })
 export class JustifiDisputeManagement {
   @Prop() disputeId!: string;
   @Prop() authToken!: string;
 
   @State() getDispute: Function;
-  @State() errorMessage: string = null;
+  @State() dispute: Dispute;
+  @State() isLoading: boolean = true;
+  @State() showDisputeResponseForm: boolean = false;
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
+
+  private fetchDisputePending = false;
+
+  private scheduleFetchDispute() {
+    if (!this.getDispute || this.fetchDisputePending) {
+      return;
+    }
+    this.fetchDisputePending = true;
+    queueMicrotask(() => {
+      this.fetchDisputePending = false;
+      if (this.getDispute) {
+        this.fetchData();
+      }
+    });
+  }
+
+  @Listen('click-event')
+  disputeResponseHandler(event: CustomEvent) {
+    if (event.detail.name === DisputeManagementClickActions.respondToDispute) {
+      this.showDisputeResponseForm = true;
+    }
+    if (event.detail.name === DisputeManagementClickActions.cancelDispute) {
+      this.showDisputeResponseForm = false;
+    }
+  }
+
+  @Listen('submit-event')
+  disputeSubmittedHandler() {
+    this.fetchData();
+  }
 
   componentWillLoad() {
     checkPkgVersion();
@@ -26,14 +62,19 @@ export class JustifiDisputeManagement {
     this.initializeGetDispute();
   }
 
+  componentDidLoad() {
+    this.scheduleFetchDispute();
+  }
+
   disconnectedCallback() {
     this.analytics?.cleanup();
-  };
+  }
 
   @Watch('disputeId')
   @Watch('authToken')
   propChanged() {
     this.initializeGetDispute();
+    this.scheduleFetchDispute();
   }
 
   private initializeGetDispute() {
@@ -41,31 +82,57 @@ export class JustifiDisputeManagement {
       this.getDispute = makeGetDispute({
         id: this.disputeId,
         authToken: this.authToken,
-        service: new DisputeService()
+        service: new DisputeService(),
       });
     } else {
-      this.errorMessage = 'Dispute ID and Auth Token are required';
       this.errorEvent.emit({
-        message: this.errorMessage,
+        message: 'Dispute ID and Auth Token are required',
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
       });
     }
   }
 
-  handleErrorEvent = event => {
-    this.errorMessage = event.detail.message;
-    this.errorEvent.emit(event.detail);
+  fetchData(): void {
+    if (!this.getDispute) {
+      return;
+    }
+    this.isLoading = true;
+
+    this.getDispute({
+      onSuccess: ({ dispute }) => {
+        this.dispute = new Dispute(dispute);
+        this.isLoading = false;
+        if (this.dispute.status !== DisputeStatus.needsResponse) {
+          this.showDisputeResponseForm = false;
+        }
+      },
+      onError: ({ error, code, severity }) => {
+        this.errorEvent.emit({
+          errorCode: code,
+          message: error,
+          severity,
+        });
+        this.isLoading = false;
+      },
+    });
   }
 
   render() {
     return (
-      <justifi-dispute-management-core
-        getDispute={this.getDispute}
-        disputeId={this.disputeId}
-        authToken={this.authToken}
-        onError-event={this.handleErrorEvent}
-      />
+      <StyledHost>
+        <div>
+          {this.showDisputeResponseForm ? (
+            <dispute-response
+              disputeId={this.disputeId}
+              disputeResponse={this.dispute.dispute_response}
+              authToken={this.authToken}
+            />
+          ) : (
+            <dispute-notification dispute={this.dispute} authToken={this.authToken} isLoading={this.isLoading} />
+          )}
+        </div>
+      </StyledHost>
     );
   }
 }

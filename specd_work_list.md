@@ -32,5 +32,5 @@ POPULATED BY: /specd:audit command, /specd:review-intake command, and humans dur
 ### Phase 4 — Non-list components
 - Merge `gross-payment-chart`: combine `justifi-gross-payment-chart` and `gross-payment-chart-core` into single component with `StyledHost`, preserve `componentDidLoad` for canvas ref, delete core files, update tests (blocked: Merge `checkouts-list`)
 - Merge `dispute-management`: combine `justifi-dispute-management` and `dispute-management-core` into single component with `StyledHost`, delete core files, update tests (blocked: Merge `checkouts-list`)
-- Merge `dispute-response`: combine `justifi-dispute-response` and `dispute-response-core` into single component with `StyledHost`, delete core files, update tests (blocked: Merge `dispute-management`)
+- Merge `dispute-response`: `dispute-response` is internal light-DOM; any remaining core-merge work TBD (blocked: Merge `dispute-management`)
 - Merge `owner-form`: combine `owner-form` wrapper and `owner-form-core` into single component with `StyledHost`, delete core files, update tests (blocked: Merge `checkouts-list`)

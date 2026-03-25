@@ -177,6 +177,12 @@ describe('justifi-payment-provisioning', () => {
         },
       })
     );
+
+    const hostText = page.root.shadowRoot?.textContent ?? '';
+    expect(hostText).toContain('Business Already Provisioned');
+    expect(hostText).toContain(
+      'We have already received the onboarding information for this business.',
+    );
   });
 
   it('should render form after business data loads', async () => {
