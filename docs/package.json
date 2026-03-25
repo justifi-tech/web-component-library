@@ -45,8 +45,7 @@
     "build:webcomponents": "pnpm --filter @justifi/webcomponents build:docs",
     "build:helpers": "pnpm exec esbuild helpers/**/*.tsx helpers/**/*.jsx helpers/**/*.ts helpers/**/*.js --outdir=dist/helpers --format=esm --jsx=automatic --platform=node --target=es2020 && node -e \"const p=require('./package.json');delete p.scripts;delete p.devDependencies;require('fs').writeFileSync('dist/package.json',JSON.stringify(p,null,2))\" && cp -r mocks dist/",
     "build:index": "echo \"export * from './helpers/index.js';\" > dist/index.js",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "lint": "eslint --ext .md,.mdx --config .eslintrc.cjs ."
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
     "markdown-table": "^3.0.4",
@@ -56,13 +55,10 @@
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
     "@justifi/webcomponents": "workspace:*",
     "@types/node": "^22.15.21",
     "@types/react": "^18.3.0",
     "esbuild": "^0.20.0",
-    "eslint": "^9.27.0",
-    "eslint-plugin-mdx": "^3.1.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remark-frontmatter": "^4.0.1"

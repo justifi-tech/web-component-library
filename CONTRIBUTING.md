@@ -8,7 +8,7 @@ email, or any other method with the owners of this repository before making a ch
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
 ## Important Links
- - [Web Component Documentation](https://storybook.justifi.ai/?path=/docs/introduction--docs)
+ - [Web Component Documentation](https://docs.justifi.tech/web-components/introduction)
  - [JustiFi API Documentation](https://developer.justifi.ai/)
 
 ## How to Report a Bug

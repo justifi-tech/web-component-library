@@ -4,9 +4,8 @@
   "scripts": {
     "postinstall": "pnpm --filter @repo/component-examples exec playwright install chromium",
     "build": "turbo run build",
-    "dev": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/docs dev'",
+    "dev": "pnpm --filter @justifi/webcomponents dev",
     "dev:server": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:server'",
-    "preview-storybook": "turbo run preview-storybook",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",
@@ -16,7 +15,6 @@
     "test:e2e:ui": "pnpm --filter @repo/component-examples test:e2e:ui",
     "test:e2e:headed": "pnpm --filter @repo/component-examples test:e2e:headed",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "docs:lint": "node scripts/run-docs-lint.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
