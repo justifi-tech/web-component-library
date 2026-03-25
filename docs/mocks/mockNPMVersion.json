@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/justifi-tech/web-component-library.git"
   },
-  "homepage": "https://storybook.justifi.ai/?path=/docs/introduction--docs",
+  "homepage": "https://docs.justifi.tech/web-components/introduction",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },

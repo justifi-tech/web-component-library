@@ -1,11 +1,11 @@
 # Documentation
 
-- [JustiFi Web Component Documentation](https://storybook.justifi.ai/?path=/docs/introduction--docs)
+- [JustiFi Web Component Documentation](https://docs.justifi.tech/web-components/introduction)
 
 ### Useful Commands
 
-- `pnpm build` - Build all packages, including the Storybook site
-- `pnpm dev` - Run all packages locally and preview with Storybook
+- `pnpm build` - Build all packages
+- `pnpm dev` - Run the webcomponents package in dev/watch mode
 - `pnpm test` - Run all tests
 - `pnpm test:watch` - Run all tests in watch mode
 - `pnpm lint` - Lint all packages
@@ -30,7 +30,6 @@ This Turborepo includes the following packages and applications:
 **Internal apps (not published):**
 
 - `apps/component-examples`: Simple component example files for local testing
-- `apps/docs`: Storybook documentation site (deprecated, will be removed)
 
 Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
 
@@ -71,21 +70,6 @@ webcomponents
 ## Components
 
 Each file inside of `webcomponents/src/components` is a component inside our component library. For example:
-
-## Storybook
-
-Storybook provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This repo is set up to:
-
-- Use Vite to bundle stories instantly (in milliseconds)
-- Automatically find any stories inside the `stories/` folder
-- Support using module path aliases for imports
-- Write MDX for component documentation pages
-
-This project includes a few helpful Storybook scripts:
-
-- `pnpm dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
-- `pnpm build`: Builds the Storybook UI and generates the static HTML files
-- `pnpm preview-storybook`: Starts a local server to view the generated Storybook UI
 
 ## Versioning & Publishing Packages
 
@@ -133,13 +117,7 @@ This project offers the ability to render the components in simple example files
 1. Clone this project to your local machine
 2. Once installed, run `pnpm install && pnpm build` to build the component library's latest version.
 
-You can verify the full components documentation by executing
-
-`pnpm dev`
-
-Or you can try them out by executing
-
-`pnpm dev:server`
+Use `pnpm dev` for the webcomponents dev watcher, or `pnpm dev:server` for the component examples app with the API server.
 
 See the full documentation of the tests components [here](https://github.com/justifi-tech/web-component-library/blob/main/apps/component-examples/README.md)
 

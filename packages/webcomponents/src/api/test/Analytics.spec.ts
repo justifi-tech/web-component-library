@@ -150,7 +150,7 @@ describe('JustifiAnalytics', () => {
     });
   });
 
-  describe('localhost and storybook exclusion', () => {
+  describe('localhost and docs exclusion', () => {
     it('should not initialize analytics on localhost', () => {
       Object.defineProperty(window, 'location', {
         value: {
@@ -171,24 +171,23 @@ describe('JustifiAnalytics', () => {
       expect(localAnalytics.service).toBeUndefined();
     });
 
-    it('should not initialize analytics on storybook', () => {
+    it('should not initialize analytics on docs.justifi.tech', () => {
       Object.defineProperty(window, 'location', {
         value: {
-          origin: 'http://storybook.example.com',
+          origin: 'https://docs.justifi.tech',
         },
         writable: true,
       });
 
-      const storybookMockComponent = {
+      const docsMockComponent = {
         tagName: 'test-component',
         addEventListener: jest.fn(),
       };
 
-      const storybookAnalytics = new JustifiAnalytics(storybookMockComponent);
+      const docsAnalytics = new JustifiAnalytics(docsMockComponent);
 
-      // Should not have called addEventListener since we're on storybook
-      expect(storybookMockComponent.addEventListener).not.toHaveBeenCalled();
-      expect(storybookAnalytics.service).toBeUndefined();
+      expect(docsMockComponent.addEventListener).not.toHaveBeenCalled();
+      expect(docsAnalytics.service).toBeUndefined();
     });
   });
 });

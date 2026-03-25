@@ -19,20 +19,3 @@ updates:
       - 'TiagoFuelber'
     commit-message:
       prefix: '[dependabot] '
-
-  - package-ecosystem: 'npm'
-    directory: '/apps/docs'
-    schedule:
-      interval: 'weekly'
-    open-pull-requests-limit: 10
-    groups:
-      dependencies:
-        patterns:
-          - '*'
-    reviewers:
-      - 'jakemer'
-      - 'colganmeanor'
-    assignees:
-      - 'TiagoFuelber'
-    commit-message:
-      prefix: '[dependabot] '
