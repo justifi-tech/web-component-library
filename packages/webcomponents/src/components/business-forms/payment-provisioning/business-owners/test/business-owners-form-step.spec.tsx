@@ -40,10 +40,12 @@ async function setupComponent(
   return { page, mockGet, mockPatch };
 }
 
-function createMockRef() {
+function createMockRef(ownershipPercentage: string = '100') {
   return {
     validate: jest.fn().mockResolvedValue(true),
     submit: jest.fn().mockResolvedValue(true),
+    getOwnershipPercentage: jest.fn().mockResolvedValue(ownershipPercentage),
+    setOwnershipPercentageError: jest.fn().mockResolvedValue(undefined),
   };
 }
 
@@ -277,6 +279,57 @@ describe('business-owners-form-step', () => {
 
       expect(mockRef.validate).toHaveBeenCalled();
       expect(mockRef.submit).toHaveBeenCalled();
+      expect(mockPatch).toHaveBeenCalled();
+    });
+
+    it('does not call sendData when ownership percentages do not total 100%', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef1 = createMockRef('30');
+      const mockRef2 = createMockRef('20');
+      page.rootInstance.refs = [mockRef1, mockRef2];
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+
+      expect(mockRef1.setOwnershipPercentageError).toHaveBeenCalledWith('Ownership percentages must total 100%');
+      expect(mockRef2.setOwnershipPercentageError).toHaveBeenCalledWith('Ownership percentages must total 100%');
+      expect(mockPatch).not.toHaveBeenCalled();
+    });
+
+    it('proceeds when ownership percentages total exactly 100%', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef1 = createMockRef('60');
+      const mockRef2 = createMockRef('40');
+      page.rootInstance.refs = [mockRef1, mockRef2];
+      mockPatch.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({});
+        final?.();
+      });
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockRef1.setOwnershipPercentageError).not.toHaveBeenCalled();
+      expect(mockPatch).toHaveBeenCalled();
+    });
+
+    it('skips total percentage validation when allowOptionalFields is true', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      page.rootInstance.allowOptionalFields = true;
+      const mockRef1 = createMockRef('30');
+      const mockRef2 = createMockRef('20');
+      page.rootInstance.refs = [mockRef1, mockRef2];
+      mockPatch.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({});
+        final?.();
+      });
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockRef1.setOwnershipPercentageError).not.toHaveBeenCalled();
       expect(mockPatch).toHaveBeenCalled();
     });
 

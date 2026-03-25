@@ -55,6 +55,16 @@ export class OwnerForm {
   }
 
   @Method()
+  async getOwnershipPercentage(): Promise<string | null> {
+    return this.formController.values.getValue()?.ownership_percentage || null;
+  }
+
+  @Method()
+  async setOwnershipPercentageError(message: string): Promise<void> {
+    this.formController.setFieldError('ownership_percentage', message);
+  }
+
+  @Method()
   async validate(): Promise<boolean> {
     return this.formController.validate();
   }
