@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-qr-terminal — initial load transitions to completed state and emits checkout-completed when checkout is already completed 1`] = `
+<justifi-qr-terminal>
+  <div>
+    <div>
+      <p>
+        Payment received
+      </p>
+    </div>
+  </div>
+</justifi-qr-terminal>
+`;
+
+exports[`justifi-qr-terminal — initial load transitions to expired state and emits checkout-expired when checkout is expired 1`] = `
+<justifi-qr-terminal>
+  <div>
+    <p>
+      Checkout expired. Please create a new checkout.
+    </p>
+  </div>
+</justifi-qr-terminal>
+`;
+
+exports[`justifi-qr-terminal — initial load transitions to ready state when checkout is created 1`] = `
+<justifi-qr-terminal>
+  <div>
+    <div>
+      <justifi-checkout-qr-code>
+        <div>
+          <svg>
+            mock-qr
+          </svg>
+        </div>
+      </justifi-checkout-qr-code>
+      <p>
+        Scan to pay
+      </p>
+    </div>
+  </div>
+</justifi-qr-terminal>
+`;
+
+exports[`justifi-qr-terminal — polling transitions to payment-failed when a new failed completion is detected 1`] = `
+<justifi-qr-terminal>
+  <div>
+    <div>
+      <justifi-checkout-qr-code>
+        <div>
+          <svg>
+            mock-qr
+          </svg>
+        </div>
+      </justifi-checkout-qr-code>
+      <p>
+        Payment failed. Please try again.
+      </p>
+    </div>
+  </div>
+</justifi-qr-terminal>
+`;
+
+exports[`justifi-qr-terminal — props validation emits error-event and renders nothing when authToken is missing 1`] = `<justifi-qr-terminal></justifi-qr-terminal>`;

@@ -10,13 +10,13 @@ import { JustifiQrTerminal } from '../justifi-qr-terminal';
 import { JustifiCheckoutQrCode } from '../../checkout-qr-code/justifi-checkout-qr-code';
 import { CheckoutService } from '../../../api/services/checkout.service';
 import JustifiAnalytics from '../../../api/Analytics';
-import mockPending from '../../../../../../../mockData/mockGetCheckoutPending.json';
-import mockCompleted from '../../../../../../../mockData/mockGetCheckoutCompleted.json';
-import mockExpired from '../../../../../../../mockData/mockGetCheckoutExpired.json';
-import mockWithFailedCompletion from '../../../../../../../mockData/mockGetCheckoutWithFailedCompletion.json';
+import mockPending from '../../../../../../mockData/mockGetCheckoutPending.json';
+import mockCompleted from '../../../../../../mockData/mockGetCheckoutCompleted.json';
+import mockExpired from '../../../../../../mockData/mockGetCheckoutExpired.json';
+import mockWithFailedCompletion from '../../../../../../mockData/mockGetCheckoutWithFailedCompletion.json';
 
 beforeEach(() => {
-  jest.useFakeTimers();
+  jest.useFakeTimers({ doNotFake: ['nextTick', 'queueMicrotask', 'setImmediate'] });
   // @ts-ignore
   JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
   jest.clearAllMocks();
@@ -149,7 +149,7 @@ describe('justifi-qr-terminal — polling', () => {
     });
     await page.waitForChanges();
 
-    jest.advanceTimersByTime(3000);
+    await jest.advanceTimersByTimeAsync(3000);
     await page.waitForChanges();
 
     expect(page.rootInstance.terminalState).toBe('payment-failed');
@@ -169,11 +169,11 @@ describe('justifi-qr-terminal — polling', () => {
     });
     await page.waitForChanges();
 
-    jest.advanceTimersByTime(3000);
+    await jest.advanceTimersByTimeAsync(3000);
     await page.waitForChanges();
     expect(page.rootInstance.terminalState).toBe('payment-failed');
 
-    jest.advanceTimersByTime(3000);
+    await jest.advanceTimersByTimeAsync(3000);
     await page.waitForChanges();
     expect(page.rootInstance.terminalState).toBe('ready');
   });
@@ -197,7 +197,7 @@ describe('justifi-qr-terminal — polling', () => {
     });
     await page.waitForChanges();
 
-    jest.advanceTimersByTime(3000);
+    await jest.advanceTimersByTimeAsync(3000);
     await page.waitForChanges();
 
     expect(page.rootInstance.terminalState).toBe('completed');
@@ -227,7 +227,7 @@ describe('justifi-qr-terminal — polling', () => {
     });
     await page.waitForChanges();
 
-    jest.advanceTimersByTime(3000);
+    await jest.advanceTimersByTimeAsync(3000);
     await page.waitForChanges();
 
     expect(page.rootInstance.terminalState).toBe('expired');
@@ -254,7 +254,7 @@ describe('justifi-qr-terminal — polling', () => {
     });
     await page.waitForChanges();
 
-    jest.advanceTimersByTime(10001);
+    await jest.advanceTimersByTimeAsync(10001);
     await page.waitForChanges();
 
     expect(page.rootInstance.terminalState).toBe('error');
