@@ -3,8 +3,7 @@
   "tasks": {
     "build": {
       "outputs": [
-        "dist/**",
-        "storybook-static/**"
+        "dist/**"
       ],
       "dependsOn": [
         "^build"
@@ -27,15 +26,6 @@
     },
     "test:file": {},
     "lint": {},
-    "preview-storybook": {
-      "outputs": [
-        "dist/**",
-        "storybook-static/**"
-      ],
-      "dependsOn": [
-        "build"
-      ]
-    },
     "clean": {
       "cache": false
     }
