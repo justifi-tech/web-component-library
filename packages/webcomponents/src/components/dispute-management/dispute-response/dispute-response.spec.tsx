@@ -143,7 +143,12 @@ describe('dispute-response', () => {
 describe('dispute-response wizard', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    global.fetch = jest.fn().mockResolvedValue({ ok: true });
+    global.fetch = jest.fn().mockResolvedValue(
+      new Response(JSON.stringify({}), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
   });
 
   it('renders step 0 (product-or-service) on mount', async () => {
