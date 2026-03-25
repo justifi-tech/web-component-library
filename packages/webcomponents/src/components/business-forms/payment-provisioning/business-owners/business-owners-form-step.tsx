@@ -119,6 +119,17 @@ export class BusinessOwnersFormStep {
     const formsValid = (await Promise.all(formValidations)).every(result => result);
     if (!formsValid) { return; }
 
+    if (!this.allowOptionalFields) {
+      const percentages = await Promise.all(this.refs.map(ref => ref.getOwnershipPercentage()));
+      const total = percentages.reduce((sum, p) => sum + (parseFloat(p) || 0), 0);
+      if (total !== 100) {
+        await Promise.all(this.refs.map(ref =>
+          ref.setOwnershipPercentageError('Ownership percentages must total 100%')
+        ));
+        return;
+      }
+    }
+
     const formSubmissions = this.refs.map(ref => ref.submit());
     const submissionsValid = (await Promise.all(formSubmissions)).every(result => result);
     if (!submissionsValid) { return; }
