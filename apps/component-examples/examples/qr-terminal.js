@@ -8,6 +8,7 @@ const router = express.Router();
 async function makeCheckout(token) {
   const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
   const subAccountId = process.env.SUB_ACCOUNT_ID;
+  const port = process.env.PORT || 3000;
 
   const response = await fetch(checkoutEndpoint, {
     method: "POST",
@@ -16,18 +17,22 @@ async function makeCheckout(token) {
       Authorization: `Bearer ${token}`,
       "Sub-Account": subAccountId,
     },
-    body: JSON.stringify({ amount: 1799, description: "QR Terminal Demo" }),
+    body: JSON.stringify({ amount: 1799, description: "QR Terminal Demo", origin_url: `localhost:${port}` }),
   });
 
-  const { data } = await response.json();
-  return data;
+  const json = await response.json();
+  if (!json.data) {
+    throw new Error(`Checkout creation failed: ${JSON.stringify(json)}`);
+  }
+  return json.data;
 }
 
 router.get("/", async (req, res) => {
+  try {
   const token = await getToken();
   const checkout = await makeCheckout(token);
   const webComponentToken = await getWebComponentToken(token, [
-    `read:checkout:${checkout.id}`,
+    `write:checkout:${checkout.id}`,
   ]);
 
   res.send(`
@@ -62,6 +67,10 @@ router.get("/", async (req, res) => {
       </script>
     </html>
   `);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(`<pre>${err.message}</pre>`);
+  }
 });
 
 module.exports = router;
