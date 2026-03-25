@@ -26,10 +26,10 @@ class JustifiAnalytics {
   private eventListeners: Map<string, Function> = new Map();
 
   constructor(component: ComponentInterface) {
-    // dont track analytics in local or storybook
+    // dont track analytics on local dev or public docs site
     if (
       window.location.origin.includes('localhost') ||
-      window.location.origin.includes('storybook')
+      window.location.origin.includes('docs.justifi.tech')
     ) {
       return;
     }
