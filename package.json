@@ -5,7 +5,7 @@
     "postinstall": "pnpm --filter @repo/component-examples exec playwright install chromium",
     "build": "turbo run build",
     "dev": "pnpm --filter @justifi/webcomponents dev",
-    "dev:server": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start:server'",
+    "dev:server": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start'",
     "lint": "turbo run lint",
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",
