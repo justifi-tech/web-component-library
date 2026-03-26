@@ -82,6 +82,44 @@ describe('ownership_percentage requirement', () => {
     });
   });
 
+  describe('strict CAN schema - SIN optional', () => {
+    it('passes for owner when identification_number is null', async () => {
+      const schema = identitySchemaCAN('owner', false);
+      const data = {
+        ...baseIdentity,
+        identification_number: null,
+        ssn_last4: null,
+        ownership_percentage: '50',
+        address: validAddressCAN,
+      };
+      await expect(schema.isValid(data)).resolves.toBe(true);
+    });
+
+    it('passes for representative when identification_number is null', async () => {
+      const schema = identitySchemaCAN('representative', false);
+      const data = {
+        ...baseIdentity,
+        identification_number: null,
+        ssn_last4: null,
+        ownership_percentage: null,
+        address: validAddressCAN,
+      };
+      await expect(schema.isValid(data)).resolves.toBe(true);
+    });
+
+    it('still validates SIN format when provided', async () => {
+      const schema = identitySchemaCAN('owner', false);
+      const data = {
+        ...baseIdentity,
+        identification_number: '111111111',
+        ssn_last4: null,
+        ownership_percentage: '50',
+        address: validAddressCAN,
+      };
+      await expect(schema.isValid(data)).resolves.toBe(false);
+    });
+  });
+
   describe('permissive schemas', () => {
     it('USA: passes for owner when ownership_percentage is empty', async () => {
       const schema = identitySchemaUSA('owner', true);

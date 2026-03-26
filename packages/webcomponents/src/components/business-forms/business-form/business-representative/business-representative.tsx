@@ -19,7 +19,7 @@ export class BusinessRepresentative {
   get identificationNumberLabel() {
     const label = countryLabels[this.country].idNumberLabel;
     const labelOptional = countryLabels[this.country].idNumberLabelOptional;
-    return this.representative?.ssn_last4 ? labelOptional : label;
+    return (this.representative?.ssn_last4 || this.country === CountryCode.CAN) ? labelOptional : label;
   }
 
   componentDidLoad() {
