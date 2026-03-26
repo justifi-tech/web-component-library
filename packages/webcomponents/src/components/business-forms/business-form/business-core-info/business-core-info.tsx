@@ -102,7 +102,7 @@ export class BusinessCoreInfo {
               {(!this.coreInfo?.tax_id_last4 || this.isEditingTaxId) ? (
                 <form-control-number-masked
                   name="tax_id"
-                  label={countryLabels[this.country].taxIdLabel}
+                  label={countryLabels[this.country].taxIdLabelOptional || countryLabels[this.country].taxIdLabel}
                   defaultValue={this.isEditingTaxId ? '' : coreInfoDefaultValue.tax_id}
                   errorText={this.errors.tax_id}
                   inputHandler={this.inputHandler}

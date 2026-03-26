@@ -180,7 +180,7 @@ export class AdditionalQuestionsFormStep {
               />
             </div>
             <div class="col-12">
-              <form-control-text
+              <form-control-number
                 name="business_average_transaction_amount"
                 label="What is your average transaction size?"
                 inputHandler={this.inputHandler}

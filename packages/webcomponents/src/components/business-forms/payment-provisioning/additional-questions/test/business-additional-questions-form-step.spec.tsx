@@ -77,7 +77,7 @@ describe('additional-questions-form-step', () => {
 
       const revenue = page.root.querySelector('form-control-monetary-provisioning[name="business_revenue"]');
       const paymentVolume = page.root.querySelector('form-control-monetary-provisioning[name="business_payment_volume"]');
-      const avgTransaction = page.root.querySelector('form-control-text[name="business_average_transaction_amount"]');
+      const avgTransaction = page.root.querySelector('form-control-number[name="business_average_transaction_amount"]');
       const whenServiceReceived = page.root.querySelector('form-control-select[name="business_when_service_received"]');
       const otherDetails = page.root.querySelector('form-control-text[name="business_other_payment_details"]');
 

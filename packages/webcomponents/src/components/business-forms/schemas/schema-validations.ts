@@ -97,9 +97,11 @@ export const makeTaxIdValidation = (country: CountryCode) => {
       .matches(numbersOnlyRegex, 'Enter valid Business Number (BN)')
       .length(countryValidation[country].taxIdDigits, 'Enter valid Business Number (BN)')
       .test('not-repeat', 'Enter valid Business Number (BN)', (value) => {
+        if (!value) return true;
         return !/^(\d)\1+$/.test(value);
       })
       .test('not-seq', 'Enter valid Business Number (BN)', (value) => {
+        if (!value) return true;
         return value !== '123456789';
       })
       .transform(transformEmptyString);

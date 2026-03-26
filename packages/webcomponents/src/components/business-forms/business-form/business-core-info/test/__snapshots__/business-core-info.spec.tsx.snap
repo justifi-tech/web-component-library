@@ -23,7 +23,7 @@ exports[`business-core-info Country-specific tax ID label and help text renders 
         <form-control-text label="Industry" name="industry"></form-control-text>
       </div>
       <div class="col-12 col-md-6">
-        <form-control-number-masked helptext="Business Numbers (BN) are nine digits. Enter value without spaces or dashes." label="Business Number (BN)" mask="000-000-000" name="tax_id"></form-control-number-masked>
+        <form-control-number-masked helptext="Business Numbers (BN) are nine digits. Enter value without spaces or dashes." label="Business Number (BN) (optional)" mask="000-000-000" name="tax_id"></form-control-number-masked>
       </div>
       <div class="col-12">
         <form-control-text label="Website URL" name="website_url"></form-control-text>
