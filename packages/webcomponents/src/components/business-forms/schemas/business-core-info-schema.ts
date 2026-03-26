@@ -60,7 +60,7 @@ export const businessCoreInfoSchemaCAN = (allowOptionalFields?: boolean) =>
     tax_id: makeTaxIdValidation(CountryCode.CAN)
       .when('tax_id_last4', {
         is: (val: string | undefined | null) => !val,
-        then: (schema) => schema.required(`Enter valid ${countryLabels.CAN.taxIdLabel} without dashes`),
+        then: (schema) => schema.notRequired().nullable(),
         otherwise: (schema) => schema.nullable(),
       }),
   } as any));
