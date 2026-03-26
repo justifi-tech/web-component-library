@@ -1,6 +1,8 @@
 name: E2E Tests
 
 on:
+  schedule:
+    - cron: '0 8 * * *' # Daily at 2am CT (8:00 UTC)
   push:
     branches: [main]
   pull_request:
