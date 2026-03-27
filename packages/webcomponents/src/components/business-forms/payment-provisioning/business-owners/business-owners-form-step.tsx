@@ -193,6 +193,7 @@ export class BusinessOwnersFormStep {
       this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== '');
       this.patchBusiness({
         payload: {
+          representative: { is_owner: true },
           owners: [{ id: this.representative.id }, ...this.ownersPayload],
         },
         onSuccess: () => {
