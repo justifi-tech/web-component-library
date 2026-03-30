@@ -40,7 +40,7 @@ export interface DocumentCategory {
   docTypeOptions: { label: string; value: string }[];
 }
 
-export type DocumentUploadStatus = 'pending' | 'uploading' | 'uploaded' | 'error';
+export type DocumentUploadStatus = 'uploading' | 'uploaded' | 'error';
 
 export interface UploadedDocumentEntry {
   categoryLabel: string;

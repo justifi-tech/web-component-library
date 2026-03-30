@@ -70,7 +70,8 @@ export class DocumentUploadFormStep {
     }
 
     this.errors = {};
-    await this.sendData(onSuccess);
+    this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.documentUpload });
+    onSuccess();
   }
 
   componentWillLoad() {
@@ -146,24 +147,24 @@ export class DocumentUploadFormStep {
     const hasExistingDoc = (types: string[]) =>
       this.existingDocuments.some(doc => types.includes(doc.document_type));
 
-    const hasQueuedDoc = (categoryValue: string) =>
-      this.uploadQueue.some(entry => entry.categoryValue === categoryValue);
+    const hasUploadedDoc = (categoryValue: string) =>
+      this.uploadQueue.some(entry => entry.categoryValue === categoryValue && entry.status === 'uploaded');
 
-    if (!hasQueuedDoc('financial_document') && !hasExistingDoc(financialDocTypes)) {
+    if (!hasUploadedDoc('financial_document') && !hasExistingDoc(financialDocTypes)) {
       errors['financial_document'] = 'Please upload a financial document';
     }
 
     if (this.country === CountryCode.CAN) {
       const businessDocTypes = ['articles_of_incorporation', 'business_registration'];
 
-      if (!hasQueuedDoc('business_document') && !hasExistingDoc(businessDocTypes)) {
+      if (!hasUploadedDoc('business_document') && !hasExistingDoc(businessDocTypes)) {
         errors['business_document'] = 'Please upload a business document';
       }
 
       for (const owner of this.owners) {
         const ownerCategoryValue = `personal_${owner.id}`;
         const ownerDocs = this.uploadQueue.filter(
-          entry => entry.categoryValue === ownerCategoryValue
+          entry => entry.categoryValue === ownerCategoryValue && entry.status === 'uploaded'
         );
 
         const hasGroup1 = ownerDocs.some(d => personalDocGroup1Types.has(d.docTypeValue));
@@ -193,7 +194,7 @@ export class DocumentUploadFormStep {
     this.selectedDocType = value;
   }
 
-  handleFileSelected = (e: CustomEvent<FileSelectEvent>) => {
+  handleFileSelected = async (e: CustomEvent<FileSelectEvent>) => {
     const fileList = Array.from(e.detail.fileList) as File[];
     const category = this.categories.find(c => c.value === this.selectedCategory);
     if (!category) return;
@@ -209,33 +210,17 @@ export class DocumentUploadFormStep {
       fileName: file.name,
       file,
       identityId: category.identityId,
-      status: 'pending' as const,
+      status: 'uploading' as const,
     }));
 
+    const startIndex = this.uploadQueue.length;
     this.uploadQueue = [...this.uploadQueue, ...newEntries];
     this.selectedCategory = '';
     this.selectedDocType = '';
     this.fileInputKey++;
-  }
 
-  handleRemoveDocument = (index: number) => {
-    if (this.uploadQueue[index]?.status === 'uploaded') return;
-    this.uploadQueue = this.uploadQueue.filter((_, i) => i !== index);
-  }
-
-  handleUploadAll = async () => {
-    const indicesToUpload = this.uploadQueue
-      .map((e, i) => (e.status === 'pending' || e.status === 'error') ? i : -1)
-      .filter(i => i !== -1);
-
-    if (!indicesToUpload.length) return;
-
-    this.uploadQueue = this.uploadQueue.map((e, i) =>
-      indicesToUpload.includes(i) ? { ...e, status: 'uploading' as const } : e
-    );
-
-    await Promise.all(indicesToUpload.map(async (index) => {
-      const entry = this.uploadQueue[index];
+    await Promise.all(newEntries.map(async (entry, i) => {
+      const index = startIndex + i;
       try {
         const docData = new EntityDocument(
           { file: entry.file, document_type: entry.docTypeValue as EntityDocumentType },
@@ -245,67 +230,22 @@ export class DocumentUploadFormStep {
 
         const recordCreated = await this.postDocumentRecordData(docData);
         if (!recordCreated) {
-          this.uploadQueue = this.uploadQueue.map((e, i) =>
-            i === index ? { ...e, status: 'error' as const } : e
+          this.uploadQueue = this.uploadQueue.map((e, j) =>
+            j === index ? { ...e, status: 'error' as const } : e
           );
           return;
         }
 
         const uploaded = await this.uploadDocument(docData);
-        this.uploadQueue = this.uploadQueue.map((e, i) =>
-          i === index ? { ...e, status: uploaded ? 'uploaded' as const : 'error' as const } : e
+        this.uploadQueue = this.uploadQueue.map((e, j) =>
+          j === index ? { ...e, status: uploaded ? 'uploaded' as const : 'error' as const } : e
         );
       } catch {
-        this.uploadQueue = this.uploadQueue.map((e, i) =>
-          i === index ? { ...e, status: 'error' as const } : e
+        this.uploadQueue = this.uploadQueue.map((e, j) =>
+          j === index ? { ...e, status: 'error' as const } : e
         );
       }
     }));
-  }
-
-  private async sendData(onSuccess: () => void) {
-    try {
-      const documentsUploaded = await this.postBusinessDocuments();
-      if (!documentsUploaded) return;
-
-      this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.documentUpload });
-      onSuccess();
-    } catch (error) {
-      this.errorEvent.emit({
-        message: error,
-        errorCode: ComponentErrorCodes.POST_ERROR,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-    }
-  }
-
-  private async postBusinessDocuments(): Promise<boolean> {
-    this.isLoading = true;
-    try {
-      const pendingEntries = this.uploadQueue.filter(e => e.status !== 'uploaded');
-      const docArray = pendingEntries.map(entry =>
-        new EntityDocument(
-          { file: entry.file, document_type: entry.docTypeValue as EntityDocumentType },
-          this.businessId,
-          entry.identityId
-        )
-      );
-      if (!docArray.length) return true;
-
-      const recordsCreated = await Promise.all(
-        docArray.map((docData) => this.postDocumentRecordData(docData))
-      );
-      if (recordsCreated.includes(false)) return false;
-
-      const uploadsCompleted = await Promise.all(
-        docArray.map((docData) => this.uploadDocument(docData))
-      );
-      if (uploadsCompleted.includes(false)) return false;
-
-      return true;
-    } finally {
-      this.isLoading = false;
-    }
   }
 
   private postDocumentRecordData = async (docData: EntityDocument): Promise<boolean> => {
@@ -424,8 +364,6 @@ export class DocumentUploadFormStep {
 
         <document-upload-list
           documents={this.uploadQueue}
-          removeHandler={this.handleRemoveDocument}
-          uploadAllHandler={this.handleUploadAll}
         />
 
         {Object.keys(this.errors).length > 0 && (
