@@ -63,11 +63,6 @@ export class DocumentUploadFormStep {
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
-    if (this.country !== CountryCode.CAN) {
-      onSuccess();
-      return;
-    }
-
     const validationErrors = this.validate();
     if (Object.keys(validationErrors).length > 0) {
       this.errors = validationErrors;
@@ -112,7 +107,7 @@ export class DocumentUploadFormStep {
         const { owners, documents } = response.data;
         this.owners = owners || [];
         this.existingDocuments = documents || [];
-        this.categories = buildAllCategories(this.owners);
+        this.categories = buildAllCategories(this.owners, this.country);
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -146,7 +141,6 @@ export class DocumentUploadFormStep {
     if (this.allowOptionalFields) return {};
 
     const errors: { [key: string]: string } = {};
-    const businessDocTypes = ['articles_of_incorporation', 'business_registration'];
     const financialDocTypes = ['voided_check', 'bank_statement'];
 
     const hasExistingDoc = (types: string[]) =>
@@ -155,30 +149,34 @@ export class DocumentUploadFormStep {
     const hasQueuedDoc = (categoryValue: string) =>
       this.uploadQueue.some(entry => entry.categoryValue === categoryValue);
 
-    if (!hasQueuedDoc('business_document') && !hasExistingDoc(businessDocTypes)) {
-      errors['business_document'] = 'Please upload a business document';
-    }
-
     if (!hasQueuedDoc('financial_document') && !hasExistingDoc(financialDocTypes)) {
       errors['financial_document'] = 'Please upload a financial document';
     }
 
-    for (const owner of this.owners) {
-      const ownerCategoryValue = `personal_${owner.id}`;
-      const ownerDocs = this.uploadQueue.filter(
-        entry => entry.categoryValue === ownerCategoryValue
-      );
+    if (this.country === CountryCode.CAN) {
+      const businessDocTypes = ['articles_of_incorporation', 'business_registration'];
 
-      const hasGroup1 = ownerDocs.some(d => personalDocGroup1Types.has(d.docTypeValue));
-      const hasGroup2 = ownerDocs.some(d => personalDocGroup2Types.has(d.docTypeValue));
-
-      if (!hasGroup1) {
-        errors[`personal_group1_${owner.id}`] =
-          `Please upload a Group 1 identity document for ${owner.name}`;
+      if (!hasQueuedDoc('business_document') && !hasExistingDoc(businessDocTypes)) {
+        errors['business_document'] = 'Please upload a business document';
       }
-      if (!hasGroup2) {
-        errors[`personal_group2_${owner.id}`] =
-          `Please upload a Group 2 identity document for ${owner.name}`;
+
+      for (const owner of this.owners) {
+        const ownerCategoryValue = `personal_${owner.id}`;
+        const ownerDocs = this.uploadQueue.filter(
+          entry => entry.categoryValue === ownerCategoryValue
+        );
+
+        const hasGroup1 = ownerDocs.some(d => personalDocGroup1Types.has(d.docTypeValue));
+        const hasGroup2 = ownerDocs.some(d => personalDocGroup2Types.has(d.docTypeValue));
+
+        if (!hasGroup1) {
+          errors[`personal_group1_${owner.id}`] =
+            `Please upload a Group 1 identity document for ${owner.name}`;
+        }
+        if (!hasGroup2) {
+          errors[`personal_group2_${owner.id}`] =
+            `Please upload a Group 2 identity document for ${owner.name}`;
+        }
       }
     }
 
@@ -368,10 +366,6 @@ export class DocumentUploadFormStep {
   }
 
   render() {
-    if (this.country !== CountryCode.CAN) {
-      return null;
-    }
-
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
     }

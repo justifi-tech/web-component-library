@@ -1,4 +1,5 @@
 import { Identity } from '../../../../api';
+import { CountryCode } from '../../../../utils/country-codes';
 
 export const businessDocumentOptions = [
   { label: 'Select a document type', value: '' },
@@ -83,7 +84,18 @@ export function buildOwnerCategories(owners: Identity[]): DocumentCategory[] {
   }));
 }
 
-export function buildAllCategories(owners: Identity[]): DocumentCategory[] {
+export const financialOnlyCategories: DocumentCategory[] = [
+  {
+    label: 'Financial Document',
+    value: 'financial_document',
+    docTypeOptions: financialDocumentOptions,
+  },
+];
+
+export function buildAllCategories(owners: Identity[], country?: CountryCode): DocumentCategory[] {
+  if (country === CountryCode.USA) {
+    return financialOnlyCategories;
+  }
   return [...staticCategories, ...buildOwnerCategories(owners)];
 }
 
