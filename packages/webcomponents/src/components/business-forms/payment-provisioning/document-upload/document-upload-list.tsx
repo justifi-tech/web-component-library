@@ -7,7 +7,7 @@ import { card, heading2, table, tableCell, tableHeadCell } from '../../../../sty
 })
 export class DocumentUploadList {
   @Prop() documents: UploadedDocumentEntry[] = [];
-  @Prop() onRemove!: (index: number) => void;
+  @Prop() removeHandler!: (index: number) => void;
 
   render() {
     if (!this.documents.length) {
@@ -39,7 +39,7 @@ export class DocumentUploadList {
                         <button
                           type="button"
                           class="btn btn-link btn-sm text-danger p-0"
-                          onClick={() => this.onRemove(index)}
+                          onClick={() => this.removeHandler(index)}
                         >
                           Remove
                         </button>

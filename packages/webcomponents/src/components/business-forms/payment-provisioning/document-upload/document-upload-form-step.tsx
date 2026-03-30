@@ -387,7 +387,7 @@ export class DocumentUploadFormStep {
 
         <document-upload-list
           documents={this.uploadQueue}
-          onRemove={this.handleRemoveDocument}
+          removeHandler={this.handleRemoveDocument}
         />
 
         {Object.keys(this.errors).length > 0 && (
