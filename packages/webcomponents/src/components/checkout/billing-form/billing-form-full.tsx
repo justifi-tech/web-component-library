@@ -2,7 +2,7 @@ import { Component, h, State, Prop, Method } from '@stencil/core';
 import { BillingFormFields, fullBillingSchema } from './billing-form-schema';
 import { billingForm } from '../../../styles/parts';
 import { Header3 } from '../../../ui-components';
-import StateOptions from '../../../utils/state-options';
+import checkoutBillingStateOptions from '../../../utils/checkout-billing-state-options';
 import { FormController } from '../../../ui-components/form/form';
 import { checkoutStore, onChange } from '../../../store/checkout.store';
 
@@ -117,8 +117,8 @@ export class BillingFormFull {
               <div class="col-12">
                 <form-control-select
                   name='address_state'
-                  label='State'
-                  options={StateOptions}
+                  label='State / Province'
+                  options={checkoutBillingStateOptions}
                   defaultValue={billingFormDefaultValue.address_state}
                   errorText={this.errors.address_state}
                   inputHandler={this.inputHandler}
