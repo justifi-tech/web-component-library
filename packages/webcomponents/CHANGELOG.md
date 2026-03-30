@@ -1,5 +1,12 @@
 ### Changelog
 
+## 6.12.5
+
+### Patch Changes
+
+- fd4c5a7: Fix Date of Birth display of the owner in Owner details and mark representative as owner in the payment provisioning form when prompted
+- 91959dd: Checkout billing: state/province field lists US states and Canadian provinces/territories. Business onboarding forms are unchanged (US-only state lists where they already apply).
+
 ## 6.12.4
 
 ### Patch Changes
