@@ -7,8 +7,8 @@ import StateOptions from './state-options';
  */
 const checkoutBillingStateOptions = [
   { label: 'Choose state / province', value: '' },
-  ...StateOptions.slice(1),
-  ...ProvinceOptions.slice(1),
+  ...StateOptions.filter((option) => option.value !== ''),
+  ...ProvinceOptions.filter((option) => option.value !== ''),
 ];
 
 export default checkoutBillingStateOptions;
