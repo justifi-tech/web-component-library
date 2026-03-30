@@ -5,6 +5,7 @@ import { deconstructDate } from '../../utils/helpers';
 import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { CountryCode } from '../../../../utils/country-codes';
 import { countryLabels } from '../../utils/country-config';
+import { businessTitleOptions } from '../../utils/business-form-options';
 
 @Component({
   tag: 'business-representative'
@@ -87,9 +88,10 @@ export class BusinessRepresentative {
               />
             </div>
             <div class="col-12 col-md-4">
-              <form-control-text
+              <form-control-select
                 name="title"
                 label="Title"
+                options={businessTitleOptions}
                 defaultValue={representativeDefaultValue?.title}
                 errorText={this.errors.title}
                 inputHandler={this.inputHandler}

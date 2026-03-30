@@ -16,7 +16,7 @@ exports[`business-representative-form-inputs Country-specific identification num
           <form-control-text label="Full Name" name="name"></form-control-text>
         </div>
         <div class="col-12 col-md-4">
-          <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
+          <form-control-select label="Title" name="title"></form-control-select>
         </div>
         <div class="col-12 col-md-6">
           <form-control-text label="Email Address" name="email"></form-control-text>
@@ -55,7 +55,7 @@ exports[`business-representative-form-inputs Country-specific identification num
           <form-control-text label="Full Name" name="name"></form-control-text>
         </div>
         <div class="col-12 col-md-4">
-          <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
+          <form-control-select label="Title" name="title"></form-control-select>
         </div>
         <div class="col-12 col-md-6">
           <form-control-text label="Email Address" name="email"></form-control-text>
@@ -94,7 +94,7 @@ exports[`business-representative-form-inputs Form component behavior uses toggle
           <form-control-text label="Full Name" name="name"></form-control-text>
         </div>
         <div class="col-12 col-md-4">
-          <form-control-text helptext="Role at your business, e.g. President, CEO, Treasurer." label="Title" name="title"></form-control-text>
+          <form-control-select label="Title" name="title"></form-control-select>
         </div>
         <div class="col-12 col-md-6">
           <form-control-text label="Email Address" name="email"></form-control-text>
