@@ -39,6 +39,8 @@ export interface DocumentCategory {
   docTypeOptions: { label: string; value: string }[];
 }
 
+export type DocumentUploadStatus = 'pending' | 'uploading' | 'uploaded' | 'error';
+
 export interface UploadedDocumentEntry {
   categoryLabel: string;
   categoryValue: string;
@@ -47,6 +49,7 @@ export interface UploadedDocumentEntry {
   fileName: string;
   file: File;
   identityId?: string;
+  status: DocumentUploadStatus;
 }
 
 export const staticCategories: DocumentCategory[] = [
