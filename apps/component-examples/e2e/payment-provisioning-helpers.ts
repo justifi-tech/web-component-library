@@ -221,7 +221,7 @@ export async function fillRepresentative(
   data: RepresentativeData,
 ): Promise<void> {
   await page.getByLabel('Full Name').fill(data.name);
-  await page.getByLabel('Title').fill(data.title);
+  await page.getByLabel('Title').selectOption(data.title);
   await page.getByLabel('Email Address').fill(data.email);
   await page.getByLabel('Phone Number').fill(data.phone);
   await page.getByLabel('Birth Date').fill(data.dob_full);
@@ -238,7 +238,7 @@ export async function fillRepresentativeCAN(
   data: RepresentativeDataCAN,
 ): Promise<void> {
   await page.getByLabel('Full Name').fill(data.name);
-  await page.getByLabel('Title').fill(data.title);
+  await page.getByLabel('Title').selectOption(data.title);
   await page.getByLabel('Email Address').fill(data.email);
   await page.getByLabel('Phone Number').fill(data.phone);
   await page.getByLabel('Birth Date').fill(data.dob_full);
@@ -274,7 +274,7 @@ export async function fillOwners(
   await nameInput.fill(data.name);
 
   if ('title' in data && data.title !== undefined) {
-    await comp.getByLabel('Title').fill(data.title);
+    await comp.getByLabel('Title').selectOption(data.title);
     await comp.getByLabel('Email Address').fill(data.email);
     await comp.getByLabel('Phone Number').fill(data.phone);
     await comp.getByLabel('Birth Date').fill(data.dob_full);

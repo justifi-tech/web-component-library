@@ -11,7 +11,7 @@ exports[`business-representative Country-specific identification number label re
         <form-control-text label="Full Name" name="name"></form-control-text>
       </div>
       <div class="col-12 col-md-4">
-        <form-control-text label="Title" name="title"></form-control-text>
+        <form-control-select label="Title" name="title"></form-control-select>
       </div>
       <div class="col-12 col-md-6">
         <form-control-text label="Email Address" name="email"></form-control-text>
@@ -44,7 +44,7 @@ exports[`business-representative Country-specific identification number label re
         <form-control-text label="Full Name" name="name"></form-control-text>
       </div>
       <div class="col-12 col-md-4">
-        <form-control-text label="Title" name="title"></form-control-text>
+        <form-control-select label="Title" name="title"></form-control-select>
       </div>
       <div class="col-12 col-md-6">
         <form-control-text label="Email Address" name="email"></form-control-text>
@@ -77,7 +77,7 @@ exports[`business-representative Form component behavior uses toggleable-field i
         <form-control-text label="Full Name" name="name"></form-control-text>
       </div>
       <div class="col-12 col-md-4">
-        <form-control-text label="Title" name="title"></form-control-text>
+        <form-control-select label="Title" name="title"></form-control-select>
       </div>
       <div class="col-12 col-md-6">
         <form-control-text label="Email Address" name="email"></form-control-text>

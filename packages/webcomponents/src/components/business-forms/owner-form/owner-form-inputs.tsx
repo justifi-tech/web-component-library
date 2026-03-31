@@ -4,6 +4,7 @@ import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues 
 import { FormController } from '../../../components';
 import { CountryCode } from '../../../utils/country-codes';
 import { countryLabels } from '../utils/country-config';
+import { businessTitleOptions } from '../utils/business-form-options';
 import { label, inputDisabled, buttonSecondary } from '../../../styles/parts';
 
 @Component({
@@ -40,13 +41,13 @@ export class OwnerFormInputs {
           />
         </div>
         <div class="col-12 col-md-4">
-          <form-control-text
+          <form-control-select
             name="title"
             label="Title"
+            options={businessTitleOptions}
             defaultValue={this.ownerDefaultValue.title}
             errorText={this.errors.title}
             inputHandler={this.inputHandler}
-            helpText="Role at your business, e.g. President, CEO, Treasurer."
           />
         </div>
         <div class="col-12 col-md-6">
