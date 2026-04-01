@@ -16,6 +16,7 @@ import {
   fillBankAccountManual,
   fillBankAccountManualCAN,
   fillDocumentUpload,
+  fillDocumentUploadCAN,
   acceptTerms,
   clickNext,
   clickSubmit,
@@ -136,7 +137,7 @@ test.describe('payment-provisioning happy path - CAN', () => {
     await waitForStep(page, 7);
 
     // Step 6: Document Upload
-    await fillDocumentUpload(page);
+    await fillDocumentUploadCAN(page);
     await clickNext(page);
     await waitForStep(page, 8);
 

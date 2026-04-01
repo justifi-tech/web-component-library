@@ -359,6 +359,37 @@ export async function fillDocumentUpload(
   await expect(comp.locator('.badge.bg-success')).toBeVisible({ timeout: 15000 });
 }
 
+export async function fillDocumentUploadCAN(
+  page: Page,
+  fixturePath: string = VOIDED_CHECK_FIXTURE,
+): Promise<void> {
+  const comp = page.locator('justifi-payment-provisioning');
+  const categorySelect = page.getByLabel('Document Category');
+  const typeSelect = page.getByLabel('Document Type');
+  const fileInput = comp.locator('input[name="document_file"]');
+
+  async function uploadDoc(categoryValue: string, docType: string, expectedBadges: number) {
+    await categorySelect.selectOption(categoryValue);
+    await page.waitForTimeout(300);
+    await typeSelect.selectOption(docType);
+    await page.waitForTimeout(300);
+    await fileInput.setInputFiles(fixturePath);
+    await expect(comp.locator('.badge.bg-success')).toHaveCount(expectedBadges, { timeout: 15000 });
+  }
+
+  // Financial document
+  await uploadDoc('financial_document', 'voided_check', 1);
+  // Business document
+  await uploadDoc('business_document', 'articles_of_incorporation', 2);
+  // Owner identity docs — select by label since we don't know owner ID
+  const ownerOption = categorySelect.locator('option', { hasText: 'Identity Document' }).first();
+  const ownerCategoryValue = (await ownerOption.getAttribute('value'))!;
+  // Group 1
+  await uploadDoc(ownerCategoryValue, 'passport', 3);
+  // Group 2
+  await uploadDoc(ownerCategoryValue, 'nexus_card', 4);
+}
+
 export async function acceptTerms(page: Page): Promise<void> {
   await page.getByLabel('I agree to the terms and conditions').check();
 }
