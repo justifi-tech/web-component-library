@@ -306,13 +306,14 @@ describe('justifi-payment-provisioning', () => {
 
       await page.waitForChanges();
 
-      expect(page.root.shadowRoot?.textContent).toContain('Step 1 of 7');
+      expect(page.root.shadowRoot?.textContent).toContain('Step 1 of 8');
     });
 
     it.each([
-      ['Step 1 of 7', 0],
-      ['Step 4 of 7', 3],
-      ['Step 7 of 7', 6],
+      ['Step 1 of 8', 0],
+      ['Step 4 of 8', 3],
+      ['Step 7 of 8', 6],
+      ['Step 8 of 8', 7],
     ])(
       'should display step counter "%s" when currentStep is %i',
       async (expectedText, currentStep) => {
@@ -354,7 +355,7 @@ describe('justifi-payment-provisioning', () => {
       expect(page.rootInstance.currentStep).toBe(1);
     });
 
-    it('should not increment past step 6', async () => {
+    it('should not increment past step 7', async () => {
       const page = await newSpecPage({
         components: [JustifiPaymentProvisioning],
         template: () => (
@@ -367,11 +368,11 @@ describe('justifi-payment-provisioning', () => {
 
       await page.waitForChanges();
 
-      page.rootInstance.currentStep = 6;
+      page.rootInstance.currentStep = 7;
       page.rootInstance.incrementSteps();
       await page.waitForChanges();
 
-      expect(page.rootInstance.currentStep).toBe(6);
+      expect(page.rootInstance.currentStep).toBe(7);
     });
 
     it('should decrement step from 1 to 0', async () => {

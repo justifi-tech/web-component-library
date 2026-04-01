@@ -59,10 +59,17 @@ export class PaymentProvisioningFormSteps {
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
-    6: () => <business-terms-conditions-form-step
+    6: () => <document-upload-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[6] = el}
+      allowOptionalFields={this.allowOptionalFields}
+      country={this.country}
+    />,
+    7: () => <business-terms-conditions-form-step
+      businessId={this.businessId}
+      authToken={this.authToken}
+      ref={(el) => this.refs[7] = el}
       onFormLoading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
     />,

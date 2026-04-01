@@ -262,9 +262,11 @@ export const routingNumberValidation = string()
   .length(9, 'Routing number must be 9 digits')
   .matches(numbersOnlyRegex, 'Enter valid routing number')
   .test('not-repeat', 'Enter valid routing number', (value) => {
+    if (!value) return true;
     return !/^(\d)\1+$/.test(value);
   })
   .test('valid', 'Enter valid routing number', (value) => {
+    if (!value) return true;
     return validateRoutingNumber(value);
   })
   .transform(transformEmptyString);

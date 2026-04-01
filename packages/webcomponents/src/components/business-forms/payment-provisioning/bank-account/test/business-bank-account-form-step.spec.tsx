@@ -247,42 +247,6 @@ describe('business-bank-account-form-step', () => {
     });
   });
 
-  describe('document uploads visibility', () => {
-    it('renders document uploads in manual mode', async () => {
-      const { page } = await setupComponent(
-        mockBusinessResponse({ bank_account_verification: false })
-      );
-
-      expect(page.rootInstance.viewMode).toBe('manual');
-      expect(page.root.querySelector('bank-account-document-form-inputs')).toBeTruthy();
-    });
-
-    it('renders document uploads in readonly mode', async () => {
-      const { page } = await setupComponent(
-        mockBusinessResponse({
-          bank_accounts: [existingBankAccount],
-          bank_account_verification: true,
-          platform_account_id: 'pa_123',
-        })
-      );
-
-      expect(page.rootInstance.viewMode).toBe('readonly');
-      expect(page.root.querySelector('bank-account-document-form-inputs')).toBeTruthy();
-    });
-
-    it('does not render document uploads in plaid mode', async () => {
-      const { page } = await setupComponent(
-        mockBusinessResponse({
-          bank_account_verification: true,
-          platform_account_id: 'pa_123',
-        })
-      );
-
-      expect(page.rootInstance.viewMode).toBe('plaid');
-      expect(page.root.querySelector('bank-account-document-form-inputs')).toBeNull();
-    });
-  });
-
   describe('computed properties', () => {
     it('plaidAvailable is false when bankAccountVerification is false', async () => {
       const { page } = await setupComponent(

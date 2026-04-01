@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentErrorEvent, ComponentErrorCodes, ComponentErrorSeverity, ComponentFormStepCompleteEvent, BankAccount, IBankAccount, EntityDocument, EntityDocumentStorage, FileSelectEvent } from '../../../../api';
-import { makeGetBusiness, makePostBankAccount, makePostDocumentRecord } from '../payment-provisioning-actions';
-import { BusinessService, BusinessBankAccountService, DocumentRecordService } from '../../../../api/services/business.service';
+import { ComponentErrorEvent, ComponentErrorCodes, ComponentErrorSeverity, ComponentFormStepCompleteEvent, BankAccount, IBankAccount } from '../../../../api';
+import { makeGetBusiness, makePostBankAccount } from '../payment-provisioning-actions';
+import { BusinessService, BusinessBankAccountService } from '../../../../api/services/business.service';
 import { CountryCode } from '../../../../utils/country-codes';
 import { bankAccountSchemaByCountry } from '../../schemas/business-bank-account-schema';
 import { FormController } from '../../../../ui-components/form/form';
@@ -17,14 +17,10 @@ export class BusinessBankAccountFormStep {
   @State() formController: FormController;
   @State() errors: any = {};
   @State() bankAccount: IBankAccount = {};
-  @State() existingDocuments: any = [];
-  @State() documentData: EntityDocumentStorage = new EntityDocumentStorage();
   @State() isLoading: boolean = false;
   @State() viewMode: 'readonly' | 'plaid' | 'manual' = 'manual';
   @State() getBusiness: Function;
   @State() postBankAccount: Function;
-  @State() postDocumentRecord: Function;
-  @State() postDocument: Function;
   @State() bankAccountVerification: boolean = false;
   @State() platformAccountId: string | null = null;
 
@@ -82,10 +78,6 @@ export class BusinessBankAccountFormStep {
         authToken: this.authToken,
         service: new BusinessBankAccountService()
       });
-      this.postDocumentRecord = makePostDocumentRecord({
-        authToken: this.authToken,
-        service: new DocumentRecordService()
-      });
     } else {
       this.errorEvent.emit({
         message: 'Missing required props',
@@ -97,7 +89,7 @@ export class BusinessBankAccountFormStep {
 
   private getSchema = () => {
     const schema = bankAccountSchemaByCountry[this.country];
-    return schema(this.allowOptionalFields, this.existingDocuments);
+    return schema(this.allowOptionalFields);
   }
 
   initializeFormController = () => {
@@ -119,13 +111,6 @@ export class BusinessBankAccountFormStep {
     });
   }
 
-  storeFiles = (e: CustomEvent<FileSelectEvent>) => {
-    const fileList = Array.from(e.detail.fileList) as File[];
-    const docType = e.detail.document_type;
-    const documentList = fileList.map(file => new EntityDocument({ file, document_type: docType }, this.businessId));
-    this.documentData[docType] = documentList;
-  }
-
   get postPayload() {
     const values = this.formController.values.getValue();
     const formValues = new BankAccount(values).payload;
@@ -145,14 +130,13 @@ export class BusinessBankAccountFormStep {
   }
 
   private processBusinessResponse(data: any) {
-    const { bank_accounts, documents, settings, platform_account_id } = data;
+    const { bank_accounts, settings, platform_account_id } = data;
     if (bank_accounts.length > 0) {
       this.bankAccount = new BankAccount(bank_accounts[bank_accounts.length - 1]);
     } else {
       this.bankAccount = new BankAccount({});
       this.bankAccount.business_id = this.businessId;
     }
-    this.existingDocuments = documents;
     this.bankAccountVerification = settings.bank_account_verification === true;
     this.platformAccountId = platform_account_id;
   }
@@ -193,12 +177,7 @@ export class BusinessBankAccountFormStep {
       if (this.viewMode === 'manual') {
         const bankAccountPosted = await this.postBankAccountData();
         if (!bankAccountPosted) return;
-      }
 
-      const documentsUploaded = await this.postBusinessDocuments();
-      if (!documentsUploaded) return;
-
-      if (this.viewMode === 'manual') {
         this.viewMode = 'readonly';
         await this.refreshBankAccountData();
       }
@@ -267,13 +246,11 @@ export class BusinessBankAccountFormStep {
 
   handleChangeBankAccount = () => {
     this.viewMode = this.plaidAvailable ? 'plaid' : 'manual';
-    this.documentData = new EntityDocumentStorage();
     this.initializeFormController();
   }
 
   handleCancel = () => {
     this.viewMode = this.existingBankAccount ? 'readonly' : 'plaid';
-    this.documentData = new EntityDocumentStorage();
     this.initializeFormController();
   }
 
@@ -291,100 +268,6 @@ export class BusinessBankAccountFormStep {
         // Success callback - form will refresh automatically
       });
     });
-  }
-
-  private async postBusinessDocuments(): Promise<boolean> {
-    this.isLoading = true;
-    try {
-      const docArray = Object.values(this.documentData).flat();
-      if (!docArray.length) {
-        return true;
-      }
-
-      const recordsCreated = await Promise.all(
-        docArray.map((docData) => this.postDocumentRecordData(docData))
-      ); // Create document records
-
-      if (recordsCreated.includes(false)) {
-        return false;
-      } // Exit if document record creation fails
-
-      const uploadsCompleted = await Promise.all(
-        docArray.map((docData) => this.uploadDocument(docData))
-      ); // Upload documents to AWS presigned URLs
-
-      if (uploadsCompleted.includes(false)) {
-        return false;
-      } // Exit if any upload fails
-
-      return true;
-    } finally {
-      this.isLoading = false;
-    }
-  }
-
-  private postDocumentRecordData = async (docData: EntityDocument): Promise<boolean> => {
-    this.isLoading = true;
-    const payload = docData.record_data;
-    return new Promise((resolve) => {
-      this.postDocumentRecord({
-        payload,
-        onSuccess: (response) => {
-          resolve(this.handleDocRecordResponse(docData, response));
-        },
-        onError: ({ error, code, severity }) => {
-          this.errorEvent.emit({
-            message: error,
-            errorCode: code,
-            severity: severity
-          });
-          resolve(false);
-        },
-      });
-    });
-  }
-
-  handleDocRecordResponse = (docData: EntityDocument, response: any) => {
-    if (response.error) {
-      this.errorEvent.emit({
-        errorCode: ComponentErrorCodes.POST_ERROR,
-        message: response.error.message,
-        severity: ComponentErrorSeverity.ERROR,
-        data: response.error,
-      })
-      return false;
-    } else {
-      docData.setPresignedUrl(response.data.presigned_url);
-      return true;
-    }
-  }
-
-  uploadDocument = async (docData: EntityDocument) => {
-    if (!docData.presigned_url) {
-      throw new Error('Presigned URL is not set');
-    }
-
-    const fileData = await docData.getFileData();
-    const response = await fetch(docData.presigned_url, {
-      method: 'PUT',
-      body: fileData
-    })
-
-    return this.handleUploadResponse(response);
-  }
-
-  handleUploadResponse = (response: any) => {
-    if (response.error) {
-      this.errorEvent.emit({
-        errorCode: ComponentErrorCodes.POST_ERROR,
-        message: response.error.message,
-        severity: ComponentErrorSeverity.ERROR,
-        data: response.error,
-      })
-      return false;
-    } else {
-      return true;
-    }
   }
 
   private renderBankAccountInputs(disabled: boolean) {
@@ -496,24 +379,6 @@ export class BusinessBankAccountFormStep {
     );
   }
 
-  private renderDocumentUploads() {
-    return (
-      <fieldset class="mt-4">
-        <div class="d-flex align-items-center gap-2">
-          <legend class="mb-0" part={heading2}>Document Uploads</legend>
-          <form-control-tooltip helpText="One document (voided check or bank statement) is required for underwriting purposes. It needs to visibly show the name tied to the account and the account number. Various file formats such as PDF, DOC, DOCX, JPEG are accepted. Multiple files can be uploaded for each document category." />
-        </div>
-        <hr class="mt-2" />
-        <business-documents-on-file documents={this.existingDocuments} isLoading={this.isLoading} />
-        <bank-account-document-form-inputs
-          inputHandler={this.inputHandler}
-          errors={this.errors}
-          storeFiles={this.storeFiles}
-        />
-      </fieldset>
-    );
-  }
-
   render() {
     if (this.isLoading) {
       return <PaymentProvisioningLoading />;
@@ -531,7 +396,6 @@ export class BusinessBankAccountFormStep {
           {this.viewMode === 'plaid' && this.renderPlaidView()}
           {this.viewMode === 'manual' && this.renderManualEntryView()}
         </fieldset>
-        {this.viewMode !== 'plaid' && this.renderDocumentUploads()}
       </form>
     );
   }

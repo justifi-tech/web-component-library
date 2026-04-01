@@ -1,7 +1,6 @@
-import { object, mixed, string } from 'yup';
+import { object, string } from 'yup';
 import { CountryCode } from '../../../utils/country-codes';
-import { EntityDocumentType } from '../../../api/Document';
-import { 
+import {
   accountNumberValidation,
   accountTypeValidation,
   bankNameValidation,
@@ -10,10 +9,6 @@ import {
   routingNumberValidation,
 } from './schema-validations';
 import { numbersOnlyRegex } from './schema-helpers';
-
-const checkExistingDocs = (documents: any[], documentType: EntityDocumentType) => {
-  return documents.some((doc) => doc.document_type === documentType);
-}
 
 const buildCommonFieldRules = (allowOptionalFields?: boolean) => {
   if (allowOptionalFields) {
@@ -31,33 +26,6 @@ const buildCommonFieldRules = (allowOptionalFields?: boolean) => {
     account_owner_name: identityNameValidation.required('Enter account owner name'),
     account_type: accountTypeValidation.required('Select account type'),
     account_number: accountNumberValidation.required('Enter account number'),
-  };
-}
-
-const buildDocumentRules = (documents: any[], allowOptionalFields?: boolean) => {
-  if (allowOptionalFields) {
-    return {
-      voided_check: mixed().nullable(),
-      bank_statement: mixed().nullable(),
-    };
-  }
-
-  const existingVoidedCheck = checkExistingDocs(documents, EntityDocumentType.voidedCheck);
-  const existingBankStatement = checkExistingDocs(documents, EntityDocumentType.bankStatement);
-  const existingDocument = existingVoidedCheck || existingBankStatement;
-  const documentErrorText = 'Please upload either a voided check or a bank statement. Only one is required.';
-
-  return {
-    voided_check: mixed().when('bank_statement', {
-      is: (val: any) => !val && !existingDocument,
-      then: (schema) => schema.required(documentErrorText),
-      otherwise: (schema) => schema.notRequired(),
-    }),
-    bank_statement: mixed().when('voided_check', {
-      is: (val: any) => !val && !existingDocument,
-      then: (schema) => schema.required(documentErrorText),
-      otherwise: (schema) => schema.notRequired(),
-    }),
   };
 }
 
@@ -89,28 +57,26 @@ const buildCANRules = (allowOptionalFields?: boolean) => {
   };
 }
 
-export const businessBankAccountSchemaUSA = (documents: any[], allowOptionalFields?: boolean) => {
+export const businessBankAccountSchemaUSA = (allowOptionalFields?: boolean) => {
   const shape = {
     ...buildCommonFieldRules(allowOptionalFields),
     ...buildUSARules(allowOptionalFields),
-    ...buildDocumentRules(documents, allowOptionalFields),
   };
-  return object().shape(shape as any, [['voided_check', 'bank_statement']]);
+  return object().shape(shape as any);
 }
 
-export const businessBankAccountSchemaCAN = (documents: any[], allowOptionalFields?: boolean) => {
+export const businessBankAccountSchemaCAN = (allowOptionalFields?: boolean) => {
   const shape = {
     ...buildCommonFieldRules(allowOptionalFields),
     ...buildCANRules(allowOptionalFields),
-    ...buildDocumentRules(documents, allowOptionalFields),
   };
-  return object().shape(shape as any, [['voided_check', 'bank_statement']]);
+  return object().shape(shape as any);
 }
 
 // For backward compatibility, default to USA
-export const businessBankAccountSchema = (documents: any[], allowOptionalFields?: boolean) => businessBankAccountSchemaUSA(documents, allowOptionalFields);
+export const businessBankAccountSchema = (allowOptionalFields?: boolean) => businessBankAccountSchemaUSA(allowOptionalFields);
 
-export const bankAccountSchemaByCountry: Record<CountryCode, (allowOptionalFields?: boolean, documents?: any[]) => any> = {
-  [CountryCode.USA]: (allowOptionalFields?: boolean, documents: any[] = []) => businessBankAccountSchemaUSA(documents, allowOptionalFields),
-  [CountryCode.CAN]: (allowOptionalFields?: boolean, documents: any[] = []) => businessBankAccountSchemaCAN(documents, allowOptionalFields),
+export const bankAccountSchemaByCountry: Record<CountryCode, (allowOptionalFields?: boolean) => any> = {
+  [CountryCode.USA]: (allowOptionalFields?: boolean) => businessBankAccountSchemaUSA(allowOptionalFields),
+  [CountryCode.CAN]: (allowOptionalFields?: boolean) => businessBankAccountSchemaCAN(allowOptionalFields),
 };
