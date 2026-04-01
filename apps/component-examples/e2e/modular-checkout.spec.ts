@@ -27,7 +27,7 @@ test.describe('Modular Checkout', () => {
       'Los Angeles',
     );
     await expect(
-      page.getByRole('combobox', { name: 'State / Province' }),
+      page.getByLabel('State / Province'),
     ).toHaveValue(
       'CA',
     );
