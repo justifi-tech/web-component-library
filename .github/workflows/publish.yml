@@ -81,3 +81,18 @@ jobs:
               "webcomponents_version": "${{ steps.docs_check.outputs.webcomponents_version }}",
               "docs_version": "${{ steps.docs_check.outputs.docs_version }}"
             }
+
+      - name: Notify slack of new release
+        if: success()
+        uses: justifi-tech/workflows/slack-notification@main
+        with:
+          channel: engineering-notifications
+          text: ":package: Published @justifi/webcomponents v${{ steps.version.outputs.version }}"
+          token: ${{ secrets.JUSTIFI_SLACKBOT_TOKEN }}
+          attachments: >-
+            [{"color": "good", "fields": [
+              {"title": "Version", "value": "v${{ steps.version.outputs.version }}", "short": true},
+              {"title": "Type", "value": "${{ steps.version.outputs.is_rc == 'true' && 'Release Candidate' || 'Release' }}", "short": true},
+              {"title": "Published by", "value": "${{ github.actor }}", "short": true},
+              {"title": "Run", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "short": false}
+            ], "footer": "GitHub Actions", "footer_icon": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"}]
