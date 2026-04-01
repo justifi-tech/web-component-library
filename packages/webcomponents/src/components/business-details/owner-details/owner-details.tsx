@@ -32,9 +32,9 @@ export class OwnerDetails {
                   title="Date of Birth"
                   value={formatMediumDate(
                     new Date(
-                      Number(owner?.dob_day),
-                      Number(owner?.dob_month),
-                      Number(owner?.dob_year)
+                      Number(owner?.dob_year),
+                      Number(owner?.dob_month) - 1,
+                      Number(owner?.dob_day)
                     )
                   )}
                 />

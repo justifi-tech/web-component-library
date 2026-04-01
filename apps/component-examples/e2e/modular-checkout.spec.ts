@@ -26,7 +26,9 @@ test.describe('Modular Checkout', () => {
     await expect(page.getByRole('textbox', { name: 'City' })).toHaveValue(
       'Los Angeles',
     );
-    await expect(page.getByRole('combobox', { name: 'State' })).toHaveValue(
+    await expect(
+      page.getByRole('combobox', { name: 'State / Province' }),
+    ).toHaveValue(
       'CA',
     );
     await expect(
