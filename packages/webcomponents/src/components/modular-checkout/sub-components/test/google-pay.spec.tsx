@@ -275,7 +275,6 @@ describe('justifi-google-pay', () => {
         components: [JustifiGooglePay],
         template: () => (
           <justifi-google-pay
-            environment="TEST"
             merchantName="Test Merchant"
           />
         ),
@@ -295,7 +294,7 @@ describe('justifi-google-pay', () => {
         {
           eventType: 'justifi.googlePay.initialize',
           data: {
-            environment: 'TEST',
+            environment: 'PRODUCTION',
             gatewayMerchantId: 'acc_123',
             merchantName: 'Test Merchant',
             authToken: 'auth_token',
