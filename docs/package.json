@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents-docs",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Documentation package for JustiFi Web Components",
   "type": "module",
   "publishConfig": {
