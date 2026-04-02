@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
             <div style="display: flex; flex-direction: column; gap: 20px;">
               <justifi-summary></justifi-summary>
               <justifi-card-form></justifi-card-form>
-              <justifi-google-pay></justifi-google-pay>
+              <justifi-google-pay environment="TEST"></justifi-google-pay>
               <justifi-apple-pay></justifi-apple-pay>
               <justifi-billing-form-full></justifi-billing-form-full>
               <button
