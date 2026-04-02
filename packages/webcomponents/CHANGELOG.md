@@ -1,5 +1,12 @@
 ### Changelog
 
+## 6.12.6
+
+### Patch Changes
+
+- 7163ee3: Default justifi-google-pay environment prop to "PRODUCTION"
+- c318c0f: Rename merchantName prop to merchantDisplayName for Google Pay to be consistent with Apple Pay
+
 ## 6.12.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @justifi/webcomponents-docs
 
+## 1.1.5
+
+### Patch Changes
+
+- Rename Google Pay merchantName to merchantDisplayName prop and use PRODUCTION as default environment
+
 ## 1.1.4
 
 ### Patch Changes
