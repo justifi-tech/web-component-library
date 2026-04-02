@@ -2,6 +2,8 @@ import { markdownTable } from 'markdown-table';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+import { escapeGfmTableCell } from './escapeGfmTableCell.js';
+
 /**
  * React component that renders a markdown table of component props.
  * @param {Object} props - Component props
@@ -12,7 +14,6 @@ export function PropsMarkdownTable({ props }) {
     return null;
   }
 
-  // Prepare table data for markdown-table
   const tableData = [
     ['Name', 'Type', 'Required', 'Default', 'Description'],
     ...props.map((prop) => [
@@ -22,7 +23,7 @@ export function PropsMarkdownTable({ props }) {
       prop.defaultValue ? `\`${prop.defaultValue}\`` : '—',
       prop.description || '',
     ]),
-  ];
+  ].map((row) => row.map((cell) => escapeGfmTableCell(cell)));
 
   // Generate markdown table using markdown-table library
   const markdownTableString = markdownTable(tableData);
