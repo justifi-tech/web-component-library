@@ -276,7 +276,7 @@ describe('justifi-google-pay', () => {
         template: () => (
           <justifi-google-pay
             environment="TEST"
-            merchantName="Test Merchant"
+            merchantDisplayName="Test Merchant"
           />
         ),
       });
