@@ -1,5 +1,14 @@
 # @repo/component-examples
 
+## 1.2.10
+
+### Patch Changes
+
+- 7163ee3: Default justifi-google-pay environment prop to "PRODUCTION"
+- Updated dependencies [7163ee3]
+- Updated dependencies [c318c0f]
+  - @justifi/webcomponents@6.12.6
+
 ## 1.2.9
 
 ### Patch Changes
