@@ -32,7 +32,7 @@ export class JustifiGooglePay {
   private iframeElement: HTMLIFrameElement;
 
   @Prop() environment: "TEST" | "PRODUCTION" = "PRODUCTION";
-  @Prop() merchantDisplayName?: string;
+  @Prop() merchantDisplayName: string = "JustiFi Checkout";
 
   @State() iframeOrigin: string;
   @State() iframeReady: boolean = false;
