@@ -231,7 +231,7 @@ export class OwnerForm {
       <Host style={{ display: 'block' }}>
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
-            <legend class="fw-semibold fs-5" part={heading3}>
+            <legend class="fw-semibold fs-5 w-100" part={heading3}>
               {this.formTitle}
             </legend>
             <br />
