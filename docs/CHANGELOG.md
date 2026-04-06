@@ -1,5 +1,17 @@
 # @justifi/webcomponents-docs
 
+## 1.1.6
+
+### Patch Changes
+
+- 15457d2: Fix props table to accept union types
+
+## 1.1.5
+
+### Patch Changes
+
+- Rename Google Pay merchantName to merchantDisplayName prop and use PRODUCTION as default environment
+
 ## 1.1.4
 
 ### Patch Changes
