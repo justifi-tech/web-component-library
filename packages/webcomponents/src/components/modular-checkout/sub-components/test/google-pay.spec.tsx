@@ -19,6 +19,7 @@ describe('justifi-google-pay', () => {
     checkoutStore.authToken = 'auth_token';
     checkoutStore.paymentAmount = 1000;
     checkoutStore.paymentCurrency = 'USD';
+    checkoutStore.checkoutMode = null;
   });
 
   afterEach(() => {
@@ -304,6 +305,63 @@ describe('justifi-google-pay', () => {
         },
         IFRAME_ORIGIN
       );
+    });
+
+    it('sendInitialize uses TEST when environment prop unset and checkoutMode is test', async () => {
+      checkoutStore.checkoutMode = 'test';
+
+      const page = await newSpecPage({
+        components: [JustifiGooglePay],
+        template: () => <justifi-google-pay merchantDisplayName="Test Merchant" />,
+      });
+
+      const instance = page.rootInstance as any;
+      instance.iframeOrigin = IFRAME_ORIGIN;
+
+      const mockPostMessage = jest.fn();
+      instance.iframeElement = {
+        contentWindow: { postMessage: mockPostMessage },
+      };
+
+      instance.sendInitialize();
+
+      expect(mockPostMessage).toHaveBeenCalledWith(
+        {
+          eventType: 'justifi.googlePay.initialize',
+          data: {
+            environment: 'TEST',
+            gatewayMerchantId: 'acc_123',
+            merchantName: 'Test Merchant',
+            authToken: 'auth_token',
+            accountId: 'acc_123',
+          },
+        },
+        IFRAME_ORIGIN
+      );
+    });
+
+    it('sendInitialize uses PRODUCTION when environment prop unset and checkoutMode is live or null', async () => {
+      const page = await newSpecPage({
+        components: [JustifiGooglePay],
+        template: () => <justifi-google-pay merchantDisplayName="Test Merchant" />,
+      });
+
+      const instance = page.rootInstance as any;
+      instance.iframeOrigin = IFRAME_ORIGIN;
+
+      const mockPostMessage = jest.fn();
+      instance.iframeElement = {
+        contentWindow: { postMessage: mockPostMessage },
+      };
+
+      checkoutStore.checkoutMode = 'live';
+      instance.sendInitialize();
+      expect(mockPostMessage.mock.calls[0][0].data.environment).toBe('PRODUCTION');
+
+      mockPostMessage.mockClear();
+      checkoutStore.checkoutMode = null;
+      instance.sendInitialize();
+      expect(mockPostMessage.mock.calls[0][0].data.environment).toBe('PRODUCTION');
     });
 
     it('sendStartPayment sends transaction info to iframe', async () => {
