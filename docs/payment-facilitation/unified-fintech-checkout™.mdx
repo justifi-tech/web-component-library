@@ -137,7 +137,7 @@ The Unified Checkout automatically displays additional payment method options wh
 
 - **Apple Pay**: Must be enabled in account settings. It renders automatically only on eligible devices/browsers; otherwise it will not appear.
 - **Sezzle (BNPL)**: Must be enabled in account settings. It displays automatically when available for the account.
-- **Plaid (Bank account verification)**: Must be enabled in account settings. It displays automatically when bank account payments with Plaid verification are enabled.
+- **Plaid (Bank account verification)**: Bank and ACH-related options (including Plaid where applicable) depend on the checkout’s payment settings: ACH or bank payments and Plaid verification must both be enabled in account/checkout configuration, consistent with `payment_settings` on the [Checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts). When those settings are off or ineligible, those options are not shown.
 
 No extra component configuration is required beyond enabling these features on the account. When unavailable or ineligible, these options are simply not shown.
 
