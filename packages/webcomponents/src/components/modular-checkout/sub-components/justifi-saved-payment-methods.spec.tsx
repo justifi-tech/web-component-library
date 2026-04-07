@@ -70,24 +70,6 @@ describe('justifi-saved-payment-methods', () => {
     expect(radio?.getAttribute('value')).toBe('pm_bank');
   });
 
-  it('filters out saved bank when ACH is disabled for checkout', async () => {
-    checkoutStore.checkoutLoaded = true;
-    checkoutStore.achPaymentsEnabled = false;
-    checkoutStore.paymentMethods = [
-      { id: 'pm_card', type: PAYMENT_METHODS.SAVED_CARD, brand: 'visa', acct_last_four: '4242' } as any,
-      { id: 'pm_bank', type: PAYMENT_METHODS.SAVED_BANK_ACCOUNT, brand: 'ach', acct_last_four: '0000' } as any,
-    ];
-
-    const page = await newSpecPage({
-      components: [JustifiSavedPaymentMethods],
-      html: `<justifi-saved-payment-methods></justifi-saved-payment-methods>`,
-    });
-
-    const listItems = Array.from(page.root?.shadowRoot?.querySelectorAll('.radio-list-item') || []);
-    expect(listItems.length).toBe(1);
-    const radio = page.root?.shadowRoot?.querySelector('form-control-radio') as HTMLElement | null;
-    expect(radio?.getAttribute('value')).toBe('pm_card');
-  });
 });
 
 

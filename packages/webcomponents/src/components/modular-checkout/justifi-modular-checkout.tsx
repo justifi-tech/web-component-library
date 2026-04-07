@@ -162,7 +162,14 @@ export class JustifiModularCheckout {
   private updateStore(checkout: ICheckout) {
     checkoutStore.accountId = checkout.account_id;
     checkoutStore.checkoutLoaded = true;
-    checkoutStore.paymentMethods = checkout.payment_methods.map((paymentMethod) => new PaymentMethod(paymentMethod));
+    const mappedPaymentMethods = checkout.payment_methods.map(
+      (paymentMethod) => new PaymentMethod(paymentMethod)
+    );
+    const achEnabled = Boolean(checkout.payment_settings?.ach_payments);
+    checkoutStore.paymentMethods = mappedPaymentMethods.filter(
+      (pm) =>
+        pm.type !== PAYMENT_METHODS.SAVED_BANK_ACCOUNT || achEnabled
+    );
     checkoutStore.paymentMethodGroupId = checkout.payment_method_group_id;
     checkoutStore.paymentDescription = checkout.payment_description;
     checkoutStore.totalAmount = checkout.total_amount;
@@ -172,9 +179,7 @@ export class JustifiModularCheckout {
     checkoutStore.bankAccountVerification = checkout.payment_settings?.bank_account_verification;
     checkoutStore.applePayEnabled = checkout.payment_settings?.apple_payments;
     checkoutStore.googlePayEnabled = checkout.payment_settings?.google_payments;
-    checkoutStore.achPaymentsEnabled = Boolean(
-      checkout.payment_settings?.ach_payments
-    );
+    checkoutStore.achPaymentsEnabled = achEnabled;
     checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
     checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
     checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;

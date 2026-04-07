@@ -308,6 +308,65 @@ describe('justifi-modular-checkout', () => {
     expect(checkoutStore.achPaymentsEnabled).toBe(true);
   });
 
+  it('excludes saved bank payment methods from store when ach_payments is false', async () => {
+    const page = await newSpecPage({
+      components: [JustifiModularCheckout],
+      html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+    });
+
+    const instance: any = page.rootInstance;
+
+    const basePm = {
+      status: 'valid',
+      invalid_reason: null,
+      name: 'Test',
+      month: '12',
+      year: '2030',
+      address_line1_check: 'pass',
+      address_postal_code_check: 'pass',
+      bin_details: null,
+    };
+
+    const checkout: any = {
+      account_id: 'acc_123',
+      payment_methods: [
+        {
+          ...basePm,
+          id: 'pm_card',
+          type: 'card',
+          brand: 'visa',
+          acct_last_four: '4242',
+          account_type: 'checking',
+        },
+        {
+          ...basePm,
+          id: 'pm_bank',
+          type: 'bank_account',
+          brand: 'ach',
+          acct_last_four: '0000',
+          account_type: 'checking',
+        },
+      ],
+      payment_method_group_id: 'pmg_123',
+      payment_description: 'desc',
+      total_amount: 100,
+      payment_amount: 100,
+      payment_settings: {
+        ach_payments: false,
+        bnpl_payments: false,
+        bank_account_verification: false,
+        apple_payments: false,
+        google_payments: false,
+        insurance_payments: false,
+      },
+    };
+
+    instance['updateStore'](checkout);
+
+    expect(checkoutStore.achPaymentsEnabled).toBe(false);
+    expect(checkoutStore.paymentMethods.map((pm) => pm.id)).toEqual(['pm_card']);
+  });
+
   describe('checkout-changed event', () => {
     beforeEach(() => {
       checkoutStore.disableCreditCard = false;

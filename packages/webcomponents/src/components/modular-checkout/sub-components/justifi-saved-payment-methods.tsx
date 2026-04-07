@@ -40,14 +40,6 @@ export class JustifiSavedPaymentMethods {
       return false;
     }
 
-    if (
-      isBankAccount &&
-      checkoutStore.checkoutLoaded &&
-      !checkoutStore.achPaymentsEnabled
-    ) {
-      return false;
-    }
-
     return true;
   }
 
