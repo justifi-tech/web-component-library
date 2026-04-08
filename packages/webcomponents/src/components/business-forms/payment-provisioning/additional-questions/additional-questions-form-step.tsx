@@ -52,7 +52,7 @@ export class AdditionalQuestionsFormStep {
   }
 
   get patchPayload() {
-    let formValues = new AdditionalQuestions(this.formController.values.getValue()).payload;
+    const formValues = new AdditionalQuestions(this.formController.values.getValue()).payload;
     return { additional_questions: formValues };
   }
 

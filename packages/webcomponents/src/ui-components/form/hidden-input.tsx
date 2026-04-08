@@ -59,7 +59,7 @@ export class HiddenInput {
       this.focusWithoutPageScroll(this.hiddenInput);
       setTimeout(() => {
         this.hiddenInput.blur();
-        let computedStyles = getComputedStyle(this.hiddenInput);
+        const computedStyles = getComputedStyle(this.hiddenInput);
         resolve({
           boxShadow: computedStyles.boxShadow,
           border: computedStyles.border,

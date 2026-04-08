@@ -62,7 +62,6 @@ export const API_PATHS = {
   SUB_ACCOUNTS_LIST: 'sub_accounts',
   EXISTING_BUSINESS_OWNER: '/entities/identity/:id',
   NEW_BUSINESS_OWNER: '/entities/identity',
-  BUSINESS_DETAILS: '/entities/business/:id',
   BUSINESS_DOCUMENT_RECORD: '/entities/document',
   BANK_ACCOUNTS: '/entities/bank_accounts',
   BUSINESS_TERMS_AND_CONDITIONS: '/entities/terms_and_conditions',

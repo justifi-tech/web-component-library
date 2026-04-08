@@ -36,6 +36,8 @@ describe('tokenize-payment-method', () => {
     checkoutStore.paymentMethodGroupId = undefined;
     checkoutStore.selectedPaymentMethod = undefined;
     checkoutStore.billingFormFields = { address_postal_code: '' };
+    checkoutStore.checkoutLoaded = false;
+    checkoutStore.achPaymentsEnabled = false;
   });
 
   it('should pass hideCardBillingForm prop to payment method options', async () => {

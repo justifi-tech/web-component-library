@@ -208,7 +208,10 @@ export class JustifiTokenizePaymentMethod {
     if (!this.disableCreditCard) {
       this.selectedPaymentMethod = PAYMENT_METHODS.NEW_CARD;
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD };
-    } else if (!this.disableBankAccount) {
+    } else if (
+      !this.disableBankAccount &&
+      (!checkoutStore.checkoutLoaded || checkoutStore.achPaymentsEnabled)
+    ) {
       this.selectedPaymentMethod = PAYMENT_METHODS.NEW_BANK_ACCOUNT;
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_BANK_ACCOUNT };
     }
@@ -241,10 +244,12 @@ export class JustifiTokenizePaymentMethod {
 
   private get availablePaymentMethods(): PAYMENT_METHODS[] {
     const methods: PAYMENT_METHODS[] = [];
+    const achAllowedForCheckout =
+      !checkoutStore.checkoutLoaded || checkoutStore.achPaymentsEnabled;
     if (!this.disableCreditCard) {
       methods.push(PAYMENT_METHODS.NEW_CARD);
     }
-    if (!this.disableBankAccount) {
+    if (!this.disableBankAccount && achAllowedForCheckout) {
       methods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
     }
     return methods;

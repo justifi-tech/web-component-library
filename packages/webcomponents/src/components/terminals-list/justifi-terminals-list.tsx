@@ -199,9 +199,9 @@ export class JustifiTerminalsList {
   }
 
   get subAccountParams() {
-    let accountIdNumbers = this.terminals.map((terminal) => terminal.account_id);
-    let uniqueAccountIds = [...new Set(accountIdNumbers)];
-    let accountIdString = uniqueAccountIds.join(',');
+    const accountIdNumbers = this.terminals.map((terminal) => terminal.account_id);
+    const uniqueAccountIds = [...new Set(accountIdNumbers)];
+    const accountIdString = uniqueAccountIds.join(',');
     return { sub_account_id: accountIdString };
   }
 

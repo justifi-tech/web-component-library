@@ -46,7 +46,7 @@ export class BusinessCoreInfoFormStep {
   }
 
   get patchPayload() {
-    let formValues = new CoreBusinessInfo(this.formController.values.getValue()).payload;
+    const formValues = new CoreBusinessInfo(this.formController.values.getValue()).payload;
     return formValues;
   }
 

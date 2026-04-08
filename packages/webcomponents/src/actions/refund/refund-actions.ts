@@ -26,6 +26,6 @@ export const makePostRefund =
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final();
+      final();
     }
   };

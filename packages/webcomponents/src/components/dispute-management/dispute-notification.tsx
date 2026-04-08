@@ -53,7 +53,7 @@ export class DisputeNotification {
 
     // Fix for JavaScript Date object parsing
     // https://stackoverflow.com/a/31732581
-    const dueDate = new Date(this.dispute.due_date.replace(/-/g, '\/').replace(/T.+/, ''));
+    const dueDate = new Date(this.dispute.due_date.replace(/-/g, '/').replace(/T.+/, ''));
 
     const today = new Date();
 

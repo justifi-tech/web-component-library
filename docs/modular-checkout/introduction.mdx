@@ -258,10 +258,16 @@ modularCheckout.addEventListener('checkout-changed', (event) => {
 
 `availablePaymentMethodTypes` includes:
 
-- `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group` (respects disabling flags).
-- `new_card`, `new_bank_account`: Entry forms for new payment methods (respects disabling flags).
+- `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group`. Bank-related types are omitted when the checkout has `payment_settings.ach_payments === false` or when `disableBankAccount` is true on checkout state.
+- `new_card`, `new_bank_account`: Entry forms for new payment methods. `new_bank_account` is omitted when `payment_settings.ach_payments === false` or when `disableBankAccount` is true.
 - `sezzle`: BNPL is available when enabled by the account and not disabled.
-- `plaid`: Plaid is available when bank account verification is enabled for the checkout.
+- `plaid`: Plaid is available when `payment_settings.bank_account_verification === true`, `payment_settings.ach_payments` is enabled for the checkout, and `disableBankAccount` is false.
+
+## ACH payments
+
+When the checkout's `payment_settings.ach_payments` is `false`, modular checkout does not offer `new_bank_account`, `saved_bank_account`, or `plaid` as available payment method types.
+
+If `justifi-bank-account-form` remains in the DOM, it renders nothing and logs a console warning: `[bank-account-form] ACH payments are disabled for this checkout (payment_settings.ach_payments=false).`
 
 ## Insurance Integration
 

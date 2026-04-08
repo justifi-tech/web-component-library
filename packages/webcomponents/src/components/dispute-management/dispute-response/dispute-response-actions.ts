@@ -59,7 +59,7 @@ export const makeUpdateDisputeResponse = ({ authToken, disputeId, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };
 
@@ -87,7 +87,7 @@ export const makeSubmitDisputeResponse = ({ authToken, disputeId, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };
 
@@ -115,6 +115,6 @@ export const makeCreateDisputeEvidence = ({ authToken, disputeId, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };

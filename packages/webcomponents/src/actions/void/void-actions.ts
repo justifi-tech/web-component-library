@@ -26,7 +26,7 @@ export const makePostVoid =
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final();
+      final();
     }
   };
 

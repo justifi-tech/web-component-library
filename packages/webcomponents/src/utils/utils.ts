@@ -209,7 +209,7 @@ export function processHTML(htmlString, functions) {
 
 export function formatPhoneNumber(number) {
   // Remove all non-numeric characters
-  let cleaned = ('' + number).replace(/\D/g, '');
+  const cleaned = ('' + number).replace(/\D/g, '');
 
   // Check if the number has the correct length
   if (cleaned.length !== 10) {
@@ -217,7 +217,7 @@ export function formatPhoneNumber(number) {
   }
 
   // Format the number (XXX) XXX-XXXX
-  let formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+  const formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
 
   return formatted;
 }
@@ -255,7 +255,7 @@ function decodeJwt(token: string): any {
     const payload = parts[1];
     const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
     return JSON.parse(decoded);
-  } catch (e) {
+  } catch {
     throw new Error('Invalid JWT');
   }
 }
@@ -267,7 +267,7 @@ export function isTokenExpired(token: string): boolean {
     }
 
     return payload.exp * 1000 < Date.now();
-  } catch (e) {
+  } catch {
     return true; // Treat invalid token as expired
   }
 }
