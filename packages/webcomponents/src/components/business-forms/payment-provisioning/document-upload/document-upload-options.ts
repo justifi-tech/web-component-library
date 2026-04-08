@@ -1,4 +1,3 @@
-import { Identity } from '../../../../api';
 import { CountryCode } from '../../../../utils/country-codes';
 
 export const businessDocumentOptions = [
@@ -36,7 +35,6 @@ export const personalDocGroup2Options = [
 export interface DocumentCategory {
   label: string;
   value: string;
-  identityId?: string;
   docTypeOptions: { label: string; value: string }[];
 }
 
@@ -49,7 +47,6 @@ export interface UploadedDocumentEntry {
   docTypeValue: string;
   fileName: string;
   file: File;
-  identityId?: string;
   status: DocumentUploadStatus;
 }
 
@@ -66,22 +63,19 @@ export const staticCategories: DocumentCategory[] = [
   },
 ];
 
-export function buildOwnerCategories(owners: Identity[]): DocumentCategory[] {
-  const group1Opts = personalDocGroup1Options.filter(o => o.value !== '');
-  const group2Opts = personalDocGroup2Options.filter(o => o.value !== '');
-
-  return owners.map(owner => ({
-    label: `${owner.name} - Identity Document`,
-    value: `personal_${owner.id}`,
-    identityId: owner.id,
-    docTypeOptions: [
-      { label: 'Select a document type', value: '' },
-      { label: '── Group 1 ──', value: '_group1_header' },
-      ...group1Opts,
-      { label: '── Group 2 ──', value: '_group2_header' },
-      ...group2Opts,
-    ],
-  }));
+export function buildPersonalDocumentCategories(): DocumentCategory[] {
+  return [
+    {
+      label: 'Identity Document - Group 1',
+      value: 'personal_group1',
+      docTypeOptions: personalDocGroup1Options,
+    },
+    {
+      label: 'Identity Document - Group 2',
+      value: 'personal_group2',
+      docTypeOptions: personalDocGroup2Options,
+    },
+  ];
 }
 
 export const financialOnlyCategories: DocumentCategory[] = [
@@ -92,11 +86,11 @@ export const financialOnlyCategories: DocumentCategory[] = [
   },
 ];
 
-export function buildAllCategories(owners: Identity[], country?: CountryCode): DocumentCategory[] {
+export function buildAllCategories(country?: CountryCode): DocumentCategory[] {
   if (country === CountryCode.USA) {
     return financialOnlyCategories;
   }
-  return [...staticCategories, ...buildOwnerCategories(owners)];
+  return [...staticCategories, ...buildPersonalDocumentCategories()];
 }
 
 export const personalDocGroup1Types = new Set(

@@ -108,7 +108,7 @@ export class DocumentUploadFormStep {
         const { owners, documents } = response.data;
         this.owners = owners || [];
         this.existingDocuments = documents || [];
-        this.categories = buildAllCategories(this.owners, this.country);
+        this.categories = buildAllCategories(this.country);
       },
       onError: ({ error, code, severity }) => {
         this.errorEvent.emit({
@@ -161,23 +161,28 @@ export class DocumentUploadFormStep {
         errors['business_document'] = 'Please upload a business document';
       }
 
-      for (const owner of this.owners) {
-        const ownerCategoryValue = `personal_${owner.id}`;
-        const ownerDocs = this.uploadQueue.filter(
-          entry => entry.categoryValue === ownerCategoryValue && entry.status === 'uploaded'
-        );
+      const requiredCount = this.owners.length;
 
-        const hasGroup1 = ownerDocs.some(d => personalDocGroup1Types.has(d.docTypeValue));
-        const hasGroup2 = ownerDocs.some(d => personalDocGroup2Types.has(d.docTypeValue));
+      const group1Uploaded = this.uploadQueue.filter(
+        entry => entry.categoryValue === 'personal_group1' && entry.status === 'uploaded'
+      ).length;
+      const group1Existing = this.existingDocuments.filter(
+        doc => personalDocGroup1Types.has(doc.document_type)
+      ).length;
+      if (group1Uploaded + group1Existing < requiredCount) {
+        errors['personal_group1'] =
+          `Please upload ${requiredCount} Group 1 identity document(s) (${group1Uploaded + group1Existing} of ${requiredCount} provided)`;
+      }
 
-        if (!hasGroup1) {
-          errors[`personal_group1_${owner.id}`] =
-            `Please upload a Group 1 identity document for ${owner.name}`;
-        }
-        if (!hasGroup2) {
-          errors[`personal_group2_${owner.id}`] =
-            `Please upload a Group 2 identity document for ${owner.name}`;
-        }
+      const group2Uploaded = this.uploadQueue.filter(
+        entry => entry.categoryValue === 'personal_group2' && entry.status === 'uploaded'
+      ).length;
+      const group2Existing = this.existingDocuments.filter(
+        doc => personalDocGroup2Types.has(doc.document_type)
+      ).length;
+      if (group2Uploaded + group2Existing < requiredCount) {
+        errors['personal_group2'] =
+          `Please upload ${requiredCount} Group 2 identity document(s) (${group2Uploaded + group2Existing} of ${requiredCount} provided)`;
       }
     }
 
@@ -209,7 +214,6 @@ export class DocumentUploadFormStep {
       docTypeValue: this.selectedDocType,
       fileName: file.name,
       file,
-      identityId: category.identityId,
       status: 'uploading' as const,
     }));
 
@@ -224,8 +228,7 @@ export class DocumentUploadFormStep {
       try {
         const docData = new EntityDocument(
           { file: entry.file, document_type: entry.docTypeValue as EntityDocumentType },
-          this.businessId,
-          entry.identityId
+          this.businessId
         );
 
         const recordCreated = await this.postDocumentRecordData(docData);
@@ -321,10 +324,16 @@ export class DocumentUploadFormStep {
           />
         </fieldset>
 
+        {this.country === CountryCode.CAN && this.owners.length > 0 && (
+          <div class="alert alert-info mt-3">
+            One document from each group (Group 1 and Group 2) is required for each owner ({this.owners.length} owner(s)).
+          </div>
+        )}
+
         <fieldset class="mt-4">
           <div class="d-flex align-items-center gap-2">
             <legend class="mb-0" part={heading2}>Add Document</legend>
-            <form-control-tooltip helpText="Upload documents one at a time. Select the category and type, then choose a file. For identity documents, two documents from different groups are required per owner." />
+            <form-control-tooltip helpText="Upload documents one at a time. Select the category and type, then choose a file. For Canadian businesses, one Group 1 and one Group 2 identity document is required for each owner." />
           </div>
           <hr class="mt-2" />
 

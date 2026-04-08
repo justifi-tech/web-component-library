@@ -53,7 +53,6 @@ export interface DocumentRecordData {
   document_type: EntityDocumentType;
   file_name: string;
   file_type: string;
-  identity_id?: string;
 }
 
 export class EntityDocumentStorage {
@@ -88,7 +87,7 @@ export class EntityDocument {
   public presigned_url: string | null;
   public record_data: DocumentRecordData | null;
 
-  constructor(fileData: EntityFileData, business_id: string, identity_id?: string) {
+  constructor(fileData: EntityFileData, business_id: string) {
     this.file = fileData.file;
     this.document_type = fileData.document_type;
     this.presigned_url = null;
@@ -97,7 +96,6 @@ export class EntityDocument {
       document_type: this.document_type,
       file_name: this.file.name,
       file_type: this.file.type,
-      ...(identity_id && { identity_id }),
     };
   }
 

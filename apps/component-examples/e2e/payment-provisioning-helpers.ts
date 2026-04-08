@@ -381,13 +381,10 @@ export async function fillDocumentUploadCAN(
   await uploadDoc('financial_document', 'voided_check', 1);
   // Business document
   await uploadDoc('business_document', 'articles_of_incorporation', 2);
-  // Owner identity docs — select by label since we don't know owner ID
-  const ownerOption = categorySelect.locator('option', { hasText: 'Identity Document' }).first();
-  const ownerCategoryValue = (await ownerOption.getAttribute('value'))!;
-  // Group 1
-  await uploadDoc(ownerCategoryValue, 'passport', 3);
-  // Group 2
-  await uploadDoc(ownerCategoryValue, 'nexus_card', 4);
+  // Identity Document - Group 1
+  await uploadDoc('personal_group1', 'passport', 3);
+  // Identity Document - Group 2
+  await uploadDoc('personal_group2', 'nexus_card', 4);
 }
 
 export async function acceptTerms(page: Page): Promise<void> {
