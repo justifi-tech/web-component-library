@@ -36,6 +36,7 @@ export class JustifiPlaidPaymentMethod {
   private timeoutId: NodeJS.Timeout | null = null;
   private abortController: AbortController | null = null;
   private hasLoggedDisabledWarning: boolean = false;
+  private hasLoggedAchPaymentsDisabledWarning: boolean = false;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
   @Event({ bubbles: true }) plaidError: EventEmitter;
@@ -66,10 +67,16 @@ export class JustifiPlaidPaymentMethod {
     if (checkoutStore.bankAccountVerification !== true) return;
 
     if (checkoutStore.checkoutLoaded) {
-      this.loadPlaidSDK();
+      if (checkoutStore.achPaymentsEnabled) {
+        this.loadPlaidSDK();
+      }
     } else {
       onChange('checkoutLoaded', (loaded) => {
-        if (loaded && checkoutStore.bankAccountVerification === true) {
+        if (
+          loaded &&
+          checkoutStore.bankAccountVerification === true &&
+          checkoutStore.achPaymentsEnabled
+        ) {
           this.loadPlaidSDK();
         }
       });
@@ -608,6 +615,16 @@ export class JustifiPlaidPaymentMethod {
   }
 
   render() {
+    if (checkoutStore.checkoutLoaded && !checkoutStore.achPaymentsEnabled) {
+      if (!this.hasLoggedAchPaymentsDisabledWarning) {
+        console.warn(
+          '[JustifiPlaidPaymentMethod] ACH payments are disabled for this checkout. Component will not render.'
+        );
+        this.hasLoggedAchPaymentsDisabledWarning = true;
+      }
+      return null;
+    }
+
     // Only allow use if enabled in checkout settings
     if (checkoutStore.bankAccountVerification !== true) {
       if (!this.hasLoggedDisabledWarning) {
