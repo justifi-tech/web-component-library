@@ -9,7 +9,7 @@ import { StyledHost } from "../../../ui-components";
   shadow: true,
 })
 export class JustifiBankAccountForm {
-  private bankAccountFormElement!: HTMLBankAccountFormElement;
+  private bankAccountFormElement?: HTMLBankAccountFormElement;
 
   analytics: JustifiAnalytics;
 
@@ -26,6 +26,9 @@ export class JustifiBankAccountForm {
 
   @Method()
   async validate(): Promise<any> {
+    if (!this.bankAccountFormElement) {
+      return false;
+    }
     return this.bankAccountFormElement.validate();
   }
 
@@ -39,6 +42,13 @@ export class JustifiBankAccountForm {
     paymentMethodMetadata: any,
     account?: string,
   }) {
+    if (!this.bankAccountFormElement) {
+      return {
+        error: {
+          message: 'Bank account form is not available.',
+        },
+      };
+    }
     return this.bankAccountFormElement.tokenize({ clientId, paymentMethodMetadata, account });
   }
 

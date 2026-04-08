@@ -24,6 +24,8 @@ This subcomponent is **designed to be used within** the `justifi-modular-checkou
 
 > **Note:** If you are using this sub component, you also need to provide billing information. This can be done by adding the `justifi-billing-form-full` sub component for complete billing address, the `justifi-bank-account-billing-form-simple` sub component for account owner name only, or by passing the `billingInformation` object as an argument to the `submitCheckout` method called on the `justifi-modular-checkout`. See the [modular checkout docs](../introduction) for more information.
 
+> **Note:** If the checkout's `payment_settings.ach_payments` is `false`, this component does not render the form and logs a console warning (`[bank-account-form] ACH payments are disabled for this checkout (payment_settings.ach_payments=false).`). Prefer omitting the sub-component when ACH is off, or use `checkout-changed` / `availablePaymentMethodTypes` so your layout does not reserve an empty slot.
+
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 
 This component exposes **no public methods or properties** and is not intended for standalone use.

@@ -11,6 +11,8 @@ describe('justifi-saved-payment-methods', () => {
     checkoutStore.paymentMethods = [] as any;
     checkoutStore.paymentToken = undefined;
     checkoutStore.selectedPaymentMethod = undefined;
+    checkoutStore.checkoutLoaded = false;
+    checkoutStore.achPaymentsEnabled = true;
   });
 
   it('renders list items for allowed saved methods and sets selection on click', async () => {
@@ -67,6 +69,7 @@ describe('justifi-saved-payment-methods', () => {
     const radio = page.root?.shadowRoot?.querySelector('form-control-radio') as HTMLElement | null;
     expect(radio?.getAttribute('value')).toBe('pm_bank');
   });
+
 });
 
 
