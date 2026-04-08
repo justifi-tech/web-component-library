@@ -31,8 +31,8 @@ enum GooglePayEventTypes {
 export class JustifiGooglePay {
   private iframeElement: HTMLIFrameElement;
 
-  @Prop() environment: "TEST" | "PRODUCTION" = "TEST";
-  @Prop() merchantName?: string;
+  @Prop() environment: "TEST" | "PRODUCTION" = "PRODUCTION";
+  @Prop() merchantDisplayName: string = "JustiFi Checkout";
 
   @State() iframeOrigin: string;
   @State() iframeReady: boolean = false;
@@ -112,7 +112,7 @@ export class JustifiGooglePay {
     const config = {
       environment: this.environment,
       gatewayMerchantId: checkoutStore.accountId,
-      merchantName: this.merchantName,
+      merchantName: this.merchantDisplayName,
       authToken: checkoutStore.authToken,
       accountId: checkoutStore.accountId,
     };
