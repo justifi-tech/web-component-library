@@ -217,9 +217,9 @@ export class JustifiPayoutsList {
   }
 
   get subAccountParams() {
-    let accountIdNumbers = this.payouts.map((payout) => payout.account_id);
-    let uniqueAccountIds = [...new Set(accountIdNumbers)];
-    let accountIdString = uniqueAccountIds.join(',');
+    const accountIdNumbers = this.payouts.map((payout) => payout.account_id);
+    const uniqueAccountIds = [...new Set(accountIdNumbers)];
+    const accountIdString = uniqueAccountIds.join(',');
     return { sub_account_id: accountIdString };
   }
 

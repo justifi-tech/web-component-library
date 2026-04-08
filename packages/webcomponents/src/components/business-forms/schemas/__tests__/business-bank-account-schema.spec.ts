@@ -77,7 +77,11 @@ describe('businessBankAccountSchemaUSA', () => {
 describe('businessBankAccountSchemaCAN', () => {
   test('requires institution and transit when not optional', async () => {
     const schema = businessBankAccountSchemaCAN([], false);
-    const { institution_number, transit_number, ...rest } = validCanBankFields;
+    const {
+      institution_number: _institution_number,
+      transit_number: _transit_number,
+      ...rest
+    } = validCanBankFields;
     await expect(schema.validate(rest)).rejects.toThrow();
   });
 

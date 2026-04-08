@@ -566,8 +566,6 @@ export class JustifiModularCheckout {
       return;
     }
 
-    let payment: { payment_mode: string; payment_token: string | undefined };
-
     const mapTypeToPaymentMode = (type: string | undefined): string | undefined => {
       switch (type) {
         case PAYMENT_METHODS.NEW_CARD:
@@ -587,7 +585,7 @@ export class JustifiModularCheckout {
       }
     };
 
-    payment = {
+    const payment = {
       payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod?.type) as string,
       payment_token: checkoutStore.paymentToken,
     };

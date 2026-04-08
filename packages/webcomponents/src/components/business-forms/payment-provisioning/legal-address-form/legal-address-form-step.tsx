@@ -44,7 +44,7 @@ export class LegalAddressFormStep {
   }
 
   get patchPayload() {
-    let formValues = new Address(this.formController.values.getValue()).payload;
+    const formValues = new Address(this.formController.values.getValue()).payload;
     return { legal_address: formValues };
   }
 

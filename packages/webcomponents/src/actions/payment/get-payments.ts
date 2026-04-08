@@ -34,6 +34,6 @@ export const makeGetPayments =
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final();
+      final();
     }
   };

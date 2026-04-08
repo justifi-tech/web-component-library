@@ -468,6 +468,7 @@ export class JustifiPlaidPaymentMethod {
 
     // Even with an error, the component should remain selected to allow retry
     if (this.isSelected) {
+      void this.isSelected;
     }
   };
 

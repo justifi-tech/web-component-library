@@ -21,10 +21,13 @@
     "install-skills": "npx -y skills experimental_install -y"
   },
   "devDependencies": {
+    "@eslint/js": "^9.27.0",
     "@changesets/cli": "^2.27.1",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^9.27.0",
+    "globals": "^16.0.0",
+    "typescript-eslint": "^8.50.0",
     "prettier": "^3.1.1",
     "turbo": "^2.0.6"
   },
