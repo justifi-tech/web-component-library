@@ -37,7 +37,6 @@ export class JustifiApplePay {
   @Prop() buttonType: ApplePayButtonType = ApplePayButtonType.PLAIN;
   @Prop() buttonStyle: ApplePayButtonStyle = ApplePayButtonStyle.BLACK;
   @Prop() disabled: boolean = false;
-  @Prop() showSkeleton: boolean = true;
   @Prop() width: string = "100%";
   @Prop() height: string = "48px";
 

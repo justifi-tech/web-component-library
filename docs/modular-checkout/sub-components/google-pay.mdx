@@ -57,6 +57,7 @@ Renders a Google Pay button for eligible devices/browsers and orchestrates the G
 
 ### Events
 
+- `googlePayStarted`: Fires when the user clicks the Google Pay button, immediately before the payment sheet opens.
 - `googlePayCompleted`: Fires when payment completes; includes success status, payment method ID, card network, and card details (last 4 digits).
 - `googlePayCancelled`: Fires when the user dismisses the Google Pay sheet.
 
@@ -87,7 +88,7 @@ Renders a Google Pay button for eligible devices/browsers and orchestrates the G
 
 1. Component checks device/browser eligibility for Google Pay
 2. If eligible, Google Pay button renders
-3. User clicks button → Google Pay sheet opens
+3. User clicks button → `googlePayStarted` fires → Google Pay sheet opens
 4. User completes payment → `googlePayCompleted` event fires with `paymentMethodId`
 5. Modular checkout automatically completes the checkout
 
