@@ -11,7 +11,7 @@ export function composeQueryParams(values: string[]) {
 }
 
 export const onFilterChange = (newFilters: any, params: any) => {
-  let newParams: any = { ...params };
+  const newParams: any = { ...params };
   delete newParams.before_cursor;
   delete newParams.after_cursor;
 

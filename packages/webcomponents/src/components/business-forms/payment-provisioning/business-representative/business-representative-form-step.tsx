@@ -93,7 +93,7 @@ export class BusinessRepresentativeFormStep {
   }
 
   get patchPayload() {
-    let formValues = new Representative(this.formController.values.getValue()).payload;
+    const formValues = new Representative(this.formController.values.getValue()).payload;
     return { representative: formValues };
   }
 

@@ -1,5 +1,5 @@
 describe('DisputeService', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   let service: any;
   let mockGet: jest.Mock;
   let mockPost: jest.Mock;
