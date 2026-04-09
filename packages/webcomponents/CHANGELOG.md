@@ -1,5 +1,18 @@
 ### Changelog
 
+## 6.13.0
+
+### Minor Changes
+
+- 1bc5900: Canada onboarding improvements for payment provisioning: add document upload step with per-owner document requirements, require ownership percentage with 100% total validation, make business number and social insurance number optional for Canadian businesses, add predefined title options for representatives/owners, and fix tooltip alignment and owners form legend width
+
+### Patch Changes
+
+- 7f49c06: Respect disabled ACH in checkout: bank account form, Plaid and saved payment methods, and payment method selection no longer treat bank/ACH as available when ACH is turned off.
+- 25c67d4: Removed dead API showSkeleton
+- 6264741: Introduce `googlePayEnv` optional prop to allow test on Google Pay on Unified Fintech Checkout
+- 6264741: Derive `justifi-google-pay` Google Pay environment from checkout API mode (test → TEST, live or unset → PRODUCTION); keep optional `environment` prop to override.
+
 ## 6.12.6
 
 ### Patch Changes
