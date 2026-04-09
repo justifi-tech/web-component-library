@@ -3,6 +3,7 @@ jest.mock('../../../utils/check-pkg-version', () => ({ checkPkgVersion: jest.fn(
 
 import { newSpecPage } from '@stencil/core/testing';
 import { JustifiCheckout } from '../justifi-checkout';
+import { JustifiGooglePay } from '../../modular-checkout/sub-components/justifi-google-pay';
 import JustifiAnalytics from '../../../api/Analytics';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
 import { checkoutStore } from '../../../store/checkout.store';
@@ -192,6 +193,26 @@ describe('justifi-checkout', () => {
       await page.waitForChanges();
 
       expect(page.root?.querySelector('justifi-google-pay')).not.toBeNull();
+    });
+
+    it('forwards googlePayEnv to justifi-google-pay as environment', async () => {
+      const page = await newSpecPage({
+        components: [JustifiCheckout, JustifiGooglePay],
+        html: '<justifi-checkout auth-token="t" checkout-id="chk_1" google-pay-env="TEST"></justifi-checkout>',
+      });
+      const instance = page.rootInstance as any;
+
+      const event = new CustomEvent('checkout-changed', {
+        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+        bubbles: true,
+        composed: true,
+      } as any);
+      instance.checkoutChanged(event);
+      await page.waitForChanges();
+
+      const googlePayEl = page.root?.querySelector('justifi-google-pay') as HTMLJustifiGooglePayElement | null;
+      expect(googlePayEl).not.toBeNull();
+      expect(googlePayEl?.environment).toBe('TEST');
     });
 
     it('hides Google Pay when availablePaymentMethods excludes GOOGLE_PAY', async () => {

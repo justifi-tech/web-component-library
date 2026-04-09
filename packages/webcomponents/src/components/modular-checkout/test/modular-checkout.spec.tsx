@@ -64,6 +64,7 @@ describe('justifi-modular-checkout', () => {
   beforeEach(() => {
     checkoutStore.isSubmitting = false;
     checkoutStore.isWalletProcessing = false;
+    checkoutStore.checkoutMode = null;
   });
 
   afterAll(() => {
@@ -119,6 +120,7 @@ describe('justifi-modular-checkout', () => {
       payment_description: 'desc',
       total_amount: 1000,
       payment_amount: 1000,
+      mode: 'test',
       payment_settings: {
         ach_payments: true,
         bnpl_payments: false,
@@ -144,6 +146,43 @@ describe('justifi-modular-checkout', () => {
 
       expect(getCheckoutSpy).toHaveBeenCalledTimes(1);
       expect(checkoutStore.checkoutLoaded).toBe(true);
+      expect(checkoutStore.checkoutMode).toBe('test');
+    });
+
+    it('maps checkout.mode live to checkoutStore.checkoutMode', async () => {
+      const getCheckoutSpy = jest.fn(({ onSuccess }: any) => {
+        onSuccess({
+          checkout: { ...mockCheckout, mode: 'live', status: ICheckoutStatus.created },
+        });
+      });
+      (checkoutActions.makeGetCheckout as jest.Mock).mockReturnValue(getCheckoutSpy);
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.checkoutMode).toBe('live');
+    });
+
+    it('sets checkoutStore.checkoutMode null when mode is absent or unknown', async () => {
+      const getCheckoutSpy = jest.fn(({ onSuccess }: any) => {
+        onSuccess({
+          checkout: { ...mockCheckout, mode: undefined, status: ICheckoutStatus.created },
+        });
+      });
+      (checkoutActions.makeGetCheckout as jest.Mock).mockReturnValue(getCheckoutSpy);
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.checkoutMode).toBeNull();
     });
 
     // Skip: insurance store subscription (insuranceValuesOn) does not trigger reliably in test env

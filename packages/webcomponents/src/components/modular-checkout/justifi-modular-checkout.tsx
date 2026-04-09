@@ -162,6 +162,9 @@ export class JustifiModularCheckout {
   private updateStore(checkout: ICheckout) {
     checkoutStore.accountId = checkout.account_id;
     checkoutStore.checkoutLoaded = true;
+    const rawMode = checkout.mode != null ? String(checkout.mode).toLowerCase() : '';
+    checkoutStore.checkoutMode =
+      rawMode === 'test' ? 'test' : rawMode === 'live' ? 'live' : null;
     const mappedPaymentMethods = checkout.payment_methods.map(
       (paymentMethod) => new PaymentMethod(paymentMethod)
     );
