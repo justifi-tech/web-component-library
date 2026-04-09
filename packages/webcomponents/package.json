@@ -52,6 +52,7 @@
     "iframe-resizer": "4.4.5",
     "imask": "^7.6.1",
     "lodash": "^4.17.23",
+    "qrcode": "^1.5.3",
     "rxjs": "^7.8.1",
     "ts-dedent": "^2.2.0",
     "yup": "^1.0.0"
@@ -62,6 +63,7 @@
     "@rollup/plugin-replace": "^6.0.1",
     "@stencil/sass": "^3.0.1",
     "@types/jest": "29.5.14",
+    "@types/qrcode": "^1.5.5",
     "@typescript-eslint/parser": "^8.50.0",
     "@typescript-eslint/typescript-estree": "^8.50.0",
     "dotenv": "^16.3.1",

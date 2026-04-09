@@ -12,7 +12,7 @@ export interface IBnpl {
   provider_api_version: string;
 }
 
-interface ICompletion {
+export interface ICompletion {
   payment_mode?: ICheckoutPaymentMode;
   payment_token?: string | null;
   payment_status?: string | null;
