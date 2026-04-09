@@ -85,6 +85,57 @@ export const seasonalBusinessOptions: BusinessFormOption[] = [
   }
 ];
 
+export const businessTitleOptions: BusinessFormOption[] = [
+  {
+    label: 'Choose title',
+    value: '',
+  },
+  {
+    label: 'Vice President',
+    value: 'Vice President',
+  },
+  {
+    label: 'President',
+    value: 'President',
+  },
+  {
+    label: 'Treasurer',
+    value: 'Treasurer',
+  },
+  {
+    label: 'Owner',
+    value: 'Owner',
+  },
+  {
+    label: 'Partner',
+    value: 'Partner',
+  },
+  {
+    label: 'CEO',
+    value: 'CEO',
+  },
+  {
+    label: 'Member LLC',
+    value: 'Member LLC',
+  },
+  {
+    label: 'Secretary',
+    value: 'Secretary',
+  },
+  {
+    label: 'Director',
+    value: 'Director',
+  },
+  {
+    label: 'COO',
+    value: 'COO',
+  },
+  {
+    label: 'CFO',
+    value: 'CFO',
+  },
+];
+
 export const bankAccountTypeOptions: BusinessFormOption[] = [
   {
     label: 'Checking',

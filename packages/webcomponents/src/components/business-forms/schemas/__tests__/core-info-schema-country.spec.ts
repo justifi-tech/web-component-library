@@ -56,6 +56,49 @@ describe('Business core info schema by country', () => {
     } as any);
     expect(valid).toBe(true);
   });
+
+  test('CAN BN is optional (empty is valid)', async () => {
+    const valid = await businessCoreInfoSchemaCAN(false).isValid({
+      legal_name: 'Acme Inc',
+      website_url: 'https://example.com',
+      email: 'test@example.com',
+      phone: '5551234567',
+      doing_business_as: '',
+      classification: 'LLC',
+      industry: 'Software',
+      date_of_incorporation: '2020-01-01',
+      tax_id: '',
+    } as any);
+    expect(valid).toBe(true);
+  });
+
+  test('CAN BN still rejects invalid values when provided', async () => {
+    const repeating = await businessCoreInfoSchemaCAN(false).isValid({
+      legal_name: 'Acme Inc',
+      website_url: 'https://example.com',
+      email: 'test@example.com',
+      phone: '5551234567',
+      doing_business_as: '',
+      classification: 'LLC',
+      industry: 'Software',
+      date_of_incorporation: '2020-01-01',
+      tax_id: '111111111',
+    } as any);
+    expect(repeating).toBe(false);
+
+    const sequential = await businessCoreInfoSchemaCAN(false).isValid({
+      legal_name: 'Acme Inc',
+      website_url: 'https://example.com',
+      email: 'test@example.com',
+      phone: '5551234567',
+      doing_business_as: '',
+      classification: 'LLC',
+      industry: 'Software',
+      date_of_incorporation: '2020-01-01',
+      tax_id: '123456789',
+    } as any);
+    expect(sequential).toBe(false);
+  });
 });
 
 

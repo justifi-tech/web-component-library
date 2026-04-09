@@ -22,6 +22,18 @@ export enum EntityDocumentType {
   profitAndLossStatement = 'profit_and_loss_statement',
   taxReturn = 'tax_return',
   other = 'other',
+  articlesOfIncorporation = 'articles_of_incorporation',
+  businessRegistration = 'business_registration',
+  passport = 'passport',
+  driverLicense = 'driver_license',
+  residentCard = 'resident_card',
+  statusCard = 'status_card',
+  nexusCard = 'nexus_card',
+  citizenshipCard = 'citizenship_card',
+  foreignPassport = 'foreign_passport',
+  birthCertificate = 'birth_certificate',
+  sinCard = 'sin_card',
+  ssnCard = 'ssn_card',
 }
 
 export enum EntityDocumentStatus {

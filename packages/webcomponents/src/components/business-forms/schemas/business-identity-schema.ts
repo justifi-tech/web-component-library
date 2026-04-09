@@ -36,7 +36,9 @@ const strictSchemaUSA = (role: string) =>
     ssn_last4: string().nullable(),
     // ssn required unless last4 provided (handled inside ssnValidation)
     identification_number: ssnValidation,
-    ownership_percentage: ownershipPercentageValidation.nullable(),
+    ownership_percentage: role === 'owner'
+      ? ownershipPercentageValidation.required('Enter ownership percentage')
+      : ownershipPercentageValidation.nullable(),
     address: addressSchemaUSA(false),
   });
 
@@ -62,8 +64,10 @@ const strictSchemaCAN = (role: string) =>
     phone: phoneValidation.required('Enter phone number'),
     dob_full: dobValidation(role).required('Enter date of birth'),
     ssn_last4: string().nullable(),
-    identification_number: makeIdentityNumberValidation(CountryCode.CAN),
-    ownership_percentage: ownershipPercentageValidation.nullable(),
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN).nullable(),
+    ownership_percentage: role === 'owner'
+      ? ownershipPercentageValidation.required('Enter ownership percentage')
+      : ownershipPercentageValidation.nullable(),
     address: addressSchemaCAN(false),
   });
 

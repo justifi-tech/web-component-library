@@ -55,6 +55,16 @@ export class OwnerForm {
   }
 
   @Method()
+  async getOwnershipPercentage(): Promise<string | null> {
+    return this.formController.values.getValue()?.ownership_percentage || null;
+  }
+
+  @Method()
+  async setOwnershipPercentageError(message: string): Promise<void> {
+    this.formController.setFieldError('ownership_percentage', message);
+  }
+
+  @Method()
   async validate(): Promise<boolean> {
     return this.formController.validate();
   }
@@ -221,7 +231,7 @@ export class OwnerForm {
       <Host style={{ display: 'block' }}>
         <form onSubmit={this.validateAndSubmit}>
           <fieldset>
-            <legend class="fw-semibold fs-5" part={heading3}>
+            <legend class="fw-semibold fs-5 w-100" part={heading3}>
               {this.formTitle}
             </legend>
             <br />

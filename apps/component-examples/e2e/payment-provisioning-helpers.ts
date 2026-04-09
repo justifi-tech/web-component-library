@@ -59,6 +59,7 @@ export const TEST_BUSINESS_DATA = {
       phone: '6125559991',
       dob_full: '1983-07-22',
       identification_number: '217651516',
+      ownership_percentage: '100',
       address: {
         line1: '100 Owner Ln',
         city: 'Duluth',
@@ -122,6 +123,7 @@ export const TEST_BUSINESS_DATA = {
       phone: '4165551234',
       dob_full: '1980-01-15',
       identification_number: '046454286',
+      ownership_percentage: '100',
       address: {
         line1: '200 Owner Ave',
         city: 'Toronto',
@@ -221,7 +223,7 @@ export async function fillRepresentative(
   data: RepresentativeData,
 ): Promise<void> {
   await page.getByLabel('Full Name').fill(data.name);
-  await page.getByLabel('Title').fill(data.title);
+  await page.getByLabel('Title').selectOption(data.title);
   await page.getByLabel('Email Address').fill(data.email);
   await page.getByLabel('Phone Number').fill(data.phone);
   await page.getByLabel('Birth Date').fill(data.dob_full);
@@ -238,7 +240,7 @@ export async function fillRepresentativeCAN(
   data: RepresentativeDataCAN,
 ): Promise<void> {
   await page.getByLabel('Full Name').fill(data.name);
-  await page.getByLabel('Title').fill(data.title);
+  await page.getByLabel('Title').selectOption(data.title);
   await page.getByLabel('Email Address').fill(data.email);
   await page.getByLabel('Phone Number').fill(data.phone);
   await page.getByLabel('Birth Date').fill(data.dob_full);
@@ -260,7 +262,11 @@ export async function fillOwners(
   );
   if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner) {
     await page.getByRole('button', { name: 'Yes' }).click();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(4000);
+    const comp = page.locator('justifi-payment-provisioning');
+    if ('ownership_percentage' in data && data.ownership_percentage) {
+      await comp.getByLabel('% of Ownership').fill(data.ownership_percentage);
+    }
     return;
   }
   if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner === false) {
@@ -274,13 +280,16 @@ export async function fillOwners(
   await nameInput.fill(data.name);
 
   if ('title' in data && data.title !== undefined) {
-    await comp.getByLabel('Title').fill(data.title);
+    await comp.getByLabel('Title').selectOption(data.title);
     await comp.getByLabel('Email Address').fill(data.email);
     await comp.getByLabel('Phone Number').fill(data.phone);
     await comp.getByLabel('Birth Date').fill(data.dob_full);
     const idLabel =
       (await comp.getByLabel('SSN').count()) > 0 ? 'SSN' : 'SIN';
     await comp.getByLabel(idLabel).fill(data.identification_number);
+    if ('ownership_percentage' in data && data.ownership_percentage) {
+      await comp.getByLabel('% of Ownership').fill(data.ownership_percentage);
+    }
     const addr = data.address;
     await comp.getByLabel('Street Address').fill(addr.line1);
     await comp.getByLabel('City').fill(addr.city);
@@ -299,7 +308,6 @@ export async function fillOwners(
 export async function fillBankAccountManual(
   page: Page,
   data: BankAccountData,
-  voidedCheckPath: string = VOIDED_CHECK_FIXTURE,
 ): Promise<void> {
   const manualButton = page.getByRole('button', {
     name: 'Enter bank details manually (document upload required)',
@@ -314,15 +322,11 @@ export async function fillBankAccountManual(
   await page.getByLabel('Account Type').selectOption(data.account_type);
   await page.getByLabel('Account Number').fill(data.account_number);
   await page.getByLabel('Routing Number').fill(data.routing_number);
-  const comp = page.locator('justifi-payment-provisioning');
-  const fileInput = comp.locator('input[name="voided_check"]');
-  await fileInput.setInputFiles(voidedCheckPath);
 }
 
 export async function fillBankAccountManualCAN(
   page: Page,
   data: BankAccountDataCAN,
-  voidedCheckPath: string = VOIDED_CHECK_FIXTURE,
 ): Promise<void> {
   const manualButton = page.getByRole('button', {
     name: 'Enter bank details manually (document upload required)',
@@ -338,9 +342,49 @@ export async function fillBankAccountManualCAN(
   await page.getByLabel('Account Number').fill(data.account_number);
   await page.getByLabel('Institution Number').fill(data.institution_number);
   await page.getByLabel('Transit Number').fill(data.transit_number);
+}
+
+export async function fillDocumentUpload(
+  page: Page,
+  voidedCheckPath: string = VOIDED_CHECK_FIXTURE,
+): Promise<void> {
   const comp = page.locator('justifi-payment-provisioning');
-  const fileInput = comp.locator('input[name="voided_check"]');
+  await page.getByLabel('Document Category').selectOption('financial_document');
+  await page.waitForTimeout(300);
+  await page.getByLabel('Document Type').selectOption('voided_check');
+  await page.waitForTimeout(300);
+  const fileInput = comp.locator('input[name="document_file"]');
   await fileInput.setInputFiles(voidedCheckPath);
+  // Wait for upload badge to show success
+  await expect(comp.locator('.badge.bg-success')).toBeVisible({ timeout: 15000 });
+}
+
+export async function fillDocumentUploadCAN(
+  page: Page,
+  fixturePath: string = VOIDED_CHECK_FIXTURE,
+): Promise<void> {
+  const comp = page.locator('justifi-payment-provisioning');
+  const categorySelect = page.getByLabel('Document Category');
+  const typeSelect = page.getByLabel('Document Type');
+  const fileInput = comp.locator('input[name="document_file"]');
+
+  async function uploadDoc(categoryValue: string, docType: string, expectedBadges: number) {
+    await categorySelect.selectOption(categoryValue);
+    await page.waitForTimeout(300);
+    await typeSelect.selectOption(docType);
+    await page.waitForTimeout(300);
+    await fileInput.setInputFiles(fixturePath);
+    await expect(comp.locator('.badge.bg-success')).toHaveCount(expectedBadges, { timeout: 15000 });
+  }
+
+  // Financial document
+  await uploadDoc('financial_document', 'voided_check', 1);
+  // Business document
+  await uploadDoc('business_document', 'articles_of_incorporation', 2);
+  // Identity Document - Group 1
+  await uploadDoc('personal_group1', 'passport', 3);
+  // Identity Document - Group 2
+  await uploadDoc('personal_group2', 'nexus_card', 4);
 }
 
 export async function acceptTerms(page: Page): Promise<void> {
@@ -372,7 +416,8 @@ export async function waitForStep(
     4: 'Full Name',
     5: 'Is the representative of this business also an owner',
     6: ['Bank Name', 'Enter bank details manually', 'Bank Account Info'],
-    7: 'I agree to the terms and conditions',
+    7: 'Document Uploads',
+    8: 'I agree to the terms and conditions',
   };
   const selector = stepSelectors[stepNumber];
   if (selector) {

@@ -11,7 +11,7 @@ exports[`business-representative Country-specific identification number label re
         <form-control-text label="Full Name" name="name"></form-control-text>
       </div>
       <div class="col-12 col-md-4">
-        <form-control-text label="Title" name="title"></form-control-text>
+        <form-control-select label="Title" name="title"></form-control-select>
       </div>
       <div class="col-12 col-md-6">
         <form-control-text label="Email Address" name="email"></form-control-text>
@@ -23,7 +23,7 @@ exports[`business-representative Country-specific identification number label re
         <form-control-date label="Birth Date" name="dob_full"></form-control-date>
       </div>
       <div class="col-12 col-md-8">
-        <form-control-number-masked helptext="Enter your full Social Insurance Number." label="SIN" mask="000-000-000" name="identification_number"></form-control-number-masked>
+        <form-control-number-masked helptext="Enter your full Social Insurance Number." label="SIN (optional)" mask="000-000-000" name="identification_number"></form-control-number-masked>
       </div>
       <div class="col-12">
         <identity-address-form country="CAN"></identity-address-form>
@@ -44,7 +44,7 @@ exports[`business-representative Country-specific identification number label re
         <form-control-text label="Full Name" name="name"></form-control-text>
       </div>
       <div class="col-12 col-md-4">
-        <form-control-text label="Title" name="title"></form-control-text>
+        <form-control-select label="Title" name="title"></form-control-select>
       </div>
       <div class="col-12 col-md-6">
         <form-control-text label="Email Address" name="email"></form-control-text>
@@ -77,7 +77,7 @@ exports[`business-representative Form component behavior uses toggleable-field i
         <form-control-text label="Full Name" name="name"></form-control-text>
       </div>
       <div class="col-12 col-md-4">
-        <form-control-text label="Title" name="title"></form-control-text>
+        <form-control-select label="Title" name="title"></form-control-select>
       </div>
       <div class="col-12 col-md-6">
         <form-control-text label="Email Address" name="email"></form-control-text>

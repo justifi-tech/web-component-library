@@ -245,10 +245,10 @@ exports[`Payment Provisioning step components country differences Form Address F
       <form-control-text label="City" name="city"></form-control-text>
     </div>
     <div class="col-12 col-md-6">
-      <form-control-select label="Province" name="state"></form-control-select>
+      <form-control-select label="Province / State" name="state"></form-control-select>
     </div>
     <div class="col-12 col-md-6">
-      <form-control-text label="Postal Code" maxlength="7" name="postal_code"></form-control-text>
+      <form-control-text label="Postal / Zip Code" maxlength="7" name="postal_code"></form-control-text>
     </div>
   </div>
 </form-address-fields>

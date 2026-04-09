@@ -31,35 +31,6 @@ describe('Address schema by country', () => {
     expect(missingState).toBe(false);
   });
 
-  test('CAN strict schema validates alphanumeric postal and requires province', async () => {
-    const valid = await addressSchemaCAN(false).isValid({
-      line1: '123 Main St',
-      line2: '',
-      city: 'Ottawa',
-      state: 'ON',
-      postal_code: 'K1A 0B1',
-    });
-    expect(valid).toBe(true);
-
-    const invalidPostal = await addressSchemaCAN(false).isValid({
-      line1: '123 Main St',
-      line2: '',
-      city: 'Ottawa',
-      state: 'ON',
-      postal_code: '30301',
-    });
-    expect(invalidPostal).toBe(false);
-
-    const missingProvince = await addressSchemaCAN(false).isValid({
-      line1: '123 Main St',
-      line2: '',
-      city: 'Ottawa',
-      state: '',
-      postal_code: 'K1A 0B1',
-    });
-    expect(missingProvince).toBe(false);
-  });
-
   test('addressSchemaByCountry chooses correct schema', async () => {
     const usaSchema = addressSchemaByCountry[CountryCode.USA];
     const canSchema = addressSchemaByCountry[CountryCode.CAN];

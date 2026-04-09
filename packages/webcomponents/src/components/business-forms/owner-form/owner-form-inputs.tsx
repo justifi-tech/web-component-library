@@ -4,6 +4,7 @@ import { updateAddressFormValues, updateDateOfBirthFormValues, updateFormValues 
 import { FormController } from '../../../components';
 import { CountryCode } from '../../../utils/country-codes';
 import { countryLabels } from '../utils/country-config';
+import { businessTitleOptions } from '../utils/business-form-options';
 import { label, inputDisabled, buttonSecondary } from '../../../styles/parts';
 
 @Component({
@@ -40,13 +41,13 @@ export class OwnerFormInputs {
           />
         </div>
         <div class="col-12 col-md-4">
-          <form-control-text
+          <form-control-select
             name="title"
             label="Title"
+            options={businessTitleOptions}
             defaultValue={this.ownerDefaultValue.title}
             errorText={this.errors.title}
             inputHandler={this.inputHandler}
-            helpText="Role at your business, e.g. President, CEO, Treasurer."
           />
         </div>
         <div class="col-12 col-md-6">
@@ -92,7 +93,7 @@ export class OwnerFormInputs {
           {(!this.ownerDefaultValue?.ssn_last4 || this.isEditingIdentification) ? (
             <form-control-number-masked
               name="identification_number"
-              label={countryLabels[this.country].idNumberLabel}
+              label={this.country === CountryCode.CAN ? countryLabels[this.country].idNumberLabelOptional : countryLabels[this.country].idNumberLabel}
               defaultValue={this.isEditingIdentification ? '' : this.ownerDefaultValue.identification_number}
               errorText={this.errors.identification_number}
               inputHandler={this.inputHandler}
@@ -102,7 +103,7 @@ export class OwnerFormInputs {
           ) : (
             <div>
               <label class="form-label" part={label}>
-                {countryLabels[this.country].idNumberLabel}
+                {this.country === CountryCode.CAN ? countryLabels[this.country].idNumberLabelOptional : countryLabels[this.country].idNumberLabel}
               </label>
               <div class="input-group mb-3">
                 <input

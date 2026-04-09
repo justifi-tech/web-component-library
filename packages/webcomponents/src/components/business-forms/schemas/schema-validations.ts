@@ -74,11 +74,6 @@ export const makeIdentityNumberValidation = (country: CountryCode) => {
     return string()
       .matches(numbersOnlyRegex, 'Enter valid SIN')
       .length(countryValidation[country].identityDigits, 'Enter valid SIN')
-      .when('ssn_last4', {
-        is: (val: string) => !val || val.length === 0,
-        then: (schema) => schema.required('Enter SIN'),
-        otherwise: (schema) => schema.nullable(),
-      })
       .test('not-repeat', 'Enter valid SIN', (value) => {
         return !/^(\d)\1+$/.test(value);
       })
@@ -97,9 +92,11 @@ export const makeTaxIdValidation = (country: CountryCode) => {
       .matches(numbersOnlyRegex, 'Enter valid Business Number (BN)')
       .length(countryValidation[country].taxIdDigits, 'Enter valid Business Number (BN)')
       .test('not-repeat', 'Enter valid Business Number (BN)', (value) => {
+        if (!value) return true;
         return !/^(\d)\1+$/.test(value);
       })
       .test('not-seq', 'Enter valid Business Number (BN)', (value) => {
+        if (!value) return true;
         return value !== '123456789';
       })
       .transform(transformEmptyString);
@@ -265,9 +262,11 @@ export const routingNumberValidation = string()
   .length(9, 'Routing number must be 9 digits')
   .matches(numbersOnlyRegex, 'Enter valid routing number')
   .test('not-repeat', 'Enter valid routing number', (value) => {
+    if (!value) return true;
     return !/^(\d)\1+$/.test(value);
   })
   .test('valid', 'Enter valid routing number', (value) => {
+    if (!value) return true;
     return validateRoutingNumber(value);
   })
   .transform(transformEmptyString);

@@ -88,7 +88,7 @@ export class JustifiPaymentProvisioning {
     } else {
       this.businessLoading = false;
     }
-    this.refs = new Array(7);
+    this.refs = new Array(8);
   }
 
   disconnectedCallback() {

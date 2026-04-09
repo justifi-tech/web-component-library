@@ -5,6 +5,7 @@ import { PHONE_MASKS, IDENTITY_MASKS } from '../../../../utils/form-input-masks'
 import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { CountryCode } from '../../../../utils/country-codes';
 import { countryLabels } from '../../utils/country-config';
+import { businessTitleOptions } from '../../utils/business-form-options';
 
 @Component({
   tag: 'business-representative-form-inputs',
@@ -47,13 +48,13 @@ export class BusinessRepresentativeFormInputs {
               />
             </div>
             <div class="col-12 col-md-4">
-              <form-control-text
+              <form-control-select
                 name="title"
                 label="Title"
+                options={businessTitleOptions}
                 defaultValue={this.representativeDefaultValue?.title}
                 errorText={this.errors.title}
                 inputHandler={this.inputHandler}
-                helpText="Role at your business, e.g. President, CEO, Treasurer."
               />
             </div>
             <div class="col-12 col-md-6">
@@ -90,7 +91,7 @@ export class BusinessRepresentativeFormInputs {
               {(!this.representativeDefaultValue?.ssn_last4 || this.isEditingIdentification) ? (
                 <form-control-number-masked
                   name="identification_number"
-                  label={countryLabels[this.country].idNumberLabel}
+                  label={this.country === CountryCode.CAN ? countryLabels[this.country].idNumberLabelOptional : countryLabels[this.country].idNumberLabel}
                   defaultValue={this.isEditingIdentification ? '' : this.representativeDefaultValue?.identification_number}
                   errorText={this.errors.identification_number}
                   inputHandler={this.inputHandler}
@@ -100,7 +101,7 @@ export class BusinessRepresentativeFormInputs {
               ) : (
                 <div>
                   <label class="form-label" part={label}>
-                    {countryLabels[this.country].idNumberLabel}
+                    {this.country === CountryCode.CAN ? countryLabels[this.country].idNumberLabelOptional : countryLabels[this.country].idNumberLabel}
                   </label>
                   <div class="input-group mb-3">
                     <input

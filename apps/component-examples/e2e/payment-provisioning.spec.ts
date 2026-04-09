@@ -15,6 +15,8 @@ import {
   fillOwners,
   fillBankAccountManual,
   fillBankAccountManualCAN,
+  fillDocumentUpload,
+  fillDocumentUploadCAN,
   acceptTerms,
   clickNext,
   clickSubmit,
@@ -22,7 +24,7 @@ import {
 } from './payment-provisioning-helpers';
 
 test.describe('payment-provisioning happy path - USA', () => {
-  test('completes full 7-step flow', async ({ page }) => {
+  test('completes full 8-step flow', async ({ page }) => {
     const pageErrors: Error[] = [];
     page.on('pageerror', (err) => pageErrors.push(err));
 
@@ -59,13 +61,18 @@ test.describe('payment-provisioning happy path - USA', () => {
     await clickNext(page);
     await waitForStep(page, 6);
 
-    // Step 5: Bank Account (step 6 in 1-based UI)
+    // Step 5: Bank Account
     await waitForStep(page, 6, 20000);
     await fillBankAccountManual(page, TEST_BUSINESS_DATA.usa.bankAccount);
     await clickNext(page);
     await waitForStep(page, 7);
 
-    // Step 6: Terms
+    // Step 6: Document Upload
+    await fillDocumentUpload(page);
+    await clickNext(page);
+    await waitForStep(page, 8);
+
+    // Step 7: Terms
     await acceptTerms(page);
     const submitPromise = listenForSubmitEvent(page);
     const errorPromise = listenForErrorEvent(
@@ -92,7 +99,7 @@ test.describe('payment-provisioning happy path - USA', () => {
 });
 
 test.describe('payment-provisioning happy path - CAN', () => {
-  test('completes full 7-step flow', async ({ page }, _testInfo) => {
+  test('completes full 8-step flow', async ({ page }, _testInfo) => {
     const pageErrors: Error[] = [];
     page.on('pageerror', (err) => pageErrors.push(err));
 
@@ -129,6 +136,11 @@ test.describe('payment-provisioning happy path - CAN', () => {
     await clickNext(page);
     await waitForStep(page, 7);
 
+    // Step 6: Document Upload
+    await fillDocumentUploadCAN(page);
+    await clickNext(page);
+    await waitForStep(page, 8);
+
     await acceptTerms(page);
     const submitPromise = listenForSubmitEvent(page);
     const errorPromise = listenForErrorEvent(
@@ -155,7 +167,7 @@ test.describe('payment-provisioning happy path - CAN', () => {
 });
 
 test.describe('payment-provisioning USA — rep not owner', () => {
-  test('completes full 7-step flow when owner is not the representative', async ({
+  test('completes full 8-step flow when owner is not the representative', async ({
     page,
   }) => {
     const pageErrors: Error[] = [];
@@ -193,6 +205,11 @@ test.describe('payment-provisioning USA — rep not owner', () => {
     await fillBankAccountManual(page, TEST_BUSINESS_DATA.usa.bankAccount);
     await clickNext(page);
     await waitForStep(page, 7);
+
+    // Step 6: Document Upload
+    await fillDocumentUpload(page);
+    await clickNext(page);
+    await waitForStep(page, 8);
 
     await acceptTerms(page);
     const submitPromise = listenForSubmitEvent(page);

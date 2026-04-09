@@ -7,9 +7,9 @@ describe('Country-aware validation helpers', () => {
     await expect(makePostalValidation(CountryCode.USA).isValid('A1A 1A1')).resolves.toBe(false);
   });
 
-  test('CAN postal', async () => {
+  test('CAN postal can accept both zip/postal code', async () => {
     await expect(makePostalValidation(CountryCode.CAN).isValid('K1A 0B1')).resolves.toBe(true);
-    await expect(makePostalValidation(CountryCode.CAN).isValid('30301')).resolves.toBe(false);
+    await expect(makePostalValidation(CountryCode.CAN).isValid('30301')).resolves.toBe(true);
   });
 
   test('USA SSN vs CAN SIN', async () => {

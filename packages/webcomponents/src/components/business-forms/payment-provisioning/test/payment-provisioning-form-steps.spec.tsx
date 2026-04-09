@@ -10,6 +10,7 @@ const STEP_TAGS = [
   'business-representative-form-step',
   'business-owners-form-step',
   'business-bank-account-form-step',
+  'document-upload-form-step',
   'business-terms-conditions-form-step',
 ] as const;
 
@@ -62,7 +63,7 @@ describe('payment-provisioning-form-steps', () => {
   });
 
   describe('prop forwarding', () => {
-    it('passes businessId and authToken to steps 0, 3, 6', async () => {
+    it('passes businessId and authToken to steps 0, 3, 7', async () => {
       const { page } = await setupComponent(0);
       const child = page.root.querySelector('business-core-info-form-step');
       const businessId =
@@ -85,7 +86,7 @@ describe('payment-provisioning-form-steps', () => {
         (child3 as any).authToken ?? child3?.getAttribute('auth-token') ?? child3?.getAttribute('authtoken')
       ).toBe('test-token');
 
-      const { page: page6 } = await setupComponent(6);
+      const { page: page6 } = await setupComponent(7);
       const child6 = page6.root.querySelector('business-terms-conditions-form-step');
       expect(
         (child6 as any).businessId ?? child6?.getAttribute('business-id') ?? child6?.getAttribute('businessid')
@@ -120,8 +121,8 @@ describe('payment-provisioning-form-steps', () => {
       expect(child?.getAttribute('country')).toBeNull();
     });
 
-    it('does NOT pass country to step 6 (terms-and-conditions)', async () => {
-      const { page } = await setupComponent(6, { country: CountryCode.CAN });
+    it('does NOT pass country to step 7 (terms-and-conditions)', async () => {
+      const { page } = await setupComponent(7, { country: CountryCode.CAN });
       const child = page.root.querySelector('business-terms-conditions-form-step');
       expect(child?.getAttribute('country')).toBeNull();
     });
@@ -136,7 +137,7 @@ describe('payment-provisioning-form-steps', () => {
 
   describe('refs', () => {
     it('sets refs[n] to the rendered child element for each step n', async () => {
-      for (let step = 0; step <= 6; step++) {
+      for (let step = 0; step <= 7; step++) {
         const { page, refs } = await setupComponent(step);
         const child = page.root.querySelector(STEP_TAGS[step]);
         expect(refs[step]).toBe(child);
