@@ -1,5 +1,5 @@
 import { string } from 'yup';
-import StateOptions from '../../../utils/state-options';
+import checkoutBillingStateOptions from '../../../utils/checkout-billing-state-options';
 import { CountryCode } from '../../../utils/country-codes';
 import { countryValidation } from '../utils/country-config';
 import {
@@ -204,8 +204,8 @@ export const cityValidation = string()
 
 export const stateValidation = string()
   .oneOf(
-    StateOptions.map((option) => option.value),
-    'Enter a 2-letter state abbreviation, such as CA'
+    checkoutBillingStateOptions.map((option) => option.value),
+    'Select a valid state or province'
   )
   .transform(transformEmptyString);
 

@@ -36,6 +36,7 @@ const mockCheckoutForFetch = {
   total_amount: 1000,
   payment_amount: 1000,
   payment_settings: {
+    ach_payments: true,
     bnpl_payments: false,
     insurance_payments: false,
     bank_account_verification: false,
@@ -63,6 +64,7 @@ describe('justifi-modular-checkout', () => {
   beforeEach(() => {
     checkoutStore.isSubmitting = false;
     checkoutStore.isWalletProcessing = false;
+    checkoutStore.checkoutMode = null;
   });
 
   afterAll(() => {
@@ -118,7 +120,9 @@ describe('justifi-modular-checkout', () => {
       payment_description: 'desc',
       total_amount: 1000,
       payment_amount: 1000,
+      mode: 'test',
       payment_settings: {
+        ach_payments: true,
         bnpl_payments: false,
         insurance_payments: false,
         bank_account_verification: false,
@@ -142,6 +146,43 @@ describe('justifi-modular-checkout', () => {
 
       expect(getCheckoutSpy).toHaveBeenCalledTimes(1);
       expect(checkoutStore.checkoutLoaded).toBe(true);
+      expect(checkoutStore.checkoutMode).toBe('test');
+    });
+
+    it('maps checkout.mode live to checkoutStore.checkoutMode', async () => {
+      const getCheckoutSpy = jest.fn(({ onSuccess }: any) => {
+        onSuccess({
+          checkout: { ...mockCheckout, mode: 'live', status: ICheckoutStatus.created },
+        });
+      });
+      (checkoutActions.makeGetCheckout as jest.Mock).mockReturnValue(getCheckoutSpy);
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.checkoutMode).toBe('live');
+    });
+
+    it('sets checkoutStore.checkoutMode null when mode is absent or unknown', async () => {
+      const getCheckoutSpy = jest.fn(({ onSuccess }: any) => {
+        onSuccess({
+          checkout: { ...mockCheckout, mode: undefined, status: ICheckoutStatus.created },
+        });
+      });
+      (checkoutActions.makeGetCheckout as jest.Mock).mockReturnValue(getCheckoutSpy);
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="tok" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.checkoutMode).toBeNull();
     });
 
     // Skip: insurance store subscription (insuranceValuesOn) does not trigger reliably in test env
@@ -291,6 +332,7 @@ describe('justifi-modular-checkout', () => {
       total_amount: 100,
       payment_amount: 100,
       payment_settings: {
+        ach_payments: true,
         bnpl_payments: false,
         bank_account_verification: false,
         apple_payments: true,
@@ -302,6 +344,66 @@ describe('justifi-modular-checkout', () => {
 
     expect(checkoutStore.bankAccountVerification).toBe(false);
     expect(checkoutStore.applePayEnabled).toBe(true);
+    expect(checkoutStore.achPaymentsEnabled).toBe(true);
+  });
+
+  it('excludes saved bank payment methods from store when ach_payments is false', async () => {
+    const page = await newSpecPage({
+      components: [JustifiModularCheckout],
+      html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+    });
+
+    const instance: any = page.rootInstance;
+
+    const basePm = {
+      status: 'valid',
+      invalid_reason: null,
+      name: 'Test',
+      month: '12',
+      year: '2030',
+      address_line1_check: 'pass',
+      address_postal_code_check: 'pass',
+      bin_details: null,
+    };
+
+    const checkout: any = {
+      account_id: 'acc_123',
+      payment_methods: [
+        {
+          ...basePm,
+          id: 'pm_card',
+          type: 'card',
+          brand: 'visa',
+          acct_last_four: '4242',
+          account_type: 'checking',
+        },
+        {
+          ...basePm,
+          id: 'pm_bank',
+          type: 'bank_account',
+          brand: 'ach',
+          acct_last_four: '0000',
+          account_type: 'checking',
+        },
+      ],
+      payment_method_group_id: 'pmg_123',
+      payment_description: 'desc',
+      total_amount: 100,
+      payment_amount: 100,
+      payment_settings: {
+        ach_payments: false,
+        bnpl_payments: false,
+        bank_account_verification: false,
+        apple_payments: false,
+        google_payments: false,
+        insurance_payments: false,
+      },
+    };
+
+    instance['updateStore'](checkout);
+
+    expect(checkoutStore.achPaymentsEnabled).toBe(false);
+    expect(checkoutStore.paymentMethods.map((pm) => pm.id)).toEqual(['pm_card']);
   });
 
   describe('checkout-changed event', () => {
@@ -312,6 +414,8 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.bnplEnabled = false;
       checkoutStore.bankAccountVerification = undefined;
       checkoutStore.paymentMethods = [] as any;
+      checkoutStore.checkoutLoaded = false;
+      checkoutStore.achPaymentsEnabled = true;
     });
 
     it('emits checkout-changed with availablePaymentMethodTypes on store updates', async () => {
@@ -351,6 +455,16 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.selectedPaymentMethod = undefined;
     });
 
+    afterEach(() => {
+      (checkoutActions.makeGetCheckout as jest.Mock).mockImplementation(() => {
+        return jest.fn(async ({ onSuccess }: any) => {
+          onSuccess({
+            checkout: { ...mockCheckoutForFetch, status: ICheckoutStatus.created },
+          });
+        });
+      });
+    });
+
     it('sets selectedPaymentMethod to NEW_CARD when justifi-card-form is present', async () => {
       const page = await newSpecPage({
         components: [JustifiModularCheckout, JustifiCardForm],
@@ -375,6 +489,36 @@ describe('justifi-modular-checkout', () => {
       await page.waitForChanges();
 
       expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.NEW_BANK_ACCOUNT });
+    });
+
+    it('does not set NEW_BANK_ACCOUNT when ach_payments is false after checkout loads', async () => {
+      const getCheckoutSpy = jest.fn(({ onSuccess }: any) => {
+        onSuccess({
+          checkout: {
+            ...mockCheckoutForFetch,
+            status: ICheckoutStatus.created,
+            payment_settings: {
+              ...mockCheckoutForFetch.payment_settings,
+              ach_payments: false,
+            },
+          },
+        });
+      });
+      (checkoutActions.makeGetCheckout as jest.Mock).mockReturnValue(getCheckoutSpy);
+
+      checkoutStore.selectedPaymentMethod = undefined;
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout, JustifiBankAccountForm],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123">
+          <justifi-bank-account-form></justifi-bank-account-form>
+        </justifi-modular-checkout>`,
+      });
+
+      await page.waitForChanges();
+
+      expect(checkoutStore.achPaymentsEnabled).toBe(false);
+      expect(checkoutStore.selectedPaymentMethod).toBeUndefined();
     });
 
     it('does not override already-set selectedPaymentMethod', async () => {

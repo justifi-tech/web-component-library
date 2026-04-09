@@ -17,6 +17,15 @@ const fullBillingFields = {
   address_postal_code: '10000',
 };
 
+const canadaBillingFields = {
+  name: 'Jane Doe',
+  address_line1: '123 Main St',
+  address_line2: '',
+  address_city: 'Toronto',
+  address_state: 'ON',
+  address_postal_code: 'M5H 2N2',
+};
+
 describe('billing-form', () => {
   beforeEach(() => {
     checkoutStore.billingFormFields = { address_postal_code: '' };
@@ -51,6 +60,22 @@ describe('billing-form', () => {
     const { isValid } = await instance.validate();
 
     expect(isValid).toBe(true); // Assuming provided fields pass the validation
+  });
+
+  it('validates the form with a Canadian province', async () => {
+    checkoutStore.billingFormFields = canadaBillingFields;
+
+    const page = await newSpecPage({
+      components: billingFormComponents,
+      html: `<justifi-billing-form></justifi-billing-form>`,
+    });
+
+    const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+    const { isValid } = await instance.validate();
+
+    expect(isValid).toBe(true);
   });
 
   it('gets values of the form', async () => {

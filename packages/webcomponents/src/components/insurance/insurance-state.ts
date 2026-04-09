@@ -28,7 +28,10 @@ const validateInsuranceValues = () => {
 
 // Helper function to check if a value has actually changed (not just initially set)
 const hasInsuranceValueChanged = (key: string, newValue: any): boolean => {
-  const hadPreviousValue = previousInsuranceValues.hasOwnProperty(key);
+  const hadPreviousValue = Object.prototype.hasOwnProperty.call(
+    previousInsuranceValues,
+    key,
+  );
   const previousValue = previousInsuranceValues[key];
 
   if (!hadPreviousValue) {

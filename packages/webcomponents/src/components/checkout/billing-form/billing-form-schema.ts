@@ -23,7 +23,7 @@ export const fullBillingSchema = () =>
     address_line1: lineOneValidation.required('Enter street address'),
     address_line2: lineTwoValidation.nullable(),
     address_city: cityValidation.required('Enter city'),
-    address_state: stateValidation.required('Select state'),
+    address_state: stateValidation.required('Select state or province'),
     address_postal_code: postalValidation.required('Enter postal code'),
   });
 

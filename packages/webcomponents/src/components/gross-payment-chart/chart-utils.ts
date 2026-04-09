@@ -24,9 +24,9 @@ export const generateChartOptions = (
           intersect: false,
           callbacks: {
             label: (context) => {
-              let index = context.dataIndex;
-              let date = formatDisplayDate(dates[index].date, endDate);
-              let value = formatCurrency(dates[index].value)
+              const index = context.dataIndex;
+              const date = formatDisplayDate(dates[index].date, endDate);
+              const value = formatCurrency(dates[index].value)
               return [date, value]
             },
           }

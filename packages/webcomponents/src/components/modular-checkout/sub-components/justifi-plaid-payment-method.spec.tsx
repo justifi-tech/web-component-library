@@ -7,6 +7,7 @@ describe('justifi-plaid-payment-method', () => {
   beforeEach(() => {
     checkoutStore.bankAccountVerification = undefined;
     checkoutStore.checkoutLoaded = false;
+    checkoutStore.achPaymentsEnabled = true;
     jest.spyOn(console, 'warn').mockImplementation(() => { });
   });
 
@@ -33,6 +34,7 @@ describe('justifi-plaid-payment-method', () => {
   it('loads Plaid script into document.head when bankAccountVerification and checkoutLoaded are true', async () => {
     checkoutStore.bankAccountVerification = true;
     checkoutStore.checkoutLoaded = true;
+    checkoutStore.achPaymentsEnabled = true;
 
     const page = await newSpecPage({
       components: [JustifiPlaidPaymentMethod],
@@ -43,6 +45,25 @@ describe('justifi-plaid-payment-method', () => {
     const script = document.querySelector('script[src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"]');
     expect(script).not.toBeNull();
     expect(script?.parentElement).toBe(document.head);
+  });
+
+  it('does not load Plaid script when ACH payments are disabled for checkout', async () => {
+    checkoutStore.bankAccountVerification = true;
+    checkoutStore.checkoutLoaded = true;
+    checkoutStore.achPaymentsEnabled = false;
+
+    const page = await newSpecPage({
+      components: [JustifiPlaidPaymentMethod],
+      html: `<justifi-plaid-payment-method></justifi-plaid-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    expect(console.warn).toHaveBeenCalledWith(
+      '[JustifiPlaidPaymentMethod] ACH payments are disabled for this checkout. Component will not render.'
+    );
+    const script = document.querySelector('script[src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"]');
+    expect(script).toBeNull();
   });
 
   describe('Store Integration', () => {

@@ -1,6 +1,6 @@
 {
   "name": "@justifi/webcomponents",
-  "version": "6.13.0-rc.1",
+  "version": "6.12.6",
   "description": "JustiFi Web Components",
   "collection": "dist/collection/collection-manifest.json",
   "main": "dist/index.cjs.js",
@@ -51,7 +51,7 @@
     "dinero.js": "^1.9.1",
     "iframe-resizer": "4.4.5",
     "imask": "^7.6.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "qrcode": "^1.5.3",
     "rxjs": "^7.8.1",
     "ts-dedent": "^2.2.0",

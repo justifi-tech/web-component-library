@@ -3,6 +3,7 @@ import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { checkoutStore } from "../../../store/checkout.store";
 
 @Component({
   tag: "bank-account-form",
@@ -14,6 +15,7 @@ export class BankAccountForm {
 
   private accountNumberIframeElement!: HTMLIframeInputElement;
   private routingNumberIframeElement!: HTMLIframeInputElement;
+  private hasLoggedAchDisabledWarning = false;
 
   async componentWillLoad() {
     await waitForConfig();
@@ -24,10 +26,18 @@ export class BankAccountForm {
   }
 
   componentDidRender() {
+    if (this.isAchDisabledForCheckout()) {
+      return;
+    }
+
     const elements = [
       this.accountNumberIframeElement,
       this.routingNumberIframeElement,
     ];
+
+    if (!elements.every(Boolean)) {
+      return;
+    }
 
     Promise.all(elements.map((element) => {
       return new Promise<void>((resolve) => {
@@ -38,8 +48,17 @@ export class BankAccountForm {
     });
   }
 
+  private isAchDisabledForCheckout(): boolean {
+    return (
+      checkoutStore.checkoutLoaded && !checkoutStore.achPaymentsEnabled
+    );
+  }
+
   @Method()
   async validate(): Promise<any> {
+    if (this.isAchDisabledForCheckout()) {
+      return false;
+    }
     const accountNumberIsValid = await this.accountNumberIframeElement.validate();
     const routingNumberIsValid = await this.routingNumberIframeElement.validate();
     return accountNumberIsValid && routingNumberIsValid;
@@ -55,6 +74,14 @@ export class BankAccountForm {
     paymentMethodMetadata: any,
     account?: string,
   }) {
+    if (this.isAchDisabledForCheckout()) {
+      return {
+        error: {
+          message:
+            'ACH payments are disabled for this checkout (payment_settings.ach_payments=false).',
+        },
+      };
+    }
     const result = await this.accountNumberIframeElement.tokenize(
       clientId,
       paymentMethodMetadata,
@@ -64,6 +91,16 @@ export class BankAccountForm {
   }
 
   render() {
+    if (this.isAchDisabledForCheckout()) {
+      if (!this.hasLoggedAchDisabledWarning) {
+        console.warn(
+          '[bank-account-form] ACH payments are disabled for this checkout (payment_settings.ach_payments=false).'
+        );
+        this.hasLoggedAchDisabledWarning = true;
+      }
+      return null;
+    }
+
     return (
       <div>
         <BankAccountFormSkeleton isReady={this.isReady} />

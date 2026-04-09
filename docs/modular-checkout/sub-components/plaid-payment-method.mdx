@@ -24,7 +24,7 @@ This component is designed to be used within the `justifi-modular-checkout` and 
 
 It exposes no public properties for configuration, but does emit Plaid-specific events for error handling and recovery.
 
-> Note: This component renders nothing and logs a console warning when bank account verification is not enabled for the checkout (`payment_settings.bank_account_verification !== true`).
+> Note: This component renders nothing and logs a console warning when bank account verification is not enabled for the checkout (`payment_settings.bank_account_verification !== true`), or when ACH payments are disabled for the checkout (`payment_settings.ach_payments !== true`). The same `payment_settings` apply to other ACH rails in modular checkout (for example `new_bank_account` and `saved_bank_account` in `availablePaymentMethodTypes`).
 
 ## Usage
 

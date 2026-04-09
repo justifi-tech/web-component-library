@@ -15,6 +15,7 @@ interface IInitialState {
   isWalletProcessing: boolean;
   applePayEnabled: boolean;
   googlePayEnabled: boolean;
+  achPaymentsEnabled: boolean;
   insuranceEnabled: boolean;
   bnplProviderApiVersion: string;
   bnplProviderCheckoutUrl: string;
@@ -22,6 +23,7 @@ interface IInitialState {
   bnplProviderMode: string;
   checkoutId: string;
   checkoutLoaded: boolean;
+  checkoutMode: 'test' | 'live' | null;
   bankAccountVerification?: boolean;
   disableBankAccount: boolean;
   disableCreditCard: boolean;
@@ -67,6 +69,7 @@ const initialState: IInitialState = {
   isWalletProcessing: false,
   applePayEnabled: false,
   googlePayEnabled: false,
+  achPaymentsEnabled: false,
   insuranceEnabled: false,
   bnplProviderApiVersion: '',
   bnplProviderCheckoutUrl: '',
@@ -74,6 +77,7 @@ const initialState: IInitialState = {
   bnplProviderMode: '',
   checkoutId: '',
   checkoutLoaded: false,
+  checkoutMode: null,
   bankAccountVerification: undefined,
   disableBankAccount: false,
   disableCreditCard: false,
@@ -103,6 +107,8 @@ Object.keys(initialState).forEach((key) => {
 // Helper: compute available payment methods based on store flags
 export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
   const methods: PAYMENT_METHODS[] = [];
+  const achAllowedForCheckout =
+    !checkoutStore.checkoutLoaded || checkoutStore.achPaymentsEnabled;
 
   if (
     !checkoutStore.disablePaymentMethodGroup &&
@@ -118,7 +124,11 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
     if (hasSavedCard && !checkoutStore.disableCreditCard) {
       methods.push(PAYMENT_METHODS.SAVED_CARD);
     }
-    if (hasSavedBank && !checkoutStore.disableBankAccount) {
+    if (
+      hasSavedBank &&
+      !checkoutStore.disableBankAccount &&
+      achAllowedForCheckout
+    ) {
       methods.push(PAYMENT_METHODS.SAVED_BANK_ACCOUNT);
     }
   }
@@ -127,7 +137,7 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
     methods.push(PAYMENT_METHODS.NEW_CARD);
   }
 
-  if (!checkoutStore.disableBankAccount) {
+  if (!checkoutStore.disableBankAccount && achAllowedForCheckout) {
     methods.push(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
   }
 
@@ -145,7 +155,8 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
 
   if (
     checkoutStore.bankAccountVerification === true &&
-    !checkoutStore.disableBankAccount
+    !checkoutStore.disableBankAccount &&
+    achAllowedForCheckout
   ) {
     methods.push(PAYMENT_METHODS.PLAID);
   }

@@ -27,7 +27,7 @@ export const makeGetBusiness = ({ authToken, businessId, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };
 
@@ -57,7 +57,7 @@ export const makePatchBusiness = ({ authToken, businessId, service }) =>
         rawError: error,
       });
     } finally {
-      return final()
+      final();
     }
   };
 
@@ -113,7 +113,7 @@ export const makeGetIdentity = ({ authToken, identityId, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };
 
@@ -141,7 +141,7 @@ export const makePatchIdentity = ({ authToken, identityId, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };
 
@@ -169,7 +169,7 @@ export const makePostIdentity = ({ authToken, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };
 
@@ -199,7 +199,7 @@ export const makePostBankAccount = ({ authToken, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };
   
@@ -229,6 +229,6 @@ export const makePostDocumentRecord = ({ authToken, service }) =>
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final()
+      final();
     }
   };

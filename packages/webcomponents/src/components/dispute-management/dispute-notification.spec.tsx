@@ -118,7 +118,7 @@ describe('dispute-notification', () => {
   });
 
   it('click Counter dispute emits click-event with action respondToDispute', async () => {
-    const dispute = makeDispute({ status: DisputeStatus.needsResponse, due_date: '2026-04-01' });
+    const dispute = makeDispute({ status: DisputeStatus.needsResponse, due_date: '2099-04-01' });
     const clickSpy = jest.fn();
 
     const page = await newSpecPage({
@@ -141,7 +141,7 @@ describe('dispute-notification', () => {
   });
 
   it('click Accept dispute calls submitDisputeResponse with { forfeit: true }', async () => {
-    const dispute = makeDispute({ status: DisputeStatus.needsResponse, due_date: '2026-04-01' });
+    const dispute = makeDispute({ status: DisputeStatus.needsResponse, due_date: '2099-04-01' });
     const submitSpy = jest.spyOn(DisputeService.prototype, 'submitDisputeResponse').mockResolvedValue({ data: { id: 'dp_1' } } as any);
 
     const page = await newSpecPage({

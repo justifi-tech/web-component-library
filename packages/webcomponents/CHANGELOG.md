@@ -1,5 +1,19 @@
 ### Changelog
 
+## 6.12.6
+
+### Patch Changes
+
+- 7163ee3: Default justifi-google-pay environment prop to "PRODUCTION"
+- c318c0f: Rename merchantName prop to merchantDisplayName for Google Pay to be consistent with Apple Pay
+
+## 6.12.5
+
+### Patch Changes
+
+- fd4c5a7: Fix Date of Birth display of the owner in Owner details and mark representative as owner in the payment provisioning form when prompted
+- 91959dd: Checkout billing: state/province field lists US states and Canadian provinces/territories. Business onboarding forms are unchanged (US-only state lists where they already apply).
+
 ## 6.12.4
 
 ### Patch Changes

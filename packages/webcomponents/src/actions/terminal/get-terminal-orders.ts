@@ -34,6 +34,6 @@ export const makeGetTerminalOrders =
         severity: ComponentErrorSeverity.ERROR,
       });
     } finally {
-      return final();
+      final();
     }
   };
