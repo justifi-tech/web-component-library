@@ -15,8 +15,8 @@ export const countryLabels = {
 		taxIdHelpText: "Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes.",
 	},
 	CAN: {
-		stateLabel: 'Province',
-		postalLabel: 'Postal Code',
+		stateLabel: 'Province / State',
+		postalLabel: 'Postal / Zip Code',
 		idNumberLabel: 'SIN',
 		idNumberLabelOptional: 'SIN (optional)',
 		identityHelpText: 'Enter your full Social Insurance Number.',
@@ -26,14 +26,20 @@ export const countryLabels = {
 	},
 } as const;
 
+const provinceAndStateOptions = [
+	{ label: 'Choose province / state', value: '' },
+	...ProvinceOptions.filter(o => o.value !== ''),
+	...StateOptions.filter(o => o.value !== ''),
+];
+
 export const countryOptions = {
 	USA: {
 		stateOptions: StateOptions,
 	},
 	CAN: {
-		stateOptions: ProvinceOptions,
+		stateOptions: provinceAndStateOptions,
 	},
-} as const;
+};
 
 export const countryValidation = {
 	USA: {
@@ -42,7 +48,7 @@ export const countryValidation = {
 		taxIdDigits: 9,
 	},
 	CAN: {
-		postalRegex: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
+		postalRegex: /^([A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d|[0-9]{5}(-[0-9]{4})?)$/,
 		identityDigits: 9,
 		taxIdDigits: 9,
 	},

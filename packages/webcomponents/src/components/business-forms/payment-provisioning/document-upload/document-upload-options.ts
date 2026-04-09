@@ -12,6 +12,12 @@ export const financialDocumentOptions = [
   { label: 'Bank Statement', value: 'bank_statement' },
 ];
 
+export const financialDocumentOptionsCAN = [
+  { label: 'Select a document type', value: '' },
+  { label: 'Voided Check', value: 'voided_check' },
+  { label: 'Bank Letter', value: 'bank_statement' },
+];
+
 export const personalDocGroup1Options = [
   { label: 'Select a document type', value: '' },
   { label: 'Canadian Passport', value: 'passport' },
@@ -50,18 +56,23 @@ export interface UploadedDocumentEntry {
   status: DocumentUploadStatus;
 }
 
-export const staticCategories: DocumentCategory[] = [
-  {
-    label: 'Business Document',
-    value: 'business_document',
-    docTypeOptions: businessDocumentOptions,
-  },
-  {
-    label: 'Financial Document',
-    value: 'financial_document',
-    docTypeOptions: financialDocumentOptions,
-  },
-];
+export function buildStaticCategories(country?: CountryCode): DocumentCategory[] {
+  const financialOptions = country === CountryCode.CAN
+    ? financialDocumentOptionsCAN
+    : financialDocumentOptions;
+  return [
+    {
+      label: 'Business Document',
+      value: 'business_document',
+      docTypeOptions: businessDocumentOptions,
+    },
+    {
+      label: 'Financial Document',
+      value: 'financial_document',
+      docTypeOptions: financialOptions,
+    },
+  ];
+}
 
 export function buildPersonalDocumentCategories(): DocumentCategory[] {
   return [
@@ -90,7 +101,7 @@ export function buildAllCategories(country?: CountryCode): DocumentCategory[] {
   if (country === CountryCode.USA) {
     return financialOnlyCategories;
   }
-  return [...staticCategories, ...buildPersonalDocumentCategories()];
+  return [...buildStaticCategories(country), ...buildPersonalDocumentCategories()];
 }
 
 export const personalDocGroup1Types = new Set(
