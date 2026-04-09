@@ -34,6 +34,8 @@ export class JustifiCheckout {
   @Prop() disablePaymentMethodGroup?: boolean = false;
   @Prop() hideBankAccountBillingForm?: boolean = false;
   @Prop() hideCardBillingForm?: boolean = false;
+  /** Passed to `justifi-google-pay` as `environment`. Omit to let the child use its default. */
+  @Prop() googlePayEnv?: 'TEST' | 'PRODUCTION';
   @Prop() preCompleteHook?: Hook<CheckoutState>;
 
   @Watch('authToken')
@@ -147,7 +149,10 @@ export class JustifiCheckout {
                     )}
                     {this.availablePaymentMethods.includes(PAYMENT_METHODS.GOOGLE_PAY) && (
                       <div class="mb-3">
-                        <justifi-google-pay ref={(el) => (this.googlePayRef = el)} />
+                        <justifi-google-pay
+                          ref={(el) => (this.googlePayRef = el)}
+                          {...(this.googlePayEnv != null ? { environment: this.googlePayEnv } : {})}
+                        />
                       </div>
                     )}
                     <justifi-saved-payment-methods />
