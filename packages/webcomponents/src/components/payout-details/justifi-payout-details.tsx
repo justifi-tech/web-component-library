@@ -186,10 +186,10 @@ export class JustifiPayoutDetails {
               <DetailSectionTitle sectionTitle="Account" />
               <div class="d-flex flex-column gap-2 w-100">
                 <DetailItem title="ID" value={this.payout.account_id} onClick={this.enableRecordClick ? () => this.handleRecordClick(this.payout.account_id) : undefined} />
-                <DetailItem title="Account Type" value={this.payout.bank_account.account_type} />
-                <DetailItem title="Institution" value={this.payout.bank_account.account_type} />
-                <DetailItem title="Routing Number" value={this.payout.bank_account.routing_number} />
-                <DetailItem title="Account Number" value={`**** ${this.payout.bank_account.account_number_last4}`} />
+                <DetailItem title="Account Type" value={this.payout.bank_account?.account_type} />
+                <DetailItem title="Institution" value={this.payout.bank_account?.account_type} />
+                <DetailItem title="Routing Number" value={this.payout.bank_account?.routing_number} />
+                <DetailItem title="Account Number" value={this.payout.bank_account ? `**** ${this.payout.bank_account.account_number_last4}` : undefined} />
               </div>
               {this.payout.metadata && [
                 <DetailSectionTitle sectionTitle='Metadata' />,
