@@ -1,4 +1,4 @@
-import { addressSchemaUSA, addressSchemaCAN, addressSchemaByCountry } from '../business-address-schema';
+import { addressSchemaUSA, addressSchemaByCountry } from '../business-address-schema';
 import { CountryCode } from '../../../../utils/country-codes';
 
 describe('Address schema by country', () => {

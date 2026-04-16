@@ -191,7 +191,7 @@ export async function fillLegalAddressCAN(
   await page.getByLabel('Street Address').fill(data.line1);
   await page.getByLabel('City').fill(data.city);
   await page.getByLabel('Province').selectOption(data.province);
-  await page.getByLabel('Postal Code').fill(data.postal_code);
+  await page.getByLabel('Postal / Zip Code').fill(data.postal_code);
 }
 
 export async function fillAdditionalQuestions(
@@ -249,7 +249,7 @@ export async function fillRepresentativeCAN(
   await page.getByLabel('Street Address').fill(addr.line1);
   await page.getByLabel('City').fill(addr.city);
   await page.getByLabel('Province').selectOption(addr.province);
-  await page.getByLabel('Postal Code').fill(addr.postal_code);
+  await page.getByLabel('Postal / Zip Code').fill(addr.postal_code);
 }
 
 export async function fillOwners(
@@ -298,7 +298,7 @@ export async function fillOwners(
       await comp.getByLabel('Zip Code').fill(addr.postal_code);
     } else if ('province' in addr && addr.province) {
       await comp.getByLabel('Province').selectOption(addr.province);
-      await comp.getByLabel('Postal Code').fill(addr.postal_code);
+      await comp.getByLabel('Postal / Zip Code').fill(addr.postal_code);
     }
   } else {
     await comp.getByLabel('Email Address').fill(data.email);
