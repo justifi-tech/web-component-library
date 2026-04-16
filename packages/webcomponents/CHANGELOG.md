@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.13.1
+
+### Patch Changes
+
+- bfe3e40: Handle null bank_account on payout details for CAD ISO payouts
+
 ## 6.13.0
 
 ### Minor Changes
