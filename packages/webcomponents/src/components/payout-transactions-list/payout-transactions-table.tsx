@@ -87,7 +87,13 @@ export const payoutTransactionTypes = {
   dispute_fee_collected: "Dispute Fee Collected",
   seller_payment: "Seller Payment",
   transfer: "Transfer",
-  partner_platform_proceeds_credit: "Partner Platform Proceeds Credit"
+  partner_platform_proceeds_credit: "Partner Platform Proceeds Credit",
+  processing_fee: "Processing Fee",
+  refund_processing_fee: "Refund Processing Fee",
+  fee_rounding_adjustment: "Fee Rounding Adjustment",
+  platform_fee: "Platform Fee",
+  processing_fee_return: "Processing Fee Return",
+  platform_fee_return: "Platform Fee Return"
 }
 
 export const payoutTransactionTableCells = {
