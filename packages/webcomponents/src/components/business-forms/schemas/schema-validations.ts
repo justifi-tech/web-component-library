@@ -113,7 +113,6 @@ export const dateOfIncorporationValidation = string()
     'not-future',
     'Date of incorporation cannot be in the future',
     (value) => {
-      if (!value) return true;
       const inputDate = new Date(value);
       inputDate.setDate(inputDate.getDate() + 1);
       const today = new Date();
