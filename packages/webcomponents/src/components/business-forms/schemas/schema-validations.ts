@@ -115,10 +115,9 @@ export const dateOfIncorporationValidation = string()
     (value) => {
       if (!value) return true;
       const inputDate = new Date(value);
-      inputDate.setHours(0, 0, 0, 0);
+      inputDate.setDate(inputDate.getDate() + 1);
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return inputDate < today;
+      return inputDate <= today;
     }
   )
   .transform(transformEmptyString);
