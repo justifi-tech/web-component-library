@@ -110,10 +110,11 @@ export const makeBusinessClassificationValidation = (_country: CountryCode) =>
 
 export const dateOfIncorporationValidation = string()
   .test(
-    'not-future',
-    'Date of incorporation cannot be in the future',
+    'past-date',
+    'Date of registration must be in the past',
     (value) => {
       const inputDate = new Date(value);
+      inputDate.setDate(inputDate.getDate() + 1);
       const today = new Date();
       return inputDate <= today;
     }
