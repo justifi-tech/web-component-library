@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.13.3
+
+### Patch Changes
+
+- 610fde0: Fix date of registration to not allow the current date.
+
 ## 6.13.2
 
 ### Patch Changes
