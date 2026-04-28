@@ -107,10 +107,31 @@ export const Api = () => {
       signal: signal,
     });
 
-    if (response) {
-      return response.status === 204 ? {} : response.json();
+    if (!response) {
+      handleError(requestUrl);
+      return;
     }
-    handleError(requestUrl);
+
+    if (response.status === 204) {
+      return {};
+    }
+
+    const parsed = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      const err: any = new Error(
+        parsed?.error?.message
+          || (typeof parsed?.error === 'string' ? parsed.error : null)
+          || parsed?.message
+          || `Request failed: ${response.status}`,
+      );
+      err.code = parsed?.error?.code;
+      err.status = response.status;
+      err.body = parsed;
+      throw err;
+    }
+
+    return parsed;
   }
 
   async function get(props: GetProps) {
