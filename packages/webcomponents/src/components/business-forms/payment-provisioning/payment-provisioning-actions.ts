@@ -66,11 +66,12 @@ export const makePostProvisioning = ({ authToken, businessId, product, service }
     try {
       const response = await service.postProvisioning(authToken, businessId, product);
 
-      if (!response.error) {
+      if (response?.data && !response.error) {
         onSuccess(response);
       } else {
-        const responseError = getErrorMessage(response.error);
-        const code = getErrorCode(response.error?.code);
+        const rawError = response?.error ?? response?.errors?.[0] ?? 'Provisioning request failed';
+        const responseError = getErrorMessage(rawError);
+        const code = getErrorCode(response?.error?.code);
         return onError({
           error: responseError,
           code,

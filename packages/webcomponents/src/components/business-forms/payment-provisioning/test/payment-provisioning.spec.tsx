@@ -284,6 +284,56 @@ describe('justifi-payment-provisioning', () => {
         }),
       })
     );
+
+    expect(page.rootInstance.submissionFailed).toBe(true);
+    await page.waitForChanges();
+    const hostText = page.root.shadowRoot?.textContent ?? '';
+    expect(hostText).toContain('Something went wrong');
+    expect(hostText).toContain('try again later');
+  });
+
+  it('should not mark form submitted when provisioning resolves without data', async () => {
+    BusinessService.prototype.fetchBusiness = jest
+      .fn()
+      .mockResolvedValue(mockBusinessResponse);
+    ProvisionService.prototype.postProvisioning = jest
+      .fn()
+      .mockResolvedValue({ errors: ['boom'] });
+
+    const errorEvent = jest.fn();
+    const submitEvent = jest.fn();
+    const page = await newSpecPage({
+      components: [JustifiPaymentProvisioning],
+      template: () => (
+        <justifi-payment-provisioning
+          businessId="biz_123"
+          authToken={validToken}
+          onError-event={errorEvent}
+          onSubmit-event={submitEvent}
+        />
+      ),
+    });
+
+    await page.waitForChanges();
+
+    page.root.dispatchEvent(new CustomEvent('formCompleted'));
+
+    await page.waitForChanges();
+
+    expect(page.rootInstance.formSubmitted).toBe(false);
+    expect(page.root.shadowRoot?.textContent).not.toContain(
+      "You're all set for now"
+    );
+    expect(errorEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: expect.objectContaining({ severity: 'error' }),
+      })
+    );
+    expect(submitEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: { response: { error: 'boom' } },
+      })
+    );
   });
 
   describe('step orchestration', () => {
