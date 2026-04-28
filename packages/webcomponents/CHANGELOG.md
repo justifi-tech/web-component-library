@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.13.4
+
+### Patch Changes
+
+- 5d13733: Fix payment provisioning silently treating failed API responses as success; surface a submission-failed view when the request errors.
+
 ## 6.13.3
 
 ### Patch Changes
