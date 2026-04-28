@@ -35,6 +35,7 @@ import { Business } from '../../../api/Business';
 import { PaymentProvisioningLoading } from './payment-provisioning-loading';
 import { PaymentProvisioningAlreadyProvisioned } from './payment-provisioning-already-provisioned';
 import { PaymentProvisioningSubmissionComplete } from './payment-provisioning-submission-complete';
+import { PaymentProvisioningSubmissionFailed } from './payment-provisioning-submission-failed';
 
 @Component({
   tag: 'justifi-payment-provisioning',
@@ -45,6 +46,7 @@ export class JustifiPaymentProvisioning {
   @State() businessLoading: boolean = true;
   @State() businessProvisioned: boolean = false;
   @State() formSubmitted: boolean = false;
+  @State() submissionFailed: boolean = false;
   @State() currentStep: number = 0;
   @State() errorMessage: string;
   @State() country: CountryCode = CountryCode.USA;
@@ -165,6 +167,7 @@ export class JustifiPaymentProvisioning {
         this.submitEvent.emit({ response: response });
       },
       onError: ({ error, code, severity }) => {
+        this.submissionFailed = true;
         this.submitEvent.emit({ response: { error } });
         this.errorEvent.emit({
           message: error,
@@ -232,6 +235,14 @@ export class JustifiPaymentProvisioning {
       return (
         <StyledHost>
           <PaymentProvisioningSubmissionComplete />
+        </StyledHost>
+      );
+    }
+
+    if (this.submissionFailed) {
+      return (
+        <StyledHost>
+          <PaymentProvisioningSubmissionFailed />
         </StyledHost>
       );
     }

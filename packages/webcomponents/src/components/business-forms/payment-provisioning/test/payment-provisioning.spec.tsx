@@ -284,6 +284,12 @@ describe('justifi-payment-provisioning', () => {
         }),
       })
     );
+
+    expect(page.rootInstance.submissionFailed).toBe(true);
+    await page.waitForChanges();
+    const hostText = page.root.shadowRoot?.textContent ?? '';
+    expect(hostText).toContain('Something went wrong');
+    expect(hostText).toContain('try again later');
   });
 
   it('should not mark form submitted when provisioning resolves without data', async () => {
