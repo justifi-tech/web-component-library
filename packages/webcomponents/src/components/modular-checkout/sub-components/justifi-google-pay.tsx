@@ -34,6 +34,10 @@ export class JustifiGooglePay {
   /** If not provided, the environment will be determined by the account mode: 'test' or 'live'. */
   @Prop() environment?: "TEST" | "PRODUCTION";
   @Prop() merchantDisplayName: string = "JustiFi Checkout";
+  /** Set to true when embedding inside an Android WebView so the iframe uses the
+   * W3C Payment Request API (native Google Pay sheet) instead of pay.js's
+   * loadPaymentData popup, which Google blocks in WebViews (OR_BIBED_15). */
+  @Prop() useNativePaymentRequest: boolean = false;
 
   @State() iframeOrigin: string;
   @State() iframeReady: boolean = false;
@@ -123,6 +127,7 @@ export class JustifiGooglePay {
       merchantName: this.merchantDisplayName,
       authToken: checkoutStore.authToken,
       accountId: checkoutStore.accountId,
+      useNativePaymentRequest: this.useNativePaymentRequest,
     };
 
     this.iframeElement.contentWindow.postMessage(
