@@ -1,5 +1,12 @@
 # @repo/component-examples
 
+## 1.2.16
+
+### Patch Changes
+
+- Updated dependencies [ccd3d05]
+  - @justifi/webcomponents@6.13.5
+
 ## 1.2.15
 
 ### Patch Changes
