@@ -301,10 +301,36 @@ describe('justifi-google-pay', () => {
             merchantName: 'Test Merchant',
             authToken: 'auth_token',
             accountId: 'acc_123',
+            useNativePaymentRequest: false,
           },
         },
         IFRAME_ORIGIN
       );
+    });
+
+    it('sendInitialize forwards useNativePaymentRequest=true', async () => {
+      const page = await newSpecPage({
+        components: [JustifiGooglePay],
+        template: () => (
+          <justifi-google-pay
+            environment="TEST"
+            merchantDisplayName="Test Merchant"
+            useNativePaymentRequest
+          />
+        ),
+      });
+
+      const instance = page.rootInstance as any;
+      instance.iframeOrigin = IFRAME_ORIGIN;
+
+      const mockPostMessage = jest.fn();
+      instance.iframeElement = {
+        contentWindow: { postMessage: mockPostMessage },
+      };
+
+      instance.sendInitialize();
+
+      expect(mockPostMessage.mock.calls[0][0].data.useNativePaymentRequest).toBe(true);
     });
 
     it('sendInitialize uses TEST when environment prop unset and checkoutMode is test', async () => {
@@ -334,6 +360,7 @@ describe('justifi-google-pay', () => {
             merchantName: 'Test Merchant',
             authToken: 'auth_token',
             accountId: 'acc_123',
+            useNativePaymentRequest: false,
           },
         },
         IFRAME_ORIGIN
