@@ -282,17 +282,17 @@ describe('business-owners-form-step', () => {
       expect(mockPatch).toHaveBeenCalled();
     });
 
-    it('does not call sendData when ownership percentages do not total 100%', async () => {
+    it('does not call sendData when ownership percentages exceed 100%', async () => {
       const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
-      const mockRef1 = createMockRef('30');
-      const mockRef2 = createMockRef('20');
+      const mockRef1 = createMockRef('60');
+      const mockRef2 = createMockRef('60');
       page.rootInstance.refs = [mockRef1, mockRef2];
 
       await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
       await page.waitForChanges();
 
-      expect(mockRef1.setOwnershipPercentageError).toHaveBeenCalledWith('Ownership percentages must total 100%');
-      expect(mockRef2.setOwnershipPercentageError).toHaveBeenCalledWith('Ownership percentages must total 100%');
+      expect(mockRef1.setOwnershipPercentageError).toHaveBeenCalledWith('Ownership percentages cannot exceed 100%');
+      expect(mockRef2.setOwnershipPercentageError).toHaveBeenCalledWith('Ownership percentages cannot exceed 100%');
       expect(mockPatch).not.toHaveBeenCalled();
     });
 
@@ -311,6 +311,25 @@ describe('business-owners-form-step', () => {
       await new Promise((r) => setTimeout(r, 0));
 
       expect(mockRef1.setOwnershipPercentageError).not.toHaveBeenCalled();
+      expect(mockPatch).toHaveBeenCalled();
+    });
+
+    it('proceeds when ownership percentages total less than 100%', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef1 = createMockRef('30');
+      const mockRef2 = createMockRef('20');
+      page.rootInstance.refs = [mockRef1, mockRef2];
+      mockPatch.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({});
+        final?.();
+      });
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockRef1.setOwnershipPercentageError).not.toHaveBeenCalled();
+      expect(mockRef2.setOwnershipPercentageError).not.toHaveBeenCalled();
       expect(mockPatch).toHaveBeenCalled();
     });
 

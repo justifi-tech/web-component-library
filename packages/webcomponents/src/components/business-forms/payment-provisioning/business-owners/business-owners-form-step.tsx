@@ -122,9 +122,9 @@ export class BusinessOwnersFormStep {
     if (!this.allowOptionalFields) {
       const percentages = await Promise.all(this.refs.map(ref => ref.getOwnershipPercentage()));
       const total = percentages.reduce((sum, p) => sum + (parseFloat(p) || 0), 0);
-      if (total !== 100) {
+      if (total > 100) {
         await Promise.all(this.refs.map(ref =>
-          ref.setOwnershipPercentageError('Ownership percentages must total 100%')
+          ref.setOwnershipPercentageError('Ownership percentages cannot exceed 100%')
         ));
         return;
       }
