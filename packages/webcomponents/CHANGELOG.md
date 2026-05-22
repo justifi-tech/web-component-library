@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.13.6
+
+### Patch Changes
+
+- ec88f42: allow ownership percentage totals under 100%
+
 ## 6.13.5
 
 ### Patch Changes
