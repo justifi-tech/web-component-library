@@ -2,9 +2,9 @@
 export function composeQueryParams(values: string[]) {
   const queryParams = values.map((value) => {
     if (value === values[0]) {
-      return (value = `?${value}`);
+      return `?${value}`;
     } else {
-      return (value = `&${value}`);
+      return `&${value}`;
     }
   });
   return queryParams.join('');
