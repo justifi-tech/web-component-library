@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.13.7
+
+### Patch Changes
+
+- 0ad10c6: Enforces minimum 25% ownership for owners and unique emails across owners on the business owners form.
+
 ## 6.13.6
 
 ### Patch Changes
