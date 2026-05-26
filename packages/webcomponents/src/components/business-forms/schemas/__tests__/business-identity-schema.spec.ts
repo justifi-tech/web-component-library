@@ -45,6 +45,24 @@ describe('ownership_percentage requirement', () => {
       const data = { ...baseIdentity, ownership_percentage: null, address: validAddress };
       await expect(schema.isValid(data)).resolves.toBe(true);
     });
+
+    it('fails for owner when ownership_percentage is below 25', async () => {
+      const schema = identitySchemaUSA('owner', false);
+      const data = { ...baseIdentity, ownership_percentage: '10', address: validAddress };
+      await expect(schema.isValid(data)).resolves.toBe(false);
+    });
+
+    it('passes for owner when ownership_percentage is exactly 25', async () => {
+      const schema = identitySchemaUSA('owner', false);
+      const data = { ...baseIdentity, ownership_percentage: '25', address: validAddress };
+      await expect(schema.isValid(data)).resolves.toBe(true);
+    });
+
+    it('does not enforce 25% minimum on representative', async () => {
+      const schema = identitySchemaUSA('representative', false);
+      const data = { ...baseIdentity, ownership_percentage: '10', address: validAddress };
+      await expect(schema.isValid(data)).resolves.toBe(true);
+    });
   });
 
   describe('strict CAN schema', () => {

@@ -128,6 +128,21 @@ export class BusinessOwnersFormStep {
         ));
         return;
       }
+
+      const emails = await Promise.all(this.refs.map(ref => ref.getEmail()));
+      const seen = new Map<string, number>();
+      let hasDuplicateEmail = false;
+      await Promise.all(emails.map(async (raw, i) => {
+        const email = raw?.trim().toLowerCase();
+        if (!email) return;
+        if (seen.has(email)) {
+          hasDuplicateEmail = true;
+          await this.refs[i].setEmailError('This email is already in use');
+        } else {
+          seen.set(email, i);
+        }
+      }));
+      if (hasDuplicateEmail) { return; }
     }
 
     const formSubmissions = this.refs.map(ref => ref.submit());
@@ -239,6 +254,9 @@ export class BusinessOwnersFormStep {
             <form-control-tooltip helpText="For partnerships, LLCs or privately held corporations, the business is required to apply with all individuals with 25% or more ownership to the application. For charities and registered non-profits, the business is required to apply with 1 individual with substantial control over the entity, such as a board member or director." />
           </div>
           <hr class="mt-2" />
+          <div class="alert alert-info mb-3" part={alert}>
+            All owners with 25% or more ownership of the business must be registered.
+          </div>
           {shouldShowRepresentativeIsOwner && (
             <div class={`alert alert-warning mb-3`} part={alert}>
               <div class="card-body">

@@ -65,6 +65,16 @@ export class OwnerForm {
   }
 
   @Method()
+  async getEmail(): Promise<string | null> {
+    return this.formController.values.getValue()?.email || null;
+  }
+
+  @Method()
+  async setEmailError(message: string): Promise<void> {
+    this.formController.setFieldError('email', message);
+  }
+
+  @Method()
   async validate(): Promise<boolean> {
     return this.formController.validate();
   }

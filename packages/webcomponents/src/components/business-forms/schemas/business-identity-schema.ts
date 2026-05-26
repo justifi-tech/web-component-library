@@ -9,6 +9,7 @@ import {
   ssnValidation,
   makeIdentityNumberValidation,
   ownershipPercentageValidation,
+  makeOwnershipPercentageValidation,
 } from './schema-validations';
 import { CountryCode } from '../../../utils/country-codes';
 
@@ -37,7 +38,7 @@ const strictSchemaUSA = (role: string) =>
     // ssn required unless last4 provided (handled inside ssnValidation)
     identification_number: ssnValidation,
     ownership_percentage: role === 'owner'
-      ? ownershipPercentageValidation.required('Enter ownership percentage')
+      ? makeOwnershipPercentageValidation(25).required('Enter ownership percentage')
       : ownershipPercentageValidation.nullable(),
     address: addressSchemaUSA(false),
   });
@@ -66,7 +67,7 @@ const strictSchemaCAN = (role: string) =>
     ssn_last4: string().nullable(),
     identification_number: makeIdentityNumberValidation(CountryCode.CAN).nullable(),
     ownership_percentage: role === 'owner'
-      ? ownershipPercentageValidation.required('Enter ownership percentage')
+      ? makeOwnershipPercentageValidation(25).required('Enter ownership percentage')
       : ownershipPercentageValidation.nullable(),
     address: addressSchemaCAN(false),
   });

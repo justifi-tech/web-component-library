@@ -164,19 +164,22 @@ export const ssnValidation = string()
   })
   .transform(transformEmptyString);
 
-export const ownershipPercentageValidation = string()
-  .matches(numbersOnlyRegex, 'Enter valid percentage')
-  .test('min', 'Percentage must be at least 0', (value) => {
-    if (!value) return true;
-    const num = parseFloat(value);
-    return num >= 0;
-  })
-  .test('max', 'Percentage must be at most 100', (value) => {
-    if (!value) return true;
-    const num = parseFloat(value);
-    return num <= 100;
-  })
-  .transform(transformEmptyString);
+export const makeOwnershipPercentageValidation = (min = 0) =>
+  string()
+    .matches(numbersOnlyRegex, 'Enter valid percentage')
+    .test('min', `Ownership percentage must be at least ${min}%`, (value) => {
+      if (!value) return true;
+      const num = parseFloat(value);
+      return num >= min;
+    })
+    .test('max', 'Percentage must be at most 100', (value) => {
+      if (!value) return true;
+      const num = parseFloat(value);
+      return num <= 100;
+    })
+    .transform(transformEmptyString);
+
+export const ownershipPercentageValidation = makeOwnershipPercentageValidation(0);
 
 // Address Validations
 
