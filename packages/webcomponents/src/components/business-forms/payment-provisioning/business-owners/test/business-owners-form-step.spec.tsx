@@ -40,12 +40,14 @@ async function setupComponent(
   return { page, mockGet, mockPatch };
 }
 
-function createMockRef(ownershipPercentage: string = '100') {
+function createMockRef(ownershipPercentage: string = '100', email: string | null = null) {
   return {
     validate: jest.fn().mockResolvedValue(true),
     submit: jest.fn().mockResolvedValue(true),
     getOwnershipPercentage: jest.fn().mockResolvedValue(ownershipPercentage),
     setOwnershipPercentageError: jest.fn().mockResolvedValue(undefined),
+    getEmail: jest.fn().mockResolvedValue(email),
+    setEmailError: jest.fn().mockResolvedValue(undefined),
   };
 }
 
@@ -227,6 +229,16 @@ describe('business-owners-form-step', () => {
     });
   });
 
+  describe('ownership info banner', () => {
+    it('renders the 25% ownership registration notice', async () => {
+      const { page } = await setupComponent([{ id: 'o1' }]);
+      await page.waitForChanges();
+
+      const banner = page.root.querySelector('.alert-info');
+      expect(banner?.textContent).toContain('All owners with 25% or more ownership of the business must be registered.');
+    });
+  });
+
   describe('Add Owner button', () => {
     it('showAddOwnerButton is true when < 4 owners and no new form open', async () => {
       const { page } = await setupComponent([{ id: 'o1' }]);
@@ -363,6 +375,59 @@ describe('business-owners-form-step', () => {
       await new Promise((r) => setTimeout(r, 0));
 
       expect(mockPatch).not.toHaveBeenCalled();
+    });
+
+    it('does not call sendData when two owners share the same email', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef1 = createMockRef('30', 'dup@example.com');
+      const mockRef2 = createMockRef('30', 'DUP@example.com');
+      page.rootInstance.refs = [mockRef1, mockRef2];
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockRef1.setEmailError).not.toHaveBeenCalled();
+      expect(mockRef2.setEmailError).toHaveBeenCalledWith('This email is already in use');
+      expect(mockPatch).not.toHaveBeenCalled();
+    });
+
+    it('proceeds when all owner emails are unique', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      const mockRef1 = createMockRef('30', 'a@example.com');
+      const mockRef2 = createMockRef('30', 'b@example.com');
+      page.rootInstance.refs = [mockRef1, mockRef2];
+      mockPatch.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({});
+        final?.();
+      });
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockRef1.setEmailError).not.toHaveBeenCalled();
+      expect(mockRef2.setEmailError).not.toHaveBeenCalled();
+      expect(mockPatch).toHaveBeenCalled();
+    });
+
+    it('skips duplicate email validation when allowOptionalFields is true', async () => {
+      const { page, mockPatch } = await setupComponent(MOCK_OWNERS);
+      page.rootInstance.allowOptionalFields = true;
+      const mockRef1 = createMockRef('30', 'dup@example.com');
+      const mockRef2 = createMockRef('30', 'dup@example.com');
+      page.rootInstance.refs = [mockRef1, mockRef2];
+      mockPatch.mockImplementation(({ onSuccess, final }) => {
+        onSuccess({});
+        final?.();
+      });
+
+      await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
+      await page.waitForChanges();
+      await new Promise((r) => setTimeout(r, 0));
+
+      expect(mockRef2.setEmailError).not.toHaveBeenCalled();
+      expect(mockPatch).toHaveBeenCalled();
     });
   });
 
