@@ -30,7 +30,7 @@ describe('businessBankAccountSchemaUSA', () => {
 
   test('requires routing number', async () => {
     const schema = businessBankAccountSchemaUSA(false);
-    const { routing_number, ...rest } = validUsaBankFields;
+    const { routing_number: _routing_number, ...rest } = validUsaBankFields;
     await expect(schema.validate(rest)).rejects.toThrow();
   });
 
@@ -52,7 +52,7 @@ describe('businessBankAccountSchemaUSA', () => {
 describe('businessBankAccountSchemaCAN', () => {
   test('requires institution and transit when not optional', async () => {
     const schema = businessBankAccountSchemaCAN(false);
-    const { institution_number, transit_number, ...rest } = validCanBankFields;
+    const { institution_number: _institution_number, transit_number: _transit_number, ...rest } = validCanBankFields;
     await expect(schema.validate(rest)).rejects.toThrow();
   });
 

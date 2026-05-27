@@ -67,6 +67,7 @@ export class ApplePayService implements IApplePayService {
       return response
     } catch (error) {
       console.error('Backend validation failed:', error);
+      // eslint-disable-next-line preserve-caught-error
       throw new Error('Merchant validation failed');
     }
   }
