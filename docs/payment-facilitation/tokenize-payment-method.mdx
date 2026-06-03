@@ -34,14 +34,74 @@ account, a submit button and all fields required for proper use. This component 
 
 ### Events
 
-- `submit-event`: fires when a payment token is created; payload includes `payment_method_token` and metadata.
+- `submit-event`: fires when tokenization completes; `event.detail.response` is the full payload (see [Response payload](#response-payload)).
 - `error-event`: fires if tokenization fails; payload includes `code`, `message`, and validation hints.
 
 ### Public methods
 
-1. `tokenizePaymentMethod()` – programmatically trigger submission (returns a promise that resolves to a token payload).
+1. `tokenizePaymentMethod()` – programmatically trigger submission (returns a promise that resolves to the same payload emitted by `submit-event`).
 2. `fillBillingForm(partialBillingDetails)` – prefill customers' billing information from saved data.
 3. `validate()` – validate the form fields and return validation result.
+
+### Response payload
+
+Both `submit-event` (`event.detail.response`) and the `tokenizePaymentMethod()` promise resolve to the **full payment method object**, not just the token:
+
+```typescript
+interface PaymentMethodPayload {
+  token?: string; // convenience: the payment method token (e.g. "pm_...")
+  data?: {
+    data?: {
+      signature: string;
+      customer_id: string;
+      account_id: string;
+      invalid_reason: string;
+      // present for card payment methods:
+      card?: {
+        id: string;
+        name: string;
+        acct_last_four: number;
+        brand: string;
+        token: string;
+        month: string;
+        year: string;
+        metadata: any;
+        address_line1_check: string;
+        address_postal_code_check: string;
+        // BIN lookup details (when available):
+        bin_details?: {
+          type: 'Credit' | 'Debit' | 'Prepaid' | 'Unknown';
+          card_brand: string;
+          card_class: string;
+          country: string;
+          issuer: string;
+          funding_source:
+            | 'Charge'
+            | 'Credit'
+            | 'Debit'
+            | 'Deferred Debit (Visa Only)'
+            | 'Network Only'
+            | 'Prepaid';
+        };
+      };
+      // present for bank account payment methods:
+      bank_account?: {
+        id: string;
+        account_owner_name: string;
+        account_type: 'checking' | 'savings';
+        bank_name: string;
+        acct_last_four: number;
+        token: string;
+        metadata: any;
+      };
+    };
+  };
+  error?: { code: string; message: string; decline_code: string };
+  validationError?: boolean;
+}
+```
+
+> **Note:** `bin_details` is only populated for card payment methods and may be absent depending on the BIN lookup result. Always null-check before reading it (e.g. `response.data?.data?.card?.bin_details`). Bank accounts do not include `bin_details`.
 
 # Authorization
 
@@ -324,6 +384,12 @@ When used within the `justifi-modular-checkout` wrapper component, this componen
       
       if (response.data) {
         console.log("Full payment method data:", response.data);
+      }
+
+      // BIN details (cards only; may be absent depending on BIN lookup)
+      const binDetails = response.data?.data?.card?.bin_details;
+      if (binDetails) {
+        console.log("BIN details:", binDetails);
       }
     });
 
