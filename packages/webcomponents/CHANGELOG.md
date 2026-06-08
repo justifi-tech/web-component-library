@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.14.0
+
+### Minor Changes
+
+- 9f3796e: Onboarding improvements: ownership percentage validation and date of establishment on the business form.
+
 ## 6.13.7
 
 ### Patch Changes
