@@ -53,6 +53,20 @@ Component to render a business onboarding form, segmented into multiple steps. Y
 
 This component does not expose any public methods. Form submission is handled automatically through the multi-step form flow.
 
+## Validation Rules
+
+The form enforces the following rules before a step can be submitted. They apply to both US and Canadian businesses.
+
+### Business Information
+
+- **Date of Registration** is required and must be a date in the past — today's date is not accepted.
+
+### Business Owners
+
+- **Ownership percentage** is required for every owner and must be at least **25%** (and at most 100%). Owners with less than 25% ownership should not be registered; the form displays an informational alert reminding that all owners with 25% or more ownership of the business must be registered.
+- **Combined ownership** across all owners cannot exceed **100%**. Totals under 100% are allowed.
+- **Email addresses** must be unique across owners. Submitting duplicate emails blocks the step and flags the offending field with an error.
+
 ## Theming & Layout
 
 <PartsMarkdownTable
