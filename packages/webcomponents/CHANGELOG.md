@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.14.1
+
+### Patch Changes
+
+- 880ca61: Send library version in a `Justifi-Web-Component-Version` request header on all API calls.
+
 ## 6.14.0
 
 ### Minor Changes
