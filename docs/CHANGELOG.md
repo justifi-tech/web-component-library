@@ -1,5 +1,11 @@
 # @justifi/webcomponents-docs
 
+## 3.0.1
+
+### Patch Changes
+
+- 3947114: Republish docs to include payment provisioning validation rules (jaris integration).
+
 ## 3.0.0
 
 ### Patch Changes
