@@ -1,8 +1,7 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch, Listen } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent, validateRequiredProps } from '../../../../api/ComponentEvents';
 import { Button } from '../../../../ui-components';
 import { heading2, alert } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
@@ -160,28 +159,23 @@ export class BusinessOwnersFormStep {
   }
 
   private initializeApi() {
-    if (this.authToken && this.businessId) {
-      this.getBusiness = makeGetBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-      this.patchBusiness = makePatchBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-    } else {
-      const missingProps = [
-        !this.authToken && 'auth-token',
-        !this.businessId && 'business-id',
-      ].filter(Boolean);
-      this.errorEvent.emit({
-        message: `Missing required props: ${missingProps.join(', ')}`,
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        severity: ComponentErrorSeverity.ERROR,
-      });
+    if (!validateRequiredProps(this.errorEvent, {
+      'auth-token': this.authToken,
+      'business-id': this.businessId,
+    })) {
+      return;
     }
+
+    this.getBusiness = makeGetBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
+    this.patchBusiness = makePatchBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
   }
 
   private addOwnerForm = (fireClick?: boolean) => {

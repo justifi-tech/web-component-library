@@ -4,7 +4,7 @@ import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-acti
 import { BusinessService } from '../../../../api/services/business.service';
 import { Identity, Representative } from '../../../../api/Identity';
 import { FormController } from '../../../../ui-components/form/form';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent, validateRequiredProps } from '../../../../api/ComponentEvents';
 import { identitySchemaByCountry } from '../../schemas/business-identity-schema';
 import { CountryCode } from '../../../../utils/country-codes';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
@@ -49,28 +49,23 @@ export class BusinessRepresentativeFormStep {
   }
 
   private initializeApi() {
-    if (this.authToken && this.businessId) {
-      this.getBusiness = makeGetBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-      this.patchBusiness = makePatchBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-    } else {
-      const missingProps = [
-        !this.authToken && 'auth-token',
-        !this.businessId && 'business-id',
-      ].filter(Boolean);
-      this.errorEvent.emit({
-        message: `Missing required props: ${missingProps.join(', ')}`,
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        severity: ComponentErrorSeverity.ERROR,
-      });
+    if (!validateRequiredProps(this.errorEvent, {
+      'auth-token': this.authToken,
+      'business-id': this.businessId,
+    })) {
+      return;
     }
+
+    this.getBusiness = makeGetBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
+    this.patchBusiness = makePatchBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
   }
 
   private initializeForm() {

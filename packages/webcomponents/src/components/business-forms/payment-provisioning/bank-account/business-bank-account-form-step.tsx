@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentErrorEvent, ComponentErrorCodes, ComponentErrorSeverity, ComponentFormStepCompleteEvent, BankAccount, IBankAccount } from '../../../../api';
+import { ComponentErrorEvent, ComponentErrorCodes, ComponentErrorSeverity, ComponentFormStepCompleteEvent, BankAccount, IBankAccount, validateRequiredProps } from '../../../../api';
 import { makeGetBusiness, makePostBankAccount } from '../payment-provisioning-actions';
 import { BusinessService, BusinessBankAccountService } from '../../../../api/services/business.service';
 import { CountryCode } from '../../../../utils/country-codes';
@@ -68,27 +68,22 @@ export class BusinessBankAccountFormStep {
   }
 
   private initializeApi() {
-    if (this.authToken && this.businessId) {
-      this.getBusiness = makeGetBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-      this.postBankAccount = makePostBankAccount({
-        authToken: this.authToken,
-        service: new BusinessBankAccountService()
-      });
-    } else {
-      const missingProps = [
-        !this.authToken && 'auth-token',
-        !this.businessId && 'business-id',
-      ].filter(Boolean);
-      this.errorEvent.emit({
-        message: `Missing required props: ${missingProps.join(', ')}`,
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        severity: ComponentErrorSeverity.ERROR,
-      });
+    if (!validateRequiredProps(this.errorEvent, {
+      'auth-token': this.authToken,
+      'business-id': this.businessId,
+    })) {
+      return;
     }
+
+    this.getBusiness = makeGetBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
+    this.postBankAccount = makePostBankAccount({
+      authToken: this.authToken,
+      service: new BusinessBankAccountService()
+    });
   }
 
   private getSchema = () => {

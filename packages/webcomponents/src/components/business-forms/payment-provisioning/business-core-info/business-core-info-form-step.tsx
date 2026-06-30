@@ -1,8 +1,7 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent, validateRequiredProps } from '../../../../api/ComponentEvents';
 import { CountryCode } from '../../../../utils/country-codes';
 import { businessCoreInfoSchemaUSA, businessCoreInfoSchemaCAN } from '../../schemas/business-core-info-schema';
 import { FormController } from '../../../../ui-components/form/form';
@@ -66,28 +65,23 @@ export class BusinessCoreInfoFormStep {
   }
 
   private initializeApi() {
-    if (this.authToken && this.businessId) {
-      this.getBusiness = makeGetBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-      this.patchBusiness = makePatchBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-    } else {
-      const missingProps = [
-        !this.authToken && 'auth-token',
-        !this.businessId && 'business-id',
-      ].filter(Boolean);
-      this.errorEvent.emit({
-        message: `Missing required props: ${missingProps.join(', ')}`,
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        severity: ComponentErrorSeverity.ERROR,
-      });
+    if (!validateRequiredProps(this.errorEvent, {
+      'auth-token': this.authToken,
+      'business-id': this.businessId,
+    })) {
+      return;
     }
+
+    this.getBusiness = makeGetBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
+    this.patchBusiness = makePatchBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
   }
 
   private getData = () => {
