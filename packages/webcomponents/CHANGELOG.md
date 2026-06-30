@@ -1,5 +1,11 @@
 ### Changelog
 
+## 6.14.3
+
+### Patch Changes
+
+- 805be54: Payment provisioning form steps now name the specific missing prop(s) in the MISSING_PROPS error (e.g. Missing required props: auth-token, business-id) instead of the generic Missing required props.
+
 ## 6.14.2
 
 ### Patch Changes

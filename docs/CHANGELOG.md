@@ -1,5 +1,13 @@
 # @justifi/webcomponents-docs
 
+## 3.0.2
+
+### Patch Changes
+
+- 805be54: Payment provisioning form steps now name the specific missing prop(s) in the MISSING_PROPS error (e.g. Missing required props: auth-token, business-id) instead of the generic Missing required props.
+- Updated dependencies [805be54]
+  - @justifi/webcomponents@6.14.3
+
 ## 3.0.1
 
 ### Patch Changes
