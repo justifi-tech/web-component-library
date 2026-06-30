@@ -172,8 +172,12 @@ export class BusinessOwnersFormStep {
         service: new BusinessService()
       });
     } else {
+      const missingProps = [
+        !this.authToken && 'auth-token',
+        !this.businessId && 'business-id',
+      ].filter(Boolean);
       this.errorEvent.emit({
-        message: 'Missing required props',
+        message: `Missing required props: ${missingProps.join(', ')}`,
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
       });
