@@ -188,6 +188,8 @@ export class JustifiApplePay {
         ),
       };
 
+      console.log("=== Apple Pay Payment Request ===", paymentRequest)
+
       const result = await this.applePayService.startPaymentSession(
         paymentRequest,
         checkoutStore.authToken,
