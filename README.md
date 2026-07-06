@@ -108,7 +108,7 @@ Each package publishes independently based on its own changesets. You can publis
 
 ### Release Candidates
 
-For pre-release versions, use the **Publish RC** workflow (`publish-rc.yml`) which publishes to the `next` npm tag.
+For pre-release versions, set the `@justifi/webcomponents` version in `packages/webcomponents/package.json` to an `-rc.N` suffix (e.g. `6.15.0-rc.1`) on your branch. Then run the **Publish packages** workflow (`publish.yml`) and select that branch as the workflow ref — no need to merge to `main` first. The workflow detects the `-rc.N` suffix and publishes to the `next` npm tag via `npm publish --tag next` instead of running `changeset publish`. Consumers install RCs with `@justifi/webcomponents@next`.
 
 ### Running component example files
 
