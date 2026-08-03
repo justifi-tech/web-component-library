@@ -153,6 +153,13 @@ export class JustifiPayoutDetails {
                       text="Standard"
                     />
                   )}
+                  {this.payout.funding_role === 'recovery' ? (
+                    <Badge
+                      variant={BadgeVariant.INFO}
+                      title="Recovery"
+                      text="Recovery"
+                    />
+                  ) : null}
                 </div>
               )}
               title={this.payout.formattedPaymentAmount(this.payout.amount)}
@@ -180,6 +187,7 @@ export class JustifiPayoutDetails {
                 <DetailItem title="Date paid" value={formatDate(this.payout.deposits_at)} />
                 <DetailItem title="Statement Description" value={this.payout.description} />
                 <DetailItem title="Payout Method" value={this.formatMethod(this.payout.delivery_method)} />
+                <DetailItem title="Funding Source" value={this.payout.funding_role ? capitalizeFirstLetter(this.payout.funding_role) : null} />
                 <DetailItem title="Amount" value={this.payout.formattedPaymentAmount(this.payout.amount)} />
                 <DetailItem title="Fee" value={this.payout.formattedPaymentAmount(this.payout.fees_total)} />
               </div>
