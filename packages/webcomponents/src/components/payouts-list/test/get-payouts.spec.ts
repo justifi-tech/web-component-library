@@ -43,6 +43,13 @@ describe('makeGetPayouts', () => {
     expect(onError).not.toHaveBeenCalled();
   });
 
+  it('preserves funding_role through the Payout constructor', () => {
+    const base = mockResponse.data[0] as unknown as IPayout;
+
+    expect(new Payout({ ...base, funding_role: 'recovery' }).funding_role).toBe('recovery');
+    expect(new Payout(base).funding_role).toBeNull();
+  });
+
   it('should call onError with an error message on API failure', async () => {
     const mockError = new Error('Error fetching payouts');
     const onSuccess = jest.fn();

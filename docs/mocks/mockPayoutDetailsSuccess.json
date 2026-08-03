@@ -8,6 +8,7 @@
     "description": "Payout",
     "status": "paid",
     "payout_type": "cc",
+    "funding_role": null,
     "delivery_method": null,
     "amount": 22015,
     "fees_total": 1485,

@@ -40,13 +40,14 @@ export interface IPayout {
   refunds_total: number;
   payments_count: number;
   payments_total: number;
-  payout_type: 'ach' | 'cc';
+  payout_type: 'ach' | 'cc' | 'mixed' | 'gross';
   other_total: number;
   status: PayoutStatuses;
   metadata: Object | null;
   created_at: string;
   updated_at: string;
   settlement_priority?: 'standard' | 'expedited';
+  funding_role?: 'primary' | 'recovery' | null;
 }
 
 export class Payout implements IPayout {
@@ -63,7 +64,7 @@ export class Payout implements IPayout {
   public refunds_total: number;
   public payments_count: number;
   public payments_total: number;
-  public payout_type: 'ach' | 'cc';
+  public payout_type: 'ach' | 'cc' | 'mixed' | 'gross';
   public other_total: number;
   public status: PayoutStatuses;
   public metadata: Object | null;
@@ -71,6 +72,7 @@ export class Payout implements IPayout {
   public updated_at: string;
   public sub_account_name?: string;
   public settlement_priority: 'standard' | 'expedited';
+  public funding_role?: 'primary' | 'recovery' | null;
 
   constructor(payout: IPayout) {
     this.id = payout.id;
@@ -93,6 +95,7 @@ export class Payout implements IPayout {
     this.created_at = payout.created_at;
     this.updated_at = payout.updated_at;
     this.settlement_priority = payout.settlement_priority || 'standard';
+    this.funding_role = payout.funding_role ?? null;
   }
 
   formattedPaymentAmount(amount: number): string {
