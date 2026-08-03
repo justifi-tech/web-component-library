@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import { convertToLocal } from '../../utils/utils';
+import { capitalizeFirstLetter, convertToLocal } from '../../utils/utils';
 import { MapPayoutStatusToBadge } from './payouts-status';
 import { getAlternateTableCellPart, tableHeadCell } from '../../styles/parts';
 import { Payout } from '../../api/Payout';
@@ -47,6 +47,11 @@ export const payoutTableColumns = {
       Status
     </th>
   ),
+  funding_role: () => (
+    <th part={tableHeadCell} scope="col" title="Whether the payout pays the primary bank account or the recovery bank account">
+      Funding Source
+    </th>
+  ),
   csv: () => (
     <th part={tableHeadCell} scope="col" title="Export CSV" />
   ),
@@ -78,6 +83,9 @@ export const payoutTableCells = (downloadCSV) => ({
   ),
   status: (payout: Payout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>{MapPayoutStatusToBadge(payout.status)}</td>
+  ),
+  funding_role: (payout: Payout, index: number) => (
+    <td part={getAlternateTableCellPart(index)}>{payout.funding_role ? capitalizeFirstLetter(payout.funding_role) : null}</td>
   ),
   csv: (payout: Payout, index: number) => (
     <td part={getAlternateTableCellPart(index)}>
