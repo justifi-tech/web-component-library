@@ -6,6 +6,9 @@ const { startStandaloneServer } = require("../utils/standalone-server");
 
 const router = express.Router();
 
+const PAYMENT_READY_POLL_INTERVAL_MS = 500;
+const PAYMENT_READY_MAX_ATTEMPTS = 30;
+
 async function createPayment(token) {
   const createPaymentEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.PAYMENTS}`;
   const subAccountId = process.env.SUB_ACCOUNT_ID;
@@ -41,11 +44,42 @@ async function createPayment(token) {
   return id;
 }
 
+// The API rejects both void and refund with "The payment is still being
+// processed, please try again later" while a payment sits in `pending`, so the
+// page must not render until the payment settles.
+async function waitForPaymentToSettle(token, paymentId) {
+  const endpoint = `${process.env.API_ORIGIN}/${API_PATHS.PAYMENTS}/${paymentId}`;
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
+
+  for (let attempt = 0; attempt < PAYMENT_READY_MAX_ATTEMPTS; attempt++) {
+    const response = await fetch(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "sub-account": subAccountId,
+      },
+    });
+    const { data } = await response.json();
+
+    if (data && data.status !== "pending") {
+      return;
+    }
+
+    await new Promise((resolve) =>
+      setTimeout(resolve, PAYMENT_READY_POLL_INTERVAL_MS),
+    );
+  }
+
+  console.warn(
+    `Payment ${paymentId} still pending after ${PAYMENT_READY_MAX_ATTEMPTS * PAYMENT_READY_POLL_INTERVAL_MS}ms; rendering anyway`,
+  );
+}
+
 router.get("/", async (req, res) => {
   const subAccountId = process.env.SUB_ACCOUNT_ID;
 
   const token = await getToken();
   const paymentId = await createPayment(token);
+  await waitForPaymentToSettle(token, paymentId);
   const webComponentToken = await getWebComponentToken(token, [
     `write:account:${subAccountId}`,
   ]);
@@ -85,11 +119,13 @@ router.get("/", async (req, res) => {
         };
 
         justifiRefundPayment.addEventListener('error-event', (event) => {
-          console.log('Error-event', event);
+          console.error('[justifi-refund-payment] error-event', event.detail);
           writeOutputToPage(event);
         });
 
         justifiRefundPayment.addEventListener('submit-event', (event) => {
+          console.log('submit-event', event.detail);
+
           if (event.detail.response.data) {
             console.log('Response data from submit-event', event.detail.response.data);
           }

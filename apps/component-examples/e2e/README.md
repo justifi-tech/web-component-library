@@ -74,6 +74,18 @@ await waitForComponent(page, 'justifi-tokenize-payment-method');
 
 Returns a promise that resolves when the component logs a console error event. Used with `Promise.race()` to detect failures during async operations.
 
+**This only works if the example page logs a matching message.** The helper matches a console message of type `error` whose text contains `[<component-tag>] error-event`, so the page's listener must be:
+
+```javascript
+component.addEventListener('error-event', (event) => {
+  console.error('[justifi-your-component] error-event', event.detail);
+});
+```
+
+A page that logs `console.log(event)` produces the text `JSHandle@object`, which never matches — the returned promise then hangs forever and a `Promise.race()` built on it degrades into a 90-second test timeout instead of a readable failure. Likewise, have the page's `submit-event` listener call `console.log('submit-event', event.detail)` unconditionally, so `listenForSubmitEvent()` still resolves when the response carries an error rather than data.
+
+Do not race `listenForErrorEvent()` against a step whose failure is intentionally mocked — the expected `error-event` will win the race and fail the test.
+
 ```typescript
 const errorPromise = listenForErrorEvent(page, 'justifi-checkout');
 const responsePromise = page.waitForResponse(/* ... */);
