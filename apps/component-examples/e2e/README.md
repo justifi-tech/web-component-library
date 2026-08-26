@@ -278,6 +278,10 @@ Due to iframe initialization and async component loading, explicit waits are nec
 
 **Prefer** `waitForComponent()` and `waitForResponse()` over raw timeouts when possible.
 
+### Freshly created payments are not immediately refundable
+
+A payment created by an example page is rejected by `POST /payments/:id/refunds` with `payment_not_available_for_refund` for the first several seconds of its life, even though the payment already reads back as `succeeded` with `captured: true` and a full `amount_refundable`. No field or endpoint exposes the window, so example pages that need a refundable payment gate rendering on the payment's age (see `examples/refund-payment.js`). Voids are unaffected.
+
 ---
 
 ## Writing New Tests Checklist

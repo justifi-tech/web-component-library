@@ -6,8 +6,15 @@ const { startStandaloneServer } = require("../utils/standalone-server");
 
 const router = express.Router();
 
-const PAYMENT_READY_POLL_INTERVAL_MS = 500;
-const PAYMENT_READY_MAX_ATTEMPTS = 30;
+// For the first few seconds of a payment's life the API rejects refunds with
+// `payment_not_available_for_refund` ("The payment is still being processed,
+// please try again later"). Nothing on the payment resource exposes this window
+// — status is already `succeeded`, `captured` is true and `amount_refundable` is
+// the full amount — and capturing manually doesn't shorten it, so elapsed time
+// is the only signal available. Rejections have been observed up to ~6s after
+// creation. Keep this comfortably above that but well under Playwright's 30s
+// navigation timeout, since the page response blocks on it.
+const REFUND_READY_AGE_MS = 12000;
 
 async function createPayment(token) {
   const createPaymentEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.PAYMENTS}`;
@@ -44,34 +51,11 @@ async function createPayment(token) {
   return id;
 }
 
-// The API rejects both void and refund with "The payment is still being
-// processed, please try again later" while a payment sits in `pending`, so the
-// page must not render until the payment settles.
-async function waitForPaymentToSettle(token, paymentId) {
-  const endpoint = `${process.env.API_ORIGIN}/${API_PATHS.PAYMENTS}/${paymentId}`;
-  const subAccountId = process.env.SUB_ACCOUNT_ID;
+async function waitUntilRefundable(paymentCreatedAt) {
+  const remainingMs = REFUND_READY_AGE_MS - (Date.now() - paymentCreatedAt);
+  if (remainingMs <= 0) return;
 
-  for (let attempt = 0; attempt < PAYMENT_READY_MAX_ATTEMPTS; attempt++) {
-    const response = await fetch(endpoint, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "sub-account": subAccountId,
-      },
-    });
-    const { data } = await response.json();
-
-    if (data && data.status !== "pending") {
-      return;
-    }
-
-    await new Promise((resolve) =>
-      setTimeout(resolve, PAYMENT_READY_POLL_INTERVAL_MS),
-    );
-  }
-
-  console.warn(
-    `Payment ${paymentId} still pending after ${PAYMENT_READY_MAX_ATTEMPTS * PAYMENT_READY_POLL_INTERVAL_MS}ms; rendering anyway`,
-  );
+  await new Promise((resolve) => setTimeout(resolve, remainingMs));
 }
 
 router.get("/", async (req, res) => {
@@ -79,10 +63,11 @@ router.get("/", async (req, res) => {
 
   const token = await getToken();
   const paymentId = await createPayment(token);
-  await waitForPaymentToSettle(token, paymentId);
+  const paymentCreatedAt = Date.now();
   const webComponentToken = await getWebComponentToken(token, [
     `write:account:${subAccountId}`,
   ]);
+  await waitUntilRefundable(paymentCreatedAt);
 
   const hideSubmitButton = false;
 
