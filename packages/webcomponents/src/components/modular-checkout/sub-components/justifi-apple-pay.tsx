@@ -81,6 +81,14 @@ export class JustifiApplePay {
     }
   }
 
+  private countryCodeForCurrency(currency: string) {
+    if (currency.toLowerCase() == "cad") {
+      return "CA"
+    }
+
+    return "US"
+  }
+
   private loadApplePaySDK() {
     if (this.sdkLoaded) return;
     this.sdkLoaded = true;
@@ -166,7 +174,7 @@ export class JustifiApplePay {
       this.applePayStarted.emit();
 
       const paymentRequest: IApplePayPaymentRequest = {
-        countryCode: this.countryCode,
+        countryCode: this.countryCodeForCurrency(checkoutStore.paymentCurrency),
         currencyCode: checkoutStore.paymentCurrency,
         merchantCapabilities: [
           ApplePayMerchantCapability.SUPPORTS_3DS,
@@ -179,6 +187,8 @@ export class JustifiApplePay {
           checkoutStore.paymentAmount
         ),
       };
+
+      console.log("=== Apple Pay Payment Request ===", paymentRequest)
 
       const result = await this.applePayService.startPaymentSession(
         paymentRequest,
