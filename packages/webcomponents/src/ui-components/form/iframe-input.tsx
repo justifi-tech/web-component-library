@@ -77,14 +77,6 @@ export class IframeInput {
     if (eventType === 'blurred') {
       this.isFocused = false;
     }
-
-    if (eventType === 'loaded') {
-      console.log('iframe loaded and listened from message event', data);
-    }
-
-    if (eventType === 'error') {
-      console.log('iframe error and listened from message event', data);
-    }
   }
 
   private get part() {
@@ -111,12 +103,6 @@ export class IframeInput {
       return iframeInputStyles.focused;
     }
     return null;
-  }
-
-  // fontStyles arrive ~500ms after load (set by <hidden-input />). Rendering the
-  // iframe before then means `src` changes once they land, which reloads it.
-  private get stylesReady() {
-    return !!iframeInputStyles.fontStyles.fontFamily;
   }
 
   private get urlParams() {
@@ -155,7 +141,7 @@ export class IframeInput {
               overflow: 'hidden',
             }}
           >
-            {this.stylesReady && <iframe
+            <iframe
               id={this.inputId}
               name={this.inputId}
               src={`${this.iframeOrigin}?${this.urlParams}`}
@@ -172,7 +158,7 @@ export class IframeInput {
                   }
                 }, this.iframeElement);
               }}
-            />}
+            />
           </div>
           <FormControlErrorText errorText={this.errorText} name={this.inputId} />
         </div>
