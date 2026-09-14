@@ -5,7 +5,8 @@
 ### Useful Commands
 
 - `pnpm build` - Build all packages
-- `pnpm dev` - Run the webcomponents package in dev/watch mode
+- `pnpm dev` - Run the webcomponents package in dev/watch
+- `pnpm dev:server` - Run the component examples app with the API server
 - `pnpm test` - Run all tests
 - `pnpm test:watch` - Run all tests in watch mode
 - `pnpm lint` - Lint all packages
