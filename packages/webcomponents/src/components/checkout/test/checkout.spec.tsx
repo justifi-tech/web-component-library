@@ -128,8 +128,8 @@ describe('justifi-checkout', () => {
     });
   });
 
-  describe('disableBnpl filtering Sezzle', () => {
-    it('strips Sezzle from availablePaymentMethods when disableBnpl is true', async () => {
+  describe('availablePaymentMethods mirrors the API', () => {
+    it('keeps Sezzle in availablePaymentMethods even when disableBnpl is true', async () => {
       const page = await newSpecPage({
         components: [JustifiCheckout],
         html: '<justifi-checkout auth-token="t" checkout-id="chk_1" disable-bnpl></justifi-checkout>',
@@ -149,7 +149,7 @@ describe('justifi-checkout', () => {
       instance.checkoutChanged(event);
       await page.waitForChanges();
 
-      expect(instance.availablePaymentMethods).toEqual([PAYMENT_METHODS.APPLE_PAY]);
+      expect(instance.availablePaymentMethods).toEqual([PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY]);
     });
 
     it('keeps Sezzle when disableBnpl is false', async () => {
@@ -289,23 +289,6 @@ describe('justifi-checkout', () => {
       expect(plaidRadio).not.toBeNull();
     });
 
-    it('hides Plaid when disableBnpl is true', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1" disable-bnpl></justifi-checkout>',
-      });
-      const instance = page.rootInstance as any;
-
-      const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.PLAID], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
-        bubbles: true,
-        composed: true,
-      } as any);
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
-
-      expect(page.root?.querySelector('justifi-radio-list-item[value="plaid"]')).toBeNull();
-    });
 
     it('always renders justifi-tokenize-payment-method with correct pass-through props', async () => {
       const page = await newSpecPage({
@@ -411,7 +394,7 @@ describe('justifi-checkout', () => {
       instance.modularCheckoutRef = {
         submitCheckout: jest.fn(() => { checkoutStore.isSubmitting = true; }),
       };
-      instance.submit({ preventDefault: () => {} });
+      instance.submit({ preventDefault: () => { } });
       await page.waitForChanges();
 
       expect(checkoutStore.isSubmitting).toBe(true);

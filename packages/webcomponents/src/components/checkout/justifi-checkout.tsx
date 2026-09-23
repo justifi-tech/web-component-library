@@ -78,11 +78,6 @@ export class JustifiCheckout {
 
   @Listen('checkout-changed')
   checkoutChanged(event: CustomEvent<CheckoutChangedEventDetail>) {
-    // if disabled bnpl, remove sezzle from available payment methods
-    if (this.disableBnpl) {
-      this.availablePaymentMethods = event.detail.availablePaymentMethodTypes.filter((method) => method !== PAYMENT_METHODS.SEZZLE);
-      return;
-    }
     this.availablePaymentMethods = event.detail.availablePaymentMethodTypes;
   }
 
@@ -156,7 +151,7 @@ export class JustifiCheckout {
                       </div>
                     )}
                     <justifi-saved-payment-methods />
-                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && (
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && !this.disableBnpl && (
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.SEZZLE}
@@ -170,7 +165,7 @@ export class JustifiCheckout {
                       />
                     )}
 
-                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.PLAID) && !this.disableBnpl && (
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.PLAID) && (
                       <justifi-radio-list-item
                         name="paymentMethodType"
                         value={PAYMENT_METHODS.PLAID}
