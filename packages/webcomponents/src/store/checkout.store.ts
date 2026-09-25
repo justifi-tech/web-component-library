@@ -95,7 +95,7 @@ const initialState: IInitialState = {
   plaidLinkTokenId: undefined,
 };
 
-const { state: checkoutStore, onChange } = createStore(initialState);
+const { state: checkoutStore, onChange, on } = createStore(initialState);
 
 Object.keys(initialState).forEach((key) => {
   // @ts-ignore
@@ -189,14 +189,13 @@ export function getCheckoutState(): CheckoutState {
 
 export { checkoutStore as checkoutStore, onChange };
 
-// Subscribe to all store key changes with a single helper
-// The callback is invoked for every key defined in the initial state whenever it changes.
+// Subscribe to all store key changes with a single helper.
+// @stencil/store's `set` event already fires for any key, so this is one listener,
+// not one per key. Returns a disposer — callers must invoke it on teardown,
+// otherwise a re-connected component stacks a second subscription.
 type StoreKey = keyof typeof initialState;
 export function onAnyChange(
   callback: (key: StoreKey, value: (typeof initialState)[StoreKey]) => void
-): void {
-  (Object.keys(initialState) as StoreKey[]).forEach((key) => {
-    // @ts-ignore - onChange is generically typed by stencil/store but not exported here
-    onChange(key as any, (newValue: any) => callback(key, newValue));
-  });
+): () => void {
+  return on('set', (key, newValue) => callback(key, newValue));
 }

@@ -45,7 +45,7 @@ describe('justifi-checkout', () => {
 
     // Simulate checkout-changed event from modular checkout
     const event = new CustomEvent('checkout-changed', {
-      detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+      detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [], checkoutLoaded: true },
       bubbles: true,
       composed: true,
     } as any);
@@ -141,6 +141,7 @@ describe('justifi-checkout', () => {
           availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY],
           selectedPaymentMethod: undefined,
           savedPaymentMethods: [],
+          checkoutLoaded: true,
         },
         bubbles: true,
         composed: true,
@@ -164,6 +165,7 @@ describe('justifi-checkout', () => {
           availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY],
           selectedPaymentMethod: undefined,
           savedPaymentMethods: [],
+          checkoutLoaded: true,
         },
         bubbles: true,
         composed: true,
@@ -185,7 +187,7 @@ describe('justifi-checkout', () => {
       const instance = page.rootInstance as any;
 
       const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [], checkoutLoaded: true },
         bubbles: true,
         composed: true,
       } as any);
@@ -203,7 +205,7 @@ describe('justifi-checkout', () => {
       const instance = page.rootInstance as any;
 
       const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [], checkoutLoaded: true },
         bubbles: true,
         composed: true,
       } as any);
@@ -223,7 +225,7 @@ describe('justifi-checkout', () => {
       const instance = page.rootInstance as any;
 
       const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [], checkoutLoaded: true },
         bubbles: true,
         composed: true,
       } as any);
@@ -241,7 +243,7 @@ describe('justifi-checkout', () => {
       const instance = page.rootInstance as any;
 
       const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE], selectedPaymentMethod: undefined, savedPaymentMethods: [], checkoutLoaded: true },
         bubbles: true,
         composed: true,
       } as any);
@@ -260,7 +262,7 @@ describe('justifi-checkout', () => {
       const instance = page.rootInstance as any;
 
       const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE], selectedPaymentMethod: undefined, savedPaymentMethods: [], checkoutLoaded: true },
         bubbles: true,
         composed: true,
       } as any);
@@ -278,7 +280,7 @@ describe('justifi-checkout', () => {
       const instance = page.rootInstance as any;
 
       const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.PLAID], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.PLAID], selectedPaymentMethod: undefined, savedPaymentMethods: [], checkoutLoaded: true },
         bubbles: true,
         composed: true,
       } as any);
@@ -289,6 +291,31 @@ describe('justifi-checkout', () => {
       expect(plaidRadio).not.toBeNull();
     });
 
+    it('ignores a pre-fetch snapshot instead of overwriting the real payment methods', async () => {
+      const page = await newSpecPage({
+        components: [JustifiCheckout],
+        html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+      });
+      const instance = page.rootInstance as any;
+
+      instance.checkoutChanged(new CustomEvent('checkout-changed', {
+        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.PLAID], selectedPaymentMethod: undefined, savedPaymentMethods: [], checkoutLoaded: true },
+      } as any));
+      await page.waitForChanges();
+
+      // The emit that happens before getCheckout resolves guesses new_card/new_bank_account.
+      instance.checkoutChanged(new CustomEvent('checkout-changed', {
+        detail: {
+          availablePaymentMethodTypes: [PAYMENT_METHODS.NEW_CARD, PAYMENT_METHODS.NEW_BANK_ACCOUNT],
+          selectedPaymentMethod: undefined,
+          savedPaymentMethods: [],
+          checkoutLoaded: false,
+        },
+      } as any));
+      await page.waitForChanges();
+
+      expect(instance.availablePaymentMethods).toEqual([PAYMENT_METHODS.PLAID]);
+    });
 
     it('always renders justifi-tokenize-payment-method with correct pass-through props', async () => {
       const page = await newSpecPage({

@@ -78,6 +78,9 @@ export class JustifiCheckout {
 
   @Listen('checkout-changed')
   checkoutChanged(event: CustomEvent<CheckoutChangedEventDetail>) {
+    // Pre-fetch snapshot: availablePaymentMethodTypes is a guess, not the real config.
+    if (!event.detail.checkoutLoaded) return;
+
     this.availablePaymentMethods = event.detail.availablePaymentMethodTypes;
   }
 
