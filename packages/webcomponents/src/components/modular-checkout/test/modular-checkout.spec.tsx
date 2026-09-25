@@ -416,6 +416,8 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.paymentMethods = [] as any;
       checkoutStore.checkoutLoaded = false;
       checkoutStore.achPaymentsEnabled = true;
+      checkoutStore.applePayEnabled = false;
+      checkoutStore.googlePayEnabled = false;
     });
 
     it('emits checkout-changed with availablePaymentMethodTypes on store updates', async () => {
@@ -447,6 +449,96 @@ describe('justifi-modular-checkout', () => {
       expect(detail.availablePaymentMethodTypes).toEqual(
         expect.arrayContaining(['saved_card', 'saved_bank_account', 'new_card', 'new_bank_account', 'sezzle', 'apple_pay'])
       );
+    });
+
+    it('coalesces a synchronous burst of store writes into a single emit', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('checkout-changed', handler as any);
+
+      // Same synchronous burst shape as updateStore()
+      checkoutStore.checkoutLoaded = true;
+      checkoutStore.achPaymentsEnabled = true;
+      checkoutStore.bnplEnabled = true;
+      checkoutStore.applePayEnabled = true;
+      checkoutStore.googlePayEnabled = true;
+      checkoutStore.bankAccountVerification = true;
+      checkoutStore.paymentMethods = [
+        { id: 'pm1', type: PAYMENT_METHODS.SAVED_CARD } as any,
+      ];
+
+      await page.waitForChanges();
+
+      expect(handler).toHaveBeenCalledTimes(1);
+
+      // The single emit carries FINAL state, not a partial snapshot
+      const detail = (handler.mock.calls[0][0] as CustomEvent).detail as any;
+      expect(detail.availablePaymentMethodTypes).toEqual(
+        expect.arrayContaining(['saved_card', 'new_card', 'new_bank_account', 'sezzle', 'apple_pay', 'google_pay', 'plaid'])
+      );
+      expect(detail.savedPaymentMethods).toHaveLength(1);
+    });
+
+    it('flags a pre-fetch snapshot with checkoutLoaded: false', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('checkout-changed', handler as any);
+
+      // Store as it stands before getCheckout resolves. Note that
+      // getAvailablePaymentMethodTypes() still returns new_card/new_bank_account here —
+      // that list is a guess, and checkoutLoaded is the only thing that says so.
+      checkoutStore.checkoutLoaded = false;
+      checkoutStore.paymentMethods = [] as any;
+      await page.waitForChanges();
+
+      const preFetch = (handler.mock.calls[0][0] as CustomEvent).detail as any;
+      expect(preFetch.checkoutLoaded).toBe(false);
+      expect(preFetch.savedPaymentMethods).toEqual([]);
+      expect(preFetch.availablePaymentMethodTypes).toEqual(
+        expect.arrayContaining(['new_card', 'new_bank_account'])
+      );
+
+      handler.mockClear();
+
+      // Once the fetch lands, the same payload is flagged as loaded.
+      const instance: any = page.rootInstance;
+      instance['updateStore']({
+        ...mockCheckoutForFetch,
+        payment_methods: [{ id: 'pm1', type: PAYMENT_METHODS.SAVED_CARD }],
+      });
+      await page.waitForChanges();
+
+      const loaded = (handler.mock.calls[0][0] as CustomEvent).detail as any;
+      expect(loaded.checkoutLoaded).toBe(true);
+      expect(loaded.savedPaymentMethods).toHaveLength(1);
+    });
+
+    it('stops emitting after the component disconnects', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('checkout-changed', handler as any);
+
+      (page.rootInstance as any).disconnectedCallback();
+
+      checkoutStore.bnplEnabled = !checkoutStore.bnplEnabled;
+      await page.waitForChanges();
+
+      expect(handler).not.toHaveBeenCalled();
     });
   });
 

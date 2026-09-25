@@ -50,6 +50,10 @@ export class JustifiModularCheckout {
   private getCheckout: Function;
   private completeCheckout: Function;
   private plaidService = new PlaidService();
+  private unsubscribeFromStore?: () => void;
+  // Per-instance on purpose: two <justifi-modular-checkout> elements on one page
+  // share the singleton store but each must emit once from its own host.
+  private checkoutChangedScheduled = false;
 
   @Prop() authToken!: string;
   @Prop() checkoutId!: string;
@@ -85,9 +89,11 @@ export class JustifiModularCheckout {
     this.getCheckout = makeGetCheckout(config);
     this.completeCheckout = makeCheckoutComplete(config);
 
-    // Emit checkout-changed whenever any store key changes
-    onAnyChange(() => {
-      this.emitCheckoutChanged();
+    // Emit checkout-changed whenever any store key changes, coalescing bursts of
+    // writes into a single trailing-edge emit.
+    this.unsubscribeFromStore?.(); // idempotent across DOM moves
+    this.unsubscribeFromStore = onAnyChange(() => {
+      this.scheduleCheckoutChanged();
     });
   }
 
@@ -116,6 +122,8 @@ export class JustifiModularCheckout {
     this.observer?.disconnect();
     this.removeApplePayListeners();
     this.removeGooglePayListeners();
+    this.unsubscribeFromStore?.();
+    this.unsubscribeFromStore = undefined;
   }
 
   private fetchCheckout() {
@@ -190,11 +198,24 @@ export class JustifiModularCheckout {
       checkout?.bnpl?.provider_checkout_url;
   }
 
+  private scheduleCheckoutChanged() {
+    if (this.checkoutChangedScheduled) return;
+    this.checkoutChangedScheduled = true;
+
+    queueMicrotask(() => {
+      this.checkoutChangedScheduled = false;
+      // Disconnected while the emit was queued — drop it.
+      if (!this.unsubscribeFromStore) return;
+      this.emitCheckoutChanged();
+    });
+  }
+
   private emitCheckoutChanged() {
     const detail: CheckoutChangedEventDetail = {
       availablePaymentMethodTypes: getAvailablePaymentMethodTypes(),
       selectedPaymentMethod: checkoutStore.selectedPaymentMethod,
       savedPaymentMethods: checkoutStore.paymentMethods,
+      checkoutLoaded: checkoutStore.checkoutLoaded,
     };
     this.checkoutChangedEvent.emit(detail);
   }

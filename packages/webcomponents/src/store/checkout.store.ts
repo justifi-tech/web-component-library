@@ -191,12 +191,16 @@ export { checkoutStore as checkoutStore, onChange };
 
 // Subscribe to all store key changes with a single helper
 // The callback is invoked for every key defined in the initial state whenever it changes.
+// Returns a disposer that removes every underlying listener — callers must invoke it on
+// teardown, otherwise a re-connected component stacks a second set of subscriptions.
 type StoreKey = keyof typeof initialState;
 export function onAnyChange(
   callback: (key: StoreKey, value: (typeof initialState)[StoreKey]) => void
-): void {
-  (Object.keys(initialState) as StoreKey[]).forEach((key) => {
+): () => void {
+  const disposers = (Object.keys(initialState) as StoreKey[]).map((key) =>
     // @ts-ignore - onChange is generically typed by stencil/store but not exported here
-    onChange(key as any, (newValue: any) => callback(key, newValue));
-  });
+    onChange(key as any, (newValue: any) => callback(key, newValue))
+  );
+
+  return () => disposers.forEach((dispose) => dispose());
 }

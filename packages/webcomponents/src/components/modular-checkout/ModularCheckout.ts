@@ -104,4 +104,8 @@ export interface CheckoutChangedEventDetail {
   availablePaymentMethodTypes: PAYMENT_METHODS[];
   selectedPaymentMethod: SelectedPaymentMethod | undefined;
   savedPaymentMethods: SavedPaymentMethod[];
+  // False until the checkout has been fetched. The component emits before that — with
+  // no saved methods and a guessed availablePaymentMethodTypes — so consumers that pick
+  // a default from this payload must ignore snapshots where this is false.
+  checkoutLoaded?: boolean;
 }

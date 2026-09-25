@@ -24,5 +24,8 @@ docs/dist/
 apps/component-examples/playwright-report/
 apps/component-examples/test-results/
 
+# Test coverage
+coverage/
+
 # Types
 packages/types/dist/
