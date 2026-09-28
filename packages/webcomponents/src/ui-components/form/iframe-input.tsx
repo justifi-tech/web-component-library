@@ -59,7 +59,7 @@ export class IframeInput {
 
   @Method()
   async reload() {
-    this.iframeElement.src = `${this.iframeOrigin}?${this.urlParams}`;
+    this.iframeElement.src = this.iframeSrc;
   }
 
   private initializeFrameCommunicationService() {
@@ -124,6 +124,10 @@ export class IframeInput {
     return params;
   }
 
+  private get iframeSrc() {
+    return `${this.iframeOrigin}?${this.urlParams}`;
+  }
+
   render() {
     return (
       <Host class="form-group d-flex flex-column">
@@ -149,7 +153,7 @@ export class IframeInput {
             <iframe
               id={this.inputId}
               name={this.inputId}
-              src={`${this.iframeOrigin}?${this.urlParams}`}
+              src={this.iframeSrc}
               ref={el => {
                 this.iframeElement = el as HTMLIFrameElement;
                 this.initializeFrameCommunicationService();
