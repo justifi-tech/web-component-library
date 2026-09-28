@@ -57,6 +57,11 @@ export class IframeInput {
     });
   }
 
+  @Method()
+  async reload() {
+    this.iframeElement.src = `${this.iframeOrigin}?${this.urlParams}`;
+  }
+
   private initializeFrameCommunicationService() {
     this.frameService = new FrameCommunicationService(
       this.iframeElement, this.iframeOrigin
