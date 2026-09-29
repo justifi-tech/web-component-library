@@ -3,6 +3,7 @@ jest.mock('../../../utils/check-pkg-version', () => ({ checkPkgVersion: jest.fn(
 
 import { newSpecPage } from '@stencil/core/testing';
 import { JustifiCheckout } from '../justifi-checkout';
+import { JustifiModularCheckout } from '../../modular-checkout/justifi-modular-checkout';
 import { JustifiGooglePay } from '../../modular-checkout/sub-components/justifi-google-pay';
 import JustifiAnalytics from '../../../api/Analytics';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
@@ -18,6 +19,14 @@ function resetStore() {
   checkoutStore.isWalletProcessing = false;
 }
 
+beforeAll(() => {
+  (global as any).MutationObserver = class {
+    constructor(_cb: any) { }
+    observe() { }
+    disconnect() { }
+  };
+});
+
 beforeEach(() => {
   resetStore();
   // @ts-ignore
@@ -25,6 +34,30 @@ beforeEach(() => {
 });
 
 describe('justifi-checkout', () => {
+  it('receives one consolidated event from modular checkout and updates payment options', async () => {
+    const page = await newSpecPage({
+      components: [JustifiCheckout, JustifiModularCheckout],
+      html: '<justifi-checkout></justifi-checkout>',
+    });
+    const handler = jest.fn();
+    page.root.addEventListener('checkout-changed', handler);
+    checkoutStore.bnplEnabled = true;
+    checkoutStore.applePayEnabled = true;
+    checkoutStore.disableCreditCard = true;
+    expect(handler).not.toHaveBeenCalled();
+    await page.waitForChanges();
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(page.rootInstance.availablePaymentMethods).toEqual(
+      expect.arrayContaining([PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY])
+    );
+    expect(page.rootInstance.availablePaymentMethods).not.toContain(PAYMENT_METHODS.NEW_CARD);
+    await page.waitForChanges();
+    expect(page.root.querySelector('justifi-apple-pay')).not.toBeNull();
+    page.root.remove();
+    checkoutStore.bnplEnabled = false;
+    checkoutStore.applePayEnabled = false;
+  });
+
   it('renders loading', async () => {
     const page = await newSpecPage({
       components: [JustifiCheckout],

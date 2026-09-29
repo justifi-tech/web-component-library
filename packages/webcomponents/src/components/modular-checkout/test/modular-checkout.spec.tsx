@@ -418,6 +418,58 @@ describe('justifi-modular-checkout', () => {
       checkoutStore.achPaymentsEnabled = true;
     });
 
+    it('emits once with final state for each fetched checkout payload', async () => {
+      let deliverCheckout: (result: any) => void;
+      const mockGet = jest.spyOn(checkoutActions, 'makeGetCheckout');
+      const previousImplementation = mockGet.getMockImplementation();
+      mockGet.mockImplementation(() => jest.fn(async ({ onSuccess }) => {
+        deliverCheckout = onSuccess;
+      }));
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: '<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>',
+      });
+      try {
+        const handler = jest.fn();
+        page.root.addEventListener('checkout-changed', handler);
+        for (const bnplEnabled of [true, false]) {
+          handler.mockClear();
+          deliverCheckout({ checkout: {
+            ...mockCheckoutForFetch,
+            status: ICheckoutStatus.created,
+            payment_settings: { ...mockCheckoutForFetch.payment_settings, bnpl_payments: bnplEnabled },
+          } });
+          expect(handler).not.toHaveBeenCalled();
+          await page.waitForChanges();
+          expect(handler).toHaveBeenCalledTimes(1);
+          expect(handler.mock.calls[0][0].detail.availablePaymentMethodTypes.includes(PAYMENT_METHODS.SEZZLE)).toBe(bnplEnabled);
+          expect(checkoutStore.paymentAmount).toBe(mockCheckoutForFetch.payment_amount);
+        }
+      } finally {
+        page.rootInstance.disconnectedCallback();
+        mockGet.mockImplementation(previousImplementation);
+      }
+    });
+
+    it('cancels pending events on disconnect and subscribes once on reconnect', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: '<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>',
+      });
+      const handler = jest.fn();
+      page.root.addEventListener('checkout-changed', handler);
+      checkoutStore.bnplEnabled = !checkoutStore.bnplEnabled;
+      page.rootInstance.disconnectedCallback();
+      await page.waitForChanges();
+      expect(handler).not.toHaveBeenCalled();
+      page.rootInstance.connectedCallback();
+      checkoutStore.bnplEnabled = !checkoutStore.bnplEnabled;
+      checkoutStore.applePayEnabled = !checkoutStore.applePayEnabled;
+      await page.waitForChanges();
+      expect(handler).toHaveBeenCalledTimes(1);
+      page.rootInstance.disconnectedCallback();
+    });
+
     it('emits checkout-changed with availablePaymentMethodTypes on store updates', async () => {
       const page = await newSpecPage({
         components: [JustifiModularCheckout],

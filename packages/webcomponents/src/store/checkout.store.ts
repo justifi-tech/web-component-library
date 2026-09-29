@@ -189,14 +189,24 @@ export function getCheckoutState(): CheckoutState {
 
 export { checkoutStore as checkoutStore, onChange };
 
-// Subscribe to all store key changes with a single helper
-// The callback is invoked for every key defined in the initial state whenever it changes.
+// Notify once after synchronous store writes finish, using the latest state.
 type StoreKey = keyof typeof initialState;
-export function onAnyChange(
-  callback: (key: StoreKey, value: (typeof initialState)[StoreKey]) => void
-): void {
-  (Object.keys(initialState) as StoreKey[]).forEach((key) => {
-    // @ts-ignore - onChange is generically typed by stencil/store but not exported here
-    onChange(key as any, (newValue: any) => callback(key, newValue));
+export function onAnyChange(callback: () => void): () => void {
+  let pending = false;
+  let active = true;
+  const unsubscribe = (Object.keys(initialState) as StoreKey[]).map((key) => {
+    return onChange(key, () => {
+      if (pending || !active) return;
+      pending = true;
+      queueMicrotask(() => {
+        pending = false;
+        if (active) callback();
+      });
+    });
   });
+
+  return () => {
+    active = false;
+    unsubscribe.forEach((off) => off());
+  };
 }

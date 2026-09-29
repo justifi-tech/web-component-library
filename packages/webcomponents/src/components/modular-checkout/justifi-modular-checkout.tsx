@@ -35,6 +35,7 @@ import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMEN
 export class JustifiModularCheckout {
   analytics: JustifiAnalytics;
   private observer?: MutationObserver;
+  private unsubscribeCheckoutChanges?: () => void;
   private paymentMethodFormRef?:
     | HTMLJustifiCardFormElement
     | HTMLJustifiBankAccountFormElement
@@ -85,8 +86,8 @@ export class JustifiModularCheckout {
     this.getCheckout = makeGetCheckout(config);
     this.completeCheckout = makeCheckoutComplete(config);
 
-    // Emit checkout-changed whenever any store key changes
-    onAnyChange(() => {
+    this.unsubscribeCheckoutChanges?.();
+    this.unsubscribeCheckoutChanges = onAnyChange(() => {
       this.emitCheckoutChanged();
     });
   }
@@ -113,6 +114,8 @@ export class JustifiModularCheckout {
   }
 
   disconnectedCallback() {
+    this.unsubscribeCheckoutChanges?.();
+    this.unsubscribeCheckoutChanges = undefined;
     this.observer?.disconnect();
     this.removeApplePayListeners();
     this.removeGooglePayListeners();
