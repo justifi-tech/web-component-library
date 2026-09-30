@@ -1,5 +1,13 @@
 ### Changelog
 
+## 6.14.4
+
+### Patch Changes
+
+- a12f8ec: `justifi-modular-checkout` no longer emits a burst of `checkout-changed` events. A single batch of store writes previously fired one event per changed key; `onAnyChange` now coalesces synchronous writes into one notification on the next microtask, carrying the final state. The subscription is also unsubscribed in `disconnectedCallback` (and before re-subscribing), so a remounted checkout no longer stacks duplicate emitters.
+- 9155b86: `card-form` and `bank-account-form` now handle iframe load failures instead of hanging on the skeleton forever. If the payment inputs don't load within 10 seconds, the component emits an `error-event` with the new `iframe-load-error` code and renders an alert with a "Try again" button that reloads the iframes. `iframe-input` gains a `reload()` method to support the retry.
+- fd523d4: `disable-bnpl` no longer hides Plaid in `justifi-checkout`. The flag now gates only Sezzle, the BNPL method — Plaid stays visible whenever the checkout API offers it. `availablePaymentMethods` also mirrors the API response verbatim again; the prop is applied at render time instead of filtering the API list.
+
 ## 6.14.3
 
 ### Patch Changes
