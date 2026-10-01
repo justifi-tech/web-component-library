@@ -1,5 +1,12 @@
 # @justifi/webcomponents-docs
 
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.14.4
+
 ## 3.0.2
 
 ### Patch Changes
