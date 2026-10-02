@@ -2,7 +2,10 @@ name: E2E Tests
 
 on:
   schedule:
-    - cron: '0 8 * * *' # Daily at 2am CT (8:00 UTC)
+    # E2E depends on staging.
+    # Weekdays only at 13:30 UTC (08:30 CDT / 07:30 CST).
+    # Staging ECS is scaled to zero Mon-Fri 20:00-05:30 CT and all weekend.
+    - cron: '30 13 * * 1-5'
   push:
     branches: [main]
   pull_request:
