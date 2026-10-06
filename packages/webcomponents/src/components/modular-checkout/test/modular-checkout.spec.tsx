@@ -696,9 +696,110 @@ describe('justifi-modular-checkout', () => {
       await assertPaymentMode(PAYMENT_METHODS.SAVED_CARD, 'ecom');
       await assertPaymentMode(PAYMENT_METHODS.NEW_BANK_ACCOUNT, 'ecom');
       await assertPaymentMode(PAYMENT_METHODS.SAVED_BANK_ACCOUNT, 'ecom');
-      await assertPaymentMode(PAYMENT_METHODS.SEZZLE, 'bnpl');
       await assertPaymentMode(PAYMENT_METHODS.APPLE_PAY, 'apple_pay');
       await assertPaymentMode(PAYMENT_METHODS.GOOGLE_PAY, 'google_pay');
+    });
+
+    describe('Sezzle (BNPL)', () => {
+      const setupSezzle = async (resolved: any) => {
+        checkoutStore.bnplEnabled = true;
+        checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SEZZLE };
+
+        const page = await newSpecPage({
+          components: [JustifiModularCheckout],
+          html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+        });
+
+        const root = page.root as HTMLElement;
+        const errorHandler = jest.fn();
+        root.addEventListener('error-event', errorHandler as any);
+
+        const sezzleEl: any = page.doc.createElement('div');
+        sezzleEl.resolvePaymentMethod = jest.fn().mockResolvedValue(resolved);
+        root.appendChild(sezzleEl);
+        sezzleEl.dispatchEvent(
+          new CustomEvent('sezzle-payment-method-ready', { detail: sezzleEl, bubbles: true, composed: true })
+        );
+
+        const instance: any = page.rootInstance;
+        instance.completeCheckout = jest.fn();
+
+        return { instance, sezzleEl, errorHandler };
+      };
+
+      it('opens Sezzle and completes with bnpl mode and no token on success', async () => {
+        checkoutStore.paymentToken = 'pm_stale';
+        const { instance, sezzleEl, errorHandler } = await setupSezzle({ bnpl: { status: 'success' } });
+
+        await instance.submitCheckout();
+
+        expect(sezzleEl.resolvePaymentMethod).toHaveBeenCalledTimes(1);
+        expect(errorHandler).not.toHaveBeenCalled();
+        expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+        expect(instance.completeCheckout.mock.calls[0][0].payment).toEqual({
+          payment_mode: 'bnpl',
+          payment_token: undefined,
+        });
+      });
+
+      it('does not open Sezzle when validation fails', async () => {
+        const { instance, sezzleEl } = await setupSezzle({ bnpl: { status: 'success' } });
+        instance.validate = jest.fn().mockResolvedValue(false);
+
+        await instance.submitCheckout();
+
+        expect(sezzleEl.resolvePaymentMethod).not.toHaveBeenCalled();
+        expect(instance.completeCheckout).not.toHaveBeenCalled();
+      });
+
+      it('resets submitting silently when customer cancels Sezzle', async () => {
+        const { instance, errorHandler } = await setupSezzle({ bnpl: { status: 'cancelled' } });
+
+        await instance.submitCheckout();
+
+        expect(instance.completeCheckout).not.toHaveBeenCalled();
+        expect(errorHandler).not.toHaveBeenCalled();
+        expect(checkoutStore.isSubmitting).toBe(false);
+      });
+
+      it('emits error when Sezzle fails', async () => {
+        const { instance, errorHandler } = await setupSezzle({ bnpl: { status: 'failure' } });
+
+        await instance.submitCheckout();
+
+        expect(instance.completeCheckout).not.toHaveBeenCalled();
+        expect(errorHandler).toHaveBeenCalledTimes(1);
+        expect(errorHandler.mock.calls[0][0].detail.errorCode).toBe(ComponentErrorCodes.TOKENIZE_ERROR);
+        expect(checkoutStore.isSubmitting).toBe(false);
+      });
+
+      it('emits Sezzle error message when Sezzle cannot load', async () => {
+        const { instance, errorHandler } = await setupSezzle({
+          error: { code: 'sezzle-load-error', message: 'Unable to load Sezzle. Please try again.', decline_code: '' },
+        });
+
+        await instance.submitCheckout();
+
+        expect(errorHandler.mock.calls[0][0].detail.message).toBe('Unable to load Sezzle. Please try again.');
+        expect(instance.completeCheckout).not.toHaveBeenCalled();
+      });
+
+      it('emits error when Sezzle component is not present', async () => {
+        checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SEZZLE };
+        const page = await newSpecPage({
+          components: [JustifiModularCheckout],
+          html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+        });
+        const handler = jest.fn();
+        page.root?.addEventListener('error-event', handler as any);
+        const instance: any = page.rootInstance;
+        instance.completeCheckout = jest.fn();
+
+        await instance.submitCheckout();
+
+        expect(handler).toHaveBeenCalledTimes(1);
+        expect(instance.completeCheckout).not.toHaveBeenCalled();
+      });
     });
 
     it('handles Apple Pay completed event success by setting token and submitting', async () => {

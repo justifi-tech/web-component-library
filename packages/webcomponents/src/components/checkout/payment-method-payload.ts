@@ -4,9 +4,9 @@ export interface PaymentMethodPayload {
   data?: CreatePaymentMethodResponse;
   token?: string;
   bnpl?: {
-    order_uuid: string;
+    order_uuid?: string;
     status: string;
-    session_uuid: string;
+    session_uuid?: string;
   };
   error?: {
     code: string;

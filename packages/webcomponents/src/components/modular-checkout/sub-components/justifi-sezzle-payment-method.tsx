@@ -1,11 +1,33 @@
-import { Component, h, Method, Event, EventEmitter, State } from '@stencil/core';
+import { Component, h, Method, Event, EventEmitter, State, Element } from '@stencil/core';
 import { formatCurrency } from '../../../utils/utils';
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import { PAYMENT_METHODS } from '../ModularCheckout';
 
-const sezzleLogo = (
+const SEZZLE_SDK_URL = 'https://checkout-sdk.sezzle.com/checkout.min.js';
+
+// Loads the Sezzle SDK, reusing the script tag across instances.
+const loadSezzleSdk = (): Promise<void> => {
+  if ((window as any).Checkout) return Promise.resolve();
+
+  return new Promise((resolve, reject) => {
+    let script = document.querySelector<HTMLScriptElement>(`script[src="${SEZZLE_SDK_URL}"]`);
+    if (!script) {
+      script = document.createElement('script');
+      script.src = SEZZLE_SDK_URL;
+      script.async = true;
+      document.head.appendChild(script);
+    }
+    script.addEventListener('load', () => resolve());
+    script.addEventListener('error', () => {
+      script.remove();
+      reject(new Error('Failed to load Sezzle SDK'));
+    });
+  });
+};
+
+const sezzleLogo = () => (
   <img
     class="sezzle-smart-button-logo-img"
     src="https://media.sezzle.com/branding/2.0/Sezzle_Logo_FullColor.svg"
@@ -24,44 +46,79 @@ const sezzleLogo = (
   shadow: true
 })
 export class JustifiSezzlePaymentMethod {
-  @State() installmentPlan: any;
-  @State() sezzleCheckout: any;
-  @State() sezzlePromise: Promise<PaymentMethodPayload>;
+  @Element() hostEl: HTMLJustifiSezzlePaymentMethodElement;
 
-  private scriptRef: HTMLScriptElement;
-  private sezzleButtonRef: HTMLButtonElement;
+  @State() sezzleCheckout: any;
+
+  private sezzleButton: HTMLButtonElement;
+  private initPromise?: Promise<void>;
+  private pendingResolve?: (payload: PaymentMethodPayload) => void;
   private paymentMethodOptionId = PAYMENT_METHODS.SEZZLE;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
 
-  componentDidRender() {
-    if (!this.scriptRef) return;
+  // Lets justifi-modular-checkout find this element even when nested in another shadow root.
+  @Event({ eventName: 'sezzle-payment-method-ready', bubbles: true, composed: true })
+  sezzlePaymentMethodReady: EventEmitter<HTMLJustifiSezzlePaymentMethodElement>;
 
-    this.scriptRef.onload = () => {
-      this.sezzleButtonRef = document.createElement('button');
-      this.initializeSezzleCheckout();
-    };
+  componentDidLoad() {
+    this.sezzlePaymentMethodReady.emit(this.hostEl);
   }
 
+  componentDidRender() {
+    if (checkoutStore.bnplEnabled) {
+      this.ensureSezzleCheckout().catch(() => {});
+    }
+  }
+
+  // Opens the Sezzle popup and resolves once the customer completes, cancels or fails.
   @Method()
-  async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
-    if (!insuranceValidation.isValid) {
+  async resolvePaymentMethod(insuranceValidation?: { isValid: boolean }): Promise<PaymentMethodPayload> {
+    if (insuranceValidation && !insuranceValidation.isValid) {
       return { validationError: true };
     }
-    this.sezzleButtonRef.click();
-    return this.sezzlePromise;
+
+    try {
+      await this.ensureSezzleCheckout();
+    } catch {
+      return {
+        error: { code: 'sezzle-load-error', message: 'Unable to load Sezzle. Please try again.', decline_code: '' },
+      };
+    }
+
+    this.settle({ bnpl: { status: 'cancelled' } });
+    return new Promise((resolve) => {
+      this.pendingResolve = resolve;
+      this.sezzleButton.click();
+    });
   }
 
   @Method()
   async handleSelectionClick(): Promise<void> {
     checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SEZZLE };
+    checkoutStore.paymentToken = undefined;
     this.paymentMethodOptionSelected.emit(this.paymentMethodOptionId);
   }
 
-  initializeSezzleCheckout = () => {
-    let resolveSezzlePromise;
-    this.sezzlePromise = new Promise((resolve) => { resolveSezzlePromise = resolve; });
-    const amount = Number(checkoutStore.paymentAmount);
+  private ensureSezzleCheckout(): Promise<void> {
+    if (!this.initPromise) {
+      this.initPromise = loadSezzleSdk()
+        .then(() => this.initializeSezzleCheckout())
+        .catch((error) => {
+          this.initPromise = undefined;
+          throw error;
+        });
+    }
+    return this.initPromise;
+  }
+
+  private settle(payload: PaymentMethodPayload) {
+    const resolve = this.pendingResolve;
+    this.pendingResolve = undefined;
+    resolve?.(payload);
+  }
+
+  private initializeSezzleCheckout = () => {
     const Checkout = (window as any).Checkout;
     const checkout = new Checkout({
       mode: 'popup',
@@ -69,20 +126,20 @@ export class JustifiSezzlePaymentMethod {
       apiMode: checkoutStore.bnplProviderMode,
       apiVersion: checkoutStore.bnplProviderApiVersion,
     });
-    checkout.sezzleButtonElement = this.sezzleButtonRef;
+    this.sezzleButton = document.createElement('button');
+    checkout.sezzleButtonElement = this.sezzleButton;
     checkout.init({
-      onClick: function (event) {
+      onClick: (event) => {
         event.preventDefault();
         checkout.startCheckout({
           checkout_url: checkoutStore.bnplProviderCheckoutUrl,
         });
       },
-      onComplete: (event) => resolveSezzlePromise({ bnpl: event.data }),
-      onCancel: (event) => resolveSezzlePromise({ bnpl: event.data }),
-      onFailure: (event) => resolveSezzlePromise({ bnpl: event.data }),
+      onComplete: (event) => this.settle({ bnpl: { ...event?.data, status: 'success' } }),
+      onCancel: (event) => this.settle({ bnpl: { ...event?.data, status: 'cancelled' } }),
+      onFailure: (event) => this.settle({ bnpl: { ...event?.data, status: 'failure' } }),
     });
     this.sezzleCheckout = checkout;
-    this.installmentPlan = this.sezzleCheckout.getInstallmentPlan(amount);
   };
 
   render() {
@@ -91,21 +148,17 @@ export class JustifiSezzlePaymentMethod {
       return null;
     }
 
+    const installmentPlan = this.sezzleCheckout?.getInstallmentPlan(Number(checkoutStore.paymentAmount));
+
     return (
       <StyledHost class="payment-method">
-        <script
-          src="https://checkout-sdk.sezzle.com/checkout.min.js"
-          async={true}
-          ref={(el) => (this.scriptRef = el)}>
-        </script>
-
         <div>
-          <div>Buy now, pay later with {sezzleLogo}</div>
-          {this.installmentPlan && (
+          <div>Buy now, pay later with {sezzleLogo()}</div>
+          {installmentPlan && (
             <small>
-              <span>{this.installmentPlan?.installments.length}</span>&nbsp;
-              <span>{this.installmentPlan.schedule} payments of</span>&nbsp;
-              <span class="fw-bold">{formatCurrency(this.installmentPlan?.installments[0].amountInCents)}</span>
+              <span>{installmentPlan.installments.length}</span>&nbsp;
+              <span>{installmentPlan.schedule} payments of</span>&nbsp;
+              <span class="fw-bold">{formatCurrency(installmentPlan.installments[0].amountInCents)}</span>
             </small>
           )}
         </div>

@@ -5,6 +5,7 @@ import {
   EventEmitter,
   h,
   Host,
+  Listen,
   Method,
   Prop,
 } from "@stencil/core";
@@ -48,6 +49,7 @@ export class JustifiModularCheckout {
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private applePayRef?: HTMLJustifiApplePayElement;
   private googlePayRef?: HTMLJustifiGooglePayElement;
+  private sezzleRef?: HTMLJustifiSezzlePaymentMethodElement;
   private getCheckout: Function;
   private completeCheckout: Function;
   private plaidService = new PlaidService();
@@ -62,6 +64,11 @@ export class JustifiModularCheckout {
   @Event({ eventName: "submit-event" }) submitEvent: EventEmitter;
   @Event({ eventName: "checkout-changed" })
   checkoutChangedEvent: EventEmitter<CheckoutChangedEventDetail>;
+
+  @Listen("sezzle-payment-method-ready")
+  handleSezzleReady(event: CustomEvent<HTMLJustifiSezzlePaymentMethodElement>) {
+    this.sezzleRef = event.detail;
+  }
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -224,6 +231,35 @@ export class JustifiModularCheckout {
     }
 
     this.insuranceFormRef = this.hostEl.querySelector('justifi-season-interruption-insurance');
+  }
+
+  // Opens the Sezzle popup; returns true only when the customer approved the BNPL plan.
+  private async resolveSezzlePayment(): Promise<boolean> {
+    const sezzle = this.sezzleRef?.isConnected
+      ? this.sezzleRef
+      : this.hostEl.querySelector("justifi-sezzle-payment-method");
+
+    if (!sezzle) {
+      this.errorEvent.emit({
+        message: "Sezzle is not available.",
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return false;
+    }
+
+    const result = await sezzle.resolvePaymentMethod();
+    const status = result?.bnpl?.status;
+
+    if (status === "success") return true;
+    if (status === "cancelled") return false;
+
+    this.errorEvent.emit({
+      message: result?.error?.message || "Sezzle payment failed. Please try again.",
+      errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+      severity: ComponentErrorSeverity.ERROR,
+    });
+    return false;
   }
 
   private setupApplePayListeners() {
@@ -487,6 +523,7 @@ export class JustifiModularCheckout {
       checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_BANK_ACCOUNT
 
     const isPlaid = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.PLAID;
+    const isSezzle = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.SEZZLE;
 
     const shouldTokenize = isNewCard || isNewBankAccount;
 
@@ -562,7 +599,13 @@ export class JustifiModularCheckout {
       return;
     }
 
-    if (!checkoutStore.paymentToken) {
+    if (isSezzle && !(await this.resolveSezzlePayment())) {
+      checkoutStore.isSubmitting = false;
+      return;
+    }
+
+    // BNPL is completed by the provider session, not a payment token
+    if (!isSezzle && !checkoutStore.paymentToken) {
       checkoutStore.isSubmitting = false;
       this.errorEvent.emit({
         message: 'Payment token not found.',
@@ -593,7 +636,7 @@ export class JustifiModularCheckout {
 
     const payment = {
       payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod?.type) as string,
-      payment_token: checkoutStore.paymentToken,
+      payment_token: isSezzle ? undefined : checkoutStore.paymentToken,
     };
 
     if (this.preCompleteHook) {
