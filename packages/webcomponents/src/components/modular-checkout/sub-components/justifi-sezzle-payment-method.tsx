@@ -5,7 +5,7 @@ import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import { PAYMENT_METHODS } from '../ModularCheckout';
 
-const sezzleLogo = (
+const sezzleLogo = () => (
   <img
     class="sezzle-smart-button-logo-img"
     src="https://media.sezzle.com/branding/2.0/Sezzle_Logo_FullColor.svg"
@@ -26,10 +26,10 @@ const sezzleLogo = (
 export class JustifiSezzlePaymentMethod {
   @State() installmentPlan: any;
   @State() sezzleCheckout: any;
-  @State() sezzlePromise: Promise<PaymentMethodPayload>;
 
   private scriptRef: HTMLScriptElement;
   private sezzleButtonRef: HTMLButtonElement;
+  private resolveSezzlePromise?: (payload: PaymentMethodPayload) => void;
   private paymentMethodOptionId = PAYMENT_METHODS.SEZZLE;
 
   @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
@@ -48,8 +48,13 @@ export class JustifiSezzlePaymentMethod {
     if (!insuranceValidation.isValid) {
       return { validationError: true };
     }
+    if (!this.sezzleButtonRef) {
+      return { error: { code: 'sezzle_not_ready', message: 'Sezzle is not ready yet. Please try again.', decline_code: '' } };
+    }
+    // new promise per attempt so retries after cancel/failure re-open the popup
+    const sezzlePromise = new Promise<PaymentMethodPayload>((resolve) => { this.resolveSezzlePromise = resolve; });
     this.sezzleButtonRef.click();
-    return this.sezzlePromise;
+    return sezzlePromise;
   }
 
   @Method()
@@ -59,8 +64,6 @@ export class JustifiSezzlePaymentMethod {
   }
 
   initializeSezzleCheckout = () => {
-    let resolveSezzlePromise;
-    this.sezzlePromise = new Promise((resolve) => { resolveSezzlePromise = resolve; });
     const amount = Number(checkoutStore.paymentAmount);
     const Checkout = (window as any).Checkout;
     const checkout = new Checkout({
@@ -77,9 +80,9 @@ export class JustifiSezzlePaymentMethod {
           checkout_url: checkoutStore.bnplProviderCheckoutUrl,
         });
       },
-      onComplete: (event) => resolveSezzlePromise({ bnpl: event.data }),
-      onCancel: (event) => resolveSezzlePromise({ bnpl: event.data }),
-      onFailure: (event) => resolveSezzlePromise({ bnpl: event.data }),
+      onComplete: (event) => this.resolveSezzlePromise?.({ bnpl: event.data }),
+      onCancel: (event) => this.resolveSezzlePromise?.({ bnpl: event.data }),
+      onFailure: (event) => this.resolveSezzlePromise?.({ bnpl: event.data }),
     });
     this.sezzleCheckout = checkout;
     this.installmentPlan = this.sezzleCheckout.getInstallmentPlan(amount);
@@ -100,7 +103,7 @@ export class JustifiSezzlePaymentMethod {
         </script>
 
         <div>
-          <div>Buy now, pay later with {sezzleLogo}</div>
+          <div>Buy now, pay later with {sezzleLogo()}</div>
           {this.installmentPlan && (
             <small>
               <span>{this.installmentPlan?.installments.length}</span>&nbsp;
