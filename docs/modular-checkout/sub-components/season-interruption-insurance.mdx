@@ -1,0 +1,120 @@
+---
+id: season-interruption-insurance
+title: Season Interruption Insurance
+description: Optional insurance add-on rail that pairs with Modular Checkout summaries.
+sidebar_position: 25
+---
+
+import {
+  CodeBlock,
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getWebcomponentsVersion,
+  getComponentParts,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
+import componentTreeJson from '../../component-tree.json';
+
+## Overview
+
+Component to render a formated list of season interruption insurance for the requested account.
+
+## Usage
+
+<CodeBlock>{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-season-interruption-insurance</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+  <style>
+      ::part(font-family) { 
+        font-family: georgia;   
+      }
+        
+      ::part(color) {
+        color: darkslategray;
+      }
+
+      ::part(background-color) {
+        background-color: transparent;
+      }
+
+      ::part(input-radio) {
+        background-color: #fff; 
+        border-color: #333;
+      }
+
+      ::part(input-radio-checked) {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 30 30" fill="white"><circle cx="10" cy="10" r="10"/></svg>');
+        background-color: #000;
+      }
+
+      ::part(input-radio-focused) {
+        background-color: #333;
+        border-color: #333;
+        box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+      }
+
+      ::part(input-radio-checked-focused) {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 30 30" fill="white"><circle cx="10" cy="10" r="10"/></svg>');
+        background-color: #000;
+        border-color: #333;
+        box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25);
+      }
+    </style>
+
+</head>
+
+<body>
+  <justifi-season-interruption-insurance
+    auth-token="your-auth-token"
+    checkout-id="your-checkout-id"
+    primary-identity-first-name="John"
+    primary-identity-last-name="Doe"
+    primary-identity-state="CA"
+    primary-identity-postal-code="90210"
+    primary-identity-country="US"
+    primary-identity-email-address="john.doe@email.com"
+    policy-attributes-insurable-amount="100000"
+  />
+</body>
+
+</html>`}</CodeBlock>
+
+## Props, Events & Methods
+
+<PropsMarkdownTable
+  props={getPropsFromDocs('justifi-season-interruption-insurance', docsJson)}
+/>
+
+### Events
+
+- `insurance-updated`: Fires after the component successfully toggles coverage via the insurance API.
+- `error-event`: Emits a `ComponentErrorEvent` if required props are missing or an API call fails.
+
+### Public methods
+
+1. `validate()` – Returns `{ isValid: boolean }` indicating whether the customer selected accept or decline. Uses the shared insurance validation helpers.
+
+## Theming & Layout
+
+- The host inherits the same typography tokens as other Modular Checkout rails via `StyledHost`, so it naturally matches surrounding content.
+- Use the exposed parts to restyle copy or validation messaging without affecting the radios themselves.
+
+<PartsMarkdownTable
+  parts={getComponentParts(
+    'justifi-season-interruption-insurance',
+    componentTreeJson
+  )}
+/>

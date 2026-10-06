@@ -1,0 +1,579 @@
+# @repo/component-examples
+
+## 1.2.23
+
+### Patch Changes
+
+- Updated dependencies [a12f8ec]
+- Updated dependencies [9155b86]
+- Updated dependencies [fd523d4]
+  - @justifi/webcomponents@6.14.4
+
+## 1.2.22
+
+### Patch Changes
+
+- Updated dependencies [805be54]
+  - @justifi/webcomponents@6.14.3
+
+## 1.2.21
+
+### Patch Changes
+
+- Updated dependencies [4527ad9]
+  - @justifi/webcomponents@6.14.2
+
+## 1.2.20
+
+### Patch Changes
+
+- Updated dependencies [880ca61]
+  - @justifi/webcomponents@6.14.1
+
+## 1.2.19
+
+### Patch Changes
+
+- Updated dependencies [9f3796e]
+  - @justifi/webcomponents@6.14.0
+
+## 1.2.18
+
+### Patch Changes
+
+- Updated dependencies [0ad10c6]
+  - @justifi/webcomponents@6.13.7
+
+## 1.2.17
+
+### Patch Changes
+
+- Updated dependencies [ec88f42]
+  - @justifi/webcomponents@6.13.6
+
+## 1.2.16
+
+### Patch Changes
+
+- Updated dependencies [ccd3d05]
+  - @justifi/webcomponents@6.13.5
+
+## 1.2.15
+
+### Patch Changes
+
+- Updated dependencies [5d13733]
+  - @justifi/webcomponents@6.13.4
+
+## 1.2.14
+
+### Patch Changes
+
+- Updated dependencies [610fde0]
+  - @justifi/webcomponents@6.13.3
+
+## 1.2.13
+
+### Patch Changes
+
+- Updated dependencies [19eb390]
+  - @justifi/webcomponents@6.13.2
+
+## 1.2.12
+
+### Patch Changes
+
+- Updated dependencies [bfe3e40]
+  - @justifi/webcomponents@6.13.1
+
+## 1.2.11
+
+### Patch Changes
+
+- Updated dependencies [1bc5900]
+- Updated dependencies [7f49c06]
+- Updated dependencies [25c67d4]
+- Updated dependencies [6264741]
+- Updated dependencies [6264741]
+  - @justifi/webcomponents@6.13.0
+
+## 1.2.10
+
+### Patch Changes
+
+- 7163ee3: Default justifi-google-pay environment prop to "PRODUCTION"
+- Updated dependencies [7163ee3]
+- Updated dependencies [c318c0f]
+  - @justifi/webcomponents@6.12.6
+
+## 1.2.9
+
+### Patch Changes
+
+- Updated dependencies [fd4c5a7]
+- Updated dependencies [91959dd]
+  - @justifi/webcomponents@6.12.5
+
+## 1.2.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.12.4
+
+## 1.2.7
+
+### Patch Changes
+
+- Updated dependencies [b9b5e47]
+  - @justifi/webcomponents@6.12.3
+
+## 1.2.6
+
+### Patch Changes
+
+- Updated dependencies [489a6dc]
+  - @justifi/webcomponents@6.12.2
+
+## 1.2.5
+
+### Patch Changes
+
+- Updated dependencies [bd81b03]
+  - @justifi/webcomponents@6.12.1
+
+## 1.2.4
+
+### Patch Changes
+
+- Updated dependencies [7a9db8b]
+- Updated dependencies [fa5b6ec]
+- Updated dependencies [f7db618]
+  - @justifi/webcomponents@6.12.0
+
+## 1.2.3
+
+### Patch Changes
+
+- Updated dependencies [9829d87]
+- Updated dependencies [e20f910]
+- Updated dependencies [b2c1aa0]
+  - @justifi/webcomponents@6.11.0
+
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.10.4
+
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.10.3
+
+## 1.2.0
+
+### Minor Changes
+
+- 074d118: Fix applePayCancelled event was not being emitted
+
+## 1.1.18
+
+### Patch Changes
+
+- Updated dependencies [bbb495f]
+  - @justifi/webcomponents@6.10.2
+
+## 1.1.17
+
+### Patch Changes
+
+- Updated dependencies [3406f47]
+- Updated dependencies [b37b70b]
+  - @justifi/webcomponents@6.10.1
+
+## 1.1.16
+
+### Patch Changes
+
+- Updated dependencies [d69a93c]
+- Updated dependencies [3ef304c]
+- Updated dependencies [8c2e3d1]
+- Updated dependencies [47b454f]
+- Updated dependencies [05fb036]
+- Updated dependencies [ca0e302]
+- Updated dependencies [2a5cbbe]
+  - @justifi/webcomponents@6.10.0
+
+## 1.1.15
+
+### Patch Changes
+
+- Updated dependencies [79c1fac]
+- Updated dependencies [aea215b]
+- Updated dependencies [aea215b]
+  - @justifi/webcomponents@6.9.0
+
+## 1.1.14
+
+### Patch Changes
+
+- Updated dependencies [85a8312]
+  - @justifi/webcomponents@6.8.1
+
+## 1.1.13
+
+### Patch Changes
+
+- Updated dependencies [fccb31f]
+- Updated dependencies [61d0c65]
+- Updated dependencies [1a5094b]
+- Updated dependencies [7befaa2]
+  - @justifi/webcomponents@6.8.0
+
+## 1.1.12
+
+### Patch Changes
+
+- Updated dependencies [2d76315]
+- Updated dependencies [2d76315]
+- Updated dependencies [2d76315]
+- Updated dependencies [2d76315]
+- Updated dependencies [2d76315]
+  - @justifi/webcomponents@6.7.3
+
+## 1.1.11
+
+### Patch Changes
+
+- Updated dependencies [b67550c]
+- Updated dependencies [be3f80f]
+- Updated dependencies [343d520]
+  - @justifi/webcomponents@6.7.2
+
+## 1.1.10
+
+### Patch Changes
+
+- Updated dependencies [0c34ce6]
+  - @justifi/webcomponents@6.7.1
+
+## 1.1.9
+
+### Patch Changes
+
+- Updated dependencies [bf665ad]
+- Updated dependencies [d11330c]
+  - @justifi/webcomponents@6.7.0
+
+## 1.1.8
+
+### Patch Changes
+
+- Updated dependencies [7235e5d]
+  - @justifi/webcomponents@6.6.0
+
+## 1.1.7
+
+### Patch Changes
+
+- Updated dependencies [c2f52d9]
+  - @justifi/webcomponents@6.5.0
+
+## 1.1.6
+
+### Patch Changes
+
+- Updated dependencies [5c8afbd]
+  - @justifi/webcomponents@6.4.3
+
+## 1.1.5
+
+### Patch Changes
+
+- Updated dependencies [89f026c]
+  - @justifi/webcomponents@6.4.2
+
+## 1.1.4
+
+### Patch Changes
+
+- Updated dependencies [3e2ca85]
+  - @justifi/webcomponents@6.4.1
+
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @justifi/webcomponents@6.3.0
+
+## 1.1.2
+
+### Patch Changes
+
+- Updated dependencies [8c9af69]
+- Updated dependencies [2739dc0]
+- Updated dependencies [eabf7a4]
+  - @justifi/webcomponents@6.2.0
+
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.1.1
+
+## 1.1.0
+
+### Minor Changes
+
+- 9132704: Added the ability to enable cliks on account IDs on payout details for easier navigation control.
+
+### Patch Changes
+
+- Updated dependencies [c123348]
+- Updated dependencies [c123348]
+- Updated dependencies [9132704]
+- Updated dependencies [70404ea]
+- Updated dependencies [4aac018]
+  - @justifi/webcomponents@6.1.0
+
+## 1.0.28
+
+### Patch Changes
+
+- Updated dependencies [c1437c4]
+- Updated dependencies
+  - @justifi/webcomponents@6.0.5
+
+## 1.0.27
+
+### Patch Changes
+
+- Updated dependencies [58f9252]
+- Updated dependencies [88ff768]
+- Updated dependencies [7697ed7]
+- Updated dependencies [71ff15a]
+  - @justifi/webcomponents@6.0.4
+
+## 1.0.26
+
+### Patch Changes
+
+- Updated dependencies [19d9b05]
+- Updated dependencies [6784705]
+  - @justifi/webcomponents@6.0.2
+
+## 1.0.25
+
+### Patch Changes
+
+- Updated dependencies [9d0e83b]
+  - @justifi/webcomponents@5.7.7
+
+## 1.0.24
+
+### Patch Changes
+
+- Updated dependencies [e425859]
+- Updated dependencies [7099d91]
+- Updated dependencies [48af167]
+  - @justifi/webcomponents@5.7.6
+
+## 1.0.23
+
+### Patch Changes
+
+- Updated dependencies [ad59f97]
+  - @justifi/webcomponents@5.7.5
+
+## 1.0.22
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@5.7.4
+
+## 1.0.21
+
+### Patch Changes
+
+- Updated dependencies [fddf91e]
+  - @justifi/webcomponents@5.7.3
+
+## 1.0.20
+
+### Patch Changes
+
+- Updated dependencies [56b7253]
+  - @justifi/webcomponents@5.7.2
+
+## 1.0.19
+
+### Patch Changes
+
+- Updated dependencies [d3f1f73]
+- Updated dependencies [1b1f2a3]
+- Updated dependencies [c74544f]
+  - @justifi/webcomponents@5.7.1
+
+## 1.0.18
+
+### Patch Changes
+
+- Updated dependencies [7b4b871]
+- Updated dependencies [1019007]
+  - @justifi/webcomponents@5.7.0
+
+## 1.0.17
+
+### Patch Changes
+
+- Updated dependencies [700fb4d]
+  - @justifi/webcomponents@5.6.1
+
+## 1.0.16
+
+### Patch Changes
+
+- Updated dependencies [5b16225]
+- Updated dependencies [811eefa]
+  - @justifi/webcomponents@5.6.0
+
+## 1.0.15
+
+### Patch Changes
+
+- Updated dependencies [97a2514]
+- Updated dependencies [0c00f63]
+- Updated dependencies [79cb8d7]
+- Updated dependencies [cbd1981]
+- Updated dependencies [1d298b0]
+- Updated dependencies [a661718]
+- Updated dependencies [a06cac1]
+- Updated dependencies [24b6637]
+  - @justifi/webcomponents@5.5.0
+
+## 1.0.14
+
+### Patch Changes
+
+- Updated dependencies [cff6ebe]
+  - @justifi/webcomponents@5.4.4
+
+## 1.0.13
+
+### Patch Changes
+
+- Updated dependencies [8b36dc5]
+- Updated dependencies [bd84820]
+  - @justifi/webcomponents@5.4.3
+
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies [1e592bd]
+  - @justifi/webcomponents@5.4.2
+
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies [2e88842]
+- Updated dependencies [21a47db]
+- Updated dependencies [40394dd]
+  - @justifi/webcomponents@5.4.1
+
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [1c7ae3e]
+  - @justifi/webcomponents@5.4.0
+
+## 1.0.9
+
+### Patch Changes
+
+- Updated dependencies [9f3e33b]
+- Updated dependencies [a2217b4]
+  - @justifi/webcomponents@5.3.6
+
+## 1.0.8
+
+### Patch Changes
+
+- Updated dependencies [6a62246]
+- Updated dependencies [b603433]
+- Updated dependencies [e61f36a]
+  - @justifi/webcomponents@5.3.5
+
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies [2c1248e]
+  - @justifi/webcomponents@5.3.4
+
+## 1.0.6
+
+### Patch Changes
+
+- Updated dependencies [6ef218e]
+- Updated dependencies [c39e6a2]
+- Updated dependencies [685bd08]
+- Updated dependencies [aa808c7]
+- Updated dependencies [8fba7cc]
+  - @justifi/webcomponents@5.3.3
+
+## 1.0.5
+
+### Patch Changes
+
+- Updated dependencies [eeca5f7]
+- Updated dependencies [f5696d9]
+  - @justifi/webcomponents@5.3.2
+
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@5.3.1
+
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [9a8c0eb]
+- Updated dependencies [dd9af3e]
+- Updated dependencies [e14badd]
+  - @justifi/webcomponents@5.3.0
+
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [73fa260]
+  - @justifi/webcomponents@5.2.0
+
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [607ce8f]
+- Updated dependencies [0d956c0]
+- Updated dependencies [be401fb]
+- Updated dependencies [f172279]
+- Updated dependencies [8a7ec70]
+- Updated dependencies [ec52599]
+- Updated dependencies [5e852d6]
+  - @justifi/webcomponents@5.2.0

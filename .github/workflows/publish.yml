@@ -1,0 +1,110 @@
+name: Publish packages
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      NPM_CONFIG_PROVENANCE: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.7.5
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Create .env file from secrets
+        shell: bash
+        run: |
+          echo "IFRAME_ORIGIN=${{ secrets.IFRAME_ORIGIN }}" >> .env
+          echo "PROXY_API_ORIGIN=${{ secrets.PROXY_API_ORIGIN }}" >> .env
+          echo "API_ORIGIN=${{ secrets.API_ORIGIN }}" >> .env
+
+      - name: Detect version type
+        id: version
+        run: |
+          VERSION=$(node -p "require('./packages/webcomponents/package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          if [[ "$VERSION" =~ -rc\.[0-9]+$ ]]; then
+            echo "is_rc=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_rc=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check if docs version exists on npm
+        if: steps.version.outputs.is_rc == 'false'
+        id: docs_check
+        run: |
+          DOCS_VERSION=$(node -p "require('./docs/package.json').version")
+          WEBCOMPONENTS_VERSION=$(node -p "require('./packages/webcomponents/package.json').version")
+          echo "docs_version=$DOCS_VERSION" >> $GITHUB_OUTPUT
+          echo "webcomponents_version=$WEBCOMPONENTS_VERSION" >> $GITHUB_OUTPUT
+          if npm view @justifi/webcomponents-docs@$DOCS_VERSION version 2>/dev/null; then
+            echo "docs_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "docs_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build all packages
+        run: pnpm build
+
+      - name: Publish packages via changesets
+        if: steps.version.outputs.is_rc == 'false'
+        run: pnpm release
+
+      - name: Publish RC to npm with next tag
+        if: steps.version.outputs.is_rc == 'true'
+        working-directory: ./packages/webcomponents
+        run: npm publish --tag next --access public --provenance
+
+      - name: Trigger public-docs workflow (if docs was published)
+        if: steps.version.outputs.is_rc == 'false' && steps.docs_check.outputs.docs_exists == 'false'
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.JUSTIFI_MACHINA_GITHUB_TOKEN }}
+          repository: justifi-tech/public-docs
+          event-type: webcomponents-docs-published
+          # webcomponents_version and docs_version to be consumed by the public-docs workflow
+          client-payload: |
+            {
+              "webcomponents_version": "${{ steps.docs_check.outputs.webcomponents_version }}",
+              "docs_version": "${{ steps.docs_check.outputs.docs_version }}"
+            }
+
+      - name: Notify slack of new release
+        if: success()
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.JUSTIFI_SLACKBOT_TOKEN }}
+          payload: |
+            channel: engineering-notifications
+            text: ":package: Published @justifi/webcomponents v${{ steps.version.outputs.version }}"
+            attachments:
+              - color: "good"
+                fields:
+                  - title: "Version"
+                    value: "v${{ steps.version.outputs.version }}"
+                    short: true
+                  - title: "Type"
+                    value: "${{ steps.version.outputs.is_rc == 'true' && 'Release Candidate' || 'Release' }}"
+                    short: true
+                  - title: "Published by"
+                    value: "${{ github.actor }}"
+                    short: true
+                  - title: "Run"
+                    value: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    short: false
+                footer: "GitHub Actions"
+                footer_icon: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"

@@ -1,0 +1,18 @@
+{
+  "id": "dp_pastdue123456789",
+  "type": "dispute",
+  "page_info": null,
+  "data": {
+    "id": "dp_pastdue123456789",
+    "payment_id": "py_1A2B3C4D5E6F7G8H9I0J",
+    "account_id": "acc_1A2B3C4D5E6F7G8H9I0J",
+    "amount": 12000,
+    "currency": "USD",
+    "due_date": "2024-01-20",
+    "reason": "general",
+    "status": "needs_response",
+    "metadata": null,
+    "created_at": "2024-01-05T16:09:20.747Z",
+    "updated_at": "2024-01-05T16:09:20.747Z"
+  }
+}

@@ -1,0 +1,89 @@
+import { object, string } from 'yup';
+import { addressSchemaUSA, addressSchemaCAN } from './business-address-schema';
+import {
+  dobValidation,
+  emailValidation,
+  identityNameValidation,
+  identityTitleValidation,
+  phoneValidation,
+  ssnValidation,
+  makeIdentityNumberValidation,
+  ownershipPercentageValidation,
+  makeOwnershipPercentageValidation,
+} from './schema-validations';
+import { CountryCode } from '../../../utils/country-codes';
+
+// Internal USA schemas
+const schemaUSA = (role: string) =>
+  object({
+    name: identityNameValidation.required(`Enter ${role} name`),
+    title: identityTitleValidation.nullable(),
+    email: emailValidation.nullable(),
+    phone: phoneValidation.nullable(),
+    dob_full: dobValidation(role).nullable(),
+    ssn_last4: string().nullable(),
+    identification_number: ssnValidation.nullable(),
+    ownership_percentage: ownershipPercentageValidation.nullable(),
+    address: addressSchemaUSA(true),
+  });
+
+const strictSchemaUSA = (role: string) =>
+  object({
+    name: identityNameValidation.required(`Enter ${role} name`),
+    title: identityTitleValidation.required(`Enter ${role} title`),
+    email: emailValidation.required(`Enter ${role} email`),
+    phone: phoneValidation.required('Enter phone number'),
+    dob_full: dobValidation(role).required('Enter date of birth'),
+    ssn_last4: string().nullable(),
+    // ssn required unless last4 provided (handled inside ssnValidation)
+    identification_number: ssnValidation,
+    ownership_percentage: role === 'owner'
+      ? makeOwnershipPercentageValidation(25).required('Enter ownership percentage')
+      : ownershipPercentageValidation.nullable(),
+    address: addressSchemaUSA(false),
+  });
+
+// Internal CAN schemas
+const schemaCAN = (role: string) =>
+  object({
+    name: identityNameValidation.required(`Enter ${role} name`),
+    title: identityTitleValidation.nullable(),
+    email: emailValidation.nullable(),
+    phone: phoneValidation.nullable(),
+    dob_full: dobValidation(role).nullable(),
+    ssn_last4: string().nullable(),
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN).nullable(),
+    ownership_percentage: ownershipPercentageValidation.nullable(),
+    address: addressSchemaCAN(true),
+  });
+
+const strictSchemaCAN = (role: string) =>
+  object({
+    name: identityNameValidation.required(`Enter ${role} name`),
+    title: identityTitleValidation.required(`Enter ${role} title`),
+    email: emailValidation.required(`Enter ${role} email`),
+    phone: phoneValidation.required('Enter phone number'),
+    dob_full: dobValidation(role).required('Enter date of birth'),
+    ssn_last4: string().nullable(),
+    identification_number: makeIdentityNumberValidation(CountryCode.CAN).nullable(),
+    ownership_percentage: role === 'owner'
+      ? makeOwnershipPercentageValidation(25).required('Enter ownership percentage')
+      : ownershipPercentageValidation.nullable(),
+    address: addressSchemaCAN(false),
+  });
+
+export const identitySchemaUSA = (role: string, allowOptionalFields?: boolean) =>
+  allowOptionalFields ? schemaUSA(role) : strictSchemaUSA(role);
+
+export const identitySchemaCAN = (role: string, allowOptionalFields?: boolean) =>
+  allowOptionalFields ? schemaCAN(role) : strictSchemaCAN(role);
+
+// For backward compatibility, default to USA
+export const identitySchema = (role: string, allowOptionalFields?: boolean) =>
+  identitySchemaUSA(role, allowOptionalFields);
+
+// Country-keyed mapping
+export const identitySchemaByCountry = {
+  [CountryCode.USA]: identitySchemaUSA,
+  [CountryCode.CAN]: identitySchemaCAN,
+} as const;

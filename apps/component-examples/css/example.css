@@ -1,0 +1,38 @@
+/* Start: Example purposes only */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.two-column-layout {
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.two-column-layout>.column-preview {
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 50vw;
+  padding: 20px;
+}
+
+.two-column-layout>.column-output {
+  background: white;
+  border-left: 1px solid #ccc;
+  padding: 20px;
+  width: 50%;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+.list-component-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+/* End: example purposes only */

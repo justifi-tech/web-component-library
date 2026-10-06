@@ -1,0 +1,69 @@
+{
+  "id": 1,
+  "type": "onboarding",
+  "data": {
+    "account_type": "test",
+    "sub_account_id": "acc_xyz",
+    "platform_account_id": "acc_123",
+    "payload": {
+      "onboarding_version": "v1.0",
+      "business_details": {
+        "legal": {
+          "name": "Business 165",
+          "address_line1": "123 Example St",
+          "address_city": "Minneapolis",
+          "address_state": "MN",
+          "address_postal_code": "55555",
+          "address_country": "USA"
+        },
+        "doing_business_as": {
+          "name": "Best Business"
+        },
+        "url": "https://justifi.ai",
+        "type": "for_profit",
+        "structure": "sole_proprietorship",
+        "industry": "Big Business",
+        "tax_id": "884351551",
+        "phone": "6124011111",
+        "email": "business@justifi.ai"
+      },
+      "representative": {
+        "name": "Person Name",
+        "title": "President",
+        "email": "person.name@justifi.ai",
+        "dob_month": "01",
+        "dob_day": "01",
+        "dob_year": "1980",
+        "address_line1": "123 Example St",
+        "address_city": "Minneapolis",
+        "address_state": "MN",
+        "address_postal_code": "55555",
+        "address_country": "USA",
+        "phone": "6124011111",
+        "ssn_last4": "6789",
+        "is_owner": true
+      },
+      "owners": [
+        {
+          "name": "Person Name",
+          "email": "person.name@justifi.ai"
+        }
+      ],
+      "bank_account": {
+        "bank_name": "Bank",
+        "account_nickname": "Test Bank",
+        "routing_number": "021000021",
+        "account_number": "1234567891",
+        "account_type": "checking",
+        "account_owner_name": "Person Name"
+      },
+      "terms_and_conditions": {
+        "accepted": true,
+        "ip": "72.211.73.132",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+      }
+    }
+  },
+  "page_info": "string"
+}
+

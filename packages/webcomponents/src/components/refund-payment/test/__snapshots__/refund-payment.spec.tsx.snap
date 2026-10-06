@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-refund-payment renders RefundLoading while paymentLoading is true 1`] = `
+<justifi-refund-payment class="body" style="display: block;">
+  <template shadowrootmode="open">
+    <style></style>
+    <div class="gap-5 row">
+      <div class="gap-3 row">
+        <div class="col-12">
+          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%; height: 40px;"></div>
+        </div>
+      </div>
+      <div class="gap-3 row">
+        <div class="col-12">
+          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%; height: 40px;"></div>
+        </div>
+      </div>
+      <div class="gap-3 row">
+        <div class="col-12">
+          <div aria-hidden="true" class="skeleton undefined" part="skeleton" style="width: 100%; height: 40px;"></div>
+        </div>
+      </div>
+    </div>
+  </template>
+</justifi-refund-payment>
+`;

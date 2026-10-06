@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-checkout renders loading 1`] = `
+<justifi-checkout class="body" style="display: block;">
+  <!---->
+  <style></style>
+  <justifi-modular-checkout>
+    <div class="gy-3 jfi-checkout-core row">
+      <div class="col-12" part="checkout-summary">
+        <justifi-header class="fs-5 fw-bold pb-3" level="h2" text="Summary"></justifi-header>
+        <section>
+          <justifi-checkout-summary></justifi-checkout-summary>
+        </section>
+      </div>
+      <div class="col-12 mt-4"></div>
+      <div class="col-12 mt-4">
+        <justifi-header class="fs-5 fw-bold pb-3" level="h2" text="Payment"></justifi-header>
+        <justifi-header class="fs-6 fw-bold lh-lg" level="h3" text="Select payment type"></justifi-header>
+        <div class="d-flex flex-column">
+          <section>
+            <div>
+              <justifi-saved-payment-methods></justifi-saved-payment-methods>
+              <justifi-tokenize-payment-method accountid="" hidesubmitbutton=""></justifi-tokenize-payment-method>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="mt-4">
+        <justifi-button text="Pay" type="submit" variant="primary"></justifi-button>
+      </div>
+    </div>
+  </justifi-modular-checkout>
+</justifi-checkout>
+`;

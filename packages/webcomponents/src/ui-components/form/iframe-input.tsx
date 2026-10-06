@@ -1,0 +1,177 @@
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from "@stencil/core";
+import iFrameResize from 'iframe-resizer/js/iframeResizer';
+import { FrameCommunicationService } from "../../utils/frame-comunication-service";
+import { FormControlErrorText } from "./form-helpers/form-control-error-text";
+import packageJson from '../../../package.json';
+import { iframeInputStyles } from "./iframe-input-styles-state";
+import { MessageEventType } from "../../components/checkout/message-event-types";
+import { input, inputFocused, inputInvalid, inputInvalidAndFocused, label } from "../../styles/parts";
+import { IPaymentMethodMetadata } from "../../api/PaymentMethod";
+
+@Component({
+  tag: "iframe-input",
+})
+export class IframeInput {
+  private iframeElement!: HTMLIFrameElement;
+  private frameService: FrameCommunicationService;
+
+  @Element() el: HTMLElement;
+
+  @Event() iframeLoaded: EventEmitter<void>;
+
+  @State() isFocused: boolean = false;
+  @State() isValid: boolean = true;
+  @State() errorText: string;
+
+  @Prop() inputId!: string;
+  @Prop() label!: string;
+  @Prop() iframeOrigin!: string;
+
+  disconnectedCallback() {
+    this.frameService.removeMessageListener(this.dispatchMessageEvent);
+  }
+
+  @Method()
+  async validate(): Promise<any> {
+    const response = await this.frameService
+      .postMessageWithResponseListener(MessageEventType.validate);
+
+    this.isValid = response.isValid;
+
+    this.errorText = response.error.message;
+
+    return response;
+  }
+
+  @Method()
+  async tokenize(
+    clientId: string,
+    paymentMethodMetadata: IPaymentMethodMetadata,
+    account?: string,
+  ) {
+    return this.frameService.postMessageWithResponseListener(MessageEventType.tokenize, {
+      clientId,
+      paymentMethodMetadata,
+      account,
+      componentVersion: packageJson.version,
+    });
+  }
+
+  @Method()
+  async reload() {
+    this.iframeElement.src = this.iframeSrc;
+  }
+
+  private initializeFrameCommunicationService() {
+    this.frameService = new FrameCommunicationService(
+      this.iframeElement, this.iframeOrigin
+    );
+    this.frameService?.addMessageListener(this.dispatchMessageEvent);
+  }
+
+  private dispatchMessageEvent = (event: MessageEvent) => {
+    const { eventType, data } = event.data;
+    if (data?.id !== this.inputId) {
+      return;
+    }
+
+    if (eventType === 'focused') {
+      this.isFocused = true;
+    }
+
+    if (eventType === 'blurred') {
+      this.isFocused = false;
+    }
+  }
+
+  private get part() {
+    if (this.isFocused && !this.isValid) {
+      return inputInvalidAndFocused;
+    }
+
+    if (!this.isValid) {
+      return inputInvalid;
+    }
+
+    if (this.isFocused) {
+      return inputFocused;
+    }
+
+    return input;
+  }
+
+  private get style() {
+    if (this.isFocused) {
+      if (!this.isValid) {
+        return iframeInputStyles.focusedAndInvalid;
+      }
+      return iframeInputStyles.focused;
+    }
+    return null;
+  }
+
+  private get urlParams() {
+    // map the iframeInputStyles.fontStyles properties to the urlParams 
+    // and encode each property with btoa
+    const encodedObject = Object.fromEntries(
+      Object
+        .entries(iframeInputStyles.fontStyles)
+        .map(([key, value]) => [key, btoa(String(value))])
+    );
+
+    const params = new URLSearchParams(encodedObject).toString();
+
+    return params;
+  }
+
+  private get iframeSrc() {
+    return `${this.iframeOrigin}?${this.urlParams}`;
+  }
+
+  render() {
+    return (
+      <Host class="form-group d-flex flex-column">
+        <div style={{
+          visibility: this.iframeLoaded ? 'visible' : 'hidden',
+          height: this.iframeLoaded ? 'auto' : '0',
+        }}>
+          <label
+            class="form-label"
+            htmlFor=""
+            part={label}
+          >
+            {this.label || ''}
+          </label>
+          <div
+            class={`p-0 d-flex form-control ${this.isValid ? '' : 'is-invalid'}`}
+            part={this.part}
+            style={{
+              ...this.style,
+              overflow: 'hidden',
+            }}
+          >
+            <iframe
+              id={this.inputId}
+              name={this.inputId}
+              src={this.iframeSrc}
+              ref={el => {
+                this.iframeElement = el as HTMLIFrameElement;
+                this.initializeFrameCommunicationService();
+              }}
+              width="100%"
+              onLoad={() => {
+                iFrameResize({
+                  log: false,
+                  onResized: () => {
+                    this.iframeLoaded.emit();
+                  }
+                }, this.iframeElement);
+              }}
+            />
+          </div>
+          <FormControlErrorText errorText={this.errorText} name={this.inputId} />
+        </div>
+      </Host>
+    );
+  }
+}

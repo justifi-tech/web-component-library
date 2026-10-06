@@ -1,0 +1,177 @@
+{
+  "id": null,
+  "type": "array",
+  "page_info": {
+    "has_previous": false,
+    "has_next": false,
+    "start_cursor": "mockCursorPage1",
+    "end_cursor": "mockCursorPage2",
+    "amount": 4
+  },
+  "data": [
+    {
+      "id": "tord_ABCD1234",
+      "business_id": "biz_0987",
+      "sub_account_id": "acc_5678",
+      "provider": "verifone",
+      "order_type": "boarding_only",
+      "order_status": "submitted",
+      "terminals": [
+        {
+          "terminal_id": "tmn_QWER",
+          "terminal_did": "11112222",
+          "model_name": "v400"
+        }
+      ],
+      "created_at": "2025-01-02T10:30:00Z",
+      "updated_at": "2025-01-02T10:45:00Z"
+    },
+    {
+      "id": "tord_WXYZ5678",
+      "business_id": "biz_1234",
+      "sub_account_id": "acc_4321",
+      "provider": "verifone",
+      "order_type": "boarding_shipping",
+      "order_status": "completed",
+      "terminals": [
+        {
+          "terminal_id": "tmn_ASDF",
+          "terminal_did": "33334444",
+          "model_name": "e355"
+        },
+        {
+          "terminal_id": "tmn_ZXCV",
+          "terminal_did": "55556666",
+          "model_name": "e355"
+        },
+        {
+          "terminal_id": "tmn_QWAS",
+          "terminal_did": "77778888",
+          "model_name": "e355"
+        },
+        {
+          "terminal_id": "tmn_QWAS",
+          "terminal_did": "99990000",
+          "model_name": "e355"
+        }
+      ],
+      "created_at": "2025-02-10T09:20:00Z",
+      "updated_at": "2025-02-10T09:25:00Z"
+    },
+    {
+      "id": "tord_DEF55468789",
+      "business_id": "biz_5678",
+      "sub_account_id": "acc_7890",
+      "provider": "verifone",
+      "order_type": "boarding_shipping",
+      "order_status": "created",
+      "terminals": [
+        {
+          "terminal_id": "tmn_TT99",
+          "terminal_did": "99887766",
+          "model_name": "v400"
+        },
+        {
+          "terminal_id": "tmn_YYZZ",
+          "terminal_did": "55443322",
+          "model_name": "v400"
+        }
+      ],
+      "created_at": "2025-03-11T17:00:00Z",
+      "updated_at": "2025-03-11T17:05:00Z"
+    },
+    {
+      "id": "tord_GHI22168225",
+      "business_id": "biz_7777",
+      "sub_account_id": "acc_6666",
+      "provider": "verifone",
+      "order_type": "boarding_only",
+      "order_status": "completed",
+      "terminals": [
+        {
+          "terminal_id": "tmn_XXYY",
+          "terminal_did": "55667788",
+          "model_name": "e355"
+        },
+        {
+          "terminal_id": "tmn_AABB",
+          "terminal_did": "99887766",
+          "model_name": "e355"
+        },
+        {
+          "terminal_id": "tmn_CCDD",
+          "terminal_did": "22334455",
+          "model_name": "e355"
+        },
+        {
+          "terminal_id": "tmn_EEFF",
+          "terminal_did": "66778899",
+          "model_name": "e355"
+        }
+      ],
+      "created_at": "2025-04-05T11:50:00Z",
+      "updated_at": "2025-04-05T12:10:00Z"
+    },
+    {
+      "id": "tord_JKL12345678",
+      "business_id": "biz_4444",
+      "sub_account_id": "acc_3333",
+      "provider": "verifone",
+      "order_type": "boarding_shipping",
+      "order_status": "canceled",
+      "terminals": [
+        {
+          "terminal_id": "tmn_ZZAA",
+          "terminal_did": "11223344",
+          "model_name": "v400"
+        },
+        {
+          "terminal_id": "tmn_BBCC",
+          "terminal_did": "55667788",
+          "model_name": "v400"
+        }
+      ],
+      "created_at": "2025-05-15T14:00:00Z",
+      "updated_at": "2025-05-15T14:20:00Z"
+    },
+    {
+      "id": "tord_PQR12345678",
+      "business_id": "biz_8888",
+      "sub_account_id": "acc_2222",
+      "provider": "verifone",
+      "order_type": "boarding_shipping",
+      "order_status": "in_progress",
+      "terminals": [
+        {
+          "terminal_id": "tmn_QWERTY",
+          "terminal_did": "22334455",
+          "model_name": "e355"
+        }
+      ],
+      "created_at": "2025-06-01T08:00:00Z",
+      "updated_at": "2025-06-01T08:15:00Z"
+    },
+    {
+      "id": "tord_MNO98765432",
+      "business_id": "biz_2222",
+      "sub_account_id": "acc_1111",
+      "provider": "verifone",
+      "order_type": "boarding_only",
+      "order_status": "on_hold",
+      "terminals": [
+        {
+          "terminal_id": "tmn_QWERTY",
+          "terminal_did": "22334455",
+          "model_name": "e355"
+        },
+        {
+          "terminal_id": "tmn_BBCC",
+          "terminal_did": "44556677",
+          "model_name": "e355"
+        }
+      ],
+      "created_at": "2025-06-20T08:30:00Z",
+      "updated_at": "2025-06-20T08:45:00Z"
+    }
+  ]
+}

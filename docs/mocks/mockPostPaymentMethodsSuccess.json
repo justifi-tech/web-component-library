@@ -1,0 +1,34 @@
+{
+  "id": "pm_123xyz",
+  "type": "payment_method",
+  "data": {
+    "signature": "3aGWnUznQ",
+    "customer_id": "cust_123abc",
+    "account_id": "acc_123",
+    "status": "valid",
+    "invalid_reason": "INVALID_ACCOUNT_NUMBER",
+    "card": {
+      "id": "pm_123xyz",
+      "name": "Lindsay Whalen",
+      "acct_last_four": 1111,
+      "brand": "visa",
+      "token": "pm_123xyz",
+      "month": "5",
+      "year": "2042",
+      "metadata": {
+        "new": "info"
+      },
+      "address_line1_check": "pass",
+      "address_postal_code_check": "pass",
+      "bin_details": {
+        "type": "Credit",
+        "card_brand": "Visa",
+        "card_class": "Consumer",
+        "country": "United States of America",
+        "issuer": "WELLS FARGO BANK, N.A.",
+        "funding_source": "Credit"
+      }
+    }
+  },
+  "page_info": "string"
+}

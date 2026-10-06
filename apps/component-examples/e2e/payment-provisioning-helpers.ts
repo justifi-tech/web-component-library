@@ -1,0 +1,447 @@
+import type { Page } from '@playwright/test';
+import { expect } from '@playwright/test';
+import path from 'path';
+
+/** Path to minimal image fixture for bank account document upload */
+export const VOIDED_CHECK_FIXTURE = path.join(
+  __dirname,
+  'fixtures',
+  'voided-check.png',
+);
+
+/** Test data for USA payment provisioning flow */
+export const TEST_BUSINESS_DATA = {
+  usa: {
+    coreInfo: {
+      /** Fresh each read so parallel/serial E2E runs do not reuse the same legal name. */
+      get legal_name() {
+        return `Acme Test Corp ${Date.now()}`;
+      },
+      doing_business_as: 'Acme',
+      classification: 'limited',
+      date_of_incorporation: '2020-01-01',
+      industry: 'Software',
+      tax_id: '941074845',
+      website_url: 'https://acme-test.com',
+      email: 'test@acme-test.com',
+      phone: '6125551234',
+    },
+    legalAddress: {
+      line1: '123 Main St',
+      city: 'Minneapolis',
+      state: 'MN',
+      postal_code: '55114',
+    },
+    additionalQuestions: {
+      business_revenue: '100000',
+      business_payment_volume: '50000',
+      business_average_transaction_amount: '100',
+      business_when_service_received: 'Within 7 days',
+    },
+    representative: {
+      name: 'Jane Doe',
+      title: 'CEO',
+      email: 'jane@acme-test.com',
+      phone: '6125551234',
+      dob_full: '1980-01-15',
+      identification_number: '078051120',
+      address: {
+        line1: '456 Rep St',
+        city: 'Minneapolis',
+        state: 'MN',
+        postal_code: '55114',
+      },
+    },
+    owner: {
+      name: 'Robert Owner',
+      title: 'Partner',
+      email: 'bob.owner@acme-test.com',
+      phone: '6125559991',
+      dob_full: '1983-07-22',
+      identification_number: '217651516',
+      ownership_percentage: '100',
+      address: {
+        line1: '100 Owner Ln',
+        city: 'Duluth',
+        state: 'MN',
+        postal_code: '55802',
+      },
+    },
+    bankAccount: {
+      bank_name: 'Test Bank',
+      nickname: 'Main Account',
+      account_owner_name: 'Acme Test Corp',
+      account_type: 'checking',
+      routing_number: '110000000',
+      account_number: '000123456789',
+    },
+  },
+  can: {
+    coreInfo: {
+      get legal_name() {
+        return `Acme Canada Inc ${Date.now()}`;
+      },
+      doing_business_as: 'Acme CA',
+      classification: 'limited',
+      date_of_incorporation: '2020-01-01',
+      industry: 'Software',
+      tax_id: '862397791',
+      website_url: 'https://acme-ca-test.com',
+      email: 'test@acme-ca-test.com',
+      phone: '4165551234',
+    },
+    legalAddress: {
+      line1: '123 King St W',
+      city: 'Toronto',
+      province: 'ON',
+      postal_code: 'M5H 1J9',
+    },
+    additionalQuestions: {
+      business_revenue: '100000',
+      business_payment_volume: '50000',
+      business_average_transaction_amount: '100',
+      business_when_service_received: 'Within 7 days',
+    },
+    representative: {
+      name: 'Jean Tremblay',
+      title: 'CEO',
+      email: 'jean@acme-ca-test.com',
+      phone: '4165551234',
+      dob_full: '1980-01-15',
+      identification_number: '046454286',
+      address: {
+        line1: '456 Bay St',
+        city: 'Toronto',
+        province: 'ON',
+        postal_code: 'M5J 2T3',
+      },
+    },
+    owner: {
+      name: 'Jean Tremblay',
+      title: 'Director',
+      email: 'jean@acme-ca-test.com',
+      phone: '4165551234',
+      dob_full: '1980-01-15',
+      identification_number: '046454286',
+      ownership_percentage: '100',
+      address: {
+        line1: '200 Owner Ave',
+        city: 'Toronto',
+        province: 'ON',
+        postal_code: 'M5V 2T6',
+      },
+    },
+    bankAccount: {
+      bank_name: 'Test Bank CA',
+      nickname: 'Main Account CA',
+      account_owner_name: 'Acme Canada Inc',
+      account_type: 'checking',
+      account_number: '000123456789',
+      institution_number: '001',
+      transit_number: '12345',
+    },
+  },
+};
+
+export type CoreInfoData = (typeof TEST_BUSINESS_DATA.usa)['coreInfo'];
+export type LegalAddressData = (typeof TEST_BUSINESS_DATA.usa)['legalAddress'];
+export type LegalAddressDataCAN = (typeof TEST_BUSINESS_DATA.can)['legalAddress'];
+export type AdditionalQuestionsData =
+  (typeof TEST_BUSINESS_DATA.usa)['additionalQuestions'];
+export type RepresentativeData = (typeof TEST_BUSINESS_DATA.usa)['representative'];
+export type RepresentativeDataCAN = (typeof TEST_BUSINESS_DATA.can)['representative'];
+export type OwnerData = (typeof TEST_BUSINESS_DATA.usa)['owner'];
+export type OwnerDataCAN = (typeof TEST_BUSINESS_DATA.can)['owner'];
+export type BankAccountData = (typeof TEST_BUSINESS_DATA.usa)['bankAccount'];
+export type BankAccountDataCAN = (typeof TEST_BUSINESS_DATA.can)['bankAccount'];
+
+export async function fillBusinessCoreInfo(
+  page: Page,
+  data: CoreInfoData,
+): Promise<void> {
+  await page.getByLabel('Business Name').waitFor({ state: 'visible', timeout: 15000 });
+  await page.getByLabel('Business Name').fill(data.legal_name);
+  await page.getByLabel('Doing Business As (DBA)').fill(data.doing_business_as);
+  await page.getByLabel('Business Classification').selectOption(data.classification);
+  await page.getByLabel('Date of Registration').fill(data.date_of_incorporation);
+  await page.getByLabel('Industry').fill(data.industry);
+  const comp = page.locator('justifi-payment-provisioning');
+  await comp.locator('input[name="tax_id"]').fill(data.tax_id);
+  await comp.locator('input[name="tax_id"]').dispatchEvent('input');
+  await page.getByLabel('Business Website URL').fill(data.website_url);
+  await page.getByLabel('Business Email Address').fill(data.email);
+  await comp.locator('input[name="phone"]').first().fill(data.phone);
+  await comp.locator('input[name="phone"]').first().dispatchEvent('input');
+}
+
+export async function fillLegalAddress(
+  page: Page,
+  data: LegalAddressData,
+): Promise<void> {
+  await page.getByLabel('Street Address').fill(data.line1);
+  await page.getByLabel('City').fill(data.city);
+  await page.getByLabel('State').selectOption(data.state);
+  await page.getByLabel('Zip Code').fill(data.postal_code);
+}
+
+export async function fillLegalAddressCAN(
+  page: Page,
+  data: LegalAddressDataCAN,
+): Promise<void> {
+  await page.getByLabel('Street Address').fill(data.line1);
+  await page.getByLabel('City').fill(data.city);
+  await page.getByLabel('Province').selectOption(data.province);
+  await page.getByLabel('Postal / Zip Code').fill(data.postal_code);
+}
+
+export async function fillAdditionalQuestions(
+  page: Page,
+  data: AdditionalQuestionsData,
+): Promise<void> {
+  await page
+    .getByLabel(
+      /What is your business' estimated annual revenue from its primary business activities/,
+    )
+    .fill(data.business_revenue);
+  await page
+    .getByLabel(
+      /What is your business' annual credit card & ACH volume anticipated to process/,
+    )
+    .fill(data.business_payment_volume);
+  await page
+    .getByLabel('What is your average transaction size?')
+    .fill(data.business_average_transaction_amount);
+  await page
+    .getByLabel(
+      /On average, how long after paying will your customers typically receive their goods or services/,
+    )
+    .selectOption(data.business_when_service_received);
+}
+
+export async function fillRepresentative(
+  page: Page,
+  data: RepresentativeData,
+): Promise<void> {
+  await page.getByLabel('Full Name').fill(data.name);
+  await page.getByLabel('Title').selectOption(data.title);
+  await page.getByLabel('Email Address').fill(data.email);
+  await page.getByLabel('Phone Number').fill(data.phone);
+  await page.getByLabel('Birth Date').fill(data.dob_full);
+  await page.getByLabel('SSN').fill(data.identification_number);
+  const addr = data.address;
+  await page.getByLabel('Street Address').fill(addr.line1);
+  await page.getByLabel('City').fill(addr.city);
+  await page.getByLabel('State').selectOption(addr.state);
+  await page.getByLabel('Zip Code').fill(addr.postal_code);
+}
+
+export async function fillRepresentativeCAN(
+  page: Page,
+  data: RepresentativeDataCAN,
+): Promise<void> {
+  await page.getByLabel('Full Name').fill(data.name);
+  await page.getByLabel('Title').selectOption(data.title);
+  await page.getByLabel('Email Address').fill(data.email);
+  await page.getByLabel('Phone Number').fill(data.phone);
+  await page.getByLabel('Birth Date').fill(data.dob_full);
+  await page.getByLabel('SIN').fill(data.identification_number);
+  const addr = data.address;
+  await page.getByLabel('Street Address').fill(addr.line1);
+  await page.getByLabel('City').fill(addr.city);
+  await page.getByLabel('Province').selectOption(addr.province);
+  await page.getByLabel('Postal / Zip Code').fill(addr.postal_code);
+}
+
+export async function fillOwners(
+  page: Page,
+  data: OwnerData | OwnerDataCAN,
+  options?: { representativeIsOwner?: boolean },
+): Promise<void> {
+  const repIsOwnerBanner = page.getByText(
+    'Is the representative of this business also an owner?',
+  );
+  if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner) {
+    await page.getByRole('button', { name: 'Yes' }).click();
+    await page.waitForTimeout(4000);
+    const comp = page.locator('justifi-payment-provisioning');
+    if ('ownership_percentage' in data && data.ownership_percentage) {
+      await comp.getByLabel('% of Ownership').fill(data.ownership_percentage);
+    }
+    return;
+  }
+  if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner === false) {
+    await page.getByRole('button', { name: 'No' }).click();
+    await page.waitForTimeout(500);
+  }
+
+  const comp = page.locator('justifi-payment-provisioning');
+  const nameInput = comp.getByLabel('Full Name');
+  await nameInput.waitFor({ state: 'visible', timeout: 15000 });
+  await nameInput.fill(data.name);
+
+  if ('title' in data && data.title !== undefined) {
+    await comp.getByLabel('Title').selectOption(data.title);
+    await comp.getByLabel('Email Address').fill(data.email);
+    await comp.getByLabel('Phone Number').fill(data.phone);
+    await comp.getByLabel('Birth Date').fill(data.dob_full);
+    const idLabel =
+      (await comp.getByLabel('SSN').count()) > 0 ? 'SSN' : 'SIN';
+    await comp.getByLabel(idLabel).fill(data.identification_number);
+    if ('ownership_percentage' in data && data.ownership_percentage) {
+      await comp.getByLabel('% of Ownership').fill(data.ownership_percentage);
+    }
+    const addr = data.address;
+    await comp.getByLabel('Street Address').fill(addr.line1);
+    await comp.getByLabel('City').fill(addr.city);
+    if ('state' in addr && addr.state) {
+      await comp.getByLabel('State').selectOption(addr.state);
+      await comp.getByLabel('Zip Code').fill(addr.postal_code);
+    } else if ('province' in addr && addr.province) {
+      await comp.getByLabel('Province').selectOption(addr.province);
+      await comp.getByLabel('Postal / Zip Code').fill(addr.postal_code);
+    }
+  } else {
+    await comp.getByLabel('Email Address').fill(data.email);
+  }
+}
+
+export async function fillBankAccountManual(
+  page: Page,
+  data: BankAccountData,
+): Promise<void> {
+  const manualButton = page.getByRole('button', {
+    name: 'Enter bank details manually (document upload required)',
+  });
+  if (await manualButton.isVisible()) {
+    await manualButton.click();
+    await page.waitForTimeout(500);
+  }
+  await page.getByLabel('Bank Name').fill(data.bank_name);
+  await page.getByLabel('Nickname').fill(data.nickname);
+  await page.getByLabel('Account Owner Name').fill(data.account_owner_name);
+  await page.getByLabel('Account Type').selectOption(data.account_type);
+  await page.getByLabel('Account Number').fill(data.account_number);
+  await page.getByLabel('Routing Number').fill(data.routing_number);
+}
+
+export async function fillBankAccountManualCAN(
+  page: Page,
+  data: BankAccountDataCAN,
+): Promise<void> {
+  const manualButton = page.getByRole('button', {
+    name: 'Enter bank details manually (document upload required)',
+  });
+  if (await manualButton.isVisible()) {
+    await manualButton.click();
+    await page.waitForTimeout(500);
+  }
+  await page.getByLabel('Bank Name').fill(data.bank_name);
+  await page.getByLabel('Nickname').fill(data.nickname);
+  await page.getByLabel('Account Owner Name').fill(data.account_owner_name);
+  await page.getByLabel('Account Type').selectOption(data.account_type);
+  await page.getByLabel('Account Number').fill(data.account_number);
+  await page.getByLabel('Institution Number').fill(data.institution_number);
+  await page.getByLabel('Transit Number').fill(data.transit_number);
+}
+
+export async function fillDocumentUpload(
+  page: Page,
+  voidedCheckPath: string = VOIDED_CHECK_FIXTURE,
+): Promise<void> {
+  const comp = page.locator('justifi-payment-provisioning');
+  await page.getByLabel('Document Category').selectOption('financial_document');
+  await page.waitForTimeout(300);
+  await page.getByLabel('Document Type').selectOption('voided_check');
+  await page.waitForTimeout(300);
+  const fileInput = comp.locator('input[name="document_file"]');
+  await fileInput.setInputFiles(voidedCheckPath);
+  // Wait for upload badge to show success
+  await expect(comp.locator('.badge.bg-success')).toBeVisible({ timeout: 15000 });
+}
+
+export async function fillDocumentUploadCAN(
+  page: Page,
+  fixturePath: string = VOIDED_CHECK_FIXTURE,
+): Promise<void> {
+  const comp = page.locator('justifi-payment-provisioning');
+  const categorySelect = page.getByLabel('Document Category');
+  const typeSelect = page.getByLabel('Document Type');
+  const fileInput = comp.locator('input[name="document_file"]');
+
+  async function uploadDoc(categoryValue: string, docType: string, expectedBadges: number) {
+    await categorySelect.selectOption(categoryValue);
+    await page.waitForTimeout(300);
+    await typeSelect.selectOption(docType);
+    await page.waitForTimeout(300);
+    await fileInput.setInputFiles(fixturePath);
+    await expect(comp.locator('.badge.bg-success')).toHaveCount(expectedBadges, { timeout: 15000 });
+  }
+
+  // Financial document
+  await uploadDoc('financial_document', 'voided_check', 1);
+  // Business document
+  await uploadDoc('business_document', 'articles_of_incorporation', 2);
+  // Identity Document - Group 1
+  await uploadDoc('personal_group1', 'passport', 3);
+  // Identity Document - Group 2
+  await uploadDoc('personal_group2', 'nexus_card', 4);
+}
+
+export async function acceptTerms(page: Page): Promise<void> {
+  await page.getByLabel('I agree to the terms and conditions').check();
+}
+
+export async function clickNext(page: Page): Promise<void> {
+  await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Next' }).click();
+}
+
+export async function clickPrevious(page: Page): Promise<void> {
+  await page.getByRole('button', { name: 'Previous' }).click();
+}
+
+export async function clickSubmit(page: Page): Promise<void> {
+  await page.getByRole('button', { name: 'Submit' }).click();
+}
+
+export async function waitForStep(
+  page: Page,
+  stepNumber: number,
+  timeout = 15000,
+): Promise<void> {
+  const stepSelectors: Record<number, string | string[]> = {
+    1: 'Business Name',
+    2: 'Street Address',
+    3: 'What is your business\' estimated annual revenue',
+    4: 'Full Name',
+    5: 'Is the representative of this business also an owner',
+    6: ['Bank Name', 'Enter bank details manually', 'Bank Account Info'],
+    7: 'Document Uploads',
+    8: 'I agree to the terms and conditions',
+  };
+  const selector = stepSelectors[stepNumber];
+  if (selector) {
+    const selectors = Array.isArray(selector) ? selector : [selector];
+    await expect(async () => {
+      for (const sel of selectors) {
+        if (await page.getByText(sel).isVisible()) return;
+      }
+      throw new Error(`None of steps selectors found: ${selectors.join(', ')}`);
+    }).toPass({ timeout });
+  }
+}
+
+export async function getStepCounter(page: Page): Promise<string> {
+  return page.evaluate(() => {
+    const el = document.querySelector('justifi-payment-provisioning');
+    const host = el?.shadowRoot;
+    if (!host) return '';
+    const walker = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
+    let node: Node | null;
+    while ((node = walker.nextNode())) {
+      const text = node.textContent?.trim() ?? '';
+      if (text.match(/Step \d+ of \d+/)) return text;
+    }
+    return '';
+  });
+}

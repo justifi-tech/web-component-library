@@ -1,0 +1,186 @@
+const express = require("express");
+const { API_PATHS } = require("../utils/api-paths");
+const { getToken, getWebComponentToken } = require("../utils/auth");
+const { startStandaloneServer } = require("../utils/standalone-server");
+
+const router = express.Router();
+
+async function makeCheckout(token) {
+  const checkoutEndpoint = `${process.env.API_ORIGIN}/${API_PATHS.CHECKOUT}`;
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
+  const paymentMethodGroupId = process.env.PAYMENT_METHOD_GROUP_ID;
+  const port = process.env.PORT || 3000;
+
+  const response = await fetch(checkoutEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      "Sub-Account": subAccountId,
+    },
+    body: JSON.stringify({
+      amount: 1799,
+      description: "One Chocolate Donut",
+      payment_method_group_id: paymentMethodGroupId,
+      origin_url: `localhost:${port}`,
+    }),
+  });
+  const responseJson = await response.json();
+  const { data } = responseJson;
+  return data;
+}
+
+router.get("/", async (req, res) => {
+  const subAccountId = process.env.SUB_ACCOUNT_ID;
+
+  const startDate = new Date();
+  const startDateString = startDate.toISOString().split("T")[0];
+
+  const endDate = new Date();
+  endDate.setFullYear(endDate.getFullYear() + 1);
+  const endDateString = endDate.toISOString().split("T")[0];
+
+  const insurance = {
+    primary_identity: {
+      state: "MN",
+      email: "test@justifi.tech",
+      first_name: "John",
+      last_name: "Doe",
+      postal_code: "55401",
+      country: "US",
+    },
+    policy_attributes: {
+      insurable_amount: 1000,
+      start_date: startDateString,
+      end_date: endDateString,
+      covered_identity: {
+        first_name: "John",
+        last_name: "Doe",
+      },
+    },
+  };
+
+  const token = await getToken();
+  const checkout = await makeCheckout(token);
+  const resources = [
+    `write:checkout:${checkout.id}`,
+    `write:tokenize:${subAccountId}`,
+  ];
+  const webComponentToken = await getWebComponentToken(token, resources);
+
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>JustiFi Checkout</title>
+        <script type="module" src="/scripts/webcomponents/webcomponents.esm.js"></script>
+        <link rel="stylesheet" href="/styles/theme.css">
+        <link rel="stylesheet" href="/styles/example.css">
+        <style>
+          body {
+            font-family: sans-serif;
+          }
+        </style>
+      </head>
+      <body>
+        <div id="component-wrapper" class="container" style="max-width: 800px; margin: auto; padding: 20px;">
+          <justifi-checkout
+            auth-token="${webComponentToken}"
+            checkout-id="${checkout.id}"
+          >
+            <div slot="insurance">
+              <justifi-season-interruption-insurance
+                primary-identity-first-name="${insurance.primary_identity.first_name}"
+                primary-identity-last-name="${insurance.primary_identity.last_name}"
+                primary-identity-state="${insurance.primary_identity.state}"
+                primary-identity-country="${insurance.primary_identity.country}"
+                primary-identity-postal-code="${insurance.primary_identity.postal_code}"
+                primary-identity-email-address="${insurance.primary_identity.email}"
+                policy-attributes-insurable-amount="${insurance.policy_attributes.insurable_amount}"
+                policy-attributes-start-date="${insurance.policy_attributes.start_date}"
+                policy-attributes-end-date="${insurance.policy_attributes.end_date}"
+                covered-identity-first-name="${insurance.policy_attributes.covered_identity.first_name}"
+                covered-identity-last-name="${insurance.policy_attributes.covered_identity.last_name}">
+              </justifi-season-interruption-insurance>
+            </div>
+          </justifi-checkout>
+          <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn btn-secondary" id="fill-billing-form">Fill Billing Form</button>
+            <button class="btn btn-secondary" id="validate-button">Validate</button>
+          </div>
+          <div id="output-pane" style="padding: 20px; border: 1px solid #ccc; margin-bottom: 20px;"><em>Checkout output will appear here...</em></div>
+          <div id="event-messages" style="padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9;">
+            <h3 style="margin-top: 0;">Event Messages</h3>
+            <div id="event-log" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: white;"><em>Event messages will appear here...</em></div>
+          </div>
+        </div>
+      </body>
+      <script>
+        const justifiCheckout = document.querySelector('justifi-checkout');
+        const fillBillingFormButton = document.getElementById('fill-billing-form');
+        const validateButton = document.getElementById('validate-button');
+
+        fillBillingFormButton.addEventListener('click', () => {
+          justifiCheckout.fillBillingForm({
+            name: 'John Doe',
+            address_line1: '123 Main St',
+            address_city: 'Anytown',
+            address_state: 'CA',
+            address_postal_code: '12345',
+          });
+        });
+
+        validateButton.addEventListener('click', async () => {
+          const isValid = await justifiCheckout.validate();
+          console.log('isValid', isValid);
+        });
+
+        function writeOutputToPage(event) {
+          document.getElementById('output-pane').innerHTML = '<code><pre>' + JSON.stringify(event.detail, null, 2) + '</pre></code>';
+        }
+
+        function logEventMessage(eventType, eventData) {
+          const timestamp = new Date().toLocaleTimeString();
+          const eventLog = document.getElementById('event-log');
+          const eventMessage = document.createElement('div');
+          eventMessage.style.cssText = 'margin-bottom: 10px; padding: 8px; border-left: 3px solid #007bff; background-color: #f8f9fa;';
+          eventMessage.innerHTML =
+            '<strong>[' + timestamp + '] ' + eventType + ':</strong><br>' +
+            '<code style="font-size: 12px;">' + JSON.stringify(eventData, null, 2) + '</code>';
+
+          // Clear the initial message if it's still there
+          if (eventLog.innerHTML.includes('Event messages will appear here...')) {
+            eventLog.innerHTML = '';
+          }
+
+          eventLog.appendChild(eventMessage);
+          eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll to bottom
+        }
+
+        justifiCheckout.addEventListener('submit-event', (event) => {
+          console.log(event);
+          writeOutputToPage(event);
+          logEventMessage('submit-event', event.detail);
+        });
+
+        justifiCheckout.addEventListener('error-event', (event) => {
+          console.log(event);
+          writeOutputToPage(event);
+          logEventMessage('error-event', event.detail);
+        });
+
+        justifiCheckout.addEventListener('payment-method-changed', (event) => {
+          console.log(event);
+          writeOutputToPage(event);
+          logEventMessage('payment-method-changed', event.detail);
+        });
+      </script>
+    </html>
+  `);
+});
+
+module.exports = router;
+
+if (require.main === module) {
+  startStandaloneServer(router);
+}

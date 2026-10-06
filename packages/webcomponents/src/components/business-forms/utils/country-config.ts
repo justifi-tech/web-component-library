@@ -1,0 +1,62 @@
+import { CountryCode } from '../../../utils/country-codes';
+import StateOptions from '../../../utils/state-options';
+import ProvinceOptions from '../../../utils/province-options';
+import { businessClassificationOptions } from './business-form-options';
+
+export const countryLabels = {
+	USA: {
+		stateLabel: 'State',
+		postalLabel: 'Zip Code',
+		idNumberLabel: 'SSN',
+		idNumberLabelOptional: 'SSN (optional)',
+		identityHelpText: 'Enter your full Social Security Number. It is required for Federal OFAC check.',
+		taxIdLabel: 'Tax ID (EIN or SSN)',
+		taxIdLabelOptional: '',
+		taxIdHelpText: "Employer Identification Numbers (EINs) are nine digits. The federal tax identification number/EIN issued to you by the IRS. It can be found on your tax returns. Enter value without dashes.",
+	},
+	CAN: {
+		stateLabel: 'Province / State',
+		postalLabel: 'Postal / Zip Code',
+		idNumberLabel: 'SIN',
+		idNumberLabelOptional: 'SIN (optional)',
+		identityHelpText: 'Enter your full Social Insurance Number.',
+		taxIdLabel: 'Business Number (BN)',
+		taxIdLabelOptional: 'Business Number (BN) (optional)',
+		taxIdHelpText: 'Business Numbers (BN) are nine digits. Enter value without spaces or dashes.',
+	},
+} as const;
+
+const provinceAndStateOptions = [
+	{ label: 'Choose province / state', value: '' },
+	...ProvinceOptions.filter(o => o.value !== ''),
+	...StateOptions.filter(o => o.value !== ''),
+];
+
+export const countryOptions = {
+	USA: {
+		stateOptions: StateOptions,
+	},
+	CAN: {
+		stateOptions: provinceAndStateOptions,
+	},
+};
+
+export const countryValidation = {
+	USA: {
+		postalRegex: /^[0-9]{5}(-[0-9]{4})?$/,
+		identityDigits: 9,
+		taxIdDigits: 9,
+	},
+	CAN: {
+		postalRegex: /^([A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d|[0-9]{5}(-[0-9]{4})?)$/,
+		identityDigits: 9,
+		taxIdDigits: 9,
+	},
+} as const;
+
+export const getStateValues = (country: CountryCode): string[] =>
+	(countryOptions[country].stateOptions || []).map((o: any) => o.value);
+
+// Business structures (placeholder for CAN duplicates USA for now)
+export const businessClassificationOptionsUSA = businessClassificationOptions;
+export const businessClassificationOptionsCAN = businessClassificationOptions;

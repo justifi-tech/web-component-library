@@ -1,0 +1,97 @@
+jest.mock('../../../../ui-components/styled-host/styled-host.css', () => '');
+
+import { h } from '@stencil/core';
+import { newSpecPage } from '@stencil/core/testing';
+import { JustifiSeasonInterruptionInsurance } from '../justifi-season-interruption-insurance';
+import { insuranceValuesStore, insuranceErrorsStore } from '../../insurance-state';
+import { checkoutStore } from '../../../../store/checkout.store';
+
+describe('justifi-season-interruption-insurance', () => {
+  beforeEach(() => insuranceValuesStore.dispose());
+  beforeEach(() => insuranceErrorsStore.dispose());
+
+  it('should display loading state correctly', async () => {
+    const page = await newSpecPage({
+      components: [JustifiSeasonInterruptionInsurance],
+      template: () => <justifi-season-interruption-insurance authToken="123" policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('loads and sets the quote to state correctly', async () => {
+    const page = await newSpecPage({
+      components: [JustifiSeasonInterruptionInsurance],
+      template: () => <justifi-season-interruption-insurance authToken="123" policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('should emit error event when fetch fails', async () => {
+    const errorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [JustifiSeasonInterruptionInsurance],
+      template: () => <justifi-season-interruption-insurance authToken="" onError-event={errorSpy} policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
+    });
+
+    await page.waitForChanges();
+    await new Promise(resolve => setTimeout(resolve, 100)); // Wait for async operations
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: {
+          errorCode: 'missing-props',
+          message: 'Missing authToken',
+          severity: 'error',
+        }
+      })
+    );
+  });
+
+  it('validates that a selection was made', async () => {
+    const page = await newSpecPage({
+      components: [JustifiSeasonInterruptionInsurance],
+      template: () => <justifi-season-interruption-insurance authToken="123" policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
+    });
+
+    await page.waitForChanges();
+
+    const instance: any = page.rootInstance;
+    const { isValid } = await instance.validate();
+
+    await page.waitForChanges();
+
+    expect(isValid).toBe(true); // The validation should pass when no selection is made initially
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('does not render and logs a warning when insurance is disabled', async () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => { });
+    checkoutStore.insuranceEnabled = false;
+
+    const page = await newSpecPage({
+      components: [JustifiSeasonInterruptionInsurance],
+      template: () => <justifi-season-interruption-insurance authToken="123" policyAttributesInsurableAmount={1000} primaryIdentityCountry="US" primaryIdentityEmailAddress="test@example.com" primaryIdentityFirstName="John" primaryIdentityLastName="Doe" primaryIdentityState="CA" primaryIdentityPostalCode="12345" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      '[justifi-season-interruption-insurance] Insurance is disabled for this checkout (payment_settings.insurance_payments=false).'
+    );
+
+    // Should render no content when disabled
+    expect(page.root.shadowRoot?.innerHTML).toBe('');
+
+    warnSpy.mockRestore();
+
+    // reset global store for other tests
+    checkoutStore.insuranceEnabled = undefined;
+  });
+});

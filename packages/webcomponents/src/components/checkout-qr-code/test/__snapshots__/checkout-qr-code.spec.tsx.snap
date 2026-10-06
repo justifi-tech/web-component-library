@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`justifi-checkout-qr-code calls QRCode.toString with the hosted checkout URL when checkoutId is provided 1`] = `
+<justifi-checkout-qr-code>
+  <div>
+    <svg>
+      mock-qr
+    </svg>
+  </div>
+</justifi-checkout-qr-code>
+`;
+
+exports[`justifi-checkout-qr-code emits error-event and renders nothing when checkoutId is missing 1`] = `<justifi-checkout-qr-code></justifi-checkout-qr-code>`;

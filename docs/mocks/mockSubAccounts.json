@@ -1,0 +1,107 @@
+{
+  "id": null,
+  "type": "array",
+  "page_info": {
+    "has_previous": false,
+    "has_next": false,
+    "start_cursor": "WyIyMDI0LTA4LTA1IDIwOjQ4OjI5LjE1ODY5NTAwMCIsIjg1NGVlYWIwLTBlNzktNDViNS1iNzQ1LTRjMDcxNWMyMzg5MyJd",
+    "end_cursor": "WyIyMDIzLTExLTIxIDIxOjM0OjM1LjUyMTQwOTAwMCIsIjA4MDU5YTkwLWM5MzItNDEyMS04YmM3LTYzNTM1N2QzMzhjOCJd"
+  },
+  "data": [
+    {
+      "id": "subaccount_1",
+      "name": "SubAccount One",
+      "account_type": "live",
+      "status": "enabled",
+      "currency": "usd",
+      "platform_account_id": "platform_1",
+      "payout_account_id": "payout_1",
+      "business_id": "business_1",
+      "application_fee_rates": [],
+      "processing_ready": true,
+      "payout_ready": true,
+      "related_accounts": {
+        "live_account_id": "live_1",
+        "test_account_id": "test_1"
+      },
+      "created_at": "2023-01-01T12:00:00Z",
+      "updated_at": "2023-01-01T12:00:00Z"
+    },
+    {
+      "id": "subaccount_2",
+      "name": "SubAccount Two",
+      "account_type": "test",
+      "status": "disabled",
+      "currency": "usd",
+      "platform_account_id": "platform_2",
+      "payout_account_id": "payout_2",
+      "business_id": "business_2",
+      "application_fee_rates": [],
+      "processing_ready": false,
+      "payout_ready": false,
+      "related_accounts": {
+        "live_account_id": "live_2",
+        "test_account_id": "test_2"
+      },
+      "created_at": "2023-02-01T12:00:00Z",
+      "updated_at": "2023-02-01T12:00:00Z"
+    },
+    {
+      "id": "subaccount_3",
+      "name": "SubAccount Three",
+      "account_type": "live",
+      "status": "enabled",
+      "currency": "usd",
+      "platform_account_id": "platform_3",
+      "payout_account_id": "payout_3",
+      "business_id": "business_3",
+      "application_fee_rates": [],
+      "processing_ready": true,
+      "payout_ready": true,
+      "related_accounts": {
+        "live_account_id": "live_3",
+        "test_account_id": "test_3"
+      },
+      "created_at": "2023-03-01T12:00:00Z",
+      "updated_at": "2023-03-01T12:00:00Z"
+    },
+    {
+      "id": "subaccount_4",
+      "name": "SubAccount Four",
+      "account_type": "test",
+      "status": "suspended",
+      "currency": "usd",
+      "platform_account_id": "platform_4",
+      "payout_account_id": "payout_4",
+      "business_id": "business_4",
+      "application_fee_rates": [],
+      "processing_ready": false,
+      "payout_ready": false,
+      "related_accounts": {
+        "live_account_id": "live_4",
+        "test_account_id": "test_4"
+      },
+      "created_at": "2023-04-01T12:00:00Z",
+      "updated_at": "2023-04-01T12:00:00Z"
+    },
+    {
+      "id": "subaccount_5",
+      "name": "SubAccount Five",
+      "account_type": "live",
+      "status": "enabled",
+      "currency": "usd",
+      "platform_account_id": "platform_5",
+      "payout_account_id": "payout_5",
+      "business_id": "business_5",
+      "application_fee_rates": [],
+      "processing_ready": true,
+      "payout_ready": true,
+      "related_accounts": {
+        "live_account_id": "live_5",
+        "test_account_id": "test_5"
+      },
+      "created_at": "2023-05-01T12:00:00Z",
+      "updated_at": "2023-05-01T12:00:00Z"
+    }
+  ]
+}

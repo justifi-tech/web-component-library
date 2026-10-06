@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LegalAddressDetails should render 1`] = `
+<legal-address-details>
+  <div>
+    <h2 class="border-bottom fs-5 mt-4 pb-3" part="heading-2 heading text color font-family">
+      Business Legal Address Details
+    </h2>
+    <div class="d-table gap-2 mt-3 w-100">
+      <div class="gy-3 row">
+        <div class="col-12 col-md-6">
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Country
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                USA
+              </span>
+            </div>
+          </div>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Legal Address
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                123 Example St
+              </span>
+            </div>
+          </div>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Address Line 2
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                Suite 101
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                City
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                Minneapolis
+              </span>
+            </div>
+          </div>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                State
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                MN
+              </span>
+            </div>
+          </div>
+          <div class="justify-content-between row">
+            <div class="col-12 col-md-4">
+              <span class="fw-bold" part="text color font-family">
+                Postal Code
+              </span>
+            </div>
+            <div class="col-12 col-md-8" style="cursor: auto;">
+              <span class="text-wrap" part="text color font-family">
+                55555
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</legal-address-details>
+`;

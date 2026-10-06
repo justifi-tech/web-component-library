@@ -1,0 +1,36 @@
+{
+  "id": "idty_IG4HgLZwiX9dxgIXoxo1n",
+  "type": "identity",
+  "page_info": null,
+  "data": {
+    "id": "idty_IG4HgLZwiX9dxgIXoxo1n",
+    "platform_account_id": "acc_5u5Dus39Meb1qqSsu5U7qS",
+    "business_id": "biz_JlSzvs2eRVzb9jrmnTZxr",
+    "name": "Business Owner",
+    "title": "CEO",
+    "email": "business.owner@justifi.tech",
+    "phone": "1239102391",
+    "dob_day": "27",
+    "dob_month": "10",
+    "dob_year": "1988",
+    "ssn_last4": "0239",
+    "is_owner": false,
+    "metadata": null,
+    "address": {
+      "id": "addr_7WQycGmvGSOI2D96398Qg8",
+      "platform_account_id": "acc_5u5Dus39Meb1qqSsu5U7qS",
+      "line1": "Business Owner Street, 81",
+      "line2": "202",
+      "postal_code": "12903",
+      "city": "Alabama City",
+      "state": "AL",
+      "country": "USA",
+      "created_at": "2024-06-03T19:10:56.185Z",
+      "updated_at": "2024-06-03T19:10:56.185Z"
+    },
+    "documents": [],
+    "created_at": "2024-06-03T19:10:56.177Z",
+    "updated_at": "2024-06-03T19:10:57.443Z"
+  }
+}
+

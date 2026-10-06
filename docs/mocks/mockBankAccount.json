@@ -1,0 +1,21 @@
+{
+  "id": "ba_123xyz",
+  "type": "bank_account",
+  "data": {
+    "id": "ba_123xyz",
+    "account_owner_name": "Napheesa Collier",
+    "account_type": "checking",
+    "account_number_last4": "6789",
+    "routing_number": "110000000",
+    "bank_name": "Wells Fargo",
+    "country": "US",
+    "currency": "usd",
+    "nickname": "Phee's money",
+    "metadata": {},
+    "business_id": "biz_123abc",
+    "platform_account_id": "acc_123abc",
+    "created_at": "2021-01-01T12:00:00Z",
+    "updated_at": "2021-01-01T12:00:00Z"
+  },
+  "page_info": "string"
+}

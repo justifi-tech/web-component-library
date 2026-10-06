@@ -1,0 +1,70 @@
+{
+  "name": "@justifi/webcomponents-docs",
+  "version": "3.0.4",
+  "description": "Documentation package for JustiFi Web Components",
+  "type": "module",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justifi-tech/web-component-library.git",
+    "directory": "docs"
+  },
+  "files": [
+    "dist/",
+    "helpers/",
+    "mocks/",
+    "docs.json",
+    "component-tree.json",
+    "*.mdx",
+    "entities/",
+    "frameworks/",
+    "merchant-tools/",
+    "modular-checkout/",
+    "payment-facilitation/"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./helpers": "./dist/helpers/index.js",
+    "./package.json": "./package.json",
+    "./docs.json": "./docs.json",
+    "./component-tree.json": "./component-tree.json",
+    "./*.mdx": "./*.mdx",
+    "./*/*.mdx": "./*/*.mdx",
+    "./*/*/*.mdx": "./*/*/*.mdx",
+    "./*/*.css": "./*/*.css",
+    "./*/*/*.css": "./*/*/*.css"
+  },
+  "scripts": {
+    "dev": "echo 'Dev server not configured yet'",
+    "build": "pnpm build:docs",
+    "build:docs": "pnpm build:webcomponents && pnpm build:helpers && pnpm build:index",
+    "build:webcomponents": "pnpm --filter @justifi/webcomponents build:docs",
+    "build:helpers": "node scripts/build-helpers.mjs",
+    "build:index": "echo \"export * from './helpers/index.js';\" > dist/index.js",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "markdown-table": "^3.0.4",
+    "miragejs": "^0.1.48",
+    "react-markdown": "^10.1.0",
+    "react-syntax-highlighter": "^16.1.1",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@justifi/webcomponents": "workspace:*",
+    "@types/node": "^22.15.21",
+    "@types/react": "^18.3.0",
+    "esbuild": "^0.25.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remark-frontmatter": "^4.0.1"
+  },
+  "peerDependencies": {
+    "@justifi/webcomponents": ">=6.14.4",
+    "react": "^17.0.0 || ^18.0.0"
+  }
+}

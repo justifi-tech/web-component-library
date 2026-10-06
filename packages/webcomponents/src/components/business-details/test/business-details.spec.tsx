@@ -1,0 +1,72 @@
+import { h } from '@stencil/core';
+import { newSpecPage } from '@stencil/core/testing';
+import { JustifiBusinessDetails } from '../justifi-business-details';
+import JustifiAnalytics from '../../../api/Analytics';
+
+beforeEach(() => {
+  // Bypass Analytics to avoid errors. Analytics attaches events listeners to HTML elements
+  // which are not available in Jest/node environment
+  // @ts-ignore
+  JustifiAnalytics.prototype.trackCustomEvents = jest.fn();
+});
+
+describe('justifi-business-details', () => {
+  it('initializes getBusiness on load with valid props', async () => {
+    const page = await newSpecPage({
+      components: [JustifiBusinessDetails],
+      template: () => <justifi-business-details businessId="123" authToken="token" />,
+    });
+
+    page.waitForChanges();
+
+    expect(page.rootInstance.getBusiness).toBeDefined();
+    expect(page.rootInstance.errorMessage).toBeUndefined();
+  });
+
+  it('sets an error message with invalid props', async () => {
+    const page = await newSpecPage({
+      components: [JustifiBusinessDetails],
+      template: () => <justifi-business-details businessId="" authToken="" />,
+    });
+
+    page.waitForChanges();
+
+    expect(page.rootInstance.errorMessage).toBe('Invalid business id or auth token');
+  });
+
+  it('renders the error state when there is an error message', async () => {
+    const page = await newSpecPage({
+      components: [JustifiBusinessDetails],
+      template: () => <justifi-business-details businessId="" authToken="" />,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.rootInstance.errorMessage).toBe('Invalid business id or auth token');
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('renders loading state initially with valid props', async () => {
+    const page = await newSpecPage({
+      components: [JustifiBusinessDetails],
+      template: () => <justifi-business-details businessId="123" authToken="token" />,
+    });
+
+    page.waitForChanges();
+
+    expect(page.rootInstance.loading).toBe(true);
+  });
+
+  it('emits an error event when there is no auth token', async () => {
+    const errorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components: [JustifiBusinessDetails],
+      template: () => <justifi-business-details businessId="123" authToken="" onError-event={errorSpy} />,
+    });
+
+    await page.waitForChanges();
+
+    expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({ detail: { message: 'Invalid business id or auth token', errorCode: 'missing-props', severity: 'error' } }));
+  });
+});

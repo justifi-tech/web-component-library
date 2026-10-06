@@ -1,0 +1,40 @@
+{
+  "id": "cho_attempted_test",
+  "type": "checkout",
+  "page_info": null,
+  "data": {
+    "id": "cho_attempted_test",
+    "payment_intent_id": null,
+    "account_id": "acc_test",
+    "platform_account_id": "acc_platform_test",
+    "payment_amount": 1799,
+    "payment_currency": "USD",
+    "payment_description": "Test Checkout",
+    "payment_methods": [],
+    "payment_method_group_id": null,
+    "payment_settings": {
+      "ach_payments": true,
+      "bnpl_payments": false,
+      "credit_card_payments": true
+    },
+    "total_amount": 1799,
+    "insurance_amount": 0,
+    "status": "attempted",
+    "successful_payment_id": null,
+    "completions": [
+      {
+        "payment_status": "failed",
+        "payment_error_code": "card_declined",
+        "payment_error_description": "Card was declined",
+        "checkout_id": "cho_attempted_test",
+        "payment_id": null,
+        "payment_method_id": null,
+        "status": "failed",
+        "created_at": "2026-03-24T00:01:00Z",
+        "updated_at": "2026-03-24T00:01:00Z"
+      }
+    ],
+    "created_at": "2026-03-24T00:00:00Z",
+    "updated_at": "2026-03-24T00:01:00Z"
+  }
+}

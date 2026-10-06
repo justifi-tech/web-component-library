@@ -1,0 +1,58 @@
+{
+  "id": "py_1NNeEnf4FbelxDCQN2RHcE",
+  "type": "payment",
+  "page_info": null,
+  "data": {
+    "id": "py_1NNeEnf4FbelxDCQN2RHcE",
+    "account_id": "acc_5Et9iXrSSAZR2KSouQGAWi",
+    "amount_disputed": 0,
+    "amount_refunded": 0,
+    "amount_returned": 0,
+    "amount": 23456,
+    "amount_refundable": 23456,
+    "application_fee_rate_id": null,
+    "balance": 23256,
+    "capture_strategy": "automatic",
+    "captured": true,
+    "created_at": "2023-12-27T21:52:53.286Z",
+    "currency": "usd",
+    "description": "payment",
+    "statement_descriptor": "WC Account",
+    "disputed": false,
+    "error_code": null,
+    "error_description": null,
+    "expedited": true,
+    "fee_amount": 200,
+    "financial_transaction_id": "ft_1czgEJzmHBw7AHMTAeJtEk",
+    "is_test": true,
+    "metadata": null,
+    "payment_intent_id": null,
+    "refunded": false,
+    "returned": false,
+    "status": "succeeded",
+    "updated_at": "2023-12-27T21:53:18.276Z",
+    "payment_method": {
+      "bank_account": {
+        "id": "pm_uICmv8696AatL4gRwa0Wq",
+        "acct_last_four": "6789",
+        "name": "Julia Garnett",
+        "brand": "Altra",
+        "token": "pm_uICmv8696AatL4gRwa0Wq",
+        "created_at": "2023-12-27T21:52:53.277Z",
+        "updated_at": "2023-12-27T21:52:53.277Z"
+      },
+      "customer_id": "cust_4g8yPTP4hjeid0tPuqpk65",
+      "signature": "hOl9oDjAd7bP9qCESVSsV"
+    },
+    "application_fee": {
+      "id": "fee_2BBieeBBZRkEPOOMKJAAAI",
+      "amount": 200,
+      "currency": "usd",
+      "created_at": "2023-12-27T21:52:53.444Z",
+      "updated_at": "2023-12-27T21:53:18.270Z"
+    },
+    "refunds": [],
+    "disputes": [],
+    "transaction_hold": null
+  }
+}

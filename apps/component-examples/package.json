@@ -1,0 +1,52 @@
+{
+  "name": "@repo/component-examples",
+  "version": "1.2.23",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "start": "npx nodemon ./server.js",
+    "start:server": "node ./server.js",
+    "start:checkout": "npx nodemon ./examples/checkout.js",
+    "start:checkout-with-insurance": "npx nodemon ./examples/checkout-with-insurance.js",
+    "start:modular-checkout": "npx nodemon ./examples/modular-checkout.js",
+    "start:dispute": "npx nodemon ./examples/dispute.js",
+    "start:checkouts-list": "npx nodemon ./examples/checkouts-list.js",
+    "start:checkouts-list-with-filters": "npx nodemon ./examples/checkouts-list-with-filters.js",
+    "start:business-form": "npx nodemon ./examples/business-form.js",
+    "start:payment-provisioning": "npx nodemon ./examples/payment-provisioning.js",
+    "start:business-details": "npx nodemon ./examples/business-details.js",
+    "start:tokenize-payment-method": "npx nodemon ./examples/tokenize-payment-method.js",
+    "start:terminals-list": "npx nodemon ./examples/terminals-list.js",
+    "start:terminals-list-with-filters": "npx nodemon ./examples/terminals-list-with-filters.js",
+    "start:payments-list": "npx nodemon ./examples/payments-list.js",
+    "start:payments-list-with-filters": "npx nodemon ./examples/payments-list-with-filters.js",
+    "start:payouts-list": "npx nodemon ./examples/payouts-list.js",
+    "start:payouts-list-with-filters": "npx nodemon ./examples/payouts-list-with-filters.js",
+    "start:order-terminals": "npx nodemon ./examples/order-terminals.js",
+    "start:refund-payment": "npx nodemon ./examples/refund-payment.js",
+    "start:terminal-orders-list": "npx nodemon ./examples/terminal-orders-list.js",
+    "start:terminal-orders-list-with-filters": "npx nodemon ./examples/terminal-orders-list-with-filters.js",
+    "start:payment-details": "npx nodemon ./examples/payment-details.js",
+    "start:payout-details": "npx nodemon ./examples/payout-details.js",
+    "start:payout-transactions-list": "npx nodemon ./examples/payout-transactions-list.js",
+    "start:payment-transactions-list": "npx nodemon ./examples/payment-transactions-list.js",
+    "start:modular-checkout-apple-pay": "npx nodemon ./examples/modular-checkout-apple-pay.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@justifi/webcomponents": "workspace:*",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.1",
+    "@types/node": "^22.15.21",
+    "dotenv": "^17.4.2"
+  }
+}

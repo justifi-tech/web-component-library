@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`identity-address should render IdentityAddressForm component 1`] = `
+<identity-address-form>
+  <form-address-fields country="USA"></form-address-fields>
+</identity-address-form>
+`;
+
+exports[`identity-address should render IdentityAddressForm component with defaults 1`] = `
+<identity-address-form>
+  <form-address-fields country="USA"></form-address-fields>
+</identity-address-form>
+`;

@@ -1,18 +1,150 @@
 # Documentation
-- [Web component library](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library)
-  - [justifi-bank-account-form](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/bank-account-form#justifi-bank-account-form)
-  - [justifi-card-form](https://github.com/justifi-tech/web-component-library/tree/main/stencil-library/src/components/card-form#justifi-card-form)
- - React component library
-   - Docs for this are not in place yet, but feel free to check out [sample-react-app.zip](https://github.com/justifi-tech/web-component-library/files/11125233/sample-react-app.zip)
 
+- [JustiFi Web Component Documentation](https://docs.justifi.tech/web-components/introduction)
 
+### Useful Commands
 
-# For contributors:
+- `pnpm build` - Build all packages
+- `pnpm dev` - Run the webcomponents package in dev/watch mode
+- `pnpm test` - Run all tests
+- `pnpm test:watch` - Run all tests in watch mode
+- `pnpm lint` - Lint all packages
+- `pnpm changeset` - Generate a changeset
+- `pnpm clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
 
-Follow the semantic versioning guidelines found [here](https://semver.org/)
+## Turborepo
 
-In order for `react-library` to build, you must first create a yarn symlink to `stencil-library` because it is a dependency.
+[Turborepo](https://turbo.build/repo) is a high-performance build system for JavaScript and TypeScript codebases. It was designed after the workflows used by massive software engineering organizations to ship code at scale. Turborepo abstracts the complex configuration needed for monorepos and provides fast, incremental builds with zero-configuration remote caching.
 
-To do this, do the following:
-- From the `stencil-library` directory, run `yarn link`
-- From the `react-library` run `yarn link "@justifi/webcomponents"`
+Using Turborepo simplifies managing your design system monorepo, as you can have a single lint, build, test, and release process for all packages. [Learn more](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software) about how monorepos improve your development workflow.
+
+## Apps & Packages
+
+This Turborepo includes the following packages and applications:
+
+**Publishable packages:**
+
+- `packages/webcomponents`: JustiFi component library (`@justifi/webcomponents`)
+- `docs/`: Documentation package for external consumption (`@justifi/webcomponents-docs`) - lives at repository root
+
+**Internal apps (not published):**
+
+- `apps/component-examples`: Simple component example files for local testing
+
+Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
+
+This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
+
+### Compilation
+
+Running `pnpm build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
+
+For `webcomponents`, the `build` command is the following:
+
+```bash
+stencil build --docs
+```
+
+Stencil compiles `src/index.tsx`, which exports all of the components in the library, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `webcomponents` then instructs the consumer to select the correct format:
+
+```json:webcomponents/package.json
+{
+  "name": "@justifi/webcomponents",
+  "version": "x.y.z",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/types/index.d.ts",
+}
+```
+
+Run `pnpm build` to confirm compilation is working correctly. You should see a folder `webcomponents/dist` which contains the compiled output.
+
+```bash
+webcomponents
+└── dist
+    ├── index.d.ts  <-- Types
+    ├── index.js    <-- CommonJS version
+    └── index.mjs   <-- ES Modules version
+```
+
+## Components
+
+Each file inside of `webcomponents/src/components` is a component inside our component library. For example:
+
+## Versioning & Publishing Packages
+
+This project uses [Changesets](https://github.com/changesets/changesets) to manage versions, create changelogs, and publish to npm. It's preconfigured so you can start publishing packages immediately.
+
+### Publishable Packages
+
+- `@justifi/webcomponents` - Main component library
+- `@justifi/webcomponents-docs` - Documentation package (MDX files, component metadata, helpers)
+
+### Creating a Changeset
+
+Before creating a PR with changes, run `pnpm changeset` locally:
+
+1. **Which packages would you like to include?** – This shows which packages have changed. Press `space` to select the packages you want to include in the `changeset`.
+1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
+1. If doing the first major version, confirm you want to release.
+1. Write a summary for the changes.
+1. Confirm the changeset looks as expected.
+1. A new Markdown file will be created in the `changeset` folder with the summary and a list of the packages included.
+
+### Publishing
+
+Before publishing, you need to run `pnpm version-packages` to update the versions of the packages in the `package.json` files and open a PR with the changes.
+
+Once the PR is merged, publishing is done via the **Publish packages** GitHub workflow (`publish.yml`):
+
+1. Navigate to Actions > "Publish packages" in GitHub
+2. Click "Run workflow" on the main branch
+3. The workflow will:
+   - Build all packages
+   - Run `changeset publish` to publish any package with pending changesets
+   - Trigger the `public-docs` workflow if the docs package version changed
+
+Each package publishes independently based on its own changesets. You can publish just webcomponents, just docs, or both together depending on which packages have pending changesets.
+
+### Release Candidates
+
+For pre-release versions, set the `@justifi/webcomponents` version in `packages/webcomponents/package.json` to an `-rc.N` suffix (e.g. `6.15.0-rc.1`) on your branch. Then run the **Publish packages** workflow (`publish.yml`) and select that branch as the workflow ref — no need to merge to `main` first. The workflow detects the `-rc.N` suffix and publishes to the `next` npm tag via `npm publish --tag next` instead of running `changeset publish`. Consumers install RCs with `@justifi/webcomponents@next`.
+
+### Running component example files
+
+This project offers the ability to render the components in simple example files that will help simulate real world usage.
+
+1. Clone this project to your local machine
+2. Once installed, run `pnpm install && pnpm build` to build the component library's latest version.
+
+Use `pnpm dev` for the webcomponents dev watcher, or `pnpm dev:server` for the component examples app with the API server.
+
+See the full documentation of the tests components [here](https://github.com/justifi-tech/web-component-library/blob/main/apps/component-examples/README.md)
+
+## AI Agent Skills
+
+This project includes [agent skills](https://skills.sh) to help AI coding assistants (Claude Code, Cursor, Codex, etc.) follow best practices.
+
+### Installed Skills
+
+| Skill                         | Source                                                                           | Purpose                                            |
+| ----------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `dogfood`                     | [vercel-labs/agent-browser](https://skills.sh/vercel-labs/agent-browser/dogfood) | Systematic web app exploration and issue detection |
+| `javascript-testing-patterns` | [wshobson/agents](https://skills.sh/wshobson/agents/javascript-testing-patterns) | JS/TS testing strategies and patterns              |
+| `webapp-testing`              | [anthropics/skills](https://skills.sh/anthropics/skills/webapp-testing)          | Web app testing with Playwright                    |
+
+### Installing Skills
+
+Skills are tracked via `skills-lock.json` (like a lock file) and restored on demand — the actual skill files are gitignored.
+
+After cloning, restore skills:
+
+```bash
+pnpm install-skills
+```
+
+To add a new skill:
+
+```bash
+npx skills add <github-repo-url> --skill <skill-name> -y
+```

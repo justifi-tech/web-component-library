@@ -1,0 +1,84 @@
+---
+id: apple-pay
+title: Apple Pay
+description: Apple Pay rail for Modular Checkout that exposes wallet buttons and handles tokenization.
+sidebar_position: 22
+---
+
+import {
+  CodeBlock,
+  PropsMarkdownTable,
+  PartsMarkdownTable,
+  getComponentParts,
+  getWebcomponentsVersion,
+  getPartsFromDocs,
+  getPropsFromDocs,
+} from '../../helpers';
+import componentTreeJson from '../../component-tree.json';
+import docsJson from '../../docs.json';
+
+## Overview
+
+Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay flow. Designed to be used within `justifi-modular-checkout`.
+
+## Usage
+
+<CodeBlock>{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-apple-pay</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+<style>
+  /** These are the available parts for styling the component. */ ::part(button){' '}
+  {
+    // button styles
+  }
+</style>
+
+</head>
+
+<body>
+  <justifi-modular-checkout
+    auth-token="authToken"
+    checkout-id="ch_123"  
+  >
+    <justifi-apple-pay />
+    <justifi-checkout-summary />
+  </justifi-modular-checkout>
+</body>
+</html>`}</CodeBlock>
+
+## Props, Events & Methods
+
+<PropsMarkdownTable props={getPropsFromDocs('justifi-apple-pay', docsJson)} />
+
+### Events
+
+- `applePayStarted`: Fires when the Apple Pay sheet is presented.
+- `applePayCompleted`: Fires when payment completes; includes success status and payment method details.
+- `applePayCancelled`: Fires when the user dismisses the Apple Pay sheet.
+- `applePayError`: Surfaces tokenization failures (network issues, validation errors, etc.).
+
+### Public methods
+
+1. `isSupported()` – Check if Apple Pay is available on the current device/browser.
+2. `getPaymentMethods()` – Returns available payment method types.
+3. `abort()` – Programmatically cancel an in-progress Apple Pay session.
+
+## Theming & Layout
+
+- Styling is intentionally limited to keep Apple compliance.
+
+<PartsMarkdownTable
+  parts={getComponentParts('justifi-apple-pay', componentTreeJson)}
+/>

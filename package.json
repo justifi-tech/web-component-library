@@ -1,0 +1,40 @@
+{
+  "private": true,
+  "name": "web-component-library",
+  "scripts": {
+    "postinstall": "pnpm --filter @repo/component-examples exec playwright install chromium",
+    "build": "turbo run build",
+    "dev": "pnpm --filter @justifi/webcomponents dev",
+    "dev:server": "concurrently 'pnpm --filter @justifi/webcomponents dev' 'pnpm --filter @repo/component-examples start'",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "test": "turbo run test",
+    "test:watch": "pnpm --filter @justifi/webcomponents test:watch",
+    "test:file": "turbo run test:file",
+    "test:e2e": "pnpm --filter @repo/component-examples test:e2e",
+    "test:e2e:ui": "pnpm --filter @repo/component-examples test:e2e:ui",
+    "test:e2e:headed": "pnpm --filter @repo/component-examples test:e2e:headed",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
+    "install-skills": "npx -y skills experimental_install -y"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@changesets/cli": "^2.27.1",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^10.3.0",
+    "globals": "^16.0.0",
+    "typescript-eslint": "^8.60.0",
+    "prettier": "^3.1.1",
+    "turbo": "^2.0.6"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "docs"
+  ],
+  "packageManager": "pnpm@10.6.5"
+}

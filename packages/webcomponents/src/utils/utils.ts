@@ -1,0 +1,274 @@
+import { format } from 'date-fns';
+import Dinero from 'dinero.js';
+import { Address } from '../api/Business';
+import { CurrencyTypes } from '../api/Payment';
+
+// Currency Formatting
+
+export const formatCurrency = (
+  amount: number,
+  currency?: CurrencyTypes,
+  omitSymbols = false
+): string => {
+  if (!amount) amount = 0;
+
+  const formattedString = omitSymbols ? '0,0.00' : '$0,0.00';
+  const formattedCurrency = currency?.toUpperCase();
+  const formattedAmount = Dinero({ amount: amount }).toFormat(formattedString);
+
+  return currency ? `${formattedAmount} ${formattedCurrency}` : formattedAmount;
+};
+
+// Number Formatting
+
+export function formatPercentage(amount: number): string {
+  if (!amount) amount = 0;
+
+  function format(amount: number) {
+    const number = amount / 100;
+    return number.toFixed(2).toString() + '%';
+  }
+
+  return format(amount);
+}
+
+// Date Formatting and Conversion
+
+export function formatDate(dateString: string | Date): string {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return format(date, 'MMM d, yyyy');
+}
+
+export function formatMediumDate(input: string | Date): string {
+  // Check if input is a string and convert to Date object
+  if (typeof input === 'string') {
+    input = new Date(input);
+  }
+
+  // Check if input is a valid date
+  if (Object.prototype.toString.call(input) === '[object Date]') {
+    if (isNaN(input.getTime())) {
+      return 'Invalid date';
+    }
+  } else {
+    return 'Invalid input';
+  }
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  };
+
+  return input.toLocaleDateString('en-US', options);
+}
+
+export function formatDisplayDate(value: any, endDate: string) {
+  const isEndingDate = value === endDate;
+  return isEndingDate
+    ? 'Today'
+    : format(new Date(value.replace(/-/g, '/')), 'MMM d');
+}
+
+export function formatTime(dateString: string): string {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return format(date, 'h:mmaaa');
+}
+
+export function formatTimeSeconds(dateString: string): string {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return format(date, 'h:mm:ssaaa');
+}
+
+interface UTCConversionOptions {
+  setEndOfDay?: boolean;
+  setExactTime?: boolean;
+}
+
+export const convertToUTC = (
+  dateString: string,
+  options: UTCConversionOptions
+): string => {
+  const { setEndOfDay, setExactTime } = options;
+  if (!dateString) return '';
+
+  const dateObj = new Date(dateString);
+
+  if (setEndOfDay) {
+    // Adjust the time to be at the very end of the day
+    dateObj.setUTCHours(23, 59, 59, 999);
+    return new Date(dateObj.toUTCString()).toISOString();
+  } else if (setExactTime) {
+    return new Date(dateObj.toUTCString()).toISOString();
+  }
+};
+
+interface localConversionOptions {
+  showDisplayDate?: boolean;
+  showInputDate?: boolean;
+  showTime?: boolean;
+  showInputDateTime?: boolean;
+}
+
+export const convertToLocal = (
+  dateString: string,
+  options: localConversionOptions
+): string => {
+  const { showDisplayDate, showInputDate, showTime, showInputDateTime } =
+    options;
+  if (!dateString) return '';
+
+  const dateObj = new Date(dateString);
+  const localDate = new Date(
+    dateObj.toLocaleString('en-US', {
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    })
+  );
+
+  if (showDisplayDate) {
+    return format(localDate, 'MMM d, yyyy');
+  } else if (showInputDate) {
+    return format(localDate, 'yyyy-MM-dd');
+  } else if (showTime) {
+    return format(localDate, 'h:mmaaa');
+  } else if (showInputDateTime) {
+    return format(localDate, "yyyy-MM-dd'T'HH:mm");
+  }
+};
+
+// Address Formatting
+
+export function formatAddress(address: Address): string {
+  return `${address.line1}, ${address.city}, ${address.state} ${address.postal_code}`;
+}
+
+// String Manipulation
+
+export function capitalFirstLetter(str: string): string {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function snakeCaseToHumanReadable(snakeCaseStr: string): string {
+  if (!snakeCaseStr) return '';
+  return snakeCaseStr
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+export function snakeToCamel(str: string): string {
+  if (!str) return '';
+  return str.replace(/([-_][a-z])/g, (group) =>
+    group.toUpperCase().replace('-', '').replace('_', '')
+  );
+}
+
+// Object Utilities
+
+export function isEmptyObject(obj: {} | null): boolean {
+  if (obj === null) {
+    return true;
+  }
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+export const isInRange = (num, min, max) => {
+  return num >= min && num <= max;
+};
+
+export function removeAttribute(htmlString, attribute) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+  const elementsWithStyle = tempDiv.querySelectorAll(`[${attribute}]`);
+  elementsWithStyle.forEach((element) => {
+    element.removeAttribute(attribute);
+  });
+  return tempDiv.innerHTML;
+}
+
+export function addAttribute(htmlString, tagName, attribute, value) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlString;
+  const elements = tempDiv.getElementsByTagName(tagName);
+  Array.from(elements).forEach((element) => {
+    element.setAttribute(attribute, value);
+  });
+  return tempDiv.innerHTML;
+}
+export function processHTML(htmlString, functions) {
+  let processedHTML = htmlString;
+  functions.forEach((func) => {
+    processedHTML = func(processedHTML);
+  });
+  return processedHTML;
+}
+
+export function formatPhoneNumber(number) {
+  // Remove all non-numeric characters
+  const cleaned = ('' + number).replace(/\D/g, '');
+
+  // Check if the number has the correct length
+  if (cleaned.length !== 10) {
+    return 'Invalid number';
+  }
+
+  // Format the number (XXX) XXX-XXXX
+  const formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+
+  return formatted;
+}
+
+export function generateId(length = 10): string {
+  const chars =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
+export function generateTabId(): string {
+  return (
+    crypto.randomUUID?.() ||
+    `${Date.now()}-${Math.random().toString(36).slice(2)}`
+  );
+}
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+// JWT Token Utilities
+
+function decodeJwt(token: string): any {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      throw new Error('Invalid JWT');
+    }
+
+    const payload = parts[1];
+    const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+    return JSON.parse(decoded);
+  } catch {
+    throw new Error('Invalid JWT');
+  }
+}
+export function isTokenExpired(token: string): boolean {
+  try {
+    const payload = decodeJwt(token);
+    if (!payload.exp) {
+      return true; // Treat missing exp as expired
+    }
+
+    return payload.exp * 1000 < Date.now();
+  } catch {
+    return true; // Treat invalid token as expired
+  }
+}
+
