@@ -79,8 +79,12 @@ export interface ICheckout {
     bank_account_verification?: boolean;
     apple_payments?: boolean;
     google_payments?: boolean;
+    paypal_payments?: boolean;
   };
   bnpl?: IBnpl;
+  paypal?: {
+    provider_client_id: string;
+  };
   total_amount: number;
   insurance_amount: number;
   status: ICheckoutStatus;
@@ -113,8 +117,10 @@ export class Checkout implements ICheckout {
     bank_account_verification?: boolean;
     apple_payments?: boolean;
     google_payments?: boolean;
+    paypal_payments?: boolean;
   };
   bnpl?: IBnpl;
+  paypal?: { provider_client_id: string };
   total_amount: number;
   insurance_amount: number;
   status: ICheckoutStatus;
@@ -141,6 +147,7 @@ export class Checkout implements ICheckout {
     this.payment_method_group_id = data.payment_method_group_id;
     this.payment_settings = data.payment_settings;
     this.bnpl = data.bnpl;
+    this.paypal = data.paypal;
     this.total_amount = data.total_amount;
     this.insurance_amount = data.insurance_amount;
     this.status = ICheckoutStatus[data.status];
@@ -152,7 +159,7 @@ export class Checkout implements ICheckout {
     this.created_at = data.created_at;
     this.updated_at = data.updated_at;
     this.completions = data.completions?.map(
-      (completion) => new Completion(completion)
+      (completion) => new Completion(completion),
     );
   }
 
@@ -196,6 +203,8 @@ export enum ICheckoutPaymentMode {
   bank_account = 'Bank Account',
   card_present = 'Card Present',
   apple_pay = 'Apple Pay',
+  paypal = 'PayPal',
+  venmo = 'Venmo',
   unknown = '',
 }
 
@@ -203,6 +212,8 @@ export enum ICheckoutPaymentModeParam {
   bnpl = 'bnpl',
   ecom = 'ecom',
   apple_pay = 'apple_pay',
+  paypal = 'paypal',
+  venmo = 'venmo',
 }
 
 export enum ICheckoutStatus {

@@ -68,29 +68,6 @@ describe('justifi-checkout', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('renders Apple Pay when availablePaymentMethods includes APPLE_PAY', async () => {
-    const page = await newSpecPage({
-      components: [JustifiCheckout],
-      html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
-    });
-
-    const instance: any = page.rootInstance;
-
-    // Simulate checkout-changed event from modular checkout
-    const event = new CustomEvent('checkout-changed', {
-      detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
-      bubbles: true,
-      composed: true,
-    } as any);
-
-    (instance as any).checkoutChanged(event);
-    await page.waitForChanges();
-
-    // Ensure the Apple Pay component is rendered
-    const el = page.root?.querySelector('justifi-apple-pay');
-    expect(el).not.toBeNull();
-  });
-
   it('fillBillingForm writes to checkoutStore.billingFormFields (store-only, no ref delegation needed)', async () => {
     checkoutStore.billingFormFields = { address_postal_code: '' };
 
@@ -161,181 +138,251 @@ describe('justifi-checkout', () => {
     });
   });
 
-  describe('availablePaymentMethods mirrors the API', () => {
-    it('keeps Sezzle in availablePaymentMethods even when disableBnpl is true', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1" disable-bnpl></justifi-checkout>',
-      });
-      const instance = page.rootInstance as any;
-
-      const event = new CustomEvent('checkout-changed', {
-        detail: {
-          availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY],
-          selectedPaymentMethod: undefined,
-          savedPaymentMethods: [],
-        },
-        bubbles: true,
-        composed: true,
-      } as any);
-
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
-
-      expect(instance.availablePaymentMethods).toEqual([PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY]);
-    });
-
-    it('keeps Sezzle when disableBnpl is false', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
-      });
-      const instance = page.rootInstance as any;
-
-      const event = new CustomEvent('checkout-changed', {
-        detail: {
-          availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY],
-          selectedPaymentMethod: undefined,
-          savedPaymentMethods: [],
-        },
-        bubbles: true,
-        composed: true,
-      } as any);
-
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
-
-      expect(instance.availablePaymentMethods).toEqual([PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY]);
-    });
-  });
-
   describe('conditional rendering of payment methods', () => {
-    it('shows Google Pay when availablePaymentMethods includes GOOGLE_PAY', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+
+    describe('Apple Pay', () => {
+      it('renders Apple Pay when availablePaymentMethods includes APPLE_PAY', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+        });
+
+        const instance: any = page.rootInstance;
+
+        // Simulate checkout-changed event from modular checkout
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+
+        (instance as any).checkoutChanged(event);
+        await page.waitForChanges();
+
+        // Ensure the Apple Pay component is rendered
+        const el = page.root?.querySelector('justifi-apple-pay');
+        expect(el).not.toBeNull();
       });
-      const instance = page.rootInstance as any;
-
-      const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
-        bubbles: true,
-        composed: true,
-      } as any);
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
-
-      expect(page.root?.querySelector('justifi-google-pay')).not.toBeNull();
     });
 
-    it('forwards googlePayEnv to justifi-google-pay as environment', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout, JustifiGooglePay],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1" google-pay-env="TEST"></justifi-checkout>',
+    describe('Google Pay', () => {
+      it('shows Google Pay when availablePaymentMethods includes GOOGLE_PAY', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
+
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        expect(page.root?.querySelector('justifi-google-pay')).not.toBeNull();
       });
-      const instance = page.rootInstance as any;
 
-      const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
-        bubbles: true,
-        composed: true,
-      } as any);
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
+      it('forwards googlePayEnv to justifi-google-pay as environment', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout, JustifiGooglePay],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1" google-pay-env="TEST"></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
 
-      const googlePayEl = page.root?.querySelector('justifi-google-pay') as HTMLJustifiGooglePayElement | null;
-      expect(googlePayEl).not.toBeNull();
-      expect(googlePayEl?.environment).toBe('TEST');
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.GOOGLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        const googlePayEl = page.root?.querySelector('justifi-google-pay') as HTMLJustifiGooglePayElement | null;
+        expect(googlePayEl).not.toBeNull();
+        expect(googlePayEl?.environment).toBe('TEST');
+      });
+
+      it('hides Google Pay when availablePaymentMethods excludes GOOGLE_PAY', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
+
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        expect(page.root?.querySelector('justifi-google-pay')).toBeNull();
+      });
     });
 
-    it('hides Google Pay when availablePaymentMethods excludes GOOGLE_PAY', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+    describe('Sezzle', () => {
+      it('shows Sezzle when availablePaymentMethods includes SEZZLE and disableBnpl is false', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
+
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        const sezzleRadio = page.root?.querySelector('justifi-radio-list-item[value="sezzle"]');
+        expect(sezzleRadio).not.toBeNull();
       });
-      const instance = page.rootInstance as any;
 
-      const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
-        bubbles: true,
-        composed: true,
-      } as any);
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
+      it('hides Sezzle when disableBnpl is true', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1" disable-bnpl></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
 
-      expect(page.root?.querySelector('justifi-google-pay')).toBeNull();
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        expect(page.root?.querySelector('justifi-radio-list-item[value="sezzle"]')).toBeNull();
+      });
+
+      it('keeps Sezzle in availablePaymentMethods even when disableBnpl is true', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1" disable-bnpl></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
+
+        const event = new CustomEvent('checkout-changed', {
+          detail: {
+            availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY],
+            selectedPaymentMethod: undefined,
+            savedPaymentMethods: [],
+          },
+          bubbles: true,
+          composed: true,
+        } as any);
+
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        expect(instance.availablePaymentMethods).toEqual([PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY]);
+      });
+
+      it('keeps Sezzle when disableBnpl is false', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
+
+        const event = new CustomEvent('checkout-changed', {
+          detail: {
+            availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY],
+            selectedPaymentMethod: undefined,
+            savedPaymentMethods: [],
+          },
+          bubbles: true,
+          composed: true,
+        } as any);
+
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        expect(instance.availablePaymentMethods).toEqual([PAYMENT_METHODS.SEZZLE, PAYMENT_METHODS.APPLE_PAY]);
+      });
     });
 
-    it('shows Sezzle when availablePaymentMethods includes SEZZLE and disableBnpl is false', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+    describe('Plaid', () => {
+      it('shows Plaid when availablePaymentMethods includes PLAID and disableBnpl is false', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
+
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.PLAID], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        const plaidRadio = page.root?.querySelector('justifi-radio-list-item[value="plaid"]');
+        expect(plaidRadio).not.toBeNull();
       });
-      const instance = page.rootInstance as any;
-
-      const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
-        bubbles: true,
-        composed: true,
-      } as any);
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
-
-      const sezzleRadio = page.root?.querySelector('justifi-radio-list-item[value="sezzle"]');
-      expect(sezzleRadio).not.toBeNull();
     });
 
-    it('hides Sezzle when disableBnpl is true', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1" disable-bnpl></justifi-checkout>',
+    describe('Paypal', () => {
+      it('renders Paypal when availablePaymentMethods includes PAYPAL', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
+
+
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.PAYPAL], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        expect(page.root?.querySelector('justifi-paypal')).not.toBeNull();
       });
-      const instance = page.rootInstance as any;
 
-      const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.SEZZLE], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
-        bubbles: true,
-        composed: true,
-      } as any);
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
+      it('hides Paypal when availablePaymentMethods excludes PAYPAL', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+        });
+        const instance = page.rootInstance as any;
 
-      expect(page.root?.querySelector('justifi-radio-list-item[value="sezzle"]')).toBeNull();
+        const event = new CustomEvent('checkout-changed', {
+          detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.APPLE_PAY], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
+          bubbles: true,
+          composed: true,
+        } as any);
+        instance.checkoutChanged(event);
+        await page.waitForChanges();
+
+        expect(page.root?.querySelector('justifi-paypal')).toBeNull();
+      });
     });
 
-    it('shows Plaid when availablePaymentMethods includes PLAID and disableBnpl is false', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
+    describe('justifi-tokenize-payment-method', () => {
+      it('always renders justifi-tokenize-payment-method with correct pass-through props', async () => {
+        const page = await newSpecPage({
+          components: [JustifiCheckout],
+          html: '<justifi-checkout auth-token="t" checkout-id="chk_1" disable-credit-card disable-bank-account></justifi-checkout>',
+        });
+        await page.waitForChanges();
+
+        const tokenize = page.root?.querySelector('justifi-tokenize-payment-method');
+        expect(tokenize).not.toBeNull();
+        const instance = page.rootInstance as any;
+        expect(instance.disableCreditCard).toBe(true);
+        expect(instance.disableBankAccount).toBe(true);
+        expect(instance.authToken).toBe('t');
       });
-      const instance = page.rootInstance as any;
-
-      const event = new CustomEvent('checkout-changed', {
-        detail: { availablePaymentMethodTypes: [PAYMENT_METHODS.PLAID], selectedPaymentMethod: undefined, savedPaymentMethods: [] },
-        bubbles: true,
-        composed: true,
-      } as any);
-      instance.checkoutChanged(event);
-      await page.waitForChanges();
-
-      const plaidRadio = page.root?.querySelector('justifi-radio-list-item[value="plaid"]');
-      expect(plaidRadio).not.toBeNull();
-    });
-
-
-    it('always renders justifi-tokenize-payment-method with correct pass-through props', async () => {
-      const page = await newSpecPage({
-        components: [JustifiCheckout],
-        html: '<justifi-checkout auth-token="t" checkout-id="chk_1" disable-credit-card disable-bank-account></justifi-checkout>',
-      });
-      await page.waitForChanges();
-
-      const tokenize = page.root?.querySelector('justifi-tokenize-payment-method');
-      expect(tokenize).not.toBeNull();
-      const instance = page.rootInstance as any;
-      expect(instance.disableCreditCard).toBe(true);
-      expect(instance.disableBankAccount).toBe(true);
-      expect(instance.authToken).toBe('t');
     });
   });
 

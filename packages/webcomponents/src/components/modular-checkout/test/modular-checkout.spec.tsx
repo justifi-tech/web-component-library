@@ -13,6 +13,7 @@ import {
   ICheckoutStatus,
 } from '../../../api';
 import { insuranceValues } from '../../insurance/insurance-state';
+import { PAYPAL_SANDBOX_CLIENT_ID } from '../sub-components/paypal/paypal';
 
 function mockFormRefs(instance: any, overrides?: Partial<Record<string, any>>) {
   instance.paymentMethodFormRef = {
@@ -1802,6 +1803,267 @@ describe('justifi-modular-checkout', () => {
       expect(state.paymentToken).toBeUndefined();
     });
   });
+
+  describe('PayPal', () => {
+    const paypalCheckout: any = {
+      account_id: 'acc_1',
+      payment_methods: [],
+      payment_method_group_id: undefined,
+      payment_description: 'desc',
+      total_amount: 1000,
+      payment_amount: 1000,
+      mode: 'test',
+      payment_settings: {
+        ach_payments: true,
+        bnpl_payments: false,
+        bank_account_verification: false,
+      },
+    };
+
+    const mountCheckout = async () =>
+      newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+    beforeEach(() => {
+      checkoutStore.paypalEnabled = false;
+      checkoutStore.paypalProviderClientId = '';
+      checkoutStore.paymentCurrency = 'USD';
+      checkoutStore.paymentToken = undefined;
+      checkoutStore.selectedPaymentMethod = undefined;
+      checkoutStore.isWalletProcessing = false;
+      checkoutStore.isSubmitting = false;
+    });
+
+    describe('updateStore', () => {
+      it('defaults paypalEnabled to true on a test checkout while staging omits paypal_payments', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore(paypalCheckout);
+
+        expect(checkoutStore.paypalEnabled).toBe(true);
+      });
+
+      it('leaves paypal off on a live checkout that omits paypal_payments', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore({
+          ...paypalCheckout,
+          mode: 'live',
+        });
+
+        expect(checkoutStore.paypalEnabled).toBe(false);
+      });
+
+      it('never hands the sandbox client id to a live checkout', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore({
+          ...paypalCheckout,
+          mode: 'live',
+        });
+
+        expect(checkoutStore.paypalProviderClientId).toBe('');
+      });
+
+      it('still takes a real provider client id on a live checkout', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore({
+          ...paypalCheckout,
+          mode: 'live',
+          paypal: { provider_client_id: 'live-client-id' },
+        });
+
+        expect(checkoutStore.paypalEnabled).toBe(false);
+        expect(checkoutStore.paypalProviderClientId).toBe('live-client-id');
+      });
+
+      it('honours payment_settings.paypal_payments when the backend sends it', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore({
+          ...paypalCheckout,
+          payment_settings: {
+            ...paypalCheckout.payment_settings,
+            paypal_payments: false,
+          },
+        });
+
+        expect(checkoutStore.paypalEnabled).toBe(false);
+      });
+
+      it('falls back to the sandbox client id on a test checkout with no paypal block', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore(paypalCheckout);
+
+        expect(checkoutStore.paypalProviderClientId).toBe(
+          PAYPAL_SANDBOX_CLIENT_ID
+        );
+      });
+
+      it('uses the provider client id from the checkout when present', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore({
+          ...paypalCheckout,
+          paypal: { provider_client_id: 'real-client-id' },
+        });
+
+        expect(checkoutStore.paypalProviderClientId).toBe('real-client-id');
+      });
+
+      it('upper-cases the checkout currency into the store', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore({
+          ...paypalCheckout,
+          payment_currency: 'cad',
+        });
+
+        expect(checkoutStore.paymentCurrency).toBe('CAD');
+      });
+
+      it('keeps the default currency when the checkout omits one', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore(paypalCheckout);
+
+        expect(checkoutStore.paymentCurrency).toBe('USD');
+      });
+    });
+
+    describe('event handlers', () => {
+      it('handlePaypalStarted sets isWalletProcessing = true', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).handlePaypalStarted();
+
+        expect(checkoutStore.isWalletProcessing).toBe(true);
+      });
+
+      it('submits the checkout with our ppo id on completion', async () => {
+        const page = await mountCheckout();
+        const instance: any = page.rootInstance;
+        instance.completeCheckout = jest.fn();
+
+        instance.handlePaypalCompleted(
+          new CustomEvent('paypalCompleted', {
+            detail: {
+              success: true,
+              paymentMethodId: 'ppo_123',
+              fundingSource: 'paypal',
+            },
+          } as any)
+        );
+        await page.waitForChanges();
+
+        expect(checkoutStore.paymentToken).toBe('ppo_123');
+        expect(checkoutStore.selectedPaymentMethod).toEqual({
+          type: PAYMENT_METHODS.PAYPAL,
+        });
+        expect(checkoutStore.isWalletProcessing).toBe(false);
+        expect(instance.completeCheckout).toHaveBeenCalledTimes(1);
+        expect(
+          (instance.completeCheckout as jest.Mock).mock.calls[0][0].payment
+        ).toEqual({ payment_mode: 'paypal', payment_token: 'ppo_123' });
+      });
+
+      it('selects VENMO when the approval came from the venmo button', async () => {
+        const page = await mountCheckout();
+        const instance: any = page.rootInstance;
+        instance.completeCheckout = jest.fn();
+
+        instance.handlePaypalCompleted(
+          new CustomEvent('paypalCompleted', {
+            detail: {
+              success: true,
+              paymentMethodId: 'ppo_456',
+              fundingSource: 'venmo',
+            },
+          } as any)
+        );
+        await page.waitForChanges();
+
+        expect(checkoutStore.selectedPaymentMethod).toEqual({
+          type: PAYMENT_METHODS.VENMO,
+        });
+        expect(
+          (instance.completeCheckout as jest.Mock).mock.calls[0][0].payment
+            .payment_mode
+        ).toBe('venmo');
+      });
+
+      it('emits an error and does not submit when completion carries no token', async () => {
+        const page = await mountCheckout();
+        const instance: any = page.rootInstance;
+        instance.completeCheckout = jest.fn();
+        const handler = jest.fn();
+        (page.root as HTMLElement).addEventListener('error-event', handler as any);
+
+        instance.handlePaypalCompleted(
+          new CustomEvent('paypalCompleted', {
+            detail: { success: false, fundingSource: 'paypal' },
+          } as any)
+        );
+        await page.waitForChanges();
+
+        expect(instance.completeCheckout).not.toHaveBeenCalled();
+        expect(handler).toHaveBeenCalled();
+        expect(checkoutStore.isWalletProcessing).toBe(false);
+      });
+
+      it('clears the selection on cancellation', async () => {
+        checkoutStore.paymentToken = 'ppo_123';
+        checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PAYPAL };
+
+        const page = await mountCheckout();
+        (page.rootInstance as any).handlePaypalCancelled();
+
+        expect(checkoutStore.paymentToken).toBeUndefined();
+        expect(checkoutStore.selectedPaymentMethod).toBeUndefined();
+        expect(checkoutStore.isWalletProcessing).toBe(false);
+      });
+
+      it('prefixes component error codes with PAYPAL_', async () => {
+        const page = await mountCheckout();
+        const handler = jest.fn();
+        (page.root as HTMLElement).addEventListener('error-event', handler as any);
+
+        (page.rootInstance as any).handlePaypalError(
+          new CustomEvent('paypalError', {
+            detail: { error: 'boom', code: 'ORDER_ERROR' },
+          } as any)
+        );
+
+        expect(handler).toHaveBeenCalled();
+        expect(handler.mock.calls[0][0].detail.errorCode).toBe(
+          'PAYPAL_ORDER_ERROR'
+        );
+        expect(checkoutStore.isWalletProcessing).toBe(false);
+      });
+    });
+
+    describe('listener wiring', () => {
+      it('registers and removes the paypal listeners with the element', async () => {
+        const page = await mountCheckout();
+        const instance: any = page.rootInstance;
+        const paypalEl = {
+          addEventListener: jest.fn(),
+          removeEventListener: jest.fn(),
+        };
+        instance.paypalRef = paypalEl;
+
+        instance.setupPaypalListeners();
+        expect(paypalEl.addEventListener.mock.calls.map((c: any) => c[0])).toEqual([
+          'paypalStarted',
+          'paypalCompleted',
+          'paypalCancelled',
+          'paypalError',
+        ]);
+
+        instance.removePaypalListeners();
+        expect(
+          paypalEl.removeEventListener.mock.calls.map((c: any) => c[0])
+        ).toEqual([
+          'paypalStarted',
+          'paypalCompleted',
+          'paypalCancelled',
+          'paypalError',
+        ]);
+      });
+    });
+  });
 });
-
-

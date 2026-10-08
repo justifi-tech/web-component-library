@@ -27,13 +27,14 @@ import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
 import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod, Hook } from "./ModularCheckout";
+import { PAYPAL_SANDBOX_CLIENT_ID } from "./sub-components/paypal/paypal";
 
 @Component({
   tag: "justifi-modular-checkout",
   shadow: false,
 })
 export class JustifiModularCheckout {
-  analytics: JustifiAnalytics;
+  analytics!: JustifiAnalytics;
   private observer?: MutationObserver;
   private unsubscribeCheckoutChanges?: () => void;
   private paymentMethodFormRef?:
@@ -48,7 +49,8 @@ export class JustifiModularCheckout {
   private insuranceFormRef?: HTMLJustifiSeasonInterruptionInsuranceElement;
   private applePayRef?: HTMLJustifiApplePayElement;
   private googlePayRef?: HTMLJustifiGooglePayElement;
-  private getCheckout: Function;
+  private paypalRef?: HTMLJustifiPaypalElement;
+  private getCheckout!: Function;
   private completeCheckout: Function;
   private plaidService = new PlaidService();
 
@@ -56,18 +58,19 @@ export class JustifiModularCheckout {
   @Prop() checkoutId!: string;
   @Prop() preCompleteHook?: Hook<CheckoutState>;
 
-  @Element() hostEl: HTMLElement;
+  @Element() hostEl!: HTMLElement;
 
-  @Event({ eventName: "error-event" }) errorEvent: EventEmitter;
-  @Event({ eventName: "submit-event" }) submitEvent: EventEmitter;
+  @Event({ eventName: "error-event" }) errorEvent!: EventEmitter;
+  @Event({ eventName: "submit-event" }) submitEvent!: EventEmitter;
   @Event({ eventName: "checkout-changed" })
-  checkoutChangedEvent: EventEmitter<CheckoutChangedEventDetail>;
+  checkoutChangedEvent!: EventEmitter<CheckoutChangedEventDetail>;
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
       this.queryFormRefs();
       this.setupApplePayListeners(); // set up again listeners when DOM changes
       this.setupGooglePayListeners();
+      this.setupPaypalListeners();
     });
 
     this.observer.observe(this.hostEl, {
@@ -111,6 +114,7 @@ export class JustifiModularCheckout {
     this.queryFormRefs();
     this.setupApplePayListeners();
     this.setupGooglePayListeners();
+    this.setupPaypalListeners();
   }
 
   disconnectedCallback() {
@@ -119,6 +123,7 @@ export class JustifiModularCheckout {
     this.observer?.disconnect();
     this.removeApplePayListeners();
     this.removeGooglePayListeners();
+    this.removePaypalListeners();
   }
 
   private fetchCheckout() {
@@ -164,7 +169,6 @@ export class JustifiModularCheckout {
 
   private updateStore(checkout: ICheckout) {
     checkoutStore.accountId = checkout.account_id;
-    checkoutStore.checkoutLoaded = true;
     const rawMode = checkout.mode != null ? String(checkout.mode).toLowerCase() : '';
     checkoutStore.checkoutMode =
       rawMode === 'test' ? 'test' : rawMode === 'live' ? 'live' : null;
@@ -181,16 +185,31 @@ export class JustifiModularCheckout {
     checkoutStore.totalAmount = checkout.total_amount;
     checkoutStore.paymentAmount = checkout.payment_amount;
     checkoutStore.bnplEnabled = checkout.payment_settings.bnpl_payments;
-    checkoutStore.insuranceEnabled = checkout.payment_settings.insurance_payments;
+    checkoutStore.insuranceEnabled = checkout.payment_settings.insurance_payments ?? false;
     checkoutStore.bankAccountVerification = checkout.payment_settings?.bank_account_verification;
-    checkoutStore.applePayEnabled = checkout.payment_settings?.apple_payments;
-    checkoutStore.googlePayEnabled = checkout.payment_settings?.google_payments;
+    checkoutStore.applePayEnabled = checkout.payment_settings?.apple_payments ?? false;
+    checkoutStore.googlePayEnabled = checkout.payment_settings?.google_payments ?? false;
+    // TODO(paypal-mock): both fallbacks go away once staging returns
+    // `payment_settings.paypal_payments` and `checkout.paypal.provider_client_id`.
+    // They are gated on test mode on purpose: a live checkout loads the production
+    // SDK, so defaulting it on with a sandbox client id would turn PayPal on for
+    // real traffic against the wrong merchant. Live checkouts fail closed.
+    const isTestCheckout = checkoutStore.checkoutMode === 'test';
+    checkoutStore.paypalEnabled =
+      checkout.payment_settings?.paypal_payments ?? isTestCheckout;
+    checkoutStore.paypalProviderClientId =
+      checkout.paypal?.provider_client_id ??
+      (isTestCheckout ? PAYPAL_SANDBOX_CLIENT_ID : '');
     checkoutStore.achPaymentsEnabled = achEnabled;
     checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
     checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
     checkoutStore.bnplProviderApiVersion = checkout?.bnpl?.provider_api_version;
     checkoutStore.bnplProviderCheckoutUrl =
       checkout?.bnpl?.provider_checkout_url;
+    checkoutStore.paymentCurrency = (
+      checkout.payment_currency || checkoutStore.paymentCurrency
+    ).toUpperCase();
+    checkoutStore.checkoutLoaded = true;
   }
 
   private emitCheckoutChanged() {
@@ -208,6 +227,7 @@ export class JustifiModularCheckout {
     );
     this.applePayRef = this.hostEl.querySelector("justifi-apple-pay");
     this.googlePayRef = this.hostEl.querySelector("justifi-google-pay");
+    this.paypalRef = this.hostEl.querySelector("justifi-paypal");
     this.paymentMethodFormRef =
       this.hostEl.querySelector('justifi-card-form, justifi-bank-account-form, justifi-tokenize-payment-method');
 
@@ -301,6 +321,84 @@ export class JustifiModularCheckout {
       );
     }
   }
+
+  private setupPaypalListeners() {
+    if (this.paypalRef) {
+      this.paypalRef.addEventListener(
+        "paypalStarted",
+        this.handlePaypalStarted
+      );
+      this.paypalRef.addEventListener(
+        "paypalCompleted",
+        this.handlePaypalCompleted
+      );
+      this.paypalRef.addEventListener(
+        "paypalCancelled",
+        this.handlePaypalCancelled
+      );
+      this.paypalRef.addEventListener("paypalError", this.handlePaypalError);
+    }
+  }
+
+  private removePaypalListeners() {
+    if (this.paypalRef) {
+      this.paypalRef.removeEventListener(
+        "paypalStarted",
+        this.handlePaypalStarted
+      );
+      this.paypalRef.removeEventListener(
+        "paypalCompleted",
+        this.handlePaypalCompleted
+      );
+      this.paypalRef.removeEventListener(
+        "paypalCancelled",
+        this.handlePaypalCancelled
+      );
+      this.paypalRef.removeEventListener("paypalError", this.handlePaypalError);
+    }
+  }
+
+  private handlePaypalStarted = () => {
+    checkoutStore.isWalletProcessing = true;
+  };
+
+  private handlePaypalCompleted = (event: CustomEvent) => {
+    const { success, paymentMethodId, fundingSource } = event.detail || {};
+    checkoutStore.isWalletProcessing = false;
+
+    if (success && paymentMethodId) {
+      checkoutStore.paymentToken = paymentMethodId;
+      checkoutStore.selectedPaymentMethod = {
+        type:
+          fundingSource === "venmo"
+            ? PAYMENT_METHODS.VENMO
+            : PAYMENT_METHODS.PAYPAL,
+      };
+      this.submitCheckout();
+    } else {
+      this.errorEvent.emit({
+        message: "Paypal payment failed",
+        errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+    }
+  };
+
+  private handlePaypalCancelled = () => {
+    checkoutStore.isWalletProcessing = false;
+    checkoutStore.paymentToken = undefined;
+    checkoutStore.selectedPaymentMethod = undefined;
+  };
+
+  private handlePaypalError = (event: CustomEvent) => {
+    checkoutStore.isWalletProcessing = false;
+    const { error, code } = event.detail || {};
+    this.errorEvent.emit({
+      message: error || "Paypal error occurred",
+      errorCode: `PAYPAL_${code}`,
+      severity: ComponentErrorSeverity.ERROR,
+    });
+  };
 
   private handleApplePayStarted = () => {
     checkoutStore.isWalletProcessing = true;
@@ -586,6 +684,10 @@ export class JustifiModularCheckout {
           return PAYMENT_MODE.APPLE_PAY;
         case PAYMENT_METHODS.GOOGLE_PAY:
           return PAYMENT_MODE.GOOGLE_PAY;
+        case PAYMENT_METHODS.PAYPAL:
+          return PAYMENT_MODE.PAYPAL;
+        case PAYMENT_METHODS.VENMO:
+          return PAYMENT_MODE.VENMO;
         default:
           return undefined;
       }
