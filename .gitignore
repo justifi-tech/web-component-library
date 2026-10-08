@@ -13,6 +13,7 @@ packages/mockData/mockGrossVolumeReport.js
 .agents/skills/
 .claude/skills/
 dogfood-output/
+**/coverage/**/*
 
 # Docs generated files
 docs/docs.json
