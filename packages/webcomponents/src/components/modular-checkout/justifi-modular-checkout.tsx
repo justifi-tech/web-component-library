@@ -660,7 +660,25 @@ export class JustifiModularCheckout {
       return;
     }
 
-    if (!checkoutStore.paymentToken) {
+    // Sezzle has no payment token; approval comes from the Sezzle popup
+    const isSezzle = checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.SEZZLE;
+
+    if (isSezzle) {
+      const sezzleRef = this.hostEl.querySelector('justifi-sezzle-payment-method');
+      const payload = await sezzleRef?.resolvePaymentMethod({ isValid });
+
+      if (payload?.bnpl?.status !== 'success') {
+        checkoutStore.isSubmitting = false;
+        this.errorEvent.emit({
+          message: payload?.error?.message || 'Sezzle checkout was not completed.',
+          errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+        return;
+      }
+    }
+
+    if (!isSezzle && !checkoutStore.paymentToken) {
       checkoutStore.isSubmitting = false;
       this.errorEvent.emit({
         message: 'Payment token not found.',
@@ -695,7 +713,7 @@ export class JustifiModularCheckout {
 
     const payment = {
       payment_mode: mapTypeToPaymentMode(checkoutStore.selectedPaymentMethod?.type) as string,
-      payment_token: checkoutStore.paymentToken,
+      payment_token: isSezzle ? undefined : checkoutStore.paymentToken,
     };
 
     if (this.preCompleteHook) {
