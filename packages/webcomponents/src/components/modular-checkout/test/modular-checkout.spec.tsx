@@ -13,7 +13,6 @@ import {
   ICheckoutStatus,
 } from '../../../api';
 import { insuranceValues } from '../../insurance/insurance-state';
-import { PAYPAL_SANDBOX_CLIENT_ID } from '../sub-components/paypal/paypal';
 
 function mockFormRefs(instance: any, overrides?: Partial<Record<string, any>>) {
   instance.paymentMethodFormRef = {
@@ -1897,46 +1896,14 @@ describe('justifi-modular-checkout', () => {
     });
 
     describe('updateStore', () => {
-      it('defaults paypalEnabled to true on a test checkout while staging omits paypal_payments', async () => {
+      it('leaves paypal off when payment_settings omits paypal_payments', async () => {
         const page = await mountCheckout();
         (page.rootInstance as any).updateStore(paypalCheckout);
 
-        expect(checkoutStore.paypalEnabled).toBe(true);
-      });
-
-      it('leaves paypal off on a live checkout that omits paypal_payments', async () => {
-        const page = await mountCheckout();
-        (page.rootInstance as any).updateStore({
-          ...paypalCheckout,
-          mode: 'live',
-        });
-
         expect(checkoutStore.paypalEnabled).toBe(false);
       });
 
-      it('never hands the sandbox client id to a live checkout', async () => {
-        const page = await mountCheckout();
-        (page.rootInstance as any).updateStore({
-          ...paypalCheckout,
-          mode: 'live',
-        });
-
-        expect(checkoutStore.paypalProviderClientId).toBe('');
-      });
-
-      it('still takes a real provider client id on a live checkout', async () => {
-        const page = await mountCheckout();
-        (page.rootInstance as any).updateStore({
-          ...paypalCheckout,
-          mode: 'live',
-          paypal: { provider_client_id: 'live-client-id' },
-        });
-
-        expect(checkoutStore.paypalEnabled).toBe(false);
-        expect(checkoutStore.paypalProviderClientId).toBe('live-client-id');
-      });
-
-      it('honours payment_settings.paypal_payments when the backend sends it', async () => {
+      it('leaves paypal off when paypal_payments is false', async () => {
         const page = await mountCheckout();
         (page.rootInstance as any).updateStore({
           ...paypalCheckout,
@@ -1949,13 +1916,25 @@ describe('justifi-modular-checkout', () => {
         expect(checkoutStore.paypalEnabled).toBe(false);
       });
 
-      it('falls back to the sandbox client id on a test checkout with no paypal block', async () => {
+      it('enables paypal when paypal_payments is true', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore({
+          ...paypalCheckout,
+          payment_settings: {
+            ...paypalCheckout.payment_settings,
+            paypal_payments: true,
+          },
+          paypal: { provider_client_id: 'real-client-id' },
+        });
+
+        expect(checkoutStore.paypalEnabled).toBe(true);
+      });
+
+      it('leaves the client id empty when the checkout has no paypal block', async () => {
         const page = await mountCheckout();
         (page.rootInstance as any).updateStore(paypalCheckout);
 
-        expect(checkoutStore.paypalProviderClientId).toBe(
-          PAYPAL_SANDBOX_CLIENT_ID
-        );
+        expect(checkoutStore.paypalProviderClientId).toBe('');
       });
 
       it('uses the provider client id from the checkout when present', async () => {
@@ -1966,6 +1945,17 @@ describe('justifi-modular-checkout', () => {
         });
 
         expect(checkoutStore.paypalProviderClientId).toBe('real-client-id');
+      });
+
+      it('takes the provider client id on a live checkout too', async () => {
+        const page = await mountCheckout();
+        (page.rootInstance as any).updateStore({
+          ...paypalCheckout,
+          mode: 'live',
+          paypal: { provider_client_id: 'live-client-id' },
+        });
+
+        expect(checkoutStore.paypalProviderClientId).toBe('live-client-id');
       });
 
       it('upper-cases the checkout currency into the store', async () => {

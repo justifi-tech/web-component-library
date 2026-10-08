@@ -4,16 +4,6 @@ export const PAYPAL_PRODUCTION_SCRIPT_URL =
   'https://www.paypal.com/web-sdk/v6/core';
 export const PAYPAL_SCRIPT_DATA_TEST_ID = 'paypal-script';
 
-/**
- * TODO(paypal-mock): remove once staging returns `checkout.paypal.provider_client_id`.
- * JustiFi's PayPal sandbox app id, taken from entity_management#637
- * (`PAYPAL_SANDBOX_CLIENT_ID` in staging.tfvars). Client ids are public by design.
- * The literal 'test' only works for the legacy `/sdk/js?client-id=test` script —
- * v6 `createInstance` validates the id and rejects it.
- */
-export const PAYPAL_SANDBOX_CLIENT_ID =
-  'AXVVC-vkCnF5CHlWA5VBFpoVM897XFBWdT9Q6yTWYJXrObd7_b0uIoKGElZvL1mCnbR5jzFCv_eo2CWb';
-
 export const PAYPAL_COMPONENTS = ['paypal-payments', 'venmo-payments'];
 export const PAYPAL_PAGE_TYPE = 'checkout';
 export const PAYPAL_DEFAULT_CURRENCY = 'USD';

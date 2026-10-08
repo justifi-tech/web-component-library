@@ -27,7 +27,6 @@ import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
 import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod, Hook } from "./ModularCheckout";
-import { PAYPAL_SANDBOX_CLIENT_ID } from "./sub-components/paypal/paypal";
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -189,17 +188,8 @@ export class JustifiModularCheckout {
     checkoutStore.bankAccountVerification = checkout.payment_settings?.bank_account_verification;
     checkoutStore.applePayEnabled = checkout.payment_settings?.apple_payments ?? false;
     checkoutStore.googlePayEnabled = checkout.payment_settings?.google_payments ?? false;
-    // TODO(paypal-mock): both fallbacks go away once staging returns
-    // `payment_settings.paypal_payments` and `checkout.paypal.provider_client_id`.
-    // They are gated on test mode on purpose: a live checkout loads the production
-    // SDK, so defaulting it on with a sandbox client id would turn PayPal on for
-    // real traffic against the wrong merchant. Live checkouts fail closed.
-    const isTestCheckout = checkoutStore.checkoutMode === 'test';
-    checkoutStore.paypalEnabled =
-      checkout.payment_settings?.paypal_payments ?? isTestCheckout;
-    checkoutStore.paypalProviderClientId =
-      checkout.paypal?.provider_client_id ??
-      (isTestCheckout ? PAYPAL_SANDBOX_CLIENT_ID : '');
+    checkoutStore.paypalEnabled = checkout.payment_settings?.paypal_payments ?? false;
+    checkoutStore.paypalProviderClientId = checkout.paypal?.provider_client_id ?? '';
     checkoutStore.achPaymentsEnabled = achEnabled;
     checkoutStore.bnplProviderClientId = checkout?.bnpl?.provider_client_id;
     checkoutStore.bnplProviderMode = checkout?.bnpl?.provider_mode;
