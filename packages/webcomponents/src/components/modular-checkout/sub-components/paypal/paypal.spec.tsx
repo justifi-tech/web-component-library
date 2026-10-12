@@ -63,6 +63,12 @@ const mount = async (eligible: string[] = ['paypal', 'venmo']) => {
   return { page, ...mocks };
 };
 
+const isShown = (el: Element | null | undefined) =>
+  !!el && el.classList.contains('shown');
+
+const containerShown = (page: any) =>
+  isShown(page.root?.shadowRoot?.querySelector('.paypal-buttons'));
+
 const buttonsOf = (page: any) => ({
   paypal: page.root?.shadowRoot?.querySelector('paypal-button') as HTMLElement,
   venmo: page.root?.shadowRoot?.querySelector('venmo-button') as HTMLElement,
@@ -120,7 +126,7 @@ describe('justifi-paypal', () => {
   });
 
   describe('initialization', () => {
-    it('emits a config error and renders nothing when the store has no client id', async () => {
+    it('emits a config error and stays hidden when the store has no client id', async () => {
       checkoutStore.paypalProviderClientId = '';
       const page = await createPage();
       const handler = jest.fn();
@@ -137,7 +143,7 @@ describe('justifi-paypal', () => {
           },
         })
       );
-      expect(page.root?.shadowRoot?.innerHTML).toBe('');
+      expect(containerShown(page)).toBe(false);
     });
 
     it('calls createInstance with the store client id and a valid v6 config', async () => {
@@ -162,7 +168,7 @@ describe('justifi-paypal', () => {
       });
     });
 
-    it('emits an initialization error and renders nothing when createInstance rejects', async () => {
+    it('emits an initialization error and stays hidden when createInstance rejects', async () => {
       const page = await createPage();
       (window as any).paypal = {
         createInstance: jest.fn().mockRejectedValue(new Error('bad client id')),
@@ -181,7 +187,7 @@ describe('justifi-paypal', () => {
           },
         })
       );
-      expect(page.root?.shadowRoot?.innerHTML).toBe('');
+      expect(containerShown(page)).toBe(false);
     });
   });
 
@@ -190,10 +196,10 @@ describe('justifi-paypal', () => {
       const { page } = await mount(['paypal', 'venmo']);
       const { paypal, venmo } = buttonsOf(page);
 
-      expect(paypal).not.toBeNull();
-      expect(venmo).not.toBeNull();
+      expect(isShown(paypal)).toBe(true);
+      expect(isShown(venmo)).toBe(true);
       expect(paypal.parentElement).toBe(venmo.parentElement);
-      expect(paypal.parentElement?.getAttribute('class')).toBe(
+      expect(paypal.parentElement?.getAttribute('class')).toContain(
         'paypal-buttons'
       );
     });
@@ -203,30 +209,50 @@ describe('justifi-paypal', () => {
       const { page } = await mount(['paypal', 'venmo']);
       const { paypal, venmo } = buttonsOf(page);
 
-      expect(paypal).not.toBeNull();
-      expect(venmo).toBeNull();
+      expect(isShown(paypal)).toBe(true);
+      expect(isShown(venmo)).toBe(false);
     });
 
     it('hides a button when its method is not eligible', async () => {
       const { page } = await mount(['venmo']);
       const { paypal, venmo } = buttonsOf(page);
 
-      expect(paypal).toBeNull();
-      expect(venmo).not.toBeNull();
+      expect(isShown(paypal)).toBe(false);
+      expect(isShown(venmo)).toBe(true);
     });
 
-    it('renders nothing when paypal is disabled on the checkout', async () => {
+    it('stays hidden when paypal is disabled on the checkout', async () => {
       checkoutStore.paypalEnabled = false;
       const { page } = await mount();
 
-      expect(page.root?.shadowRoot?.innerHTML).toBe('');
+      expect(containerShown(page)).toBe(false);
     });
 
-    it('renders nothing when venmo is the only eligible method outside USD', async () => {
+    it('stays hidden when venmo is the only eligible method outside USD', async () => {
       checkoutStore.paymentCurrency = 'cad';
       const { page } = await mount(['venmo']);
 
-      expect(page.root?.shadowRoot?.innerHTML).toBe('');
+      expect(containerShown(page)).toBe(false);
+    });
+
+    it('reveals the buttons when eligibility resolves late, without a second render', async () => {
+      const page = await createPage();
+      const mocks = mockSdk(['paypal', 'venmo']);
+      (window as any).paypal = { createInstance: mocks.createInstance };
+
+      expect(containerShown(page)).toBe(false);
+
+      const renderSpy = jest.spyOn(page.rootInstance as any, 'render');
+
+      const script = page.doc.head.querySelector(SCRIPT_SELECTOR);
+      script?.dispatchEvent(new Event('load'));
+      // drains the sdk promises only — deliberately no `waitForChanges()`
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(renderSpy).not.toHaveBeenCalled();
+      expect(containerShown(page)).toBe(true);
+      expect(isShown(buttonsOf(page).paypal)).toBe(true);
+      expect(isShown(buttonsOf(page).venmo)).toBe(true);
     });
   });
 

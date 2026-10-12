@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, State } from '@stencil/core';
+import { Component, Event, EventEmitter, h } from '@stencil/core';
 import { StyledHost } from '../../../../ui-components';
 import { checkoutStore, onChange } from '../../../../store/checkout.store';
 import { PaypalService } from '../../../../api/services/paypal.service';
@@ -18,6 +18,14 @@ import {
   VENMO_SUPPORTED_CURRENCY,
 } from './paypal';
 
+const SHOWN_CLASS = 'shown';
+
+const setShown = (el: HTMLElement | undefined, shown: boolean) => {
+  if (!el) return;
+  if (shown) el.classList.add(SHOWN_CLASS);
+  else el.classList.remove(SHOWN_CLASS);
+};
+
 @Component({
   tag: 'justifi-paypal',
   shadow: true,
@@ -29,8 +37,12 @@ export class JustifiPaypal {
   private venmoSession: IPaypalSession | undefined;
   private pendingOrderId?: string;
 
-  @State() paypalEligible: boolean = false;
-  @State() venmoEligible: boolean = false;
+  private paypalEligible: boolean = false;
+  private venmoEligible: boolean = false;
+
+  private buttonsEl?: HTMLElement;
+  private paypalButtonEl?: HTMLElement;
+  private venmoButtonEl?: HTMLElement;
 
   @Event() paypalStarted!: EventEmitter<{
     fundingSource: PaypalFundingSource;
@@ -55,10 +67,33 @@ export class JustifiPaypal {
     }
   }
 
+  componentDidRender() {
+    this.applyVisibility();
+  }
+
   private get currencyCode(): string {
     return (
       checkoutStore.paymentCurrency || PAYPAL_DEFAULT_CURRENCY
     ).toUpperCase();
+  }
+
+  private get showPaypal(): boolean {
+    return !!checkoutStore.paypalEnabled && this.paypalEligible;
+  }
+
+  private get showVenmo(): boolean {
+    return (
+      !!checkoutStore.paypalEnabled &&
+      this.venmoEligible &&
+      this.currencyCode === VENMO_SUPPORTED_CURRENCY
+    );
+  }
+
+  private applyVisibility() {
+    const { showPaypal, showVenmo } = this;
+    setShown(this.buttonsEl, showPaypal || showVenmo);
+    setShown(this.paypalButtonEl, showPaypal);
+    setShown(this.venmoButtonEl, showVenmo);
   }
 
   private emitError(error: string, code: PaypalErrorCodeType) {
@@ -112,6 +147,7 @@ export class JustifiPaypal {
     if (!clientId) {
       this.paypalEligible = false;
       this.venmoEligible = false;
+      this.applyVisibility();
       this.emitError('Missing Paypal client id', PaypalErrorCode.CONFIG_ERROR);
       return;
     }
@@ -143,9 +179,12 @@ export class JustifiPaypal {
           this.sessionOptions('venmo')
         );
       }
+
+      this.applyVisibility();
     } catch (error) {
       this.paypalEligible = false;
       this.venmoEligible = false;
+      this.applyVisibility();
       this.emitError(
         (error as any)?.message || 'Error initializing Paypal',
         PaypalErrorCode.INITIALIZATION_ERROR
@@ -197,7 +236,7 @@ export class JustifiPaypal {
   }
 
   private startSession = async (
-    session: IPaypalSession,
+    session: IPaypalSession | undefined,
     fundingSource: PaypalFundingSource
   ) => {
     if (!session) return;
@@ -237,40 +276,38 @@ export class JustifiPaypal {
   };
 
   render() {
-    if (!checkoutStore.paypalEnabled) return null;
-
-    const showVenmo =
-      this.venmoEligible && this.currencyCode === VENMO_SUPPORTED_CURRENCY;
-
-    if (!this.paypalEligible && !showVenmo) return null;
-
     return (
       <StyledHost>
-        <div class="paypal-buttons">
-          {this.paypalEligible && (
-            <paypal-button
-              type="pay"
-              onClick={() => this.startSession(this.paypalSession!, 'paypal')}
-            />
-          )}
-          {showVenmo && (
-            <venmo-button
-              type="pay"
-              onClick={() => this.startSession(this.venmoSession!, 'venmo')}
-            />
-          )}
+        <div class="paypal-buttons" ref={(el) => (this.buttonsEl = el)}>
+          <paypal-button
+            type="pay"
+            ref={(el: HTMLElement) => (this.paypalButtonEl = el)}
+            onClick={() => this.startSession(this.paypalSession, 'paypal')}
+          />
+          <venmo-button
+            type="pay"
+            ref={(el: HTMLElement) => (this.venmoButtonEl = el)}
+            onClick={() => this.startSession(this.venmoSession, 'venmo')}
+          />
         </div>
 
         <style>
           {`
             .paypal-buttons {
-              display: flex;
+              display: none;
               gap: 8px;
               width: 100%;
             }
+            .paypal-buttons.shown {
+              display: flex;
+            }
             .paypal-buttons > * {
+              display: none;
               flex: 1 1 0;
               min-width: 0;
+            }
+            .paypal-buttons > .shown {
+              display: block;
             }
           `}
         </style>
