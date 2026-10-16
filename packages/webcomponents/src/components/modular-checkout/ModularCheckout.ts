@@ -7,6 +7,8 @@ export enum PAYMENT_MODE {
   BNPL = 'bnpl',
   APPLE_PAY = 'apple_pay',
   GOOGLE_PAY = 'google_pay',
+  PAYPAL = 'paypal',
+  VENMO = 'venmo',
 }
 
 // Maps the backend payment method types to the frontend payment method types
@@ -29,6 +31,8 @@ export enum PAYMENT_METHODS {
   GOOGLE_PAY = 'google_pay',
   SEZZLE = 'sezzle',
   PLAID = 'plaid',
+  PAYPAL = 'paypal',
+  VENMO = 'venmo',
 }
 
 export type SelectedPaymentMethod = { id?: string; type: PAYMENT_METHODS };
