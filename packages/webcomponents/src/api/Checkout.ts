@@ -82,6 +82,9 @@ export interface ICheckout {
     paypal_payments: boolean;
   };
   bnpl?: IBnpl;
+  paypal?: {
+    provider_client_id: string;
+  };
   total_amount: number;
   insurance_amount: number;
   status: ICheckoutStatus;
@@ -117,6 +120,7 @@ export class Checkout implements ICheckout {
     paypal_payments: boolean;
   };
   bnpl?: IBnpl;
+  paypal?: { provider_client_id: string };
   total_amount: number;
   insurance_amount: number;
   status: ICheckoutStatus;
@@ -143,6 +147,7 @@ export class Checkout implements ICheckout {
     this.payment_method_group_id = data.payment_method_group_id;
     this.payment_settings = data.payment_settings;
     this.bnpl = data.bnpl;
+    this.paypal = data.paypal;
     this.total_amount = data.total_amount;
     this.insurance_amount = data.insurance_amount;
     this.status = ICheckoutStatus[data.status];
@@ -198,7 +203,7 @@ export enum ICheckoutPaymentMode {
   bank_account = 'Bank Account',
   card_present = 'Card Present',
   apple_pay = 'Apple Pay',
-  paypal = 'Paypal',
+  paypal = 'PayPal',
   venmo = 'Venmo',
   unknown = '',
 }
