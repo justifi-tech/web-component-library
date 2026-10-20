@@ -26,7 +26,7 @@ test.describe('TokenizePaymentMethod Component', () => {
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
       const outputPane = page.locator('#output-pane');
-      await expect(outputPane).toContainText('token', { timeout: 15000 });
+      await expect(outputPane).toContainText('token');
       expect(pageErrors).toHaveLength(0);
     });
 
@@ -46,9 +46,9 @@ test.describe('TokenizePaymentMethod Component', () => {
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
       const outputPane = page.locator('#output-pane');
-      await expect(outputPane).not.toContainText('Tokenization output will appear here', {
-        timeout: 15000,
-      });
+      await expect(outputPane).not.toContainText(
+        'Tokenization output will appear here',
+      );
       const content = await outputPane.textContent();
       const hasToken = content?.includes('token');
       const hasError = content?.includes('error');

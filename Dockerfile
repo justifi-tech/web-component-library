@@ -8,11 +8,6 @@ ENV IFRAME_ORIGIN=$IFRAME_ORIGIN
 ENV PROXY_API_ORIGIN=$PROXY_API_ORIGIN
 ENV API_ORIGIN=$API_ORIGIN
 
-# This image only serves the example pages; the E2E job installs its own
-# Playwright browsers on the runner. Without this the root `postinstall` pulls
-# ~280MB of Chromium into the image that nothing here ever launches.
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@10.6.5 --activate
 

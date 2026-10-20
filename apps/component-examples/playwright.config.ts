@@ -14,11 +14,11 @@ export default defineConfig({
   fullyParallel: true,
   workers: process.env.CI ? 4 : undefined,
   retries: process.env.CI ? 1 : 0,
-  // These assertions wait on a real API over the network — a tokenize round
-  // trip happens before the checkout error being asserted on can surface, for
-  // instance. Playwright's 5s default is tuned for a local app and turns
-  // slow-but-correct paths into flakes.
-  expect: { timeout: 15_000 },
+  // These assertions wait on a real API over the network, under four workers
+  // hitting it at once — a tokenize round trip overran 15s on CI. Playwright's
+  // 5s default is tuned for a local app and turns slow-but-correct paths into
+  // flakes. The 90s test timeout still bounds a genuinely stuck test.
+  expect: { timeout: 30_000 },
   reporter: process.env.CI
     ? [['list'], ['html', { open: 'never' }]]
     : 'html',
