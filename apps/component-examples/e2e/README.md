@@ -84,9 +84,11 @@ These are also the signal that a payment-method toggle finished — the bank ifr
 
 For list components. The table renders a single-cell `loading-state` / `empty-state` / `error-state` row while it has no data, so a row merely existing proves nothing. `waitForTableRows` waits for a real data row; `waitForTableRowChange` waits for the first row to settle on different content, ignoring the loading row that renders mid-fetch (asserting `not.toHaveText(previous)` on its own passes on that loading row).
 
-### `waitForFieldsValid(page, tagName)`
+### `waitForCardFieldsSynced(page)` / `waitForBankAccountFieldsSynced(page)`
 
-Polls the component's own `validate()` until it reports valid. Hosted fields report their state back to the host component asynchronously, so a successful `fill()` does not mean the component has registered the value yet. Use this between filling a form and triggering tokenization.
+Waits for typed hosted-field values to reach the host component. `fillCardForm()` and `fillBankAccountForm()` already call these, so you only need them when you fill the iframes yourself.
+
+> ⚠️ **This is the one wait in the suite that still ends in a sleep, and it is deliberate.** Two things can go wrong after `fill()` returns. The frame can reload and silently drop what was typed — the value read back out of the frame catches that, and is asserted. And the field syncs its value to the host over postMessage with **nothing observable marking that done**. `validate()` is not a substitute: on CI it reported `isValid` while a card field had not synced, and the tokenize that followed failed with `card_number_required` — three times in one run. The only number known to hold is the 2s this suite always used. If the component ever exposes a fields-ready signal, this sleep is the first thing that should go.
 
 ### `listenForErrorEvent(page, componentName)`
 
@@ -294,7 +296,7 @@ six minutes of CI. Removing them is what took this suite from 6m19s to the time 
 | After `page.goto()` | `waitForComponent(page, tagName)` |
 | Before calling a component method or clicking Submit | `waitForCardForm(page)` / `waitForBankAccountForm(page)` |
 | After toggling payment method | `waitForCardForm(page)` / `waitForBankAccountForm(page)` |
-| After filling a form, before tokenizing | `waitForFieldsValid(page, tagName)` |
+| After filling a form, before tokenizing | `waitForCardFieldsSynced(page)` (built into `fillCardForm()`) |
 | After clicking the billing-fill button | `expect(locator).toHaveValue(...)` |
 | After a button click | the assertion itself — `expect()` auto-retries |
 | Before reading list rows | `waitForTableRows(page, tagName)` |
@@ -306,10 +308,10 @@ six minutes of CI. Removing them is what took this suite from 6m19s to the time 
 **Watch for assertions that pass vacuously.** `expect(submitButton).toBeEnabled()` straight after a click passes against the pre-click state. Assert the outcome you are waiting for first (the error in the event log, the response), then assert the button came back.
 
 Four sleeps are left in the suite, each with a comment saying what it waits for and why nothing
-exposes it: component teardown, a field registering its value before a provisioning step advances,
-a row click that produces no observable effect, and the one `validate()` test that cannot use
-`validate()` as its own wait condition. If you need a fifth, write the same kind of comment — or
-find the condition.
+exposes it: the hosted-field sync above, component teardown, a field registering its value before a
+provisioning step advances, and a row click that produces no observable effect. Three of the four
+are one-liners; only the hosted-field one is on a hot path. If you need a fifth, write the same kind
+of comment — or find the condition.
 
 ### Freshly created payments are not immediately refundable
 

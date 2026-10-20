@@ -116,26 +116,44 @@ export async function waitForComponent(page: Page, tagName: string) {
 }
 
 /**
- * Wait for a component to report its filled fields as valid.
+ * Wait for typed hosted-field values to reach the host component.
  *
- * Hosted iframe fields report their state back to the host component
- * asynchronously, so a successful `fill()` does not mean the component has
- * registered the value yet. `validate()` is the component's own view of that
- * state, which is what the flat 2s sleeps used to approximate.
+ * This is the one wait in the suite that still ends in a sleep, and it is
+ * deliberate. Two separate things can go wrong after `fill()` returns:
+ *
+ * 1. The frame reloads and silently drops what was typed into it. The value
+ *    read back out of the frame catches that, so it is asserted here.
+ * 2. The field syncs its value to the host over postMessage, and **nothing
+ *    observable marks that as done**. `validate()` is not a substitute: on CI
+ *    it reported `isValid` while a card field had not synced, and the tokenize
+ *    that followed failed with `card_number_required` — three times in one
+ *    run. The only number known to hold is the 2s this suite always used.
+ *
+ * If the component ever exposes a fields-ready signal, this sleep is the first
+ * thing that should go.
  */
-export async function waitForFieldsValid(page: Page, tagName: string) {
-  await expect
-    .poll(
-      () =>
-        page.evaluate(async (tag) => {
-          const el = document.querySelector(tag) as any;
-          if (!el) return false;
-          const result = await el.validate();
-          return !!result?.isValid;
-        }, tagName),
-      { timeout: 15000 },
-    )
-    .toBe(true);
+export async function waitForHostedFieldsSynced(
+  page: Page,
+  iframeNames: readonly string[],
+) {
+  await Promise.all(
+    iframeNames.map((name) =>
+      expect(
+        page.frameLocator(`iframe[name="${name}"]`).locator('input'),
+      ).toHaveValue(/\S/),
+    ),
+  );
+  await page.waitForTimeout(2000);
+}
+
+/** Wait for typed card-form values to reach the host component. */
+export async function waitForCardFieldsSynced(page: Page) {
+  await waitForHostedFieldsSynced(page, CARD_IFRAMES);
+}
+
+/** Wait for typed bank-account-form values to reach the host component. */
+export async function waitForBankAccountFieldsSynced(page: Page) {
+  await waitForHostedFieldsSynced(page, BANK_ACCOUNT_IFRAMES);
 }
 
 /** Returns a promise that resolves when a console error-event is logged for the given component. */
@@ -174,6 +192,7 @@ export async function fillCardForm(page: Page) {
   await fillIframeInput(page, 'expirationYear', TEST_DATA.card.expirationYear);
   await fillIframeInput(page, 'CVV', TEST_DATA.card.cvv);
   await fillBillingFormViaButton(page);
+  await waitForCardFieldsSynced(page);
 }
 
 /** Fill bank account iframe fields + billing via fill-billing-form button. */
@@ -181,6 +200,7 @@ export async function fillBankAccountForm(page: Page) {
   await fillIframeInput(page, 'routingNumber', TEST_DATA.bankAccount.routingNumber);
   await fillIframeInput(page, 'accountNumber', TEST_DATA.bankAccount.accountNumber);
   await fillBillingFormViaButton(page);
+  await waitForBankAccountFieldsSynced(page);
 }
 
 /** Clicks fill-billing-form button to populate billing fields. */

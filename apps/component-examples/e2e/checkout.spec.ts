@@ -3,8 +3,9 @@ import {
   fillIframeInput,
   waitForComponent,
   waitForBankAccountForm,
+  waitForBankAccountFieldsSynced,
   waitForCardForm,
-  waitForFieldsValid,
+  waitForCardFieldsSynced,
   listenForErrorEvent,
   TEST_DATA,
 } from './helpers';
@@ -33,7 +34,7 @@ test.describe('Checkout Component', () => {
       TEST_DATA.bankAccount.accountNumber,
     );
 
-    await waitForFieldsValid(page, 'justifi-checkout');
+    await waitForBankAccountFieldsSynced(page);
 
     const errorPromise = listenForErrorEvent(page, 'justifi-checkout');
     const completeResponsePromise = page.waitForResponse(
@@ -91,7 +92,7 @@ test.describe('Checkout Component', () => {
       .getByRole('textbox', { name: 'Postal Code' })
       .fill(TEST_DATA.postalCodes.minneapolis);
 
-    await waitForFieldsValid(page, 'justifi-checkout');
+    await waitForCardFieldsSynced(page);
 
     const errorPromise = listenForErrorEvent(page, 'justifi-checkout');
     const completeResponsePromise = page.waitForResponse(
@@ -252,7 +253,7 @@ test.describe('Checkout Component', () => {
     await page
       .getByRole('textbox', { name: 'Postal Code' })
       .fill(TEST_DATA.postalCodes.minneapolis);
-    await waitForFieldsValid(page, 'justifi-checkout');
+    await waitForCardFieldsSynced(page);
 
     const payButton = page.getByRole('button', { name: 'Pay', exact: true });
     await payButton.click();

@@ -7,7 +7,6 @@ import {
   listenForSubmitEvent,
   waitForBankAccountForm,
   waitForCardForm,
-  waitForFieldsValid,
   TEST_DATA,
 } from './helpers';
 
@@ -21,7 +20,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
@@ -41,7 +39,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForBankAccountForm(page);
 
       await fillBankAccountForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
@@ -75,10 +72,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      // validate() is the assertion here, so it cannot also be the wait
-      // condition, and nothing else exposes when the hosted fields have
-      // reported their state back to the component.
-      await page.waitForTimeout(2000);
 
       const result = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');
@@ -94,7 +87,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const result = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');
@@ -116,7 +108,6 @@ test.describe('TokenizePaymentMethod Component', () => {
 
       const submitPromise = listenForSubmitEvent(page);
       await fillCardForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
@@ -135,7 +126,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
@@ -165,7 +155,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const payload = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');
@@ -202,7 +191,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const payload = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');
@@ -220,7 +208,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const loadingStates = await page.evaluate(async () => {
         const states: boolean[] = [];
@@ -262,7 +249,6 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const submitButton = page.getByRole('button', { name: 'Submit', exact: true });
       await submitButton.click();
