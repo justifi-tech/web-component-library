@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 import {
   fillIframeInput,
   waitForComponent,
+  waitForBankAccountForm,
+  waitForCardForm,
+  waitForFieldsValid,
   listenForErrorEvent,
   TEST_DATA,
 } from './helpers';
@@ -12,10 +15,12 @@ test.describe('Checkout Component', () => {
     await waitForComponent(page, 'justifi-checkout');
 
     await page.getByRole('radio', { name: 'New bank account' }).click();
-    await page.waitForTimeout(2000);
+    await waitForBankAccountForm(page);
 
     await page.getByTestId('fill-billing-form-button').click();
-    await page.waitForTimeout(500);
+    await expect(page.getByRole('textbox', { name: 'Full Name' })).toHaveValue(
+      'John Doe',
+    );
 
     await fillIframeInput(
       page,
@@ -28,7 +33,7 @@ test.describe('Checkout Component', () => {
       TEST_DATA.bankAccount.accountNumber,
     );
 
-    await page.waitForTimeout(2000);
+    await waitForFieldsValid(page, 'justifi-checkout');
 
     const errorPromise = listenForErrorEvent(page, 'justifi-checkout');
     const completeResponsePromise = page.waitForResponse(
@@ -86,8 +91,7 @@ test.describe('Checkout Component', () => {
       .getByRole('textbox', { name: 'Postal Code' })
       .fill(TEST_DATA.postalCodes.minneapolis);
 
-    // Let iframe JS fully initialize before triggering tokenization
-    await page.waitForTimeout(2000);
+    await waitForFieldsValid(page, 'justifi-checkout');
 
     const errorPromise = listenForErrorEvent(page, 'justifi-checkout');
     const completeResponsePromise = page.waitForResponse(
@@ -137,7 +141,9 @@ test.describe('Checkout Component', () => {
     }
 
     await savedMethodLocator.first().click();
-    await page.waitForTimeout(1000);
+    await expect(
+      page.getByRole('button', { name: 'Pay', exact: true }),
+    ).toBeEnabled();
 
     const errorPromise = listenForErrorEvent(page, 'justifi-checkout');
     const completeResponsePromise = page.waitForResponse(
@@ -246,16 +252,16 @@ test.describe('Checkout Component', () => {
     await page
       .getByRole('textbox', { name: 'Postal Code' })
       .fill(TEST_DATA.postalCodes.minneapolis);
-    await page.waitForTimeout(2000);
+    await waitForFieldsValid(page, 'justifi-checkout');
 
     const payButton = page.getByRole('button', { name: 'Pay', exact: true });
     await payButton.click();
 
-    await page.waitForTimeout(3000);
-
-    await expect(payButton).toBeEnabled();
+    // Assert the failure surfaced BEFORE asserting Pay came back: the button is
+    // enabled before the click too, so checking it first passes vacuously.
     const outputPane = page.locator('#output-pane');
     await expect(outputPane).toContainText(/error|fail/i);
+    await expect(payButton).toBeEnabled();
   });
 
   test('validate() works after toggling payment methods', async ({ page }) => {
@@ -263,10 +269,10 @@ test.describe('Checkout Component', () => {
     await waitForComponent(page, 'justifi-checkout');
 
     await page.getByRole('radio', { name: 'New bank account' }).click();
-    await page.waitForTimeout(500);
+    await waitForBankAccountForm(page);
 
     await page.getByRole('radio', { name: 'New credit or debit card' }).click();
-    await page.waitForTimeout(3000);
+    await waitForCardForm(page);
 
     const result = await page.evaluate(async () => {
       const el = document.querySelector('justifi-checkout');
@@ -282,10 +288,10 @@ test.describe('Checkout Component', () => {
     page,
   }) => {
     await page.goto('/checkout');
-    await page.waitForSelector('justifi-checkout');
-
-    // Wait for checkout data fetch
-    await page.waitForTimeout(3000);
+    await waitForComponent(page, 'justifi-checkout');
+    // The button is plain page markup, so it is clickable before the component
+    // can answer fillBillingForm(). Wait for the card form it writes into.
+    await waitForCardForm(page);
 
     // Click Fill Billing Form button to populate billing data
     await page.getByTestId('fill-billing-form-button').click();
@@ -299,8 +305,8 @@ test.describe('Checkout Component', () => {
     // Toggle to bank account payment method
     await page.getByRole('radio', { name: 'New bank account' }).click();
 
-    // Wait for form to switch
-    await page.waitForTimeout(500);
+    // The bank iframes only exist on the bank form, so this is the form switch
+    await waitForBankAccountForm(page);
 
     // Verify billing data persists: name field should show filled value
     const nameInput = page.getByRole('textbox', { name: 'Full Name' });
@@ -309,7 +315,9 @@ test.describe('Checkout Component', () => {
     // Toggle back to card
     await page.getByRole('radio', { name: 'New credit or debit card' }).click();
 
-    await page.waitForTimeout(500);
+    // Both forms render a Postal Code field, so wait for the card iframes
+    // rather than letting the assertion below match the bank form's copy.
+    await waitForCardForm(page);
 
     // Verify postal code still persists
     await expect(postalCodeInput).toHaveValue('90210');

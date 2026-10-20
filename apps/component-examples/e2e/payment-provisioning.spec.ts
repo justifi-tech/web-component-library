@@ -59,10 +59,11 @@ test.describe('payment-provisioning happy path - USA', () => {
       representativeIsOwner: true,
     });
     await clickNext(page);
-    await waitForStep(page, 6);
 
-    // Step 5: Bank Account
-    await waitForStep(page, 6, 20000);
+    // Step 5: Bank Account. Owners -> Bank PATCHes the business and refetches,
+    // which is the slowest transition in the flow and slower still with the
+    // suite running in parallel.
+    await waitForStep(page, 6, 30000);
     await fillBankAccountManual(page, TEST_BUSINESS_DATA.usa.bankAccount);
     await clickNext(page);
     await waitForStep(page, 7);
@@ -129,9 +130,9 @@ test.describe('payment-provisioning happy path - CAN', () => {
       representativeIsOwner: true,
     });
     await clickNext(page);
-    await waitForStep(page, 6);
 
-    await waitForStep(page, 6, 20000);
+    // Owners -> Bank is the slowest transition in the flow; see the USA test.
+    await waitForStep(page, 6, 30000);
     await fillBankAccountManualCAN(page, TEST_BUSINESS_DATA.can.bankAccount);
     await clickNext(page);
     await waitForStep(page, 7);
@@ -199,9 +200,9 @@ test.describe('payment-provisioning USA — rep not owner', () => {
       representativeIsOwner: false,
     });
     await clickNext(page);
-    await waitForStep(page, 6);
 
-    await waitForStep(page, 6, 20000);
+    // Owners -> Bank is the slowest transition in the flow; see the USA test.
+    await waitForStep(page, 6, 30000);
     await fillBankAccountManual(page, TEST_BUSINESS_DATA.usa.bankAccount);
     await clickNext(page);
     await waitForStep(page, 7);

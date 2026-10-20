@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test';
+import { waitForComponent } from './helpers';
 
 test.describe('Modular Checkout', () => {
   test('allows pre-filling billing form fields externally (fillBillingForm())', async ({
     page,
   }) => {
     await page.goto('/modular-checkout');
-    await page.waitForSelector('justifi-modular-checkout');
-
-    // Wait for checkout data fetch
-    await page.waitForTimeout(3000);
+    await waitForComponent(page, 'justifi-modular-checkout');
+    // The button is plain page markup, so it is clickable before the component
+    // can answer fillBillingForm(). Wait for the form it writes into.
+    await expect(page.getByRole('textbox', { name: 'Full Name' })).toBeVisible();
 
     // Click Fill Billing Form button to populate billing data
     await page.getByTestId('fill-billing-form-button').click();

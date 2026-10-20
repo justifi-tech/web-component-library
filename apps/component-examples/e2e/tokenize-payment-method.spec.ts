@@ -5,6 +5,9 @@ import {
   fillBankAccountForm,
   fillIframeInput,
   listenForSubmitEvent,
+  waitForBankAccountForm,
+  waitForCardForm,
+  waitForFieldsValid,
   TEST_DATA,
 } from './helpers';
 
@@ -18,7 +21,7 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
@@ -35,10 +38,10 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('radio', { name: 'New bank account' }).click();
-      await page.waitForTimeout(2000);
+      await waitForBankAccountForm(page);
 
       await fillBankAccountForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
@@ -56,6 +59,7 @@ test.describe('TokenizePaymentMethod Component', () => {
     test('validate() -- returns invalid when fields empty', async ({ page }) => {
       await page.goto('/tokenize-payment-method');
       await waitForComponent(page, 'justifi-tokenize-payment-method');
+      await waitForCardForm(page);
 
       const result = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');
@@ -71,6 +75,9 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
+      // validate() is the assertion here, so it cannot also be the wait
+      // condition, and nothing else exposes when the hosted fields have
+      // reported their state back to the component.
       await page.waitForTimeout(2000);
 
       const result = await page.evaluate(async () => {
@@ -87,7 +94,7 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const result = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');
@@ -109,7 +116,7 @@ test.describe('TokenizePaymentMethod Component', () => {
 
       const submitPromise = listenForSubmitEvent(page);
       await fillCardForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
 
@@ -128,10 +135,9 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
-      await page.waitForTimeout(3000);
 
       const eventLog = page.locator('#event-log');
       await expect(eventLog).toContainText('error-event');
@@ -144,9 +150,9 @@ test.describe('TokenizePaymentMethod Component', () => {
     }) => {
       await page.goto('/tokenize-payment-method');
       await waitForComponent(page, 'justifi-tokenize-payment-method');
+      await waitForCardForm(page);
 
       await page.getByRole('button', { name: 'Submit', exact: true }).click();
-      await page.waitForTimeout(2000);
 
       const eventLog = page.locator('#event-log');
       await expect(eventLog).toContainText('error-event');
@@ -159,7 +165,7 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const payload = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');
@@ -196,7 +202,7 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const payload = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');
@@ -214,7 +220,7 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const loadingStates = await page.evaluate(async () => {
         const states: boolean[] = [];
@@ -256,15 +262,14 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await fillCardForm(page);
-      await page.waitForTimeout(2000);
+      await waitForFieldsValid(page, 'justifi-tokenize-payment-method');
 
       const submitButton = page.getByRole('button', { name: 'Submit', exact: true });
       await submitButton.click();
-      await page.waitForTimeout(3000);
 
-      await expect(submitButton).toBeEnabled();
       const eventLog = page.locator('#event-log');
       await expect(eventLog).toContainText('error-event');
+      await expect(submitButton).toBeEnabled();
     });
 
     test('analytics init/cleanup', async ({ page }) => {
@@ -276,6 +281,8 @@ test.describe('TokenizePaymentMethod Component', () => {
       expect(pageErrors).toHaveLength(0);
 
       await page.goto('about:blank');
+      // Nothing observable marks "teardown finished"; this gives a disconnect
+      // error a window to reach the pageerror listener.
       await page.waitForTimeout(500);
       expect(pageErrors).toHaveLength(0);
     });
@@ -303,7 +310,7 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('radio', { name: 'New bank account' }).click();
-      await page.waitForTimeout(2000);
+      await waitForBankAccountForm(page);
 
       await fillIframeInput(page, 'routingNumber', TEST_DATA.bankAccount.routingNumber);
       await fillIframeInput(page, 'accountNumber', TEST_DATA.bankAccount.accountNumber);
@@ -321,10 +328,10 @@ test.describe('TokenizePaymentMethod Component', () => {
       await waitForComponent(page, 'justifi-tokenize-payment-method');
 
       await page.getByRole('radio', { name: 'New bank account' }).click();
-      await page.waitForTimeout(500);
+      await waitForBankAccountForm(page);
 
       await page.getByRole('radio', { name: 'New credit or debit card' }).click();
-      await page.waitForTimeout(3000);
+      await waitForCardForm(page);
 
       const result = await page.evaluate(async () => {
         const el = document.querySelector('justifi-tokenize-payment-method');

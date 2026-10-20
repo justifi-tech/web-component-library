@@ -262,8 +262,13 @@ export async function fillOwners(
   );
   if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner) {
     await page.getByRole('button', { name: 'Yes' }).click();
-    await page.waitForTimeout(4000);
     const comp = page.locator('justifi-payment-provisioning');
+    // Clicking Yes PATCHes the business and refetches behind a loading view.
+    // The owner form comes back prefilled with the representative, so a
+    // non-empty name is the completion signal.
+    await expect(comp.getByLabel('Full Name')).not.toHaveValue('', {
+      timeout: 20000,
+    });
     if ('ownership_percentage' in data && data.ownership_percentage) {
       await comp.getByLabel('% of Ownership').fill(data.ownership_percentage);
     }
@@ -271,7 +276,10 @@ export async function fillOwners(
   }
   if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner === false) {
     await page.getByRole('button', { name: 'No' }).click();
-    await page.waitForTimeout(500);
+    // The prompt disappears in the same render that puts the owner form into
+    // its editable state. Filling before that lands on the pre-answer form, the
+    // owners PATCH then fails validation and the step never advances.
+    await expect(repIsOwnerBanner).toBeHidden();
   }
 
   const comp = page.locator('justifi-payment-provisioning');
@@ -314,7 +322,6 @@ export async function fillBankAccountManual(
   });
   if (await manualButton.isVisible()) {
     await manualButton.click();
-    await page.waitForTimeout(500);
   }
   await page.getByLabel('Bank Name').fill(data.bank_name);
   await page.getByLabel('Nickname').fill(data.nickname);
@@ -333,7 +340,6 @@ export async function fillBankAccountManualCAN(
   });
   if (await manualButton.isVisible()) {
     await manualButton.click();
-    await page.waitForTimeout(500);
   }
   await page.getByLabel('Bank Name').fill(data.bank_name);
   await page.getByLabel('Nickname').fill(data.nickname);
@@ -350,9 +356,7 @@ export async function fillDocumentUpload(
 ): Promise<void> {
   const comp = page.locator('justifi-payment-provisioning');
   await page.getByLabel('Document Category').selectOption('financial_document');
-  await page.waitForTimeout(300);
   await page.getByLabel('Document Type').selectOption('voided_check');
-  await page.waitForTimeout(300);
   const fileInput = comp.locator('input[name="document_file"]');
   await fileInput.setInputFiles(voidedCheckPath);
   // Wait for upload badge to show success
@@ -370,9 +374,7 @@ export async function fillDocumentUploadCAN(
 
   async function uploadDoc(categoryValue: string, docType: string, expectedBadges: number) {
     await categorySelect.selectOption(categoryValue);
-    await page.waitForTimeout(300);
     await typeSelect.selectOption(docType);
-    await page.waitForTimeout(300);
     await fileInput.setInputFiles(fixturePath);
     await expect(comp.locator('.badge.bg-success')).toHaveCount(expectedBadges, { timeout: 15000 });
   }
@@ -392,6 +394,9 @@ export async function acceptTerms(page: Page): Promise<void> {
 }
 
 export async function clickNext(page: Page): Promise<void> {
+  // Deliberate: lets the last-filled field register its value before the step
+  // advances. Nothing on the form exposes that, and the 8-step flows are the
+  // most expensive tests to make flaky.
   await page.waitForTimeout(300);
   await page.getByRole('button', { name: 'Next' }).click();
 }

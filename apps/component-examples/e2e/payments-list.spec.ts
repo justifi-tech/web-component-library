@@ -1,20 +1,27 @@
 import { test, expect } from '@playwright/test';
-import { waitForComponent } from './helpers';
+import {
+  waitForComponent,
+  waitForTableRowChange,
+  waitForTableRows,
+} from './helpers';
+
+const TAG = 'justifi-payments-list';
 
 test.describe('Payments List Component', () => {
   test('should paginate forward with Next button', async ({ page }) => {
     await page.goto('/payments-list');
-    await waitForComponent(page, 'justifi-payments-list');
+    await waitForComponent(page, TAG);
+    await waitForTableRows(page, TAG);
 
-    const firstRow = page.locator('justifi-payments-list tbody tr:first-child');
+    const firstRow = page.locator(`${TAG} tbody tr:first-child`);
     const firstRowText = await firstRow.textContent();
 
     const nextButton = page.getByRole('button', { name: 'Next»' });
     await expect(nextButton).toBeVisible();
     await nextButton.click();
 
-    // Wait for table content to change
-    await expect(firstRow).not.toHaveText(firstRowText!, { timeout: 15000 });
+    // Wait for the table to settle on a different page
+    await waitForTableRowChange(page, TAG, firstRowText!);
 
     const newFirstRowText = await firstRow.textContent();
     expect(newFirstRowText).not.toBe(firstRowText);
@@ -23,20 +30,21 @@ test.describe('Payments List Component', () => {
   // Known bug: Previous button doesn't return to the correct page (ISSUE-001 from dogfood report)
   test.fixme('should paginate back with Previous button', async ({ page }) => {
     await page.goto('/payments-list');
-    await waitForComponent(page, 'justifi-payments-list');
+    await waitForComponent(page, TAG);
+    await waitForTableRows(page, TAG);
 
-    const firstRow = page.locator('justifi-payments-list tbody tr:first-child');
+    const firstRow = page.locator(`${TAG} tbody tr:first-child`);
     const firstPageText = await firstRow.textContent();
 
     // Go to page 2
     await page.getByRole('button', { name: 'Next»' }).click();
-    await expect(firstRow).not.toHaveText(firstPageText!, { timeout: 15000 });
+    await waitForTableRowChange(page, TAG, firstPageText!);
 
     const page2Text = await firstRow.textContent();
 
     // Go back to page 1
     await page.getByRole('button', { name: '«Previous' }).click();
-    await expect(firstRow).not.toHaveText(page2Text!, { timeout: 15000 });
+    await waitForTableRowChange(page, TAG, page2Text!);
 
     const backText = await firstRow.textContent();
     expect(backText).toBe(firstPageText);
@@ -46,7 +54,8 @@ test.describe('Payments List Component', () => {
     'should not skip pages on rapid Next clicks',
     async ({ page }) => {
       await page.goto('/payments-list');
-      await waitForComponent(page, 'justifi-payments-list');
+      await waitForComponent(page, TAG);
+      await waitForTableRows(page, TAG);
 
       const apiRequests: string[] = [];
       page.on('request', (req) => {
@@ -76,18 +85,24 @@ test.describe('Payments List Component', () => {
     page.on('pageerror', (err) => pageErrors.push(err));
 
     await page.goto('/payments-list');
-    await waitForComponent(page, 'justifi-payments-list');
+    await waitForComponent(page, TAG);
+    await waitForTableRows(page, TAG);
+
+    const firstRow = page.locator(`${TAG} tbody tr:first-child`);
+    const page1Text = await firstRow.textContent();
 
     // Navigate forward
     await page.getByRole('button', { name: 'Next»' }).click();
-    await page.waitForTimeout(2000);
+    await waitForTableRowChange(page, TAG, page1Text!);
+    const page2Text = await firstRow.textContent();
 
     // Navigate back
     await page.getByRole('button', { name: '«Previous' }).click();
-    await page.waitForTimeout(2000);
+    await waitForTableRowChange(page, TAG, page2Text!);
 
-    // Click a row
-    await page.locator('justifi-payments-list tbody tr:first-child').click();
+    // Click a row. Nothing observable happens on the page, so this is just a
+    // window for a click handler to throw into the pageerror listener.
+    await firstRow.click();
     await page.waitForTimeout(1000);
 
     expect(pageErrors).toHaveLength(0);
