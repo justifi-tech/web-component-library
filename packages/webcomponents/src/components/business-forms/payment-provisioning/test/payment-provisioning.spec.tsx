@@ -185,6 +185,32 @@ describe('justifi-payment-provisioning', () => {
     );
   });
 
+  it('should render the form for a platform sub account business linked to its account', async () => {
+    BusinessService.prototype.fetchBusiness = jest
+      .fn()
+      .mockResolvedValue(mockProvisionedBusinessResponse);
+
+    const errorEvent = jest.fn();
+    const page = await newSpecPage({
+      components: [JustifiPaymentProvisioning],
+      template: () => (
+        <justifi-payment-provisioning
+          businessId="biz_123"
+          authToken={validToken}
+          platformSubAccount={true}
+          onError-event={errorEvent}
+        />
+      ),
+    });
+
+    await page.waitForChanges();
+
+    expect(errorEvent).not.toHaveBeenCalled();
+    const hostText = page.root.shadowRoot?.textContent ?? '';
+    expect(hostText).not.toContain('Business Already Provisioned');
+    expect(page.root.shadowRoot.querySelector('payment-provisioning-form-steps')).not.toBeNull();
+  });
+
   it('should render form after business data loads', async () => {
     BusinessService.prototype.fetchBusiness = jest
       .fn()

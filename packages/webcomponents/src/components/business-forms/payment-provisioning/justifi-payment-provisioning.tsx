@@ -55,6 +55,8 @@ export class JustifiPaymentProvisioning {
   @Prop() authToken!: string;
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() formTitle?: string = 'Business Information';
+  /** Set for a platform sub account's business, which is linked to its account before provisioning. */
+  @Prop() platformSubAccount?: boolean = false;
 
   @Watch('authToken')
   @Watch('businessId')
@@ -134,7 +136,7 @@ export class JustifiPaymentProvisioning {
       this.getBusiness({
         onSuccess: (response) => {
           const business = new Business(response.data);
-          this.businessProvisioned = checkProvisioningStatus(business);
+          this.businessProvisioned = !this.platformSubAccount && checkProvisioningStatus(business);
           this.country = business.country_of_establishment;
           if (this.businessProvisioned) {
             this.errorEvent.emit({
