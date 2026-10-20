@@ -32,16 +32,32 @@ export async function waitForIframeInput(page: Page, iframeName: string) {
   return input;
 }
 
-/** Wait for every card-form iframe to be loaded and interactive. */
-export async function waitForCardForm(page: Page) {
-  await Promise.all(CARD_IFRAMES.map((name) => waitForIframeInput(page, name)));
+/**
+ * The hosted field scripts keep initialising after their input is interactive,
+ * and a late init wipes whatever was typed before it finished. On CI that
+ * surfaced as the whole tokenize suite failing with `card_number_required`
+ * while the same code was green locally — a slower machine simply loses the
+ * race. Nothing in the frame or on the host marks init as done.
+ *
+ * This is the 3s `waitForComponent()` used to spend on EVERY navigation, now
+ * spent only on the two forms that actually have hosted fields.
+ */
+async function settleHostedFields(page: Page) {
+  await page.waitForTimeout(3000);
 }
 
-/** Wait for every bank-account-form iframe to be loaded and interactive. */
+/** Wait for every card-form iframe to be loaded and ready to be typed into. */
+export async function waitForCardForm(page: Page) {
+  await Promise.all(CARD_IFRAMES.map((name) => waitForIframeInput(page, name)));
+  await settleHostedFields(page);
+}
+
+/** Wait for every bank-account-form iframe to be loaded and ready. */
 export async function waitForBankAccountForm(page: Page) {
   await Promise.all(
     BANK_ACCOUNT_IFRAMES.map((name) => waitForIframeInput(page, name)),
   );
+  await settleHostedFields(page);
 }
 
 /**
@@ -86,14 +102,24 @@ export async function waitForTableRowChange(
     .not.toBe(previousText);
 }
 
-/** Fill an input inside a hosted iframe. */
+/**
+ * Fill an input inside a hosted iframe, retrying until the value sticks.
+ *
+ * A hosted field that is still initialising accepts the keystrokes and then
+ * clears itself, so a single `fill()` can silently leave the field empty.
+ * `waitForCardForm()` / `waitForBankAccountForm()` cover the common case; this
+ * is the backstop for the rest.
+ */
 export async function fillIframeInput(
   page: Page,
   iframeName: string,
   value: string,
 ) {
   const input = await waitForIframeInput(page, iframeName);
-  await input.fill(value);
+  await expect(async () => {
+    await input.fill(value);
+    await expect(input).toHaveValue(/\S/, { timeout: 2000 });
+  }).toPass({ timeout: 20000 });
 }
 
 /**
@@ -187,6 +213,7 @@ export function listenForSubmitEvent(page: Page): Promise<string> {
 
 /** Fill card iframe fields + billing via fill-billing-form button. */
 export async function fillCardForm(page: Page) {
+  await waitForCardForm(page);
   await fillIframeInput(page, 'cardNumber', TEST_DATA.card.number);
   await fillIframeInput(page, 'expirationMonth', TEST_DATA.card.expirationMonth);
   await fillIframeInput(page, 'expirationYear', TEST_DATA.card.expirationYear);
@@ -197,6 +224,7 @@ export async function fillCardForm(page: Page) {
 
 /** Fill bank account iframe fields + billing via fill-billing-form button. */
 export async function fillBankAccountForm(page: Page) {
+  await waitForBankAccountForm(page);
   await fillIframeInput(page, 'routingNumber', TEST_DATA.bankAccount.routingNumber);
   await fillIframeInput(page, 'accountNumber', TEST_DATA.bankAccount.accountNumber);
   await fillBillingFormViaButton(page);

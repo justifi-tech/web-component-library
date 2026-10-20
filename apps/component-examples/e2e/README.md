@@ -294,6 +294,7 @@ six minutes of CI. Removing them is what took this suite from 6m19s to the time 
 | Scenario | Wait on |
 |---|---|
 | After `page.goto()` | `waitForComponent(page, tagName)` |
+| Before typing into hosted fields | `waitForCardForm(page)` / `waitForBankAccountForm(page)` (built into `fillCardForm()`) |
 | Before calling a component method or clicking Submit | `waitForCardForm(page)` / `waitForBankAccountForm(page)` |
 | After toggling payment method | `waitForCardForm(page)` / `waitForBankAccountForm(page)` |
 | After filling a form, before tokenizing | `waitForCardFieldsSynced(page)` (built into `fillCardForm()`) |
@@ -307,11 +308,23 @@ six minutes of CI. Removing them is what took this suite from 6m19s to the time 
 
 **Watch for assertions that pass vacuously.** `expect(submitButton).toBeEnabled()` straight after a click passes against the pre-click state. Assert the outcome you are waiting for first (the error in the event log, the response), then assert the button came back.
 
-Four sleeps are left in the suite, each with a comment saying what it waits for and why nothing
-exposes it: the hosted-field sync above, component teardown, a field registering its value before a
-provisioning step advances, and a row click that produces no observable effect. Three of the four
-are one-liners; only the hosted-field one is on a hot path. If you need a fifth, write the same kind
-of comment — or find the condition.
+Five sleeps are left, each with a comment saying what it waits for and why nothing exposes it.
+Two are on the hosted-field path and are the stubborn ones:
+
+- **Before typing** — hosted field scripts keep initialising after their input is interactive and a
+  late init wipes what was typed. This is the 3s `waitForComponent()` used to spend on *every*
+  navigation, now spent only inside `waitForCardForm()` / `waitForBankAccountForm()`.
+- **After typing** — the field syncs its value to the host over postMessage with no signal.
+
+The other three are one-liners: component teardown, a field registering its value before a
+provisioning step advances, and a row click with no observable effect. If you need a sixth, write
+the same kind of comment — or find the condition.
+
+Both hosted-field sleeps were removed once and CI put them back. On a slower machine `fill()`
+returned, the field cleared itself, and the whole tokenize suite failed with
+`card_number_required` — green locally, 6 failed / 4 flaky on CI. `fillIframeInput()` now also
+re-fills until the value sticks, as a backstop. **If you are tempted to delete either sleep, read
+that paragraph again and check CI, not your laptop.**
 
 ### Freshly created payments are not immediately refundable
 

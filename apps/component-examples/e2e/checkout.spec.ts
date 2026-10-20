@@ -74,6 +74,7 @@ test.describe('Checkout Component', () => {
     await waitForComponent(page, 'justifi-checkout');
 
     await page.getByRole('radio', { name: 'New credit or debit card' }).click();
+    await waitForCardForm(page);
 
     await fillIframeInput(page, 'cardNumber', TEST_DATA.card.number);
     await fillIframeInput(
@@ -238,6 +239,7 @@ test.describe('Checkout Component', () => {
     await waitForComponent(page, 'justifi-checkout');
 
     await page.getByRole('radio', { name: 'New credit or debit card' }).click();
+    await waitForCardForm(page);
     await fillIframeInput(page, 'cardNumber', TEST_DATA.card.number);
     await fillIframeInput(
       page,
