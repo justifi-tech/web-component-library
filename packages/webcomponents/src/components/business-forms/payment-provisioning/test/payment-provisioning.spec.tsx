@@ -25,6 +25,15 @@ const mockProvisionedBusinessResponse = {
   data: {
     ...createMockBusinessData('US'),
     associated_accounts: [{ id: 'acc_123' }],
+    provisioned: ['payments'],
+  },
+};
+
+const mockLinkedBusinessResponse = {
+  data: {
+    ...createMockBusinessData('US'),
+    associated_accounts: [{ id: 'acc_123' }],
+    provisioned: [],
   },
 };
 
@@ -185,10 +194,10 @@ describe('justifi-payment-provisioning', () => {
     );
   });
 
-  it('should render the form for a platform sub account business linked to its account', async () => {
+  it('should render the form for a business linked to an account but not provisioned for payments', async () => {
     BusinessService.prototype.fetchBusiness = jest
       .fn()
-      .mockResolvedValue(mockProvisionedBusinessResponse);
+      .mockResolvedValue(mockLinkedBusinessResponse);
 
     const errorEvent = jest.fn();
     const page = await newSpecPage({
@@ -197,7 +206,6 @@ describe('justifi-payment-provisioning', () => {
         <justifi-payment-provisioning
           businessId="biz_123"
           authToken={validToken}
-          platformSubAccount={true}
           onError-event={errorEvent}
         />
       ),

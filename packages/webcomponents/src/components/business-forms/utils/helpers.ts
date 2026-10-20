@@ -29,5 +29,6 @@ export function deconstructDate(formInput: any): { dob_year: string, dob_month: 
 }
 
 export function checkProvisioningStatus(business: IBusiness): boolean {
-  return business.associated_accounts.length > 0;
+  // Succeeded provisioning records; an associated account alone doesn't mean payments were provisioned.
+  return business.provisioned?.includes('payments') ?? false;
 }
