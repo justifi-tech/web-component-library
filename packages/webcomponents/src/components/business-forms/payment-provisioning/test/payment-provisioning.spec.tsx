@@ -25,6 +25,15 @@ const mockProvisionedBusinessResponse = {
   data: {
     ...createMockBusinessData('US'),
     associated_accounts: [{ id: 'acc_123' }],
+    provisioned: ['payments'],
+  },
+};
+
+const mockLinkedBusinessResponse = {
+  data: {
+    ...createMockBusinessData('US'),
+    associated_accounts: [{ id: 'acc_123' }],
+    provisioned: [],
   },
 };
 
@@ -183,6 +192,31 @@ describe('justifi-payment-provisioning', () => {
     expect(hostText).toContain(
       'We have already received the onboarding information for this business.',
     );
+  });
+
+  it('should render the form for a business linked to an account but not provisioned for payments', async () => {
+    BusinessService.prototype.fetchBusiness = jest
+      .fn()
+      .mockResolvedValue(mockLinkedBusinessResponse);
+
+    const errorEvent = jest.fn();
+    const page = await newSpecPage({
+      components: [JustifiPaymentProvisioning],
+      template: () => (
+        <justifi-payment-provisioning
+          businessId="biz_123"
+          authToken={validToken}
+          onError-event={errorEvent}
+        />
+      ),
+    });
+
+    await page.waitForChanges();
+
+    expect(errorEvent).not.toHaveBeenCalled();
+    const hostText = page.root.shadowRoot?.textContent ?? '';
+    expect(hostText).not.toContain('Business Already Provisioned');
+    expect(page.root.shadowRoot.querySelector('payment-provisioning-form-steps')).not.toBeNull();
   });
 
   it('should render form after business data loads', async () => {
