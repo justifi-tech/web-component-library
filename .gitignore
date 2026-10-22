@@ -10,9 +10,6 @@ packages/mockData/mockGrossVolumeReport.js
 .claude/settings.local.json
 .kiro/
 .crush/
-.agents/skills/
-.claude/skills/*
-!.claude/skills/testing/
 dogfood-output/
 **/coverage/**/*
 
