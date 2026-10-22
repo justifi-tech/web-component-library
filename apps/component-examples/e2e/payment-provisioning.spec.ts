@@ -60,9 +60,8 @@ test.describe('payment-provisioning happy path - USA', () => {
     });
     await clickNext(page);
 
-    // Step 5: Bank Account. Owners -> Bank PATCHes the business and refetches,
-    // which is the slowest transition in the flow and slower still with the
-    // suite running in parallel.
+    // Step 5: Bank Account. Owners -> Bank PATCHes and refetches — the slowest
+    // transition in the flow, slower still under parallel workers.
     await waitForStep(page, 6, 30000);
     await fillBankAccountManual(page, TEST_BUSINESS_DATA.usa.bankAccount);
     await clickNext(page);

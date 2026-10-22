@@ -14,10 +14,6 @@ const router = express.Router();
 // is the only signal available. Rejections have been observed up to ~6s after
 // creation. Keep this comfortably above that but well under Playwright's 30s
 // navigation timeout, since the page response blocks on it.
-//
-// Do not "optimise" this by lowering it: the headroom over the observed ~6s is
-// the point. With the suite running fully parallel the four refund tests pay
-// this wait concurrently, so it costs ~12s of wall clock for the whole file.
 const REFUND_READY_AGE_MS = 12000;
 
 async function createPayment(token) {

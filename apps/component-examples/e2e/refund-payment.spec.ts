@@ -122,8 +122,8 @@ test.describe('Refund Payment Component', () => {
   }) => {
     await page.goto('/refund-payment');
     await waitForComponent(page, 'justifi-refund-payment');
-    // The other tests click the component's own button, which auto-waits. This
-    // one calls the method directly, so it needs the same readiness signal.
+    // This test calls the method directly instead of clicking, so it has to wait
+    // for readiness itself.
     await expect(page.getByRole('button', { name: /Refund/ })).toBeVisible();
 
     const submitPromise = listenForSubmitEvent(page);

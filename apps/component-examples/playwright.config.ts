@@ -8,16 +8,13 @@ export default defineConfig({
   testDir: './e2e',
   forbidOnly: !!process.env.CI,
   timeout: 90_000,
-  // Every example route mints its own resource per page load (new checkout, new
-  // business, new payment) and /dispute traffic is mocked, so no test shares
-  // mutable server state and the suite is safe to run fully parallel.
+  // Every example route mints its own resource per page load and /dispute is
+  // mocked, so no test shares mutable server state.
   fullyParallel: true,
   workers: process.env.CI ? 4 : undefined,
   retries: process.env.CI ? 1 : 0,
-  // These assertions wait on a real API over the network, under four workers
-  // hitting it at once — a tokenize round trip overran 15s on CI. Playwright's
-  // 5s default is tuned for a local app and turns slow-but-correct paths into
-  // flakes. The 90s test timeout still bounds a genuinely stuck test.
+  // Assertions wait on a real API with four workers hitting it at once; a
+  // tokenize round trip overran 15s on CI. The 90s test timeout still bounds it.
   expect: { timeout: 30_000 },
   reporter: process.env.CI
     ? [['list'], ['html', { open: 'never' }]]

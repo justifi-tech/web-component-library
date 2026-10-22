@@ -20,7 +20,6 @@ test.describe('Payments List Component', () => {
     await expect(nextButton).toBeVisible();
     await nextButton.click();
 
-    // Wait for the table to settle on a different page
     await waitForTableRowChange(page, TAG, firstRowText!);
 
     const newFirstRowText = await firstRow.textContent();
@@ -100,8 +99,8 @@ test.describe('Payments List Component', () => {
     await page.getByRole('button', { name: '«Previous' }).click();
     await waitForTableRowChange(page, TAG, page2Text!);
 
-    // Click a row. Nothing observable happens on the page, so this is just a
-    // window for a click handler to throw into the pageerror listener.
+    // Nothing observable happens on click; this just gives a throwing handler a
+    // window to reach the pageerror listener.
     await firstRow.click();
     await page.waitForTimeout(1000);
 

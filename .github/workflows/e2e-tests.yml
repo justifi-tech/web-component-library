@@ -14,8 +14,8 @@ on:
 permissions:
   contents: read
 
-# A superseded push on the same PR has nothing to tell us, and every run holds a
-# runner for minutes and creates real records on staging.
+# Cancel superseded PR runs: each holds a runner for minutes and creates real
+# records on staging.
 concurrency:
   group: e2e-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -36,12 +36,8 @@ jobs:
           vars-json: "${{ toJSON(vars) }}"
           secrets-json: '{"CLIENT_ID":"${{ secrets.CLIENT_ID }}","CLIENT_SECRET":"${{ secrets.CLIENT_SECRET }}","CAN_CLIENT_ID":"${{ secrets.CAN_CLIENT_ID }}","CAN_CLIENT_SECRET":"${{ secrets.CAN_CLIENT_SECRET }}"}'
 
-      # Tried buildx + `cache-from/to: type=gha` here and it was measurably
-      # worse: 81s exporting the image and importing it into the daemon for
-      # `--load`, plus 42s exporting the cache, to save ~16s on the dependency
-      # layer. Net +117s on the build step. A runner's local layer cache is
-      # empty every run, so the COPY split in the Dockerfile only pays off for
-      # local rebuilds today.
+      # buildx + `cache-from/to: type=gha` measured worse here: +117s on the
+      # build step to save ~16s on the dependency layer.
       - name: Build Docker image
         run: |
           docker build \

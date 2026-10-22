@@ -1,8 +1,7 @@
 const { API_PATHS } = require('./api-paths');
 
-// Platform tokens are reusable, and every example page mints one on every
-// request. Caching them keeps a parallel E2E run from hammering /oauth/token.
-// Web component tokens are NOT cached: they are scoped to a single resource.
+// Platform tokens are reusable, so cache them — a parallel E2E run otherwise
+// hammers /oauth/token. Web component tokens are not: they are single-resource.
 const TOKEN_TTL_MS = 10 * 60 * 1000;
 const tokenCache = new Map();
 

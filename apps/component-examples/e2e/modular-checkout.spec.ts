@@ -7,8 +7,8 @@ test.describe('Modular Checkout', () => {
   }) => {
     await page.goto('/modular-checkout');
     await waitForComponent(page, 'justifi-modular-checkout');
-    // The button is plain page markup, so it is clickable before the component
-    // can answer fillBillingForm(). Wait for the form it writes into.
+    // The button is plain page markup, clickable before the component can answer
+    // fillBillingForm(). Wait for the form it writes into.
     await expect(page.getByRole('textbox', { name: 'Full Name' })).toBeVisible();
 
     // Click Fill Billing Form button to populate billing data

@@ -263,9 +263,8 @@ export async function fillOwners(
   if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner) {
     await page.getByRole('button', { name: 'Yes' }).click();
     const comp = page.locator('justifi-payment-provisioning');
-    // Clicking Yes PATCHes the business and refetches behind a loading view.
-    // The owner form comes back prefilled with the representative, so a
-    // non-empty name is the completion signal.
+    // Yes PATCHes the business and refetches; the form comes back prefilled with
+    // the representative, so a non-empty name means it finished.
     await expect(comp.getByLabel('Full Name')).not.toHaveValue('', {
       timeout: 20000,
     });
@@ -276,9 +275,8 @@ export async function fillOwners(
   }
   if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner === false) {
     await page.getByRole('button', { name: 'No' }).click();
-    // The prompt disappears in the same render that puts the owner form into
-    // its editable state. Filling before that lands on the pre-answer form, the
-    // owners PATCH then fails validation and the step never advances.
+    // The prompt disappears in the render that makes the owner form editable.
+    // Filling before that hits the pre-answer form and the PATCH fails validation.
     await expect(repIsOwnerBanner).toBeHidden();
   }
 
@@ -394,9 +392,7 @@ export async function acceptTerms(page: Page): Promise<void> {
 }
 
 export async function clickNext(page: Page): Promise<void> {
-  // Deliberate: lets the last-filled field register its value before the step
-  // advances. Nothing on the form exposes that, and the 8-step flows are the
-  // most expensive tests to make flaky.
+  // Deliberate: nothing exposes when the last-filled field registers its value.
   await page.waitForTimeout(300);
   await page.getByRole('button', { name: 'Next' }).click();
 }

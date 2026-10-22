@@ -1,7 +1,6 @@
 import { expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-/** Iframe names rendered by each payment form. */
 const CARD_IFRAMES = [
   'cardNumber',
   'expirationMonth',
@@ -13,13 +12,8 @@ const BANK_ACCOUNT_IFRAMES = ['routingNumber', 'accountNumber'] as const;
 /**
  * Wait for a hosted iframe to be loaded and interactive.
  *
- * `iframe-input` renders its wrapper as `visibility: hidden; height: 0` until
- * the frame reports `iframeLoaded`, so the iframe element becoming visible in
- * the PARENT document is the real readiness signal. The inner input can be
- * "visible" inside its own document long before that, which is not enough:
- * `validate()` and `tokenize()` postMessage into the frame and wait for a
- * reply with no timeout, so talking to a frame that is not listening yet hangs
- * until the test times out rather than failing.
+ * The iframe becoming visible in the PARENT document is the readiness signal;
+ * the inner input is visible well before the frame is listening.
  */
 export async function waitForIframeInput(page: Page, iframeName: string) {
   await page
@@ -33,26 +27,18 @@ export async function waitForIframeInput(page: Page, iframeName: string) {
 }
 
 /**
- * The hosted field scripts keep initialising after their input is interactive,
- * and a late init wipes whatever was typed before it finished. On CI that
- * surfaced as the whole tokenize suite failing with `card_number_required`
- * while the same code was green locally — a slower machine simply loses the
- * race. Nothing in the frame or on the host marks init as done.
- *
- * This is the 3s `waitForComponent()` used to spend on EVERY navigation, now
- * spent only on the two forms that actually have hosted fields.
+ * Hosted field scripts keep initialising after their input is interactive, and
+ * a late init wipes what was typed. Nothing marks init as done.
  */
 async function settleHostedFields(page: Page) {
   await page.waitForTimeout(3000);
 }
 
-/** Wait for every card-form iframe to be loaded and ready to be typed into. */
 export async function waitForCardForm(page: Page) {
   await Promise.all(CARD_IFRAMES.map((name) => waitForIframeInput(page, name)));
   await settleHostedFields(page);
 }
 
-/** Wait for every bank-account-form iframe to be loaded and ready. */
 export async function waitForBankAccountForm(page: Page) {
   await Promise.all(
     BANK_ACCOUNT_IFRAMES.map((name) => waitForIframeInput(page, name)),
@@ -61,11 +47,10 @@ export async function waitForBankAccountForm(page: Page) {
 }
 
 /**
- * Wait for a list component's table to finish loading real rows.
+ * Wait for a list component's table to load real rows.
  *
- * The table renders a single-cell `loading-state` / `empty-state` /
- * `error-state` row while it has no data, so a row simply existing is not a
- * signal that the data arrived.
+ * Loading / empty / error states render as a single-cell row, so a row
+ * existing is not a signal that the data arrived.
  */
 export async function waitForTableRows(page: Page, tagName: string) {
   await expect(
@@ -80,8 +65,8 @@ export async function waitForTableRows(page: Page, tagName: string) {
 /**
  * Wait for a table's first row to settle on content different from `previousText`.
  *
- * Asserting `not.toHaveText(previousText)` alone passes on the loading row that
- * renders mid-fetch, so this ignores any state where the table is still loading.
+ * `not.toHaveText(previousText)` alone passes on the loading row that renders
+ * mid-fetch, so loading states are ignored.
  */
 export async function waitForTableRowChange(
   page: Page,
@@ -105,10 +90,8 @@ export async function waitForTableRowChange(
 /**
  * Fill an input inside a hosted iframe, retrying until the value sticks.
  *
- * A hosted field that is still initialising accepts the keystrokes and then
- * clears itself, so a single `fill()` can silently leave the field empty.
- * `waitForCardForm()` / `waitForBankAccountForm()` cover the common case; this
- * is the backstop for the rest.
+ * A field that is still initialising accepts the keystrokes and then clears
+ * itself, so a single `fill()` can leave it empty.
  */
 export async function fillIframeInput(
   page: Page,
@@ -125,15 +108,9 @@ export async function fillIframeInput(
 /**
  * Wait for a web component to finish hydrating.
  *
- * Stencil stamps the `hydrated` class on the host element once the component
- * has rendered, which is the real signal this used to approximate with a flat
- * 3s sleep.
- *
- * This is hydration ONLY — the first render, which for a component that fetches
- * is still its loading state. Anything that reads data, calls a component
- * method, or clicks a control the component owns needs a second wait for the
- * thing it actually depends on: `waitForCardForm()`, `waitForTableRows()`, or a
- * web-first assertion on the element in question.
+ * Stencil stamps `hydrated` on the host once it has rendered. That is the
+ * first render only — for a component that fetches, still its loading state.
+ * Reading data or calling a method needs a second, more specific wait.
  */
 export async function waitForComponent(page: Page, tagName: string) {
   await page
@@ -144,19 +121,10 @@ export async function waitForComponent(page: Page, tagName: string) {
 /**
  * Wait for typed hosted-field values to reach the host component.
  *
- * This is the one wait in the suite that still ends in a sleep, and it is
- * deliberate. Two separate things can go wrong after `fill()` returns:
- *
- * 1. The frame reloads and silently drops what was typed into it. The value
- *    read back out of the frame catches that, so it is asserted here.
- * 2. The field syncs its value to the host over postMessage, and **nothing
- *    observable marks that as done**. `validate()` is not a substitute: on CI
- *    it reported `isValid` while a card field had not synced, and the tokenize
- *    that followed failed with `card_number_required` — three times in one
- *    run. The only number known to hold is the 2s this suite always used.
- *
- * If the component ever exposes a fields-ready signal, this sleep is the first
- * thing that should go.
+ * The read-back catches a frame that reloaded and dropped what was typed. The
+ * sleep is deliberate: the value syncs to the host over postMessage and
+ * nothing observable marks that as done (`validate()` reports valid too
+ * early). Drop it if the component ever exposes a fields-ready signal.
  */
 export async function waitForHostedFieldsSynced(
   page: Page,
@@ -172,12 +140,10 @@ export async function waitForHostedFieldsSynced(
   await page.waitForTimeout(2000);
 }
 
-/** Wait for typed card-form values to reach the host component. */
 export async function waitForCardFieldsSynced(page: Page) {
   await waitForHostedFieldsSynced(page, CARD_IFRAMES);
 }
 
-/** Wait for typed bank-account-form values to reach the host component. */
 export async function waitForBankAccountFieldsSynced(page: Page) {
   await waitForHostedFieldsSynced(page, BANK_ACCOUNT_IFRAMES);
 }
@@ -234,8 +200,7 @@ export async function fillBankAccountForm(page: Page) {
 /** Clicks fill-billing-form button to populate billing fields. */
 export async function fillBillingFormViaButton(page: Page) {
   await page.locator('#fill-billing-form-button').click();
-  // The example pages all pass name: 'John Doe'; waiting on the rendered value
-  // is what the old 500ms sleep was standing in for.
+  // The example pages all fill the name with 'John Doe'.
   await expect(page.getByRole('textbox', { name: 'Full Name' })).toHaveValue(
     'John Doe',
   );
