@@ -11,7 +11,8 @@ packages/mockData/mockGrossVolumeReport.js
 .kiro/
 .crush/
 .agents/skills/
-.claude/skills/
+.claude/skills/*
+!.claude/skills/testing/
 dogfood-output/
 **/coverage/**/*
 
