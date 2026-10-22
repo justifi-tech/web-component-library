@@ -77,9 +77,9 @@ export interface ICheckout {
     credit_card_payments: boolean;
     insurance_payments?: boolean;
     bank_account_verification?: boolean;
-    apple_payments?: boolean;
-    google_payments?: boolean;
-    paypal_payments?: boolean;
+    apple_payments: boolean;
+    google_payments: boolean;
+    paypal_payments: boolean;
   };
   bnpl?: IBnpl;
   paypal?: {
@@ -115,9 +115,9 @@ export class Checkout implements ICheckout {
     credit_card_payments: boolean;
     insurance_payments?: boolean;
     bank_account_verification?: boolean;
-    apple_payments?: boolean;
-    google_payments?: boolean;
-    paypal_payments?: boolean;
+    apple_payments: boolean;
+    google_payments: boolean;
+    paypal_payments: boolean;
   };
   bnpl?: IBnpl;
   paypal?: { provider_client_id: string };
@@ -163,8 +163,8 @@ export class Checkout implements ICheckout {
     );
   }
 
-  get payment_mode(): ICheckoutPaymentMode {
-    let paymentMode: ICheckoutPaymentMode;
+  get payment_mode(): ICheckoutPaymentMode | null {
+    let paymentMode: ICheckoutPaymentMode | null = null;
 
     if (!this.completions || this.completions.length === 0) {
       return ICheckoutPaymentMode.unknown;
