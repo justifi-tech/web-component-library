@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import {
+  firstTableRow,
   waitForComponent,
   waitForTableRowChange,
   waitForTableRows,
@@ -13,7 +14,7 @@ test.describe('Payments List Component', () => {
     await waitForComponent(page, TAG);
     await waitForTableRows(page, TAG);
 
-    const firstRow = page.locator(`${TAG} tbody tr:first-child`);
+    const firstRow = firstTableRow(page, TAG);
     const firstRowText = await firstRow.textContent();
 
     const nextButton = page.getByRole('button', { name: 'Next»' });
@@ -32,7 +33,7 @@ test.describe('Payments List Component', () => {
     await waitForComponent(page, TAG);
     await waitForTableRows(page, TAG);
 
-    const firstRow = page.locator(`${TAG} tbody tr:first-child`);
+    const firstRow = firstTableRow(page, TAG);
     const firstPageText = await firstRow.textContent();
 
     // Go to page 2
@@ -87,7 +88,7 @@ test.describe('Payments List Component', () => {
     await waitForComponent(page, TAG);
     await waitForTableRows(page, TAG);
 
-    const firstRow = page.locator(`${TAG} tbody tr:first-child`);
+    const firstRow = firstTableRow(page, TAG);
     const page1Text = await firstRow.textContent();
 
     // Navigate forward

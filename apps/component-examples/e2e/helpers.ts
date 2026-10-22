@@ -46,44 +46,24 @@ export async function waitForBankAccountForm(page: Page) {
   await settleHostedFields(page);
 }
 
-/**
- * Wait for a list component's table to load real rows.
- *
- * Loading / empty / error states render as a single-cell row, so a row
- * existing is not a signal that the data arrived.
- */
-export async function waitForTableRows(page: Page, tagName: string) {
-  await expect(
-    page
-      .locator(
-        `${tagName} tbody tr:first-child td:not(.loading-state):not(.empty-state):not(.error-state)`,
-      )
-      .first(),
-  ).toBeVisible({ timeout: 15000 });
+export function firstTableRow(page: Page, tagName: string) {
+  return page.locator(`${tagName} tbody tr[data-test-id="table-row"]`).first();
 }
 
-/**
- * Wait for a table's first row to settle on content different from `previousText`.
- *
- * `not.toHaveText(previousText)` alone passes on the loading row that renders
- * mid-fetch, so loading states are ignored.
- */
+export async function waitForTableRows(page: Page, tagName: string) {
+  await expect(firstTableRow(page, tagName)).toBeVisible({ timeout: 15000 });
+}
+
 export async function waitForTableRowChange(
   page: Page,
   tagName: string,
   previousText: string,
 ) {
-  const firstRow = page.locator(`${tagName} tbody tr:first-child`);
+  const firstRow = firstTableRow(page, tagName);
   await expect
-    .poll(
-      async () => {
-        if ((await page.locator(`${tagName} td.loading-state`).count()) > 0) {
-          return previousText;
-        }
-        return (await firstRow.textContent()) ?? previousText;
-      },
-      { timeout: 15000 },
-    )
+    .poll(async () => (await firstRow.textContent()) ?? previousText, {
+      timeout: 15000,
+    })
     .not.toBe(previousText);
 }
 
@@ -181,7 +161,11 @@ export function listenForSubmitEvent(page: Page): Promise<string> {
 export async function fillCardForm(page: Page) {
   await waitForCardForm(page);
   await fillIframeInput(page, 'cardNumber', TEST_DATA.card.number);
-  await fillIframeInput(page, 'expirationMonth', TEST_DATA.card.expirationMonth);
+  await fillIframeInput(
+    page,
+    'expirationMonth',
+    TEST_DATA.card.expirationMonth,
+  );
   await fillIframeInput(page, 'expirationYear', TEST_DATA.card.expirationYear);
   await fillIframeInput(page, 'CVV', TEST_DATA.card.cvv);
   await fillBillingFormViaButton(page);
@@ -191,8 +175,16 @@ export async function fillCardForm(page: Page) {
 /** Fill bank account iframe fields + billing via fill-billing-form button. */
 export async function fillBankAccountForm(page: Page) {
   await waitForBankAccountForm(page);
-  await fillIframeInput(page, 'routingNumber', TEST_DATA.bankAccount.routingNumber);
-  await fillIframeInput(page, 'accountNumber', TEST_DATA.bankAccount.accountNumber);
+  await fillIframeInput(
+    page,
+    'routingNumber',
+    TEST_DATA.bankAccount.routingNumber,
+  );
+  await fillIframeInput(
+    page,
+    'accountNumber',
+    TEST_DATA.bankAccount.accountNumber,
+  );
   await fillBillingFormViaButton(page);
   await waitForBankAccountFieldsSynced(page);
 }

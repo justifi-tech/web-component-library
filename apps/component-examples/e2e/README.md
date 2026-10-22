@@ -82,7 +82,7 @@ These are also the signal that a payment-method toggle finished — the bank ifr
 
 ### `waitForTableRows(page, tagName)` / `waitForTableRowChange(page, tagName, previousText)`
 
-For list components. The table renders a single-cell `loading-state` / `empty-state` / `error-state` row while it has no data, so a row merely existing proves nothing. `waitForTableRows` waits for a real data row; `waitForTableRowChange` waits for the first row to settle on different content, ignoring the loading row that renders mid-fetch (asserting `not.toHaveText(previous)` on its own passes on that loading row).
+For list components. The table renders a `loading-state` / `empty-state` / `error-state` row while it has no data, so a row merely existing proves nothing. Only real data rows carry `data-test-id="table-row"` (every list component sets it, and the unit specs query it) — that is what both helpers target, via `firstTableRow(page, tagName)`. A refetch leaves the previous rows in place and renders the loading row above them, so targeting the data row is also what makes `waitForTableRowChange` ignore the loading state. It polls `textContent()` rather than asserting `not.toHaveText(previous)`, which normalises whitespace and would read unchanged content as changed.
 
 ### `waitForCardFieldsSynced(page)` / `waitForBankAccountFieldsSynced(page)`
 
