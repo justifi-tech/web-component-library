@@ -200,7 +200,6 @@ export async function fillBankAccountForm(page: Page) {
 /** Clicks fill-billing-form button to populate billing fields. */
 export async function fillBillingFormViaButton(page: Page) {
   await page.locator('#fill-billing-form-button').click();
-  // The example pages all fill the name with 'John Doe'.
   await expect(page.getByRole('textbox', { name: 'Full Name' })).toHaveValue(
     'John Doe',
   );
