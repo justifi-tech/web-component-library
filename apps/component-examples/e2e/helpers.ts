@@ -9,12 +9,6 @@ const CARD_IFRAMES = [
 ] as const;
 const BANK_ACCOUNT_IFRAMES = ['routingNumber', 'accountNumber'] as const;
 
-/**
- * Wait for a hosted iframe to be loaded and interactive.
- *
- * The iframe becoming visible in the PARENT document is the readiness signal;
- * the inner input is visible well before the frame is listening.
- */
 export async function waitForIframeInput(page: Page, iframeName: string) {
   await page
     .locator(`iframe[name="${iframeName}"]`)

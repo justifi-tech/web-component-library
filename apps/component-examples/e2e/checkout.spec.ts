@@ -260,8 +260,6 @@ test.describe('Checkout Component', () => {
     const payButton = page.getByRole('button', { name: 'Pay', exact: true });
     await payButton.click();
 
-    // Check the error first: Pay is enabled before the click too, so asserting
-    // it alone passes vacuously.
     const outputPane = page.locator('#output-pane');
     await expect(outputPane).toContainText(/error|fail/i);
     await expect(payButton).toBeEnabled();
@@ -292,8 +290,6 @@ test.describe('Checkout Component', () => {
   }) => {
     await page.goto('/checkout');
     await waitForComponent(page, 'justifi-checkout');
-    // The button is plain page markup, clickable before the component can answer
-    // fillBillingForm(). Wait for the form it writes into.
     await waitForCardForm(page);
 
     // Click Fill Billing Form button to populate billing data
@@ -308,7 +304,6 @@ test.describe('Checkout Component', () => {
     // Toggle to bank account payment method
     await page.getByRole('radio', { name: 'New bank account' }).click();
 
-    // The bank iframes only exist on the bank form, so this is the form switch
     await waitForBankAccountForm(page);
 
     // Verify billing data persists: name field should show filled value
@@ -318,7 +313,6 @@ test.describe('Checkout Component', () => {
     // Toggle back to card
     await page.getByRole('radio', { name: 'New credit or debit card' }).click();
 
-    // Both forms render a Postal Code field, so wait for the card iframes.
     await waitForCardForm(page);
 
     // Verify postal code still persists
