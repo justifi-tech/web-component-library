@@ -208,6 +208,7 @@ export interface IBusiness {
   phone: string;
   platform_account_id: string;
   product_categories: ProductCategories;
+  provisioned?: string[];
   representative?: Identity | null;
   tax_id: string;
   tax_id_last4: string;
@@ -246,12 +247,14 @@ export class Business implements IBusiness {
   public product_categories: ProductCategories;
   public country_of_establishment?: CountryCode;
   public bank_account_verification?: boolean;
+  public provisioned: string[];
 
   constructor(business: IBusiness) {
     this.additional_questions = business.additional_questions
       ? new AdditionalQuestions(business.additional_questions)
       : null;
     this.associated_accounts = business.associated_accounts;
+    this.provisioned = business.provisioned ?? [];
     this.classification = business.classification;
     this.bank_accounts = business.bank_accounts;
     this.created_at = business.created_at;

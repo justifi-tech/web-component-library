@@ -98,7 +98,6 @@ test.describe('Refund Payment Component', () => {
     await waitForComponent(page, 'justifi-refund-payment');
 
     const submitPromise = listenForSubmitEvent(page);
-    const errorPromise = listenForErrorEvent(page, 'justifi-refund-payment');
     const refundResponsePromise = page.waitForResponse(
       (resp) =>
         resp.url().includes('/refunds') &&
@@ -107,20 +106,15 @@ test.describe('Refund Payment Component', () => {
 
     await page.getByRole('button', { name: /Refund/ }).click();
 
-    const result = await Promise.race([
-      submitPromise.then((msg) => ({ type: 'success' as const, msg })),
-      errorPromise.then((err) => ({ type: 'error' as const, err })),
-    ]);
-
-    if (result.type === 'error') {
-      throw new Error(`Refund failed: ${result.err}`);
-    }
-
+    // The mocked void emits an error-event by design, so only the refund
+    // fallback is raced against here.
     const refundResponse = await refundResponsePromise;
     const body = await refundResponse.json();
 
     expect(refundResponse.status()).toBe(201);
     expect(body.data.id).toMatch(/^re_/);
+
+    await expect(submitPromise).resolves.toContain('submit-event');
   });
 
   test('external refundPayment() method triggers full flow', async ({

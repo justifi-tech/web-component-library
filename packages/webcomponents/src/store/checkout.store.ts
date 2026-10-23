@@ -15,6 +15,8 @@ interface IInitialState {
   isWalletProcessing: boolean;
   applePayEnabled: boolean;
   googlePayEnabled: boolean;
+  paypalEnabled: boolean;
+  paypalProviderClientId: string;
   achPaymentsEnabled: boolean;
   insuranceEnabled: boolean;
   bnplProviderApiVersion: string;
@@ -69,6 +71,8 @@ const initialState: IInitialState = {
   isWalletProcessing: false,
   applePayEnabled: false,
   googlePayEnabled: false,
+  paypalEnabled: false,
+  paypalProviderClientId: '',
   achPaymentsEnabled: false,
   insuranceEnabled: false,
   bnplProviderApiVersion: '',
@@ -115,10 +119,10 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
     checkoutStore.paymentMethods?.length
   ) {
     const hasSavedCard = checkoutStore.paymentMethods.some(
-      (pm) => pm.type === PAYMENT_METHODS.SAVED_CARD
+      (pm) => pm.type === PAYMENT_METHODS.SAVED_CARD,
     );
     const hasSavedBank = checkoutStore.paymentMethods.some(
-      (pm) => pm.type === PAYMENT_METHODS.SAVED_BANK_ACCOUNT
+      (pm) => pm.type === PAYMENT_METHODS.SAVED_BANK_ACCOUNT,
     );
 
     if (hasSavedCard && !checkoutStore.disableCreditCard) {
@@ -151,6 +155,10 @@ export function getAvailablePaymentMethodTypes(): PAYMENT_METHODS[] {
 
   if (checkoutStore.googlePayEnabled) {
     methods.push(PAYMENT_METHODS.GOOGLE_PAY);
+  }
+
+  if (checkoutStore.paypalEnabled) {
+    methods.push(PAYMENT_METHODS.PAYPAL);
   }
 
   if (
@@ -189,14 +197,24 @@ export function getCheckoutState(): CheckoutState {
 
 export { checkoutStore as checkoutStore, onChange };
 
-// Subscribe to all store key changes with a single helper
-// The callback is invoked for every key defined in the initial state whenever it changes.
+// Notify once after synchronous store writes finish, using the latest state.
 type StoreKey = keyof typeof initialState;
-export function onAnyChange(
-  callback: (key: StoreKey, value: (typeof initialState)[StoreKey]) => void
-): void {
-  (Object.keys(initialState) as StoreKey[]).forEach((key) => {
-    // @ts-ignore - onChange is generically typed by stencil/store but not exported here
-    onChange(key as any, (newValue: any) => callback(key, newValue));
+export function onAnyChange(callback: () => void): () => void {
+  let pending = false;
+  let active = true;
+  const unsubscribe = (Object.keys(initialState) as StoreKey[]).map((key) => {
+    return onChange(key, () => {
+      if (pending || !active) return;
+      pending = true;
+      queueMicrotask(() => {
+        pending = false;
+        if (active) callback();
+      });
+    });
   });
+
+  return () => {
+    active = false;
+    unsubscribe.forEach((off) => off());
+  };
 }

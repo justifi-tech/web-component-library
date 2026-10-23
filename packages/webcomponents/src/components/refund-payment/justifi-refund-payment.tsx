@@ -175,7 +175,7 @@ export class JustifiRefundPayment {
         onError: ({ error, code, severity }) => {
           // If void fails, fall back to refund
           voidAttempted = true;
-          this.handleError(error, code, severity);
+          this.handleError(code, error, severity);
           this.processRefund(values)
             .then(resolve);
         },
@@ -207,7 +207,7 @@ export class JustifiRefundPayment {
         onSuccess: (response) => { refundResponse = response; },
         onError: ({ error, code, severity }) => {
           refundResponse = error;
-          this.handleError(error, code, severity);
+          this.handleError(code, error, severity);
         },
         final: () => {
           this.submitEvent.emit({ response: refundResponse });

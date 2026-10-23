@@ -1,5 +1,18 @@
 # @justifi/webcomponents-docs
 
+## 3.0.5
+
+### Patch Changes
+
+- Add Authorization section to Entities and Merchant Tools web components
+
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @justifi/webcomponents@6.14.4
+
 ## 3.0.2
 
 ### Patch Changes
