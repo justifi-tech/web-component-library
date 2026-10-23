@@ -100,6 +100,20 @@ describe('ownership_percentage requirement', () => {
     });
   });
 
+  describe('strict USA schema - ITIN', () => {
+    it('passes for owner with an ITIN', async () => {
+      const schema = identitySchemaUSA('owner', false);
+      const data = { ...baseIdentity, identification_number: '912701234', ownership_percentage: '25', address: validAddress };
+      await expect(schema.isValid(data)).resolves.toBe(true);
+    });
+
+    it('passes for representative with an ITIN', async () => {
+      const schema = identitySchemaUSA('representative', false);
+      const data = { ...baseIdentity, identification_number: '912701234', ownership_percentage: null, address: validAddress };
+      await expect(schema.isValid(data)).resolves.toBe(true);
+    });
+  });
+
   describe('strict CAN schema - SIN optional', () => {
     it('passes for owner when identification_number is null', async () => {
       const schema = identitySchemaCAN('owner', false);
