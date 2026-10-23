@@ -2,9 +2,10 @@
 
 ## Build & Test
 
-- **Do not run** `build`, `dev`, `start`, `format`, `clean` — per CLAUDE.md rules
-- Run `pnpm test` for the unit test suite (Stencil + Jest)
-- Run `pnpm test:e2e` for Playwright E2E tests (requires dev server running)
+- All package scripts are allowed. `format` (rewrites every `.ts/.tsx/.md`) and `clean` (deletes `node_modules`) have wide blast radius — announce before running either
+- Run `pnpm --filter @justifi/webcomponents test` for the unit test suite (Stencil + Jest); root `pnpm test` also works but builds first
+- Run `pnpm test:e2e` for Playwright E2E tests — it starts the example server itself if `:3000` is free
+- Run `pnpm dev:server` to bring up the Stencil watcher + examples server for live component work; it never exits, so background it
 - Run `pnpm lint` for ESLint across all packages (`--max-warnings 0`)
 - Validate with both unit and E2E tests when changes affect component behavior
 - When working on E2E tests, read `apps/component-examples/e2e/README.md` first
