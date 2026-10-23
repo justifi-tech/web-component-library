@@ -38,6 +38,7 @@ Optional:
 - [justifi-bank-account-billing-form-simple](./sub-components/bank-account-billing-form-simple)
 - [justifi-apple-pay](./sub-components/apple-pay)
 - [justifi-google-pay](./sub-components/google-pay)
+- [justifi-paypal](./sub-components/paypal) (PayPal & Venmo)
 
 > **Note:** In addition to the supported sub components, you can add any custom HTML elements or markup inside the justifi-modular-checkout. This allows you to render headings, descriptions, disclaimers, or other layout elements as needed.
 
@@ -50,7 +51,7 @@ Billing information is **required when collecting a new card or bank account** a
 - Using the `<justifi-bank-account-billing-form-simple />` sub component for account owner name only (ACH payments)
 - Passing a `billingInformation` object directly to the `submitCheckout` method
 
-For checkouts that use a saved payment method or a wallet/BNPL sub component (for example, `<justifi-saved-payment-methods />`, `<justifi-apple-pay />`, `<justifi-sezzle-payment-method />`, or `<justifi-plaid-payment-method />`), billing information is optional and is not validated by the modular checkout flow.
+For checkouts that use a saved payment method or a wallet/BNPL sub component (for example, `<justifi-saved-payment-methods />`, `<justifi-apple-pay />`, `<justifi-paypal />`, `<justifi-sezzle-payment-method />`, or `<justifi-plaid-payment-method />`), billing information is optional and is not validated by the modular checkout flow.
 The `billingInformation` object can take one of two forms:
 
 **Full billing address:**
@@ -140,7 +141,7 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 ### Events
 
-- **`error-event`**: Emitted when validation fails or an error occurs. Detail shape: `{ message: string; errorCode: string; severity?: 'info' | 'warning' | 'error' }`. When the error originates from `justifi-apple-pay`, `errorCode` will be prefixed with `APPLE_PAY_` (e.g. `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_PAYMENT_FAILED`).
+- **`error-event`**: Emitted when validation fails or an error occurs. Detail shape: `{ message: string; errorCode: string; severity?: 'info' | 'warning' | 'error' }`. When the error originates from `justifi-apple-pay`, `errorCode` will be prefixed with `APPLE_PAY_` (e.g. `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_PAYMENT_FAILED`). Errors from `justifi-paypal` are prefixed with `PAYPAL_` (e.g. `PAYPAL_CONFIG_ERROR`, `PAYPAL_PAYMENT_FAILED`).
 - **`submit-event`**: Emitted when checkout completes successfully. Detail shape: `{ checkout: any; message: string }`.
 - **`checkout-changed`**: Emitted when checkout state changes. Detail shape: `{ availablePaymentMethodTypes: PAYMENT_METHODS[]; selectedPaymentMethod: { id?: string; type: PAYMENT_METHODS }; savedPaymentMethods: SavedPaymentMethod[] }`.
 
@@ -261,6 +262,7 @@ modularCheckout.addEventListener('checkout-changed', (event) => {
 - `saved_card`, `saved_bank_account`: Saved methods from `payment_method_group`. Bank-related types are omitted when the checkout has `payment_settings.ach_payments === false` or when `disableBankAccount` is true on checkout state.
 - `new_card`, `new_bank_account`: Entry forms for new payment methods. `new_bank_account` is omitted when `payment_settings.ach_payments === false` or when `disableBankAccount` is true.
 - `sezzle`: BNPL is available when enabled by the account and not disabled.
+- `paypal`: Available when PayPal is enabled on the checkout. Covers both PayPal and Venmo; `selectedPaymentMethod.type` resolves to `paypal` or `venmo` once the buyer picks a button.
 - `plaid`: Plaid is available when `payment_settings.bank_account_verification === true`, `payment_settings.ach_payments` is enabled for the checkout, and `disableBankAccount` is false.
 
 ## ACH payments
