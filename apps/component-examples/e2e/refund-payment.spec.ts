@@ -122,6 +122,9 @@ test.describe('Refund Payment Component', () => {
   }) => {
     await page.goto('/refund-payment');
     await waitForComponent(page, 'justifi-refund-payment');
+    // This test calls the method directly instead of clicking, so it has to wait
+    // for readiness itself.
+    await expect(page.getByRole('button', { name: /Refund/ })).toBeVisible();
 
     const submitPromise = listenForSubmitEvent(page);
     const errorPromise = listenForErrorEvent(page, 'justifi-refund-payment');
