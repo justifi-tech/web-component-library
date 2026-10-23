@@ -65,7 +65,7 @@ describe('additional-questions-form-step', () => {
       expect(captured).toContainEqual(
         expect.objectContaining({
           errorCode: ComponentErrorCodes.MISSING_PROPS,
-          message: 'Missing required props',
+          message: 'Missing required props: auth-token, business-id',
         })
       );
     });

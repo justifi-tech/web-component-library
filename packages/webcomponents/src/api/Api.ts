@@ -1,6 +1,7 @@
 import { waitForConfig, configState } from '../components/config-provider/config-state';
 import { generateId } from '../utils/utils';
 import { PagingInfo } from './Pagination';
+import packageJson from '../../package.json';
 
 export interface IApiResponse<T> {
   data: T;
@@ -78,6 +79,7 @@ export const Api = () => {
     if (!authToken) {
       return {
         'Content-Type': 'application/json',
+        'Justifi-Web-Component-Version': packageJson.version,
       };
     }
 
@@ -85,6 +87,7 @@ export const Api = () => {
       Authorization: `Bearer ${authToken}`,
       'Idempotency-Key': generateId(),
       'Content-Type': 'application/json',
+      'Justifi-Web-Component-Version': packageJson.version,
     };
   }
 

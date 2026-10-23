@@ -8,6 +8,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { JustifiRefundPayment } from '../justifi-refund-payment';
 import { PaymentService } from '../../../api/services/payment.service';
 import { RefundService } from '../../../api/services/refund.service';
+import { VoidService } from '../../../api/services/void.service';
 import JustifiAnalytics from '../../../api/Analytics';
 import mockPaymentDetailsResponse from '../../../../../../mockData/mockPaymentDetailSuccess.json';
 
@@ -194,6 +195,62 @@ describe('justifi-refund-payment', () => {
     await page.waitForChanges();
 
     expect(page.rootInstance.submitDisabled).toBe(true);
+  });
+
+  it('refund failure emits error-event with the API error code and message', async () => {
+    setupMockPaymentService();
+    RefundService.prototype.postRefund = jest.fn().mockResolvedValue({
+      error: { code: 'invalid_parameter', message: 'Refund amount too large' },
+    });
+
+    const errorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components,
+      template: () => (
+        <justifi-refund-payment authToken="token" accountId="acc" paymentId="py_123" onError-event={errorSpy} />
+      ),
+    });
+
+    await page.waitForChanges();
+    await page.rootInstance.refundPayment();
+
+    expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        errorCode: 'invalid-parameter',
+        message: 'Refund amount too large',
+        severity: 'error',
+      },
+    }));
+  });
+
+  it('void failure emits error-event with the API error code and message, then falls back to refund', async () => {
+    setupMockPaymentService({ created_at: new Date().toISOString() });
+    VoidService.prototype.postVoid = jest.fn().mockResolvedValue({
+      error: { code: 'invalid_parameter', message: 'Void not allowed' },
+    });
+    RefundService.prototype.postRefund = jest.fn().mockResolvedValue({ data: { id: 're_123' } });
+
+    const errorSpy = jest.fn();
+
+    const page = await newSpecPage({
+      components,
+      template: () => (
+        <justifi-refund-payment authToken="token" accountId="acc" paymentId="py_123" onError-event={errorSpy} />
+      ),
+    });
+
+    await page.waitForChanges();
+    await page.rootInstance.refundPayment();
+
+    expect(errorSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: {
+        errorCode: 'invalid-parameter',
+        message: 'Void not allowed',
+        severity: 'error',
+      },
+    }));
+    expect(RefundService.prototype.postRefund).toHaveBeenCalled();
   });
 
   it('reason dropdown renders all options from refundReasonOptions', async () => {

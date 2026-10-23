@@ -1,6 +1,5 @@
 import { Component, h, Prop, State, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
-import { ComponentErrorEvent, ComponentFormStepCompleteEvent } from '../../../../api/ComponentEvents';
+import { ComponentErrorEvent, ComponentFormStepCompleteEvent, validateRequiredProps } from '../../../../api/ComponentEvents';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 import { additionalQuestionsSchema } from '../../schemas/business-additional-questions-schema';
@@ -69,24 +68,23 @@ export class AdditionalQuestionsFormStep {
   }
 
   private initializeApi() {
-    if (this.authToken && this.businessId) {
-      this.getBusiness = makeGetBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-      this.patchBusiness = makePatchBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-    } else {
-      this.errorEvent.emit({
-        message: 'Missing required props',
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        severity: ComponentErrorSeverity.ERROR,
-      });
+    if (!validateRequiredProps(this.errorEvent, {
+      'auth-token': this.authToken,
+      'business-id': this.businessId,
+    })) {
+      return;
     }
+
+    this.getBusiness = makeGetBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
+    this.patchBusiness = makePatchBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
   }
 
   private getData = () => {

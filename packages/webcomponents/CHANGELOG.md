@@ -1,5 +1,43 @@
 ### Changelog
 
+## 6.14.6
+
+### Patch Changes
+
+- 4553534: PaymentProvisioning component - "Business Already Provisioned" now shows only when the business has been provisioned for payments (`payments` in its `provisioned` list). An associated account by itself no longer counts, so a business linked to its account before provisioning, such as a platform sub account's, can onboard.
+
+## 6.14.5
+
+### Patch Changes
+
+- 956c87e: Fix Sezzle popup not opening when submitting checkout with Sezzle selected. `submitCheckout` now opens the Sezzle checkout and completes with `payment_mode: bnpl` on approval, emitting `error-event` on cancel/failure. Retrying after a cancel re-opens the popup.
+
+## 6.14.4
+
+### Patch Changes
+
+- a12f8ec: `justifi-modular-checkout` no longer emits a burst of `checkout-changed` events. A single batch of store writes previously fired one event per changed key; `onAnyChange` now coalesces synchronous writes into one notification on the next microtask, carrying the final state. The subscription is also unsubscribed in `disconnectedCallback` (and before re-subscribing), so a remounted checkout no longer stacks duplicate emitters.
+- 9155b86: `card-form` and `bank-account-form` now handle iframe load failures instead of hanging on the skeleton forever. If the payment inputs don't load within 10 seconds, the component emits an `error-event` with the new `iframe-load-error` code and renders an alert with a "Try again" button that reloads the iframes. `iframe-input` gains a `reload()` method to support the retry.
+- fd523d4: `disable-bnpl` no longer hides Plaid in `justifi-checkout`. The flag now gates only Sezzle, the BNPL method — Plaid stays visible whenever the checkout API offers it. `availablePaymentMethods` also mirrors the API response verbatim again; the prop is applied at render time instead of filtering the API list.
+
+## 6.14.3
+
+### Patch Changes
+
+- 805be54: Payment provisioning form steps now name the specific missing prop(s) in the MISSING_PROPS error (e.g. Missing required props: auth-token, business-id) instead of the generic Missing required props.
+
+## 6.14.2
+
+### Patch Changes
+
+- 4527ad9: Fix unreadable tooltip text. Tooltips now default to a light bubble (white background, dark text, subtle border + shadow) instead of dark-on-dark. The tooltip stays themeable via `::part(tooltip)`/`::part(tooltip-inner)` and the shared `color`/`text` parts — themed text color now lands on a light background and stays readable.
+
+## 6.14.1
+
+### Patch Changes
+
+- 880ca61: Send library version in a `Justifi-Web-Component-Version` request header on all API calls.
+
 ## 6.14.0
 
 ### Minor Changes

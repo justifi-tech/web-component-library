@@ -5,7 +5,7 @@ import path from 'path';
 /** Path to minimal image fixture for bank account document upload */
 export const VOIDED_CHECK_FIXTURE = path.join(
   __dirname,
-  'fixtures',
+  'assets',
   'voided-check.png',
 );
 

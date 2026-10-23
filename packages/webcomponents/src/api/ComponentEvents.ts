@@ -1,3 +1,4 @@
+import { EventEmitter } from "@stencil/core";
 import { BusinessFormClickActions, BusinessFormStep } from "../components/business-forms/utils/event-types";
 import { DisputeManagementClickActions, DisputeResponseFormStep } from "../components/dispute-management/event-types";
 import { TableClickActions } from "../ui-components/table/event-types";
@@ -32,6 +33,27 @@ export interface ComponentErrorEvent {
   message: string; // A descriptive message about the error
   severity?: ComponentErrorSeverity; // Optional severity level
   data?: any; // Additional data pertinent to the error (optional)
+}
+
+// Emits a MISSING_PROPS error naming each falsy prop. Returns true when all props are present.
+// `props` keys are the public attribute names, e.g. { 'auth-token': this.authToken }.
+export function validateRequiredProps(
+  errorEvent: EventEmitter<ComponentErrorEvent>,
+  props: Record<string, unknown>,
+): boolean {
+  const missingProps = Object.entries(props)
+    .filter(([, value]) => !value)
+    .map(([name]) => name);
+
+  if (missingProps.length) {
+    errorEvent.emit({
+      message: `Missing required props: ${missingProps.join(', ')}`,
+      errorCode: ComponentErrorCodes.MISSING_PROPS,
+      severity: ComponentErrorSeverity.ERROR,
+    });
+    return false;
+  }
+  return true;
 }
 export interface RecordClickEvent {
   id: string;

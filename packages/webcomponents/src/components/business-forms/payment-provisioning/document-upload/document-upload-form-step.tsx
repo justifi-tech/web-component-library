@@ -4,6 +4,7 @@ import {
   ComponentErrorCodes,
   ComponentErrorSeverity,
   ComponentFormStepCompleteEvent,
+  validateRequiredProps,
   EntityDocument,
   EntityDocumentType,
   FileSelectEvent,
@@ -82,23 +83,22 @@ export class DocumentUploadFormStep {
   }
 
   private initializeApi() {
-    if (this.authToken && this.businessId) {
-      this.getBusiness = makeGetBusiness({
-        authToken: this.authToken,
-        businessId: this.businessId,
-        service: new BusinessService()
-      });
-      this.postDocumentRecord = makePostDocumentRecord({
-        authToken: this.authToken,
-        service: new DocumentRecordService()
-      });
-    } else {
-      this.errorEvent.emit({
-        message: 'Missing required props',
-        errorCode: ComponentErrorCodes.MISSING_PROPS,
-        severity: ComponentErrorSeverity.ERROR,
-      });
+    if (!validateRequiredProps(this.errorEvent, {
+      'auth-token': this.authToken,
+      'business-id': this.businessId,
+    })) {
+      return;
     }
+
+    this.getBusiness = makeGetBusiness({
+      authToken: this.authToken,
+      businessId: this.businessId,
+      service: new BusinessService()
+    });
+    this.postDocumentRecord = makePostDocumentRecord({
+      authToken: this.authToken,
+      service: new DocumentRecordService()
+    });
   }
 
   private getData = () => {

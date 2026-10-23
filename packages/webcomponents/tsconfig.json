@@ -13,7 +13,8 @@
     "jsx": "react",
     "jsxFactory": "h",
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["jest"]
   },
   "include": ["src", "globals.d.ts", "stencil.config.ts"],
   "exclude": ["node_modules", "src/__mocks__"]

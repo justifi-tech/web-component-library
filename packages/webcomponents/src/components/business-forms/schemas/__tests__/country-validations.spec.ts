@@ -22,6 +22,21 @@ describe('Country-aware validation helpers', () => {
     await expect(makeIdentityNumberValidation(CountryCode.CAN).isValid('046454286')).resolves.toBe(true);
   });
 
+  test('USA accepts ITIN (starts with 9)', async () => {
+    await expect(makeIdentityNumberValidation(CountryCode.USA).isValid('912701234')).resolves.toBe(true);
+    await expect(makeIdentityNumberValidation(CountryCode.USA).isValid('999881234')).resolves.toBe(true);
+  });
+
+  test('USA rejects ITIN with zero group or serial', async () => {
+    await expect(makeIdentityNumberValidation(CountryCode.USA).isValid('912001234')).resolves.toBe(false);
+    await expect(makeIdentityNumberValidation(CountryCode.USA).isValid('912700000')).resolves.toBe(false);
+  });
+
+  test('USA still rejects SSN area 000 and 666', async () => {
+    await expect(makeIdentityNumberValidation(CountryCode.USA).isValid('000451234')).resolves.toBe(false);
+    await expect(makeIdentityNumberValidation(CountryCode.USA).isValid('666451234')).resolves.toBe(false);
+  });
+
   test('USA Tax ID vs CAN BN', async () => {
     await expect(makeTaxIdValidation(CountryCode.USA).isValid('123456789')).resolves.toBe(false);
     await expect(makeTaxIdValidation(CountryCode.USA).isValid('111111111')).resolves.toBe(false);
