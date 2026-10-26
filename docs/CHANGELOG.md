@@ -1,5 +1,15 @@
 # @justifi/webcomponents-docs
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies [35ce8b7]
+- Updated dependencies [d95f63c]
+- Updated dependencies [05a2a0b]
+- Updated dependencies [ebaeec3]
+  - @justifi/webcomponents@6.15.0
+
 ## 3.0.5
 
 ### Patch Changes
