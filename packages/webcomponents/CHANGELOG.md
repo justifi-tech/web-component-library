@@ -4,6 +4,7 @@
 
 ### Minor Changes
 
+- 35ce8b7: Add `<justifi-paypal />` sub-component: PayPal and Venmo buttons rendered via the PayPal SDK, emitting `paypalStarted`, `paypalCompleted`, `paypalCancelled` and `paypalError`. Each button shows only when its funding source is eligible (Venmo requires USD). `<justifi-checkout />` renders it automatically when `paypal` is in the checkout's available payment methods, and `paypal`/`venmo` are added to `PAYMENT_MODE` and `PAYMENT_METHODS`.
 - d95f63c: Include Paypal/Venmo payment modes on `<justifi-checkouts-list/>` and `<justifi-checkouts-list-filters/>`
 - ebaeec3: Fix apple pay country code selection to be based off of the payment currency
 
