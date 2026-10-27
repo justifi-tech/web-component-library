@@ -1,0 +1,142 @@
+---
+id: browser-support
+title: Checkout Browser Support
+sidebar_label: Browser Support
+description: Minimum browser versions and payment method availability for the JustiFi checkout components.
+sidebar_position: 3
+---
+
+# Checkout Browser Support
+
+This page covers the components that take a payment, and the versions they are
+built and shipped against. The numbers are derived from the features those
+components actually use once bundled — the ES module loader, the JavaScript
+syntax left in the dependencies their entry chunks import, and the CSS they lay
+out with.
+
+**Covered here:**
+
+- `justifi-checkout` and the components it builds on — `justifi-card-form`,
+  `justifi-bank-account-form`, the billing forms, `justifi-saved-payment-method`,
+  `justifi-save-new-payment-method`, `justifi-sezzle-payment-method`
+- `justifi-modular-checkout` and all of its
+  [sub-components](./modular-checkout/sub-components), including
+  the Apple Pay, Google Pay, PayPal, Venmo, Plaid and Sezzle rails
+- `justifi-tokenize-payment-method`, which uses the same hosted payment fields
+- `justifi-season-interruption-insurance`
+
+The other components in the library — merchant tools, business and entity forms,
+payment provisioning, terminals, lists and charts — are not covered by the tables
+below.
+
+## Minimum versions
+
+**Supported from** is the lowest version where the checkout components load, the
+hosted payment fields work and tokenization completes. **Recommended** is the
+lowest version where their default styling also renders as designed; between the
+two columns checkout is functional but some spacing is lost.
+
+| Browser                              | Supported from | Recommended   |
+| ------------------------------------ | -------------- | ------------- |
+| Chrome                               | 80             | 84            |
+| Edge                                 | 80             | 84            |
+| Firefox                              | 74             | 74            |
+| Safari (macOS)                       | 13.1           | 14.1          |
+| Safari (iOS / iPadOS)                | iOS 13.4       | iOS 14.5      |
+| Chrome, Edge, Firefox on iOS/iPadOS  | iOS 13.4       | iOS 14.5      |
+| Samsung Internet                     | 13.0           | 14.0          |
+| Android WebView                      | 80             | 84            |
+| iOS WKWebView (in-app browsers)      | iOS 13.4       | iOS 14.5      |
+| Opera Mini and other proxy browsers  | Not supported  | Not supported |
+
+Every browser on iOS and iPadOS uses the system WebKit engine, so Chrome, Edge
+and Firefox there follow the Safari row rather than their desktop ones.
+
+### What sets these floors
+
+| Requirement                                                                     | Floor                                                                             |
+| ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [ES modules](https://caniuse.com/es6-module) — the library loads as ESM, and no ES5 bundle is published | Chrome 61 · Edge 16 · Firefox 60 · Safari 11 · Samsung Internet 8.2 |
+| [Optional chaining](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Optional_chaining) and [nullish coalescing](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) — used unpolyfilled by dependencies that every checkout entry chunk imports | Chrome 80 · Edge 80 · Firefox 74 · Safari 13.1 · iOS 13.4 · Samsung Internet 13.0 |
+| [`::part()`](https://developer.mozilla.org/docs/Web/CSS/::part) — how the checkout surface is themed | Chrome 73 · Edge 79 · Firefox 72 · Safari 13.1 · iOS 13.4                 |
+| [Flexbox `gap`](https://caniuse.com/flexbox-gap) — spacing inside the billing form rows, the Apple Pay and PayPal buttons, and the insurance loading state | Chrome 84 · Edge 84 · Firefox 63 · Safari 14.1 · iOS 14.5 · Samsung Internet 14.0 |
+| [`:focus-visible`](https://caniuse.com/css-focus-visible) — keyboard focus ring on checkout inputs | Chrome 86 · Edge 86 · Safari 15.4 · iOS 15.4 · Samsung Internet 14.0       |
+
+Only the first two rows affect whether a payment can be taken. A browser below
+the flexbox `gap` floor still completes checkout; it loses the spacing in the
+places listed above. A browser below the `:focus-visible` floor ignores those
+rules entirely, which makes the keyboard focus ring less visible but changes
+nothing else.
+
+## Hosted payment fields
+
+The card and bank account fields render in cross-origin iframes, one per field,
+and exchange values with each other while a payment is tokenized. This applies
+to `justifi-checkout`, `justifi-modular-checkout` and
+`justifi-tokenize-payment-method` alike — all three build their fields from the
+same components.
+
+Where [`BroadcastChannel`](https://caniuse.com/broadcastchannel) is available
+(Chrome 54+, Firefox 38+, Safari and iOS 15.4+) the fields use it directly.
+Below that — Safari and iOS 13.4 through 15.3, and any in-app browser on those
+versions — the parent component brokers the messages between its own fields
+instead, so those versions are supported with no change on your side.
+
+Two checkout forms on the same page never exchange values: each form brokers
+only for the iframes it owns.
+
+## Payment method availability
+
+✅ available · ⚠️ conditional, see notes · ❌ not available
+
+| Payment method        | Chrome / Edge | Firefox | Safari (macOS) | Safari (iOS) | Samsung Internet | In-app browsers / WebViews |
+| --------------------- | ------------- | ------- | -------------- | ------------ | ---------------- | -------------------------- |
+| Card                  | ✅            | ✅      | ✅             | ✅           | ✅               | ✅                         |
+| Bank account (ACH)    | ✅            | ✅      | ✅             | ✅           | ✅               | ✅                         |
+| Saved payment methods | ✅            | ✅      | ✅             | ✅           | ✅               | ✅                         |
+| Apple Pay             | ❌            | ❌      | ✅             | ✅           | ❌               | ⚠️                         |
+| Google Pay            | ✅            | ⚠️      | ⚠️             | ⚠️           | ✅               | ⚠️                         |
+| PayPal                | ✅            | ✅      | ✅             | ✅           | ✅               | ⚠️                         |
+| Venmo                 | ⚠️            | ⚠️      | ⚠️             | ⚠️           | ⚠️               | ⚠️                         |
+| Plaid (bank login)    | ✅            | ✅      | ✅             | ✅           | ⚠️               | ⚠️                         |
+| Sezzle                | ✅            | ✅      | ✅             | ✅           | ✅               | ❌                         |
+
+Card, bank account and saved payment methods are the rails JustiFi serves
+directly; the rest are provided by the wallet or lender and carry that vendor's
+own browser rules on top of the table above.
+
+**Apple Pay** is offered only where Apple exposes `ApplePaySession`, which today
+means Safari on macOS and every browser on iOS 16+. The button hides itself
+elsewhere rather than failing at payment time. Inside an in-app browser on iOS,
+availability depends on the host app's WebView configuration.
+
+**Google Pay** is offered when the browser can present a Google Pay sheet. On
+Chromium browsers that is the Payment Handler path and works as expected;
+outside Chromium the sheet may not be offered at all, which Google reports as
+`OR_BIBED_15` — see
+[Google's troubleshooting guide](https://developers.google.com/pay/api/web/support/troubleshooting).
+In an Android WebView, Google requires the native Payment Request path: set
+`use-native-payment-request` on `justifi-google-pay`, and note that Google also
+requires Google Play services 25.18.30+ and Android System WebView 137+
+([Google's WebView recipe](https://developers.google.com/pay/api/android/guides/recipes/using-android-webview)).
+
+**PayPal and Venmo** follow the
+[PayPal JS SDK's supported browsers](https://developer.paypal.com/sdk/js/reference/).
+Venmo is US-only and eligibility-gated per buyer; PayPal does not support
+first-party WebViews for either button.
+
+**Plaid** follows
+[Plaid Link's supported browsers](https://plaid.com/docs/link/web/), which
+covers current versions of Chrome, Edge, Firefox and Safari. Plaid does not
+publish support for Samsung Internet or for embedded WebViews.
+
+**Sezzle** completes in a popup window, so it needs a browser that allows
+`window.open`. In-app browsers inside social and messaging apps block popups and
+the Sezzle flow cannot complete there.
+
+## Not supported
+
+- **Opera Mini and other proxy browsers.** They do not run ES modules, so no
+  checkout component loads at all. The library is published as ES modules only —
+  there is no ES5 fallback bundle.
+- **Internet Explorer**, in any version.
