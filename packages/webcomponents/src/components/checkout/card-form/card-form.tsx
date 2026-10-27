@@ -3,6 +3,7 @@ import CardFormSkeleton from "./card-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
 import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { BroadcastHostService } from "../../../utils/broadcast-host-service";
 import {
   ComponentErrorCodes,
   ComponentErrorEvent,
@@ -26,11 +27,21 @@ export class CardForm {
   private expirationYearIframeElement!: HTMLIframeInputElement;
   private cvvIframeElement!: HTMLIframeInputElement;
   private loadAbortController?: AbortController;
+  private broadcastHost?: BroadcastHostService;
 
   async componentWillLoad() {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
     this.tabId = generateTabId();
+
+    // Started before render so no iframe can broadcast before anything is
+    // listening; targets are resolved per message, not now.
+    this.broadcastHost = new BroadcastHostService(
+      () => this.iframeElements,
+      this.tabId,
+      this.iframeOrigin,
+    );
+    this.broadcastHost.start();
 
     checkPkgVersion();
   }
@@ -41,6 +52,7 @@ export class CardForm {
 
   disconnectedCallback() {
     this.loadAbortController?.abort();
+    this.broadcastHost?.stop();
   }
 
   @Method()

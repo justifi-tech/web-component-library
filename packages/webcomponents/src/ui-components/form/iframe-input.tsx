@@ -62,6 +62,16 @@ export class IframeInput {
     this.iframeElement.src = this.iframeSrc;
   }
 
+  /**
+   * Delivers a broadcast envelope sent on by the parent form. Only iframes
+   * without BroadcastChannel (Safari/iOS < 15.4) ever need this; see
+   * BroadcastHostService.
+   */
+  @Method()
+  async deliverBroadcast(message: any) {
+    this.frameService?.postRaw(message);
+  }
+
   private initializeFrameCommunicationService() {
     this.frameService = new FrameCommunicationService(
       this.iframeElement, this.iframeOrigin

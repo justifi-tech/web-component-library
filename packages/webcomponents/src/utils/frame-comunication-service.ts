@@ -16,6 +16,15 @@ export class FrameCommunicationService {
     this.iframe.contentWindow.postMessage(message, this.iframeOrigin);
   }
 
+  /**
+   * Posts a message verbatim. `postMessage` above spreads the payload into a
+   * flat object, which would flatten a nested envelope -- the broadcast host
+   * needs the structure preserved.
+   */
+  postRaw(message: any) {
+    this.iframe.contentWindow?.postMessage(message, this.iframeOrigin);
+  }
+
   addMessageListener(callback: (event: MessageEvent) => void) {
     window.addEventListener('message', callback);
   }
