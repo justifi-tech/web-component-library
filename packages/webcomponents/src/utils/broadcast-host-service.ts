@@ -21,10 +21,7 @@ type BroadcastEnvelope = {
   payload: unknown;
 };
 
-/**
- * Structural, not `Pick<HTMLIframeInputElement, ...>`: `components.d.ts` is
- * build-generated and gitignored, so a plain .ts file cannot lean on it.
- */
+// Structural: components.d.ts is build-generated and gitignored.
 type BroadcastTarget = {
   inputId: string;
   deliverBroadcast: (message: unknown) => Promise<void>;

@@ -34,8 +34,6 @@ export class CardForm {
     this.iframeOrigin = configState.iframeOrigin;
     this.tabId = generateTabId();
 
-    // Started before render so no iframe can broadcast before anything is
-    // listening; targets are resolved per message, not now.
     this.broadcastHost = new BroadcastHostService(
       () => this.iframeElements,
       this.tabId,
