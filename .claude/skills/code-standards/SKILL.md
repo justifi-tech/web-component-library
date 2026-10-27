@@ -145,6 +145,25 @@ private async submitOrder() {
 }
 ```
 
+**Exception — test files.** A test body is three named phases, not sections
+looking for a method: extracting Arrange, Act or Assert into a helper hides the
+thing the test is about. Keep one blank line between the phases in
+`*.spec.ts`, `*.spec.tsx` and `apps/component-examples/e2e/**/*.ts`, and
+nowhere else in those files. The `testing` skill is the authority on how a test
+is written.
+
+```ts
+it('emits error-event when the terminal fetch fails', async () => {
+  const errorSpy = jest.fn();
+
+  await page.rootInstance.fetchTerminalModels();
+
+  expect(errorSpy).toHaveBeenCalledWith(
+    expect.objectContaining({ errorCode: ComponentErrorCodes.FETCH_ERROR }),
+  );
+});
+```
+
 ## 6. No comment the code could have said itself
 
 A comment that restates the next line goes stale and earns nothing. Rename the
@@ -243,7 +262,7 @@ It is the second level that is banned.
 ## Before calling it done
 
 Re-read the methods you touched and check each one: under 30 lines, at most
-three parameters, no blank line in the body, no empty catch, no literal that
+three parameters, no blank line in the body (outside a test's three phases), no empty catch, no literal that
 needed a name, no third level of `if`, no ternary inside a ternary. If a rule
 is hard to satisfy, the method is doing too much — split it rather than making
 an exception.
