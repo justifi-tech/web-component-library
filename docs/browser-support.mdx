@@ -1,0 +1,84 @@
+---
+id: browser-support
+title: Checkout Browser Support
+sidebar_label: Browser Support
+description: Minimum browser versions and payment method availability for the JustiFi checkout components.
+sidebar_position: 3
+---
+
+# Checkout Browser Support
+
+Which browsers the JustiFi checkout components support, and which payment
+methods work where.
+
+**Applies to** `justifi-checkout`, `justifi-modular-checkout` and its
+sub-components, `justifi-tokenize-payment-method` and
+`justifi-season-interruption-insurance`. Other components in the library are not
+covered here.
+
+## Minimum versions
+
+- **Supported** — checkout works and payments complete.
+- **Recommended** — checkout also looks as designed. Between the two columns,
+  some spacing is lost.
+
+| Browser                              | Supported     | Recommended   |
+| ------------------------------------ | ------------- | ------------- |
+| Chrome                               | 80            | 84            |
+| Edge                                 | 80            | 84            |
+| Firefox                              | 74            | 74            |
+| Safari (macOS)                       | 13.1          | 14.1          |
+| Safari (iOS / iPadOS)                | iOS 13.4      | iOS 14.5      |
+| Chrome, Edge, Firefox on iOS/iPadOS  | iOS 13.4      | iOS 14.5      |
+| Samsung Internet                     | 13.0          | 14.0          |
+| Android WebView                      | 80            | 84            |
+| iOS WKWebView (in-app browsers)      | iOS 13.4      | iOS 14.5      |
+| Opera Mini and other proxy browsers  | Not supported | Not supported |
+
+Every browser on iOS and iPadOS uses Safari's engine, so Chrome, Edge and
+Firefox there follow the Safari row.
+
+## Payment methods
+
+✅ available · ⚠️ conditional, see below · ❌ not available
+
+| Payment method        | Chrome / Edge | Firefox | Safari (macOS) | Safari (iOS) | Samsung Internet | In-app browsers / WebViews |
+| --------------------- | ------------- | ------- | -------------- | ------------ | ---------------- | -------------------------- |
+| Card                  | ✅            | ✅      | ✅             | ✅           | ✅               | ✅                         |
+| Bank account (ACH)    | ✅            | ✅      | ✅             | ✅           | ✅               | ✅                         |
+| Saved payment methods | ✅            | ✅      | ✅             | ✅           | ✅               | ✅                         |
+| Apple Pay             | ❌            | ❌      | ✅             | ✅           | ❌               | ⚠️                         |
+| Google Pay            | ✅            | ⚠️      | ⚠️             | ⚠️           | ✅               | ⚠️                         |
+| PayPal                | ✅            | ✅      | ✅             | ✅           | ✅               | ⚠️                         |
+| Venmo                 | ⚠️            | ⚠️      | ⚠️             | ⚠️           | ⚠️               | ⚠️                         |
+| Plaid (bank login)    | ✅            | ✅      | ✅             | ✅           | ⚠️               | ⚠️                         |
+| Sezzle                | ✅            | ✅      | ✅             | ✅           | ✅               | ❌                         |
+
+Card, bank account and saved payment methods work everywhere the table above
+says checkout is supported. The wallets and lenders add their own rules:
+
+**Apple Pay** — Safari on macOS, and any browser on iOS 16+. The button hides
+itself where Apple Pay is unavailable, so you do not need to detect it yourself.
+In an iOS in-app browser, availability depends on the host app.
+
+**Google Pay** — reliable on Chromium browsers; elsewhere the sheet may not be
+offered ([why](https://developers.google.com/pay/api/web/support/troubleshooting)).
+In an Android WebView, set `use-native-payment-request` on `justifi-google-pay`;
+Google also requires Play services 25.18.30+ and System WebView 137+
+([details](https://developers.google.com/pay/api/android/guides/recipes/using-android-webview)).
+
+**PayPal and Venmo** — follow the
+[PayPal JS SDK](https://developer.paypal.com/sdk/js/reference/). Venmo is
+US-only and eligibility-gated per buyer. Neither works in your own app's WebView.
+
+**Plaid** — follows [Plaid Link](https://plaid.com/docs/link/web/): current
+Chrome, Edge, Firefox and Safari. Samsung Internet and WebViews are not covered
+by Plaid.
+
+**Sezzle** — opens a popup, so it cannot complete in an in-app browser that
+blocks popups.
+
+## Not supported
+
+Opera Mini, other proxy browsers, and Internet Explorer. The components ship as
+ES modules only — there is no ES5 build.
