@@ -10,7 +10,6 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",
     "test:watch": "pnpm --filter @justifi/webcomponents test:watch",
-    "test:file": "turbo run test:file",
     "test:e2e": "pnpm --filter @repo/component-examples test:e2e",
     "test:e2e:ui": "pnpm --filter @repo/component-examples test:e2e:ui",
     "test:e2e:headed": "pnpm --filter @repo/component-examples test:e2e:headed",
@@ -29,7 +28,7 @@
     "globals": "^16.0.0",
     "typescript-eslint": "^8.60.0",
     "prettier": "^3.1.1",
-    "turbo": "^2.0.6"
+    "turbo": "^2.9.14"
   },
   "workspaces": [
     "apps/*",

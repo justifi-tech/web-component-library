@@ -5,7 +5,7 @@ import path from 'path';
 /** Path to minimal image fixture for bank account document upload */
 export const VOIDED_CHECK_FIXTURE = path.join(
   __dirname,
-  'fixtures',
+  'assets',
   'voided-check.png',
 );
 
@@ -262,8 +262,12 @@ export async function fillOwners(
   );
   if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner) {
     await page.getByRole('button', { name: 'Yes' }).click();
-    await page.waitForTimeout(4000);
     const comp = page.locator('justifi-payment-provisioning');
+    // Yes PATCHes the business and refetches; the form comes back prefilled with
+    // the representative, so a non-empty name means it finished.
+    await expect(comp.getByLabel('Full Name')).not.toHaveValue('', {
+      timeout: 20000,
+    });
     if ('ownership_percentage' in data && data.ownership_percentage) {
       await comp.getByLabel('% of Ownership').fill(data.ownership_percentage);
     }
@@ -271,7 +275,9 @@ export async function fillOwners(
   }
   if ((await repIsOwnerBanner.isVisible()) && options?.representativeIsOwner === false) {
     await page.getByRole('button', { name: 'No' }).click();
-    await page.waitForTimeout(500);
+    // The prompt disappears in the render that makes the owner form editable.
+    // Filling before that hits the pre-answer form and the PATCH fails validation.
+    await expect(repIsOwnerBanner).toBeHidden();
   }
 
   const comp = page.locator('justifi-payment-provisioning');
@@ -314,7 +320,6 @@ export async function fillBankAccountManual(
   });
   if (await manualButton.isVisible()) {
     await manualButton.click();
-    await page.waitForTimeout(500);
   }
   await page.getByLabel('Bank Name').fill(data.bank_name);
   await page.getByLabel('Nickname').fill(data.nickname);
@@ -333,7 +338,6 @@ export async function fillBankAccountManualCAN(
   });
   if (await manualButton.isVisible()) {
     await manualButton.click();
-    await page.waitForTimeout(500);
   }
   await page.getByLabel('Bank Name').fill(data.bank_name);
   await page.getByLabel('Nickname').fill(data.nickname);
@@ -350,9 +354,7 @@ export async function fillDocumentUpload(
 ): Promise<void> {
   const comp = page.locator('justifi-payment-provisioning');
   await page.getByLabel('Document Category').selectOption('financial_document');
-  await page.waitForTimeout(300);
   await page.getByLabel('Document Type').selectOption('voided_check');
-  await page.waitForTimeout(300);
   const fileInput = comp.locator('input[name="document_file"]');
   await fileInput.setInputFiles(voidedCheckPath);
   // Wait for upload badge to show success
@@ -370,9 +372,7 @@ export async function fillDocumentUploadCAN(
 
   async function uploadDoc(categoryValue: string, docType: string, expectedBadges: number) {
     await categorySelect.selectOption(categoryValue);
-    await page.waitForTimeout(300);
     await typeSelect.selectOption(docType);
-    await page.waitForTimeout(300);
     await fileInput.setInputFiles(fixturePath);
     await expect(comp.locator('.badge.bg-success')).toHaveCount(expectedBadges, { timeout: 15000 });
   }
@@ -392,6 +392,7 @@ export async function acceptTerms(page: Page): Promise<void> {
 }
 
 export async function clickNext(page: Page): Promise<void> {
+  // Deliberate: nothing exposes when the last-filled field registers its value.
   await page.waitForTimeout(300);
   await page.getByRole('button', { name: 'Next' }).click();
 }

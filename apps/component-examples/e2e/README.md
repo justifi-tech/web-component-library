@@ -8,7 +8,8 @@ This guide covers patterns, helpers, and conventions for writing Playwright E2E 
 - **Config**: `apps/component-examples/playwright.config.ts`
 - **Base URL**: `http://localhost:3000` (Express server serving example pages)
 - **Browser**: Chromium (Desktop Chrome)
-- **Timeout**: 90s per test, single worker
+- **Timeout**: 90s per test, 15s per `expect` (the 5s default is too tight for assertions that wait on a real API)
+- **Parallelism**: `fullyParallel` — 4 workers on CI, 1 retry on CI
 - **Traces**: Retained on failure for debugging
 
 ### Running Tests
@@ -61,7 +62,7 @@ await fillIframeInput(page, 'routingNumber', TEST_DATA.bankAccount.routingNumber
 
 ### `waitForComponent(page, tagName)`
 
-Waits for a web component to appear in the DOM, then adds a 3-second delay for iframe initialization.
+Waits for the component's Stencil `hydrated` class. Iframe readiness is separate — `fillIframeInput()` / `waitForIframeInput()` handle that.
 
 ```typescript
 await waitForComponent(page, 'justifi-checkout');
@@ -69,6 +70,25 @@ await waitForComponent(page, 'justifi-tokenize-payment-method');
 ```
 
 **Always call this after `page.goto()`** before interacting with the component.
+
+### `waitForIframeInput(page, iframeName)` / `waitForCardForm(page)` / `waitForBankAccountForm(page)`
+
+Waits for hosted iframes to be **loaded**, not merely present. `waitForCardForm` and `waitForBankAccountForm` wait for every iframe of that form; prefer them over a single `waitForIframeInput` when you are about to call a component method, since the frames load independently.
+
+These are also the signal that a payment-method toggle finished — the bank iframes only exist on the bank form, the card iframes only on the card form.
+
+> ⚠️ **`validate()` and `tokenize()` hang — they do not fail — if the frames are not ready.**
+> Both postMessage into the hosted field and await a reply with **no timeout**, so talking to a frame whose script has not registered its listener yet produces a 90-second test timeout rather than a readable error. `iframe-input` renders its wrapper as `visibility: hidden; height: 0` until the frame reports `iframeLoaded`, so **the iframe element becoming visible in the parent document** is the readiness signal these helpers use. Checking the input *inside* the frame is not enough: Playwright computes that visibility in the frame's own document, where it is visible long before the parent un-hides it.
+
+### `waitForTableRows(page, tagName)` / `waitForTableRowChange(page, tagName, previousText)`
+
+For list components. The table renders a `loading-state` / `empty-state` / `error-state` row while it has no data, so a row merely existing proves nothing. Only real data rows carry `data-test-id="table-row"` (every list component sets it, and the unit specs query it) — that is what both helpers target, via `firstTableRow(page, tagName)`. A refetch leaves the previous rows in place and renders the loading row above them, so targeting the data row is also what makes `waitForTableRowChange` ignore the loading state. It polls `textContent()` rather than asserting `not.toHaveText(previous)`, which normalises whitespace and would read unchanged content as changed.
+
+### `waitForCardFieldsSynced(page)` / `waitForBankAccountFieldsSynced(page)`
+
+Waits for typed hosted-field values to reach the host component. `fillCardForm()` and `fillBankAccountForm()` already call these, so you only need them when you fill the iframes yourself.
+
+> ⚠️ **This is the one wait in the suite that still ends in a sleep, and it is deliberate.** Two things can go wrong after `fill()` returns. The frame can reload and silently drop what was typed — the value read back out of the frame catches that, and is asserted. And the field syncs its value to the host over postMessage with **nothing observable marking that done**. `validate()` is not a substitute: on CI it reported `isValid` while a card field had not synced, and the tokenize that followed failed with `card_number_required` — three times in one run. The only number known to hold is the 2s this suite always used. If the component ever exposes a fields-ready signal, this sleep is the first thing that should go.
 
 ### `listenForErrorEvent(page, componentName)`
 
@@ -171,7 +191,7 @@ await page.getByRole('textbox', { name: 'Postal Code' }).fill(TEST_DATA.postalCo
 **Bank account**:
 ```typescript
 await page.getByRole('radio', { name: 'New bank account' }).click();
-await page.waitForTimeout(2000); // Wait for form switch
+await waitForIframeInput(page, 'routingNumber'); // the form switch finished
 await fillIframeInput(page, 'routingNumber', TEST_DATA.bankAccount.routingNumber);
 await fillIframeInput(page, 'accountNumber', TEST_DATA.bankAccount.accountNumber);
 ```
@@ -242,13 +262,13 @@ if (result.type === 'error') {
 
 ### 7. Toggling Payment Methods
 
-Test that state persists across form switches:
+Test that state persists across form switches. Wait for each form's own iframes — both forms render a Postal Code field, so asserting on shared fields without waiting can match the form you just left:
 
 ```typescript
 await page.getByRole('radio', { name: 'New bank account' }).click();
-await page.waitForTimeout(500);
+await waitForIframeInput(page, 'routingNumber');
 await page.getByRole('radio', { name: 'New credit or debit card' }).click();
-await page.waitForTimeout(3000); // Allow iframe re-initialization
+await waitForIframeInput(page, 'cardNumber');
 ```
 
 ### 8. Tracking Page Errors
@@ -266,17 +286,45 @@ expect(pageErrors).toHaveLength(0);
 
 ## Timing & Waits
 
-Due to iframe initialization and async component loading, explicit waits are necessary:
+**Do not use `page.waitForTimeout()`.** Every sleep is standing in for a condition — wait on the
+condition instead. Sleeps cost the same whether or not they were needed, and they hide real
+regressions: a sleep that is 500ms too short becomes a flake, and one that is 3s too long becomes
+six minutes of CI. Removing them is what took this suite from 6m19s to the time it takes now.
 
-| Scenario | Wait |
+| Scenario | Wait on |
 |---|---|
-| After `page.goto()` | `waitForComponent(page, tagName)` (includes 3s delay) |
-| After toggling payment method | `page.waitForTimeout(500)` minimum |
-| After toggling to form with iframes | `page.waitForTimeout(2000-3000)` for iframe init |
-| Before clicking Pay | `page.waitForTimeout(2000)` for iframe JS init |
-| After button click (error check) | `page.waitForTimeout(3000)` |
+| After `page.goto()` | `waitForComponent(page, tagName)` |
+| Before typing into hosted fields | `waitForCardForm(page)` / `waitForBankAccountForm(page)` (built into `fillCardForm()`) |
+| Before calling a component method or clicking Submit | `waitForCardForm(page)` / `waitForBankAccountForm(page)` |
+| After toggling payment method | `waitForCardForm(page)` / `waitForBankAccountForm(page)` |
+| After filling a form, before tokenizing | `waitForCardFieldsSynced(page)` (built into `fillCardForm()`) |
+| After clicking the billing-fill button | `expect(locator).toHaveValue(...)` |
+| After a button click | the assertion itself — `expect()` auto-retries |
+| Before reading list rows | `waitForTableRows(page, tagName)` |
+| After pagination | `waitForTableRowChange(page, tagName, previousText)` |
+| For an API call | `page.waitForResponse(...)` |
 
-**Prefer** `waitForComponent()` and `waitForResponse()` over raw timeouts when possible.
+**`waitForComponent()` is hydration only.** It returns as soon as Stencil stamps `hydrated`, which is the component's *first* render — the loading state. Anything that reads data, calls a component method, or clicks a control the component owns needs a second wait for the thing it actually depends on. The buttons on the example pages (`#fill-billing-form-button`, `#test-submit-button`) are plain page markup and are clickable long before the component can answer.
+
+**Watch for assertions that pass vacuously.** `expect(submitButton).toBeEnabled()` straight after a click passes against the pre-click state. Assert the outcome you are waiting for first (the error in the event log, the response), then assert the button came back.
+
+Five sleeps are left, each with a comment saying what it waits for and why nothing exposes it.
+Two are on the hosted-field path and are the stubborn ones:
+
+- **Before typing** — hosted field scripts keep initialising after their input is interactive and a
+  late init wipes what was typed. This is the 3s `waitForComponent()` used to spend on *every*
+  navigation, now spent only inside `waitForCardForm()` / `waitForBankAccountForm()`.
+- **After typing** — the field syncs its value to the host over postMessage with no signal.
+
+The other three are one-liners: component teardown, a field registering its value before a
+provisioning step advances, and a row click with no observable effect. If you need a sixth, write
+the same kind of comment — or find the condition.
+
+Both hosted-field sleeps were removed once and CI put them back. On a slower machine `fill()`
+returned, the field cleared itself, and the whole tokenize suite failed with
+`card_number_required` — green locally, 6 failed / 4 flaky on CI. `fillIframeInput()` now also
+re-fills until the value sticks, as a backstop. **If you are tempted to delete either sleep, read
+that paragraph again and check CI, not your laptop.**
 
 ### Freshly created payments are not immediately refundable
 
@@ -292,7 +340,7 @@ A payment created by an example page is rejected by `POST /payments/:id/refunds`
 3. Use `fillIframeInput()` for PCI fields, regular locators for other fields
 4. Use `TEST_DATA` constants for test values
 5. Use `Promise.race()` pattern with `listenForErrorEvent()` for async operations
-6. Add appropriate waits for iframe initialization
+6. Wait on conditions, never `page.waitForTimeout()` — see Timing & Waits
 7. Assert on API response status, body structure, and component state
 8. Track page errors if testing for absence of JS exceptions
 

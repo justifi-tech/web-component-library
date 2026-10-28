@@ -14,6 +14,12 @@ on:
 permissions:
   contents: read
 
+# Cancel superseded PR runs: each holds a runner for minutes and creates real
+# records on staging.
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   e2e:
     runs-on: ubuntu-latest
@@ -30,6 +36,8 @@ jobs:
           vars-json: "${{ toJSON(vars) }}"
           secrets-json: '{"CLIENT_ID":"${{ secrets.CLIENT_ID }}","CLIENT_SECRET":"${{ secrets.CLIENT_SECRET }}","CAN_CLIENT_ID":"${{ secrets.CAN_CLIENT_ID }}","CAN_CLIENT_SECRET":"${{ secrets.CAN_CLIENT_SECRET }}"}'
 
+      # buildx + `cache-from/to: type=gha` measured worse here: +117s on the
+      # build step to save ~16s on the dependency layer.
       - name: Build Docker image
         run: |
           docker build \

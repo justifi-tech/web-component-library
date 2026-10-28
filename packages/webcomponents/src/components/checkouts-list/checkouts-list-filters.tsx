@@ -18,7 +18,7 @@ export class JustifiCheckoutsListFilters {
   @Prop() createdAfter?: string;
   @Prop() createdBefore?: string;
 
-  private debouncedSetParamsOnChange: (name: string, value: string) => void;
+  private debouncedSetParamsOnChange!: (name: string, value: string) => void;
 
   componentWillLoad() {
     // debounced input handler for text input
@@ -39,7 +39,7 @@ export class JustifiCheckoutsListFilters {
       }
     });
   }
-  
+
   setParamsOnChange = (name: string, value: string) => {
     filterParams[name] = value;
   }
@@ -65,6 +65,8 @@ export class JustifiCheckoutsListFilters {
       { label: 'E-commerce', value: ICheckoutPaymentModeParam.ecom },
       { label: 'BNPL', value: ICheckoutPaymentModeParam.bnpl },
       { label: 'Apple Pay', value: ICheckoutPaymentModeParam.apple_pay },
+      { label: 'Paypal', value: ICheckoutPaymentModeParam.paypal },
+      { label: 'Venmo', value: ICheckoutPaymentModeParam.venmo }
     ]
   }
 

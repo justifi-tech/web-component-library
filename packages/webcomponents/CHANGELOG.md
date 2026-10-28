@@ -1,5 +1,29 @@
 ### Changelog
 
+## 6.15.0
+
+### Minor Changes
+
+- 35ce8b7: Add `<justifi-paypal />` sub-component: PayPal and Venmo buttons rendered via the PayPal SDK, emitting `paypalStarted`, `paypalCompleted`, `paypalCancelled` and `paypalError`. Each button shows only when its funding source is eligible (Venmo requires USD). `<justifi-checkout />` renders it automatically when `paypal` is in the checkout's available payment methods, and `paypal`/`venmo` are added to `PAYMENT_MODE` and `PAYMENT_METHODS`.
+- d95f63c: Include Paypal/Venmo payment modes on `<justifi-checkouts-list/>` and `<justifi-checkouts-list-filters/>`
+- ebaeec3: Fix apple pay country code selection to be based off of the payment currency
+
+### Patch Changes
+
+- 05a2a0b: Accept ITINs (9XX area) in owner/representative SSN field on business forms
+
+## 6.14.6
+
+### Patch Changes
+
+- 4553534: PaymentProvisioning component - "Business Already Provisioned" now shows only when the business has been provisioned for payments (`payments` in its `provisioned` list). An associated account by itself no longer counts, so a business linked to its account before provisioning, such as a platform sub account's, can onboard.
+
+## 6.14.5
+
+### Patch Changes
+
+- 956c87e: Fix Sezzle popup not opening when submitting checkout with Sezzle selected. `submitCheckout` now opens the Sezzle checkout and completes with `payment_mode: bnpl` on approval, emitting `error-event` on cancel/failure. Retrying after a cancel re-opens the popup.
+
 ## 6.14.4
 
 ### Patch Changes

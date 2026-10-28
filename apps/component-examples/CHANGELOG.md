@@ -1,5 +1,29 @@
 # @repo/component-examples
 
+## 1.2.26
+
+### Patch Changes
+
+- Updated dependencies [35ce8b7]
+- Updated dependencies [d95f63c]
+- Updated dependencies [05a2a0b]
+- Updated dependencies [ebaeec3]
+  - @justifi/webcomponents@6.15.0
+
+## 1.2.25
+
+### Patch Changes
+
+- Updated dependencies [4553534]
+  - @justifi/webcomponents@6.14.6
+
+## 1.2.24
+
+### Patch Changes
+
+- Updated dependencies [956c87e]
+  - @justifi/webcomponents@6.14.5
+
 ## 1.2.23
 
 ### Patch Changes

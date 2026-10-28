@@ -27,7 +27,7 @@ import { checkoutStore, onChange } from "../../../store/checkout.store";
   shadow: true,
 })
 export class JustifiApplePay {
-  private applePayService: ApplePayService;
+  private applePayService!: ApplePayService;
   private sdkLoaded = false;
   @Prop() countryCode: string = "US";
   @Prop() merchantIdentifier: string =
@@ -47,15 +47,15 @@ export class JustifiApplePay {
   @State() isConfigValid: boolean = true;
   @State() error: string | null = null;
 
-  @Event() applePayStarted: EventEmitter<void>;
-  @Event() applePayCompleted: EventEmitter<{
+  @Event() applePayStarted!: EventEmitter<void>;
+  @Event() applePayCompleted!: EventEmitter<{
     success: boolean;
     token?: IApplePayToken;
     paymentMethodId?: string;
     error?: any;
   }>;
-  @Event() applePayCancelled: EventEmitter<void>;
-  @Event() applePayError: EventEmitter<{ error: string, code: string }>;
+  @Event() applePayCancelled!: EventEmitter<void>;
+  @Event() applePayError!: EventEmitter<{ error: string, code: string }>;
 
   // Centralized error codes for the Apple Pay component layer
   static ErrorCode = {
@@ -79,6 +79,14 @@ export class JustifiApplePay {
         if (loaded) this.loadApplePaySDK();
       });
     }
+  }
+
+  private countryCodeForCurrency(currency: string) {
+    if (currency.toLowerCase() == "cad") {
+      return "CA"
+    }
+
+    return "US"
   }
 
   private loadApplePaySDK() {
@@ -166,7 +174,7 @@ export class JustifiApplePay {
       this.applePayStarted.emit();
 
       const paymentRequest: IApplePayPaymentRequest = {
-        countryCode: this.countryCode,
+        countryCode: this.countryCodeForCurrency(checkoutStore.paymentCurrency),
         currencyCode: checkoutStore.paymentCurrency,
         merchantCapabilities: [
           ApplePayMerchantCapability.SUPPORTS_3DS,
@@ -179,6 +187,7 @@ export class JustifiApplePay {
           checkoutStore.paymentAmount
         ),
       };
+
 
       const result = await this.applePayService.startPaymentSession(
         paymentRequest,

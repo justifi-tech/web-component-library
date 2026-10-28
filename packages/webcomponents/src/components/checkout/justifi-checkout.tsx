@@ -150,6 +150,11 @@ export class JustifiCheckout {
                         />
                       </div>
                     )}
+                    {this.availablePaymentMethods.includes(PAYMENT_METHODS.PAYPAL) && (
+                      <div class="mb-3">
+                        <justifi-paypal />
+                      </div>
+                    )}
                     <justifi-saved-payment-methods />
                     {this.availablePaymentMethods.includes(PAYMENT_METHODS.SEZZLE) && !this.disableBnpl && (
                       <justifi-radio-list-item

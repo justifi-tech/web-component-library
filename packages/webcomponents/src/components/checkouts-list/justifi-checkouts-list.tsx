@@ -35,24 +35,24 @@ import { ComponentClickEvent, ComponentErrorEvent } from '../../api/ComponentEve
 export class JustifiCheckoutsList {
   @Prop() accountId!: string;
   @Prop() authToken!: string;
-  @Prop() columns?: string = defaultColumnsKeys;
+  @Prop() columns: string = defaultColumnsKeys;
   @Prop() subAccountId?: string;
 
   @State() checkouts: Checkout[] = [];
-  @State() checkoutsTable: Table<Checkout>;
+  @State() checkoutsTable!: Table<Checkout>;
   @State() subAccounts: SubAccount[] = [];
   @State() loading: boolean = true;
-  @State() errorMessage: string;
+  @State() errorMessage!: string;
   @State() paging: PagingInfo = pagingDefaults;
   @State() pagingParams: any = {};
 
-  @State() getCheckouts: Function;
-  @State() getSubAccounts: Function;
+  @State() getCheckouts!: Function;
+  @State() getSubAccounts!: Function;
 
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'click-event', bubbles: true }) clickEvent!: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'error-event' }) errorEvent!: EventEmitter<ComponentErrorEvent>;
 
-  analytics: JustifiAnalytics;
+  analytics!: JustifiAnalytics;
 
   componentWillLoad() {
     detectDuplicateVersion();
@@ -136,7 +136,7 @@ export class JustifiCheckoutsList {
 
     this.getCheckouts({
       params: this.checkoutParams,
-      onSuccess: async ({ checkouts, pagingInfo }) => {
+      onSuccess: async ({ checkouts, pagingInfo }: any) => {
         this.checkouts = checkouts;
         this.paging = pagingInfo;
         this.checkoutsTable.collectionData = this.checkouts;
@@ -148,7 +148,7 @@ export class JustifiCheckoutsList {
           this.loading = false;
         }
       },
-      onError: ({ error, code, severity }) => {
+      onError: ({ error, code, severity }: any) => {
         this.errorMessage = error;
         this.errorEvent.emit({
           errorCode: code,
@@ -167,7 +167,7 @@ export class JustifiCheckoutsList {
     }
     this.getSubAccounts({
       params: this.subAccountParams,
-      onSuccess: ({ subAccounts }) => {
+      onSuccess: ({ subAccounts }: any) => {
         this.subAccounts = subAccounts;
         this.checkouts = this.checkouts.map((checkout) => {
           checkout.sub_account_name = this.subAccounts.find((subAccount) => subAccount.id === checkout.account_id)?.name;
@@ -175,7 +175,7 @@ export class JustifiCheckoutsList {
         });
         this.loading = false;
       },
-      onError: ({ error, code, severity }) => {
+      onError: ({ error, code, severity }: any) => {
         this.errorMessage = error;
         this.errorEvent.emit({
           errorCode: code,
@@ -197,7 +197,7 @@ export class JustifiCheckoutsList {
     this.clickEvent.emit({ name: TableClickActions.next });
   };
 
-  rowClickHandler = (e) => {
+  rowClickHandler = (e: any) => {
     const clickedCheckoutID = e.target.closest('tr').dataset.rowEntityId;
     if (!clickedCheckoutID) return;
 
