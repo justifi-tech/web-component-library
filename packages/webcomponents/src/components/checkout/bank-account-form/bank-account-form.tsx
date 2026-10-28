@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Method, State } from "@stencil/core"
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
-import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { detectDuplicateVersion } from "../../../utils/detect-duplicate-version";
 import { checkoutStore } from "../../../store/checkout.store";
 import {
   ComponentErrorCodes,
@@ -32,7 +32,7 @@ export class BankAccountForm {
     this.iframeOrigin = configState.iframeOrigin;
     this.tabId = generateTabId();
 
-    checkPkgVersion();
+    detectDuplicateVersion();
   }
 
   componentDidRender() {

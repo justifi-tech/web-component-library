@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter, Listen } from '@stencil/core';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { makeGetDispute } from '../../actions/dispute/dispute-actions';
 import { DisputeService } from '../../api/services/dispute.service';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
@@ -57,7 +57,7 @@ export class JustifiDisputeManagement {
   }
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetDispute();
   }

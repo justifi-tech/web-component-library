@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { TerminalService } from '../../api/services/terminal.service';
 import { makeGetTerminals } from '../../actions/terminal/get-terminals';
 import { SubAccountService } from '../../api/services/subaccounts.service';
@@ -52,7 +52,7 @@ export class JustifiTerminalsList {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.terminalsTable = new Table<Terminal>(this.terminals, this.columns, terminalTableColumns, terminalTableCells);
     this.initializeGetData();

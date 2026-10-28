@@ -13,7 +13,6 @@ import { checkoutStore } from '../../../store/checkout.store';
 import { PAYMENT_METHODS } from '../../modular-checkout/ModularCheckout';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 
-jest.mock('../../../utils/check-pkg-version', () => ({ checkPkgVersion: jest.fn() }));
 
 const tokenizeComponents = [
   JustifiTokenizePaymentMethod,

@@ -16,7 +16,7 @@ import { makeGetGrossPaymentChartData } from '../../actions/gross-payment/get-gr
 import { ErrorState } from '../../ui-components/details/utils';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
@@ -47,7 +47,7 @@ export class JustifiGrossPaymentChart {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetGrossPayment();
   }

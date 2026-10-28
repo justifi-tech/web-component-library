@@ -1,5 +1,5 @@
 import { Component, h, Watch, State, Prop, Event, EventEmitter } from '@stencil/core';
-import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../../utils/detect-duplicate-version';
 import {
   makeCreateDisputeEvidence,
   makeUpdateDisputeResponse,
@@ -124,7 +124,7 @@ export class DisputeResponse {
   ];
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeDisputeServiceMethods();
   }

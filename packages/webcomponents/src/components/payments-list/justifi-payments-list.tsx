@@ -3,7 +3,7 @@ import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPayments } from '../../actions/payment/get-payments';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { StyledHost } from '../../ui-components';
 import { paymentTableCells, paymentTableColumns } from './payments-table';
 import { defaultColumnsKeys } from './payments-table';
@@ -49,7 +49,7 @@ export class JustifiPaymentsList {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.paymentsTable = new Table<Payment>(this.payments, this.columns, paymentTableColumns, paymentTableCells);
     this.initializeGetPayments();

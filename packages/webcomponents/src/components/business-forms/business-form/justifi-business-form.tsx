@@ -6,7 +6,7 @@ import { Business, BusinessFormServerErrors, IBusiness } from '../../../api/Busi
 import JustifiAnalytics from '../../../api/Analytics';
 import { Button, Header1, StyledHost } from '../../../ui-components';
 import { CountryCode } from '../../../utils/country-codes';
-import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../../utils/detect-duplicate-version';
 import { BusinessFormLoading } from './business-form-loading';
 import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '../../../api/ComponentEvents';
 import { BusinessFormClickActions } from '../utils';
@@ -39,7 +39,7 @@ export class JustifiBusinessForm {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.formController = new FormController(businessFormSchema);
     this.initializeApi();

@@ -21,7 +21,6 @@ import mockBusinessProvisioning from '../mocks/mockBusinessProvisioning.json';
 import mockBankAccount from '../mocks/mockBankAccount.json';
 import mockDispute from '../mocks/mockDisputeResponse.json';
 import mockDisputePastDue from '../mocks/mockDisputePastDueResponse.json';
-import mockNPMVersion from '../mocks/mockNPMVersion.json';
 import mockRefundResponse from '../mocks/mockPostRefundSuccess.json';
 import mockGrossPaymentChart from '../mocks/mockGrossVolumeReportSuccess.json';
 
@@ -69,7 +68,6 @@ export const API_PATHS = {
   DISPUTE: '/disputes/:id',
   DISPUTE_RESPONSE: '/disputes/:id/response',
   REFUND: '/payments/:id/refunds',
-  PKG_VERSION: '/@justifi/webcomponents/latest',
 };
 
 export const setUpMocks = () => {
@@ -228,13 +226,6 @@ export const setUpMocks = () => {
       });
       // Post Refund
       this.post(API_PATHS.REFUND, () => mockRefundResponse);
-
-      // URL Prefix for NPM Package Check
-      this.namespace = ''; // Reset the namespace to avoid prefixing with the primary URL prefix
-      this.urlPrefix = 'https://registry.npmjs.org';
-
-      // PackageVersion
-      this.get(API_PATHS.PKG_VERSION, () => mockNPMVersion);
 
       // To test an error response, you can use something like:
       // this.get('/somepath', new Response(500, {}, { error: 'An error message' }));

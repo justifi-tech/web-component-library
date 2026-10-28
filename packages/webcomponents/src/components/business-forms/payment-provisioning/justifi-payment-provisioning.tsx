@@ -19,7 +19,7 @@ import {
 } from './payment-provisioning-actions';
 import { BusinessService } from '../../../api/services/business.service';
 import { ProvisionService } from '../../../api/services/provision.service';
-import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../../utils/detect-duplicate-version';
 import {
   ComponentClickEvent,
   ComponentErrorEvent,
@@ -82,7 +82,7 @@ export class JustifiPaymentProvisioning {
   private refs: any[] = [];
 
   async componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeApi();
     if (this.getBusiness) {

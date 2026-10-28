@@ -1,6 +1,6 @@
 import { Component, h, Prop, Method } from '@stencil/core';
 import JustifiAnalytics from '../../../api/Analytics';
-import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../../utils/detect-duplicate-version';
 import { waitForConfig } from '../../config-provider/config-state';
 import { BillingFormFields } from '../../checkout/billing-form/billing-form-schema';
 import { StyledHost } from '../../../ui-components';
@@ -19,7 +19,7 @@ export class JustifiBankAccountBillingFormSimple {
   async componentWillLoad() {
     await waitForConfig();
 
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
   }
 

@@ -16,7 +16,7 @@ import refundReasonOptions from './refund-reason-options';
 import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPaymentDetails } from '../../actions/payment/get-payment-details';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { makePostRefund } from '../../actions/refund/refund-actions';
 import { RefundService } from '../../api/services/refund.service';
 import { makePostVoid } from '../../actions/void/void-actions';
@@ -48,7 +48,7 @@ export class JustifiRefundPayment {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeApi();
     this.formController = new FormController(RefundPaymentSchema());

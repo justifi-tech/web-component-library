@@ -7,7 +7,7 @@ import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadIn
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
 import { makeGetPayoutCSV } from './get-payout-csv';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents';
 import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
@@ -36,7 +36,7 @@ export class JustifiPayoutDetails {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeServices();
     if (this.getPayout) {

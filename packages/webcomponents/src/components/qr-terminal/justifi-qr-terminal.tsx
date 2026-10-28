@@ -5,7 +5,7 @@ import { Checkout, CompletionStatuses, ICheckoutStatus } from '../../api/Checkou
 import { ComponentErrorCodes, ComponentErrorMessages, ComponentErrorSeverity } from '../../api/ComponentError';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 
 type TerminalState = 'loading' | 'ready' | 'payment-failed' | 'completed' | 'expired' | 'error';
 
@@ -36,7 +36,7 @@ export class JustifiQrTerminal {
   private getCheckout: Function;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initialize();
   }

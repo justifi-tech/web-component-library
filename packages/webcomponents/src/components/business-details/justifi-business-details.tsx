@@ -5,7 +5,7 @@ import { BusinessService } from '../../api/services/business.service';
 import { makeGetBusiness } from '../../actions/business/get-business';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { StyledHost } from '../../ui-components';
 import { BusinessDetailsLoading } from './business-details-loading';
@@ -28,7 +28,7 @@ export class JustifiBusinessDetails {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetBusiness();
   }

@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { ComponentClickEvent, ComponentErrorCodes, ComponentErrorEvent, ComponentErrorSeverity, pagingDefaults, PagingInfo, PayoutBalanceTransaction } from '../../api';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { makeGetPayoutTransactions } from '../../actions/payout/get-payout-transactions';
 import { PayoutService } from '../../api/services/payout.service';
 import { Table } from '../../utils/table';
@@ -44,7 +44,7 @@ export class JustifiPayoutTransactionsList {
 
   componentWillLoad() {
     this.transactionsTable = new Table<PayoutBalanceTransaction>(this.balanceTransactions, this.columns, payoutTransactionTableColumns, payoutTransactionTableCells);
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeApi();
   }
