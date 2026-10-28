@@ -62,6 +62,11 @@ export class IframeInput {
     this.iframeElement.src = this.iframeSrc;
   }
 
+  @Method()
+  async deliverBroadcast(message: any) {
+    this.frameService?.postRaw(message);
+  }
+
   private initializeFrameCommunicationService() {
     this.frameService = new FrameCommunicationService(
       this.iframeElement, this.iframeOrigin
