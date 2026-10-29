@@ -10,7 +10,7 @@ import {
 } from "@stencil/core";
 import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes, getCheckoutState, CheckoutState } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
-import { checkPkgVersion } from "../../utils/check-pkg-version";
+import { detectDuplicateVersion } from "../../utils/detect-duplicate-version";
 import {
   ComponentErrorCodes,
   ComponentErrorMessages,
@@ -96,7 +96,7 @@ export class JustifiModularCheckout {
 
   componentWillLoad() {
     this.analytics = new JustifiAnalytics(this);
-    checkPkgVersion();
+    detectDuplicateVersion();
     checkoutStore.authToken = this.authToken;
     this.fetchCheckout();
 

@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { StyledHost } from '../../ui-components';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import {
   defaultColumnsKeys,
   terminalOrdersTableCells,
@@ -51,7 +51,7 @@ export class JustifiTerminalOrdersList {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.terminalOrdersTable = new Table<TerminalOrder>(
       this.terminalOrders,

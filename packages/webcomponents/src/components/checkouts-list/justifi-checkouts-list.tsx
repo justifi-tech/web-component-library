@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { Checkout, PagingInfo, SubAccount, pagingDefaults } from '../../api';
 import { makeGetCheckouts } from '../../actions/checkout/get-checkouts';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import JustifiAnalytics from '../../api/Analytics';
 import { CheckoutService } from '../../api/services/checkout.service';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
@@ -55,7 +55,7 @@ export class JustifiCheckoutsList {
   analytics!: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.checkoutsTable = new Table<Checkout>(this.checkouts, this.columns, checkoutTableColumns, checkoutTableCells);
     this.initializeGetData();

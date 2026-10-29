@@ -3,7 +3,7 @@ import { InsuranceService } from '../../../api/services/insurance.service';
 import { makeGetQuote, makeToggleCoverage } from '../../../actions/insurance/insurance-actions';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../api/ComponentError';
 import JustifiAnalytics from '../../../api/Analytics';
-import { checkPkgVersion } from '../../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../../utils/detect-duplicate-version';
 import { ComponentErrorEvent } from '../../../api/ComponentEvents';
 import { checkoutStore } from '../../../store/checkout.store';
 import { addAttribute, formatCurrency, processHTML, removeAttribute } from '../../../utils/utils';
@@ -59,7 +59,7 @@ export class JustifiSeasonInterruptionInsurance {
   }
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeServiceMethods();
 

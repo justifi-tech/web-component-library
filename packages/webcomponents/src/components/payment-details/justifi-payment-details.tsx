@@ -3,7 +3,7 @@ import { PaymentService } from '../../api/services/payment.service';
 import { makeGetPaymentDetails } from '../../actions/payment/get-payment-details';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { ComponentErrorEvent, RecordClickEvent } from '../../api/ComponentEvents';
 import { DisputeStatus, Payment, PaymentStatuses } from '../../api';
 import { formatDate, formatTime, snakeCaseToHumanReadable } from '../../utils/utils';
@@ -33,7 +33,7 @@ export class JustifiPaymentDetails {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetPaymentDetails();
   }

@@ -3,7 +3,7 @@ import QRCode from 'qrcode';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 
 @Component({
   tag: 'justifi-checkout-qr-code',
@@ -19,7 +19,7 @@ export class JustifiCheckoutQrCode {
   private qrContainerEl: HTMLDivElement;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
   }
 

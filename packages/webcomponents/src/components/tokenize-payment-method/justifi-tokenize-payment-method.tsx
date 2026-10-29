@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Listen, Element } from '@stencil/core';
 import { StyledHost } from '../../ui-components';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import JustifiAnalytics from '../../api/Analytics';
 import { PaymentMethodPayload } from '../checkout/payment-method-payload';
 import {
@@ -87,7 +87,7 @@ export class JustifiTokenizePaymentMethod {
   }
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
   }
 

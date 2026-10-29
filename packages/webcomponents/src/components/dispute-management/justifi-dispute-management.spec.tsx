@@ -1,4 +1,3 @@
-jest.mock('../../utils/check-pkg-version', () => ({ checkPkgVersion: jest.fn() }));
 jest.mock('../../ui-components/styled-host/styled-host.css', () => '');
 
 import { h } from '@stencil/core';

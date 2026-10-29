@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import JustifiAnalytics from '../../api/Analytics';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { PayoutService } from '../../api/services/payout.service';
 import { makeGetPayouts } from '../../actions/payout/get-payouts';
 import { makeGetPayoutCSV } from '../payout-details/get-payout-csv';
@@ -53,7 +53,7 @@ export class JustifiPayoutsList {
   analytics: JustifiAnalytics;
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.initializeGetData();
     this.payoutsTable = new Table<Payout>(this.payouts, this.columns, payoutTableColumns, payoutTableCells(this.downloadCSV));

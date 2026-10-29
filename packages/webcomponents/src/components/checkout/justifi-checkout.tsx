@@ -2,7 +2,7 @@ import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Listen }
 import JustifiAnalytics from '../../api/Analytics';
 import { BillingFormFields } from './billing-form/billing-form-schema';
 import { ICheckout, ILoadedEventResponse } from '../../api';
-import { checkPkgVersion } from '../../utils/check-pkg-version';
+import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
 import { CheckoutState, checkoutStore } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
@@ -58,7 +58,7 @@ export class JustifiCheckout {
   }
 
   componentWillLoad() {
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
   }
 

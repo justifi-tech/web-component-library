@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State } from "@stencil/core";
 import { StyledHost } from "../../ui-components";
-import { checkPkgVersion } from "../../utils/check-pkg-version";
+import { detectDuplicateVersion } from "../../utils/detect-duplicate-version";
 import JustifiAnalytics from "../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
 import { BusinessService } from "../../api/services/business.service";
@@ -53,7 +53,7 @@ export class JustifiOrderTerminals {
       sub_account_id: this.accountId,
       order_type: this.shipping ? TerminalOrderType.boardingShipping : TerminalOrderType.boardingOnly,
     });
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
     this.loadData();
   }

@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Method, State } from "@stencil/core"
 import CardFormSkeleton from "./card-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
-import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { detectDuplicateVersion } from "../../../utils/detect-duplicate-version";
 import { BroadcastHostService } from "../../../utils/broadcast-host-service";
 import {
   ComponentErrorCodes,
@@ -41,7 +41,7 @@ export class CardForm {
     );
     this.broadcastHost.start();
 
-    checkPkgVersion();
+    detectDuplicateVersion();
   }
 
   componentDidLoad() {

@@ -1,5 +1,4 @@
 jest.mock('../../../ui-components/styled-host/styled-host.css', () => '');
-jest.mock('../../../utils/check-pkg-version', () => ({ checkPkgVersion: jest.fn() }));
 
 import { newSpecPage } from '@stencil/core/testing';
 import { JustifiCheckout } from '../justifi-checkout';

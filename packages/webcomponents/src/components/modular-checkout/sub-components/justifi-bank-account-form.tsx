@@ -1,5 +1,5 @@
 import { Component, h, Method } from "@stencil/core";
-import { checkPkgVersion } from "../../../utils/check-pkg-version";
+import { detectDuplicateVersion } from "../../../utils/detect-duplicate-version";
 import JustifiAnalytics from "../../../api/Analytics";
 import { waitForConfig } from "../../config-provider/config-state";
 import { StyledHost } from "../../../ui-components";
@@ -16,7 +16,7 @@ export class JustifiBankAccountForm {
   async componentWillLoad() {
     await waitForConfig();
 
-    checkPkgVersion();
+    detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
   }
 
