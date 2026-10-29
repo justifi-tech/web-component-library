@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import {
   fillIframeInput,
   waitForComponent,
@@ -317,5 +317,174 @@ test.describe('Checkout Component', () => {
 
     // Verify postal code still persists
     await expect(postalCodeInput).toHaveValue('90210');
+  });
+});
+
+/**
+ * Safari and iOS below 15.4 have no BroadcastChannel. The hosted fields must
+ * then reach each other through `window.parent.frames`, which only works
+ * because `iframe-input` slots its iframe into the light DOM of the shadow
+ * host. Deleting the constructor in every frame simulates those browsers.
+ */
+const removeBroadcastChannel = () => {
+  delete (window as any).BroadcastChannel;
+};
+
+/** Top document only: record every message it receives, to prove card data never transits the host. */
+const recordHostMessages = () => {
+  if (window !== window.top) return;
+  const log: string[] = [];
+  (window as any).__hostMessages = log;
+  window.addEventListener('message', (event: MessageEvent) => {
+    try {
+      log.push(JSON.stringify(event.data));
+    } catch {
+      log.push(String(event.data));
+    }
+  });
+};
+
+async function expectHostNeverSaw(page: Page, secrets: readonly string[]) {
+  const messages: string[] = await page.evaluate(
+    () => (window as any).__hostMessages ?? [],
+  );
+  // The SDK's own validate/tokenize replies do arrive here; they carry a
+  // token, never the data.
+  expect(messages.length).toBeGreaterThan(0);
+  for (const message of messages) {
+    expect(message).not.toContain('justifi.broadcast');
+    // Compare digits only, so a formatted "4242 4242 …" cannot slip past.
+    const digits = message.replace(/\D/g, '');
+    for (const secret of secrets) {
+      expect(digits).not.toContain(secret.replace(/\D/g, ''));
+    }
+  }
+}
+
+async function payAndExpectComplete(page: Page) {
+  const errorPromise = listenForErrorEvent(page, 'justifi-checkout');
+  const completeResponsePromise = page.waitForResponse(
+    (resp) =>
+      resp.url().includes('/v1/checkouts/') &&
+      resp.url().endsWith('/complete') &&
+      resp.request().method() === 'POST',
+  );
+
+  await page.getByRole('button', { name: 'Pay', exact: true }).click();
+
+  const result = await Promise.race([
+    completeResponsePromise.then((resp) => ({
+      type: 'success' as const,
+      resp,
+    })),
+    errorPromise.then((err) => ({ type: 'error' as const, err })),
+  ]);
+
+  if (result.type === 'error') {
+    throw new Error(
+      `Checkout failed before /complete was called: ${result.err}`,
+    );
+  }
+
+  const body = await result.resp.json();
+  expect(result.resp.status()).toBe(201);
+  expect(body.data.id).toMatch(/^chc_/);
+  expect(body.data.payment_response.data.amount).toBe(1799);
+  return body;
+}
+
+test.describe('Hosted fields without BroadcastChannel', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(removeBroadcastChannel);
+    await page.addInitScript(recordHostMessages);
+  });
+
+  test('card fields are document-tree frames inside an intact shadow host', async ({
+    page,
+  }) => {
+    await page.goto('/checkout');
+    await waitForComponent(page, 'justifi-checkout');
+    await page.getByRole('radio', { name: 'New credit or debit card' }).click();
+    await waitForCardForm(page);
+
+    const frames = await page.evaluate(() => ({
+      broadcastChannel: typeof (window as any).BroadcastChannel,
+      named: ['cardNumber', 'expirationMonth', 'expirationYear', 'CVV'].map(
+        (name) => !!(window as any).frames[name],
+      ),
+      slotted: Array.from(document.querySelectorAll('iframe')).filter(
+        (iframe) => iframe.assignedSlot,
+      ).length,
+      shadowRoot: !!document.querySelector('justifi-tokenize-payment-method')
+        ?.shadowRoot,
+    }));
+
+    expect(frames.broadcastChannel).toBe('undefined');
+    expect(frames.named).toEqual([true, true, true, true]);
+    expect(frames.slotted).toBe(4);
+    expect(frames.shadowRoot).toBe(true);
+  });
+
+  test('should complete checkout with credit card', async ({ page }) => {
+    await page.goto('/checkout');
+    await waitForComponent(page, 'justifi-checkout');
+
+    await page.getByRole('radio', { name: 'New credit or debit card' }).click();
+    await waitForCardForm(page);
+
+    await fillIframeInput(page, 'cardNumber', TEST_DATA.card.number);
+    await fillIframeInput(
+      page,
+      'expirationMonth',
+      TEST_DATA.card.expirationMonth,
+    );
+    await fillIframeInput(
+      page,
+      'expirationYear',
+      TEST_DATA.card.expirationYear,
+    );
+    await fillIframeInput(page, 'CVV', TEST_DATA.card.cvv);
+    await page
+      .getByRole('textbox', { name: 'Postal Code' })
+      .fill(TEST_DATA.postalCodes.minneapolis);
+    await waitForCardFieldsSynced(page);
+
+    const body = await payAndExpectComplete(page);
+    expect(body.data.payment_status).toBe('succeeded');
+
+    await expectHostNeverSaw(page, [TEST_DATA.card.number]);
+  });
+
+  test('should complete checkout with bank account', async ({ page }) => {
+    await page.goto('/checkout');
+    await waitForComponent(page, 'justifi-checkout');
+
+    await page.getByRole('radio', { name: 'New bank account' }).click();
+    await waitForBankAccountForm(page);
+
+    await page.getByTestId('fill-billing-form-button').click();
+    await expect(page.getByRole('textbox', { name: 'Full Name' })).toHaveValue(
+      'John Doe',
+    );
+
+    await fillIframeInput(
+      page,
+      'routingNumber',
+      TEST_DATA.bankAccount.routingNumber,
+    );
+    await fillIframeInput(
+      page,
+      'accountNumber',
+      TEST_DATA.bankAccount.accountNumber,
+    );
+    await waitForBankAccountFieldsSynced(page);
+
+    const body = await payAndExpectComplete(page);
+    expect(['succeeded', 'pending']).toContain(body.data.payment_status);
+
+    await expectHostNeverSaw(page, [
+      TEST_DATA.bankAccount.routingNumber,
+      TEST_DATA.bankAccount.accountNumber,
+    ]);
   });
 });
