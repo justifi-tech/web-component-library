@@ -30,13 +30,9 @@ export class IframeInput {
   private wrapperElement!: HTMLDivElement;
 
   /**
-   * The <iframe> is created in the LIGHT DOM of the nearest shadow host and
-   * projected into this component through a named <slot>. A slotted element
-   * stays in the document tree, so it is a document-tree child navigable and
-   * `window.parent.frames[name]` resolves it from a sibling iframe. An iframe
-   * rendered inside a shadow tree is invisible to `window.frames` (HTML spec:
-   * document-tree child navigables exclude shadow trees). The ::part wrappers
-   * stay in the shadow tree, so the theming API is untouched.
+   * The <iframe> is created in the LIGHT DOM and slotted in: an iframe inside a
+   * shadow tree is invisible to `window.frames` (spec), so siblings could not
+   * resolve it. The ::part wrappers stay in the shadow tree — theming untouched.
    */
   componentDidLoad() {
     const iframe = document.createElement('iframe');
