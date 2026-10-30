@@ -27,8 +27,91 @@ export class IframeInput {
   @Prop() label!: string;
   @Prop() iframeOrigin!: string;
 
+  private wrapperElement!: HTMLDivElement;
+
+  /**
+   * The <iframe> is created in the LIGHT DOM and slotted in: an iframe inside a
+   * shadow tree is invisible to `window.frames` (spec), so siblings could not
+   * resolve it. The ::part wrappers stay in the shadow tree — theming untouched.
+   */
+  componentDidLoad() {
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('name', this.inputId);
+    iframe.setAttribute('width', '100%');
+    // Light-DOM element: merchant CSS reaches it, so pin the box inline.
+    iframe.style.border = '0';
+    iframe.style.display = 'block';
+    iframe.style.width = '100%';
+    iframe.style.boxSizing = 'border-box';
+    iframe.addEventListener('load', () => {
+      iFrameResize({
+        log: false,
+        onResized: () => {
+          this.iframeLoaded.emit();
+        }
+      }, iframe);
+    });
+    this.iframeElement = iframe;
+    this.initializeFrameCommunicationService();
+
+    iframe.setAttribute('src', this.iframeSrc);
+    this.mountIframe();
+  }
+
+  /**
+   * Stencil runs componentDidLoad once per instance; a DOM move (framework
+   * reparenting, list reorder) fires disconnected → connected on the same
+   * instance, so the iframe has to be put back by hand.
+   */
+  connectedCallback() {
+    if (this.iframeElement && !this.iframeElement.isConnected) {
+      this.frameService?.addMessageListener(this.dispatchMessageEvent);
+      this.mountIframe();
+    }
+  }
+
+  private mountIframe() {
+    const root = this.el.getRootNode() as Node & { host?: Element };
+    // Duck-typed: ShadowRoot is not a global in Stencil's mock-doc.
+    const host = root.nodeType === 11 && root.host ? root.host : null;
+    const iframe = this.iframeElement;
+
+    if (host) {
+      if (host.getRootNode() !== document) {
+        // A host nested in another shadow tree keeps the iframe out of the
+        // document tree; sibling fields fall back to BroadcastChannel.
+        console.warn(`[justifi] hosted field "${this.inputId}" is inside a nested shadow tree; window.frames cannot reach it`);
+      }
+      // Real <slot> element, not JSX: Stencil's slot polyfill for shadow:false
+      // components would otherwise replace it with a virtual slot.
+      if (!this.wrapperElement.querySelector(`slot[name="${this.inputId}"]`)) {
+        const slot = document.createElement('slot');
+        slot.name = this.inputId;
+        this.wrapperElement.appendChild(slot);
+      }
+      iframe.setAttribute('slot', this.inputId);
+      host.appendChild(iframe);
+    } else {
+      iframe.removeAttribute('slot');
+      this.wrapperElement.appendChild(iframe);
+    }
+  }
+
+  componentDidRender() {
+    // iframeSrc depends on the iframeInputStyles store, which is filled after
+    // first paint; keep the light-DOM iframe in sync like the old JSX src did.
+    if (this.iframeElement && this.iframeElement.getAttribute('src') !== this.renderedSrc) {
+      this.iframeElement.setAttribute('src', this.renderedSrc);
+    }
+  }
+
   disconnectedCallback() {
-    this.frameService.removeMessageListener(this.dispatchMessageEvent);
+    // Stencil defers this call; on a DOM move the element is already back in
+    // the document (its light-DOM iframe moved with the host), so leave it be.
+    if (this.el.isConnected) return;
+    this.frameService?.removeMessageListener(this.dispatchMessageEvent);
+    (this.iframeElement as any)?.iFrameResizer?.removeListeners?.();
+    this.iframeElement?.remove();
   }
 
   @Method()
@@ -60,11 +143,6 @@ export class IframeInput {
   @Method()
   async reload() {
     this.iframeElement.src = this.iframeSrc;
-  }
-
-  @Method()
-  async deliverBroadcast(message: any) {
-    this.frameService?.postRaw(message);
   }
 
   private initializeFrameCommunicationService() {
@@ -130,10 +208,16 @@ export class IframeInput {
   }
 
   private get iframeSrc() {
-    return `${this.iframeOrigin}?${this.urlParams}`;
+    // iframeOrigin already carries ?tabId=…; a second '?' would fold the
+    // style params into the tabId value on the iframe side.
+    const separator = this.iframeOrigin.includes('?') ? '&' : '?';
+    return `${this.iframeOrigin}${separator}${this.urlParams}`;
   }
 
+  private renderedSrc: string;
+
   render() {
+    this.renderedSrc = this.iframeSrc;
     return (
       <Host class="form-group d-flex flex-column">
         <div style={{
@@ -147,7 +231,10 @@ export class IframeInput {
           >
             {this.label || ''}
           </label>
+          {/* Keep this div childless in JSX: mountIframe() appends the real
+              <slot> (or the iframe) to it, and vdom children would clobber it. */}
           <div
+            ref={el => (this.wrapperElement = el as HTMLDivElement)}
             class={`p-0 d-flex form-control ${this.isValid ? '' : 'is-invalid'}`}
             part={this.part}
             style={{
@@ -155,24 +242,6 @@ export class IframeInput {
               overflow: 'hidden',
             }}
           >
-            <iframe
-              id={this.inputId}
-              name={this.inputId}
-              src={this.iframeSrc}
-              ref={el => {
-                this.iframeElement = el as HTMLIFrameElement;
-                this.initializeFrameCommunicationService();
-              }}
-              width="100%"
-              onLoad={() => {
-                iFrameResize({
-                  log: false,
-                  onResized: () => {
-                    this.iframeLoaded.emit();
-                  }
-                }, this.iframeElement);
-              }}
-            />
           </div>
           <FormControlErrorText errorText={this.errorText} name={this.inputId} />
         </div>

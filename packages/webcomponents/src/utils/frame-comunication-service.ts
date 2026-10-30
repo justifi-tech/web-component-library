@@ -16,11 +16,6 @@ export class FrameCommunicationService {
     this.iframe.contentWindow.postMessage(message, this.iframeOrigin);
   }
 
-  // Verbatim: postMessage above spreads payload flat, which would flatten the envelope.
-  postRaw(message: any) {
-    this.iframe.contentWindow?.postMessage(message, this.iframeOrigin);
-  }
-
   addMessageListener(callback: (event: MessageEvent) => void) {
     window.addEventListener('message', callback);
   }
