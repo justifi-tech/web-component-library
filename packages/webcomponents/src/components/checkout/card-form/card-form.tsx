@@ -3,7 +3,6 @@ import CardFormSkeleton from "./card-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
 import { detectDuplicateVersion } from "../../../utils/detect-duplicate-version";
-import { BroadcastHostService } from "../../../utils/broadcast-host-service";
 import {
   ComponentErrorCodes,
   ComponentErrorEvent,
@@ -27,19 +26,12 @@ export class CardForm {
   private expirationYearIframeElement!: HTMLIframeInputElement;
   private cvvIframeElement!: HTMLIframeInputElement;
   private loadAbortController?: AbortController;
-  private broadcastHost?: BroadcastHostService;
 
   async componentWillLoad() {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
     this.tabId = generateTabId();
 
-    this.broadcastHost = new BroadcastHostService(
-      () => this.iframeElements,
-      this.tabId,
-      this.iframeOrigin,
-    );
-    this.broadcastHost.start();
 
     detectDuplicateVersion();
   }
@@ -50,7 +42,6 @@ export class CardForm {
 
   disconnectedCallback() {
     this.loadAbortController?.abort();
-    this.broadcastHost?.stop();
   }
 
   @Method()
