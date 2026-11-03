@@ -1,4 +1,4 @@
-import { Component, h, Method } from "@stencil/core";
+import { Component, h, Method, Prop } from "@stencil/core";
 import { detectDuplicateVersion } from "../../../utils/detect-duplicate-version";
 import JustifiAnalytics from "../../../api/Analytics";
 import { waitForConfig } from "../../config-provider/config-state";
@@ -9,6 +9,8 @@ import { StyledHost } from "../../../ui-components";
   shadow: true,
 })
 export class JustifiBankAccountForm {
+  @Prop() showAccountNumberConfirmation?: boolean = false;
+
   private bankAccountFormElement?: HTMLBankAccountFormElement;
 
   analytics: JustifiAnalytics;
@@ -25,9 +27,9 @@ export class JustifiBankAccountForm {
   }
 
   @Method()
-  async validate(): Promise<any> {
+  async validate(): Promise<{ isValid: boolean }> {
     if (!this.bankAccountFormElement) {
-      return false;
+      return { isValid: false };
     }
     return this.bankAccountFormElement.validate();
   }
@@ -55,7 +57,10 @@ export class JustifiBankAccountForm {
   render() {
     return (
       <StyledHost>
-        <bank-account-form ref={(el) => (this.bankAccountFormElement = el as HTMLBankAccountFormElement)} />
+        <bank-account-form
+          ref={(el) => (this.bankAccountFormElement = el as HTMLBankAccountFormElement)}
+          showAccountNumberConfirmation={this.showAccountNumberConfirmation}
+        />
       </StyledHost>
     );
   }

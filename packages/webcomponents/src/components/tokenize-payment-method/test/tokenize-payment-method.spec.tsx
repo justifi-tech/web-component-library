@@ -87,6 +87,40 @@ describe('tokenize-payment-method', () => {
     expect(tokenizePaymentMethod.hideBankAccountBillingForm).toBe(true);
   });
 
+  it('should pass showAccountNumberConfirmation down to bank-account-form', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method show-account-number-confirmation="true" disable-credit-card="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.rootInstance.showAccountNumberConfirmation).toBe(true);
+
+    const bankAccountForm = page.root.shadowRoot.querySelector('bank-account-form') as any;
+    expect(bankAccountForm).not.toBeNull();
+    expect(bankAccountForm.showAccountNumberConfirmation).toBe(true);
+    expect(
+      bankAccountForm.querySelector('iframe-input[inputId="accountNumberConfirmation"]'),
+    ).not.toBeNull();
+  });
+
+  it('should leave the confirmation field off bank-account-form by default', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method disable-credit-card="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    const bankAccountForm = page.root.shadowRoot.querySelector('bank-account-form') as any;
+    expect(bankAccountForm).not.toBeNull();
+    expect(bankAccountForm.showAccountNumberConfirmation).toBeFalsy();
+    expect(
+      bankAccountForm.querySelector('iframe-input[inputId="accountNumberConfirmation"]'),
+    ).toBeNull();
+  });
+
   it('should not render billing form fields except postal_code when hideCardBillingForm is true', async () => {
     const page = await newSpecPage({
       components: [BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple],

@@ -33,6 +33,24 @@ beforeEach(() => {
 });
 
 describe('justifi-checkout', () => {
+  it('forwards showAccountNumberConfirmation to justifi-tokenize-payment-method', async () => {
+    const page = await newSpecPage({
+      components: [JustifiCheckout, JustifiModularCheckout],
+      html: '<justifi-checkout show-account-number-confirmation="true"></justifi-checkout>',
+    });
+
+    await page.waitForChanges();
+
+    const tokenize = page.root.querySelector('justifi-tokenize-payment-method');
+
+    expect(tokenize).not.toBeNull();
+    // justifi-tokenize-payment-method is not registered in this spec page, so
+    // Stencil falls back to the attribute -- same path as hideSubmitButton.
+    expect(tokenize.hasAttribute('showaccountnumberconfirmation')).toBe(true);
+
+    page.root.remove();
+  });
+
   it('receives one consolidated event from modular checkout and updates payment options', async () => {
     const page = await newSpecPage({
       components: [JustifiCheckout, JustifiModularCheckout],

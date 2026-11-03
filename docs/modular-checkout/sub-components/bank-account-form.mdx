@@ -20,7 +20,9 @@ import componentTreeJson from '../../component-tree.json';
 
 Renders a form for collecting bank account details as part of a checkout flow.
 
-This subcomponent is **designed to be used within** the `justifi-modular-checkout` and **does not accept props directly**. Instead, it relies on the shared state passed through the Stencil Store, managed by the `justifi-modular-checkout` component.
+This subcomponent is **designed to be used within** the `justifi-modular-checkout`. Authorization, business context and checkout state reach it through the shared Stencil Store managed by `justifi-modular-checkout`; the one prop it takes directly is `show-account-number-confirmation`, which must be set on this element because `justifi-modular-checkout` renders its children through a slot and cannot forward props to them.
+
+With `show-account-number-confirmation` on, the form renders a required **Confirm Account Number** field below the account number and fails validation with `The entered value does not match the account number` when the two differ.
 
 > **Note:** If you are using this sub component, you also need to provide billing information. This can be done by adding the `justifi-billing-form-full` sub component for complete billing address, the `justifi-bank-account-billing-form-simple` sub component for account owner name only, or by passing the `billingInformation` object as an argument to the `submitCheckout` method called on the `justifi-modular-checkout`. See the [modular checkout docs](../introduction) for more information.
 
@@ -28,7 +30,7 @@ This subcomponent is **designed to be used within** the `justifi-modular-checkou
 
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 
-This component exposes **no public methods or properties** and is not intended for standalone use.
+Beyond `show-account-number-confirmation`, this component is not intended for standalone use — the parent checkout drives validation and tokenization.
 
 ## Usage
 

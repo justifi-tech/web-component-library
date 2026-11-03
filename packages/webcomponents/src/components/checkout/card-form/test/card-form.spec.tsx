@@ -16,8 +16,9 @@ import { useBridgedFakeTimers } from '../../test/use-bridged-fake-timers';
 
 const RELOAD_BUTTON = 'button[aria-label="Reload payment form"]';
 
-const createMockIframeElement = (validateResult: boolean) => ({
-  validate: jest.fn().mockResolvedValue(validateResult),
+// iframe-input.validate() resolves { isValid, error } -- never a bare boolean.
+const createMockIframeElement = (isValid: boolean) => ({
+  validate: jest.fn().mockResolvedValue({ isValid, error: { message: undefined } }),
   addEventListener: jest.fn(),
 });
 
@@ -157,7 +158,7 @@ describe('card-form', () => {
   });
 
   describe('validate', () => {
-    it('returns true when all iframe fields are valid', async () => {
+    it('returns isValid true when all iframe fields are valid', async () => {
       const page = await newSpecPage({
         components: [CardForm],
         html: '<card-form></card-form>',
@@ -171,10 +172,10 @@ describe('card-form', () => {
 
       const result = await instance.validate();
 
-      expect(result).toBe(true);
+      expect(result).toEqual({ isValid: true });
     });
 
-    it('returns false when any iframe field is invalid', async () => {
+    it('returns isValid false when any iframe field is invalid', async () => {
       const page = await newSpecPage({
         components: [CardForm],
         html: '<card-form></card-form>',
@@ -188,7 +189,24 @@ describe('card-form', () => {
 
       const result = await instance.validate();
 
-      expect(result).toBe(false);
+      expect(result).toEqual({ isValid: false });
+    });
+
+    it('returns isValid false when only the card number is invalid', async () => {
+      const page = await newSpecPage({
+        components: [CardForm],
+        html: '<card-form></card-form>',
+      });
+
+      const instance = page.rootInstance as any;
+      instance.cardNumberIframeElement = createMockIframeElement(false);
+      instance.expirationMonthIframeElement = createMockIframeElement(true);
+      instance.expirationYearIframeElement = createMockIframeElement(true);
+      instance.cvvIframeElement = createMockIframeElement(true);
+
+      const result = await instance.validate();
+
+      expect(result).toEqual({ isValid: false });
     });
   });
 });
