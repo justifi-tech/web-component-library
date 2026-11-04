@@ -208,6 +208,7 @@ export const TEST_DATA = {
     minneapolis: '55114',
     newYork: '10001',
     losAngeles: '90001',
+    zipPlusFour: '44240-5555',
   },
   billingAddress: {
     line1: '123 Main St',

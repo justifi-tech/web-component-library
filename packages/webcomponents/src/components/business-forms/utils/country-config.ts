@@ -1,6 +1,7 @@
 import { CountryCode } from '../../../utils/country-codes';
 import StateOptions from '../../../utils/state-options';
 import ProvinceOptions from '../../../utils/province-options';
+import { CA_OR_US_POSTAL_REGEX, US_ZIP_REGEX } from '../../../utils/postal-code';
 import { businessClassificationOptions } from './business-form-options';
 
 export const countryLabels = {
@@ -43,12 +44,12 @@ export const countryOptions = {
 
 export const countryValidation = {
 	USA: {
-		postalRegex: /^[0-9]{5}(-[0-9]{4})?$/,
+		postalRegex: US_ZIP_REGEX,
 		identityDigits: 9,
 		taxIdDigits: 9,
 	},
 	CAN: {
-		postalRegex: /^([A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d|[0-9]{5}(-[0-9]{4})?)$/,
+		postalRegex: CA_OR_US_POSTAL_REGEX,
 		identityDigits: 9,
 		taxIdDigits: 9,
 	},

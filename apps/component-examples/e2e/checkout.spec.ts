@@ -318,6 +318,51 @@ test.describe('Checkout Component', () => {
     // Verify postal code still persists
     await expect(postalCodeInput).toHaveValue('90210');
   });
+
+  test('normalizes a Canadian postal code to the canonical Canada Post form as it is typed', async ({
+    page,
+  }) => {
+    await page.goto('/checkout');
+    await waitForComponent(page, 'justifi-checkout');
+    await waitForCardForm(page);
+
+    const postalCodeInput = page.getByRole('textbox', { name: 'Postal Code' });
+
+    // Typed character by character, lowercase and without the separator —
+    // the shape reported in the bug.
+    await postalCodeInput.pressSequentially('n2b2a5');
+
+    await expect(postalCodeInput).toHaveValue('N2B 2A5');
+    await expect(
+      page.getByText('Enter valid postal code'),
+    ).toBeHidden();
+
+    // A US ZIP keeps its characters.
+    await postalCodeInput.fill('');
+    await postalCodeInput.pressSequentially('90210');
+
+    await expect(postalCodeInput).toHaveValue('90210');
+    await expect(
+      page.getByText('Enter valid postal code'),
+    ).toBeHidden();
+  });
+
+  test('accepts a full ZIP+4 typed into the postal code field', async ({ page }) => {
+    await page.goto('/checkout');
+    await waitForComponent(page, 'justifi-checkout');
+    await waitForCardForm(page);
+
+    const postalCodeInput = page.getByRole('textbox', { name: 'Postal Code' });
+
+    // Typed character by character: a maxlength too small to hold the +4 would
+    // silently truncate here, which is exactly what used to happen.
+    await postalCodeInput.pressSequentially(TEST_DATA.postalCodes.zipPlusFour);
+
+    await expect(postalCodeInput).toHaveValue(TEST_DATA.postalCodes.zipPlusFour);
+    await expect(
+      page.getByText('Enter valid postal code'),
+    ).toBeHidden();
+  });
 });
 
 /**

@@ -1,6 +1,7 @@
 import { string } from 'yup';
 import checkoutBillingStateOptions from '../../../utils/checkout-billing-state-options';
 import { CountryCode } from '../../../utils/country-codes';
+import { CA_OR_US_POSTAL_REGEX, normalizePostalCode } from '../../../utils/postal-code';
 import { countryValidation } from '../utils/country-config';
 import {
   businessServiceReceivedOptions,
@@ -63,6 +64,11 @@ export const taxIdValidation = string()
 
 export const makePostalValidation = (country: CountryCode) =>
   string()
+    // Normalize before matching so a stored value that predates the canonical
+    // format — 'm5v2t6', 'M5V-2T6' — still validates. Nothing in vault or
+    // entity_management ever enforced a format, and Stripe imports copy the
+    // merchant's own spelling verbatim.
+    .transform(normalizePostalCode)
     .matches(
       countryValidation[country].postalRegex,
       'Enter valid postal code'
@@ -211,7 +217,8 @@ export const stateValidation = string()
   .transform(transformEmptyString);
 
 export const postalValidation = string()
-  .matches(/^((\d{5}-\d{4})|(\d{5})|([A-Z]\d[A-Z]\s\d[A-Z]\d))$/, 'Enter valid postal code')
+  .transform(normalizePostalCode)
+  .matches(CA_OR_US_POSTAL_REGEX, 'Enter valid postal code')
   .transform(transformEmptyString);
 
 // Additional Questions Validations
