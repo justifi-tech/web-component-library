@@ -18,6 +18,9 @@ router.get("/", async (req, res) => {
   const hideBankAccountBillingForm = false;
   const hideSubmitButton = false;
   const paymentMethodGroupId = undefined;
+  // Query-param gated: turning this on by default would add a third hosted
+  // field to every existing bank-account e2e run.
+  const showAccountNumberConfirmation = req.query.confirmAccountNumber === "1";
 
   const billingFormFields = {
     name: "John Doe",
@@ -70,6 +73,7 @@ router.get("/", async (req, res) => {
               hide-bank-account-billing-form="${hideBankAccountBillingForm}"
               hide-card-billing-form="${hideCardBillingForm}"
               hide-submit-button="${hideSubmitButton}"
+              show-account-number-confirmation="${showAccountNumberConfirmation}"
               ${paymentMethodGroupId ? `payment-method-group-id="${paymentMethodGroupId}"` : ""}
             >
             </justifi-tokenize-payment-method>

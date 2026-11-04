@@ -647,6 +647,34 @@ describe('justifi-modular-checkout', () => {
       expect(event.detail.errorCode).toBe(ComponentErrorCodes.VALIDATION_ERROR);
     });
 
+    it('does not tokenize when validation fails for a new payment method', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_BANK_ACCOUNT };
+      checkoutStore.paymentToken = undefined;
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const root = page.root as HTMLElement;
+      const handler = jest.fn();
+      root.addEventListener('error-event', handler as any);
+
+      const instance: any = page.rootInstance;
+      instance.completeCheckout = jest.fn();
+      instance.tokenizePaymentMethod = jest.fn();
+      instance.validate = jest.fn().mockResolvedValue(false);
+
+      await instance.submitCheckout();
+
+      // A mistyped account number must not reach the tokenize endpoint.
+      expect(instance.tokenizePaymentMethod).not.toHaveBeenCalled();
+      expect(instance.completeCheckout).not.toHaveBeenCalled();
+      expect(handler.mock.calls[0][0].detail.errorCode).toBe(
+        ComponentErrorCodes.VALIDATION_ERROR,
+      );
+    });
+
     it('blocks submission if no payment token is available after all steps', async () => {
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SAVED_CARD, id: 'pm_123' };
       checkoutStore.paymentToken = undefined;
