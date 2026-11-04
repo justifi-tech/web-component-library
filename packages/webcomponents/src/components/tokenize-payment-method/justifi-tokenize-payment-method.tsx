@@ -157,8 +157,7 @@ export class JustifiTokenizePaymentMethod {
       this.paymentMethodFormRef.validate(),
     ]);
 
-    // card-form and bank-account-form both resolve { isValid } -- field-level
-    // messages stay inside the hosted iframes, so only billing contributes errors.
+    // Field-level messages stay inside the hosted iframes, so only billing contributes errors.
     const result = {
       isValid: billingValidation.isValid && paymentMethodValidation.isValid,
       errors: { ...billingValidation.errors },

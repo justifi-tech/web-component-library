@@ -16,7 +16,6 @@ import { useBridgedFakeTimers } from '../../test/use-bridged-fake-timers';
 
 const RELOAD_BUTTON = 'button[aria-label="Reload payment form"]';
 
-// iframe-input.validate() resolves { isValid, error } -- never a bare boolean.
 const createMockIframeElement = (isValid: boolean) => ({
   validate: jest.fn().mockResolvedValue({ isValid, error: { message: undefined } }),
   addEventListener: jest.fn(),

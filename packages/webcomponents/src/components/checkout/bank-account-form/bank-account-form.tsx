@@ -200,9 +200,7 @@ export class BankAccountForm {
 
       if (pending.has('accountNumberConfirmation')) {
         console.error(
-          '[bank-account-form] The "Confirm Account Number" field did not load. ' +
-          `show-account-number-confirmation needs an iframe release that serves ${this.iframeOrigin}/v2/accountNumberConfirmation -- ` +
-          'unset the prop until that release is live.'
+          '[bank-account-form] "Confirm Account Number" field failed to load.'
         );
       }
 

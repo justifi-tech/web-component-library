@@ -21,7 +21,6 @@ const DEFAULT_FORM = '<bank-account-form></bank-account-form>';
 const CONFIRM_FORM =
   '<bank-account-form show-account-number-confirmation="true"></bank-account-form>';
 
-// iframe-input.validate() resolves { isValid, error } -- never a bare boolean.
 const createMockIframeElement = (isValid: boolean) => ({
   validate: jest.fn().mockResolvedValue({ isValid, error: { message: undefined } }),
   addEventListener: jest.fn(),
