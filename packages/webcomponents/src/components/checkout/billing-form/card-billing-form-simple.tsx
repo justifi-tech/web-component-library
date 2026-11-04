@@ -3,6 +3,7 @@ import { BillingFormFields, postalOnlySchema } from './billing-form-schema';
 import { billingForm } from '../../../styles/parts';
 import { FormController } from '../../../ui-components/form/form';
 import { checkoutStore, onChange } from '../../../store/checkout.store';
+import { normalizePostalCode } from '../../../utils/postal-code';
 
 @Component({
   tag: 'card-billing-form-simple',
@@ -49,7 +50,12 @@ export class CardBillingFormSimple {
 
   @Method()
   async getValues(): Promise<BillingFormFields> {
-    return this.formController.values.getValue();
+    const values = this.formController.values.getValue();
+
+    // checkoutStore values skip the input transform, so normalize on the way out.
+    return values?.address_postal_code
+      ? { ...values, address_postal_code: normalizePostalCode(values.address_postal_code) }
+      : values;
   }
 
   @Method()
@@ -77,7 +83,8 @@ export class CardBillingFormSimple {
                   defaultValue={billingFormDefaultValue.address_postal_code}
                   errorText={this.errors.address_postal_code}
                   inputHandler={this.inputHandler}
-                  maxLength={7}
+                  transformValue={normalizePostalCode}
+                  maxLength={10}
                 />
               </div>
             </div>

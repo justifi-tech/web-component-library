@@ -28,6 +28,7 @@ export class FormControlText {
   @Prop() errorText?: string;
   @Prop() maxLength?: number;
   @Prop() keyDownHandler?: (event: any) => void;
+  @Prop() transformValue?: (value: string) => string;
   @Prop() disabled?: boolean;
 
   @Watch('defaultValue')
@@ -45,8 +46,28 @@ export class FormControlText {
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
-    this.inputHandler(name, target.value);
-    this.formControlInput.emit({ name, value: target.value });
+    const raw = target.value;
+    const value = this.transformValue ? this.transformValue(raw) : raw;
+
+    if (value !== raw) {
+      // Writing back to the input drops the caret at the end, which is wrong
+      // mid-string — and with a transform that uppercases, that would happen on
+      // every lowercase keystroke. Shift the caret by whatever the transform added.
+      const caret = target.selectionStart ?? raw.length;
+      const atEnd = caret >= raw.length;
+
+      target.value = value;
+
+      const next = atEnd
+        ? value.length
+        : Math.max(0, Math.min(caret + (value.length - raw.length), value.length));
+
+      // Stencil's mock DOM does not implement setSelectionRange.
+      target.setSelectionRange?.(next, next);
+    }
+
+    this.inputHandler(name, value);
+    this.formControlInput.emit({ name, value });
   }
 
   updateInput = (newValue: any) => {
