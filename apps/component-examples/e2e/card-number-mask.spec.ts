@@ -24,7 +24,7 @@ test.describe('card number masking through the SDK', () => {
   test.fixme(
     'masks on blur when mask-card-number is set',
     async ({ page }) => {
-      await page.goto('/tokenize-payment-method?maskCardNumber=true');
+      await page.goto('/tokenize-payment-method?maskNumber=true');
       await waitForComponent(page, 'justifi-tokenize-payment-method');
       await waitForCardForm(page);
 
