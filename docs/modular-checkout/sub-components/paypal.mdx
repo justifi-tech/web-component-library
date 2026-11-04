@@ -1,0 +1,171 @@
+---
+id: paypal
+title: PayPal & Venmo
+description: PayPal and Venmo buttons for Modular Checkout — one component, two funding sources, checkout completes on approval.
+sidebar_position: 24
+---
+
+import {
+  CodeBlock,
+  PropsMarkdownTable,
+  getWebcomponentsVersion,
+  getPropsFromDocs,
+} from '../../helpers';
+import docsJson from '../../docs.json';
+
+## Overview
+
+`<justifi-paypal />` renders the PayPal and Venmo buttons and runs the whole
+payment flow: it creates the order, opens PayPal's popup, and — on approval —
+completes the checkout for you.
+
+It takes **no props**. Everything it needs (auth token, checkout id, currency,
+whether PayPal is enabled) comes from the parent `<justifi-modular-checkout />`.
+
+One element renders both buttons — there is no separate Venmo component.
+
+![The PayPal and Venmo buttons rendered side by side](./images/paypal-venmo-buttons.png)
+
+## Before you start
+
+PayPal must be enabled on your account and on the checkout. When it isn't, the
+component renders nothing — so it's safe to leave in your layout.
+
+Which buttons show up:
+
+| Button | Appears when                                                                 |
+| ------ | ---------------------------------------------------------------------------- |
+| PayPal | PayPal is enabled on the checkout and the buyer is eligible                   |
+| Venmo  | Same, **and** the checkout currency is `USD`, **and** the buyer is eligible   |
+
+Eligibility is decided by PayPal (device, browser, buyer country), not by you.
+
+Test checkouts (`mode: test`) automatically use PayPal's sandbox; live
+checkouts use production. Nothing to configure.
+
+## Usage
+
+Drop it inside the checkout, anywhere in your layout:
+
+```html
+<justifi-modular-checkout auth-token="authToken" checkout-id="cho_123">
+  <justifi-paypal />
+  <justifi-card-form />
+  <justifi-billing-form-full />
+  <button id="pay">Pay with card</button>
+</justifi-modular-checkout>
+```
+
+> **Your submit button is for the other payment methods.** PayPal and Venmo
+> complete the checkout on their own — don't call `submitCheckout()` after a
+> PayPal approval, and don't require billing fields for it.
+
+Full page:
+
+<CodeBlock>{`<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>justifi-paypal</title>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.esm.js"></script>
+
+<script
+  nomodule
+  src="https://cdn.jsdelivr.net/npm/@justifi/webcomponents@${getWebcomponentsVersion()}/dist/webcomponents/webcomponents.js"
+></script>
+
+</head>
+
+<body>
+  <justifi-modular-checkout auth-token="authToken" checkout-id="cho_123">
+    <justifi-checkout-summary />
+    <justifi-paypal />
+  </justifi-modular-checkout>
+
+  <script>
+    const checkout = document.querySelector('justifi-modular-checkout');
+
+    // Fires for every payment method, PayPal included.
+    checkout.addEventListener('submit-event', (event) => {
+      console.log('checkout completed', event.detail.checkout);
+    });
+
+    checkout.addEventListener('error-event', (event) => {
+      // PayPal failures arrive here with a PAYPAL_ prefixed code.
+      console.error(event.detail.errorCode, event.detail.message);
+    });
+  </script>
+</body>
+</html>`}</CodeBlock>
+
+## Flow
+
+1. Buyer clicks the PayPal or Venmo button → `paypalStarted` fires.
+2. The component creates a PayPal order for the checkout and opens PayPal's popup.
+3. Buyer approves → `paypalCompleted` fires with the payment method id.
+4. Modular checkout selects `paypal` or `venmo` as the payment method and
+   **completes the checkout automatically** → `submit-event`.
+
+If the buyer closes the popup, `paypalCancelled` fires and the checkout stays
+open — the selected payment method is cleared, nothing is charged.
+
+## Events
+
+Listen on `<justifi-paypal />` for the granular events, and on
+`<justifi-modular-checkout />` for `submit-event` / `error-event`.
+
+| Event             | Fires when                       | `event.detail`                                                                |
+| ----------------- | -------------------------------- | ----------------------------------------------------------------------------- |
+| `paypalStarted`   | Button clicked, popup opening    | `{ fundingSource: 'paypal' \| 'venmo' }`                                        |
+| `paypalCompleted` | Buyer approved the payment       | `{ success: true, paymentMethodId: 'ppo_123', fundingSource: 'paypal' }`        |
+| `paypalCancelled` | Buyer closed the popup           | `{ fundingSource: 'paypal' \| 'venmo' }`                                        |
+| `paypalError`     | Anything failed                  | `{ error: string, code: string }`                                               |
+
+```javascript
+const paypal = document.querySelector('justifi-paypal');
+
+paypal.addEventListener('paypalStarted', (e) => {
+  showSpinner(e.detail.fundingSource); // 'paypal' or 'venmo'
+});
+
+paypal.addEventListener('paypalCancelled', () => hideSpinner());
+```
+
+### Error codes
+
+Every `paypalError` is also re-emitted by the parent as `error-event`, with the
+code prefixed — that's usually the only listener you need.
+
+| `paypalError` code     | `error-event` code               | Meaning                                     |
+| ---------------------- | -------------------------------- | ------------------------------------------- |
+| `CONFIG_ERROR`         | `PAYPAL_CONFIG_ERROR`            | PayPal is enabled but misconfigured         |
+| `INITIALIZATION_ERROR` | `PAYPAL_INITIALIZATION_ERROR`    | PayPal's SDK failed to load or start        |
+| `ORDER_ERROR`          | `PAYPAL_ORDER_ERROR`             | The order couldn't be created               |
+| `PAYMENT_FAILED`       | `PAYPAL_PAYMENT_FAILED`          | The payment was declined or failed          |
+
+On a config or initialization error the buttons stay hidden, so the buyer never
+sees a dead button.
+
+## Props
+
+<PropsMarkdownTable props={getPropsFromDocs('justifi-paypal', docsJson)} />
+
+This component takes no props and exposes no public methods.
+
+## Theming & Layout
+
+The buttons are rendered by PayPal's SDK and can't be restyled — PayPal's brand
+rules require it, and there are no `::part()` hooks.
+
+What you control is the space around them: the component fills the width of its
+container, and when both buttons show they sit side by side with an 8px gap.
+Wrap it to constrain the width.
+
+```html
+<div style="max-width: 420px">
+  <justifi-paypal />
+</div>
+```
