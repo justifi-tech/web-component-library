@@ -17,6 +17,8 @@ router.get("/", async (req, res) => {
   const hideCardBillingForm = false;
   const hideBankAccountBillingForm = false;
   const hideSubmitButton = false;
+  // ?maskCardNumber=true drives the e2e; same shape as payment-provisioning's ?country.
+  const maskCardNumber = req.query.maskCardNumber === 'true';
   const paymentMethodGroupId = undefined;
 
   const billingFormFields = {
@@ -70,6 +72,7 @@ router.get("/", async (req, res) => {
               hide-bank-account-billing-form="${hideBankAccountBillingForm}"
               hide-card-billing-form="${hideCardBillingForm}"
               hide-submit-button="${hideSubmitButton}"
+              mask-card-number="${maskCardNumber}"
               ${paymentMethodGroupId ? `payment-method-group-id="${paymentMethodGroupId}"` : ""}
             >
             </justifi-tokenize-payment-method>

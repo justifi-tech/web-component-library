@@ -64,6 +64,13 @@ export class JustifiTokenizePaymentMethod {
   @Prop() paymentMethodGroupId?: string;
   @Prop() submitButtonText?: string = 'Submit';
   @Prop() savePaymentMethodLabel?: string;
+  /**
+   * Mask the card number to its last four digits when the field loses focus,
+   * with an eye toggle to reveal it. Defaults to false.
+   *
+   * Anti-shoulder-surfing only, not a secrecy boundary.
+   */
+  @Prop() maskCardNumber?: boolean;
 
   @Watch('disableCreditCard')
   @Watch('disableBankAccount')
@@ -375,7 +382,7 @@ export class JustifiTokenizePaymentMethod {
 
   private renderPaymentMethodForm(paymentMethodType: string) {
     return paymentMethodType === PAYMENT_METHODS.NEW_CARD ? (
-      <card-form ref={(el) => { if (el) this.paymentMethodFormRef = el; }} />
+      <card-form ref={(el) => { if (el) this.paymentMethodFormRef = el; }} maskCardNumber={this.maskCardNumber} />
     ) : (
       <bank-account-form ref={(el) => { if (el) this.paymentMethodFormRef = el; }} />
     );

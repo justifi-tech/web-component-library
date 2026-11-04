@@ -65,6 +65,7 @@ describe('justifi-modular-checkout', () => {
     checkoutStore.isSubmitting = false;
     checkoutStore.isWalletProcessing = false;
     checkoutStore.checkoutMode = null;
+    checkoutStore.maskCardNumber = false;
   });
 
   afterAll(() => {
@@ -404,6 +405,41 @@ describe('justifi-modular-checkout', () => {
 
     expect(checkoutStore.achPaymentsEnabled).toBe(false);
     expect(checkoutStore.paymentMethods.map((pm) => pm.id)).toEqual(['pm_card']);
+  });
+
+  describe('maskCardNumber', () => {
+    it('leaves the card number visible by default', async () => {
+      await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: '<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>',
+      });
+
+      expect(checkoutStore.maskCardNumber).toBe(false);
+    });
+
+    it('routes the prop into the store, which is how the slotted card form sees it', async () => {
+      await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: '<justifi-modular-checkout auth-token="test" checkout-id="chk_123" mask-card-number="true"></justifi-modular-checkout>',
+      });
+
+      expect(checkoutStore.maskCardNumber).toBe(true);
+    });
+
+    it('keeps the store in step when the prop changes after load', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: '<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>',
+      });
+
+      page.root.setAttribute('mask-card-number', 'true');
+      await page.waitForChanges();
+      expect(checkoutStore.maskCardNumber).toBe(true);
+
+      page.root.setAttribute('mask-card-number', 'false');
+      await page.waitForChanges();
+      expect(checkoutStore.maskCardNumber).toBe(false);
+    });
   });
 
   describe('checkout-changed event', () => {

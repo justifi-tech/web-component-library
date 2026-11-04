@@ -39,6 +39,28 @@ describe('tokenize-payment-method', () => {
     checkoutStore.achPaymentsEnabled = false;
   });
 
+  it('should default maskCardNumber to undefined, leaving the card number visible', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.rootInstance.maskCardNumber).toBeUndefined();
+  });
+
+  it('should pass maskCardNumber prop through to the card form', async () => {
+    const page = await newSpecPage({
+      components: tokenizeComponents,
+      html: `<justifi-tokenize-payment-method mask-card-number="true" auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+    });
+
+    await page.waitForChanges();
+
+    expect(page.rootInstance.maskCardNumber).toBe(true);
+  });
+
   it('should pass hideCardBillingForm prop to payment method options', async () => {
     const page = await newSpecPage({
       components: tokenizeComponents,
