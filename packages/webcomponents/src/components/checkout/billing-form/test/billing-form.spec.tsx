@@ -5,6 +5,7 @@ import { BillingFormFull } from '../billing-form-full';
 import { CardBillingFormSimple } from '../card-billing-form-simple';
 import { BankAccountBillingFormSimple } from '../bank-account-billing-form-simple';
 import { checkoutStore } from '../../../../store/checkout.store';
+import { FormControlText } from '../../../../ui-components/form/form-control-text';
 
 const billingFormComponents = [JustifiBillingForm, BillingForm, BillingFormFull, CardBillingFormSimple, BankAccountBillingFormSimple];
 
@@ -234,6 +235,99 @@ describe('billing-form', () => {
     const validation = await instance.validate();
     expect(validation).toHaveProperty('isValid');
     expect(validation).toHaveProperty('errors');
+  });
+
+  it('canonicalizes a lowercase postal code typed into the form', async () => {
+    // Arrange
+    const page = await newSpecPage({
+      // FormControlText is registered here only: without it the <input> this test
+      // drives is never rendered.
+      components: [...billingFormComponents, FormControlText],
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
+    });
+    const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+    const cardBillingFormSimpleElement = page.root?.shadowRoot?.querySelector('card-billing-form-simple') ?? page.root?.querySelector('card-billing-form-simple');
+    const postalInput = cardBillingFormSimpleElement?.querySelector('input[name="address_postal_code"]') as HTMLInputElement;
+
+    // Act — the bug report's exact input.
+    postalInput.value = 'n2b 2a5';
+    postalInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    await page.waitForChanges();
+
+    // Assert
+    expect(postalInput.value).toBe('N2B 2A5');
+
+    const values = await instance.getValues();
+    expect(values.address_postal_code).toBe('N2B 2A5');
+
+    const validation = await instance.validate();
+    expect(validation.isValid).toBe(true);
+  });
+
+  it('canonicalizes a postal code prefilled through checkoutStore', async () => {
+    // Arrange — a value set programmatically never passes the input transform.
+    checkoutStore.billingFormFields = { address_postal_code: 'm5v2t6' };
+
+    const page = await newSpecPage({
+      components: billingFormComponents,
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
+    });
+    const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+    // Act
+    const values = await instance.getValues();
+    const validation = await instance.validate();
+
+    // Assert
+    expect(values.address_postal_code).toBe('M5V 2T6');
+    expect(validation.isValid).toBe(true);
+  });
+
+  it('accepts a ZIP+4 typed into the postal field', async () => {
+    // Arrange
+    const page = await newSpecPage({
+      components: [...billingFormComponents, FormControlText],
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
+    });
+    const instance: any = page.rootInstance;
+    await page.waitForChanges();
+
+    const cardBillingFormSimpleElement = page.root?.shadowRoot?.querySelector('card-billing-form-simple') ?? page.root?.querySelector('card-billing-form-simple');
+    const postalInput = cardBillingFormSimpleElement?.querySelector('input[name="address_postal_code"]') as HTMLInputElement;
+
+    // Act
+    postalInput.value = '44240-5555';
+    postalInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    await page.waitForChanges();
+
+    // Assert — the hyphen and the +4 survive the transform, the store and validation.
+    expect(postalInput.value).toBe('44240-5555');
+
+    const values = await instance.getValues();
+    expect(values.address_postal_code).toBe('44240-5555');
+
+    const validation = await instance.validate();
+    expect(validation.isValid).toBe(true);
+  });
+
+  it('gives the postal field room for a 10-character ZIP+4', async () => {
+    // Arrange — the mock DOM does not enforce maxlength, so the attribute itself
+    // is what proves a ZIP+4 can be typed in a real browser.
+    const page = await newSpecPage({
+      components: [...billingFormComponents, FormControlText],
+      html: `<justifi-billing-form hide-card-billing-form="true" payment-method-type="new_card"></justifi-billing-form>`,
+    });
+    await page.waitForChanges();
+
+    // Act
+    const cardBillingFormSimpleElement = page.root?.shadowRoot?.querySelector('card-billing-form-simple') ?? page.root?.querySelector('card-billing-form-simple');
+    const postalInput = cardBillingFormSimpleElement?.querySelector('input[name="address_postal_code"]') as HTMLInputElement;
+
+    // Assert
+    expect(postalInput.getAttribute('maxlength')).toBe('10');
   });
 
   it('should handle form methods correctly in name-only mode', async () => {

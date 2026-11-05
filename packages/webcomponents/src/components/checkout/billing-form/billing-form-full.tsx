@@ -5,6 +5,7 @@ import { Header3 } from '../../../ui-components';
 import checkoutBillingStateOptions from '../../../utils/checkout-billing-state-options';
 import { FormController } from '../../../ui-components/form/form';
 import { checkoutStore, onChange } from '../../../store/checkout.store';
+import { normalizePostalCode } from '../../../utils/postal-code';
 
 @Component({
   tag: 'billing-form-full',
@@ -52,7 +53,12 @@ export class BillingFormFull {
 
   @Method()
   async getValues(): Promise<BillingFormFields> {
-    return this.formController.values.getValue();
+    const values = this.formController.values.getValue();
+
+    // checkoutStore values skip the input transform, so normalize on the way out.
+    return values?.address_postal_code
+      ? { ...values, address_postal_code: normalizePostalCode(values.address_postal_code) }
+      : values;
   }
 
   @Method()
@@ -131,7 +137,8 @@ export class BillingFormFull {
                   defaultValue={billingFormDefaultValue.address_postal_code}
                   errorText={this.errors.address_postal_code}
                   inputHandler={this.inputHandler}
-                  maxLength={7}
+                  transformValue={normalizePostalCode}
+                  maxLength={10}
                 />
               </div>
             </div>

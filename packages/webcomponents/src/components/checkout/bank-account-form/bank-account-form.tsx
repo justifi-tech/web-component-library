@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Method, State } from "@stencil/core";
+import { Component, Event, EventEmitter, h, Method, Prop, State } from "@stencil/core";
 import BankAccountFormSkeleton from "./bank-account-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
@@ -22,25 +22,37 @@ export class BankAccountForm {
   @State() tabId: string;
   @State() iframeState: 'loading' | 'ready' | 'error' = 'loading';
 
+  @Prop() showAccountNumberConfirmation?: boolean = false;
+
   private accountNumberIframeElement!: HTMLIframeInputElement;
+  private accountNumberConfirmationIframeElement?: HTMLIframeInputElement;
   private routingNumberIframeElement!: HTMLIframeInputElement;
   private hasLoggedAchDisabledWarning = false;
   private loadAbortController?: AbortController;
+  private loadedInputIds = new Set<string>();
+  private watchedInputIds = '';
 
   async componentWillLoad() {
     await waitForConfig();
     this.iframeOrigin = configState.iframeOrigin;
     this.tabId = generateTabId();
 
-
     detectDuplicateVersion();
   }
 
   componentDidRender() {
-    if (this.loadAbortController || !this.iframeElements.every(Boolean)) {
+    if (this.iframeElements.length < this.expectedIframeCount) {
       return;
     }
 
+    // Re-watch when the rendered field set changes -- showAccountNumberConfirmation
+    // can flip on after the first watch already finished.
+    const inputIds = this.iframeElements.map((element) => element.inputId).join(',');
+    if (inputIds === this.watchedInputIds) {
+      return;
+    }
+
+    this.watchedInputIds = inputIds;
     this.watchIframesLoad();
   }
 
@@ -55,13 +67,27 @@ export class BankAccountForm {
   }
 
   @Method()
-  async validate(): Promise<any> {
+  async validate(): Promise<{ isValid: boolean }> {
     if (this.isAchDisabledForCheckout()) {
-      return false;
+      return { isValid: false };
     }
-    const accountNumberIsValid = await this.accountNumberIframeElement.validate();
-    const routingNumberIsValid = await this.routingNumberIframeElement.validate();
-    return accountNumberIsValid && routingNumberIsValid;
+
+    const elements = this.iframeElements;
+
+    // A field that has not rendered yet cannot be validated -- fail closed
+    // rather than report a pass for a form that is not all there.
+    if (elements.length < this.expectedIframeCount) {
+      return { isValid: false };
+    }
+
+    // Sequential on purpose: the parent correlates iframe replies by eventType
+    // alone, with no request id, so concurrent validates would cross replies.
+    const results: any[] = [];
+    for (const element of elements) {
+      results.push(await element.validate());
+    }
+
+    return { isValid: results.every((result) => result?.isValid === true) };
   }
 
   @Method()
@@ -82,6 +108,23 @@ export class BankAccountForm {
         },
       };
     }
+    // tokenize() is a public @Method: an integrator with their own submit button
+    // can reach it without validate(), so the mismatch check has to live here too.
+    if (this.showAccountNumberConfirmation) {
+      const confirmation = await this.accountNumberConfirmationIframeElement?.validate();
+
+      if (confirmation?.isValid !== true) {
+        return {
+          error: {
+            code: 'validation_error',
+            message:
+              confirmation?.error?.message ||
+              'The entered value does not match the account number',
+          },
+        };
+      }
+    }
+
     const result = await this.accountNumberIframeElement.tokenize(
       clientId,
       paymentMethodMetadata,
@@ -94,22 +137,41 @@ export class BankAccountForm {
     return this.iframeState === 'ready';
   }
 
+  private get expectedIframeCount(): number {
+    return this.showAccountNumberConfirmation ? 3 : 2;
+  }
+
   private get iframeElements(): HTMLIframeInputElement[] {
     return [
       this.accountNumberIframeElement,
+      ...(this.showAccountNumberConfirmation
+        ? [this.accountNumberConfirmationIframeElement]
+        : []),
       this.routingNumberIframeElement,
-    ];
+    ].filter(Boolean) as HTMLIframeInputElement[];
   }
 
   private watchIframesLoad() {
     this.loadAbortController?.abort();
     const { signal } = (this.loadAbortController = new AbortController());
 
-    const pending = new Set(this.iframeElements.map((element) => element.inputId));
+    const pending = new Set(
+      this.iframeElements
+        .filter((element) => !this.loadedInputIds.has(element.inputId))
+        .map((element) => element.inputId),
+    );
 
     const loaded = Promise.all(this.iframeElements.map((element) => (
       new Promise<void>((resolve) => {
+        // iframeLoaded is a once: true listener, so an element that already
+        // loaded will never fire again on a re-watch.
+        if (this.loadedInputIds.has(element.inputId)) {
+          resolve();
+          return;
+        }
+
         element.addEventListener('iframeLoaded', () => {
+          this.loadedInputIds.add(element.inputId);
           pending.delete(element.inputId);
           resolve();
         }, { once: true, signal });
@@ -135,6 +197,13 @@ export class BankAccountForm {
       if (signal.aborted) return;
       this.iframeState = 'error';
       this.loadAbortController?.abort();
+
+      if (pending.has('accountNumberConfirmation')) {
+        console.error(
+          '[bank-account-form] "Confirm Account Number" field failed to load.'
+        );
+      }
+
       this.errorEvent.emit({
         errorCode: ComponentErrorCodes.IFRAME_LOAD_ERROR,
         message: ComponentErrorMessages.IFRAME_LOAD_ERROR,
@@ -148,6 +217,7 @@ export class BankAccountForm {
 
   private reloadIframes = () => {
     this.iframeState = 'loading';
+    this.loadedInputIds.clear();
     this.iframeElements.forEach((element) => element.reload());
     this.watchIframesLoad();
   };
@@ -191,6 +261,16 @@ export class BankAccountForm {
               iframeOrigin={`${this.iframeOrigin}/v2/accountNumber?tabId=${this.tabId}`}
             />
           </div>
+          {this.showAccountNumberConfirmation && (
+            <div class="row mb-3">
+              <iframe-input
+                inputId="accountNumberConfirmation"
+                ref={(el) => (this.accountNumberConfirmationIframeElement = el as HTMLIframeInputElement)}
+                label="Confirm Account Number"
+                iframeOrigin={`${this.iframeOrigin}/v2/accountNumberConfirmation?tabId=${this.tabId}`}
+              />
+            </div>
+          )}
           <div class="row">
             <iframe-input
               inputId="routingNumber"

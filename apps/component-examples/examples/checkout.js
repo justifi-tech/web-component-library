@@ -51,6 +51,7 @@ router.get("/", async (req, res) => {
   const disableCreditCard = false;
   const hideCardBillingForm = true;
   const hideBankAccountBillingForm = false;
+  const showAccountNumberConfirmation = req.query.confirmAccountNumber === "1";
 
   const billingFormFields = {
     name: "John Doe",
@@ -79,6 +80,7 @@ router.get("/", async (req, res) => {
             disable-credit-card="${disableCreditCard}"
             hide-bank-account-billing-form="${hideBankAccountBillingForm}"
             hide-card-billing-form="${hideCardBillingForm}"
+            show-account-number-confirmation="${showAccountNumberConfirmation}"
           >
           </justifi-checkout>
           <button

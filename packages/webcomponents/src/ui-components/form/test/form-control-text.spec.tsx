@@ -9,6 +9,9 @@ describe('form-control-text', () => {
   const mockInputHandler = jest.fn();
   const mockKeyDownHandler = jest.fn();
 
+  // Nothing is reset between tests in this repo by default.
+  beforeEach(() => jest.clearAllMocks());
+
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
@@ -126,6 +129,57 @@ describe('form-control-text', () => {
         value: 'other-user@example.com'
       }
     }));
+  });
+
+  it('Applies transformValue to the input before storing or emitting it', async () => {
+    // Arrange
+    const toUpper = (value: string) => value.toUpperCase();
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-text
+          label='Postal Code'
+          name='address_postal_code'
+          inputHandler={mockInputHandler}
+          transformValue={toUpper}
+        />
+    });
+    const inputEventSpy = jest.fn();
+    page.root.addEventListener('formControlInput', inputEventSpy);
+    await page.waitForChanges();
+
+    // Act
+    const inputElement = page.root.querySelector('input');
+    inputElement.value = 'n2b 2a5';
+    inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    await page.waitForChanges();
+
+    // Assert — what the field shows, what the form stores, and what is emitted all agree.
+    expect(inputElement.value).toBe('N2B 2A5');
+    expect(mockInputHandler).toHaveBeenCalledWith('address_postal_code', 'N2B 2A5');
+    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
+      detail: { name: 'address_postal_code', value: 'N2B 2A5' }
+    }));
+  });
+
+  it('Leaves the value untouched when no transformValue is given', async () => {
+    // Arrange
+    const page = await newSpecPage({
+      components: components,
+      template: () =>
+        <form-control-text label='Email' name='email' inputHandler={mockInputHandler} />
+    });
+    await page.waitForChanges();
+
+    // Act
+    const inputElement = page.root.querySelector('input');
+    inputElement.value = 'user@example.com';
+    inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    await page.waitForChanges();
+
+    // Assert
+    expect(inputElement.value).toBe('user@example.com');
+    expect(mockInputHandler).toHaveBeenCalledWith('email', 'user@example.com');
   });
 
   it('Emits formControlBlur event on blur', async () => {

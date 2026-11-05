@@ -62,6 +62,8 @@ export class JustifiTokenizePaymentMethod {
   @Prop() hideCardBillingForm?: boolean;
   @Prop() hideSubmitButton?: boolean;
   @Prop() paymentMethodGroupId?: string;
+  /** Renders a "Confirm Account Number" field in the bank account form. */
+  @Prop() showAccountNumberConfirmation?: boolean;
   @Prop() submitButtonText?: string = 'Submit';
   @Prop() savePaymentMethodLabel?: string;
   /**
@@ -162,9 +164,10 @@ export class JustifiTokenizePaymentMethod {
       this.paymentMethodFormRef.validate(),
     ]);
 
+    // Field-level messages stay inside the hosted iframes, so only billing contributes errors.
     const result = {
       isValid: billingValidation.isValid && paymentMethodValidation.isValid,
-      errors: { ...billingValidation.errors, ...paymentMethodValidation.errors },
+      errors: { ...billingValidation.errors },
     };
     return result;
   }
@@ -384,7 +387,10 @@ export class JustifiTokenizePaymentMethod {
     return paymentMethodType === PAYMENT_METHODS.NEW_CARD ? (
       <card-form ref={(el) => { if (el) this.paymentMethodFormRef = el; }} maskCardNumber={this.maskCardNumber} />
     ) : (
-      <bank-account-form ref={(el) => { if (el) this.paymentMethodFormRef = el; }} />
+      <bank-account-form
+        ref={(el) => { if (el) this.paymentMethodFormRef = el; }}
+        showAccountNumberConfirmation={this.showAccountNumberConfirmation}
+      />
     );
   }
 

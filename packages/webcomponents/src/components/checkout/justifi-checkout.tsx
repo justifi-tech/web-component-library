@@ -37,6 +37,8 @@ export class JustifiCheckout {
   /** Passed to `justifi-google-pay` as `environment`. Omit to let the child use its default. */
   @Prop() googlePayEnv?: 'TEST' | 'PRODUCTION';
   @Prop() preCompleteHook?: Hook<CheckoutState>;
+  /** Renders a "Confirm Account Number" field in the bank account form. */
+  @Prop() showAccountNumberConfirmation?: boolean = false;
 
   @Watch('authToken')
   @Watch('checkoutId')
@@ -193,6 +195,7 @@ export class JustifiCheckout {
                       hideBankAccountBillingForm={this.hideBankAccountBillingForm}
                       hideSubmitButton={true}
                       paymentMethodGroupId={checkoutStore.paymentMethodGroupId}
+                      showAccountNumberConfirmation={this.showAccountNumberConfirmation}
                     />
                   </div>
                 </section>

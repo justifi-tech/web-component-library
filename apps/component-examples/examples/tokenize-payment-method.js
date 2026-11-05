@@ -22,6 +22,9 @@ router.get("/", async (req, res) => {
   // any GET param matching (card).?(num) as a secret in a URL. This is a boolean.
   const maskNumber = req.query.maskNumber === 'true';
   const paymentMethodGroupId = undefined;
+  // Query-param gated: turning this on by default would add a third hosted
+  // field to every existing bank-account e2e run.
+  const showAccountNumberConfirmation = req.query.confirmAccountNumber === "1";
 
   const billingFormFields = {
     name: "John Doe",
@@ -75,6 +78,7 @@ router.get("/", async (req, res) => {
               hide-card-billing-form="${hideCardBillingForm}"
               hide-submit-button="${hideSubmitButton}"
               mask-card-number="${maskNumber}"
+              show-account-number-confirmation="${showAccountNumberConfirmation}"
               ${paymentMethodGroupId ? `payment-method-group-id="${paymentMethodGroupId}"` : ""}
             >
             </justifi-tokenize-payment-method>

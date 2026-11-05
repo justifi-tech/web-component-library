@@ -48,12 +48,15 @@ export class CardForm {
   }
 
   @Method()
-  async validate(): Promise<any> {
-    const cardNumberIsValid = await this.cardNumberIframeElement.validate();
-    const expirationMonthIsValid = await this.expirationMonthIframeElement.validate();
-    const expirationYearIsValid = await this.expirationYearIframeElement.validate();
-    const cvvIsValid = await this.cvvIframeElement.validate();
-    return cardNumberIsValid && expirationMonthIsValid && expirationYearIsValid && cvvIsValid;
+  async validate(): Promise<{ isValid: boolean }> {
+    // Sequential on purpose: the parent correlates iframe replies by eventType
+    // alone, with no request id, so concurrent validates would cross replies.
+    const results: any[] = [];
+    for (const element of this.iframeElements) {
+      results.push(await element.validate());
+    }
+
+    return { isValid: results.every((result) => result?.isValid === true) };
   }
 
   @Method()

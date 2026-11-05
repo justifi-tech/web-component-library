@@ -1,6 +1,7 @@
 import { Component, h, Prop, Host } from '@stencil/core';
 import { CountryCode } from '../../../../utils/country-codes';
-import { numberOnlyHandler } from '../../../../ui-components/form/utils';
+import { zipCodeOnlyHandler } from '../../../../ui-components/form/utils';
+import { normalizePostalCode } from '../../../../utils/postal-code';
 import { countryLabels, countryOptions } from '../../utils/country-config';
 
 @Component({
@@ -64,8 +65,9 @@ export class FormAddressFields {
               inputHandler={this.inputHandler}
               defaultValue={this.defaultValues?.postal_code}
               errorText={this.errors?.postal_code}
-              maxLength={this.country === CountryCode.USA ? 5 : 7}
-              keyDownHandler={this.country === CountryCode.USA ? numberOnlyHandler : undefined}
+              transformValue={normalizePostalCode}
+              maxLength={this.country === CountryCode.USA ? 10 : 7}
+              keyDownHandler={this.country === CountryCode.USA ? zipCodeOnlyHandler : undefined}
             />
           </div>
         </div>

@@ -584,6 +584,16 @@ export class JustifiModularCheckout {
       return;
     }
 
+    if (!isValid) {
+      checkoutStore.isSubmitting = false;
+      this.errorEvent.emit({
+        message: "Please fill in all required fields.",
+        errorCode: ComponentErrorCodes.VALIDATION_ERROR,
+        severity: ComponentErrorSeverity.ERROR,
+      });
+      return;
+    }
+
     const isNewCard =
       checkoutStore.selectedPaymentMethod?.type === PAYMENT_METHODS.NEW_CARD
     const isNewBankAccount =
@@ -653,16 +663,6 @@ export class JustifiModularCheckout {
         });
         return;
       }
-    }
-
-    if (!isValid) {
-      checkoutStore.isSubmitting = false;
-      this.errorEvent.emit({
-        message: "Please fill in all required fields.",
-        errorCode: ComponentErrorCodes.VALIDATION_ERROR,
-        severity: ComponentErrorSeverity.ERROR,
-      });
-      return;
     }
 
     // Sezzle has no payment token; approval comes from the Sezzle popup
