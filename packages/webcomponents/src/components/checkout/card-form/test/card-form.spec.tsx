@@ -51,6 +51,40 @@ describe('card-form', () => {
       });
     });
 
+    it('forwards maskCardNumber to the card number field only', async () => {
+      const page = await newSpecPage({
+        components: [CardForm],
+        html: '<card-form mask-card-number="true"></card-form>',
+      });
+
+      const byId = (id: string) =>
+        Array.from(page.root.querySelectorAll('iframe-input')).find(
+          (el) => el.getAttribute('inputId') === id,
+        );
+
+      expect((page.rootInstance as CardForm).maskCardNumber).toBe(true);
+      // Stencil reflects a true boolean prop as an empty attribute.
+      expect(byId('cardNumber').getAttribute('maskCardNumber')).toBe('');
+      // The other three fields hold no card number to mask.
+      ['expirationMonth', 'expirationYear', 'CVV'].forEach((id) => {
+        expect(byId(id).getAttribute('maskCardNumber')).toBeNull();
+      });
+    });
+
+    it('leaves the card number unmasked by default', async () => {
+      const page = await newSpecPage({
+        components: [CardForm],
+        html: '<card-form></card-form>',
+      });
+
+      const cardNumber = Array.from(
+        page.root.querySelectorAll('iframe-input'),
+      ).find((el) => el.getAttribute('inputId') === 'cardNumber');
+
+      expect((page.rootInstance as CardForm).maskCardNumber).toBe(false);
+      expect(cardNumber.getAttribute('maskCardNumber')).toBeNull();
+    });
+
     it('shows an error message and a reload button when the iframe fails to load', async () => {
       const page = await newSpecPage({
         components: [CardForm, FormAlert],

@@ -17,6 +17,10 @@ router.get("/", async (req, res) => {
   const hideCardBillingForm = false;
   const hideBankAccountBillingForm = false;
   const hideSubmitButton = false;
+  // ?maskNumber=true drives the e2e; same shape as payment-provisioning's ?country.
+  // Deliberately not named after the card: CodeQL's js/sensitive-get-query treats
+  // any GET param matching (card).?(num) as a secret in a URL. This is a boolean.
+  const maskNumber = req.query.maskNumber === 'true';
   const paymentMethodGroupId = undefined;
   // Query-param gated: turning this on by default would add a third hosted
   // field to every existing bank-account e2e run.
@@ -73,6 +77,7 @@ router.get("/", async (req, res) => {
               hide-bank-account-billing-form="${hideBankAccountBillingForm}"
               hide-card-billing-form="${hideCardBillingForm}"
               hide-submit-button="${hideSubmitButton}"
+              mask-card-number="${maskNumber}"
               show-account-number-confirmation="${showAccountNumberConfirmation}"
               ${paymentMethodGroupId ? `payment-method-group-id="${paymentMethodGroupId}"` : ""}
             >
