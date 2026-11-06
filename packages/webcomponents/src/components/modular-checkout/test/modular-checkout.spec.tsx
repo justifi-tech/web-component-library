@@ -13,6 +13,7 @@ import {
   ICheckoutStatus,
 } from '../../../api';
 import { insuranceValues } from '../../insurance/insurance-state';
+import { CheckoutService } from '../../../api/services/checkout.service';
 
 function mockFormRefs(instance: any, overrides?: Partial<Record<string, any>>) {
   instance.paymentMethodFormRef = {
@@ -301,7 +302,7 @@ describe('justifi-modular-checkout', () => {
 
       const instance: any = page.rootInstance;
       instance.getCheckout = jest.fn(({ onError }: any) => {
-        onError({ message: 'Network error', code: 'fetch-error', severity: ComponentErrorSeverity.ERROR });
+        onError({ error: 'Network error', code: 'fetch-error', severity: ComponentErrorSeverity.ERROR });
       });
 
       instance['fetchCheckout']();
@@ -987,12 +988,51 @@ describe('justifi-modular-checkout', () => {
 
       const instance: any = page.rootInstance;
       instance.completeCheckout = jest.fn(({ onError }: any) => {
-        onError({ message: 'Completion failed', code: 'complete-error', severity: ComponentErrorSeverity.ERROR });
+        onError({ error: 'Completion failed', code: 'complete-error', severity: ComponentErrorSeverity.ERROR });
       });
 
       await instance.submitCheckout();
 
       expect(checkoutStore.isSubmitting).toBe(false);
+    });
+
+    describe('when the complete checkout API rejects', () => {
+      let completeSpy: jest.SpyInstance;
+
+      beforeEach(() => {
+        const apiError: any = new Error('Insufficient funds');
+        apiError.code = 'insufficient_funds';
+        apiError.status = 402;
+        completeSpy = jest.spyOn(CheckoutService.prototype, 'complete').mockRejectedValue(apiError);
+      });
+
+      afterEach(() => {
+        completeSpy.mockRestore();
+      });
+
+      it.each([
+        ['without preCompleteHook', undefined],
+        ['with preCompleteHook', (state: any, resolve: any) => resolve(state)],
+      ])('emits error-event carrying the API message %s', async (_label, hook) => {
+        const page = await newSpecPage({
+          components: [JustifiModularCheckout],
+          html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+        });
+        const root = page.root as HTMLElement;
+        const handler = jest.fn();
+        root.addEventListener('error-event', handler as any);
+        const instance: any = page.rootInstance;
+        instance.preCompleteHook = hook;
+
+        await instance.submitCheckout();
+
+        expect(handler).toHaveBeenCalledTimes(1);
+        expect(handler.mock.calls[0][0].detail).toEqual({
+          message: 'Insufficient funds',
+          errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,
+          severity: ComponentErrorSeverity.ERROR,
+        });
+      });
     });
 
     it('isSubmitting reset to false on early-return path (validation fail)', async () => {
@@ -1839,7 +1879,7 @@ describe('justifi-modular-checkout', () => {
 
       const instance: any = page.rootInstance;
       instance.completeCheckout = jest.fn(({ onError }: any) => {
-        onError({ message: 'Completion failed', code: 'complete-error', severity: ComponentErrorSeverity.ERROR });
+        onError({ error: 'Completion failed', code: 'complete-error', severity: ComponentErrorSeverity.ERROR });
       });
 
       await instance.submitCheckout();
