@@ -155,11 +155,11 @@ export class JustifiModularCheckout {
             return;
           }
         },
-        onError: (error) => {
+        onError: ({ error, code, severity }) => {
           this.errorEvent.emit({
-            message: error.message,
-            errorCode: error.code,
-            severity: error.severity,
+            message: error,
+            errorCode: code,
+            severity,
           });
         },
       });
@@ -733,10 +733,10 @@ export class JustifiModularCheckout {
           message: "Checkout completed successfully",
         });
       },
-      onError: (error) => {
+      onError: ({ error }) => {
         checkoutStore.isSubmitting = false;
         this.errorEvent.emit({
-          message: error.message,
+          message: error,
           errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,
           severity: ComponentErrorSeverity.ERROR,
         });
