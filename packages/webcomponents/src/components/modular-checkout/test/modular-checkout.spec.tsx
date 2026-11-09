@@ -1436,6 +1436,34 @@ describe('justifi-modular-checkout', () => {
       expect(result).toBe(true);
     });
 
+    it('validates justifi-tokenize-payment-method once when it is both refs', async () => {
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_CARD };
+
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: `<justifi-modular-checkout auth-token="t" checkout-id="chk_1"></justifi-modular-checkout>`,
+      });
+
+      const instance: any = page.rootInstance;
+      // queryFormRefs matches justifi-tokenize-payment-method with both
+      // selectors, so a checkout that only slots that component gets the same
+      // element in both refs. Two validate passes over the hosted-field
+      // iframes cross their replies -- field errors land on the wrong field.
+      const tokenizePaymentMethod = {
+        validate: jest.fn().mockResolvedValue({ isValid: true }),
+        tokenize: jest.fn().mockResolvedValue({ id: 'tok_mock' }),
+        getValues: jest.fn().mockResolvedValue({}),
+        tagName: 'JUSTIFI-TOKENIZE-PAYMENT-METHOD',
+      };
+      instance.paymentMethodFormRef = tokenizePaymentMethod;
+      instance.billingFormRef = tokenizePaymentMethod;
+
+      const result = await instance.validate();
+
+      expect(tokenizePaymentMethod.validate).toHaveBeenCalledTimes(1);
+      expect(result).toBe(true);
+    });
+
     it('validates payment method and billing forms for new bank account', async () => {
       checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.NEW_BANK_ACCOUNT };
 

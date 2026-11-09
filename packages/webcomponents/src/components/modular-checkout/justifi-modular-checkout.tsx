@@ -536,7 +536,14 @@ export class JustifiModularCheckout {
       isNewCard || isNewBankAccount
     ) {
       if (this.paymentMethodFormRef) promises.push(this.paymentMethodFormRef.validate());
-      if (this.billingFormRef) promises.push(this.billingFormRef.validate());
+      // queryFormRefs matches justifi-tokenize-payment-method with both
+      // selectors, so a checkout that slots only that component gets the same
+      // element in both refs -- and that component already validates its own
+      // billing form. Validating it again doubles every hosted-field round
+      // trip and runs the billing form twice.
+      if (this.billingFormRef && this.billingFormRef !== this.paymentMethodFormRef) {
+        promises.push(this.billingFormRef.validate());
+      }
     }
 
     if (promises.length === 0) return true;
