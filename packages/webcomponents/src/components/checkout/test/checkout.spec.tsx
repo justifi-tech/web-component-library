@@ -51,6 +51,37 @@ describe('justifi-checkout', () => {
     page.root.remove();
   });
 
+  it('forwards maskCardNumber to justifi-tokenize-payment-method', async () => {
+    const page = await newSpecPage({
+      components: [JustifiCheckout, JustifiModularCheckout],
+      html: '<justifi-checkout mask-card-number="true"></justifi-checkout>',
+    });
+
+    await page.waitForChanges();
+
+    const tokenize = page.root.querySelector('justifi-tokenize-payment-method');
+
+    expect(tokenize).not.toBeNull();
+    expect(tokenize.hasAttribute('maskcardnumber')).toBe(true);
+
+    page.root.remove();
+  });
+
+  it('leaves the card number visible by default', async () => {
+    const page = await newSpecPage({
+      components: [JustifiCheckout, JustifiModularCheckout],
+      html: '<justifi-checkout></justifi-checkout>',
+    });
+
+    await page.waitForChanges();
+
+    const tokenize = page.root.querySelector('justifi-tokenize-payment-method');
+
+    expect(tokenize.hasAttribute('maskcardnumber')).toBe(false);
+
+    page.root.remove();
+  });
+
   it('receives one consolidated event from modular checkout and updates payment options', async () => {
     const page = await newSpecPage({
       components: [JustifiCheckout, JustifiModularCheckout],

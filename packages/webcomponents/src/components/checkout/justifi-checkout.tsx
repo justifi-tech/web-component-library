@@ -39,6 +39,13 @@ export class JustifiCheckout {
   @Prop() preCompleteHook?: Hook<CheckoutState>;
   /** Renders a "Confirm Account Number" field in the bank account form. */
   @Prop() showAccountNumberConfirmation?: boolean = false;
+  /**
+   * Mask the card number to its last four digits when the field loses focus,
+   * with an eye toggle to reveal it. Defaults to false.
+   *
+   * Anti-shoulder-surfing only, not a secrecy boundary.
+   */
+  @Prop() maskCardNumber?: boolean = false;
 
   @Watch('authToken')
   @Watch('checkoutId')
@@ -196,6 +203,7 @@ export class JustifiCheckout {
                       hideSubmitButton={true}
                       paymentMethodGroupId={checkoutStore.paymentMethodGroupId}
                       showAccountNumberConfirmation={this.showAccountNumberConfirmation}
+                      maskCardNumber={this.maskCardNumber}
                     />
                   </div>
                 </section>
