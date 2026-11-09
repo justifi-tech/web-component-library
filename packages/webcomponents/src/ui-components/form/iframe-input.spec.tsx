@@ -164,5 +164,78 @@ describe('iframe-input', () => {
       expect(postMessage).not.toHaveBeenCalled();
     });
   });
+
+  /**
+   * Every hosted field replies to the same window, so a field's validate()
+   * must render its own field's reply, never a sibling's.
+   */
+  describe('validate', () => {
+    let page: SpecPage;
+
+    const field = (id: string) =>
+      page.body.querySelector(`iframe-input[input-id="${id}"]`) as HTMLIframeInputElement;
+
+    const errorText = (id: string) =>
+      page.body.querySelector(`#form-error-text-${id}`)?.textContent ?? null;
+
+    /** A validate reply posted up by the named field's frame. */
+    const validateReply = (id: string, data: any) => {
+      const event: any = new (page.win as any).Event('message');
+      event.data = { eventType: MessageEventType.validate, data };
+      event.source = (page.body.querySelector(`iframe[name="${id}"]`) as any).contentWindow;
+      page.win.dispatchEvent(event);
+    };
+
+    beforeEach(async () => {
+      page = await newSpecPage({
+        components: [IframeInput],
+        html: `
+          <iframe-input input-id="accountNumberConfirmation" label="Confirm Account Number" iframe-origin="https://iframe.test/v2/accountNumberConfirmation"></iframe-input>
+          <iframe-input input-id="routingNumber" label="Routing Number" iframe-origin="https://iframe.test/v2/routingNumber"></iframe-input>
+        `,
+      });
+      await page.waitForChanges();
+
+      // mock-doc builds no contentWindow; give each frame a distinct one.
+      page.body.querySelectorAll('iframe').forEach((iframe: any) => {
+        iframe.contentWindow = { postMessage: jest.fn() };
+      });
+    });
+
+    it('shows the error under the field that reported it when a sibling replies first', async () => {
+      const confirmValidation = field('accountNumberConfirmation').validate();
+      // Stencil runs @Methods after a tick; let the listener register.
+      await page.waitForChanges();
+
+      validateReply('routingNumber', { isValid: true, error: {} });
+      validateReply('accountNumberConfirmation', {
+        isValid: false,
+        error: { message: 'The entered value does not match the account number' },
+      });
+      await confirmValidation;
+      await page.waitForChanges();
+
+      expect(errorText('accountNumberConfirmation')).toBe(
+        'The entered value does not match the account number',
+      );
+      expect(errorText('routingNumber')).toBeNull();
+    });
+
+    it('does not show a sibling error under a field that is still waiting', async () => {
+      const routingValidation = field('routingNumber').validate();
+      // Stencil runs @Methods after a tick; let the listener register.
+      await page.waitForChanges();
+
+      validateReply('accountNumberConfirmation', {
+        isValid: false,
+        error: { message: 'The entered value does not match the account number' },
+      });
+      validateReply('routingNumber', { isValid: true, error: {} });
+      await routingValidation;
+      await page.waitForChanges();
+
+      expect(errorText('routingNumber')).toBeNull();
+    });
+  });
 });
 

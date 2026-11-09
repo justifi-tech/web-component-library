@@ -30,7 +30,10 @@ export class FrameCommunicationService {
   ): Promise<any> {
     return new Promise((resolve) => {
       const responseListener = (event: MessageEvent) => {
-        if (event.data.eventType !== eventType) return;
+        // Every hosted field replies to this same window. Without the sender
+        // check, overlapping requests take a sibling field's reply.
+        if (event.source !== this.iframe.contentWindow) return;
+        if (event.data?.eventType !== eventType) return;
         window.removeEventListener('message', responseListener);
         resolve(event.data.data);
       };

@@ -49,8 +49,6 @@ export class CardForm {
 
   @Method()
   async validate(): Promise<{ isValid: boolean }> {
-    // Sequential on purpose: the parent correlates iframe replies by eventType
-    // alone, with no request id, so concurrent validates would cross replies.
     const results: any[] = [];
     for (const element of this.iframeElements) {
       results.push(await element.validate());

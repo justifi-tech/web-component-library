@@ -113,6 +113,28 @@ test.describe('account number confirmation', () => {
     );
   });
 
+  test('overlapping validate() calls keep the mismatch error on the confirm field', async ({
+    page,
+  }) => {
+    await openBankFormWithConfirmation(page);
+    await fillBankForm(page, '999999999999');
+
+    // What a double-clicked Submit does: two validates in flight at once, so
+    // every hosted field gets two requests and sends two replies.
+    const results = await page.evaluate(async () => {
+      const el = document.querySelector('justifi-tokenize-payment-method') as any;
+      return Promise.all([el.validate(), el.validate()]);
+    });
+
+    expect(results.map((result) => result.isValid)).toEqual([false, false]);
+    await expect(confirmFieldError(page)).toHaveText(
+      'The entered value does not match the account number',
+    );
+    await expect(
+      page.locator('#form-error-text-routingNumber'),
+    ).toHaveCount(0);
+  });
+
   test('validate() passes when the values match', async ({ page }) => {
     await openBankFormWithConfirmation(page);
     await fillBankForm(page, TEST_DATA.bankAccount.accountNumber);
