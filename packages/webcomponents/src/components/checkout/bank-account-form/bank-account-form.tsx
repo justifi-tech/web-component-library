@@ -80,8 +80,6 @@ export class BankAccountForm {
       return { isValid: false };
     }
 
-    // Sequential on purpose: the parent correlates iframe replies by eventType
-    // alone, with no request id, so concurrent validates would cross replies.
     const results: any[] = [];
     for (const element of elements) {
       results.push(await element.validate());
