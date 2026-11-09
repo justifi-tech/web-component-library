@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Method, State } from "@stencil/core";
+import { Component, Event, EventEmitter, h, Method, Prop, State } from "@stencil/core";
 import CardFormSkeleton from "./card-form-skeleton";
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { generateTabId } from "../../../utils/utils";
@@ -20,6 +20,9 @@ export class CardForm {
   @State() iframeOrigin: string;
   @State() tabId: string;
   @State() iframeState: 'loading' | 'ready' | 'error' = 'loading';
+
+  /** Mask the card number to its last four digits when the field blurs. */
+  @Prop() maskCardNumber?: boolean = false;
 
   private cardNumberIframeElement!: HTMLIframeInputElement;
   private expirationMonthIframeElement!: HTMLIframeInputElement;
@@ -164,6 +167,7 @@ export class CardForm {
               inputId="cardNumber"
               ref={(el) => (this.cardNumberIframeElement = el as HTMLIframeInputElement)}
               label="Card Number"
+              maskCardNumber={this.maskCardNumber}
               iframeOrigin={`${this.iframeOrigin}/v2/cardNumber?tabId=${this.tabId}`}
             />
           </div>

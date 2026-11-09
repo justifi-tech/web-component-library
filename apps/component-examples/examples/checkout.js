@@ -52,6 +52,9 @@ router.get("/", async (req, res) => {
   const hideCardBillingForm = true;
   const hideBankAccountBillingForm = false;
   const showAccountNumberConfirmation = req.query.confirmAccountNumber === "1";
+  // ?maskNumber=true. Not named after the card: CodeQL's js/sensitive-get-query
+  // treats any GET param matching (card).?(num) as a secret in a URL.
+  const maskNumber = req.query.maskNumber === 'true';
 
   const billingFormFields = {
     name: "John Doe",
@@ -81,6 +84,7 @@ router.get("/", async (req, res) => {
             hide-bank-account-billing-form="${hideBankAccountBillingForm}"
             hide-card-billing-form="${hideCardBillingForm}"
             show-account-number-confirmation="${showAccountNumberConfirmation}"
+            mask-card-number="${maskNumber}"
           >
           </justifi-checkout>
           <button

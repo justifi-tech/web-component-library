@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State } from "@stencil/core";
+import { Component, Element, Event, EventEmitter, h, Host, Method, Prop, State, Watch } from "@stencil/core";
 import iFrameResize from 'iframe-resizer/js/iframeResizer';
 import { FrameCommunicationService } from "../../utils/frame-comunication-service";
 import { FormControlErrorText } from "./form-helpers/form-control-error-text";
@@ -26,6 +26,18 @@ export class IframeInput {
   @Prop() inputId!: string;
   @Prop() label!: string;
   @Prop() iframeOrigin!: string;
+  /**
+   * Opt this field into masking its value to the last four characters when it
+   * loses focus. Forwarded to the hosted field, which owns the behavior.
+   */
+  @Prop() maskCardNumber?: boolean = false;
+
+  @Watch('maskCardNumber')
+  maskCardNumberChanged() {
+    if (this.hasLoaded) this.sendMaskCardNumber();
+  }
+
+  private hasLoaded = false;
 
   private wrapperElement!: HTMLDivElement;
 
@@ -158,6 +170,14 @@ export class IframeInput {
       return;
     }
 
+    if (eventType === 'loaded') {
+      this.hasLoaded = true;
+      // Re-sent on every load, not just the first: componentDidRender swaps
+      // the iframe src once the style store fills, so the frame can reload
+      // and would otherwise come back without the flag.
+      this.sendMaskCardNumber();
+    }
+
     if (eventType === 'focused') {
       this.isFocused = true;
     }
@@ -165,6 +185,12 @@ export class IframeInput {
     if (eventType === 'blurred') {
       this.isFocused = false;
     }
+  }
+
+  private sendMaskCardNumber() {
+    this.frameService?.postMessage(MessageEventType.setMaskCardNumber, {
+      enabled: !!this.maskCardNumber,
+    });
   }
 
   private get part() {
