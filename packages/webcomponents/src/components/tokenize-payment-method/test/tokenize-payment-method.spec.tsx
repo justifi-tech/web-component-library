@@ -536,4 +536,76 @@ describe('tokenize-payment-method', () => {
       expect(checkoutStore.billingFormFields).toEqual(fields);
     });
   });
+  describe('selection shared with sibling payment methods', () => {
+    const cardRadioChecked = (page: any) =>
+      page.root?.shadowRoot
+        ?.querySelector(`form-control-radio[value="${PAYMENT_METHODS.NEW_CARD}"]`)
+        ?.hasAttribute('checked');
+
+    const clickCardRadio = (page: any) => {
+      const radio = page.root?.shadowRoot?.querySelector(
+        `form-control-radio[value="${PAYMENT_METHODS.NEW_CARD}"]`,
+      );
+      radio?.closest('radio-list-item')?.dispatchEvent(
+        new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_CARD, bubbles: true, composed: true }),
+      );
+    };
+
+    const renderTokenize = async () => {
+      const page = await newSpecPage({
+        components: tokenizeComponents,
+        html: `<justifi-tokenize-payment-method auth-token="test-token" account-id="test-account"></justifi-tokenize-payment-method>`,
+      });
+      await page.waitForChanges();
+      return page;
+    };
+
+    it('checks the card radio by default', async () => {
+      const page = await renderTokenize();
+
+      expect(cardRadioChecked(page)).toBe(true);
+      expect(page.root?.shadowRoot?.querySelector('card-form')).not.toBeNull();
+    });
+
+    it('unchecks the card radio when a sibling selects plaid', async () => {
+      const page = await renderTokenize();
+
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
+      await page.waitForChanges();
+
+      expect(cardRadioChecked(page)).toBe(false);
+      expect(page.root?.shadowRoot?.querySelector('card-form')).toBeNull();
+    });
+
+    it('unchecks the card radio when a sibling selects sezzle', async () => {
+      const page = await renderTokenize();
+
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SEZZLE };
+      await page.waitForChanges();
+
+      expect(cardRadioChecked(page)).toBe(false);
+    });
+
+    it('re-checks the card radio when the card option is clicked again', async () => {
+      const page = await renderTokenize();
+
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
+      await page.waitForChanges();
+
+      clickCardRadio(page);
+      await page.waitForChanges();
+
+      expect(cardRadioChecked(page)).toBe(true);
+      expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.NEW_CARD });
+    });
+
+    it('keeps the card radio checked when a wallet flow clears the selection', async () => {
+      const page = await renderTokenize();
+
+      checkoutStore.selectedPaymentMethod = undefined;
+      await page.waitForChanges();
+
+      expect(cardRadioChecked(page)).toBe(true);
+    });
+  });
 });

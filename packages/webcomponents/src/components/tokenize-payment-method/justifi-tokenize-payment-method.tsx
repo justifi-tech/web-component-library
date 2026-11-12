@@ -348,7 +348,14 @@ export class JustifiTokenizePaymentMethod {
   }
 
   private renderPaymentMethodOption(paymentMethodType: PAYMENT_METHODS) {
-    const isSelected = this.selectedPaymentMethod === paymentMethodType && (checkoutStore.selectedPaymentMethod as SelectedPaymentMethod).id === undefined;
+    // Siblings (plaid, sezzle, wallets, saved methods) select themselves by
+    // writing the store, not by emitting radio-click, so local state alone
+    // would leave this radio checked next to theirs.
+    const storeSelection = checkoutStore.selectedPaymentMethod as SelectedPaymentMethod | undefined;
+    const claimedBySibling =
+      !!storeSelection &&
+      (storeSelection.id !== undefined || storeSelection.type !== paymentMethodType);
+    const isSelected = this.selectedPaymentMethod === paymentMethodType && !claimedBySibling;
 
     return (
       <div class="payment-method">
