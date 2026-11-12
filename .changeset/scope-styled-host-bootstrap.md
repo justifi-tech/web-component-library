@@ -13,4 +13,4 @@ Two visible changes, both inside light-DOM components only:
 - `justifi-checkout` and `plaid-verification` now pick up Bootstrap's theme variables, which previously resolved to nothing in the light DOM because they were declared on `:host`. Links inside them render Bootstrap blue and body text Bootstrap's grey instead of inheriting the page's defaults.
 - Host pages that were relying — knowingly or not — on JustiFi's Bootstrap styling their own markup will lose it. That styling was never intended to apply.
 
-`scripts/scope-styled-host-css.mjs` performs the transform and is idempotent; re-run it after dropping in a new stock Bootstrap build.
+The stylesheet is a checked-in vendored Bootstrap build that this repo does not track upstream, so the prefixing is a one-time rewrite of that file rather than a build step.
