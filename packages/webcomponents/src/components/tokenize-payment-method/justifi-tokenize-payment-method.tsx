@@ -95,6 +95,17 @@ export class JustifiTokenizePaymentMethod {
     }
   }
 
+  componentWillRender() {
+    // A cancelled wallet flow clears the store (modular-checkout's apple/google/
+    // paypal cancel handlers) without telling us. Local state still holds this
+    // component's option, and renderPaymentMethodOption keeps its radio checked
+    // on that basis — so re-claim the store, or submit reports "No payment
+    // method selected." while the radio plainly looks selected.
+    if (this.selectedPaymentMethod && !checkoutStore.selectedPaymentMethod) {
+      checkoutStore.selectedPaymentMethod = { type: this.selectedPaymentMethod };
+    }
+  }
+
   componentWillLoad() {
     detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);

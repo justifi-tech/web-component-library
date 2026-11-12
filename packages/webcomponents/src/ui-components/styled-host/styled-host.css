@@ -5,7 +5,7 @@
  * Copyright 2011-2024 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-:where(:host, .jfi-styled-host), :where(:host, .jfi-styled-host) [data-bs-theme='light'] {
+:is(:host, .jfi-styled-host), :where(:host, .jfi-styled-host) [data-bs-theme='light'] {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -130,7 +130,7 @@
   --bs-form-invalid-border-color: #dc3545;
 }
 
-:where(:host, .jfi-styled-host) [data-bs-theme='dark'] {
+:where(.jfi-styled-host)[data-bs-theme='dark'], [data-bs-theme='dark'] :where(.jfi-styled-host), :where(:host, .jfi-styled-host) [data-bs-theme='dark'] {
   color-scheme: dark;
   --bs-body-color: #dee2e6;
   --bs-body-color-rgb: 222, 226, 230;
@@ -191,12 +191,12 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  :where(:host, .jfi-styled-host) {
+  :is(:host, .jfi-styled-host) {
     scroll-behavior: smooth;
   }
 }
 
-:where(:host, .jfi-styled-host)>* {
+:is(:host, .jfi-styled-host)>* {
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
@@ -812,7 +812,7 @@
   }
 }
 
-:where(:host, .jfi-styled-host) {
+:is(:host, .jfi-styled-host) {
   --bs-breakpoint-xs: 0;
   --bs-breakpoint-sm: 576px;
   --bs-breakpoint-md: 768px;

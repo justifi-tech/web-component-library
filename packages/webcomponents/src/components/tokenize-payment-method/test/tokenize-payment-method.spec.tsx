@@ -607,5 +607,26 @@ describe('tokenize-payment-method', () => {
 
       expect(cardRadioChecked(page)).toBe(true);
     });
+
+    it('reclaims the store when a wallet flow clears the selection', async () => {
+      const page = await renderTokenize();
+
+      checkoutStore.selectedPaymentMethod = undefined;
+      await page.waitForChanges();
+
+      // Checked radio and empty store would make submit report
+      // "No payment method selected." against a visibly selected card.
+      expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.NEW_CARD });
+    });
+
+    it('does not reclaim the store from a sibling selection', async () => {
+      const page = await renderTokenize();
+
+      checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
+      await page.waitForChanges();
+
+      expect(checkoutStore.selectedPaymentMethod).toEqual({ type: PAYMENT_METHODS.PLAID });
+      expect(cardRadioChecked(page)).toBe(false);
+    });
   });
 });
