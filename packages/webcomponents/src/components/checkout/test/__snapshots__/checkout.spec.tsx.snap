@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`justifi-checkout renders loading 1`] = `
-<justifi-checkout class="body" style="display: block;">
+<justifi-checkout class="body jfi-styled-host" style="display: block;">
   <!---->
   <style></style>
   <justifi-modular-checkout>
