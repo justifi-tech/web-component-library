@@ -2,7 +2,7 @@ import { Component, h, Method, Event, EventEmitter, State, Watch } from '@stenci
 import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { checkoutStore, onChange } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
-import plaidLogoSvg from '../../../assets/plaid-icon.svg';
+import { image, label, text, textDanger } from '../../../styles/parts';
 import { PlaidService } from '../../../api/services/plaid.service';
 import { ComponentErrorSeverity } from '../../../api/ComponentError';
 import { PAYMENT_METHODS } from '../ModularCheckout';
@@ -636,12 +636,17 @@ export class JustifiPlaidPaymentMethod {
       return null;
     }
 
+    // Inlined rather than an <img> so the mark inherits the surrounding text
+    // color via currentColor -- an <img> cannot, and the old asset's hardcoded
+    // #111 fill was invisible on dark themes.
     const plaidLogo = (
-      <img
+      <svg
         class="plaid-logo-img"
-        src={plaidLogoSvg}
-        alt="Plaid"
-        title="Plaid"
+        part={image}
+        role="img"
+        aria-label="Plaid"
+        viewBox="0 0 28 29"
+        xmlns="http://www.w3.org/2000/svg"
         style={{
           display: 'inline',
           width: '20px',
@@ -649,7 +654,14 @@ export class JustifiPlaidPaymentMethod {
           marginLeft: '5px',
           marginTop: '-2px',
         }}
-      />
+      >
+        <title>Plaid</title>
+        <path
+          fill="currentColor"
+          fill-rule="evenodd"
+          d="M25.7629 26.2628L28 17.5309L24.9691 14.5001L27.9999 11.4691L25.7628 2.73706L17.0309 0.5L14.0001 3.531L10.969 0.50014L2.23706 2.73734L0 11.4691L3.03128 14.4999L0.00014 17.531L2.2372 26.2629L10.9691 28.5L14.0001 25.469L17.031 28.4999L25.7629 26.2628ZM15.7321 23.7371L18.6186 20.8505L22.2912 24.5233L17.6956 25.7007L15.7321 23.7371ZM11.1136 9.88154L14.0003 6.99502L16.8868 9.8814L14.0001 12.7679L11.1136 9.88154ZM12.2682 14.5L9.38154 17.3865L6.49502 14.5L9.38154 11.6135L12.2682 14.5ZM18.6187 11.6133L21.5053 14.5L18.6186 17.3865L15.7321 14.5L18.6187 11.6133ZM16.8867 19.1186L14.0001 22.0051L11.1135 19.1185L14.0001 16.2319L16.8867 19.1186ZM10.3044 25.7007L5.70864 24.5233L9.38154 20.8504L12.2682 23.7371L10.3044 25.7007ZM4.76308 16.2319L7.6496 19.1185L3.9767 22.7914L2.7993 18.1957L4.76308 16.2319ZM3.9767 6.20836L7.64974 9.8814L4.76308 12.7681L2.7993 10.8041L3.9767 6.20836ZM12.2683 5.26294L9.38168 8.1496L5.70892 4.4767L10.3047 3.2993L12.2683 5.26294ZM17.6959 3.2993L22.2915 4.4767L18.6186 8.14946L15.7321 5.26294L17.6959 3.2993ZM23.2372 12.7681L20.3505 9.8814L24.0233 6.20878L25.2007 10.8046L23.2372 12.7681ZM24.0233 22.7914L20.3505 19.1186L23.2372 16.2321L25.2007 18.1957L24.0233 22.7914Z"
+        />
+      </svg>
     );
 
     const renderErrorState = () => {
@@ -661,16 +673,21 @@ export class JustifiPlaidPaymentMethod {
           ? 'text-warning'
           : 'text-info';
 
+      const errorPart = this.error.severity === ComponentErrorSeverity.ERROR ? textDanger : text;
+
       return (
-        <div class={`${errorClass} mt-2`}>
-          <small>{this.error.message}</small>
-          <br />
-          <small class="text-muted">
-            {this.error.userAction}
-            {this.error.retryable && this.retryCount < this.maxRetries && (
-              <span> • Auto-retry in progress...</span>
-            )}
-          </small>
+        <div class="mt-2">
+          <div class={errorClass}>
+            <small part={errorPart}>{this.error.message}</small>
+          </div>
+          <div class="text-muted">
+            <small part={text}>
+              {this.error.userAction}
+              {this.error.retryable && this.retryCount < this.maxRetries && (
+                <span> • Auto-retry in progress...</span>
+              )}
+            </small>
+          </div>
         </div>
       );
     };
@@ -681,7 +698,7 @@ export class JustifiPlaidPaymentMethod {
       if (this.isAuthenticating) {
         return (
           <div class="text-info mt-2">
-            <small>Connecting to your bank...</small>
+            <small part={text}>Connecting to your bank...</small>
           </div>
         );
       }
@@ -689,7 +706,7 @@ export class JustifiPlaidPaymentMethod {
       if (this.publicToken) {
         return (
           <div class="text-success mt-2">
-            <small>✓ Bank account connected successfully</small>
+            <small part={text}>✓ Bank account connected successfully</small>
           </div>
         );
       }
@@ -697,7 +714,7 @@ export class JustifiPlaidPaymentMethod {
       if (this.isSelected && !this.publicToken && !this.error && !this.isAuthenticating) {
         return (
           <div class="text-muted mt-2">
-            <small>Click to connect your bank account</small>
+            <small part={text}>Click to connect your bank account</small>
           </div>
         );
       }
@@ -706,9 +723,15 @@ export class JustifiPlaidPaymentMethod {
     };
 
     return (
-      <StyledHost class="payment-method">
+      <StyledHost
+        class="payment-method"
+        exportparts="label,text,color,font-family,text-danger,image"
+      >
         <div title="Pay with Plaid">
-          <div onClick={(event) => { event.preventDefault(); this.handleSelectionClick(); }}>Pay with Bank Account {plaidLogo} </div>
+          <div
+            part={label}
+            onClick={(event) => { event.preventDefault(); this.handleSelectionClick(); }}
+          >Pay with Bank Account {plaidLogo} </div>
           {renderErrorState()}
           {renderStatusState()}
         </div>
