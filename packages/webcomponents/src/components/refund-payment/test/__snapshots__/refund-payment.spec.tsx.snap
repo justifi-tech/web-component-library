@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`justifi-refund-payment renders RefundLoading while paymentLoading is true 1`] = `
-<justifi-refund-payment class="body" style="display: block;">
+<justifi-refund-payment class="body jfi-styled-host" style="display: block;">
   <template shadowrootmode="open">
     <style></style>
     <div class="gap-5 row">

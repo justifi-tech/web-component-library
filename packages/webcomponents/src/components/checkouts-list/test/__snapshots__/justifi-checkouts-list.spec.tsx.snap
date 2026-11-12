@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`justifi-checkouts-list table displays an error state on failed data fetch 1`] = `
-<justifi-checkouts-list class="body" style="display: block;">
+<justifi-checkouts-list class="body jfi-styled-host" style="display: block;">
   <template shadowrootmode="open">
     <style></style>
     <div class="table-wrapper" part="table-wrapper">
@@ -71,7 +71,7 @@ exports[`justifi-checkouts-list table displays an error state on failed data fet
 `;
 
 exports[`justifi-checkouts-list table renders properly with fetched data 1`] = `
-<justifi-checkouts-list class="body" style="display: block;">
+<justifi-checkouts-list class="body jfi-styled-host" style="display: block;">
   <template shadowrootmode="open">
     <style></style>
     <div class="table-wrapper" part="table-wrapper">

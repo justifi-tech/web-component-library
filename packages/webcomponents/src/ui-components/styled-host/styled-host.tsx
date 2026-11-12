@@ -4,7 +4,7 @@ import styledHostStyles from './styled-host.css';
 
 export const StyledHost: FunctionalComponent<HostAttributes> = (props, children) => {
   return (
-    <Host {...props} class="body" style={{ display: 'block' }}>
+    <Host {...props} class="body jfi-styled-host" style={{ display: 'block' }}>
       <style>{styledHostStyles}</style>
       {children}
     </Host>
