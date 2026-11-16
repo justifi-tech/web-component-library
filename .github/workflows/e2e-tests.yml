@@ -22,6 +22,14 @@ concurrency:
 
 jobs:
   e2e:
+    # Skipped on Dependabot PRs. GitHub does not expose repo or environment
+    # secrets to pull_request runs triggered by Dependabot, so CLIENT_ID and
+    # friends arrive empty, the examples container serves / but dies on the
+    # first authenticated route, and every test fails with
+    # ERR_CONNECTION_REFUSED. The run carries no signal, so don't spend a
+    # runner or leave a red X on every dependency bump.
+    if: github.event_name != 'pull_request' || github.event.pull_request.user.login != 'dependabot[bot]'
+
     # Pinned: ubuntu-latest moved to 26.04 on 2026-11-11 and Playwright
     # 1.58 refuses to install chromium there ("does not support chromium
     # on ubuntu26.04-x64"), which kills postinstall before any test runs.
