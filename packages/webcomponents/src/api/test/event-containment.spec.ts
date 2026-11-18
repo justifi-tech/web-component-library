@@ -5,11 +5,7 @@ const SRC = join(__dirname, '..', '..');
 
 /**
  * Which event names are merchant-facing contract and which are internal
- * plumbing. This classification lives here, in the only thing that consumes
- * it, rather than in a module under src/ — Stencil evaluates `@Event()`
- * statically, so a decorator can never import its name from a constant
- * anyway. The literals in the decorators are the source of truth; these two
- * lists are what keep them honest.
+ * plumbing.
  */
 
 /** The name IS the contract. Renaming one is a breaking change. */
@@ -70,7 +66,11 @@ const sourceFiles = (dir: string, out: string[] = []): string[] => {
       if (entry === 'test' || entry === '__snapshots__') continue;
       sourceFiles(full, out);
       // components.d.ts is generated build output, not source
-    } else if (/\.tsx?$/.test(entry) && !/\.spec\.tsx?$/.test(entry) && entry !== 'components.d.ts') {
+    } else if (
+      /\.tsx?$/.test(entry) &&
+      !/\.spec\.tsx?$/.test(entry) &&
+      entry !== 'components.d.ts'
+    ) {
       out.push(full);
     }
   }
@@ -109,7 +109,11 @@ describe('event containment', () => {
   it('declares every internal event with bubbles: false and composed: false', () => {
     const leaking = declarations
       .filter((d) => internalNames.has(d.name))
-      .filter((d) => !/bubbles:\s*false/.test(d.options) || !/composed:\s*false/.test(d.options))
+      .filter(
+        (d) =>
+          !/bubbles:\s*false/.test(d.options) ||
+          !/composed:\s*false/.test(d.options),
+      )
       .map((d) => `${d.file} -> ${d.name}`);
 
     expect(leaking).toEqual([]);
@@ -125,7 +129,11 @@ describe('event containment', () => {
   it('keeps every public event reachable from the host page', () => {
     const contained = declarations
       .filter((d) => publicNames.has(d.name))
-      .filter((d) => /bubbles:\s*false/.test(d.options) || /composed:\s*false/.test(d.options))
+      .filter(
+        (d) =>
+          /bubbles:\s*false/.test(d.options) ||
+          /composed:\s*false/.test(d.options),
+      )
       .map((d) => `${d.file} -> ${d.name}`);
 
     expect(contained).toEqual([]);
@@ -150,16 +158,24 @@ describe('event containment', () => {
   // bank-account-form listeners still waiting on 'iframeLoaded'.
   it('leaves no reference to a pre-rename internal event name', () => {
     const RENAMED = [
-      'formControlInput', 'formControlBlur', 'formLoading', 'formCompleted',
-      'ownerSubmitted', 'showEvent', 'hideEvent', 'checkboxChanged',
-      'fileSelected', 'iframeLoaded', 'selectedQuantityChange',
+      'formControlInput',
+      'formControlBlur',
+      'formLoading',
+      'formCompleted',
+      'ownerSubmitted',
+      'showEvent',
+      'hideEvent',
+      'checkboxChanged',
+      'fileSelected',
+      'iframeLoaded',
+      'selectedQuantityChange',
     ];
     const offenders: string[] = [];
     for (const f of sourceFiles(SRC)) {
       const src = readFileSync(f, 'utf8');
       for (const name of RENAMED) {
         // a quoted name is an event name; a bare identifier is the emitter property
-        if (new RegExp("['\"`]" + name + "['\"`]").test(src)) {
+        if (new RegExp('[\'"`]' + name + '[\'"`]').test(src)) {
           offenders.push(f.slice(SRC.length + 1) + " -> '" + name + "'");
         }
       }
