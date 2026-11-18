@@ -266,7 +266,7 @@ describe('justifi-payment-provisioning', () => {
 
     await page.waitForChanges();
 
-    page.root.dispatchEvent(new CustomEvent('formCompleted'));
+    page.rootInstance.handleFormCompleted();
 
     await page.waitForChanges();
 
@@ -306,7 +306,7 @@ describe('justifi-payment-provisioning', () => {
 
     await page.waitForChanges();
 
-    page.root.dispatchEvent(new CustomEvent('formCompleted'));
+    page.rootInstance.handleFormCompleted();
 
     await page.waitForChanges();
 
@@ -350,7 +350,7 @@ describe('justifi-payment-provisioning', () => {
 
     await page.waitForChanges();
 
-    page.root.dispatchEvent(new CustomEvent('formCompleted'));
+    page.rootInstance.handleFormCompleted();
 
     await page.waitForChanges();
 
@@ -595,15 +595,15 @@ describe('justifi-payment-provisioning', () => {
 
       await page.waitForChanges();
 
-      page.root.dispatchEvent(
-        new CustomEvent('formLoading', { detail: true, bubbles: false })
+      page.rootInstance.handleFormLoading(
+        new CustomEvent('form-loading', { detail: true })
       );
       await page.waitForChanges();
 
       expect(page.rootInstance.loading).toBe(true);
 
-      page.root.dispatchEvent(
-        new CustomEvent('formLoading', { detail: false, bubbles: false })
+      page.rootInstance.handleFormLoading(
+        new CustomEvent('form-loading', { detail: false })
       );
       await page.waitForChanges();
 
@@ -623,16 +623,16 @@ describe('justifi-payment-provisioning', () => {
 
       await page.waitForChanges();
 
-      page.root.dispatchEvent(
-        new CustomEvent('formLoading', { detail: true, bubbles: false })
+      page.rootInstance.handleFormLoading(
+        new CustomEvent('form-loading', { detail: true })
       );
       await page.waitForChanges();
 
       expect(page.rootInstance.loading).toBe(true);
       expect(page.rootInstance.formDisabled).toBe(true);
 
-      page.root.dispatchEvent(
-        new CustomEvent('formLoading', { detail: false, bubbles: false })
+      page.rootInstance.handleFormLoading(
+        new CustomEvent('form-loading', { detail: false })
       );
       await page.waitForChanges();
 

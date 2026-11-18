@@ -15,7 +15,8 @@ export class TerminalQuantitySelector {
 
   @State() selectedQuantity: number = 0;
 
-  @Event() selectedQuantityChange: EventEmitter<{ modelName: TerminalModelName, quantity: number }>;
+  @Event({ eventName: 'selected-quantity-change', bubbles: false, composed: false })
+  selectedQuantityChange: EventEmitter<{ modelName: TerminalModelName, quantity: number }>;
 
   private removeUnit = () => {
     if (this.selectedQuantity > 0) {

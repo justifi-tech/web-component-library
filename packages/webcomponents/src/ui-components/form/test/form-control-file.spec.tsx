@@ -74,7 +74,7 @@ describe('form-control-file', () => {
     });
 
     const inputEventSpy = jest.fn();
-    page.root.addEventListener('formControlInput', inputEventSpy);
+    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.value = 'govermnent-id.jpg';
@@ -103,7 +103,7 @@ describe('form-control-file', () => {
     });
 
     const blurEventSpy = jest.fn();
-    page.root.addEventListener('formControlBlur', blurEventSpy);
+    page.root.addEventListener('form-control-blur', blurEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.dispatchEvent(new Event('blur'));

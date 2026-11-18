@@ -33,8 +33,10 @@ export class FormControlRadio {
   @Prop() errorText?: string = '';
   @Prop() checked!: boolean;
 
-  @Event() formControlInput: EventEmitter<any>;
-  @Event() formControlBlur: EventEmitter<any>;
+  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
+  formControlInput: EventEmitter<any>;
+  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
+  formControlBlur: EventEmitter<any>;
 
   handleFormControlInput = (event: any) => {
     const target = event.target;

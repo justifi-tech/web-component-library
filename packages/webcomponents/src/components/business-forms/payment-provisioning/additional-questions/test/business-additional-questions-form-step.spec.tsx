@@ -297,7 +297,7 @@ describe('additional-questions-form-step', () => {
       });
 
       const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+      page.root.addEventListener('form-loading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
 
       const mockGet = jest.fn(({ onSuccess, final }) => {
         onSuccess({ data: { additional_questions: {} } });
@@ -327,7 +327,7 @@ describe('additional-questions-form-step', () => {
       await page.waitForChanges();
 
       const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+      page.root.addEventListener('form-loading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
 
       await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
       await page.waitForChanges();

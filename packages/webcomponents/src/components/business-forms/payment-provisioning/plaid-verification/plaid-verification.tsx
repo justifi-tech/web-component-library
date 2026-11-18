@@ -32,6 +32,10 @@ export class PlaidVerification {
   private abortController: AbortController | null = null;
   private timeoutId: NodeJS.Timeout | null = null;
 
+  // TODO: these two are almost certainly public API — real payloads, no
+  // in-library consumer for the error one — but they are undocumented. Left
+  // bubbling on purpose while the internal events were contained. Document
+  // them and give them `justifi-` names with the rest of the public set.
   @Event({ bubbles: true }) plaidVerificationSuccess: EventEmitter<{ publicToken: string, bankAccount: any }>;
   @Event({ bubbles: true }) plaidVerificationError: EventEmitter<PlaidError>;
 

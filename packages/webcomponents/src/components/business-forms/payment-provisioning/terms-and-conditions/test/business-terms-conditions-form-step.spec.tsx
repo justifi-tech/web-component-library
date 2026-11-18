@@ -77,7 +77,7 @@ describe('business-terms-conditions-form-step', () => {
       const onSuccess = jest.fn();
 
       page.root.addEventListener('complete-form-step-event', stepCompleteEvent);
-      page.root.addEventListener('formCompleted', formCompletedEvent);
+      page.root.addEventListener('form-completed', formCompletedEvent);
 
       await page.rootInstance.validateAndSubmit({ onSuccess });
       await page.waitForChanges();
@@ -109,7 +109,7 @@ describe('business-terms-conditions-form-step', () => {
       const onSuccess = jest.fn();
 
       page.root.addEventListener('complete-form-step-event', stepCompleteEvent);
-      page.root.addEventListener('formCompleted', formCompletedEvent);
+      page.root.addEventListener('form-completed', formCompletedEvent);
 
       await page.rootInstance.validateAndSubmit({ onSuccess });
       await page.waitForChanges();
@@ -218,7 +218,7 @@ describe('business-terms-conditions-form-step', () => {
       const formCompletedEvent = jest.fn();
       page.root.addEventListener('error-event', (e: CustomEvent) => errorEvent(e.detail));
       page.root.addEventListener('complete-form-step-event', stepCompleteEvent);
-      page.root.addEventListener('formCompleted', formCompletedEvent);
+      page.root.addEventListener('form-completed', formCompletedEvent);
 
       await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
       await page.waitForChanges();
@@ -255,7 +255,7 @@ describe('business-terms-conditions-form-step', () => {
       page.rootInstance.api = { get: mockGet, post: jest.fn() };
 
       const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+      page.root.addEventListener('form-loading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
 
       // @ts-ignore
       await page.rootInstance.fetchData();
@@ -272,7 +272,7 @@ describe('business-terms-conditions-form-step', () => {
       await page.waitForChanges();
 
       const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+      page.root.addEventListener('form-loading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
 
       await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
       await page.waitForChanges();

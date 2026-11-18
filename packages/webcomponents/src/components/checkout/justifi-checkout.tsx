@@ -57,6 +57,10 @@ export class JustifiCheckout {
   }
 
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  // TODO: nothing emits this. The docs promise it fires when the checkout form
+  // has finished loading — emit it there so the documented contract is true,
+  // and add the `justifi-checkout-loaded` name alongside it with the rest of
+  // the public-event rename.
   @Event({ eventName: 'loaded' }) loadedEvent: EventEmitter<ILoadedEventResponse>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 

@@ -436,8 +436,11 @@ describe('business-owners-form-step', () => {
       const { page } = await setupComponent([{ id: '' }]);
       const submittedOwner = { id: 'new_owner_123', name: 'New Owner' };
 
-      page.root.dispatchEvent(
-        new CustomEvent('ownerSubmitted', { detail: submittedOwner, bubbles: true })
+      // owner-submitted is contained, so it is delivered straight to the
+      // <owner-form> the step renders rather than bubbling up to the host.
+      const ownerForm = page.root.querySelector('owner-form');
+      ownerForm.dispatchEvent(
+        new CustomEvent('owner-submitted', { detail: submittedOwner })
       );
       await page.waitForChanges();
 
@@ -536,7 +539,7 @@ describe('business-owners-form-step', () => {
       });
 
       const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+      page.root.addEventListener('form-loading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
 
       const mockGet = jest.fn(({ onSuccess, final }) => {
         onSuccess({ data: { owners: [], representative: {} } });

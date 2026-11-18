@@ -112,7 +112,7 @@ describe('form-control-text', () => {
     });
 
     const inputEventSpy = jest.fn();
-    page.root.addEventListener('formControlInput', inputEventSpy);
+    page.root.addEventListener('form-control-input', inputEventSpy);
 
     await page.waitForChanges();
 
@@ -145,7 +145,7 @@ describe('form-control-text', () => {
         />
     });
     const inputEventSpy = jest.fn();
-    page.root.addEventListener('formControlInput', inputEventSpy);
+    page.root.addEventListener('form-control-input', inputEventSpy);
     await page.waitForChanges();
 
     // Act
@@ -189,7 +189,7 @@ describe('form-control-text', () => {
     });
 
     const blurEventSpy = jest.fn();
-    page.root.addEventListener('formControlBlur', blurEventSpy);
+    page.root.addEventListener('form-control-blur', blurEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.dispatchEvent(new Event('blur'));

@@ -123,7 +123,7 @@ export class BusinessRepresentative {
                 defaultValue={representativeDefaultValue?.dob_full}
                 errorText={this.errors.dob_full}
                 inputHandler={this.inputHandler}
-                onFormControlInput={this.onDateOfBirthUpdate}
+                onForm-control-input={this.onDateOfBirthUpdate}
               />
             </div>
             <div class="col-12 col-md-8">

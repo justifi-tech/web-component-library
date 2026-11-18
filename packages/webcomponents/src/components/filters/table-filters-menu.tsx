@@ -1,4 +1,4 @@
-import { Component, Listen, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Prop, State, Watch, h } from '@stencil/core';
 import { Button } from '../../ui-components/button';
 import { hasFilters } from './utils';
 import { dropdownMenu, dropdownMenuButton } from '../../styles/parts';
@@ -19,15 +19,13 @@ export class TableFiltersMenu {
     this.showClearButton = hasFilters(newValue);
   }
 
-  @Listen('showEvent')
-  show() {
+  show = () => {
     this.menu.classList.add('show');
-  }
+  };
 
-  @Listen('hideEvent')
-  hide() {
+  hide = () => {
     this.menu.classList.remove('show');
-  }
+  };
 
   componentWillLoad() {
     this.showClearButton = hasFilters(this.params);
@@ -52,6 +50,8 @@ export class TableFiltersMenu {
             strategy="fixed"
             anchorRef={this.anchorButton}
             trigger="click"
+            onPopper-show={this.show}
+            onPopper-hide={this.hide}
           >
             <form
               class="dropdown-menu"

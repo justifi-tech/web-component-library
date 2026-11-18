@@ -1,4 +1,4 @@
-import { Component, Listen, Prop, State, h } from '@stencil/core';
+import { Component, Prop, State, h } from '@stencil/core';
 import { tooltip, tooltipIcon, tooltipInner } from '../../../../styles/parts';
 
 @Component({
@@ -10,15 +10,13 @@ export class FormControlTooltip {
 
   @Prop() helpText!: string;
 
-  @Listen('showEvent')
-  show() {
+  show = () => {
     this.tooltip.classList.add('show');
-  }
+  };
 
-  @Listen('hideEvent')
-  hide() {
+  hide = () => {
     this.tooltip.classList.remove('show');
-  }
+  };
 
   render() {
     if (!this.helpText) {
@@ -44,6 +42,8 @@ export class FormControlTooltip {
           trigger="hover"
           placement="top"
           anchorRef={this.anchorIcon}
+          onPopper-show={this.show}
+          onPopper-hide={this.hide}
         >
           <div class="tooltip bs-tooltip-top" part={tooltip} role="tooltip" ref={(el) => (this.tooltip = el)}>
             <div class="tooltip-inner" part={tooltipInner}>

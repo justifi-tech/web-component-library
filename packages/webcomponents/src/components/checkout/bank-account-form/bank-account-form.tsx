@@ -161,14 +161,14 @@ export class BankAccountForm {
 
     const loaded = Promise.all(this.iframeElements.map((element) => (
       new Promise<void>((resolve) => {
-        // iframeLoaded is a once: true listener, so an element that already
+        // iframe-loaded is a once: true listener, so an element that already
         // loaded will never fire again on a re-watch.
         if (this.loadedInputIds.has(element.inputId)) {
           resolve();
           return;
         }
 
-        element.addEventListener('iframeLoaded', () => {
+        element.addEventListener('iframe-loaded', () => {
           this.loadedInputIds.add(element.inputId);
           pending.delete(element.inputId);
           resolve();

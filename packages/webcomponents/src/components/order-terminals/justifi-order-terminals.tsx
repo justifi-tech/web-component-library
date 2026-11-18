@@ -199,7 +199,7 @@ export class JustifiOrderTerminals {
               imageUrl={terminal.image_url}
               helpUrl={terminal.help_url}
               limit={this.orderLimit - this.order.totalQuantity}
-              onSelectedQuantityChange={this.onSelectedQuantityChange.bind(this)}
+              onSelected-quantity-change={this.onSelectedQuantityChange.bind(this)}
             />
           ))}
         </div>

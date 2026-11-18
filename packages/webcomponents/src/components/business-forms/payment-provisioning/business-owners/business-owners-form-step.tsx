@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Method, Watch } from '@stencil/core';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning-actions';
 import { BusinessService } from '../../../../api/services/business.service';
 import { ComponentErrorEvent, ComponentClickEvent, ComponentFormStepCompleteEvent, validateRequiredProps } from '../../../../api/ComponentEvents';
@@ -38,7 +38,8 @@ export class BusinessOwnersFormStep {
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event() formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
+  formLoading: EventEmitter<boolean>;
 
   get showAddOwnerButton() {
     return this.ownersPayload.length < 4 && !this.newFormOpen;
@@ -194,8 +195,7 @@ export class BusinessOwnersFormStep {
     this.manageRefs();
   }
 
-  @Listen('ownerSubmitted')
-  handleOwnerSubmit(event) {
+  handleOwnerSubmit = (event: CustomEvent) => {
     const submittedOwner = event.detail;
     const updatedOwners = this.ownersPayload.map(owner =>
       owner.id === submittedOwner.id ? submittedOwner : owner
@@ -207,7 +207,7 @@ export class BusinessOwnersFormStep {
       this.newFormOpen && (this.newFormOpen = false);
     }
     this.ownersPayload = updatedOwners;
-  }
+  };
 
   private handleRepresentativeIsOwnerChange = (value: boolean) => {
     this.representativeIsOwner = value;
@@ -290,6 +290,8 @@ export class BusinessOwnersFormStep {
                   country={this.country}
                   allowOptionalFields={this.allowOptionalFields}
                   ref={(ref) => this.matchRef(ref, owner.id)}
+                  onOwner-submitted={this.handleOwnerSubmit}
+                  onForm-loading={(e: CustomEvent<boolean>) => this.formLoading.emit(e.detail)}
                 />
               );
             })}

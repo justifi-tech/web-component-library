@@ -22,6 +22,7 @@ async function setupComponent(
     allowOptionalFields: boolean;
     country: CountryCode;
     handleFormLoading: (e: CustomEvent) => void;
+    handleFormCompleted: () => void;
   }> = {}
 ) {
   const refs: any[] = [];
@@ -36,6 +37,7 @@ async function setupComponent(
         allowOptionalFields={overrides.allowOptionalFields ?? false}
         country={overrides.country ?? CountryCode.USA}
         handleFormLoading={overrides.handleFormLoading ?? jest.fn()}
+        handleFormCompleted={overrides.handleFormCompleted ?? jest.fn()}
       />
     ),
   });
@@ -127,11 +129,32 @@ describe('payment-provisioning-form-steps', () => {
       expect(child?.getAttribute('country')).toBeNull();
     });
 
-    it('does NOT pass onFormLoading to steps 0-5', async () => {
-      const handleFormLoading = jest.fn();
-      const { page } = await setupComponent(0, { handleFormLoading });
-      const child = page.root.querySelector('business-core-info-form-step');
-      expect((child as any).onFormLoading).toBeUndefined();
+    // form-loading is emitted with bubbles: false, so it cannot reach
+    // justifi-payment-provisioning on its own. Every step has to be wired
+    // directly or its loading state is silently lost.
+    it.each(STEP_TAGS.map((tag, i) => [tag, i] as const))(
+      'delivers form-loading from %s (step %i) to the handler',
+      async (tag, step) => {
+        const handleFormLoading = jest.fn();
+        const { page } = await setupComponent(step, { handleFormLoading });
+        const child = page.root.querySelector(tag);
+
+        child.dispatchEvent(new CustomEvent('form-loading', { detail: true }));
+
+        expect(handleFormLoading).toHaveBeenCalledWith(
+          expect.objectContaining({ detail: true })
+        );
+      }
+    );
+
+    it('delivers form-completed from the terms step to the handler', async () => {
+      const handleFormCompleted = jest.fn();
+      const { page } = await setupComponent(7, { handleFormCompleted });
+      const child = page.root.querySelector('business-terms-conditions-form-step');
+
+      child.dispatchEvent(new CustomEvent('form-completed'));
+
+      expect(handleFormCompleted).toHaveBeenCalled();
     });
   });
 

@@ -96,7 +96,7 @@ export class CardForm {
 
     const loaded = Promise.all(this.iframeElements.map((element) => (
       new Promise<void>((resolve) => {
-        element.addEventListener('iframeLoaded', () => {
+        element.addEventListener('iframe-loaded', () => {
           pending.delete(element.inputId);
           resolve();
         }, { once: true, signal });

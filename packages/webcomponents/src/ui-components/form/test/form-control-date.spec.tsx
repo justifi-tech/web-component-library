@@ -103,7 +103,7 @@ describe('form-control-date', () => {
     });
 
     const inputEventSpy = jest.fn();
-    page.win.addEventListener('formControlInput', inputEventSpy);
+    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.value = '2000-01-01';
@@ -130,7 +130,7 @@ describe('form-control-date', () => {
     });
 
     const blurEventSpy = jest.fn();
-    page.win.addEventListener('formControlBlur', blurEventSpy);
+    page.root.addEventListener('form-control-blur', blurEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
