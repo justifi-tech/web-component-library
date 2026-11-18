@@ -5,20 +5,7 @@ const SRC = join(__dirname, '..', '..');
 
 /**
  * Which event names are merchant-facing contract and which are internal
- * plumbing. This classification lives here, in the only thing that consumes
- * it, rather than in a module under src/ — Stencil evaluates `@Event()`
- * statically, so a decorator can never import its name from a constant
- * anyway. The literals in the decorators are the source of truth; these two
- * lists are what keep them honest.
- */
-
-/**
- * Which event names are merchant-facing contract and which are internal
- * plumbing. This classification lives here, in the only thing that consumes
- * it, rather than in a module under src/ — Stencil evaluates `@Event()`
- * statically, so a decorator can never import its name from a constant
- * anyway. The literals in the decorators are the source of truth; these
- * lists are what keep them honest.
+ * plumbing.
  */
 
 /**
