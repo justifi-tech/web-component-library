@@ -1,8 +1,67 @@
 import { readdirSync, readFileSync, statSync } from 'fs';
 import { join } from 'path';
-import { INTERNAL_EVENTS, PUBLIC_EVENTS } from '../event-names';
 
 const SRC = join(__dirname, '..', '..');
+
+/**
+ * Which event names are merchant-facing contract and which are internal
+ * plumbing. This classification lives here, in the only thing that consumes
+ * it, rather than in a module under src/ — Stencil evaluates `@Event()`
+ * statically, so a decorator can never import its name from a constant
+ * anyway. The literals in the decorators are the source of truth; these two
+ * lists are what keep them honest.
+ */
+
+/** The name IS the contract. Renaming one is a breaking change. */
+const PUBLIC_EVENTS = [
+  'error-event',
+  'click-event',
+  'submit-event',
+  'complete-form-step-event',
+  'record-click-event',
+  'checkout-changed',
+  'loaded',
+  'checkout-completed',
+  'checkout-expired',
+  'insurance-updated',
+  'paymentMethodOptionSelected',
+  'plaidError',
+  'plaidErrorRecovered',
+  'plaidVerificationSuccess',
+  'plaidVerificationError',
+  'applePayStarted',
+  'applePayCompleted',
+  'applePayCancelled',
+  'applePayError',
+  'googlePayStarted',
+  'googlePayCompleted',
+  'googlePayCancelled',
+  'paypalStarted',
+  'paypalCompleted',
+  'paypalCancelled',
+  'paypalError',
+];
+
+/**
+ * Component-to-component plumbing. Contained (`bubbles: false, composed:
+ * false`), never reaches the merchant's page, free to rename. Consume one by
+ * listening on the emitting element — a JSX `onX` prop or `addEventListener`
+ * on a ref. Never `@Listen`, which binds to the host and needs bubbling.
+ */
+const INTERNAL_EVENTS = [
+  'form-control-input',
+  'form-control-blur',
+  'form-loading',
+  'form-completed',
+  'owner-submitted',
+  'popper-show',
+  'popper-hide',
+  'radio-click',
+  'checkbox-changed',
+  'file-selected',
+  'iframe-loaded',
+  'selected-quantity-change',
+];
 
 const sourceFiles = (dir: string, out: string[] = []): string[] => {
   for (const entry of readdirSync(dir)) {
@@ -39,8 +98,8 @@ const declarations = (() => {
   return found;
 })();
 
-const internalNames = new Set<string>(Object.values(INTERNAL_EVENTS));
-const publicNames = new Set<string>(Object.values(PUBLIC_EVENTS));
+const internalNames = new Set<string>(INTERNAL_EVENTS);
+const publicNames = new Set<string>(PUBLIC_EVENTS);
 
 describe('event containment', () => {
   it('finds the @Event declarations (guards against a broken scan)', () => {
@@ -105,16 +164,6 @@ describe('event containment', () => {
         }
       }
     }
-    expect(offenders).toEqual([]);
-  });
-
-  it('never references INTERNAL_EVENTS inside an @Event decorator', () => {
-    const offenders = sourceFiles(SRC)
-      .map((f) => f.slice(SRC.length + 1))
-      // the registry spells the mistake out in its own doc comment
-      .filter((f) => f !== join('api', 'event-names.ts'))
-      .filter((f) => /@Event\([^)]*INTERNAL_EVENTS\./.test(readFileSync(join(SRC, f), 'utf8')));
-
     expect(offenders).toEqual([]);
   });
 });

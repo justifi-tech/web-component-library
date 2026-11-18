@@ -1,7 +1,6 @@
 import { ComponentInterface } from '@stencil/core';
 import webcomponentsPackageJson from '../../package.json';
 import { AnalyticsService } from './services/analytics.service';
-import { PUBLIC_EVENTS } from './event-names';
 
 interface iBasicData {
   resource_id: string;
@@ -69,7 +68,7 @@ class JustifiAnalytics {
   };
 
   private trackCustomEvents() {
-    this.eventEmitters = [PUBLIC_EVENTS.SUBMIT, PUBLIC_EVENTS.ERROR];
+    this.eventEmitters = ['submit-event', 'error-event'];
 
     // for each event, add an event listener
     this.eventEmitters.forEach((eventName) => {
@@ -80,7 +79,7 @@ class JustifiAnalytics {
             event_type: eventName,
             data: {
               ...this.basicData,
-              ...(eventName === PUBLIC_EVENTS.ERROR && { error: event.detail }),
+              ...(eventName === 'error-event' && { error: event.detail }),
             },
           });
 

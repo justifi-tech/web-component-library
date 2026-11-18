@@ -2,7 +2,6 @@ import { newSpecPage } from '@stencil/core/testing';
 import { FormControlText } from '../../ui-components/form/form-control-text';
 import { CustomPopper } from '../../ui-components/custom-popper/custom-popper';
 import { RadioListItem } from '../../ui-components/radio-list-item';
-import { INTERNAL_EVENTS } from '../event-names';
 
 /**
  * The source scan in event-containment.spec.ts proves the decorators are
@@ -15,21 +14,21 @@ const cases = [
     component: FormControlText,
     html: '<form-control-text label="Email" name="email"></form-control-text>',
     emitter: 'formControlInput',
-    eventName: INTERNAL_EVENTS.FORM_CONTROL_INPUT,
+    eventName: 'form-control-input',
   },
   {
     label: 'custom-popper (light DOM)',
     component: CustomPopper,
     html: '<custom-popper></custom-popper>',
     emitter: 'showEvent',
-    eventName: INTERNAL_EVENTS.POPPER_SHOW,
+    eventName: 'popper-show',
   },
   {
     label: 'radio-list-item (light DOM, re-emitted through a shadow wrapper)',
     component: RadioListItem,
     html: '<radio-list-item name="pm" value="card"></radio-list-item>',
     emitter: 'radioClick',
-    eventName: INTERNAL_EVENTS.RADIO_CLICK,
+    eventName: 'radio-click',
   },
 ] as const;
 

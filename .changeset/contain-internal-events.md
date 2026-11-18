@@ -14,8 +14,6 @@ Those events are now declared `bubbles: false, composed: false` and renamed to
 kebab-case: `formControlInput` → `form-control-input`, `formLoading` →
 `form-loading`, `showEvent`/`hideEvent` → `popper-show`/`popper-hide`, and so on.
 Each one is delivered straight to the element that needs it instead of bubbling.
-A new `api/event-names.ts` is the single list of every event name the library
-emits, and `Analytics` reads from it rather than its own hardcoded copy.
 
 **No documented event changed.** `error-event`, `click-event`, `submit-event`,
 `complete-form-step-event`, `record-click-event`, `checkout-changed`, the Plaid
