@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Listen, Element } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Method, Watch, Element } from '@stencil/core';
 import { StyledHost } from '../../ui-components';
 import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import JustifiAnalytics from '../../api/Analytics';
@@ -111,11 +111,10 @@ export class JustifiTokenizePaymentMethod {
     this.analytics = new JustifiAnalytics(this);
   }
 
-  @Listen('radio-click')
-  handleRadioClick(event: CustomEvent<string>) {
+  handleRadioClick = (event: CustomEvent<string>) => {
     this.selectedPaymentMethod = event.detail as PAYMENT_METHODS;
     checkoutStore.selectedPaymentMethod = { type: event.detail as PAYMENT_METHODS };
-  }
+  };
 
   @Method()
   async tokenizePaymentMethod(event?: MouseEvent): Promise<PaymentMethodPayload> {
@@ -376,6 +375,7 @@ export class JustifiTokenizePaymentMethod {
           checked={isSelected}
           label={PAYMENT_METHOD_TYPE_LABELS[paymentMethodType]}
           hidden={this.shouldHideRadioInput}
+          onRadio-click={this.handleRadioClick}
         />
         {isSelected && this.renderSelectedPaymentMethodForm(paymentMethodType)}
       </div>

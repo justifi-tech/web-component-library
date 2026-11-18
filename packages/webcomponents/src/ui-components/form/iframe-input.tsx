@@ -17,7 +17,8 @@ export class IframeInput {
 
   @Element() el: HTMLElement;
 
-  @Event() iframeLoaded: EventEmitter<void>;
+  @Event({ eventName: 'iframe-loaded', bubbles: false, composed: false })
+  iframeLoaded: EventEmitter<void>;
 
   @State() isFocused: boolean = false;
   @State() isValid: boolean = true;

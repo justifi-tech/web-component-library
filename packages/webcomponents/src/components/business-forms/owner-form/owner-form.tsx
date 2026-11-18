@@ -40,8 +40,10 @@ export class OwnerForm {
 
   @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event() formLoading: EventEmitter<boolean>;
-  @Event({ bubbles: true }) ownerSubmitted: EventEmitter<any>;
+  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
+  formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'owner-submitted', bubbles: false, composed: false })
+  ownerSubmitted: EventEmitter<any>;
 
   constructor() {
     this.validate = this.validate.bind(this);

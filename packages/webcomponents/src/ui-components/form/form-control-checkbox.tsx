@@ -26,8 +26,10 @@ export class FormControlCheckbox {
   @Prop() inputHandler?: (name: string, value: boolean) => void = () => { };
   @Prop() disabled?: boolean = false;
 
-  @Event() formControlInput: EventEmitter<any>;
-  @Event() formControlBlur: EventEmitter<any>;
+  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
+  formControlInput: EventEmitter<any>;
+  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
+  formControlBlur: EventEmitter<any>;
 
   handleFormControlInput = (event: any) => {
     event.preventDefault();

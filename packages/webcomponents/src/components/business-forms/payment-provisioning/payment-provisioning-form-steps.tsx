@@ -12,6 +12,7 @@ export class PaymentProvisioningFormSteps {
   @Prop() allowOptionalFields?: boolean = false;
   @Prop() country?: CountryCode = CountryCode.USA;
   @Prop() handleFormLoading!: (e: CustomEvent) => void
+  @Prop() handleFormCompleted!: () => void
 
   get currentStepComponent() {
     return this.componentStepMapping[this.currentStep]();
@@ -22,6 +23,7 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[0] = el}
+      onForm-loading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
@@ -29,6 +31,7 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[1] = el}
+      onForm-loading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
@@ -36,12 +39,14 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[2] = el}
+      onForm-loading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
     />,
     3: () => <business-representative-form-step
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[3] = el}
+      onForm-loading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
@@ -49,6 +54,7 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[4] = el}
+      onForm-loading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
@@ -56,6 +62,7 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[5] = el}
+      onForm-loading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
@@ -63,6 +70,7 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[6] = el}
+      onForm-loading={this.handleFormLoading}
       allowOptionalFields={this.allowOptionalFields}
       country={this.country}
     />,
@@ -70,7 +78,8 @@ export class PaymentProvisioningFormSteps {
       businessId={this.businessId}
       authToken={this.authToken}
       ref={(el) => this.refs[7] = el}
-      onFormLoading={this.handleFormLoading}
+      onForm-loading={this.handleFormLoading}
+      onForm-completed={this.handleFormCompleted}
       allowOptionalFields={this.allowOptionalFields}
     />,
   };

@@ -431,7 +431,7 @@ describe('tokenize-payment-method', () => {
     expect(shadowRoot.querySelector('card-form')).toBeTruthy();
     expect(shadowRoot.querySelector('bank-account-form')).toBeFalsy();
 
-    page.root?.dispatchEvent(new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_BANK_ACCOUNT, bubbles: true }));
+    shadowRoot.querySelector('radio-list-item')?.dispatchEvent(new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_BANK_ACCOUNT }));
     await page.waitForChanges();
 
     shadowRoot = (page.root as HTMLElement).shadowRoot!;

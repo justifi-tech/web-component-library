@@ -13,8 +13,10 @@ export class CustomPopper {
 
   @State() isOpen: boolean = false;
 
-  @Event() showEvent: EventEmitter;
-  @Event() hideEvent: EventEmitter;
+  @Event({ eventName: 'popper-show', bubbles: false, composed: false })
+  showEvent: EventEmitter;
+  @Event({ eventName: 'popper-hide', bubbles: false, composed: false })
+  hideEvent: EventEmitter;
 
   private popperInstance: any;
   private popperContentRef: HTMLElement;

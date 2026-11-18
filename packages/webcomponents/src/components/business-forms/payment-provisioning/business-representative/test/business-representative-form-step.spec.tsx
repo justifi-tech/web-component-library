@@ -308,7 +308,7 @@ describe('business-representative-form-step', () => {
       });
 
       const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+      page.root.addEventListener('form-loading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
 
       const mockGet = jest.fn(({ onSuccess, final }) => {
         onSuccess({ data: { representative: {} } });
@@ -339,7 +339,7 @@ describe('business-representative-form-step', () => {
       await page.waitForChanges();
 
       const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('formLoading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+      page.root.addEventListener('form-loading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
 
       await page.rootInstance.validateAndSubmit({ onSuccess: jest.fn() });
       await page.waitForChanges();

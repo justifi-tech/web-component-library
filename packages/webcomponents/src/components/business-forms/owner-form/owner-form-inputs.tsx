@@ -76,7 +76,7 @@ export class OwnerFormInputs {
             defaultValue={this.ownerDefaultValue.dob_full}
             errorText={this.errors.dob_full}
             inputHandler={this.inputHandler}
-            onFormControlInput={(e) => updateDateOfBirthFormValues(e, this.formController)}
+            onForm-control-input={(e) => updateDateOfBirthFormValues(e, this.formController)}
             helpText="Must be 18 or older."
           />
         </div>

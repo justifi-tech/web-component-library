@@ -13,7 +13,7 @@ export class JustifiRadioListItem {
   @Prop() hidden?: boolean = false;
   @Prop() class?: string;
 
-  @Event({ eventName: 'radio-click' }) radioClick: EventEmitter<string>;
+  @Event({ eventName: 'radio-click', bubbles: false, composed: false }) radioClick: EventEmitter<string>;
 
   render() {
     return (
