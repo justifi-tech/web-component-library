@@ -35,6 +35,7 @@ import { PaymentProvisioningLoading } from './payment-provisioning-loading';
 import { PaymentProvisioningAlreadyProvisioned } from './payment-provisioning-already-provisioned';
 import { PaymentProvisioningSubmissionComplete } from './payment-provisioning-submission-complete';
 import { PaymentProvisioningSubmissionFailed } from './payment-provisioning-submission-failed';
+import { emitPublic } from '../../../api/emit-public';
 
 @Component({
   tag: 'justifi-payment-provisioning',
@@ -61,9 +62,15 @@ export class JustifiPaymentProvisioning {
     this.initializeApi();
   }
 
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'justifi-click' }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event' }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-submit' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event' }) submitEventLegacy: EventEmitter<ComponentSubmitEvent>;
 
   // Passed down as props rather than caught with @Listen: the form steps emit
   // these with bubbles: false so they never reach the merchant's page.
@@ -98,7 +105,7 @@ export class JustifiPaymentProvisioning {
 
   private initializeApi() {
     if (!this.authToken || !this.businessId) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'auth-token and business-id are required',
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
@@ -107,7 +114,7 @@ export class JustifiPaymentProvisioning {
     }
 
     if (isTokenExpired(this.authToken)) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'auth-token is expired',
         errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
         severity: ComponentErrorSeverity.ERROR,
@@ -136,7 +143,7 @@ export class JustifiPaymentProvisioning {
           this.businessProvisioned = checkProvisioningStatus(business);
           this.country = business.country_of_establishment;
           if (this.businessProvisioned) {
-            this.errorEvent.emit({
+            emitPublic(this.errorEvent, this.errorEventLegacy, {
               message:
                 'A request to provision payments for this business has already been submitted.',
               errorCode: ComponentErrorCodes.PROVISIONING_REQUESTED,
@@ -147,7 +154,7 @@ export class JustifiPaymentProvisioning {
           resolve();
         },
         onError: ({ error, code, severity }) => {
-          this.errorEvent.emit({
+          emitPublic(this.errorEvent, this.errorEventLegacy, {
             message: error,
             errorCode: code,
             severity: severity,
@@ -163,12 +170,12 @@ export class JustifiPaymentProvisioning {
     this.postProvisioning({
       onSuccess: (response) => {
         this.formSubmitted = true;
-        this.submitEvent.emit({ response: response });
+        emitPublic(this.submitEvent, this.submitEventLegacy, { response: response });
       },
       onError: ({ error, code, severity }) => {
         this.submissionFailed = true;
-        this.submitEvent.emit({ response: { error } });
-        this.errorEvent.emit({
+        emitPublic(this.submitEvent, this.submitEventLegacy, { response: { error } });
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity,
@@ -202,13 +209,13 @@ export class JustifiPaymentProvisioning {
   };
 
   previousStepButtonOnClick = () => {
-    this.clickEvent.emit({ name: BusinessFormClickActions.previousStep });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: BusinessFormClickActions.previousStep });
     this.decrementSteps();
   };
 
   nextStepButtonOnClick = (e: any, clickEventName) => {
     e.preventDefault();
-    this.clickEvent.emit({ name: clickEventName });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: clickEventName });
     const currentStep = this.refs[this.currentStep];
     currentStep.validateAndSubmit({ onSuccess: this.incrementSteps });
   };

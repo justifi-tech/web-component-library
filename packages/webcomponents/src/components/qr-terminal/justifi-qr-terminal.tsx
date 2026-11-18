@@ -6,6 +6,7 @@ import { ComponentErrorCodes, ComponentErrorMessages, ComponentErrorSeverity } f
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import JustifiAnalytics from '../../api/Analytics';
 import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
+import { emitPublic } from '../../api/emit-public';
 
 type TerminalState = 'loading' | 'ready' | 'payment-failed' | 'completed' | 'expired' | 'error';
 
@@ -22,9 +23,15 @@ export class JustifiQrTerminal {
   @State() paymentStatus: string = '';
   @State() errorMessage: string = '';
 
-  @Event({ eventName: 'checkout-completed' }) checkoutCompleted: EventEmitter<{ checkoutId: string; paymentStatus: string }>;
-  @Event({ eventName: 'checkout-expired' }) checkoutExpired: EventEmitter<{ checkoutId: string }>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-checkout-completed' }) checkoutCompleted: EventEmitter<{ checkoutId: string; paymentStatus: string }>;
+  /** @deprecated Listen for `justifi-checkout-completed`. Removed in the next major. */
+  @Event({ eventName: 'checkout-completed' }) checkoutCompletedLegacy: EventEmitter<{ checkoutId: string; paymentStatus: string }>;
+  @Event({ eventName: 'justifi-checkout-expired' }) checkoutExpired: EventEmitter<{ checkoutId: string }>;
+  /** @deprecated Listen for `justifi-checkout-expired`. Removed in the next major. */
+  @Event({ eventName: 'checkout-expired' }) checkoutExpiredLegacy: EventEmitter<{ checkoutId: string }>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -53,9 +60,16 @@ export class JustifiQrTerminal {
     this.initialize();
   }
 
-  @Listen('error-event')
+  // Both names have to be suppressed, or the inner component's error reaches
+  // the merchant under whichever one is left unhandled.
+  @Listen('justifi-error')
   suppressInnerErrors(event: CustomEvent) {
-    // Suppress error-event bubbling from inner justifi-checkout-qr-code
+    // Suppress error bubbling from inner justifi-checkout-qr-code
+    event.stopPropagation();
+  }
+
+  @Listen('error-event')
+  suppressInnerLegacyErrors(event: CustomEvent) {
     event.stopPropagation();
   }
 
@@ -65,7 +79,7 @@ export class JustifiQrTerminal {
 
   private initialize() {
     if (!this.authToken || !this.checkoutId) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'authToken and checkoutId are required',
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
@@ -85,7 +99,7 @@ export class JustifiQrTerminal {
       onError: ({ error, code, severity }: { error: string; code: ComponentErrorCodes; severity: ComponentErrorSeverity }) => {
         this.terminalState = 'error';
         this.errorMessage = error;
-        this.errorEvent.emit({ message: error, errorCode: code, severity });
+        emitPublic(this.errorEvent, this.errorEventLegacy, { message: error, errorCode: code, severity });
       },
     });
   }
@@ -94,8 +108,8 @@ export class JustifiQrTerminal {
     switch (checkout.status) {
       case ICheckoutStatus.expired:
         this.terminalState = 'expired';
-        this.checkoutExpired.emit({ checkoutId: this.checkoutId });
-        this.errorEvent.emit({
+        emitPublic(this.checkoutExpired, this.checkoutExpiredLegacy, { checkoutId: this.checkoutId });
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: ComponentErrorMessages.CHECKOUT_EXPIRED,
           errorCode: ComponentErrorCodes.CHECKOUT_EXPIRED,
           severity: ComponentErrorSeverity.ERROR,
@@ -105,7 +119,7 @@ export class JustifiQrTerminal {
       case ICheckoutStatus.completed:
         this.terminalState = 'completed';
         this.paymentStatus = this.resolvePaymentStatus(checkout);
-        this.checkoutCompleted.emit({ checkoutId: this.checkoutId, paymentStatus: this.paymentStatus });
+        emitPublic(this.checkoutCompleted, this.checkoutCompletedLegacy, { checkoutId: this.checkoutId, paymentStatus: this.paymentStatus });
         break;
 
       default:
@@ -121,7 +135,7 @@ export class JustifiQrTerminal {
       this.stopAll();
       this.terminalState = 'error';
       this.errorMessage = 'Checkout polling timed out';
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'Checkout polling timed out',
         errorCode: ComponentErrorCodes.FETCH_ERROR,
         severity: ComponentErrorSeverity.ERROR,
@@ -145,7 +159,7 @@ export class JustifiQrTerminal {
         this.stopAll();
         this.terminalState = 'error';
         this.errorMessage = error;
-        this.errorEvent.emit({ message: error, errorCode: code, severity });
+        emitPublic(this.errorEvent, this.errorEventLegacy, { message: error, errorCode: code, severity });
       },
     });
   }
@@ -170,15 +184,15 @@ export class JustifiQrTerminal {
       this.stopAll();
       this.terminalState = 'completed';
       this.paymentStatus = this.resolvePaymentStatus(checkout);
-      this.checkoutCompleted.emit({ checkoutId: this.checkoutId, paymentStatus: this.paymentStatus });
+      emitPublic(this.checkoutCompleted, this.checkoutCompletedLegacy, { checkoutId: this.checkoutId, paymentStatus: this.paymentStatus });
       return;
     }
 
     if (checkout.status === ICheckoutStatus.expired) {
       this.stopAll();
       this.terminalState = 'expired';
-      this.checkoutExpired.emit({ checkoutId: this.checkoutId });
-      this.errorEvent.emit({
+      emitPublic(this.checkoutExpired, this.checkoutExpiredLegacy, { checkoutId: this.checkoutId });
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: ComponentErrorMessages.CHECKOUT_EXPIRED,
         errorCode: ComponentErrorCodes.CHECKOUT_EXPIRED,
         severity: ComponentErrorSeverity.ERROR,

@@ -17,6 +17,7 @@ import {
   paypalScriptUrl,
   VENMO_SUPPORTED_CURRENCY,
 } from './paypal';
+import { emitPublic } from '../../../../api/emit-public';
 
 const SHOWN_CLASS = 'shown';
 
@@ -44,18 +45,34 @@ export class JustifiPaypal {
   private paypalButtonEl?: HTMLElement;
   private venmoButtonEl?: HTMLElement;
 
-  @Event() paypalStarted!: EventEmitter<{
+  @Event({ eventName: 'justifi-paypal-started' }) paypalStarted!: EventEmitter<{
     fundingSource: PaypalFundingSource;
   }>;
-  @Event() paypalCompleted!: EventEmitter<{
+  /** @deprecated Listen for `justifi-paypal-started`. Removed in the next major. */
+  @Event({ eventName: 'paypalStarted' }) paypalStartedLegacy!: EventEmitter<{
+    fundingSource: PaypalFundingSource;
+  }>;
+  @Event({ eventName: 'justifi-paypal-completed' }) paypalCompleted!: EventEmitter<{
     success: boolean;
     paymentMethodId?: string;
     fundingSource: PaypalFundingSource;
   }>;
-  @Event() paypalCancelled!: EventEmitter<{
+  /** @deprecated Listen for `justifi-paypal-completed`. Removed in the next major. */
+  @Event({ eventName: 'paypalCompleted' }) paypalCompletedLegacy!: EventEmitter<{
+    success: boolean;
+    paymentMethodId?: string;
     fundingSource: PaypalFundingSource;
   }>;
-  @Event() paypalError!: EventEmitter<{ error: string; code: string }>;
+  @Event({ eventName: 'justifi-paypal-cancelled' }) paypalCancelled!: EventEmitter<{
+    fundingSource: PaypalFundingSource;
+  }>;
+  /** @deprecated Listen for `justifi-paypal-cancelled`. Removed in the next major. */
+  @Event({ eventName: 'paypalCancelled' }) paypalCancelledLegacy!: EventEmitter<{
+    fundingSource: PaypalFundingSource;
+  }>;
+  @Event({ eventName: 'justifi-paypal-error' }) paypalError!: EventEmitter<{ error: string; code: string }>;
+  /** @deprecated Listen for `justifi-paypal-error`. Removed in the next major. */
+  @Event({ eventName: 'paypalError' }) paypalErrorLegacy!: EventEmitter<{ error: string; code: string }>;
 
   componentDidLoad() {
     if (checkoutStore.checkoutLoaded) {
@@ -97,7 +114,7 @@ export class JustifiPaypal {
   }
 
   private emitError(error: string, code: PaypalErrorCodeType) {
-    this.paypalError.emit({ error, code });
+    emitPublic(this.paypalError, this.paypalErrorLegacy, { error, code });
   }
 
   // The script tag is the dedup token, so a second instance (or a remount)
@@ -195,12 +212,12 @@ export class JustifiPaypal {
   private sessionOptions(fundingSource: PaypalFundingSource) {
     return {
       onApprove: () =>
-        this.paypalCompleted.emit({
+        emitPublic(this.paypalCompleted, this.paypalCompletedLegacy, {
           success: true,
           paymentMethodId: this.pendingOrderId,
           fundingSource,
         }),
-      onCancel: () => this.paypalCancelled.emit({ fundingSource }),
+      onCancel: () => emitPublic(this.paypalCancelled, this.paypalCancelledLegacy, { fundingSource }),
       onError: (error: any) =>
         this.emitError(
           error?.message || 'Paypal payment failed',
@@ -242,7 +259,7 @@ export class JustifiPaypal {
     if (!session) return;
 
     this.pendingOrderId = undefined;
-    this.paypalStarted.emit({ fundingSource });
+    emitPublic(this.paypalStarted, this.paypalStartedLegacy, { fundingSource });
 
     let orderFailed = false;
 

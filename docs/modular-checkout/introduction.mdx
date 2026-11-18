@@ -130,8 +130,8 @@ To finalize the checkout process, include a submit button that calls the `submit
 - handles validation, form submission and payment method tokenization
 - optionally accepts a `billingInformation` object (useful when not using a billing component)
 - executes `preCompleteHook` (if provided) after validation and tokenization (including Plaid exchange) and before checkout completion
-- emits a `submit-event` when the submission is successful
-- returns a promise (`Promise<void>`) and you should listen for `submit-event` to handle completion
+- emits a `justifi-submit` when the submission is successful
+- returns a promise (`Promise<void>`) and you should listen for `justifi-submit` to handle completion
 
 > If you passed a `payment_method_group_id` to the [create checkout API](https://docs.justifi.tech/api-spec#tag/Checkouts/operation/CreateCheckout) and you want to give the user the option to save a newly entered payment method to that payment method group for future use, set the `savePaymentMethod` prop to true on the `justifi-modular-checkout`. This will automatically save the payment method to that payment method group after successful checkout.
 
@@ -143,9 +143,14 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 ### Events
 
-- **`error-event`**: Emitted when validation fails or an error occurs. Detail shape: `{ message: string; errorCode: string; severity?: 'info' | 'warning' | 'error' }`. When the error originates from `justifi-apple-pay`, `errorCode` will be prefixed with `APPLE_PAY_` (e.g. `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_PAYMENT_FAILED`).
-- **`submit-event`**: Emitted when checkout completes successfully. Detail shape: `{ checkout: any; message: string }`.
-- **`checkout-changed`**: Emitted when checkout state changes. Detail shape: `{ availablePaymentMethodTypes: PAYMENT_METHODS[]; selectedPaymentMethod: { id?: string; type: PAYMENT_METHODS }; savedPaymentMethods: SavedPaymentMethod[] }`.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- **`justifi-error`**: Emitted when validation fails or an error occurs. Detail shape: `{ message: string; errorCode: string; severity?: 'info' | 'warning' | 'error' }`. When the error originates from `justifi-apple-pay`, `errorCode` will be prefixed with `APPLE_PAY_` (e.g. `APPLE_PAY_NOT_SUPPORTED`, `APPLE_PAY_PAYMENT_FAILED`).
+- **`justifi-submit`**: Emitted when checkout completes successfully. Detail shape: `{ checkout: any; message: string }`.
+- **`justifi-checkout-changed`**: Emitted when checkout state changes. Detail shape: `{ availablePaymentMethodTypes: PAYMENT_METHODS[]; selectedPaymentMethod: { id?: string; type: PAYMENT_METHODS }; savedPaymentMethods: SavedPaymentMethod[] }`.
 
 ### Public methods
 
@@ -219,7 +224,7 @@ You can also trigger validation manually by calling the `validate` method on the
 
 You can programmatically set the selected payment method by calling the `setSelectedPaymentMethod` method on the `justifi-modular-checkout` wrapper component. This method accepts either a saved payment method object or an object with a `type` field.
 
-> Important: The wrapper does not automatically select a default payment method. If you want a default to be selected (for example, the first saved method or a new card), explicitly call `setSelectedPaymentMethod` after initialization (e.g., on the first `checkout-changed` event).
+> Important: The wrapper does not automatically select a default payment method. If you want a default to be selected (for example, the first saved method or a new card), explicitly call `setSelectedPaymentMethod` after initialization (e.g., on the first `justifi-checkout-changed` event).
 
 ```javascript
 import { PAYMENT_METHODS } from '@justifi/webcomponents';
@@ -243,11 +248,11 @@ modularCheckout.setSelectedPaymentMethod({
 
 ## Checkout Changed Event
 
-The `justifi-modular-checkout` wrapper component emits a `checkout-changed` event whenever any internal checkout state changes. The event detail includes `availablePaymentMethodTypes`, `selectedPaymentMethod`, and `savedPaymentMethods`.
+The `justifi-modular-checkout` wrapper component emits a `justifi-checkout-changed` event whenever any internal checkout state changes. The event detail includes `availablePaymentMethodTypes`, `selectedPaymentMethod`, and `savedPaymentMethods`.
 
 ```javascript
 const modularCheckout = document.querySelector('justifi-modular-checkout');
-modularCheckout.addEventListener('checkout-changed', (event) => {
+modularCheckout.addEventListener('justifi-checkout-changed', (event) => {
   const {
     availablePaymentMethodTypes,
     selectedPaymentMethod,
@@ -354,17 +359,17 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const modularCheckout = document.querySelector('justifi-modular-checkout');
 
-    modularCheckout.addEventListener('error-event', (event) => {
+    modularCheckout.addEventListener('justifi-error', (event) => {
       // this event is emitted when validation fails or an error occurs during processing
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
 
-    modularCheckout.addEventListener('submit-event', (event) => {
+    modularCheckout.addEventListener('justifi-submit', (event) => {
       // this event is emitted when checkout is successfully completed
-      console.log('submit-event', event.detail);
+      console.log('justifi-submit', event.detail);
     });
 
-    modularCheckout.addEventListener('checkout-changed', (event) => {
+    modularCheckout.addEventListener('justifi-checkout-changed', (event) => {
       // this event is emitted when the checkout state changes
       // includes availablePaymentMethodTypes, selectedPaymentMethod, and savedPaymentMethods
       const {

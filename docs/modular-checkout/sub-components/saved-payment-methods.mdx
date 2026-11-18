@@ -99,11 +99,11 @@ This component exposes **no public methods or properties** and is not intended f
       checkoutWrapper.submitCheckout();
     });
 
-    checkoutWrapper.addEventListener('error-event', (event) => {
+    checkoutWrapper.addEventListener('justifi-error', (event) => {
       console.error(event.detail);
     });
 
-    document.addEventListener('submit-event', (event) => {
+    document.addEventListener('justifi-submit', (event) => {
       console.log('Checkout completed successfully!', event.detail);
     });
   })();
@@ -118,6 +118,11 @@ This component exposes **no public methods or properties** and is not intended f
 />
 
 ### Events
+
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
 
 This component does not emit any events directly. Events are handled by the parent `justifi-modular-checkout` component.
 

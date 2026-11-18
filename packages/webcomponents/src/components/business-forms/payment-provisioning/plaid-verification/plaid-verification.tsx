@@ -9,6 +9,7 @@ import {
   PlaidError,
 } from '../../../../api/Plaid';
 import { buttonPrimary } from '../../../../styles/parts';
+import { emitPublic } from '../../../../api/emit-public';
 
 @Component({
   tag: 'plaid-verification',
@@ -32,12 +33,13 @@ export class PlaidVerification {
   private abortController: AbortController | null = null;
   private timeoutId: NodeJS.Timeout | null = null;
 
-  // TODO: these two are almost certainly public API — real payloads, no
-  // in-library consumer for the error one — but they are undocumented. Left
-  // bubbling on purpose while the internal events were contained. Document
-  // them and give them `justifi-` names with the rest of the public set.
-  @Event({ bubbles: true }) plaidVerificationSuccess: EventEmitter<{ publicToken: string, bankAccount: any }>;
-  @Event({ bubbles: true }) plaidVerificationError: EventEmitter<PlaidError>;
+  /** Fires when the account holder finishes Plaid verification. */
+  @Event({ eventName: 'justifi-plaid-verification-succeeded', bubbles: true }) plaidVerificationSuccess: EventEmitter<{ publicToken: string, bankAccount: any }>;
+  /** @deprecated Listen for `justifi-plaid-verification-succeeded`. Removed in the next major. */
+  @Event({ eventName: 'plaidVerificationSuccess', bubbles: true }) plaidVerificationSuccessLegacy: EventEmitter<{ publicToken: string, bankAccount: any }>;
+  @Event({ eventName: 'justifi-plaid-verification-failed', bubbles: true }) plaidVerificationError: EventEmitter<PlaidError>;
+  /** @deprecated Listen for `justifi-plaid-verification-failed`. Removed in the next major. */
+  @Event({ eventName: 'plaidVerificationError', bubbles: true }) plaidVerificationErrorLegacy: EventEmitter<PlaidError>;
 
   componentDidRender() {
     if (!this.scriptRef) return;
@@ -224,7 +226,7 @@ export class PlaidVerification {
       this.isLoading = false;
 
       // Emit success event
-      this.plaidVerificationSuccess.emit({ publicToken, bankAccount: response.data });
+      emitPublic(this.plaidVerificationSuccess, this.plaidVerificationSuccessLegacy, { publicToken, bankAccount: response.data });
     } catch (error) {
       this.isLoading = false;
       this.handleError({
@@ -325,7 +327,7 @@ export class PlaidVerification {
     this.isLoading = false;
 
     // Emit error event for parent components
-    this.plaidVerificationError.emit(plaidError);
+    emitPublic(this.plaidVerificationError, this.plaidVerificationErrorLegacy, plaidError);
 
     console.error('Plaid verification error:', plaidError);
   };

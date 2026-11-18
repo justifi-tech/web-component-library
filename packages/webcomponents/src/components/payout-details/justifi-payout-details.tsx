@@ -13,6 +13,7 @@ import { Button, StyledHost } from '../../ui-components';
 import { MapPayoutStatusToBadge } from '../payouts-list/payouts-status';
 import PayoutDetailsLoading from './payout-details-loading';
 import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-payout-details',
@@ -30,8 +31,12 @@ export class JustifiPayoutDetails {
   @State() loading: boolean = true;
   @State() errorMessage: string = null;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEvent: EventEmitter<RecordClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-record-click', bubbles: true }) recordClickEvent: EventEmitter<RecordClickEvent>;
+  /** @deprecated Listen for `justifi-record-click`. Removed in the next major. */
+  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEventLegacy: EventEmitter<RecordClickEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -72,7 +77,7 @@ export class JustifiPayoutDetails {
       });
     } else {
       this.errorMessage = 'Failed to load payout details. payoutId or authToken is not provided.';
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: this.errorMessage,
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR
@@ -91,7 +96,7 @@ export class JustifiPayoutDetails {
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity,
@@ -106,7 +111,7 @@ export class JustifiPayoutDetails {
       payoutId: this.payout.id,
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity,
@@ -122,7 +127,7 @@ export class JustifiPayoutDetails {
   }
 
   handleRecordClick = (id: string) => {
-    this.recordClickEvent.emit({
+    emitPublic(this.recordClickEvent, this.recordClickEventLegacy, {
       id,
       type: 'account'
     });

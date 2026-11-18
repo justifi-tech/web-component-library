@@ -12,6 +12,7 @@ import {
 import { checkoutStore } from '../../store/checkout.store';
 import { PAYMENT_METHODS, SelectedPaymentMethod } from '../modular-checkout/ModularCheckout';
 import { BillingFormFields } from '../checkout/billing-form/billing-form-schema';
+import { emitPublic } from '../../api/emit-public';
 
 // Constants
 const PAYMENT_METHOD_TYPE_LABELS = {
@@ -80,8 +81,12 @@ export class JustifiTokenizePaymentMethod {
     this.setDefaultSelectedPaymentMethod();
   }
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-submit' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event' }) submitEventLegacy: EventEmitter<ComponentSubmitEvent>;
 
   connectedCallback() {
     this.setDefaultSelectedPaymentMethod();
@@ -125,7 +130,7 @@ export class JustifiTokenizePaymentMethod {
     try {
       const validation = await this.validate();
       if (!validation.isValid) {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           message: ERROR_MESSAGES.VALIDATION_ERROR,
         });
@@ -143,7 +148,7 @@ export class JustifiTokenizePaymentMethod {
         });
       }
 
-      this.submitEvent.emit({ response: tokenizeResponse });
+      emitPublic(this.submitEvent, this.submitEventLegacy, { response: tokenizeResponse });
       return tokenizeResponse;
     } catch (error) {
       const errorResponse = this.createErrorResponse(ComponentErrorCodes.TOKENIZE_ERROR, error.message as string);
@@ -151,7 +156,7 @@ export class JustifiTokenizePaymentMethod {
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         message: (error as any).message,
       });
-      this.submitEvent.emit({ response: errorResponse });
+      emitPublic(this.submitEvent, this.submitEventLegacy, { response: errorResponse });
       return errorResponse;
     } finally {
       this.isLoading = false;
@@ -280,7 +285,7 @@ export class JustifiTokenizePaymentMethod {
   }
 
   private emitError(errorData: { errorCode: ComponentErrorCodes; message: string }) {
-    this.errorEvent.emit({
+    emitPublic(this.errorEvent, this.errorEventLegacy, {
       ...errorData,
       severity: ComponentErrorSeverity.ERROR,
     });

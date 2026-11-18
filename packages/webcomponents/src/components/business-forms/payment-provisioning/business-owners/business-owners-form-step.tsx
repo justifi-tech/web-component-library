@@ -8,6 +8,7 @@ import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
 import { CountryCode } from '../../../../utils/country-codes';
 import { Representative } from '../../../../api/Identity';
+import { emitPublic } from '../../../../api/emit-public';
 
 interface ownerPayloadItem { id: string; }
 
@@ -35,9 +36,15 @@ export class BusinessOwnersFormStep {
     this.initializeApi();
   }
 
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-click', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event', bubbles: true }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'form-loading', bubbles: false, composed: false })
   formLoading: EventEmitter<boolean>;
 
@@ -75,7 +82,7 @@ export class BusinessOwnersFormStep {
         }
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
@@ -100,14 +107,14 @@ export class BusinessOwnersFormStep {
       },
       onError: ({ error, code, severity }) => {
         submittedData = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.owners });
+        emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: submittedData, formStep: BusinessFormStep.owners });
         this.formLoading.emit(false)
       }
     });
@@ -160,7 +167,7 @@ export class BusinessOwnersFormStep {
   }
 
   private initializeApi() {
-    if (!validateRequiredProps(this.errorEvent, {
+    if (!validateRequiredProps(this.errorEvent, this.errorEventLegacy, {
       'auth-token': this.authToken,
       'business-id': this.businessId,
     })) {
@@ -182,7 +189,7 @@ export class BusinessOwnersFormStep {
   private addOwnerForm = (fireClick?: boolean) => {
     this.newFormOpen = true;
     this.ownersPayload = [...this.ownersPayload, { id: '' }];
-    fireClick && this.clickEvent.emit({ name: BusinessFormClickActions.addOwnerForm });
+    fireClick && emitPublic(this.clickEvent, this.clickEventLegacy, { name: BusinessFormClickActions.addOwnerForm });
   };
 
   private removeOwnerForm = (id: string) => {

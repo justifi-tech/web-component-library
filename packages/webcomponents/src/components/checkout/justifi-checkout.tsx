@@ -4,8 +4,9 @@ import { BillingFormFields } from './billing-form/billing-form-schema';
 import { ICheckout, ILoadedEventResponse } from '../../api';
 import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { ComponentErrorEvent, ComponentSubmitEvent } from '../../api/ComponentEvents';
-import { CheckoutState, checkoutStore } from '../../store/checkout.store';
+import { CheckoutState, checkoutStore, onChange } from '../../store/checkout.store';
 import { checkoutSummary } from '../../styles/parts';
+import { emitPublic } from '../../api/emit-public';
 import { StyledHost } from '../../ui-components';
 import { CheckoutChangedEventDetail, Hook, PAYMENT_METHODS } from '../modular-checkout/ModularCheckout';
 
@@ -25,6 +26,9 @@ export class JustifiCheckout {
   @State() errorMessage: string = '';
   @State() insuranceToggled: boolean = false;
   @State() serverError: string;
+
+  private hasEmittedLoaded = false;
+  private disposeLoadedListener?: () => void;
 
   @Prop() authToken!: string;
   @Prop() checkoutId!: string;
@@ -56,13 +60,16 @@ export class JustifiCheckout {
     this.updateStore();
   }
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  // TODO: nothing emits this. The docs promise it fires when the checkout form
-  // has finished loading — emit it there so the documented contract is true,
-  // and add the `justifi-checkout-loaded` name alongside it with the rest of
-  // the public-event rename.
-  @Event({ eventName: 'loaded' }) loadedEvent: EventEmitter<ILoadedEventResponse>;
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  /** Fires once the checkout has loaded, with the checkout's status. */
+  @Event({ eventName: 'justifi-checkout-loaded' }) loadedEvent: EventEmitter<ILoadedEventResponse>;
+  /** @deprecated Listen for `justifi-checkout-loaded`. Removed in the next major. */
+  @Event({ eventName: 'loaded' }) loadedEventLegacy: EventEmitter<ILoadedEventResponse>;
+  @Event({ eventName: 'justifi-submit' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event' }) submitEventLegacy: EventEmitter<ComponentSubmitEvent>;
 
   connectedCallback() {
     if (this.authToken && this.checkoutId) {
@@ -73,23 +80,50 @@ export class JustifiCheckout {
   componentWillLoad() {
     detectDuplicateVersion();
     this.analytics = new JustifiAnalytics(this);
+    this.emitWhenLoaded();
   }
 
   disconnectedCallback() {
     this.analytics?.cleanup();
+    this.disposeLoadedListener?.();
   }
 
-  @Listen('submit-event')
+  /**
+   * The checkout is fetched by the child justifi-modular-checkout, so the
+   * store is what tells us it arrived. It may already be loaded by the time
+   * this component mounts, hence the two paths.
+   */
+  private emitWhenLoaded() {
+    if (checkoutStore.checkoutLoaded) {
+      this.emitLoaded();
+      return;
+    }
+    this.disposeLoadedListener = onChange('checkoutLoaded', (loaded) => {
+      if (!loaded || this.hasEmittedLoaded) return;
+      this.emitLoaded();
+    });
+  }
+
+  private emitLoaded() {
+    this.hasEmittedLoaded = true;
+    emitPublic(this.loadedEvent, this.loadedEventLegacy, {
+      checkout_status: checkoutStore.checkoutStatus,
+    });
+  }
+
+  // the justifi- names only: each public event also fires under its
+  // deprecated name, and listening for both would double-handle it
+  @Listen('justifi-submit')
   checkoutComplete(_event: CustomEvent<any>) {
     checkoutStore.isSubmitting = false;
   }
 
-  @Listen('error-event')
+  @Listen('justifi-error')
   checkoutError(_event: CustomEvent<any>) {
     checkoutStore.isSubmitting = false;
   }
 
-  @Listen('checkout-changed')
+  @Listen('justifi-checkout-changed')
   checkoutChanged(event: CustomEvent<CheckoutChangedEventDetail>) {
     this.availablePaymentMethods = event.detail.availablePaymentMethodTypes;
   }

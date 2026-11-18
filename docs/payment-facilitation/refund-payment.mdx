@@ -33,8 +33,13 @@ Component to render a form for partially or fully refunding a payment based on a
 
 ### Events
 
-- `submit-event`: Emits when the refund is created; payload includes `refund_id` and amount.
-- `error-event`: Fires when validation or network calls fail.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-submit`: Emits when the refund is created; payload includes `refund_id` and amount.
+- `justifi-error`: Fires when validation or network calls fail.
 
 ### Public methods
 
@@ -179,14 +184,14 @@ Component to render a form for partially or fully refunding a payment based on a
   (function () {
     var refundForm = document.querySelector("justifi-refund-payment");
 
-    refundForm.addEventListener("submit-event", (event) => {
+    refundForm.addEventListener("justifi-submit", (event) => {
       /* this event is raised when the server response is received */
       console.log("server response received", event.detail.response);
     });
 
-    refundForm.addEventListener("error-event", (event) => {
+    refundForm.addEventListener("justifi-error", (event) => {
       /* here is where you would handle the error */
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
 
     /* manually call Refund with provided method, if built-in submit button is hidden */

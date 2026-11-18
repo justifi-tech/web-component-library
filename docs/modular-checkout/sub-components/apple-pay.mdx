@@ -64,10 +64,15 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 
 ### Events
 
-- `applePayStarted`: Fires when the Apple Pay sheet is presented.
-- `applePayCompleted`: Fires when payment completes; includes success status and payment method details.
-- `applePayCancelled`: Fires when the user dismisses the Apple Pay sheet.
-- `applePayError`: Surfaces tokenization failures (network issues, validation errors, etc.).
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-apple-pay-started`: Fires when the Apple Pay sheet is presented.
+- `justifi-apple-pay-completed`: Fires when payment completes; includes success status and payment method details.
+- `justifi-apple-pay-cancelled`: Fires when the user dismisses the Apple Pay sheet.
+- `justifi-apple-pay-error`: Surfaces tokenization failures (network issues, validation errors, etc.).
 
 ### Public methods
 

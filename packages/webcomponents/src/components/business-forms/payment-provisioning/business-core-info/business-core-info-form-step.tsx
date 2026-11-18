@@ -11,6 +11,7 @@ import { PHONE_MASKS } from '../../../../utils/form-input-masks';
 import { heading2, label, inputDisabled, buttonSecondary } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { countryLabels } from '../../utils/country-config';
+import { emitPublic } from '../../../../api/emit-public';
 
 @Component({
   tag: 'business-core-info-form-step'
@@ -35,8 +36,12 @@ export class BusinessCoreInfoFormStep {
     this.initializeApi();
   }
 
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
   @Event({ eventName: 'form-loading', bubbles: false, composed: false })
   formLoading: EventEmitter<boolean>;
 
@@ -66,7 +71,7 @@ export class BusinessCoreInfoFormStep {
   }
 
   private initializeApi() {
-    if (!validateRequiredProps(this.errorEvent, {
+    if (!validateRequiredProps(this.errorEvent, this.errorEventLegacy, {
       'auth-token': this.authToken,
       'business-id': this.businessId,
     })) {
@@ -96,7 +101,7 @@ export class BusinessCoreInfoFormStep {
         this.formController.setInitialValues({ ...this.coreInfo });
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
@@ -129,14 +134,14 @@ export class BusinessCoreInfoFormStep {
         }
 
         // Still emit component-level error
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.businessInfo });
+        emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: submittedData, formStep: BusinessFormStep.businessInfo });
         this.formLoading.emit(false)
       }
     });

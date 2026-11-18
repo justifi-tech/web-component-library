@@ -7,6 +7,7 @@ import { IBusiness } from '../../../../api/Business';
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../../../api/ComponentError';
 import { heading2 } from '../../../../styles/parts';
 import { BusinessFormStep } from '../../utils';
+import { emitPublic } from '../../../../api/emit-public';
 
 @Component({
   tag: 'business-terms-conditions-form-step'
@@ -21,8 +22,12 @@ export class BusinessTermsConditionsFormStep {
   @Prop() businessId!: string;
   @Prop() allowOptionalFields?: boolean;
 
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   // internal loading events
   @Event({ eventName: 'form-loading', bubbles: false, composed: false })
@@ -66,7 +71,7 @@ export class BusinessTermsConditionsFormStep {
       const response: IApiResponse<IBusiness> = await this.api.get({ endpoint: this.businessEndpoint, authToken: this.authToken });
       this.acceptedTermsBefore = response.data.terms_conditions_accepted;
     } catch (error) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.FETCH_ERROR,
         message: error.message,
         severity: ComponentErrorSeverity.ERROR,
@@ -84,7 +89,7 @@ export class BusinessTermsConditionsFormStep {
       const response = await this.api.post({ endpoint: this.termsConditionsEndpoint, body: payload, authToken: this.authToken });
       this.handleResponse(response, onSuccess);
     } catch (error) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.POST_ERROR,
         message: error.message,
         severity: ComponentErrorSeverity.ERROR,
@@ -97,7 +102,7 @@ export class BusinessTermsConditionsFormStep {
 
   handleResponse(response, onSuccess) {
     if (response.error) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.POST_ERROR,
         message: response.error.message,
         severity: ComponentErrorSeverity.ERROR,
@@ -106,14 +111,14 @@ export class BusinessTermsConditionsFormStep {
     } else {
       onSuccess();
     }
-    this.stepCompleteEvent.emit({ response: response, formStep: BusinessFormStep.termsAndConditions });
+    emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: response, formStep: BusinessFormStep.termsAndConditions });
     this.formCompleted.emit();
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.acceptedTermsBefore) {
-      this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
+      emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
       this.formCompleted.emit();
       onSuccess();
     } else {

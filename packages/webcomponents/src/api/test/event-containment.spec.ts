@@ -12,35 +12,51 @@ const SRC = join(__dirname, '..', '..');
  * lists are what keep them honest.
  */
 
-/** The name IS the contract. Renaming one is a breaking change. */
-const PUBLIC_EVENTS = [
-  'error-event',
-  'click-event',
-  'submit-event',
-  'complete-form-step-event',
-  'record-click-event',
-  'checkout-changed',
-  'loaded',
-  'checkout-completed',
-  'checkout-expired',
-  'insurance-updated',
-  'paymentMethodOptionSelected',
-  'plaidError',
-  'plaidErrorRecovered',
-  'plaidVerificationSuccess',
-  'plaidVerificationError',
-  'applePayStarted',
-  'applePayCompleted',
-  'applePayCancelled',
-  'applePayError',
-  'googlePayStarted',
-  'googlePayCompleted',
-  'googlePayCancelled',
-  'paypalStarted',
-  'paypalCompleted',
-  'paypalCancelled',
-  'paypalError',
+/**
+ * Which event names are merchant-facing contract and which are internal
+ * plumbing. This classification lives here, in the only thing that consumes
+ * it, rather than in a module under src/ — Stencil evaluates `@Event()`
+ * statically, so a decorator can never import its name from a constant
+ * anyway. The literals in the decorators are the source of truth; these
+ * lists are what keep them honest.
+ */
+
+/**
+ * Merchant-facing, as [current name, deprecated name]. Every public event is
+ * declared under both and emitted through `emitPublic`; the deprecated half
+ * goes away in the next major.
+ */
+const PUBLIC_EVENT_PAIRS: [string, string][] = [
+  ['justifi-error', 'error-event'],
+  ['justifi-click', 'click-event'],
+  ['justifi-submit', 'submit-event'],
+  ['justifi-form-step-complete', 'complete-form-step-event'],
+  ['justifi-record-click', 'record-click-event'],
+  ['justifi-checkout-changed', 'checkout-changed'],
+  ['justifi-checkout-loaded', 'loaded'],
+  ['justifi-checkout-completed', 'checkout-completed'],
+  ['justifi-checkout-expired', 'checkout-expired'],
+  ['justifi-insurance-updated', 'insurance-updated'],
+  ['justifi-payment-method-selected', 'paymentMethodOptionSelected'],
+  ['justifi-plaid-error', 'plaidError'],
+  ['justifi-plaid-error-recovered', 'plaidErrorRecovered'],
+  ['justifi-plaid-verification-succeeded', 'plaidVerificationSuccess'],
+  ['justifi-plaid-verification-failed', 'plaidVerificationError'],
+  ['justifi-apple-pay-started', 'applePayStarted'],
+  ['justifi-apple-pay-completed', 'applePayCompleted'],
+  ['justifi-apple-pay-cancelled', 'applePayCancelled'],
+  ['justifi-apple-pay-error', 'applePayError'],
+  ['justifi-google-pay-started', 'googlePayStarted'],
+  ['justifi-google-pay-completed', 'googlePayCompleted'],
+  ['justifi-google-pay-cancelled', 'googlePayCancelled'],
+  ['justifi-paypal-started', 'paypalStarted'],
+  ['justifi-paypal-completed', 'paypalCompleted'],
+  ['justifi-paypal-cancelled', 'paypalCancelled'],
+  ['justifi-paypal-error', 'paypalError'],
 ];
+
+const PUBLIC_EVENTS = PUBLIC_EVENT_PAIRS.map(([next]) => next);
+const LEGACY_EVENTS = PUBLIC_EVENT_PAIRS.map(([, legacy]) => legacy);
 
 /**
  * Component-to-component plumbing. Contained (`bubbles: false, composed:
@@ -79,7 +95,7 @@ const sourceFiles = (dir: string, out: string[] = []): string[] => {
 
 /** Every `@Event({...})` / `@Event()` declaration with its declared options. */
 const declarations = (() => {
-  const found: { file: string; name: string; options: string }[] = [];
+  const found: { file: string; name: string; prop: string; options: string }[] = [];
   for (const file of sourceFiles(SRC)) {
     const src = readFileSync(file, 'utf8');
     const re = /@Event\((\{[^}]*\})?\)\s*(\w+)!?\s*:/g;
@@ -91,6 +107,7 @@ const declarations = (() => {
         file: file.slice(SRC.length + 1),
         // Stencil falls back to the property name when eventName is absent
         name: explicit ? explicit[1] : m[2],
+        prop: m[2],
         options,
       });
     }
@@ -100,6 +117,7 @@ const declarations = (() => {
 
 const internalNames = new Set<string>(INTERNAL_EVENTS);
 const publicNames = new Set<string>(PUBLIC_EVENTS);
+const legacyNames = new Set<string>(LEGACY_EVENTS);
 
 describe('event containment', () => {
   it('finds the @Event declarations (guards against a broken scan)', () => {
@@ -122,9 +140,81 @@ describe('event containment', () => {
     expect(unused).toEqual([]);
   });
 
+  // validateRequiredProps took a single emitter and emitted through it
+  // directly, so the deprecated name never fired and every integration still
+  // on it went silent. Public events go through emitPublic, always.
+  it('never emits a public event directly, only through emitPublic', () => {
+    const emitterProps = new Set<string>();
+    for (const d of declarations) {
+      if (publicNames.has(d.name) || legacyNames.has(d.name)) emitterProps.add(d.prop);
+    }
+
+    const direct: string[] = [];
+    for (const f of sourceFiles(SRC)) {
+      const rel = f.slice(SRC.length + 1);
+      if (rel === join('api', 'emit-public.ts')) continue; // the helper itself
+      const src = readFileSync(f, 'utf8');
+      for (const prop of emitterProps) {
+        // matches both `this.errorEvent.emit(` and a bare `errorEvent.emit(`
+        // parameter inside a shared helper
+        if (new RegExp('(?<![\\w.])(?:this\\.)?' + prop + '\\.emit\\(').test(src)) {
+          direct.push(rel + ' -> ' + prop + '.emit()');
+        }
+      }
+    }
+    expect(direct).toEqual([]);
+  });
+
+  it('pairs every public name with exactly one deprecated name', () => {
+    expect(new Set(PUBLIC_EVENTS).size).toBe(PUBLIC_EVENT_PAIRS.length);
+    expect(new Set(LEGACY_EVENTS).size).toBe(PUBLIC_EVENT_PAIRS.length);
+  });
+
+  it('prefixes every public event name with justifi-', () => {
+    const unprefixed = PUBLIC_EVENTS.filter((n) => !n.startsWith('justifi-'));
+    expect(unprefixed).toEqual([]);
+  });
+
+  // Each public event is declared twice, once per name. A component that
+  // declares only one of the pair leaves half its listeners deaf, and nothing
+  // at runtime says so.
+  it('declares every public event under both its names', () => {
+    const byFile = new Map<string, Set<string>>();
+    for (const d of declarations) {
+      if (!byFile.has(d.file)) byFile.set(d.file, new Set());
+      byFile.get(d.file)!.add(d.name);
+    }
+    const halfPairs: string[] = [];
+    for (const [file, names] of byFile) {
+      for (const [newName, legacyName] of PUBLIC_EVENT_PAIRS) {
+        if (names.has(newName) !== names.has(legacyName)) {
+          const present = names.has(newName) ? newName : legacyName;
+          halfPairs.push(file + ' -> ' + present + ' has no twin');
+        }
+      }
+    }
+    expect(halfPairs).toEqual([]);
+  });
+
+  // Listening for both names runs the handler twice per event.
+  it('never listens internally for a deprecated public name', () => {
+    const offenders: string[] = [];
+    for (const f of sourceFiles(SRC)) {
+      const src = readFileSync(f, 'utf8');
+      // justifi-qr-terminal suppresses both names on purpose
+      if (/suppressInnerLegacyErrors/.test(src)) continue;
+      for (const name of legacyNames) {
+        if (new RegExp("@Listen\\(['\"]" + name + "['\"]\\)").test(src)) {
+          offenders.push(f.slice(SRC.length + 1) + " -> @Listen('" + name + "')");
+        }
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
   it('keeps every public event reachable from the host page', () => {
     const contained = declarations
-      .filter((d) => publicNames.has(d.name))
+      .filter((d) => publicNames.has(d.name) || legacyNames.has(d.name))
       .filter((d) => /bubbles:\s*false/.test(d.options) || /composed:\s*false/.test(d.options))
       .map((d) => `${d.file} -> ${d.name}`);
 

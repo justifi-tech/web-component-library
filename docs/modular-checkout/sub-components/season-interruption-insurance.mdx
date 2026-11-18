@@ -100,8 +100,13 @@ Component to render a formated list of season interruption insurance for the req
 
 ### Events
 
-- `insurance-updated`: Fires after the component successfully toggles coverage via the insurance API.
-- `error-event`: Emits a `ComponentErrorEvent` if required props are missing or an API call fails.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-insurance-updated`: Fires after the component successfully toggles coverage via the insurance API.
+- `justifi-error`: Emits a `ComponentErrorEvent` if required props are missing or an API call fails.
 
 ### Public methods
 

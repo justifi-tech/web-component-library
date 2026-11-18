@@ -20,6 +20,7 @@ import {
   TableFootCell,
   TableClickActions
 } from '../../ui-components';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-payout-transactions-list',
@@ -37,8 +38,12 @@ export class JustifiPayoutTransactionsList {
   @Prop() authToken!: string;
   @Prop() columns?: string = defaultColumnsKeys;
 
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-click', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event', bubbles: true }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -62,7 +67,7 @@ export class JustifiPayoutTransactionsList {
 
   private handleError(code: ComponentErrorCodes, errorMessage: string, severity: ComponentErrorSeverity) {
     this.isLoading = false;
-    this.errorEvent.emit({ errorCode: code, message: errorMessage, severity });
+    emitPublic(this.errorEvent, this.errorEventLegacy, { errorCode: code, message: errorMessage, severity });
   }
 
   private initializeApi() {
@@ -96,12 +101,12 @@ export class JustifiPayoutTransactionsList {
 
   handleClickPrevious = (beforeCursor: string) => {
     this.pagingParams = { before_cursor: beforeCursor };
-    this.clickEvent.emit({ name: TableClickActions.previous });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.previous });
   };
 
   handleClickNext = (afterCursor: string) => {
     this.pagingParams = { after_cursor: afterCursor };
-    this.clickEvent.emit({ name: TableClickActions.next });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.next });
   };
 
   rowClickHandler = (e) => {
@@ -109,7 +114,7 @@ export class JustifiPayoutTransactionsList {
     if (!clickedPayoutId) return;
 
     const transactionData = this.balanceTransactions.find((payout) => payout.id === clickedPayoutId);
-    this.clickEvent.emit({ name: TableClickActions.row, data: transactionData });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.row, data: transactionData });
   };
 
   get entityId() {

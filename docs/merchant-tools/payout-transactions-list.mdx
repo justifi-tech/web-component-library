@@ -40,8 +40,13 @@ Component to display a list of payout transactions for a specific payout.
 
 ### Events
 
-- `click-event`: Row selection event that surfaces `transaction_id`.
-- `error-event`: Surfaces API or token failures.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-click`: Row selection event that surfaces `transaction_id`.
+- `justifi-error`: Surfaces API or token failures.
 
 ## Authorization
 
@@ -110,14 +115,14 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const payoutTransactionsList = document.querySelector('justifi-payout-transactions-list');
 
-    payoutTransactionsList.addEventListener('click-event', (event) => {
+    payoutTransactionsList.addEventListener('justifi-click', (event) => {
       // here is where you would handle the click events
-      console.log('click-event', event.detail);
+      console.log('justifi-click', event.detail);
     });
 
-    payoutTransactionsList.addEventListener('error-event', (event) => {
+    payoutTransactionsList.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
   })();
 </script>

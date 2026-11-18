@@ -10,12 +10,15 @@ import {
   ComponentErrorSeverity,
 } from "../../../api";
 import { Button } from "../../../ui-components";
+import { emitPublic } from '../../../api/emit-public';
 
 @Component({
   tag: "card-form",
 })
 export class CardForm {
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   @State() iframeOrigin: string;
   @State() tabId: string;
@@ -122,7 +125,7 @@ export class CardForm {
       if (signal.aborted) return;
       this.iframeState = 'error';
       this.loadAbortController?.abort();
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.IFRAME_LOAD_ERROR,
         message: ComponentErrorMessages.IFRAME_LOAD_ERROR,
         severity: ComponentErrorSeverity.ERROR,

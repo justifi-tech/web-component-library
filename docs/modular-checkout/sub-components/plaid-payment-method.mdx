@@ -67,11 +67,11 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
   (function() {
     const modularCheckout = document.querySelector('justifi-modular-checkout');
 
-    modularCheckout?.addEventListener('plaidError', (event) => {
+    modularCheckout?.addEventListener('justifi-plaid-error', (event) => {
       console.warn('Plaid error', event.detail);
     });
 
-    modularCheckout?.addEventListener('plaidErrorRecovered', (event) => {
+    modularCheckout?.addEventListener('justifi-plaid-error-recovered', (event) => {
       console.log('Plaid recovered', event.detail);
     });
   })();
@@ -87,8 +87,13 @@ It exposes no public properties for configuration, but does emit Plaid-specific 
 
 ### Events
 
-- `plaidError`: Surfaces integration failures (expired link token, network issues, user errors).
-- `plaidErrorRecovered`: Fires when a previous Plaid error has been resolved and the flow can continue.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-plaid-error`: Surfaces integration failures (expired link token, network issues, user errors).
+- `justifi-plaid-error-recovered`: Fires when a previous Plaid error has been resolved and the flow can continue.
 
 ## Theming & Layout
 

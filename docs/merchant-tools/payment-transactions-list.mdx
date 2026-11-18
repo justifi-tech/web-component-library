@@ -40,8 +40,13 @@ Component to display a list of payment transactions for a specific payment.
 
 ### Events
 
-- `click-event`: Emitted when a row is clicked; surfaces `transaction_id`.
-- `error-event`: Surfaces API or token failures.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-click`: Emitted when a row is clicked; surfaces `transaction_id`.
+- `justifi-error`: Surfaces API or token failures.
 
 ## Authorization
 
@@ -113,14 +118,14 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const paymentTransactionsList = document.querySelector('justifi-payment-transactions-list');
 
-    paymentTransactionsList.addEventListener('click-event', (event) => {
+    paymentTransactionsList.addEventListener('justifi-click', (event) => {
       // here is where you would handle the click events
-      console.log('click-event', event.detail);
+      console.log('justifi-click', event.detail);
     });
 
-    paymentTransactionsList.addEventListener('error-event', (event) => {
+    paymentTransactionsList.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
   })();
 </script>

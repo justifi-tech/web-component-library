@@ -40,7 +40,12 @@ Component to render chart displaying last 30 days of gross payment data.
 
 ### Events
 
-- `error-event`: Surfaces API or token errors for logging.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-error`: Surfaces API or token errors for logging.
 
 ## Authorization
 
@@ -106,9 +111,9 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const grossPaymentChart = document.querySelector('justifi-gross-payment-chart');
 
-    grossPaymentChart.addEventListener('error-event', (event) => {
+    grossPaymentChart.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
   })();
 </script>
