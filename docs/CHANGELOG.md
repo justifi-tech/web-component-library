@@ -1,5 +1,30 @@
 # @justifi/webcomponents-docs
 
+## 4.1.0
+
+### Minor Changes
+
+- c1c83c5: Add a Checkout Browser Support page: minimum and recommended browser versions for the checkout components, the features that set each floor, and payment method availability per browser family.
+
+### Patch Changes
+
+- 15a9120: Add `mask-card-number` to `justifi-card-form`, `justifi-tokenize-payment-method`, `justifi-modular-checkout` and `justifi-checkout`. When set, the card number collapses to its last four digits once the field loses focus, with an eye toggle to reveal it again. Defaults to `false`, so existing integrations are unchanged.
+
+  The masking happens in the hosted field, which must be deployed before this ships. It is a shoulder-surfing deterrent, not a PCI control.
+
+- Updated dependencies [71597c6]
+- Updated dependencies [d050583]
+- Updated dependencies [7618887]
+- Updated dependencies [9817dd6]
+- Updated dependencies [b4c2934]
+- Updated dependencies [15a9120]
+- Updated dependencies [3f4dcfd]
+- Updated dependencies [7618887]
+- Updated dependencies [7618887]
+- Updated dependencies [fa72d90]
+- Updated dependencies [8cf1502]
+  - @justifi/webcomponents@6.16.0
+
 ## 4.0.0
 
 ### Patch Changes
