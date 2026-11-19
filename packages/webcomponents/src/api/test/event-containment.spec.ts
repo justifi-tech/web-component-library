@@ -60,7 +60,11 @@ const sourceFiles = (dir: string, out: string[] = []): string[] => {
       if (entry === 'test' || entry === '__snapshots__') continue;
       sourceFiles(full, out);
       // components.d.ts is generated build output, not source
-    } else if (/\.tsx?$/.test(entry) && !/\.spec\.tsx?$/.test(entry) && entry !== 'components.d.ts') {
+    } else if (
+      /\.tsx?$/.test(entry) &&
+      !/\.spec\.tsx?$/.test(entry) &&
+      entry !== 'components.d.ts'
+    ) {
       out.push(full);
     }
   }
@@ -101,7 +105,11 @@ describe('event containment', () => {
   it('declares every internal event with bubbles: false and composed: false', () => {
     const leaking = declarations
       .filter((d) => internalNames.has(d.name))
-      .filter((d) => !/bubbles:\s*false/.test(d.options) || !/composed:\s*false/.test(d.options))
+      .filter(
+        (d) =>
+          !/bubbles:\s*false/.test(d.options) ||
+          !/composed:\s*false/.test(d.options),
+      )
       .map((d) => `${d.file} -> ${d.name}`);
 
     expect(leaking).toEqual([]);
@@ -189,7 +197,11 @@ describe('event containment', () => {
   it('keeps every public event reachable from the host page', () => {
     const contained = declarations
       .filter((d) => publicNames.has(d.name) || legacyNames.has(d.name))
-      .filter((d) => /bubbles:\s*false/.test(d.options) || /composed:\s*false/.test(d.options))
+      .filter(
+        (d) =>
+          /bubbles:\s*false/.test(d.options) ||
+          /composed:\s*false/.test(d.options),
+      )
       .map((d) => `${d.file} -> ${d.name}`);
 
     expect(contained).toEqual([]);
@@ -214,16 +226,24 @@ describe('event containment', () => {
   // bank-account-form listeners still waiting on 'iframeLoaded'.
   it('leaves no reference to a pre-rename internal event name', () => {
     const RENAMED = [
-      'formControlInput', 'formControlBlur', 'formLoading', 'formCompleted',
-      'ownerSubmitted', 'showEvent', 'hideEvent', 'checkboxChanged',
-      'fileSelected', 'iframeLoaded', 'selectedQuantityChange',
+      'formControlInput',
+      'formControlBlur',
+      'formLoading',
+      'formCompleted',
+      'ownerSubmitted',
+      'showEvent',
+      'hideEvent',
+      'checkboxChanged',
+      'fileSelected',
+      'iframeLoaded',
+      'selectedQuantityChange',
     ];
     const offenders: string[] = [];
     for (const f of sourceFiles(SRC)) {
       const src = readFileSync(f, 'utf8');
       for (const name of RENAMED) {
         // a quoted name is an event name; a bare identifier is the emitter property
-        if (new RegExp("['\"`]" + name + "['\"`]").test(src)) {
+        if (new RegExp('[\'"`]' + name + '[\'"`]').test(src)) {
           offenders.push(f.slice(SRC.length + 1) + " -> '" + name + "'");
         }
       }
