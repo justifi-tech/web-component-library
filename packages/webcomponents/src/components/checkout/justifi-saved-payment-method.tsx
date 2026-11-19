@@ -16,7 +16,7 @@ export class JustifiSavedPaymentMethod {
   paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
   /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
   @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
-  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
+  paymentMethodSelectedLegacy: EventEmitter<PaymentMethodOption>;
 
   @Method()
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
@@ -28,10 +28,12 @@ export class JustifiSavedPaymentMethod {
 
   onPaymentMethodOptionClick = (e) => {
     e.preventDefault();
-    emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
-      id: this.paymentMethodOption?.id,
-      type: this.paymentMethodOption?.type as PAYMENT_METHODS,
-    });
+    emitPublic(
+      this.paymentMethodSelected,
+      this.paymentMethodSelectedLegacy,
+      { id: this.paymentMethodOption?.id, type: this.paymentMethodOption?.type as PAYMENT_METHODS },
+      this.paymentMethodOption,
+    );
   };
 
   render() {

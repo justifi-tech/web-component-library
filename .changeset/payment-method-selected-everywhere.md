@@ -12,14 +12,16 @@ or Venmo reported nothing, and `justifi-plaid-payment-method` declared the
 event but never emitted it — so a merchant tracking which method a shopper
 chose simply went quiet for most of the checkout.
 
-All eight options now emit it when clicked, under both the current and the
-deprecated name like every other public event.
+All eight options now emit it when clicked, with one payload shape everywhere:
+`{ type, id? }`, matching `checkoutStore.selectedPaymentMethod`. `type` is the
+`PAYMENT_METHODS` value; `id` carries the token when a saved method was picked.
 
-The payload is now the same everywhere: `{ type, id? }`, matching
-`checkoutStore.selectedPaymentMethod`. `type` is the `PAYMENT_METHODS` value;
-`id` carries the token when a saved method was picked. **This changes two
-existing payloads** — Sezzle emitted the bare string `'sezzle'`, and
-`justifi-saved-payment-method` emitted its whole option object.
+Nothing changes for anyone listening on the deprecated
+`paymentMethodOptionSelected`. The two components that fired it still fire it,
+with the payload they always had — Sezzle's bare `'sezzle'` string, and
+`justifi-saved-payment-method`'s whole option object. The six that never fired
+it don't start: for those, `justifi-payment-method-selected` is the only name,
+with no deprecated twin to retire later.
 
 For the wallets the event fires when the shopper starts the payment (the sheet
 opening or the button click), not when it completes, so it reports the choice

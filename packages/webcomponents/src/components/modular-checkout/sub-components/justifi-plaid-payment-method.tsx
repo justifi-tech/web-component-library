@@ -152,7 +152,8 @@ export class JustifiPlaidPaymentMethod {
 
     // Update store selection
     checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
-    emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, { type: PAYMENT_METHODS.PLAID });
+    // the deprecated name is declared here but never fired; leave it that way
+    emitPublic(this.paymentMethodSelected, null, { type: PAYMENT_METHODS.PLAID });
 
     // If there's an error, clear it and try to initialize again
     if (this.error) {

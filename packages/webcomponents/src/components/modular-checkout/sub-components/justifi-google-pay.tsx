@@ -48,9 +48,6 @@ export class JustifiGooglePay {
 
   @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
   paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
-  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
-  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
-  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
   @Event({ eventName: 'justifi-google-pay-started' }) googlePayStarted: EventEmitter<void>;
   /** @deprecated Listen for `justifi-google-pay-started`. Removed in the next major. */
   @Event({ eventName: 'googlePayStarted' }) googlePayStartedLegacy: EventEmitter<void>;
@@ -108,7 +105,7 @@ export class JustifiGooglePay {
         break;
       case GooglePayEventTypes.buttonClicked:
         emitPublic(this.googlePayStarted, this.googlePayStartedLegacy);
-        emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
+        emitPublic(this.paymentMethodSelected, null, {
           type: PAYMENT_METHODS.GOOGLE_PAY,
         });
         this.sendStartPayment();

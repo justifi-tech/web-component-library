@@ -48,9 +48,6 @@ export class JustifiPaypal {
 
   @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
   paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
-  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
-  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
-  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
   @Event({ eventName: 'justifi-paypal-started' }) paypalStarted!: EventEmitter<{
     fundingSource: PaypalFundingSource;
   }>;
@@ -266,7 +263,7 @@ export class JustifiPaypal {
 
     this.pendingOrderId = undefined;
     emitPublic(this.paypalStarted, this.paypalStartedLegacy, { fundingSource });
-    emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
+    emitPublic(this.paymentMethodSelected, null, {
       type: fundingSource === "venmo" ? PAYMENT_METHODS.VENMO : PAYMENT_METHODS.PAYPAL,
     });
 

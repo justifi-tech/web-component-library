@@ -13,9 +13,6 @@ import { emitPublic } from "../../../api/emit-public";
 export class JustifiSavedPaymentMethods {
   @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
   paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
-  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
-  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
-  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
 
   componentWillLoad() {
     if (checkoutStore.checkoutLoaded) {
@@ -33,7 +30,7 @@ export class JustifiSavedPaymentMethods {
     e.preventDefault();
     checkoutStore.selectedPaymentMethod = { id: paymentMethod.id, type: paymentMethod.type }
     checkoutStore.paymentToken = paymentMethod.id;
-    emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
+    emitPublic(this.paymentMethodSelected, null, {
       id: paymentMethod.id,
       type: paymentMethod.type,
     });

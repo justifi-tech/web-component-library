@@ -36,7 +36,7 @@ export class JustifiSezzlePaymentMethod {
   paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
   /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
   @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
-  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
+  paymentMethodSelectedLegacy: EventEmitter<PAYMENT_METHODS>;
 
   componentDidRender() {
     if (!this.scriptRef) return;
@@ -64,7 +64,13 @@ export class JustifiSezzlePaymentMethod {
   @Method()
   async handleSelectionClick(): Promise<void> {
     checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SEZZLE };
-    emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, { type: PAYMENT_METHODS.SEZZLE });
+    emitPublic(
+      this.paymentMethodSelected,
+      this.paymentMethodSelectedLegacy,
+      { type: PAYMENT_METHODS.SEZZLE },
+      // the deprecated name shipped the bare string; keep it that way
+      PAYMENT_METHODS.SEZZLE,
+    );
   }
 
   initializeSezzleCheckout = () => {

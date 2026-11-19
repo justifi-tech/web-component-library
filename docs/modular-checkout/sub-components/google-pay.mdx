@@ -62,7 +62,7 @@ Renders a Google Pay button for eligible devices/browsers and orchestrates the G
 > integration keeps working untouched. The old names are deprecated and go away in
 > the next major release; new code should listen for the `justifi-` ones.
 
-- `justifi-payment-method-selected`: Emits when the shopper starts a Google Pay payment. `event.detail` is `{ type, id? }` — `type` is the payment method, `id` the saved payment method's token when there is one.
+- `justifi-payment-method-selected`: Emits when the shopper starts a Google Pay payment. `event.detail` is `{ type, id? }` — `type` is the payment method, `id` the saved payment method's token when there is one. This event is new, so unlike the others here it has no deprecated twin.
 - `justifi-google-pay-started`: Fires when the user clicks the Google Pay button, immediately before the payment sheet opens.
 - `justifi-google-pay-completed`: Fires when payment completes; includes success status, payment method ID, card network, and card details (last 4 digits).
 - `justifi-google-pay-cancelled`: Fires when the user dismisses the Google Pay sheet.

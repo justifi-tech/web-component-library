@@ -51,9 +51,6 @@ export class JustifiApplePay {
 
   @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
   paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
-  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
-  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
-  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
   @Event({ eventName: 'justifi-apple-pay-started' }) applePayStarted!: EventEmitter<void>;
   /** @deprecated Listen for `justifi-apple-pay-started`. Removed in the next major. */
   @Event({ eventName: 'applePayStarted' }) applePayStartedLegacy!: EventEmitter<void>;
@@ -192,7 +189,7 @@ export class JustifiApplePay {
       this.isProcessing = true;
       this.error = null;
       emitPublic(this.applePayStarted, this.applePayStartedLegacy);
-      emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
+      emitPublic(this.paymentMethodSelected, null, {
         type: PAYMENT_METHODS.APPLE_PAY,
       });
 

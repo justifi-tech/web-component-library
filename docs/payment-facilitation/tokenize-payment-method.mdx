@@ -39,7 +39,7 @@ account, a submit button and all fields required for proper use. This component 
 > integration keeps working untouched. The old names are deprecated and go away in
 > the next major release; new code should listen for the `justifi-` ones.
 
-- `justifi-payment-method-selected`: Emits when the shopper picks a new card or bank account. `event.detail` is `{ type, id? }` — `type` is the payment method, `id` the saved payment method's token when there is one.
+- `justifi-payment-method-selected`: Emits when the shopper picks a new card or bank account. `event.detail` is `{ type, id? }` — `type` is the payment method, `id` the saved payment method's token when there is one. This event is new, so unlike the others here it has no deprecated twin.
 - `justifi-submit`: fires when tokenization completes; `event.detail.response` is the full payload (see [Response payload](#response-payload)).
 - `justifi-error`: fires if tokenization fails; payload includes `code`, `message`, and validation hints.
 

@@ -69,7 +69,7 @@ Renders an Apple Pay button for eligible devices and orchestrates the Apple Pay 
 > integration keeps working untouched. The old names are deprecated and go away in
 > the next major release; new code should listen for the `justifi-` ones.
 
-- `justifi-payment-method-selected`: Emits when the shopper starts an Apple Pay payment. `event.detail` is `{ type, id? }` — `type` is the payment method, `id` the saved payment method's token when there is one.
+- `justifi-payment-method-selected`: Emits when the shopper starts an Apple Pay payment. `event.detail` is `{ type, id? }` — `type` is the payment method, `id` the saved payment method's token when there is one. This event is new, so unlike the others here it has no deprecated twin.
 - `justifi-apple-pay-started`: Fires when the Apple Pay sheet is presented.
 - `justifi-apple-pay-completed`: Fires when payment completes; includes success status and payment method details.
 - `justifi-apple-pay-cancelled`: Fires when the user dismisses the Apple Pay sheet.

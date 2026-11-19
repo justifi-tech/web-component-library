@@ -7,22 +7,66 @@ const SRC = join(__dirname, '..', '..');
  * Every payment method a shopper can pick has to report it. Miss one and the
  * merchant's selection tracking just goes quiet for that option — nothing
  * fails, nothing logs.
+ *
+ * `legacy` is what the component already did with the deprecated name, and it
+ * stays that way. The deprecated name is never added where it did not already
+ * ship: a merchant cannot have been listening for an event that never fired.
+ *
+ *   emits    — fired it, with its own payload, which does not change here
+ *   declared — declared the emitter and never fired it
+ *   none     — never had it, and does not get one now
  */
-const OPTIONS: { tag: string; file: string }[] = [
-  { tag: 'justifi-tokenize-payment-method', file: 'components/tokenize-payment-method/justifi-tokenize-payment-method.tsx' },
-  { tag: 'justifi-saved-payment-methods', file: 'components/modular-checkout/sub-components/justifi-saved-payment-methods.tsx' },
-  { tag: 'justifi-saved-payment-method', file: 'components/checkout/justifi-saved-payment-method.tsx' },
-  { tag: 'justifi-sezzle-payment-method', file: 'components/modular-checkout/sub-components/justifi-sezzle-payment-method.tsx' },
-  { tag: 'justifi-plaid-payment-method', file: 'components/modular-checkout/sub-components/justifi-plaid-payment-method.tsx' },
-  { tag: 'justifi-apple-pay', file: 'components/modular-checkout/sub-components/justifi-apple-pay.tsx' },
-  { tag: 'justifi-google-pay', file: 'components/modular-checkout/sub-components/justifi-google-pay.tsx' },
-  { tag: 'justifi-paypal', file: 'components/modular-checkout/sub-components/paypal/justifi-paypal.tsx' },
+const OPTIONS: { tag: string; file: string; legacy: 'emits' | 'declared' | 'none' }[] = [
+  {
+    tag: 'justifi-tokenize-payment-method',
+    file: 'components/tokenize-payment-method/justifi-tokenize-payment-method.tsx',
+    legacy: 'none',
+  },
+  {
+    tag: 'justifi-saved-payment-methods',
+    file: 'components/modular-checkout/sub-components/justifi-saved-payment-methods.tsx',
+    legacy: 'none',
+  },
+  {
+    tag: 'justifi-saved-payment-method',
+    file: 'components/checkout/justifi-saved-payment-method.tsx',
+    legacy: 'emits',
+  },
+  {
+    tag: 'justifi-sezzle-payment-method',
+    file: 'components/modular-checkout/sub-components/justifi-sezzle-payment-method.tsx',
+    legacy: 'emits',
+  },
+  {
+    tag: 'justifi-plaid-payment-method',
+    file: 'components/modular-checkout/sub-components/justifi-plaid-payment-method.tsx',
+    legacy: 'declared',
+  },
+  {
+    tag: 'justifi-apple-pay',
+    file: 'components/modular-checkout/sub-components/justifi-apple-pay.tsx',
+    legacy: 'none',
+  },
+  {
+    tag: 'justifi-google-pay',
+    file: 'components/modular-checkout/sub-components/justifi-google-pay.tsx',
+    legacy: 'none',
+  },
+  {
+    tag: 'justifi-paypal',
+    file: 'components/modular-checkout/sub-components/paypal/justifi-paypal.tsx',
+    legacy: 'none',
+  },
 ];
 
 const EVENT = 'justifi-payment-method-selected';
 const LEGACY = 'paymentMethodOptionSelected';
 
 const read = (rel: string) => readFileSync(join(SRC, rel), 'utf8');
+
+/** The `emitPublic(this.paymentMethodSelected, …)` calls in one file. */
+const calls = (src: string) =>
+  src.match(/emitPublic\(\s*this\.paymentMethodSelected,[\s\S]*?\);/g) ?? [];
 
 const sourceFiles = (dir: string, out: string[] = []): string[] => {
   for (const entry of readdirSync(dir)) {
@@ -37,29 +81,58 @@ const sourceFiles = (dir: string, out: string[] = []): string[] => {
   return out;
 };
 
-describe('justifi-payment-method-selected', () => {
-  it.each(OPTIONS.map((o) => [o.tag, o] as const))('%s declares both names', (_tag, option) => {
+const each = OPTIONS.map((o) => [o.tag, o] as const);
+
+describe(EVENT, () => {
+  it.each(each)('%s declares it', (_tag, option) => {
+    expect(read(option.file)).toContain(`eventName: '${EVENT}'`);
+  });
+
+  it.each(each)('%s emits it', (_tag, option) => {
+    expect(calls(read(option.file)).length).toBeGreaterThan(0);
+  });
+
+  it.each(each)('%s emits a payload carrying a type', (_tag, option) => {
+    const payloads = calls(read(option.file)).map((call) =>
+      call.slice(call.indexOf('{'), call.lastIndexOf('}') + 1),
+    );
+    expect(payloads.every((p) => /type\s*:/.test(p))).toBe(true);
+  });
+
+  // Adding the deprecated name to a component that never had it invents a
+  // contract: nothing was listening for it, and it would have to be deprecated
+  // on arrival.
+  it.each(each)('%s keeps the deprecated name exactly where it was', (_tag, option) => {
     const src = read(option.file);
-    expect(src).toContain(`eventName: '${EVENT}'`);
+
+    if (option.legacy === 'none') {
+      expect(src).not.toContain(`eventName: '${LEGACY}'`);
+      expect(src).not.toContain('paymentMethodSelectedLegacy');
+      return;
+    }
+
     expect(src).toContain(`eventName: '${LEGACY}'`);
   });
 
-  it.each(OPTIONS.map((o) => [o.tag, o] as const))('%s emits it', (_tag, option) => {
-    const src = read(option.file);
-    expect(src).toMatch(/emitPublic\(\s*this\.paymentMethodSelected,\s*this\.paymentMethodSelectedLegacy/);
-  });
-
-  it('emits the same { id?, type } shape everywhere', () => {
-    const offenders: string[] = [];
-    for (const option of OPTIONS) {
-      const src = read(option.file);
-      const calls = src.match(/emitPublic\(\s*this\.paymentMethodSelected,[\s\S]*?\);/g) ?? [];
-      for (const call of calls) {
-        const payload = call.slice(call.indexOf('Legacy,') + 'Legacy,'.length, call.lastIndexOf(')'));
-        if (!/type\s*:/.test(payload)) offenders.push(`${option.tag} -> no type in ${payload.trim()}`);
+  it.each(each)('%s passes the deprecated emitter only when it fires one', (_tag, option) => {
+    for (const call of calls(read(option.file))) {
+      if (option.legacy === 'emits') {
+        expect(call).toMatch(/this\.paymentMethodSelected,\s*this\.paymentMethodSelectedLegacy,/);
+      } else {
+        expect(call).toMatch(/this\.paymentMethodSelected,\s*null,/);
       }
     }
-    expect(offenders).toEqual([]);
+  });
+
+  // The two components that already fired it keep their original payloads —
+  // a merchant's handler cannot change shape under them.
+  it('keeps the payload the deprecated name always shipped', () => {
+    expect(read(OPTIONS.find((o) => o.tag === 'justifi-saved-payment-method')!.file)).toContain(
+      'this.paymentMethodOption,',
+    );
+    expect(read(OPTIONS.find((o) => o.tag === 'justifi-sezzle-payment-method')!.file)).toMatch(
+      /\{ type: PAYMENT_METHODS\.SEZZLE \},\s*(\/\/[^\n]*\n\s*)?PAYMENT_METHODS\.SEZZLE,/,
+    );
   });
 
   // a new option component should not be able to join quietly
