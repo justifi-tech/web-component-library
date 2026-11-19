@@ -30,10 +30,8 @@ export class BusinessTermsConditionsFormStep {
   @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   // internal loading events
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'form-completed', bubbles: false, composed: false })
-  formCompleted: EventEmitter<any>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
+  @Prop() completeHandler?: () => void;
 
   private api: any;
 
@@ -66,7 +64,7 @@ export class BusinessTermsConditionsFormStep {
   }
 
   private fetchData = async () => {
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     try {
       const response: IApiResponse<IBusiness> = await this.api.get({ endpoint: this.businessEndpoint, authToken: this.authToken });
       this.acceptedTermsBefore = response.data.terms_conditions_accepted;
@@ -78,12 +76,12 @@ export class BusinessTermsConditionsFormStep {
         data: error,
       })
     } finally {
-      this.formLoading.emit(false);
+      this.loadingHandler?.(false);
     }
   }
 
   private sendData = async (onSuccess?: () => void) => {
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     try {
       const payload = this.termsPayload;
       const response = await this.api.post({ endpoint: this.termsConditionsEndpoint, body: payload, authToken: this.authToken });
@@ -96,7 +94,7 @@ export class BusinessTermsConditionsFormStep {
         data: error,
       })
     } finally {
-      this.formLoading.emit(false);
+      this.loadingHandler?.(false);
     }
   }
 
@@ -112,14 +110,14 @@ export class BusinessTermsConditionsFormStep {
       onSuccess();
     }
     emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: response, formStep: BusinessFormStep.termsAndConditions });
-    this.formCompleted.emit();
+    this.completeHandler?.();
   }
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
     if (this.acceptedTermsBefore) {
       emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: null, formStep: BusinessFormStep.termsAndConditions, metadata: 'no data submitted' });
-      this.formCompleted.emit();
+      this.completeHandler?.();
       onSuccess();
     } else {
       this.formController.validateAndSubmit(() => this.sendData(onSuccess));

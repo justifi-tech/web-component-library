@@ -213,7 +213,7 @@ export class JustifiCheckout {
                             ref={(el) => (this.sezzlePaymentMethodRef = el)}
                           />
                         }
-                        onRadio-click={() => { this.sezzlePaymentMethodRef?.handleSelectionClick(); }}
+                        radioClickHandler={() => { this.sezzlePaymentMethodRef?.handleSelectionClick(); }}
                       />
                     )}
 
@@ -227,7 +227,7 @@ export class JustifiCheckout {
                             ref={(el) => (this.plaidPaymentMethodRef = el)}
                           />
                         }
-                        onRadio-click={() => { this.plaidPaymentMethodRef?.handleSelectionClick(); }}
+                        radioClickHandler={() => { this.plaidPaymentMethodRef?.handleSelectionClick(); }}
                       />
                     )}
                     <justifi-tokenize-payment-method

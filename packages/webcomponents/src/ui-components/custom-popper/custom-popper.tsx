@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Prop, h, State, Watch } from '@stencil/core';
 import { createPopper, Options, Placement, PositioningStrategy } from '@popperjs/core';
 
 @Component({
@@ -13,10 +13,8 @@ export class CustomPopper {
 
   @State() isOpen: boolean = false;
 
-  @Event({ eventName: 'popper-show', bubbles: false, composed: false })
-  showEvent: EventEmitter;
-  @Event({ eventName: 'popper-hide', bubbles: false, composed: false })
-  hideEvent: EventEmitter;
+  @Prop() showHandler?: () => void;
+  @Prop() hideHandler?: () => void;
 
   private popperInstance: any;
   private popperContentRef: HTMLElement;
@@ -116,14 +114,14 @@ export class CustomPopper {
     this.isOpen = true;
     this.popperContentRef.setAttribute('data-show', '');
     this.popperInstance.update();
-    this.showEvent.emit();
+    this.showHandler?.();
   }
 
   hide() {
     this.isOpen = false;
     this.popperContentRef.removeAttribute('data-show');
     this.popperInstance.update();
-    this.hideEvent.emit();
+    this.hideHandler?.();
   }
 
   render() {

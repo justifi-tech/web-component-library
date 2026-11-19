@@ -45,8 +45,7 @@ export class BusinessOwnersFormStep {
   @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   /** @deprecated Listen for `justifi-error`. Removed in the next major. */
   @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   get showAddOwnerButton() {
     return this.ownersPayload.length < 4 && !this.newFormOpen;
@@ -70,7 +69,7 @@ export class BusinessOwnersFormStep {
   }
 
   private getData = () => {
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
@@ -89,7 +88,7 @@ export class BusinessOwnersFormStep {
         });
       },
       final: () => {
-        this.formLoading.emit(false);
+        this.loadingHandler?.(false);
         this.isLoading = false;
         this.manageRefs();
       }
@@ -98,7 +97,7 @@ export class BusinessOwnersFormStep {
 
   private sendData = async (onSuccess?: () => void) => {
     let submittedData;
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.patchBusiness({
       payload: { owners: this.ownersPayload },
       onSuccess: (response) => {
@@ -115,7 +114,7 @@ export class BusinessOwnersFormStep {
       },
       final: () => {
         emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: submittedData, formStep: BusinessFormStep.owners });
-        this.formLoading.emit(false)
+        this.loadingHandler?.(false)
       }
     });
   }
@@ -202,8 +201,7 @@ export class BusinessOwnersFormStep {
     this.manageRefs();
   }
 
-  handleOwnerSubmit = (event: CustomEvent) => {
-    const submittedOwner = event.detail;
+  handleOwnerSubmit = (submittedOwner: { id: string }) => {
     const updatedOwners = this.ownersPayload.map(owner =>
       owner.id === submittedOwner.id ? submittedOwner : owner
     );
@@ -219,7 +217,7 @@ export class BusinessOwnersFormStep {
   private handleRepresentativeIsOwnerChange = (value: boolean) => {
     this.representativeIsOwner = value;
     if (this.representativeIsOwner) {
-      this.formLoading.emit(true);
+      this.loadingHandler?.(true);
       this.isLoading = true;
       this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== '');
       this.patchBusiness({
@@ -233,7 +231,7 @@ export class BusinessOwnersFormStep {
         },
         finally: () => {
           this.isLoading = false;
-          this.formLoading.emit(false);
+          this.loadingHandler?.(false);
         }
       });
     }
@@ -297,8 +295,8 @@ export class BusinessOwnersFormStep {
                   country={this.country}
                   allowOptionalFields={this.allowOptionalFields}
                   ref={(ref) => this.matchRef(ref, owner.id)}
-                  onOwner-submitted={this.handleOwnerSubmit}
-                  onForm-loading={(e: CustomEvent<boolean>) => this.formLoading.emit(e.detail)}
+                  submitHandler={this.handleOwnerSubmit}
+                  loadingHandler={(loading) => this.loadingHandler?.(loading)}
                 />
               );
             })}

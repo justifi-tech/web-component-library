@@ -116,9 +116,9 @@ export class JustifiTokenizePaymentMethod {
     this.analytics = new JustifiAnalytics(this);
   }
 
-  handleRadioClick = (event: CustomEvent<string>) => {
-    this.selectedPaymentMethod = event.detail as PAYMENT_METHODS;
-    checkoutStore.selectedPaymentMethod = { type: event.detail as PAYMENT_METHODS };
+  handleRadioClick = (value: string) => {
+    this.selectedPaymentMethod = value as PAYMENT_METHODS;
+    checkoutStore.selectedPaymentMethod = { type: value as PAYMENT_METHODS };
   };
 
   @Method()
@@ -380,7 +380,7 @@ export class JustifiTokenizePaymentMethod {
           checked={isSelected}
           label={PAYMENT_METHOD_TYPE_LABELS[paymentMethodType]}
           hidden={this.shouldHideRadioInput}
-          onRadio-click={this.handleRadioClick}
+          radioClickHandler={this.handleRadioClick}
         />
         {isSelected && this.renderSelectedPaymentMethodForm(paymentMethodType)}
       </div>

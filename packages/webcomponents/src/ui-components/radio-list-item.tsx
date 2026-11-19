@@ -1,4 +1,4 @@
-import { Component, Prop, h, Event, EventEmitter, Host } from "@stencil/core";
+import { Component, Prop, h, Host } from '@stencil/core';
 import { radioListItem } from "../styles/parts";
 
 @Component({
@@ -12,10 +12,10 @@ export class RadioListItem {
   @Prop() hidden?: boolean = false;
   @Prop() class?: string;
 
-  @Event({ eventName: 'radio-click', bubbles: false, composed: false }) radioClick: EventEmitter<string>;
+  @Prop() radioClickHandler?: (value: string) => void;
 
   handleClick = () => {
-    this.radioClick.emit(this.value);
+    this.radioClickHandler?.(this.value);
   };
 
   render() {

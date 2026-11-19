@@ -8,6 +8,8 @@ describe('form-control-number-masked', () => {
   const components = [FormControlNumberMasked, FormControlErrorText, FormControlTooltip];
   const mockInputHandler = jest.fn();
 
+  beforeEach(() => jest.clearAllMocks());
+
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
@@ -95,7 +97,7 @@ describe('form-control-number-masked', () => {
     expect(inputElement.value).toBe(testValue);
   });
 
-  it('Emits formControlInput event on input', async () => {
+  it('Calls inputHandler on input', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -107,42 +109,13 @@ describe('form-control-number-masked', () => {
           mask='00'
         />
     });
-
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.value = '25';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
-      detail: {
-        name: 'age',
-        value: '25',
-      }
-    }));
-  });
-
-  it('Emits formControlBlur event on blur', async () => {
-    const page = await newSpecPage({
-      components: components,
-      template: () =>
-        <form-control-number-masked
-          label='Age'
-          name='age'
-          inputHandler={mockInputHandler}
-          defaultValue='25'
-          mask='00'
-        />
-    });
-    const blurEventSpy = jest.fn();
-    page.root.addEventListener('form-control-blur', blurEventSpy);
-
-    const inputElement = page.root.querySelector('input');
-    await inputElement.dispatchEvent(new CustomEvent('blur'));
-
-    expect(blurEventSpy).toHaveBeenCalled();
+    expect(mockInputHandler).toHaveBeenCalledWith('age', '25');
   });
 
   it('Disables input when disabled prop is provided', async () => {
@@ -213,7 +186,7 @@ describe('form-control-number-masked', () => {
     expect(inputElement.classList.contains('is-invalid')).toBe(true);
   });
 
-  it('Emits unmasked value for SSN mask input', async () => {
+  it('Passes the unmasked value to inputHandler for an SSN mask', async () => {
     const mockHandler = jest.fn();
     const page = await newSpecPage({
       components: components,
@@ -227,24 +200,21 @@ describe('form-control-number-masked', () => {
         />
     });
 
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
-
     const inputElement = page.root.querySelector('input');
 
     // Simulate entering SSN with dashes
     inputElement.value = '123-45-6789';
     await inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    // The formControlInput event should emit the unmasked value (digits only)
+    // inputHandler should receive the unmasked value (digits only)
     // Note: In the test environment, IMask might not be fully functional,
     // but the logic should attempt to use unmaskedValue when available
-    expect(inputEventSpy).toHaveBeenCalled();
+    expect(mockHandler).toHaveBeenCalled();
 
-    // The event should have been called with either the unmasked value or fall back to input value
-    const lastCall = inputEventSpy.mock.calls[inputEventSpy.mock.calls.length - 1][0];
-    expect(lastCall.detail.name).toBe('identification_number');
+    // It should have been called with either the unmasked value or fall back to input value
+    const lastCall = mockHandler.mock.calls[mockHandler.mock.calls.length - 1];
+    expect(lastCall[0]).toBe('identification_number');
     // In real usage, this would be '123456789' (unmasked), but in test it might fall back to input value
-    expect(lastCall.detail.value).toBeDefined();
+    expect(lastCall[1]).toBeDefined();
   });
 });

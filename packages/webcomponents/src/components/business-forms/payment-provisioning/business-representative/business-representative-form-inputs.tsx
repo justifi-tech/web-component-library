@@ -83,7 +83,7 @@ export class BusinessRepresentativeFormInputs {
                 defaultValue={this.representativeDefaultValue?.dob_full}
                 errorText={this.errors.dob_full}
                 inputHandler={this.inputHandler}
-                onForm-control-input={(e) => updateDateOfBirthFormValues(e, this.formController)}
+                dateChangeHandler={(date) => updateDateOfBirthFormValues(date, this.formController)}
                 helpText="Must be 18 or older."
               />
             </div>

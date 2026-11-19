@@ -21,7 +21,7 @@ async function setupComponent(
     authToken: string;
     allowOptionalFields: boolean;
     country: CountryCode;
-    handleFormLoading: (e: CustomEvent) => void;
+    handleFormLoading: (loading: boolean) => void;
     handleFormCompleted: () => void;
   }> = {}
 ) {
@@ -133,17 +133,15 @@ describe('payment-provisioning-form-steps', () => {
     // justifi-payment-provisioning on its own. Every step has to be wired
     // directly or its loading state is silently lost.
     it.each(STEP_TAGS.map((tag, i) => [tag, i] as const))(
-      'delivers form-loading from %s (step %i) to the handler',
+      'delivers loading from %s (step %i) to the handler',
       async (tag, step) => {
         const handleFormLoading = jest.fn();
         const { page } = await setupComponent(step, { handleFormLoading });
         const child = page.root.querySelector(tag);
 
-        child.dispatchEvent(new CustomEvent('form-loading', { detail: true }));
+        (child as any).loadingHandler(true);
 
-        expect(handleFormLoading).toHaveBeenCalledWith(
-          expect.objectContaining({ detail: true })
-        );
+        expect(handleFormLoading).toHaveBeenCalledWith(true);
       }
     );
 
@@ -152,7 +150,7 @@ describe('payment-provisioning-form-steps', () => {
       const { page } = await setupComponent(7, { handleFormCompleted });
       const child = page.root.querySelector('business-terms-conditions-form-step');
 
-      child.dispatchEvent(new CustomEvent('form-completed'));
+      (child as any).completeHandler();
 
       expect(handleFormCompleted).toHaveBeenCalled();
     });

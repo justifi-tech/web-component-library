@@ -3,6 +3,7 @@ import { StyledHost } from "../../ui-components";
 import { detectDuplicateVersion } from "../../utils/detect-duplicate-version";
 import JustifiAnalytics from "../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { TerminalModelName } from "../../api";
 import { BusinessService } from "../../api/services/business.service";
 import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
@@ -137,8 +138,8 @@ export class JustifiOrderTerminals {
     });
   }
 
-  private onSelectedQuantityChange(event) {
-    this.order.updateTerminal(event.detail.modelName, event.detail.quantity);
+  private onSelectedQuantityChange(change: { modelName: TerminalModelName; quantity: number }) {
+    this.order.updateTerminal(change.modelName, change.quantity);
     this.totalQuantity = this.order.totalQuantity;
   }
 
@@ -202,7 +203,7 @@ export class JustifiOrderTerminals {
               imageUrl={terminal.image_url}
               helpUrl={terminal.help_url}
               limit={this.orderLimit - this.order.totalQuantity}
-              onSelected-quantity-change={this.onSelectedQuantityChange.bind(this)}
+              quantityChangeHandler={this.onSelectedQuantityChange.bind(this)}
             />
           ))}
         </div>

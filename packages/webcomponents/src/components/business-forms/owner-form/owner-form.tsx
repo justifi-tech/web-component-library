@@ -36,7 +36,7 @@ export class OwnerForm {
 
   @Watch('isLoading')
   loadingWatcher() {
-    this.formLoading.emit(this.isLoading);
+    this.loadingHandler?.(this.isLoading);
   }
 
   @Event({ eventName: 'justifi-click', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
@@ -45,10 +45,8 @@ export class OwnerForm {
   @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   /** @deprecated Listen for `justifi-error`. Removed in the next major. */
   @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'owner-submitted', bubbles: false, composed: false })
-  ownerSubmitted: EventEmitter<any>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
+  @Prop() submitHandler?: (owner: { id: string }) => void;
 
   constructor() {
     this.validate = this.validate.bind(this);
@@ -192,7 +190,7 @@ export class OwnerForm {
         this.patchOwner({
           payload: this.payload,
           onSuccess: (response) => {
-            this.ownerSubmitted.emit({ id: response.data.id });
+            this.submitHandler?.({ id: response.data.id });
             this.instantiateOwner(response.data);
             resolve(true);
           },
@@ -210,7 +208,7 @@ export class OwnerForm {
         this.postOwner({
           payload: this.payload,
           onSuccess: (response) => {
-            this.ownerSubmitted.emit({ id: response.data.id });
+            this.submitHandler?.({ id: response.data.id });
             this.instantiateOwner(response.data);
             resolve(true);
           },

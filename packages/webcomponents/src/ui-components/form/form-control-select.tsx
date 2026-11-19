@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   Watch,
   State,
 } from '@stencil/core';
@@ -33,10 +31,6 @@ export class FormControlSelect {
     this.updateInput(newValue);
   }
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   componentDidLoad() {
     this.updateInput(this.defaultValue);
@@ -46,7 +40,6 @@ export class FormControlSelect {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
-    this.formControlInput.emit(target.value);
   }
 
   updateInput = (newValue: any) => {
@@ -84,7 +77,6 @@ export class FormControlSelect {
             onFocus={() => this.isFocused = true}
             onBlur={() => {
               this.isFocused = false;
-              this.formControlBlur.emit();
             }}
             onInput={this.handleFormControlInput}
             part={this.part}

@@ -9,6 +9,8 @@ describe('form-control-file', () => {
   const components = [FormControlFile, FormControlErrorText, FormControlTooltip];
   const mockInputHandler = jest.fn();
 
+  beforeEach(() => jest.clearAllMocks());
+
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
@@ -60,7 +62,7 @@ describe('form-control-file', () => {
     expect(inputElement.value).toBe(testValue);
   });
 
-  it('Emits formControlInput event on input', async () => {
+  it('Calls inputHandler on input', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -72,43 +74,13 @@ describe('form-control-file', () => {
         >
         </form-control-file>
     });
-
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.value = 'govermnent-id.jpg';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
-      detail: expect.objectContaining({
-        name: 'governmentId',
-        value: 'govermnent-id.jpg'
-      })
-    }));
-  });
-
-  it('Emits formControlBlur event on blur', async () => {
-    const page = await newSpecPage({
-      components: components,
-      template: () =>
-        <form-control-file
-          label='Government ID'
-          name='governmentId'
-          inputHandler={mockInputHandler}
-          documentType={EntityDocumentType.other}
-        >
-        </form-control-file>
-    });
-
-    const blurEventSpy = jest.fn();
-    page.root.addEventListener('form-control-blur', blurEventSpy);
-
-    const inputElement = page.root.querySelector('input');
-    inputElement.dispatchEvent(new Event('blur'));
-
-    expect(blurEventSpy).toHaveBeenCalled();
+    expect(mockInputHandler).toHaveBeenCalledWith('governmentId', 'govermnent-id.jpg');
   });
 
   it('Disables input when disabled prop is true', async () => {

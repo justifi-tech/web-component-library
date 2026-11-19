@@ -51,20 +51,7 @@ const LEGACY_EVENTS = PUBLIC_EVENT_PAIRS.map(([, legacy]) => legacy);
  * listening on the emitting element — a JSX `onX` prop or `addEventListener`
  * on a ref. Never `@Listen`, which binds to the host and needs bubbling.
  */
-const INTERNAL_EVENTS = [
-  'form-control-input',
-  'form-control-blur',
-  'form-loading',
-  'form-completed',
-  'owner-submitted',
-  'popper-show',
-  'popper-hide',
-  'radio-click',
-  'checkbox-changed',
-  'file-selected',
-  'iframe-loaded',
-  'selected-quantity-change',
-];
+const INTERNAL_EVENTS = ['iframe-loaded'];
 
 const sourceFiles = (dir: string, out: string[] = []): string[] => {
   for (const entry of readdirSync(dir)) {

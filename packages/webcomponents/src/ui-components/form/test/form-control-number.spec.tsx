@@ -8,6 +8,8 @@ describe('form-control-number', () => {
   const components = [FormControlNumber, FormControlErrorText, FormControlHelpText];
   const mockInputHandler = jest.fn();
 
+  beforeEach(() => jest.clearAllMocks());
+
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
@@ -92,7 +94,7 @@ describe('form-control-number', () => {
     expect(inputElement.value).toBe(testValue);
   });
 
-  it('Emits formControlInput event on input', async () => {
+  it('Calls inputHandler on input', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -104,42 +106,13 @@ describe('form-control-number', () => {
           disabled={false}
         />
     });
-
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.value = '25';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
-      detail: expect.objectContaining({
-        name: 'age',
-        value: '25',
-      }),
-    }));
-  });
-
-  it('Emits formControlBlur event on blur', async () => {
-    const page = await newSpecPage({
-      components: components,
-      template: () =>
-        <form-control-number
-          label='Age'
-          name='age'
-          inputHandler={mockInputHandler}
-          disabled={false}
-          defaultValue='25'
-        />
-    });
-    const blurEventSpy = jest.fn();
-    page.root.addEventListener('form-control-blur', blurEventSpy);
-
-    const inputElement = page.root.querySelector('input');
-    await inputElement.dispatchEvent(new CustomEvent('blur'));
-
-    expect(blurEventSpy).toHaveBeenCalled();
+    expect(mockInputHandler).toHaveBeenCalledWith('age', '25');
   });
 
   it('Disables input when disabled prop is provided', async () => {

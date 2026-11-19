@@ -39,8 +39,7 @@ export class LegalAddressFormStep {
   @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -88,7 +87,7 @@ export class LegalAddressFormStep {
   private getData = () => {
     if (!this.getBusiness) return;
 
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
@@ -105,7 +104,7 @@ export class LegalAddressFormStep {
         });
       },
       final: () => {
-        this.formLoading.emit(false);
+        this.loadingHandler?.(false);
         this.isLoading = false;
       }
     });
@@ -113,7 +112,7 @@ export class LegalAddressFormStep {
 
   private sendData = (onSuccess: () => void) => {
     let submittedData;
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.patchBusiness({
       payload: this.patchPayload,
       onSuccess: (response) => {
@@ -130,7 +129,7 @@ export class LegalAddressFormStep {
       },
       final: () => {
         emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: submittedData, formStep: BusinessFormStep.legalAddress });
-        this.formLoading.emit(false)
+        this.loadingHandler?.(false)
       }
     });
   }

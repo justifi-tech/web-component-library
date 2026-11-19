@@ -72,14 +72,13 @@ export class JustifiPaymentProvisioning {
   /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
   @Event({ eventName: 'submit-event' }) submitEventLegacy: EventEmitter<ComponentSubmitEvent>;
 
-  // Passed down as props rather than caught with @Listen: the form steps emit
-  // these with bubbles: false so they never reach the merchant's page.
+  // Handed to the steps as props; nothing crosses the DOM.
   handleFormCompleted = () => {
     this.postProvisioningData();
   };
 
-  handleFormLoading = (event: CustomEvent<boolean>) => {
-    this.loading = event.detail;
+  handleFormLoading = (loading: boolean) => {
+    this.loading = loading;
   };
 
   analytics: JustifiAnalytics;

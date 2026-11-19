@@ -38,7 +38,7 @@ export class BusinessBankAccountFormStep {
 
   @Watch('isLoading')
   watchHandler(newValue: boolean) {
-    this.formLoading.emit(newValue);
+    this.loadingHandler?.(newValue);
   }
 
   @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -47,8 +47,7 @@ export class BusinessBankAccountFormStep {
   @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {

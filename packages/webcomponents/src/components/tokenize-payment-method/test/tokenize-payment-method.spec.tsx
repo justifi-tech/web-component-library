@@ -431,7 +431,7 @@ describe('tokenize-payment-method', () => {
     expect(shadowRoot.querySelector('card-form')).toBeTruthy();
     expect(shadowRoot.querySelector('bank-account-form')).toBeFalsy();
 
-    shadowRoot.querySelector('radio-list-item')?.dispatchEvent(new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_BANK_ACCOUNT }));
+    (shadowRoot.querySelector('radio-list-item') as any)?.radioClickHandler?.(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
     await page.waitForChanges();
 
     shadowRoot = (page.root as HTMLElement).shadowRoot!;
@@ -527,9 +527,8 @@ describe('tokenize-payment-method', () => {
 
       expect(checkoutStore.billingFormFields).toEqual(fields);
 
-      // Simulate toggle: dispatch radio-click to switch from card to bank account
-      const internalEl = page.root?.shadowRoot?.querySelector('justifi-tokenize-payment-method') ?? page.root?.querySelector('justifi-tokenize-payment-method');
-      internalEl?.dispatchEvent(new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_BANK_ACCOUNT }));
+      // switch from card to bank account the way a radio click does
+      (page.rootInstance as any).handleRadioClick(PAYMENT_METHODS.NEW_BANK_ACCOUNT);
       await page.waitForChanges();
 
       // Store retains data; sub-components read from store on mount (billing-form-store-sync.spec)
@@ -546,9 +545,7 @@ describe('tokenize-payment-method', () => {
       const radio = page.root?.shadowRoot?.querySelector(
         `form-control-radio[value="${PAYMENT_METHODS.NEW_CARD}"]`,
       );
-      radio?.closest('radio-list-item')?.dispatchEvent(
-        new CustomEvent('radio-click', { detail: PAYMENT_METHODS.NEW_CARD, bubbles: true, composed: true }),
-      );
+      (radio?.closest('radio-list-item') as any)?.radioClickHandler?.(PAYMENT_METHODS.NEW_CARD);
     };
 
     const renderTokenize = async () => {

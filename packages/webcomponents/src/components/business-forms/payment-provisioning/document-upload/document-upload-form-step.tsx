@@ -56,7 +56,7 @@ export class DocumentUploadFormStep {
 
   @Watch('isLoading')
   watchHandler(newValue: boolean) {
-    this.formLoading.emit(newValue);
+    this.loadingHandler?.(newValue);
   }
 
   @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
@@ -65,8 +65,7 @@ export class DocumentUploadFormStep {
   @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
   /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
   @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -205,8 +204,8 @@ export class DocumentUploadFormStep {
     this.selectedDocType = value;
   }
 
-  handleFileSelected = async (e: CustomEvent<FileSelectEvent>) => {
-    const fileList = Array.from(e.detail.fileList) as File[];
+  handleFileSelected = async (files: FileSelectEvent) => {
+    const fileList = Array.from(files.fileList) as File[];
     const category = this.categories.find(c => c.value === this.selectedCategory);
     if (!category) return;
 
@@ -369,7 +368,7 @@ export class DocumentUploadFormStep {
                 name="document_file"
                 label="Upload Document"
                 documentType={this.selectedDocType as EntityDocumentType}
-                onFile-selected={this.handleFileSelected}
+                fileSelectHandler={this.handleFileSelected}
                 disabled={!this.selectedDocType}
                 multiple={false}
               />
