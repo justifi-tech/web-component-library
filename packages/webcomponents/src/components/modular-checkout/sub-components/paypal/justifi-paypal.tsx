@@ -18,6 +18,7 @@ import {
   VENMO_SUPPORTED_CURRENCY,
 } from './paypal';
 import { emitPublic } from '../../../../api/emit-public';
+import { PAYMENT_METHODS, SelectedPaymentMethod } from '../../ModularCheckout';
 
 const SHOWN_CLASS = 'shown';
 
@@ -45,6 +46,8 @@ export class JustifiPaypal {
   private paypalButtonEl?: HTMLElement;
   private venmoButtonEl?: HTMLElement;
 
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
+  paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
   @Event({ eventName: 'justifi-paypal-started' }) paypalStarted!: EventEmitter<{
     fundingSource: PaypalFundingSource;
   }>;
@@ -260,6 +263,9 @@ export class JustifiPaypal {
 
     this.pendingOrderId = undefined;
     emitPublic(this.paypalStarted, this.paypalStartedLegacy, { fundingSource });
+    emitPublic(this.paymentMethodSelected, null, {
+      type: fundingSource === "venmo" ? PAYMENT_METHODS.VENMO : PAYMENT_METHODS.PAYPAL,
+    });
 
     let orderFailed = false;
 
