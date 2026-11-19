@@ -51,6 +51,7 @@ const NEW_NAME_ONLY: Record<string, string[]> = {
   'justifi-payment-method-selected': [
     'components/tokenize-payment-method/justifi-tokenize-payment-method.tsx',
     'components/modular-checkout/sub-components/justifi-saved-payment-methods.tsx',
+    'components/modular-checkout/sub-components/justifi-plaid-payment-method.tsx',
     'components/modular-checkout/sub-components/justifi-apple-pay.tsx',
     'components/modular-checkout/sub-components/justifi-google-pay.tsx',
     'components/modular-checkout/sub-components/paypal/justifi-paypal.tsx',

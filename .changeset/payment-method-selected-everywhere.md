@@ -21,7 +21,9 @@ Nothing changes for anyone listening on the deprecated
 with the payload they always had — Sezzle's bare `'sezzle'` string, and
 `justifi-saved-payment-method`'s whole option object. The six that never fired
 it don't start: for those, `justifi-payment-method-selected` is the only name,
-with no deprecated twin to retire later.
+with no deprecated twin to retire later. `justifi-plaid-payment-method` had
+declared the deprecated emitter without ever firing it; that declaration is
+gone.
 
 For the wallets the event fires when the shopper starts the payment (the sheet
 opening or the button click), not when it completes, so it reports the choice

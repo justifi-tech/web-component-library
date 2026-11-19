@@ -12,11 +12,10 @@ const SRC = join(__dirname, '..', '..');
  * stays that way. The deprecated name is never added where it did not already
  * ship: a merchant cannot have been listening for an event that never fired.
  *
- *   emits    — fired it, with its own payload, which does not change here
- *   declared — declared the emitter and never fired it
- *   none     — never had it, and does not get one now
+ *   emits — fired it, with its own payload, which does not change here
+ *   none  — never fired it, and does not start now
  */
-const OPTIONS: { tag: string; file: string; legacy: 'emits' | 'declared' | 'none' }[] = [
+const OPTIONS: { tag: string; file: string; legacy: 'emits' | 'none' }[] = [
   {
     tag: 'justifi-tokenize-payment-method',
     file: 'components/tokenize-payment-method/justifi-tokenize-payment-method.tsx',
@@ -40,7 +39,8 @@ const OPTIONS: { tag: string; file: string; legacy: 'emits' | 'declared' | 'none
   {
     tag: 'justifi-plaid-payment-method',
     file: 'components/modular-checkout/sub-components/justifi-plaid-payment-method.tsx',
-    legacy: 'declared',
+    // declared the deprecated emitter for years and never fired it; dropped
+    legacy: 'none',
   },
   {
     tag: 'justifi-apple-pay',
