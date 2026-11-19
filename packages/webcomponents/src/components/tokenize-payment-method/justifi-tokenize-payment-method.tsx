@@ -116,9 +116,18 @@ export class JustifiTokenizePaymentMethod {
     this.analytics = new JustifiAnalytics(this);
   }
 
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
+  paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
+  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
+  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
+  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
+
   handleRadioClick = (value: string) => {
     this.selectedPaymentMethod = value as PAYMENT_METHODS;
     checkoutStore.selectedPaymentMethod = { type: value as PAYMENT_METHODS };
+    emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
+      type: value as PAYMENT_METHODS,
+    });
   };
 
   @Method()

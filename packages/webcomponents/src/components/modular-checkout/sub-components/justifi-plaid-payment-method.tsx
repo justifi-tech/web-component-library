@@ -5,7 +5,7 @@ import { StyledHost } from '../../../ui-components';
 import { image, label, text, textDanger } from '../../../styles/parts';
 import { PlaidService } from '../../../api/services/plaid.service';
 import { ComponentErrorSeverity } from '../../../api/ComponentError';
-import { PAYMENT_METHODS } from '../ModularCheckout';
+import { PAYMENT_METHODS, SelectedPaymentMethod } from '../ModularCheckout';
 import {
   PlaidErrorCodes,
   PLAID_ERROR_MESSAGES,
@@ -39,9 +39,11 @@ export class JustifiPlaidPaymentMethod {
   private hasLoggedDisabledWarning: boolean = false;
   private hasLoggedAchPaymentsDisabledWarning: boolean = false;
 
-  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true }) paymentMethodOptionSelected: EventEmitter;
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
+  paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
   /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
-  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true }) paymentMethodOptionSelectedLegacy: EventEmitter;
+  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
+  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
   @Event({ eventName: 'justifi-plaid-error', bubbles: true }) plaidError: EventEmitter;
   /** @deprecated Listen for `justifi-plaid-error`. Removed in the next major. */
   @Event({ eventName: 'plaidError', bubbles: true }) plaidErrorLegacy: EventEmitter;
@@ -150,6 +152,7 @@ export class JustifiPlaidPaymentMethod {
 
     // Update store selection
     checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.PLAID };
+    emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, { type: PAYMENT_METHODS.PLAID });
 
     // If there's an error, clear it and try to initialize again
     if (this.error) {

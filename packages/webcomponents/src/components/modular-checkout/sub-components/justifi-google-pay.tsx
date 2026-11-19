@@ -11,6 +11,7 @@ import { configState, waitForConfig } from "../../config-provider/config-state";
 import { checkoutStore } from "../../../store/checkout.store";
 import GooglePaySkeleton from "./google-pay-skeleton";
 import { emitPublic } from '../../../api/emit-public';
+import { PAYMENT_METHODS, SelectedPaymentMethod } from '../ModularCheckout';
 
 enum GooglePayEventTypes {
   initialize = "justifi.googlePay.initialize",
@@ -45,6 +46,11 @@ export class JustifiGooglePay {
   @State() sdkLoaded: boolean = false;
   @State() isReadyToPay: boolean = false;
 
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
+  paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
+  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
+  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
+  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
   @Event({ eventName: 'justifi-google-pay-started' }) googlePayStarted: EventEmitter<void>;
   /** @deprecated Listen for `justifi-google-pay-started`. Removed in the next major. */
   @Event({ eventName: 'googlePayStarted' }) googlePayStartedLegacy: EventEmitter<void>;
@@ -102,6 +108,9 @@ export class JustifiGooglePay {
         break;
       case GooglePayEventTypes.buttonClicked:
         emitPublic(this.googlePayStarted, this.googlePayStartedLegacy);
+        emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
+          type: PAYMENT_METHODS.GOOGLE_PAY,
+        });
         this.sendStartPayment();
         break;
       case GooglePayEventTypes.paymentSuccess:

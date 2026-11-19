@@ -22,6 +22,7 @@ import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
 import { checkoutStore, onChange } from "../../../store/checkout.store";
 import { emitPublic } from '../../../api/emit-public';
+import { PAYMENT_METHODS, SelectedPaymentMethod } from '../ModularCheckout';
 
 @Component({
   tag: "justifi-apple-pay",
@@ -48,6 +49,11 @@ export class JustifiApplePay {
   @State() isConfigValid: boolean = true;
   @State() error: string | null = null;
 
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
+  paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
+  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
+  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
+  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
   @Event({ eventName: 'justifi-apple-pay-started' }) applePayStarted!: EventEmitter<void>;
   /** @deprecated Listen for `justifi-apple-pay-started`. Removed in the next major. */
   @Event({ eventName: 'applePayStarted' }) applePayStartedLegacy!: EventEmitter<void>;
@@ -186,6 +192,9 @@ export class JustifiApplePay {
       this.isProcessing = true;
       this.error = null;
       emitPublic(this.applePayStarted, this.applePayStartedLegacy);
+      emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
+        type: PAYMENT_METHODS.APPLE_PAY,
+      });
 
       const paymentRequest: IApplePayPaymentRequest = {
         countryCode: this.countryCodeForCurrency(checkoutStore.paymentCurrency),

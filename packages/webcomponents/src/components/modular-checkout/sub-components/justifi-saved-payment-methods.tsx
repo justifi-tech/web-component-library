@@ -1,15 +1,22 @@
-import { Component, h } from "@stencil/core";
+import { Component, Event, EventEmitter, h } from "@stencil/core";
 import { StyledHost } from '../../../ui-components';
 import { checkoutStore } from '../../../store/checkout.store';
 import { radioListItem } from '../../../styles/parts';
 import { CardBrandLabels } from '../../checkout/payment-method-option-utils';
-import { PAYMENT_METHODS, SavedPaymentMethod } from "../ModularCheckout";
+import { PAYMENT_METHODS, SavedPaymentMethod, SelectedPaymentMethod } from "../ModularCheckout";
+import { emitPublic } from "../../../api/emit-public";
 
 @Component({
   tag: 'justifi-saved-payment-methods',
   shadow: true,
 })
 export class JustifiSavedPaymentMethods {
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
+  paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
+  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
+  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
+  paymentMethodSelectedLegacy: EventEmitter<SelectedPaymentMethod>;
+
   componentWillLoad() {
     if (checkoutStore.checkoutLoaded) {
       if (!checkoutStore.paymentMethods.length) {
@@ -26,6 +33,10 @@ export class JustifiSavedPaymentMethods {
     e.preventDefault();
     checkoutStore.selectedPaymentMethod = { id: paymentMethod.id, type: paymentMethod.type }
     checkoutStore.paymentToken = paymentMethod.id;
+    emitPublic(this.paymentMethodSelected, this.paymentMethodSelectedLegacy, {
+      id: paymentMethod.id,
+      type: paymentMethod.type,
+    });
   };
 
   isAllowedPaymentMethod = (paymentMethodType: PAYMENT_METHODS) => {
