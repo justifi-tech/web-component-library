@@ -24,10 +24,10 @@ export const updateAddressFormValues = (
 };
 
 export const updateDateOfBirthFormValues = (
-  event,
+  date: { name: string; value: string },
   formController: FormController
 ) => {
-  const dob_values = deconstructDate(event.detail);
+  const dob_values = deconstructDate(date);
   updateFormValues(formController, {
     ...formController.values.getValue(),
     dob_day: dob_values.dob_day,

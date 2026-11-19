@@ -33,8 +33,13 @@ Component to render a formated list of payments for the requested account.
 
 ### Events
 
-- `click-event`: emitted when users select a row or click an inline action; `event.detail` surfaces `payment_id`.
-- `error-event`: surfaces API or token errors for logging.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-click`: emitted when users select a row or click an inline action; `event.detail` surfaces `payment_id`.
+- `justifi-error`: surfaces API or token errors for logging.
 
 ## Authorization
 
@@ -110,8 +115,8 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const paymentsList = document.querySelector('justifi-payments-list');
 
-    paymentsList.addEventListener('click-event', (event) => {
-      // 'click-event' is emitted when a user clicks on a table row, or clicks on the next or previous page buttons
+    paymentsList.addEventListener('justifi-click', (event) => {
+      // 'justifi-click' is emitted when a user clicks on a table row, or clicks on the next or previous page buttons
       // event.detail.name describes the action that was clicked - it could be 'nextPage', 'previousPage', or 'tableRow'
       // event.detail.data will be included if the action was 'tableRow', and will contain the data for the row that was clicked
       
@@ -121,9 +126,9 @@ Authorization is performed by passing a web component token as `auth-token`.
       }
     });
 
-    paymentsList.addEventListener('error-event', (event) => {
+    paymentsList.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
   })();
 </script>

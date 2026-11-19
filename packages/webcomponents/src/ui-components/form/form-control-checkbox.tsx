@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   State,
 } from '@stencil/core';
 import { FormControlHelpText, FormControlErrorText } from '../../ui-components';
@@ -26,17 +24,12 @@ export class FormControlCheckbox {
   @Prop() inputHandler?: (name: string, value: boolean) => void = () => { };
   @Prop() disabled?: boolean = false;
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   handleFormControlInput = (event: any) => {
     event.preventDefault();
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.checked);
-    this.formControlInput.emit({ name, value: target.value });
   }
 
   updateInput = (newValue: any) => {
@@ -72,7 +65,6 @@ export class FormControlCheckbox {
               onFocus={() => this.isFocused = true}
               onBlur={() => {
                 this.isFocused = false;
-                this.formControlBlur.emit();
               }}
               onInput={this.handleFormControlInput}
               part={this.part}

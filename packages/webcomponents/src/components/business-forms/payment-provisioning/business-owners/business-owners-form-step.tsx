@@ -8,6 +8,7 @@ import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormClickActions, BusinessFormStep } from '../../utils/event-types';
 import { CountryCode } from '../../../../utils/country-codes';
 import { Representative } from '../../../../api/Identity';
+import { emitPublic } from '../../../../api/emit-public';
 
 interface ownerPayloadItem { id: string; }
 
@@ -35,11 +36,16 @@ export class BusinessOwnersFormStep {
     this.initializeApi();
   }
 
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'justifi-click', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event', bubbles: true }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   get showAddOwnerButton() {
     return this.ownersPayload.length < 4 && !this.newFormOpen;
@@ -63,7 +69,7 @@ export class BusinessOwnersFormStep {
   }
 
   private getData = () => {
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
@@ -75,14 +81,14 @@ export class BusinessOwnersFormStep {
         }
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
         });
       },
       final: () => {
-        this.formLoading.emit(false);
+        this.loadingHandler?.(false);
         this.isLoading = false;
         this.manageRefs();
       }
@@ -91,7 +97,7 @@ export class BusinessOwnersFormStep {
 
   private sendData = async (onSuccess?: () => void) => {
     let submittedData;
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.patchBusiness({
       payload: { owners: this.ownersPayload },
       onSuccess: (response) => {
@@ -100,15 +106,15 @@ export class BusinessOwnersFormStep {
       },
       onError: ({ error, code, severity }) => {
         submittedData = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.owners });
-        this.formLoading.emit(false)
+        emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: submittedData, formStep: BusinessFormStep.owners });
+        this.loadingHandler?.(false)
       }
     });
   }
@@ -160,7 +166,7 @@ export class BusinessOwnersFormStep {
   }
 
   private initializeApi() {
-    if (!validateRequiredProps(this.errorEvent, {
+    if (!validateRequiredProps(this.errorEvent, this.errorEventLegacy, {
       'auth-token': this.authToken,
       'business-id': this.businessId,
     })) {
@@ -182,7 +188,7 @@ export class BusinessOwnersFormStep {
   private addOwnerForm = (fireClick?: boolean) => {
     this.newFormOpen = true;
     this.ownersPayload = [...this.ownersPayload, { id: '' }];
-    fireClick && this.clickEvent.emit({ name: BusinessFormClickActions.addOwnerForm });
+    fireClick && emitPublic(this.clickEvent, this.clickEventLegacy, { name: BusinessFormClickActions.addOwnerForm });
   };
 
   private removeOwnerForm = (id: string) => {
@@ -195,8 +201,7 @@ export class BusinessOwnersFormStep {
     this.manageRefs();
   }
 
-  handleOwnerSubmit = (event: CustomEvent) => {
-    const submittedOwner = event.detail;
+  handleOwnerSubmit = (submittedOwner: { id: string }) => {
     const updatedOwners = this.ownersPayload.map(owner =>
       owner.id === submittedOwner.id ? submittedOwner : owner
     );
@@ -212,7 +217,7 @@ export class BusinessOwnersFormStep {
   private handleRepresentativeIsOwnerChange = (value: boolean) => {
     this.representativeIsOwner = value;
     if (this.representativeIsOwner) {
-      this.formLoading.emit(true);
+      this.loadingHandler?.(true);
       this.isLoading = true;
       this.ownersPayload = this.ownersPayload.filter(owner => owner.id !== '');
       this.patchBusiness({
@@ -226,7 +231,7 @@ export class BusinessOwnersFormStep {
         },
         finally: () => {
           this.isLoading = false;
-          this.formLoading.emit(false);
+          this.loadingHandler?.(false);
         }
       });
     }
@@ -290,8 +295,8 @@ export class BusinessOwnersFormStep {
                   country={this.country}
                   allowOptionalFields={this.allowOptionalFields}
                   ref={(ref) => this.matchRef(ref, owner.id)}
-                  onOwner-submitted={this.handleOwnerSubmit}
-                  onForm-loading={(e: CustomEvent<boolean>) => this.formLoading.emit(e.detail)}
+                  submitHandler={this.handleOwnerSubmit}
+                  loadingHandler={(loading) => this.loadingHandler?.(loading)}
                 />
               );
             })}

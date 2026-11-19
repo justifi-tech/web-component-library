@@ -3,6 +3,7 @@ import { StyledHost } from "../../ui-components";
 import { detectDuplicateVersion } from "../../utils/detect-duplicate-version";
 import JustifiAnalytics from "../../api/Analytics";
 import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/ComponentError';
+import { TerminalModelName } from "../../api";
 import { BusinessService } from "../../api/services/business.service";
 import { TerminalModel, ComponentErrorEvent } from "../../api";
 import { Business } from "../../api/Business";
@@ -15,6 +16,7 @@ import { TerminalService } from "../../api/services/terminal.service";
 import { TerminalOrder, TerminalOrderType } from "../../api/TerminalOrder";
 import { makeOrderTerminals } from "../../actions/terminal/order-terminals";
 import { formatPhoneNumber } from "../../utils/utils";
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-order-terminals',
@@ -41,11 +43,13 @@ export class JustifiOrderTerminals {
 
   analytics: JustifiAnalytics;
 
-  @Event({
-    eventName: 'error-event',
-  }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
-  @Event({ eventName: 'submit-event' }) submitted: EventEmitter<any>;
+  @Event({ eventName: 'justifi-submit' }) submitted: EventEmitter<any>;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event' }) submittedLegacy: EventEmitter<any>;
 
   componentWillLoad() {
     this.order = new TerminalOrder({
@@ -64,7 +68,7 @@ export class JustifiOrderTerminals {
 
   private handleError(errorMessage: string, code: ComponentErrorCodes, severity: ComponentErrorSeverity) {
     this.error = { message: errorMessage, code, severity };
-    this.errorEvent.emit({ errorCode: code, message: errorMessage, severity });
+    emitPublic(this.errorEvent, this.errorEventLegacy, { errorCode: code, message: errorMessage, severity });
   }
 
   private loadData() {
@@ -124,7 +128,7 @@ export class JustifiOrderTerminals {
     orderTerminals({
       terminalOrder: this.order.payload,
       onSuccess: ({ data }) => {
-        this.submitted.emit(data);
+        emitPublic(this.submitted, this.submittedLegacy, data);
         this.submitting = false;
       },
       onError: ({ error, code, severity }) => {
@@ -134,8 +138,8 @@ export class JustifiOrderTerminals {
     });
   }
 
-  private onSelectedQuantityChange(event) {
-    this.order.updateTerminal(event.detail.modelName, event.detail.quantity);
+  private onSelectedQuantityChange(change: { modelName: TerminalModelName; quantity: number }) {
+    this.order.updateTerminal(change.modelName, change.quantity);
     this.totalQuantity = this.order.totalQuantity;
   }
 
@@ -199,7 +203,7 @@ export class JustifiOrderTerminals {
               imageUrl={terminal.image_url}
               helpUrl={terminal.help_url}
               limit={this.orderLimit - this.order.totalQuantity}
-              onSelected-quantity-change={this.onSelectedQuantityChange.bind(this)}
+              quantityChangeHandler={this.onSelectedQuantityChange.bind(this)}
             />
           ))}
         </div>

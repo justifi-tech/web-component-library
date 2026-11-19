@@ -12,6 +12,7 @@ import {
   PLAID_ERROR_SEVERITY,
   PlaidError,
 } from '../../../api/Plaid';
+import { emitPublic } from '../../../api/emit-public';
 
 @Component({
   tag: 'justifi-plaid-payment-method',
@@ -38,9 +39,15 @@ export class JustifiPlaidPaymentMethod {
   private hasLoggedDisabledWarning: boolean = false;
   private hasLoggedAchPaymentsDisabledWarning: boolean = false;
 
-  @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
-  @Event({ bubbles: true }) plaidError: EventEmitter;
-  @Event({ bubbles: true }) plaidErrorRecovered: EventEmitter;
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true }) paymentMethodOptionSelected: EventEmitter;
+  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
+  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true }) paymentMethodOptionSelectedLegacy: EventEmitter;
+  @Event({ eventName: 'justifi-plaid-error', bubbles: true }) plaidError: EventEmitter;
+  /** @deprecated Listen for `justifi-plaid-error`. Removed in the next major. */
+  @Event({ eventName: 'plaidError', bubbles: true }) plaidErrorLegacy: EventEmitter;
+  @Event({ eventName: 'justifi-plaid-error-recovered', bubbles: true }) plaidErrorRecovered: EventEmitter;
+  /** @deprecated Listen for `justifi-plaid-error-recovered`. Removed in the next major. */
+  @Event({ eventName: 'plaidErrorRecovered', bubbles: true }) plaidErrorRecoveredLegacy: EventEmitter;
 
   @Watch('isSelected')
   onSelectionChange(newValue: boolean) {
@@ -333,7 +340,7 @@ export class JustifiPlaidPaymentMethod {
     }
 
     // Emit success event for parent components
-    this.plaidErrorRecovered.emit({
+    emitPublic(this.plaidErrorRecovered, this.plaidErrorRecoveredLegacy, {
       code: 'plaid-success',
       message: 'Bank account connected successfully',
       severity: ComponentErrorSeverity.INFO
@@ -476,7 +483,7 @@ export class JustifiPlaidPaymentMethod {
     this.error = plaidError;
 
     // Emit error event for parent components
-    this.plaidError.emit({
+    emitPublic(this.plaidError, this.plaidErrorLegacy, {
       code: plaidError.code,
       message: plaidError.message,
       severity: plaidError.severity,

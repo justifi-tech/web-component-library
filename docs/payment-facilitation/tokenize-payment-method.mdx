@@ -34,18 +34,23 @@ account, a submit button and all fields required for proper use. This component 
 
 ### Events
 
-- `submit-event`: fires when tokenization completes; `event.detail.response` is the full payload (see [Response payload](#response-payload)).
-- `error-event`: fires if tokenization fails; payload includes `code`, `message`, and validation hints.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-submit`: fires when tokenization completes; `event.detail.response` is the full payload (see [Response payload](#response-payload)).
+- `justifi-error`: fires if tokenization fails; payload includes `code`, `message`, and validation hints.
 
 ### Public methods
 
-1. `tokenizePaymentMethod()` – programmatically trigger submission (returns a promise that resolves to the same payload emitted by `submit-event`).
+1. `tokenizePaymentMethod()` – programmatically trigger submission (returns a promise that resolves to the same payload emitted by `justifi-submit`).
 2. `fillBillingForm(partialBillingDetails)` – prefill customers' billing information from saved data.
 3. `validate()` – validate the form fields and return validation result.
 
 ### Response payload
 
-Both `submit-event` (`event.detail.response`) and the `tokenizePaymentMethod()` promise resolve to the **full payment method object**, not just the token:
+Both `justifi-submit` (`event.detail.response`) and the `tokenizePaymentMethod()` promise resolve to the **full payment method object**, not just the token:
 
 ```typescript
 interface PaymentMethodPayload {
@@ -374,7 +379,7 @@ When used within the `justifi-modular-checkout` wrapper component, this componen
     const justifiTokenizePaymentMethod = document.querySelector("justifi-tokenize-payment-method");
 
     // Handle successful tokenization
-    justifiTokenizePaymentMethod.addEventListener("submit-event", (event) => {
+    justifiTokenizePaymentMethod.addEventListener("justifi-submit", (event) => {
       const response = event.detail.response;
       console.log("Tokenization successful:", response);
       
@@ -394,7 +399,7 @@ When used within the `justifi-modular-checkout` wrapper component, this componen
     });
 
     // Handle errors
-    justifiTokenizePaymentMethod.addEventListener("error-event", (event) => {
+    justifiTokenizePaymentMethod.addEventListener("justifi-error", (event) => {
       console.error("Tokenization error:", event.detail);
     });
 

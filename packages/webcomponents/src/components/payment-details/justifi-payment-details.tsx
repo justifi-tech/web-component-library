@@ -12,6 +12,7 @@ import { CodeBlock, DetailItem, DetailSectionTitle, EntityHeadInfo, EntityHeadIn
 import { StyledHost } from '../../ui-components';
 import PaymentDetailsLoading from './payment-details-loading';
 import { Badge, BadgeVariant } from '../../ui-components/badge/badge';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-payment-details',
@@ -27,8 +28,12 @@ export class JustifiPaymentDetails {
   @State() loading: boolean = true;
   @State() errorMessage: string;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEvent: EventEmitter<RecordClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-record-click', bubbles: true }) recordClickEvent: EventEmitter<RecordClickEvent>;
+  /** @deprecated Listen for `justifi-record-click`. Removed in the next major. */
+  @Event({ eventName: 'record-click-event', bubbles: true }) recordClickEventLegacy: EventEmitter<RecordClickEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -58,7 +63,7 @@ export class JustifiPaymentDetails {
       this.fetchData();
     } else {
       this.errorMessage = 'Payment ID and Auth Token are required';
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: this.errorMessage,
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
@@ -83,7 +88,7 @@ export class JustifiPaymentDetails {
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,

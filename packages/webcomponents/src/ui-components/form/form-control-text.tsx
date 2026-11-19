@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   Element,
   Watch,
   State,
@@ -36,10 +34,6 @@ export class FormControlText {
     this.updateInput(newValue);
   }
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   componentDidLoad() {
     this.updateInput(this.defaultValue);
@@ -69,7 +63,6 @@ export class FormControlText {
     }
 
     this.inputHandler(name, value);
-    this.formControlInput.emit({ name, value });
   }
 
   updateInput = (newValue: any) => {
@@ -108,7 +101,6 @@ export class FormControlText {
             onFocus={() => this.isFocused = true}
             onBlur={() => {
               this.isFocused = false;
-              this.formControlBlur.emit();
             }}
             onInput={this.handleFormControlInput}
             onKeyDown={this.keyDownHandler}

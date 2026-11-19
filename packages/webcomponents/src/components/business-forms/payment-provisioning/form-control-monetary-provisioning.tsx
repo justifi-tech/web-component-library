@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   Watch,
   State,
 } from '@stencil/core';
@@ -36,10 +34,6 @@ export class FormControlMonetaryProvisioning {
     this.updateInput(newValue);
   }
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   componentDidLoad() {
     this.initializeIMask();
@@ -58,18 +52,10 @@ export class FormControlMonetaryProvisioning {
     this.imask.on('accept', () => {
       const rawValue = this.imask.unmaskedValue;
       this.inputHandler(this.name, rawValue);
-      this.formControlInput.emit({ name: this.name, value: rawValue });
     });
 
-    this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
   }
 
-  handleFormControlInput = (event: any) => {
-    const target = event.target;
-    const name = target.getAttribute('name');
-    const rawValue = this.imask.unmaskedValue;
-    this.formControlInput.emit({ name: name, value: rawValue });
-  }
 
   updateInput = (newValue: any) => {
     if (this.imask) {
@@ -107,9 +93,7 @@ export class FormControlMonetaryProvisioning {
               onFocus={() => this.isFocused = true}
               onBlur={() => {
                 this.isFocused = false;
-                this.formControlBlur.emit();
               }}
-              onInput={this.handleFormControlInput}
               part={this.inputPart}
               class={this.errorText ? 'form-control monetary is-invalid' : 'form-control monetary'}
               type="text"

@@ -8,6 +8,7 @@ import { makeSubmitDisputeResponse } from "./dispute-response/dispute-response-a
 import { DisputeService } from "../../api/services/dispute.service";
 import { ComponentClickEvent, ComponentSubmitEvent, ComponentErrorEvent } from "../../api/ComponentEvents";
 import { DisputeManagementClickActions } from "./event-types";
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'dispute-notification',
@@ -18,9 +19,15 @@ export class DisputeNotification {
   @Prop() authToken!: string;
   @Prop() isLoading!: boolean;
 
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'justifi-click' }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event' }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-submit', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event', bubbles: true }) submitEventLegacy: EventEmitter<ComponentSubmitEvent>;
 
   acceptDispute() {
     makeSubmitDisputeResponse({
@@ -30,10 +37,10 @@ export class DisputeNotification {
     })({
       payload: { forfeit: true },
       onSuccess: (response) => {
-        this.submitEvent.emit({ response: response });
+        emitPublic(this.submitEvent, this.submitEventLegacy, { response: response });
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,
@@ -43,7 +50,7 @@ export class DisputeNotification {
   }
 
   initiateRespondToDispute() {
-    this.clickEvent.emit({ name: DisputeManagementClickActions.respondToDispute });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: DisputeManagementClickActions.respondToDispute });
   }
 
   isDueDatePassed(): boolean {

@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   State,
 } from '@stencil/core';
 import {
@@ -33,16 +31,11 @@ export class FormControlRadio {
   @Prop() errorText?: string = '';
   @Prop() checked!: boolean;
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   handleFormControlInput = (event: any) => {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, this.value);
-    this.formControlInput.emit({ name, value: this.value });
   }
 
   private get part() {
@@ -77,7 +70,6 @@ export class FormControlRadio {
             onFocus={() => this.isFocused = true}
             onBlur={() => {
               this.isFocused = false;
-              this.formControlBlur.emit();
             }}
             onChange={this.handleFormControlInput}
             part={this.part}

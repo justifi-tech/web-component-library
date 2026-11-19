@@ -50,8 +50,8 @@ export class TableFiltersMenu {
             strategy="fixed"
             anchorRef={this.anchorButton}
             trigger="click"
-            onPopper-show={this.show}
-            onPopper-hide={this.hide}
+            showHandler={this.show}
+            hideHandler={this.hide}
           >
             <form
               class="dropdown-menu"

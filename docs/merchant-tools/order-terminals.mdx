@@ -41,8 +41,13 @@ Component to render a form for terminal order requests.
 
 ### Events
 
-- `submit-event`: Fires when an order is placed; includes order ID and device list.
-- `error-event`: Emits network or validation errors.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-submit`: Fires when an order is placed; includes order ID and device list.
+- `justifi-error`: Emits network or validation errors.
 
 ## Authorization
 
@@ -116,14 +121,14 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const orderTerminals = document.querySelector('justifi-order-terminals');
 
-    orderTerminals.addEventListener('error-event', (event) => {
+    orderTerminals.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
 
-    orderTerminals.addEventListener('submit-event', (event) => {
+    orderTerminals.addEventListener('justifi-submit', (event) => {
       // here is where you would handle the submit event
-      console.log('submit-event', event.detail);
+      console.log('justifi-submit', event.detail);
     });
   })();
 </script>

@@ -25,6 +25,7 @@ import {
   TableFootCell,
   TableClickActions
 } from '../../ui-components';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-payouts-list',
@@ -47,8 +48,12 @@ export class JustifiPayoutsList {
   @Prop() authToken!: string;
   @Prop() columns?: string = defaultColumnsKeys;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-click', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event', bubbles: true }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -104,7 +109,7 @@ export class JustifiPayoutsList {
       this.getPayoutCSV = makeGetPayoutCSV(serviceParams);
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: this.errorMessage,
         severity: ComponentErrorSeverity.ERROR,
@@ -141,7 +146,7 @@ export class JustifiPayoutsList {
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,
@@ -164,7 +169,7 @@ export class JustifiPayoutsList {
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,
@@ -178,7 +183,7 @@ export class JustifiPayoutsList {
     this.getPayoutCSV({
       payoutId,
       onError: () => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: ComponentErrorCodes.FETCH_ERROR,
           message: 'Failed to download CSV',
           severity: ComponentErrorSeverity.ERROR,
@@ -189,12 +194,12 @@ export class JustifiPayoutsList {
 
   handleClickPrevious = (beforeCursor: string) => {
     this.pagingParams = { before_cursor: beforeCursor };
-    this.clickEvent.emit({ name: TableClickActions.previous });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.previous });
   };
 
   handleClickNext = (afterCursor: string) => {
     this.pagingParams = { after_cursor: afterCursor };
-    this.clickEvent.emit({ name: TableClickActions.next });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.next });
   };
 
   rowClickHandler = (e) => {
@@ -207,7 +212,7 @@ export class JustifiPayoutsList {
     if (clickedCSV === e.target) return;
 
     const payoutData = this.payouts.find((payout) => payout.id === clickedPayoutID);
-    this.clickEvent.emit({ name: TableClickActions.row, data: payoutData });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.row, data: payoutData });
   }
 
   get payoutParams() {

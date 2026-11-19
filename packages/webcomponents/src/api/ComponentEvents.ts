@@ -3,6 +3,7 @@ import { BusinessFormClickActions, BusinessFormStep } from "../components/busine
 import { DisputeManagementClickActions, DisputeResponseFormStep } from "../components/dispute-management/event-types";
 import { TableClickActions } from "../ui-components/table/event-types";
 import { ComponentErrorCodes, ComponentErrorSeverity } from "./ComponentError";
+import { emitPublic } from './emit-public';
 
 // click-event
 
@@ -39,6 +40,7 @@ export interface ComponentErrorEvent {
 // `props` keys are the public attribute names, e.g. { 'auth-token': this.authToken }.
 export function validateRequiredProps(
   errorEvent: EventEmitter<ComponentErrorEvent>,
+  errorEventLegacy: EventEmitter<ComponentErrorEvent>,
   props: Record<string, unknown>,
 ): boolean {
   const missingProps = Object.entries(props)
@@ -46,7 +48,7 @@ export function validateRequiredProps(
     .map(([name]) => name);
 
   if (missingProps.length) {
-    errorEvent.emit({
+    emitPublic(errorEvent, errorEventLegacy, {
       message: `Missing required props: ${missingProps.join(', ')}`,
       errorCode: ComponentErrorCodes.MISSING_PROPS,
       severity: ComponentErrorSeverity.ERROR,

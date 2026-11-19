@@ -42,8 +42,8 @@ export class FormControlTooltip {
           trigger="hover"
           placement="top"
           anchorRef={this.anchorIcon}
-          onPopper-show={this.show}
-          onPopper-hide={this.hide}
+          showHandler={this.show}
+          hideHandler={this.hide}
         >
           <div class="tooltip bs-tooltip-top" part={tooltip} role="tooltip" ref={(el) => (this.tooltip = el)}>
             <div class="tooltip-inner" part={tooltipInner}>

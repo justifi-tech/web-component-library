@@ -9,6 +9,7 @@ import { BusinessFormClickActions } from '../utils/event-types';
 import { CountryCode } from '../../../utils/country-codes';
 import { makeGetIdentity, makePatchIdentity, makePostIdentity } from '../payment-provisioning/payment-provisioning-actions';
 import { IdentityService } from '../../../api/services/business.service';
+import { emitPublic } from '../../../api/emit-public';
 
 @Component({
   tag: 'owner-form',
@@ -35,15 +36,17 @@ export class OwnerForm {
 
   @Watch('isLoading')
   loadingWatcher() {
-    this.formLoading.emit(this.isLoading);
+    this.loadingHandler?.(this.isLoading);
   }
 
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
-  @Event({ eventName: 'owner-submitted', bubbles: false, composed: false })
-  ownerSubmitted: EventEmitter<any>;
+  @Event({ eventName: 'justifi-click', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event', bubbles: true }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
+  @Prop() submitHandler?: (owner: { id: string }) => void;
 
   constructor() {
     this.validate = this.validate.bind(this);
@@ -169,7 +172,7 @@ export class OwnerForm {
         this.instantiateOwner(response.data);
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity,
@@ -187,12 +190,12 @@ export class OwnerForm {
         this.patchOwner({
           payload: this.payload,
           onSuccess: (response) => {
-            this.ownerSubmitted.emit({ id: response.data.id });
+            this.submitHandler?.({ id: response.data.id });
             this.instantiateOwner(response.data);
             resolve(true);
           },
           onError: ({ error, code, severity }) => {
-            this.errorEvent.emit({
+            emitPublic(this.errorEvent, this.errorEventLegacy, {
               message: error,
               errorCode: code,
               severity: severity,
@@ -205,12 +208,12 @@ export class OwnerForm {
         this.postOwner({
           payload: this.payload,
           onSuccess: (response) => {
-            this.ownerSubmitted.emit({ id: response.data.id });
+            this.submitHandler?.({ id: response.data.id });
             this.instantiateOwner(response.data);
             resolve(true);
           },
           onError: ({ error, code, severity }) => {
-            this.errorEvent.emit({
+            emitPublic(this.errorEvent, this.errorEventLegacy, {
               message: error,
               errorCode: code,
               severity: severity,
@@ -230,12 +233,12 @@ export class OwnerForm {
 
   handleAddOwner = () => {
     const eventName = this.ownerId ? BusinessFormClickActions.updateOwner : BusinessFormClickActions.addOwner;
-    this.clickEvent.emit({ name: eventName });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: eventName });
   };
 
   handleRemoveOwner = () => {
     this.removeOwner(this.ownerId);
-    this.clickEvent.emit({ name: BusinessFormClickActions.removeOwner });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: BusinessFormClickActions.removeOwner });
   };
 
   render() {

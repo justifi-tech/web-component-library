@@ -12,6 +12,7 @@ import { ComponentClickEvent, ComponentErrorEvent, ComponentSubmitEvent } from '
 import { BusinessFormClickActions } from '../utils';
 import { makeGetBusiness, makePatchBusiness } from '../payment-provisioning/payment-provisioning-actions';
 import { BusinessService } from '../../../api/services/business.service';
+import { emitPublic } from '../../../api/emit-public';
 
 @Component({
   tag: 'justifi-business-form',
@@ -29,9 +30,15 @@ export class JustifiBusinessForm {
   @Prop() formTitle?: string = 'Business Information';
   @Prop() removeTitle?: boolean = false;
 
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-submit' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event' }) submitEventLegacy: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'justifi-click' }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event' }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   private getBusiness: Function;
   private patchBusiness: Function;
@@ -88,7 +95,7 @@ export class JustifiBusinessForm {
         },
         onError: ({ error, code, severity }) => {
           this.errorMessage = error.message;
-          this.errorEvent.emit({ errorCode: code, message: error.message, severity });
+          emitPublic(this.errorEvent, this.errorEventLegacy, { errorCode: code, message: error.message, severity });
         },
         final: () => {
           this.isLoading = false;
@@ -96,7 +103,7 @@ export class JustifiBusinessForm {
       });
 
     } else {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'auth-token and business-id are required',
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
@@ -116,7 +123,7 @@ export class JustifiBusinessForm {
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error.message;
-        this.errorEvent.emit({ errorCode: code, message: error.message, severity });
+        emitPublic(this.errorEvent, this.errorEventLegacy, { errorCode: code, message: error.message, severity });
       },
       final: () => {
         this.isSaving = false;
@@ -133,7 +140,7 @@ export class JustifiBusinessForm {
     if (response.error) {
       this.errorMessage = BusinessFormServerErrors.patchData;
     }
-    this.submitEvent.emit({ response });
+    emitPublic(this.submitEvent, this.submitEventLegacy, { response });
     this.instantiateBusiness(response.data);
   }
 
@@ -165,7 +172,7 @@ export class JustifiBusinessForm {
                 type="submit"
                 disabled={this.disabledState}
                 variant='primary'
-                onClick={() => this.clickEvent.emit({ name: BusinessFormClickActions.submit })}
+                onClick={() => emitPublic(this.clickEvent, this.clickEventLegacy, { name: BusinessFormClickActions.submit })}
                 isLoading={this.isSaving}
               >
                 Submit

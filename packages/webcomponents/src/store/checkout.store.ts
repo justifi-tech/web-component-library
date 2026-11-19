@@ -1,3 +1,4 @@
+import { ICheckoutStatus } from '../api/Checkout';
 import { createStore } from '@stencil/store';
 import { BillingFormFields } from '../components';
 import {
@@ -25,6 +26,7 @@ interface IInitialState {
   bnplProviderMode: string;
   checkoutId: string;
   checkoutLoaded: boolean;
+  checkoutStatus: ICheckoutStatus | null;
   checkoutMode: 'test' | 'live' | null;
   bankAccountVerification?: boolean;
   disableBankAccount: boolean;
@@ -82,6 +84,7 @@ const initialState: IInitialState = {
   bnplProviderMode: '',
   checkoutId: '',
   checkoutLoaded: false,
+  checkoutStatus: null,
   checkoutMode: null,
   bankAccountVerification: undefined,
   disableBankAccount: false,

@@ -4,6 +4,7 @@ import { PaymentMethodPayload } from '../../checkout/payment-method-payload';
 import { checkoutStore } from '../../../store/checkout.store';
 import { StyledHost } from '../../../ui-components';
 import { PAYMENT_METHODS } from '../ModularCheckout';
+import { emitPublic } from '../../../api/emit-public';
 
 const sezzleLogo = () => (
   <img
@@ -32,7 +33,9 @@ export class JustifiSezzlePaymentMethod {
   private resolveSezzlePromise?: (payload: PaymentMethodPayload) => void;
   private paymentMethodOptionId = PAYMENT_METHODS.SEZZLE;
 
-  @Event({ bubbles: true }) paymentMethodOptionSelected: EventEmitter;
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true }) paymentMethodOptionSelected: EventEmitter;
+  /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
+  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true }) paymentMethodOptionSelectedLegacy: EventEmitter;
 
   componentDidRender() {
     if (!this.scriptRef) return;
@@ -60,7 +63,7 @@ export class JustifiSezzlePaymentMethod {
   @Method()
   async handleSelectionClick(): Promise<void> {
     checkoutStore.selectedPaymentMethod = { type: PAYMENT_METHODS.SEZZLE };
-    this.paymentMethodOptionSelected.emit(this.paymentMethodOptionId);
+    emitPublic(this.paymentMethodOptionSelected, this.paymentMethodOptionSelectedLegacy, this.paymentMethodOptionId);
   }
 
   initializeSezzleCheckout = () => {

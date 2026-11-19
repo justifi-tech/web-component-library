@@ -76,11 +76,11 @@ This component is **designed to be used within** the `justifi-modular-checkout` 
       checkoutWrapper.submitCheckout();
     });
 
-    checkoutWrapper.addEventListener('error-event', (event) => {
+    checkoutWrapper.addEventListener('justifi-error', (event) => {
       console.error(event.detail);
     });
 
-    checkoutWrapper.addEventListener('submit-event', (event) => {
+    checkoutWrapper.addEventListener('justifi-submit', (event) => {
       console.log('Checkout completed successfully!', event.detail);
     });
   })();
@@ -93,6 +93,11 @@ This component is **designed to be used within** the `justifi-modular-checkout` 
 <PropsMarkdownTable props={getPropsFromDocs('justifi-bank-account-billing-form-simple', docsJson)} />
 
 ### Events
+
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
 
 All submit and error events bubble through the parent `<justifi-modular-checkout>`, so no additional listeners are required on the billing form.
 

@@ -7,7 +7,7 @@ import { EntityDocumentType, FileSelectEvent } from '../../../../api';
 export class BankAccountDocumentFormInputs {
   @Prop() inputHandler!: (name: string, value: string) => void;
   @Prop() errors!: any;
-  @Prop() storeFiles!: (e: CustomEvent<FileSelectEvent>) => void;
+  @Prop() storeFiles!: (files: FileSelectEvent) => void;
 
   render() {
     return (
@@ -18,7 +18,7 @@ export class BankAccountDocumentFormInputs {
             label="Voided Check"
             documentType={EntityDocumentType.voidedCheck}
             inputHandler={this.inputHandler}
-            onFile-selected={this.storeFiles}
+            fileSelectHandler={this.storeFiles}
             errorText={this.errors["voided_check"]}
             multiple={true}
           />
@@ -29,7 +29,7 @@ export class BankAccountDocumentFormInputs {
             label="Bank Statement"
             documentType={EntityDocumentType.bankStatement}
             inputHandler={this.inputHandler}
-            onFile-selected={this.storeFiles}
+            fileSelectHandler={this.storeFiles}
             errorText={this.errors["bank_statement"]}
             multiple={true}
           />

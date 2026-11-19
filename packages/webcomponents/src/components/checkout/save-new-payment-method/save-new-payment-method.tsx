@@ -1,4 +1,4 @@
-import { Component, h, State, Event, EventEmitter, Prop, Host } from '@stencil/core';
+import { Component, h, State, Prop, Host } from '@stencil/core';
 import { checkoutStore } from '../../../store/checkout.store';
 
 @Component({
@@ -8,13 +8,12 @@ export class SaveNewPaymentMethod {
   @Prop() label?: string = 'Save New Payment Method';
   @Prop() hidden?: boolean;
   @State() isChecked: boolean = false;
-  @Event({ eventName: 'checkbox-changed', bubbles: false, composed: false })
-  checkboxChanged: EventEmitter<boolean>;
+  @Prop() changeHandler?: (checked: boolean) => void;
 
   private handleCheckboxChange = (_name: string, value: boolean) => {
     this.isChecked = value;
     checkoutStore.savePaymentMethod = value;
-    this.checkboxChanged.emit(this.isChecked);
+    this.changeHandler?.(this.isChecked);
   }
 
   render() {

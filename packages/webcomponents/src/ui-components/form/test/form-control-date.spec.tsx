@@ -8,6 +8,8 @@ describe('form-control-date', () => {
   const components = [FormControlDate, FormControlErrorText, FormControlTooltip];
   const mockInputHandler = jest.fn();
 
+  beforeEach(() => jest.clearAllMocks());
+
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
@@ -90,7 +92,7 @@ describe('form-control-date', () => {
     expect(inputElement.value).toBe(testValue);
   });
 
-  it('Emits formControlInput event on input', async () => {
+  it('Calls inputHandler on input', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -102,40 +104,34 @@ describe('form-control-date', () => {
         />
     });
 
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
-
     const inputElement = page.root.querySelector('input');
     inputElement.value = '2000-01-01';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
-      detail: expect.objectContaining({
-        name: 'birthday',
-        value: '2000-01-01',
-      }),
-    }));
+    expect(mockInputHandler).toHaveBeenCalledWith('birthday', '2000-01-01');
   });
 
-  it('Emits formControlBlur event on blur', async () => {
+  it('Calls dateChangeHandler with the name/value pair on input', async () => {
+    const mockDateChangeHandler = jest.fn();
     const page = await newSpecPage({
       components: components,
       template: () =>
         <form-control-date
           label='Birthday'
           name='birthday'
+          defaultValue='1990-01-01'
           inputHandler={mockInputHandler}
+          dateChangeHandler={mockDateChangeHandler}
         />
     });
 
-    const blurEventSpy = jest.fn();
-    page.root.addEventListener('form-control-blur', blurEventSpy);
-
     const inputElement = page.root.querySelector('input');
-    inputElement.dispatchEvent(new Event('blur', { bubbles: true, composed: true }));
+    inputElement.value = '2000-01-01';
 
-    expect(blurEventSpy).toHaveBeenCalled();
+    inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+    expect(mockDateChangeHandler).toHaveBeenCalledWith({ name: 'birthday', value: '2000-01-01' });
   });
 
   it('Disables input when disabled prop is provided', async () => {

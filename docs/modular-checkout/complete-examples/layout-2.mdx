@@ -484,13 +484,13 @@ This example uses the `justifi-card-form` and `justifi-card-billing-form-simple`
     submitButton.addEventListener('click', async () => {
       await modularCheckout.submitCheckout();
     });
-    modularCheckout.addEventListener('submit-event', (event) => {
+    modularCheckout.addEventListener('justifi-submit', (event) => {
       console.log('Checkout completed successfully!', event.detail);
     });
-    modularCheckout.addEventListener('error-event', (event) => {
+    modularCheckout.addEventListener('justifi-error', (event) => {
       console.error('Checkout error:', event.detail);
     });
-    modularCheckout.addEventListener('checkout-changed', (event) => {
+    modularCheckout.addEventListener('justifi-checkout-changed', (event) => {
       console.log('Checkout changed:', event.detail);
     });
   })();

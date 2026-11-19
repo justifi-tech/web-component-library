@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   Element,
   Watch,
   State,
@@ -33,10 +31,6 @@ export class FormControlNumber {
     this.updateInput(newValue);
   }
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   componentDidLoad() {
     this.updateInput(this.defaultValue);
@@ -46,7 +40,6 @@ export class FormControlNumber {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
-    this.formControlInput.emit({ name, value: target.value });
   }
 
   updateInput = (newValue: any) => {
@@ -82,7 +75,6 @@ export class FormControlNumber {
             onFocus={() => this.isFocused = true}
             onBlur={() => {
               this.isFocused = false;
-              this.formControlBlur.emit();
             }}
             onInput={this.handleFormControlInput}
             part={this.part}

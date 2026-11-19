@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, State } from "@stencil/core";
+import { Component, h, Prop, State } from '@stencil/core';
 import { buttonLink, card, image } from "../../../styles/parts";
 import { TerminalModelName } from "../../../api";
 
@@ -15,20 +15,19 @@ export class TerminalQuantitySelector {
 
   @State() selectedQuantity: number = 0;
 
-  @Event({ eventName: 'selected-quantity-change', bubbles: false, composed: false })
-  selectedQuantityChange: EventEmitter<{ modelName: TerminalModelName, quantity: number }>;
+  @Prop() quantityChangeHandler?: (change: { modelName: TerminalModelName; quantity: number }) => void;
 
   private removeUnit = () => {
     if (this.selectedQuantity > 0) {
       this.selectedQuantity--;
-      this.selectedQuantityChange.emit({ modelName: this.modelName, quantity: this.selectedQuantity });
+      this.quantityChangeHandler?.({ modelName: this.modelName, quantity: this.selectedQuantity });
     }
   }
 
   private addUnit = () => {
     if (this.limit > 0) {
       this.selectedQuantity++;
-      this.selectedQuantityChange.emit({ modelName: this.modelName, quantity: this.selectedQuantity });
+      this.quantityChangeHandler?.({ modelName: this.modelName, quantity: this.selectedQuantity });
     }
   }
 

@@ -21,6 +21,7 @@ import { StyledHost } from "../../../ui-components";
 import ApplePaySkeleton from "./apple-pay-skeleton";
 import { ApplePayButton } from "../../../ui-components/apple-pay-button";
 import { checkoutStore, onChange } from "../../../store/checkout.store";
+import { emitPublic } from '../../../api/emit-public';
 
 @Component({
   tag: "justifi-apple-pay",
@@ -47,15 +48,28 @@ export class JustifiApplePay {
   @State() isConfigValid: boolean = true;
   @State() error: string | null = null;
 
-  @Event() applePayStarted!: EventEmitter<void>;
-  @Event() applePayCompleted!: EventEmitter<{
+  @Event({ eventName: 'justifi-apple-pay-started' }) applePayStarted!: EventEmitter<void>;
+  /** @deprecated Listen for `justifi-apple-pay-started`. Removed in the next major. */
+  @Event({ eventName: 'applePayStarted' }) applePayStartedLegacy!: EventEmitter<void>;
+  @Event({ eventName: 'justifi-apple-pay-completed' }) applePayCompleted!: EventEmitter<{
     success: boolean;
     token?: IApplePayToken;
     paymentMethodId?: string;
     error?: any;
   }>;
-  @Event() applePayCancelled!: EventEmitter<void>;
-  @Event() applePayError!: EventEmitter<{ error: string, code: string }>;
+  /** @deprecated Listen for `justifi-apple-pay-completed`. Removed in the next major. */
+  @Event({ eventName: 'applePayCompleted' }) applePayCompletedLegacy!: EventEmitter<{
+    success: boolean;
+    token?: IApplePayToken;
+    paymentMethodId?: string;
+    error?: any;
+  }>;
+  @Event({ eventName: 'justifi-apple-pay-cancelled' }) applePayCancelled!: EventEmitter<void>;
+  /** @deprecated Listen for `justifi-apple-pay-cancelled`. Removed in the next major. */
+  @Event({ eventName: 'applePayCancelled' }) applePayCancelledLegacy!: EventEmitter<void>;
+  @Event({ eventName: 'justifi-apple-pay-error' }) applePayError!: EventEmitter<{ error: string, code: string }>;
+  /** @deprecated Listen for `justifi-apple-pay-error`. Removed in the next major. */
+  @Event({ eventName: 'applePayError' }) applePayErrorLegacy!: EventEmitter<{ error: string, code: string }>;
 
   // Centralized error codes for the Apple Pay component layer
   static ErrorCode = {
@@ -113,7 +127,7 @@ export class JustifiApplePay {
       if (!hasRequiredConfig) {
         this.error = "Missing required Apple Pay configuration";
         this.isConfigValid = false;
-        this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.CONFIG_ERROR });
+        emitPublic(this.applePayError, this.applePayErrorLegacy, { error: this.error, code: JustifiApplePay.ErrorCode.CONFIG_ERROR });
         this.isLoading = false;
         return;
       }
@@ -123,14 +137,14 @@ export class JustifiApplePay {
 
       if (!this.isAvailable) {
         this.error = "Apple Pay is not supported on this device";
-        this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.NOT_SUPPORTED });
+        emitPublic(this.applePayError, this.applePayErrorLegacy, { error: this.error, code: JustifiApplePay.ErrorCode.NOT_SUPPORTED });
         this.isLoading = false;
         return;
       }
 
       if (!this.canMakePayments) {
         this.error = "Apple Pay is not available";
-        this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.NOT_AVAILABLE });
+        emitPublic(this.applePayError, this.applePayErrorLegacy, { error: this.error, code: JustifiApplePay.ErrorCode.NOT_AVAILABLE });
         this.isLoading = false;
         return;
       }
@@ -157,7 +171,7 @@ export class JustifiApplePay {
         error instanceof Error
           ? error.message
           : "Failed to initialize Apple Pay";
-      this.applePayError.emit({ error: this.error, code: JustifiApplePay.ErrorCode.INITIALIZATION_ERROR });
+      emitPublic(this.applePayError, this.applePayErrorLegacy, { error: this.error, code: JustifiApplePay.ErrorCode.INITIALIZATION_ERROR });
     } finally {
       this.isLoading = false;
     }
@@ -171,7 +185,7 @@ export class JustifiApplePay {
     try {
       this.isProcessing = true;
       this.error = null;
-      this.applePayStarted.emit();
+      emitPublic(this.applePayStarted, this.applePayStartedLegacy);
 
       const paymentRequest: IApplePayPaymentRequest = {
         countryCode: this.countryCodeForCurrency(checkoutStore.paymentCurrency),
@@ -196,30 +210,30 @@ export class JustifiApplePay {
       );
 
       if (result.success) {
-        this.applePayCompleted.emit({
+        emitPublic(this.applePayCompleted, this.applePayCompletedLegacy, {
           success: true,
           token: result.token,
           paymentMethodId: result.paymentMethodId,
         });
       } else {
-        this.applePayCompleted.emit({
+        emitPublic(this.applePayCompleted, this.applePayCompletedLegacy, {
           success: false,
           error: result.error,
         });
-        this.applePayError.emit({
+        emitPublic(this.applePayError, this.applePayErrorLegacy, {
           error: result.error?.message || "Payment failed",
           code: result.error?.code || JustifiApplePay.ErrorCode.PAYMENT_FAILED,
         });
       }
     } catch (error) {
       if (error?.error?.code === ApplePayServiceErrorCode.USER_CANCELLED) {
-        this.applePayCancelled.emit();
+        emitPublic(this.applePayCancelled, this.applePayCancelledLegacy);
       } else {
         const errorMessage =
           error instanceof Error ? error.message : "Payment failed";
         this.error = errorMessage;
-        this.applePayError.emit({ error: errorMessage, code: JustifiApplePay.ErrorCode.PAYMENT_FAILED });
-        this.applePayCompleted.emit({
+        emitPublic(this.applePayError, this.applePayErrorLegacy, { error: errorMessage, code: JustifiApplePay.ErrorCode.PAYMENT_FAILED });
+        emitPublic(this.applePayCompleted, this.applePayCompletedLegacy, {
           success: false,
           error: errorMessage,
         });
@@ -246,7 +260,7 @@ export class JustifiApplePay {
   async abort(): Promise<void> {
     this.applePayService?.abortPaymentSession();
     this.isProcessing = false;
-    this.applePayCancelled.emit();
+    emitPublic(this.applePayCancelled, this.applePayCancelledLegacy);
   }
 
   render() {

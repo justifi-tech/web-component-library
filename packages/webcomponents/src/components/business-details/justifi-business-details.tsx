@@ -9,6 +9,7 @@ import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { StyledHost } from '../../ui-components';
 import { BusinessDetailsLoading } from './business-details-loading';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-business-details',
@@ -25,7 +26,9 @@ export class JustifiBusinessDetails {
 
   analytics: JustifiAnalytics;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   componentWillLoad() {
     detectDuplicateVersion();
@@ -53,7 +56,7 @@ export class JustifiBusinessDetails {
       this.fetchData();
     } else {
       this.errorMessage = 'Invalid business id or auth token';
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: this.errorMessage,
         severity: ComponentErrorSeverity.ERROR,
@@ -78,7 +81,7 @@ export class JustifiBusinessDetails {
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,

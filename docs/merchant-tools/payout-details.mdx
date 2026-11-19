@@ -40,8 +40,13 @@ Component to display detailed information about a specific payout.
 
 ### Events
 
-- `error-event`: Emits when payout data cannot be loaded.
-- `record-click-event`: Emitted when users click on a related record.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-error`: Emits when payout data cannot be loaded.
+- `justifi-record-click`: Emitted when users click on a related record.
 
 ## Authorization
 
@@ -107,12 +112,12 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const payoutDetails = document.querySelector('justifi-payout-details');
 
-    payoutDetails.addEventListener('error-event', (event) => {
+    payoutDetails.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
 
-    payoutDetails.addEventListener('record-click-event', (event) => {
+    payoutDetails.addEventListener('justifi-record-click', (event) => {
       // Handle the record click event
       console.log('Record clicked:', event.detail);
     });

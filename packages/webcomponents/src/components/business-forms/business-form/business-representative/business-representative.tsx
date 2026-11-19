@@ -55,8 +55,8 @@ export class BusinessRepresentative {
     });
   }
 
-  onDateOfBirthUpdate = (event): void => {
-    const dob_values = deconstructDate(event.detail);
+  onDateOfBirthUpdate = (date: { name: string; value: string }): void => {
+    const dob_values = deconstructDate(date);
 
     this.formController.setValues({
       ...this.formController.values.getValue(),
@@ -123,7 +123,7 @@ export class BusinessRepresentative {
                 defaultValue={representativeDefaultValue?.dob_full}
                 errorText={this.errors.dob_full}
                 inputHandler={this.inputHandler}
-                onForm-control-input={this.onDateOfBirthUpdate}
+                dateChangeHandler={this.onDateOfBirthUpdate}
               />
             </div>
             <div class="col-12 col-md-8">

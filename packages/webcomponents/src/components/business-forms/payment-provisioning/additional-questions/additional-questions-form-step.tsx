@@ -9,6 +9,7 @@ import { CURRENCY_MASK } from '../../../../utils/form-input-masks';
 import { heading2 } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormStep, businessServiceReceivedOptions } from '../../utils';
+import { emitPublic } from '../../../../api/emit-public';
 
 @Component({
   tag: 'additional-questions-form-step',
@@ -41,10 +42,13 @@ export class AdditionalQuestionsFormStep {
     }
   }
 
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -69,7 +73,7 @@ export class AdditionalQuestionsFormStep {
   }
 
   private initializeApi() {
-    if (!validateRequiredProps(this.errorEvent, {
+    if (!validateRequiredProps(this.errorEvent, this.errorEventLegacy, {
       'auth-token': this.authToken,
       'business-id': this.businessId,
     })) {
@@ -89,7 +93,7 @@ export class AdditionalQuestionsFormStep {
   }
 
   private getData = () => {
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
@@ -97,14 +101,14 @@ export class AdditionalQuestionsFormStep {
         this.formController.setInitialValues({ ...this.additional_questions });
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
         });
       },
       final: () => {
-        this.formLoading.emit(false);
+        this.loadingHandler?.(false);
         this.isLoading = false;
       }
     });
@@ -112,7 +116,7 @@ export class AdditionalQuestionsFormStep {
 
   private sendData = (onSuccess: () => void) => {
     let submittedData;
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.patchBusiness({
       payload: this.patchPayload,
       onSuccess: (response) => {
@@ -121,15 +125,15 @@ export class AdditionalQuestionsFormStep {
       },
       onError: ({ error, code, severity }) => {
         submittedData = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.additionalQuestions });
-        this.formLoading.emit(false)
+        emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: submittedData, formStep: BusinessFormStep.additionalQuestions });
+        this.loadingHandler?.(false)
       }
     });
   }
