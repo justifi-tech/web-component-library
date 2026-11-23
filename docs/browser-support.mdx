@@ -49,8 +49,6 @@ Firefox there follow the Safari row.
 | Saved payment methods | ✅            | ✅      | ✅             | ✅           | ✅               | ✅                         |
 | Apple Pay             | ❌            | ❌      | ✅             | ✅           | ❌               | ⚠️                         |
 | Google Pay            | ✅            | ⚠️      | ⚠️             | ⚠️           | ✅               | ⚠️                         |
-| PayPal                | ✅            | ✅      | ✅             | ✅           | ✅               | ⚠️                         |
-| Venmo                 | ⚠️            | ⚠️      | ⚠️             | ⚠️           | ⚠️               | ⚠️                         |
 | Plaid (bank login)    | ✅            | ✅      | ✅             | ✅           | ⚠️               | ⚠️                         |
 | Sezzle                | ✅            | ✅      | ✅             | ✅           | ✅               | ❌                         |
 
@@ -66,10 +64,6 @@ offered ([why](https://developers.google.com/pay/api/web/support/troubleshooting
 In an Android WebView, set `use-native-payment-request` on `justifi-google-pay`;
 Google also requires Play services 25.18.30+ and System WebView 137+
 ([details](https://developers.google.com/pay/api/android/guides/recipes/using-android-webview)).
-
-**PayPal and Venmo** — follow the
-[PayPal JS SDK](https://developer.paypal.com/sdk/js/reference/). Venmo is
-US-only and eligibility-gated per buyer. Neither works in your own app's WebView.
 
 **Plaid** — follows [Plaid Link](https://plaid.com/docs/link/web/): current
 Chrome, Edge, Firefox and Safari. Samsung Internet and WebViews are not covered
