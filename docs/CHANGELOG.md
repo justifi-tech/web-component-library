@@ -1,5 +1,11 @@
 # @justifi/webcomponents-docs
 
+## 4.1.1
+
+### Patch Changes
+
+- 624dc38: Remove PayPal and Venmo from the Checkout Browser Support payment-method table. PayPal is not announced yet, and Venmo ships only as a PayPal funding source, so neither belongs in the published availability matrix. Both rows come back with the PayPal sub-component docs.
+
 ## 4.1.0
 
 ### Minor Changes
