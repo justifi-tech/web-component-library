@@ -3,6 +3,7 @@ import { CardBrandLabels, PaymentMethodOption } from './payment-method-option-ut
 import { PaymentMethodPayload } from './payment-method-payload';
 import { radioListItem } from '../../styles/parts';
 import { emitPublic } from '../../api/emit-public';
+import { PAYMENT_METHODS, SelectedPaymentMethod } from '../modular-checkout/ModularCheckout';
 
 @Component({
   tag: 'justifi-saved-payment-method',
@@ -11,9 +12,11 @@ export class JustifiSavedPaymentMethod {
   @Prop() paymentMethodOption!: PaymentMethodOption;
   @Prop() isSelected!: boolean;
 
-  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true }) paymentMethodOptionSelected: EventEmitter;
+  @Event({ eventName: 'justifi-payment-method-selected', bubbles: true })
+  paymentMethodSelected: EventEmitter<SelectedPaymentMethod>;
   /** @deprecated Listen for `justifi-payment-method-selected`. Removed in the next major. */
-  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true }) paymentMethodOptionSelectedLegacy: EventEmitter;
+  @Event({ eventName: 'paymentMethodOptionSelected', bubbles: true })
+  paymentMethodSelectedLegacy: EventEmitter<PaymentMethodOption>;
 
   @Method()
   async resolvePaymentMethod(insuranceValidation: any): Promise<PaymentMethodPayload> {
@@ -25,7 +28,12 @@ export class JustifiSavedPaymentMethod {
 
   onPaymentMethodOptionClick = (e) => {
     e.preventDefault();
-    emitPublic(this.paymentMethodOptionSelected, this.paymentMethodOptionSelectedLegacy, this.paymentMethodOption);
+    emitPublic(
+      this.paymentMethodSelected,
+      this.paymentMethodSelectedLegacy,
+      { id: this.paymentMethodOption?.id, type: this.paymentMethodOption?.type as PAYMENT_METHODS },
+      this.paymentMethodOption,
+    );
   };
 
   render() {

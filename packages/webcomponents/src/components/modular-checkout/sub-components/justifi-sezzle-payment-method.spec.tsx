@@ -31,13 +31,17 @@ describe('justifi-sezzle-payment-method', () => {
     });
 
     const root = page.root as HTMLElement;
-    const handler = jest.fn();
-    root.addEventListener('paymentMethodOptionSelected', handler as any);
+    const legacy = jest.fn();
+    const current = jest.fn();
+    root.addEventListener('paymentMethodOptionSelected', legacy as any);
+    root.addEventListener('justifi-payment-method-selected', current as any);
 
     const instance: any = page.rootInstance;
     await instance.handleSelectionClick();
 
-    expect(handler).toHaveBeenCalled();
+    expect(current.mock.calls[0][0].detail).toEqual({ type: PAYMENT_METHODS.SEZZLE });
+    // the deprecated name keeps the bare string it has always emitted
+    expect(legacy.mock.calls[0][0].detail).toBe(PAYMENT_METHODS.SEZZLE);
     expect(checkoutStore.selectedPaymentMethod?.type).toBe(PAYMENT_METHODS.SEZZLE);
   });
 

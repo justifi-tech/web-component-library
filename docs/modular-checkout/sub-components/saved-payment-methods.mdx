@@ -124,7 +124,8 @@ This component exposes **no public methods or properties** and is not intended f
 > integration keeps working untouched. The old names are deprecated and go away in
 > the next major release; new code should listen for the `justifi-` ones.
 
-This component does not emit any events directly. Events are handled by the parent `justifi-modular-checkout` component.
+- `justifi-payment-method-selected`: Emits when the shopper picks a saved payment method. `event.detail` is `{ type, id? }` — `type` is the payment method, `id` the saved payment method's token when there is one. This event is new, so unlike the others here it has no deprecated twin.
+Everything else is handled by the parent `justifi-modular-checkout` component.
 
 ## Theming & Layout
 

@@ -42,6 +42,22 @@ const PUBLIC_EVENT_PAIRS: [string, string][] = [
   ['justifi-paypal-error', 'paypalError'],
 ];
 
+/**
+ * Components that declare a public event under its current name only, because
+ * the deprecated half never shipped from them. Adding it there would invent a
+ * contract — an event born deprecated, that nothing was ever listening for.
+ */
+const NEW_NAME_ONLY: Record<string, string[]> = {
+  'justifi-payment-method-selected': [
+    'components/tokenize-payment-method/justifi-tokenize-payment-method.tsx',
+    'components/modular-checkout/sub-components/justifi-saved-payment-methods.tsx',
+    'components/modular-checkout/sub-components/justifi-plaid-payment-method.tsx',
+    'components/modular-checkout/sub-components/justifi-apple-pay.tsx',
+    'components/modular-checkout/sub-components/justifi-google-pay.tsx',
+    'components/modular-checkout/sub-components/paypal/justifi-paypal.tsx',
+  ],
+};
+
 const PUBLIC_EVENTS = PUBLIC_EVENT_PAIRS.map(([next]) => next);
 const LEGACY_EVENTS = PUBLIC_EVENT_PAIRS.map(([, legacy]) => legacy);
 
@@ -169,13 +185,28 @@ describe('event containment', () => {
     const halfPairs: string[] = [];
     for (const [file, names] of byFile) {
       for (const [newName, legacyName] of PUBLIC_EVENT_PAIRS) {
-        if (names.has(newName) !== names.has(legacyName)) {
-          const present = names.has(newName) ? newName : legacyName;
-          halfPairs.push(file + ' -> ' + present + ' has no twin');
-        }
+        if (names.has(newName) === names.has(legacyName)) continue;
+        if (names.has(newName) && (NEW_NAME_ONLY[newName] ?? []).includes(file)) continue;
+        const present = names.has(newName) ? newName : legacyName;
+        halfPairs.push(file + ' -> ' + present + ' has no twin');
       }
     }
     expect(halfPairs).toEqual([]);
+  });
+
+  // An exemption that outlives its reason silently stops guarding anything.
+  it('exempts only files that really carry the current name alone', () => {
+    const stale: string[] = [];
+    for (const [newName, files] of Object.entries(NEW_NAME_ONLY)) {
+      const legacyName = PUBLIC_EVENT_PAIRS.find(([n]) => n === newName)?.[1];
+      expect(legacyName).toBeDefined();
+      for (const file of files) {
+        const names = declarations.filter((d) => d.file === file).map((d) => d.name);
+        if (!names.includes(newName)) stale.push(file + ' -> does not declare ' + newName);
+        if (names.includes(legacyName!)) stale.push(file + ' -> declares ' + legacyName + ', drop the exemption');
+      }
+    }
+    expect(stale).toEqual([]);
   });
 
   // Listening for both names runs the handler twice per event.
