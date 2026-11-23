@@ -528,7 +528,7 @@ describe('justifi-checkout', () => {
       expect(checkoutStore.isSubmitting).toBe(true);
     });
 
-    it('submit-event resets isSubmitting to false', async () => {
+    it('justifi-submit resets isSubmitting to false', async () => {
       const page = await newSpecPage({
         components: [JustifiCheckout],
         html: '<justifi-checkout auth-token="t" checkout-id="chk_1"></justifi-checkout>',
@@ -538,14 +538,14 @@ describe('justifi-checkout', () => {
       checkoutStore.isSubmitting = true;
       await page.waitForChanges();
 
-      const ev = new CustomEvent('submit-event', { detail: {}, bubbles: true, composed: true });
+      const ev = new CustomEvent('justifi-submit', { detail: {}, bubbles: true, composed: true });
       page.root?.dispatchEvent(ev);
       await page.waitForChanges();
 
       expect(checkoutStore.isSubmitting).toBe(false);
     });
 
-    it('error-event resets isSubmitting to false', async () => {
+    it('justifi-error resets isSubmitting to false', async () => {
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
       const page = await newSpecPage({
         components: [JustifiCheckout],
@@ -556,7 +556,7 @@ describe('justifi-checkout', () => {
       checkoutStore.isSubmitting = true;
       await page.waitForChanges();
 
-      const ev = new CustomEvent('error-event', { detail: {}, bubbles: true, composed: true });
+      const ev = new CustomEvent('justifi-error', { detail: {}, bubbles: true, composed: true });
       page.root?.dispatchEvent(ev);
       await page.waitForChanges();
 

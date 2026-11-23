@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   Watch,
   State,
 } from '@stencil/core';
@@ -36,10 +34,6 @@ export class FormControlNumberMasked {
     this.updateInput(newValue);
   }
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   disconnectedCallback() {
     this.imask?.destroy();
@@ -66,14 +60,6 @@ export class FormControlNumberMasked {
       }
     });
 
-    this.textInput.addEventListener('blur', () => this.formControlBlur.emit());
-  }
-
-  handleFormControlInput = (event: any) => {
-    const target = event.target;
-    const name = target.getAttribute('name');
-    const rawValue = this.imask?.unmaskedValue || target.value;
-    this.formControlInput.emit({ name: name, value: rawValue });
   }
 
   updateInput = (newValue: any) => {
@@ -112,9 +98,7 @@ export class FormControlNumberMasked {
             onFocus={() => (this.isFocused = true)}
             onBlur={() => {
               this.isFocused = false;
-              this.formControlBlur.emit();
             }}
-            onInput={this.handleFormControlInput}
             part={this.part}
             class={this.errorText ? 'form-control is-invalid' : 'form-control'}
             type="text"

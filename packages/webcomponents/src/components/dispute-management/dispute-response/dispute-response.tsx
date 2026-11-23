@@ -20,6 +20,7 @@ import {
 import { DisputeManagementClickActions, DisputeResponseFormStep } from '../event-types';
 import { heading4 } from '../../../styles/parts';
 import { Button } from '../../../ui-components/button';
+import { emitPublic } from '../../../api/emit-public';
 
 @Component({
   tag: 'dispute-response',
@@ -57,10 +58,18 @@ export class DisputeResponse {
   @State() currentStep = 0;
   @State() currentStepComponentRef: any;
 
-  @Event({ eventName: 'click-event' }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'submit-event', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'justifi-click' }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event' }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Event({ eventName: 'justifi-submit', bubbles: true }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event', bubbles: true }) submitEventLegacy: EventEmitter<ComponentSubmitEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -158,7 +167,7 @@ export class DisputeResponse {
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: this.errorMessage,
         severity: ComponentErrorSeverity.ERROR,
@@ -181,18 +190,18 @@ export class DisputeResponse {
   saveData = async (formData: any, formStep): Promise<IApiResponse<Dispute>> => {
     const hasFormData = Object.keys(formData).length;
     if (!hasFormData) {
-      this.stepCompleteEvent.emit({ response: null, formStep: formStep });
+      emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: null, formStep: formStep });
       return;
     }
     if (this.isLastStep) {
       return this.submitDisputeResponse({
         payload: formData,
         onSuccess: (response) => {
-          this.submitEvent.emit({ response: response });
-          this.stepCompleteEvent.emit({ response: response, formStep: formStep });
+          emitPublic(this.submitEvent, this.submitEventLegacy, { response: response });
+          emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: response, formStep: formStep });
         },
         onError: ({ error, code, severity }) => {
-          this.errorEvent.emit({
+          emitPublic(this.errorEvent, this.errorEventLegacy, {
             errorCode: code,
             message: error,
             severity,
@@ -204,10 +213,10 @@ export class DisputeResponse {
         payload: formData,
         onSuccess: (response) => {
           this.disputeResponse = { ...response.data };
-          this.stepCompleteEvent.emit({ response: response, formStep: formStep });
+          emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: response, formStep: formStep });
         },
         onError: ({ error, code, severity }) => {
-          this.errorEvent.emit({
+          emitPublic(this.errorEvent, this.errorEventLegacy, {
             errorCode: code,
             message: error,
             severity,
@@ -246,7 +255,7 @@ export class DisputeResponse {
       onError: ({ error, code, severity }) => {
         const errors = { [document.dispute_evidence_type]: error };
         this.documentErrors = { ...this.documentErrors, ...errors };
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,
@@ -293,12 +302,12 @@ export class DisputeResponse {
   };
 
   private onCancel = () => {
-    this.clickEvent.emit({ name: DisputeManagementClickActions.cancelDispute });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: DisputeManagementClickActions.cancelDispute });
   };
 
   private onBack = async () => {
     await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
-      this.clickEvent.emit({ name: DisputeManagementClickActions.previousStep });
+      emitPublic(this.clickEvent, this.clickEventLegacy, { name: DisputeManagementClickActions.previousStep });
       await this.handleSubmit(formData, documentList, formStep);
       this.currentStep--;
     });
@@ -306,7 +315,7 @@ export class DisputeResponse {
 
   private onNext = async () => {
     await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
-      this.clickEvent.emit({ name: DisputeManagementClickActions.nextStep });
+      emitPublic(this.clickEvent, this.clickEventLegacy, { name: DisputeManagementClickActions.nextStep });
       await this.handleSubmit(formData, documentList, formStep);
       this.currentStep++;
     });
@@ -314,7 +323,7 @@ export class DisputeResponse {
 
   private onSubmit = async () => {
     await this.currentStepComponentRef.validateAndSubmit(async (formData, documentList, formStep: DisputeResponseFormStep) => {
-      this.clickEvent.emit({ name: DisputeManagementClickActions.submit });
+      emitPublic(this.clickEvent, this.clickEventLegacy, { name: DisputeManagementClickActions.submit });
       const submitData = { ...formData, forfeit: false };
       await this.handleSubmit(submitData, documentList, formStep);
     });

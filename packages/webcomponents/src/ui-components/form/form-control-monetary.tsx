@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   Watch,
   State,
 } from '@stencil/core';
@@ -35,10 +33,6 @@ export class FormControlMonetary {
     this.updateInput(newValue);
   }
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   componentDidLoad() {
     this.updateInput(this.defaultValue);
@@ -61,7 +55,6 @@ export class FormControlMonetary {
     this.formControl.value = this.formatDisplayValue(formatRawValue); // "1,000.00"
 
     this.inputHandler(name, formatRawValue);
-    this.formControlInput.emit({ name: name, value: formatRawValue });
   }
 
   private get inputPart() {
@@ -94,7 +87,6 @@ export class FormControlMonetary {
               onFocus={() => this.isFocused = true}
               onBlur={() => {
                 this.isFocused = false;
-                this.formControlBlur.emit();
               }}
               onInput={(event: Event) => this.updateInput((event.target as HTMLInputElement).value)}
               onKeyDown={this.keyDownHandler}

@@ -57,9 +57,14 @@ Renders a Google Pay button for eligible devices/browsers and orchestrates the G
 
 ### Events
 
-- `googlePayStarted`: Fires when the user clicks the Google Pay button, immediately before the payment sheet opens.
-- `googlePayCompleted`: Fires when payment completes; includes success status, payment method ID, card network, and card details (last 4 digits).
-- `googlePayCancelled`: Fires when the user dismisses the Google Pay sheet.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-google-pay-started`: Fires when the user clicks the Google Pay button, immediately before the payment sheet opens.
+- `justifi-google-pay-completed`: Fires when payment completes; includes success status, payment method ID, card network, and card details (last 4 digits).
+- `justifi-google-pay-cancelled`: Fires when the user dismisses the Google Pay sheet.
 
 ### Event Payloads
 
@@ -88,8 +93,8 @@ Renders a Google Pay button for eligible devices/browsers and orchestrates the G
 
 1. Component checks device/browser eligibility for Google Pay
 2. If eligible, Google Pay button renders
-3. User clicks button → `googlePayStarted` fires → Google Pay sheet opens
-4. User completes payment → `googlePayCompleted` event fires with `paymentMethodId`
+3. User clicks button → `justifi-google-pay-started` fires → Google Pay sheet opens
+4. User completes payment → `justifi-google-pay-completed` event fires with `paymentMethodId`
 5. Modular checkout automatically completes the checkout
 
 ## Theming & Layout

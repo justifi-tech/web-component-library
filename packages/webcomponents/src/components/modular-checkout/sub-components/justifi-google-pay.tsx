@@ -10,6 +10,7 @@ import {
 import { configState, waitForConfig } from "../../config-provider/config-state";
 import { checkoutStore } from "../../../store/checkout.store";
 import GooglePaySkeleton from "./google-pay-skeleton";
+import { emitPublic } from '../../../api/emit-public';
 
 enum GooglePayEventTypes {
   initialize = "justifi.googlePay.initialize",
@@ -44,15 +45,27 @@ export class JustifiGooglePay {
   @State() sdkLoaded: boolean = false;
   @State() isReadyToPay: boolean = false;
 
-  @Event() googlePayStarted: EventEmitter<void>;
-  @Event() googlePayCompleted: EventEmitter<{
+  @Event({ eventName: 'justifi-google-pay-started' }) googlePayStarted: EventEmitter<void>;
+  /** @deprecated Listen for `justifi-google-pay-started`. Removed in the next major. */
+  @Event({ eventName: 'googlePayStarted' }) googlePayStartedLegacy: EventEmitter<void>;
+  @Event({ eventName: 'justifi-google-pay-completed' }) googlePayCompleted: EventEmitter<{
     success: boolean;
     paymentMethodId?: string;
     cardNetwork?: string;
     cardDetails?: string;
     error?: { code: string; message: string };
   }>;
-  @Event() googlePayCancelled: EventEmitter<void>;
+  /** @deprecated Listen for `justifi-google-pay-completed`. Removed in the next major. */
+  @Event({ eventName: 'googlePayCompleted' }) googlePayCompletedLegacy: EventEmitter<{
+    success: boolean;
+    paymentMethodId?: string;
+    cardNetwork?: string;
+    cardDetails?: string;
+    error?: { code: string; message: string };
+  }>;
+  @Event({ eventName: 'justifi-google-pay-cancelled' }) googlePayCancelled: EventEmitter<void>;
+  /** @deprecated Listen for `justifi-google-pay-cancelled`. Removed in the next major. */
+  @Event({ eventName: 'googlePayCancelled' }) googlePayCancelledLegacy: EventEmitter<void>;
 
   async componentWillLoad() {
     await waitForConfig();
@@ -88,11 +101,11 @@ export class JustifiGooglePay {
         console.error("Google Pay error:", data);
         break;
       case GooglePayEventTypes.buttonClicked:
-        this.googlePayStarted.emit();
+        emitPublic(this.googlePayStarted, this.googlePayStartedLegacy);
         this.sendStartPayment();
         break;
       case GooglePayEventTypes.paymentSuccess:
-        this.googlePayCompleted.emit({
+        emitPublic(this.googlePayCompleted, this.googlePayCompletedLegacy, {
           success: true,
           paymentMethodId: data.paymentMethodId,
           cardNetwork: data.cardNetwork,
@@ -100,10 +113,10 @@ export class JustifiGooglePay {
         });
         break;
       case GooglePayEventTypes.paymentCanceled:
-        this.googlePayCancelled.emit();
+        emitPublic(this.googlePayCancelled, this.googlePayCancelledLegacy);
         break;
       case GooglePayEventTypes.paymentError:
-        this.googlePayCompleted.emit({
+        emitPublic(this.googlePayCompleted, this.googlePayCompletedLegacy, {
           success: false,
           error: { code: data.code, message: data.message },
         });

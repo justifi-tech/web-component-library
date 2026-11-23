@@ -40,8 +40,13 @@ Component to render a formated list of terminal device orders for the requested 
 
 ### Events
 
-- `click-event`: Surfaces the order ID for navigation.
-- `error-event`: Surfaces API or token errors for logging.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-click`: Surfaces the order ID for navigation.
+- `justifi-error`: Surfaces API or token errors for logging.
 
 ## Authorization
 
@@ -107,14 +112,14 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const terminalOrdersList = document.querySelector('justifi-terminal-orders-list');
 
-    terminalOrdersList.addEventListener('click-event', (event) => {
+    terminalOrdersList.addEventListener('justifi-click', (event) => {
       // here is where you would handle the click events
-      console.log('click-event', event.detail);
+      console.log('justifi-click', event.detail);
     });
 
-    terminalOrdersList.addEventListener('error-event', (event) => {
+    terminalOrdersList.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
   })();
 </script>

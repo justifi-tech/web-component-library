@@ -26,6 +26,7 @@ import {
   TableFootCell,
   TableClickActions,
 } from '../../ui-components';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-terminal-orders-list',
@@ -45,8 +46,12 @@ export class JustifiTerminalOrdersList {
 
   @State() getTerminalOrders: Function;
 
-  @Event({ eventName: 'click-event', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-click', bubbles: true }) clickEvent: EventEmitter<ComponentClickEvent>;
+  /** @deprecated Listen for `justifi-click`. Removed in the next major. */
+  @Event({ eventName: 'click-event', bubbles: true }) clickEventLegacy: EventEmitter<ComponentClickEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -104,7 +109,7 @@ export class JustifiTerminalOrdersList {
       });
     } else {
       this.errorMessage = 'Account ID and Auth Token are required';
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: this.errorMessage,
         severity: ComponentErrorSeverity.ERROR,
@@ -127,7 +132,7 @@ export class JustifiTerminalOrdersList {
       },
       onError: ({ error, code, severity }) => {
         this.errorMessage = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,
@@ -141,12 +146,12 @@ export class JustifiTerminalOrdersList {
 
   handleClickPrevious = (beforeCursor: string) => {
     this.pagingParams = { before_cursor: beforeCursor };
-    this.clickEvent.emit({ name: TableClickActions.previous });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.previous });
   };
 
   handleClickNext = (afterCursor: string) => {
     this.pagingParams = { after_cursor: afterCursor };
-    this.clickEvent.emit({ name: TableClickActions.next });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.next });
   };
 
   rowClickHandler = (e) => {
@@ -154,7 +159,7 @@ export class JustifiTerminalOrdersList {
     if (!clickedOrderId) return;
 
     const orderData = this.terminalOrders.find((order) => order.id === clickedOrderId);
-    this.clickEvent.emit({ name: TableClickActions.row, data: orderData });
+    emitPublic(this.clickEvent, this.clickEventLegacy, { name: TableClickActions.row, data: orderData });
   };
 
   get terminalOrderParams() {

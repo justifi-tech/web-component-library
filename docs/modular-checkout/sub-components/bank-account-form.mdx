@@ -26,7 +26,7 @@ With `show-account-number-confirmation` on, the form renders a required **Confir
 
 > **Note:** If you are using this sub component, you also need to provide billing information. This can be done by adding the `justifi-billing-form-full` sub component for complete billing address, the `justifi-bank-account-billing-form-simple` sub component for account owner name only, or by passing the `billingInformation` object as an argument to the `submitCheckout` method called on the `justifi-modular-checkout`. See the [modular checkout docs](../introduction) for more information.
 
-> **Note:** If the checkout's `payment_settings.ach_payments` is `false`, this component does not render the form and logs a console warning (`[bank-account-form] ACH payments are disabled for this checkout (payment_settings.ach_payments=false).`). Prefer omitting the sub-component when ACH is off, or use `checkout-changed` / `availablePaymentMethodTypes` so your layout does not reserve an empty slot.
+> **Note:** If the checkout's `payment_settings.ach_payments` is `false`, this component does not render the form and logs a console warning (`[bank-account-form] ACH payments are disabled for this checkout (payment_settings.ach_payments=false).`). Prefer omitting the sub-component when ACH is off, or use `justifi-checkout-changed` / `availablePaymentMethodTypes` so your layout does not reserve an empty slot.
 
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 
@@ -95,11 +95,11 @@ Beyond `show-account-number-confirmation`, this component is not intended for st
       checkoutWrapper.submitCheckout();
     });
 
-    checkoutWrapper.addEventListener('error-event', (event) => {
+    checkoutWrapper.addEventListener('justifi-error', (event) => {
       console.error(event.detail);
     });
 
-    document.addEventListener('submit-event', (event) => {
+    document.addEventListener('justifi-submit', (event) => {
       console.log('Checkout completed successfully!', event.detail);
     });
   })();
@@ -114,6 +114,11 @@ Beyond `show-account-number-confirmation`, this component is not intended for st
 />
 
 ### Events
+
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
 
 - Emits the same `submit` / `error` events as other modular rails via the parent checkout; no direct listeners required.
 

@@ -9,6 +9,7 @@ import { identitySchemaByCountry } from '../../schemas/business-identity-schema'
 import { CountryCode } from '../../../../utils/country-codes';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { BusinessFormStep } from '../../utils';
+import { emitPublic } from '../../../../api/emit-public';
 
 @Component({
   tag: 'business-representative-form-step'
@@ -33,12 +34,13 @@ export class BusinessRepresentativeFormStep {
     this.getData();
   }
 
-  @Event({ eventName: 'error-event', bubbles: true })
-  errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'complete-form-step-event', bubbles: true })
-  stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -50,7 +52,7 @@ export class BusinessRepresentativeFormStep {
   }
 
   private initializeApi() {
-    if (!validateRequiredProps(this.errorEvent, {
+    if (!validateRequiredProps(this.errorEvent, this.errorEventLegacy, {
       'auth-token': this.authToken,
       'business-id': this.businessId,
     })) {
@@ -72,7 +74,7 @@ export class BusinessRepresentativeFormStep {
   private initializeForm() {
     const schemaFactory = identitySchemaByCountry[this.country];
     if (!schemaFactory) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'Missing schema for selected country',
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
@@ -100,7 +102,7 @@ export class BusinessRepresentativeFormStep {
   private getData = () => {
     if (!this.getBusiness || !this.formController) return;
 
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.isLoading = true;
     this.getBusiness({
       onSuccess: (response) => {
@@ -109,14 +111,14 @@ export class BusinessRepresentativeFormStep {
         this.formController.setInitialValues({ ...this.representative });
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
         });
       },
       final: () => {
-        this.formLoading.emit(false);
+        this.loadingHandler?.(false);
         this.isLoading = false;
       }
     });
@@ -124,7 +126,7 @@ export class BusinessRepresentativeFormStep {
 
   private sendData = (onSuccess: () => void) => {
     let submittedData;
-    this.formLoading.emit(true);
+    this.loadingHandler?.(true);
     this.patchBusiness({
       payload: this.patchPayload,
       onSuccess: (response) => {
@@ -133,15 +135,15 @@ export class BusinessRepresentativeFormStep {
       },
       onError: ({ error, code, severity }) => {
         submittedData = error;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
         });
       },
       final: () => {
-        this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.representative });
-        this.formLoading.emit(false)
+        emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: submittedData, formStep: BusinessFormStep.representative });
+        this.loadingHandler?.(false)
       }
     });
   }

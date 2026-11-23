@@ -9,6 +9,8 @@ describe('form-control-monetary-provisioning', () => {
   const components = [FormControlMonetaryProvisioning, FormControlErrorText, FormControlHelpText];
   const mockInputHandler = jest.fn();
 
+  beforeEach(() => jest.clearAllMocks());
+
   it('renders correctly with default props', async () => {
     const page = await newSpecPage({
       components: components,
@@ -116,7 +118,7 @@ describe('form-control-monetary-provisioning', () => {
     expect(inputElement.value).toBe('1,234.56');
   });
 
-  it('Emits formControlInput event on input change', async () => {
+  it('Passes the unmasked value to inputHandler on input change', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -127,43 +129,13 @@ describe('form-control-monetary-provisioning', () => {
           maskOptions={CURRENCY_MASK.DECIMAL}
         />,
     });
-
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.value = '150.99';
 
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
-    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
-      detail: {
-        name: 'amount',
-        value: '150.99',
-      }
-    }));
-  });
-
-  it('Emits formControlBlur on input blur', async () => {
-    const page = await newSpecPage({
-      components: components,
-      template: () =>
-        <form-control-monetary-provisioning
-          label='Amount'
-          name='amount'
-          inputHandler={mockInputHandler}
-          maskOptions={CURRENCY_MASK.DECIMAL}
-        />,
-    });
-
-    const blurSpy = jest.fn();
-    page.root.addEventListener('form-control-blur', blurSpy);
-
-    const input = page.root.querySelector('input');
-    input.dispatchEvent(new Event('blur', { bubbles: true }));
-    await page.waitForChanges();
-
-    expect(blurSpy).toHaveBeenCalled();
+    expect(mockInputHandler).toHaveBeenCalledWith('amount', '150.99');
   });
 
   it('Disables input when disabled prop is set', async () => {

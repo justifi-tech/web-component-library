@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   State,
   Element,
 } from '@stencil/core';
@@ -32,12 +30,7 @@ export class FormControlFile {
   @Prop() inputHandler?: (name: string, value: string) => void = () => { };
   @Prop() disabled?: boolean = false;
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
-  @Event({ eventName: 'file-selected', bubbles: false, composed: false })
-  fileSelected: EventEmitter<FileSelectEvent>;
+  @Prop() fileSelectHandler?: (files: FileSelectEvent) => void;
 
   componentDidLoad() {
     this.fileInput = this.el.querySelector('input');
@@ -47,13 +40,12 @@ export class FormControlFile {
     const target = event.target;
     const name = target.getAttribute('name');
     this.inputHandler(name, target.value);
-    this.formControlInput.emit({ name, value: target.value });
   }
 
   changeHandler = () => {
     const inputFileList = this.fileInput.files;
     if (inputFileList) {
-      this.fileSelected.emit({
+      this.fileSelectHandler?.({
         fileList: inputFileList,
         document_type: this.documentType
       });
@@ -97,7 +89,6 @@ export class FormControlFile {
             onFocus={() => this.isFocused = true}
             onBlur={() => {
               this.isFocused = false;
-              this.formControlBlur.emit();
             }}
           />
           <FormControlErrorText errorText={this.errorText} name={this.name} />

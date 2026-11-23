@@ -14,6 +14,7 @@ import {
   textDanger
 } from '../../../styles/parts';
 import SeasonInterruptionInsuranceLoading from './season-interruption-insurance-loading';
+import { emitPublic } from '../../../api/emit-public';
 
 @Component({
   tag: 'justifi-season-interruption-insurance',
@@ -40,8 +41,12 @@ export class JustifiSeasonInterruptionInsurance {
   @State() isLoading: boolean = true;
   @State() accepted: string | undefined;
 
-  @Event({ eventName: 'insurance-updated' }) insuranceUpdated: EventEmitter;
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-insurance-updated' }) insuranceUpdated: EventEmitter;
+  /** @deprecated Listen for `justifi-insurance-updated`. Removed in the next major. */
+  @Event({ eventName: 'insurance-updated' }) insuranceUpdatedLegacy: EventEmitter;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -75,7 +80,7 @@ export class JustifiSeasonInterruptionInsurance {
   private initializeServiceMethods() {
     const authToken = this.authToken || checkoutStore.authToken;
     if (!authToken) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: 'Missing authToken',
         severity: ComponentErrorSeverity.ERROR,
@@ -123,7 +128,7 @@ export class JustifiSeasonInterruptionInsurance {
       },
       onError: ({ error, code, severity }) => {
         this.isLoading = false;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,
@@ -139,11 +144,11 @@ export class JustifiSeasonInterruptionInsurance {
       quoteId: this.quote.id,
       payload: { accepted: this.accepted },
       onSuccess: () => {
-        this.insuranceUpdated.emit();
+        emitPublic(this.insuranceUpdated, this.insuranceUpdatedLegacy);
         insuranceValues[this.quote.policy_type] = this.accepted;
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,

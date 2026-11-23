@@ -1,7 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { FormControlText } from '../../ui-components/form/form-control-text';
-import { CustomPopper } from '../../ui-components/custom-popper/custom-popper';
-import { RadioListItem } from '../../ui-components/radio-list-item';
+import { IframeInput } from '../../ui-components/form/iframe-input';
 
 /**
  * The source scan in event-containment.spec.ts proves the decorators are
@@ -10,25 +9,11 @@ import { RadioListItem } from '../../ui-components/radio-list-item';
  */
 const cases = [
   {
-    label: 'form-control-text (light DOM)',
-    component: FormControlText,
-    html: '<form-control-text label="Email" name="email"></form-control-text>',
-    emitter: 'formControlInput',
-    eventName: 'form-control-input',
-  },
-  {
-    label: 'custom-popper (light DOM)',
-    component: CustomPopper,
-    html: '<custom-popper></custom-popper>',
-    emitter: 'showEvent',
-    eventName: 'popper-show',
-  },
-  {
-    label: 'radio-list-item (light DOM, re-emitted through a shadow wrapper)',
-    component: RadioListItem,
-    html: '<radio-list-item name="pm" value="card"></radio-list-item>',
-    emitter: 'radioClick',
-    eventName: 'radio-click',
+    label: 'iframe-input (light DOM)',
+    component: IframeInput,
+    html: '<iframe-input input-id="cardNumber" label="Card Number" iframe-origin="http://localhost/v2/cardNumber"></iframe-input>',
+    emitter: 'iframeLoaded',
+    eventName: 'iframe-loaded',
   },
 ] as const;
 

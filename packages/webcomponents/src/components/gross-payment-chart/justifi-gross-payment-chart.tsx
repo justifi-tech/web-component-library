@@ -22,6 +22,7 @@ import { GrossVolumeReport } from '../../api/GrossVolume';
 import { generateChartOptions } from './chart-utils';
 import Spinner from '../../ui-components/spinner';
 import { StyledHost } from '../../ui-components';
+import { emitPublic } from '../../api/emit-public';
 
 Chart.register(Colors, BarController, BarElement, CategoryScale, LinearScale, Legend, Tooltip, Title);
 
@@ -42,7 +43,9 @@ export class JustifiGrossPaymentChart {
   @State() errorMessage: string = '';
   @State() wrapperErrorMessage: string = null;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -97,7 +100,7 @@ export class JustifiGrossPaymentChart {
     } else {
       this.getGrossPayment = undefined;
       this.wrapperErrorMessage = 'Account ID and Auth Token are required';
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         message: this.wrapperErrorMessage,
         severity: ComponentErrorSeverity.ERROR,
@@ -117,7 +120,7 @@ export class JustifiGrossPaymentChart {
         this.loading = false;
         this.errorMessage = error;
 
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,

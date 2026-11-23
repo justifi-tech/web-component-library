@@ -8,6 +8,7 @@ import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import { DisputeManagementClickActions } from './event-types';
 import { Dispute, DisputeStatus } from '../../api/Dispute';
 import { StyledHost } from '../../ui-components';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-dispute-management',
@@ -22,7 +23,9 @@ export class JustifiDisputeManagement {
   @State() isLoading: boolean = true;
   @State() showDisputeResponseForm: boolean = false;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -41,7 +44,9 @@ export class JustifiDisputeManagement {
     });
   }
 
-  @Listen('click-event')
+  // the justifi- name only: the deprecated twin fires too, and handling both
+  // would run this twice per click
+  @Listen('justifi-click')
   disputeResponseHandler(event: CustomEvent) {
     if (event.detail.name === DisputeManagementClickActions.respondToDispute) {
       this.showDisputeResponseForm = true;
@@ -51,7 +56,7 @@ export class JustifiDisputeManagement {
     }
   }
 
-  @Listen('submit-event')
+  @Listen('justifi-submit')
   disputeSubmittedHandler() {
     this.fetchData();
   }
@@ -85,7 +90,7 @@ export class JustifiDisputeManagement {
         service: new DisputeService(),
       });
     } else {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'Dispute ID and Auth Token are required',
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,
@@ -108,7 +113,7 @@ export class JustifiDisputeManagement {
         }
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           errorCode: code,
           message: error,
           severity,

@@ -24,6 +24,7 @@ import {
   personalDocGroup2Types,
   UploadedDocumentEntry,
 } from './document-upload-options';
+import { emitPublic } from '../../../../api/emit-public';
 
 @Component({
   tag: 'document-upload-form-step'
@@ -55,13 +56,16 @@ export class DocumentUploadFormStep {
 
   @Watch('isLoading')
   watchHandler(newValue: boolean) {
-    this.formLoading.emit(newValue);
+    this.loadingHandler?.(newValue);
   }
 
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -72,7 +76,7 @@ export class DocumentUploadFormStep {
     }
 
     this.errors = {};
-    this.stepCompleteEvent.emit({ response: null, formStep: BusinessFormStep.documentUpload });
+    emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: null, formStep: BusinessFormStep.documentUpload });
     onSuccess();
   }
 
@@ -84,7 +88,7 @@ export class DocumentUploadFormStep {
   }
 
   private initializeApi() {
-    if (!validateRequiredProps(this.errorEvent, {
+    if (!validateRequiredProps(this.errorEvent, this.errorEventLegacy, {
       'auth-token': this.authToken,
       'business-id': this.businessId,
     })) {
@@ -112,7 +116,7 @@ export class DocumentUploadFormStep {
         this.categories = buildAllCategories(this.country);
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity,
@@ -200,8 +204,8 @@ export class DocumentUploadFormStep {
     this.selectedDocType = value;
   }
 
-  handleFileSelected = async (e: CustomEvent<FileSelectEvent>) => {
-    const fileList = Array.from(e.detail.fileList) as File[];
+  handleFileSelected = async (files: FileSelectEvent) => {
+    const fileList = Array.from(files.fileList) as File[];
     const category = this.categories.find(c => c.value === this.selectedCategory);
     if (!category) return;
 
@@ -261,7 +265,7 @@ export class DocumentUploadFormStep {
           resolve(this.handleDocRecordResponse(docData, response));
         },
         onError: ({ error, code, severity }) => {
-          this.errorEvent.emit({
+          emitPublic(this.errorEvent, this.errorEventLegacy, {
             message: error,
             errorCode: code,
             severity: severity,
@@ -274,7 +278,7 @@ export class DocumentUploadFormStep {
 
   private handleDocRecordResponse = (docData: EntityDocument, response: any) => {
     if (response.error) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.POST_ERROR,
         message: response.error.message,
         severity: ComponentErrorSeverity.ERROR,
@@ -299,7 +303,7 @@ export class DocumentUploadFormStep {
     });
 
     if (!response.ok) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         errorCode: ComponentErrorCodes.POST_ERROR,
         message: 'Failed to upload document',
         severity: ComponentErrorSeverity.ERROR,
@@ -364,7 +368,7 @@ export class DocumentUploadFormStep {
                 name="document_file"
                 label="Upload Document"
                 documentType={this.selectedDocType as EntityDocumentType}
-                onFile-selected={this.handleFileSelected}
+                fileSelectHandler={this.handleFileSelected}
                 disabled={!this.selectedDocType}
                 multiple={false}
               />

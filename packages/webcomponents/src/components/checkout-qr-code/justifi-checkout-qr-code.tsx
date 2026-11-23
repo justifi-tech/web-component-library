@@ -4,6 +4,7 @@ import { ComponentErrorCodes, ComponentErrorSeverity } from '../../api/Component
 import { ComponentErrorEvent } from '../../api/ComponentEvents';
 import JustifiAnalytics from '../../api/Analytics';
 import { detectDuplicateVersion } from '../../utils/detect-duplicate-version';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-checkout-qr-code',
@@ -13,7 +14,9 @@ export class JustifiCheckoutQrCode {
   @Prop() checkoutId!: string;
   @Prop() size: number = 256;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
 
   analytics: JustifiAnalytics;
   private qrContainerEl: HTMLDivElement;
@@ -43,7 +46,7 @@ export class JustifiCheckoutQrCode {
 
   private async renderQrCode() {
     if (!this.checkoutId) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'checkoutId is required',
         errorCode: ComponentErrorCodes.MISSING_PROPS,
         severity: ComponentErrorSeverity.ERROR,

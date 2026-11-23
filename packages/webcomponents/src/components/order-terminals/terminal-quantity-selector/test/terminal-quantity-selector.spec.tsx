@@ -22,7 +22,7 @@ describe('justifi-terminal-quantity-selector', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('should emit an event when the quantity is changed and update state', async () => {
+  it('should report the quantity change and update state and update state', async () => {
     const onSelectedQuantityChange = jest.fn();
 
     const page = await newSpecPage({
@@ -39,7 +39,7 @@ describe('justifi-terminal-quantity-selector', () => {
 
     await page.waitForChanges();
 
-    page.root.addEventListener('selected-quantity-change', onSelectedQuantityChange);
+    page.rootInstance.quantityChangeHandler = onSelectedQuantityChange;
 
     const addButton = page.root.querySelector('.plus');
     (addButton as HTMLElement).click();
@@ -47,11 +47,9 @@ describe('justifi-terminal-quantity-selector', () => {
     await page.waitForChanges();
 
     expect(onSelectedQuantityChange).toHaveBeenCalledWith(expect.objectContaining({
-      detail: {
         modelName: 'v400',
         quantity: 1
-      }
-    }));
+      }));
 
     expect(page.rootInstance.selectedQuantity).toBe(1);
   });

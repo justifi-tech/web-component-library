@@ -169,10 +169,7 @@ router.get("/", async (req, res) => {
           logEventMessage('error-event', event.detail);
         });
 
-        // TODO: no component emits 'payment-method-changed' — this listener has never
-        // fired. Looks like a leftover of 'checkout-changed'. Repoint it during the
-        // public-event rename.
-        justifiCheckout.addEventListener('payment-method-changed', (event) => {
+        justifiCheckout.addEventListener('justifi-checkout-changed', (event) => {
           console.log(event);
           writeOutputToPage(event);
           logEventMessage('payment-method-changed', event.detail);

@@ -69,9 +69,9 @@ Component to display detailed information about a specific payment.
   (function () {
     const paymentDetails = document.querySelector('justifi-payment-details');
 
-    paymentDetails.addEventListener('error-event', (event) => {
+    paymentDetails.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
   })();
 </script>
@@ -86,8 +86,13 @@ Component to display detailed information about a specific payment.
 
 ### Events
 
-- `error-event`: Surfaces API or token errors for logging.
-- `record-click-event`: Emitted when users click on a related record (e.g., refund, dispute).
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-error`: Surfaces API or token errors for logging.
+- `justifi-record-click`: Emitted when users click on a related record (e.g., refund, dispute).
 
 ## Authorization
 

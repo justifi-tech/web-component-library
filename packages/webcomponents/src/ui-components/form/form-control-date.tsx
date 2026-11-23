@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   Watch,
   State,
 } from '@stencil/core';
@@ -22,6 +20,8 @@ export class FormControlDate {
   @Prop() name!: string;
   @Prop() label!: string;
   @Prop() inputHandler!: (name: string, value: string) => void;
+  /** Fires alongside inputHandler; consumers use it to split the date apart. */
+  @Prop() dateChangeHandler?: (date: { name: string; value: string }) => void;
   @Prop() defaultValue?: string;
   @Prop() helpText?: string;
   @Prop() errorText?: string;
@@ -34,10 +34,6 @@ export class FormControlDate {
     this.updateInput(newValue);
   }
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   get currentDate() {
     if (!this.showTime) {
@@ -55,7 +51,7 @@ export class FormControlDate {
     const dateValue = event.target.value;
 
     this.inputHandler(this.name, dateValue);
-    this.formControlInput.emit({ name: this.name, value: dateValue });
+    this.dateChangeHandler?.({ name: this.name, value: dateValue });
   }
 
   updateInput(value: any) {
@@ -94,7 +90,6 @@ export class FormControlDate {
             onFocus={() => this.isFocused = true}
             onBlur={() => {
               this.isFocused = false;
-              this.formControlBlur.emit();
             }}
             onInput={this.handleFormControlInput}
             part={this.part}

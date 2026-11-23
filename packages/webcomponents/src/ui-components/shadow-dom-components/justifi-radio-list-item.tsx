@@ -1,4 +1,4 @@
-import { Component, Prop, h, Event, EventEmitter } from "@stencil/core";
+import { Component, Prop, h } from '@stencil/core';
 import { StyledHost } from "../styled-host/styled-host";
 
 @Component({
@@ -13,7 +13,7 @@ export class JustifiRadioListItem {
   @Prop() hidden?: boolean = false;
   @Prop() class?: string;
 
-  @Event({ eventName: 'radio-click', bubbles: false, composed: false }) radioClick: EventEmitter<string>;
+  @Prop() radioClickHandler?: (value: string) => void;
 
   render() {
     return (
@@ -25,7 +25,7 @@ export class JustifiRadioListItem {
           checked={this.checked}
           hidden={this.hidden}
           class={this.class}
-          onRadio-click={(e: CustomEvent<string>) => this.radioClick.emit(e.detail)}
+          radioClickHandler={(value) => this.radioClickHandler?.(value)}
         />
       </StyledHost>
     );

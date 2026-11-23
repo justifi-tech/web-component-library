@@ -41,8 +41,13 @@ Component to render a formated list of payouts for the requested account.
 
 ### Events
 
-- `click-event`: Fires when a row is clicked; `detail.payout_id` indicates which payout to drill into.
-- `error-event`: Surfaces API or token errors for logging.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-click`: Fires when a row is clicked; `detail.payout_id` indicates which payout to drill into.
+- `justifi-error`: Surfaces API or token errors for logging.
 
 ## Authorization
 
@@ -108,14 +113,14 @@ Authorization is performed by passing a web component token as `auth-token`.
   (function () {
     const payoutsList = document.querySelector('justifi-payouts-list');
 
-    payoutsList.addEventListener('click-event', (event) => {
+    payoutsList.addEventListener('justifi-click', (event) => {
       // here is where you would handle the click events
-      console.log('click-event', event.detail);
+      console.log('justifi-click', event.detail);
     });
 
-    payoutsList.addEventListener('error-event', (event) => {
+    payoutsList.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
   })();
 </script>

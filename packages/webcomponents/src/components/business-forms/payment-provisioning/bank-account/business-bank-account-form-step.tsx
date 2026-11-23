@@ -9,6 +9,7 @@ import { BusinessFormStep } from '../../utils';
 import { heading2, buttonSecondary, buttonLink } from '../../../../styles/parts';
 import { PaymentProvisioningLoading } from '../payment-provisioning-loading';
 import { Button } from '../../../../ui-components';
+import { emitPublic } from '../../../../api/emit-public';
 
 @Component({
   tag: 'business-bank-account-form-step'
@@ -37,13 +38,16 @@ export class BusinessBankAccountFormStep {
 
   @Watch('isLoading')
   watchHandler(newValue: boolean) {
-    this.formLoading.emit(newValue);
+    this.loadingHandler?.(newValue);
   }
 
-  @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
-  formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'justifi-error', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event', bubbles: true }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-form-step-complete', bubbles: true }) stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
+  /** @deprecated Listen for `justifi-form-step-complete`. Removed in the next major. */
+  @Event({ eventName: 'complete-form-step-event', bubbles: true }) stepCompleteEventLegacy: EventEmitter<ComponentFormStepCompleteEvent>;
+  @Prop() loadingHandler?: (loading: boolean) => void;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {
@@ -69,7 +73,7 @@ export class BusinessBankAccountFormStep {
   }
 
   private initializeApi() {
-    if (!validateRequiredProps(this.errorEvent, {
+    if (!validateRequiredProps(this.errorEvent, this.errorEventLegacy, {
       'auth-token': this.authToken,
       'business-id': this.businessId,
     })) {
@@ -159,7 +163,7 @@ export class BusinessBankAccountFormStep {
         this.determineViewMode();
       },
       onError: ({ error, code, severity }) => {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: code,
           severity: severity
@@ -184,7 +188,7 @@ export class BusinessBankAccountFormStep {
 
       onSuccess();
     } catch (error) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: error,
         errorCode: ComponentErrorCodes.POST_ERROR,
         severity: ComponentErrorSeverity.ERROR
@@ -205,14 +209,14 @@ export class BusinessBankAccountFormStep {
         },
         onError: ({ error, code, severity }) => {
           success = false;
-          this.errorEvent.emit({
+          emitPublic(this.errorEvent, this.errorEventLegacy, {
             message: error,
             errorCode: code,
             severity: severity
           });
         },
         final: () => {
-          this.stepCompleteEvent.emit({ response: submittedData, formStep: BusinessFormStep.bankAccount });
+          emitPublic(this.stepCompleteEvent, this.stepCompleteEventLegacy, { response: submittedData, formStep: BusinessFormStep.bankAccount });
           this.isLoading = false;
           resolve(success);
         }
@@ -230,7 +234,7 @@ export class BusinessBankAccountFormStep {
           this.initializeFormController();
         },
         onError: ({ error, code, severity }) => {
-          this.errorEvent.emit({
+          emitPublic(this.errorEvent, this.errorEventLegacy, {
             message: error,
             errorCode: code,
             severity: severity

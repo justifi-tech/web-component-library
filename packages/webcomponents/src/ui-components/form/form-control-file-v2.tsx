@@ -3,8 +3,6 @@ import {
   Host,
   h,
   Prop,
-  Event,
-  EventEmitter,
   State,
   Element,
 } from '@stencil/core';
@@ -26,10 +24,6 @@ export class FormControlFileV2 {
   @Prop() inputHandler?: (name: string, value: string) => void = () => { };
   @Prop() disabled?: boolean = false;
 
-  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
-  formControlInput: EventEmitter<any>;
-  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
-  formControlBlur: EventEmitter<any>;
 
   render() {
     return (
@@ -48,7 +42,6 @@ export class FormControlFileV2 {
             class={this.errorText ? "form-control is-invalid" : "form-control"}
             multiple={this.multiple}
             disabled={this.disabled}
-            onBlur={() => this.formControlBlur.emit()}
             onChange={() => this.errorText = ""}
           />
           <FormControlErrorText errorText={this.errorText} name={this.name} />

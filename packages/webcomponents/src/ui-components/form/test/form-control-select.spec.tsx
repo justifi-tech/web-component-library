@@ -12,6 +12,8 @@ describe('form-control-select', () => {
     { label: 'Delivery', value: 'delivery' }
   ];
 
+  beforeEach(() => jest.clearAllMocks());
+
   it('Renders with default props', async () => {
     const page = await newSpecPage({
       components: components,
@@ -121,7 +123,7 @@ describe('form-control-select', () => {
     expect(selectElement.value).toBe(testValue);
   });
 
-  it('Emits formControlInput event on input', async () => {
+  it('Calls inputHandler on input', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -133,36 +135,12 @@ describe('form-control-select', () => {
         />
     });
 
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
-
     const selectElement = page.root.querySelector('select');
-    selectElement.value = '1';
+    selectElement.value = options[1].value;
     selectElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
 
     await page.waitForChanges();
-    expect(inputEventSpy).toHaveBeenCalled();
-  });
-
-  it('Emits formControlBlur event on blur', async () => {
-    const page = await newSpecPage({
-      components: components,
-      template: () =>
-        <form-control-select
-          label='Select your delivery method'
-          name='delivery_method'
-          inputHandler={mockInputHandler}
-          options={options}
-        />
-    });
-
-    const blurEventSpy = jest.fn();
-    page.root.addEventListener('form-control-blur', blurEventSpy);
-
-    const selectElement = page.root.querySelector('select');
-    selectElement.dispatchEvent(new Event('blur'));
-
-    expect(blurEventSpy).toHaveBeenCalled();
+    expect(mockInputHandler).toHaveBeenCalledWith('delivery_method', 'delivery');
   });
 
   it('Disables input when disabled prop is provided', async () => {

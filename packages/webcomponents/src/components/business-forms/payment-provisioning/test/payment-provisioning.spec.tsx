@@ -595,16 +595,12 @@ describe('justifi-payment-provisioning', () => {
 
       await page.waitForChanges();
 
-      page.rootInstance.handleFormLoading(
-        new CustomEvent('form-loading', { detail: true })
-      );
+      page.rootInstance.handleFormLoading(true);
       await page.waitForChanges();
 
       expect(page.rootInstance.loading).toBe(true);
 
-      page.rootInstance.handleFormLoading(
-        new CustomEvent('form-loading', { detail: false })
-      );
+      page.rootInstance.handleFormLoading(false);
       await page.waitForChanges();
 
       expect(page.rootInstance.loading).toBe(false);
@@ -623,17 +619,13 @@ describe('justifi-payment-provisioning', () => {
 
       await page.waitForChanges();
 
-      page.rootInstance.handleFormLoading(
-        new CustomEvent('form-loading', { detail: true })
-      );
+      page.rootInstance.handleFormLoading(true);
       await page.waitForChanges();
 
       expect(page.rootInstance.loading).toBe(true);
       expect(page.rootInstance.formDisabled).toBe(true);
 
-      page.rootInstance.handleFormLoading(
-        new CustomEvent('form-loading', { detail: false })
-      );
+      page.rootInstance.handleFormLoading(false);
       await page.waitForChanges();
 
       expect(page.rootInstance.formDisabled).toBe(false);

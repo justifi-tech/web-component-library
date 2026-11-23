@@ -28,6 +28,7 @@ import { PlaidService } from "../../api/services/plaid.service";
 import { BillingFormFields } from "../../components";
 import { insuranceValues, insuranceValuesOn, hasInsuranceValueChanged } from "../insurance/insurance-state";
 import { PAYMENT_MODE, CheckoutChangedEventDetail, SelectedPaymentMethod, PAYMENT_METHODS, PaymentMethod, Hook } from "./ModularCheckout";
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: "justifi-modular-checkout",
@@ -73,10 +74,15 @@ export class JustifiModularCheckout {
 
   @Element() hostEl!: HTMLElement;
 
-  @Event({ eventName: "error-event" }) errorEvent!: EventEmitter;
-  @Event({ eventName: "submit-event" }) submitEvent!: EventEmitter;
-  @Event({ eventName: "checkout-changed" })
-  checkoutChangedEvent!: EventEmitter<CheckoutChangedEventDetail>;
+  @Event({ eventName: 'justifi-error' }) errorEvent!: EventEmitter;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy!: EventEmitter;
+  @Event({ eventName: 'justifi-submit' }) submitEvent!: EventEmitter;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event' }) submitEventLegacy!: EventEmitter;
+  @Event({ eventName: 'justifi-checkout-changed' }) checkoutChangedEvent!: EventEmitter<CheckoutChangedEventDetail>;
+  /** @deprecated Listen for `justifi-checkout-changed`. Removed in the next major. */
+  @Event({ eventName: 'checkout-changed' }) checkoutChangedEventLegacy!: EventEmitter<CheckoutChangedEventDetail>;
 
   connectedCallback() {
     this.observer = new MutationObserver(() => {
@@ -142,7 +148,7 @@ export class JustifiModularCheckout {
 
   private fetchCheckout() {
     if (!this.authToken || !this.checkoutId) {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: ComponentErrorMessages.NOT_AUTHENTICATED,
         errorCode: ComponentErrorCodes.NOT_AUTHENTICATED,
         severity: ComponentErrorSeverity.ERROR,
@@ -155,14 +161,14 @@ export class JustifiModularCheckout {
         onSuccess: ({ checkout }) => {
           this.updateStore(checkout);
           if (checkout.status === ICheckoutStatus.completed) {
-            this.errorEvent.emit({
+            emitPublic(this.errorEvent, this.errorEventLegacy, {
               message: ComponentErrorMessages.CHECKOUT_ALREADY_COMPLETED,
               errorCode: ComponentErrorCodes.CHECKOUT_ALREADY_COMPLETED,
               severity: ComponentErrorSeverity.ERROR,
             });
             return;
           } else if (checkout.status === ICheckoutStatus.expired) {
-            this.errorEvent.emit({
+            emitPublic(this.errorEvent, this.errorEventLegacy, {
               message: ComponentErrorMessages.CHECKOUT_EXPIRED,
               errorCode: ComponentErrorCodes.CHECKOUT_EXPIRED,
               severity: ComponentErrorSeverity.ERROR,
@@ -171,7 +177,7 @@ export class JustifiModularCheckout {
           }
         },
         onError: ({ error, code, severity }) => {
-          this.errorEvent.emit({
+          emitPublic(this.errorEvent, this.errorEventLegacy, {
             message: error,
             errorCode: code,
             severity,
@@ -214,6 +220,7 @@ export class JustifiModularCheckout {
     checkoutStore.paymentCurrency = (
       checkout.payment_currency || checkoutStore.paymentCurrency
     ).toUpperCase();
+    checkoutStore.checkoutStatus = checkout.status;
     checkoutStore.checkoutLoaded = true;
   }
 
@@ -223,7 +230,7 @@ export class JustifiModularCheckout {
       selectedPaymentMethod: checkoutStore.selectedPaymentMethod,
       savedPaymentMethods: checkoutStore.paymentMethods,
     };
-    this.checkoutChangedEvent.emit(detail);
+    emitPublic(this.checkoutChangedEvent, this.checkoutChangedEventLegacy, detail);
   }
 
   private queryFormRefs() {
@@ -254,19 +261,19 @@ export class JustifiModularCheckout {
   private setupApplePayListeners() {
     if (this.applePayRef) {
       this.applePayRef.addEventListener(
-        "applePayStarted",
+        'justifi-apple-pay-started',
         this.handleApplePayStarted
       );
       this.applePayRef.addEventListener(
-        "applePayCompleted",
+        'justifi-apple-pay-completed',
         this.handleApplePayCompleted
       );
       this.applePayRef.addEventListener(
-        "applePayError",
+        'justifi-apple-pay-error',
         this.handleApplePayError
       );
       this.applePayRef.addEventListener(
-        "applePayCancelled",
+        'justifi-apple-pay-cancelled',
         this.handleApplePayCancelled
       );
     }
@@ -275,19 +282,19 @@ export class JustifiModularCheckout {
   private removeApplePayListeners() {
     if (this.applePayRef) {
       this.applePayRef.removeEventListener(
-        "applePayStarted",
+        'justifi-apple-pay-started',
         this.handleApplePayStarted
       );
       this.applePayRef.removeEventListener(
-        "applePayCompleted",
+        'justifi-apple-pay-completed',
         this.handleApplePayCompleted
       );
       this.applePayRef.removeEventListener(
-        "applePayError",
+        'justifi-apple-pay-error',
         this.handleApplePayError
       );
       this.applePayRef.removeEventListener(
-        "applePayCancelled",
+        'justifi-apple-pay-cancelled',
         this.handleApplePayCancelled
       );
     }
@@ -296,15 +303,15 @@ export class JustifiModularCheckout {
   private setupGooglePayListeners() {
     if (this.googlePayRef) {
       this.googlePayRef.addEventListener(
-        "googlePayStarted",
+        'justifi-google-pay-started',
         this.handleGooglePayStarted
       );
       this.googlePayRef.addEventListener(
-        "googlePayCompleted",
+        'justifi-google-pay-completed',
         this.handleGooglePayCompleted
       );
       this.googlePayRef.addEventListener(
-        "googlePayCancelled",
+        'justifi-google-pay-cancelled',
         this.handleGooglePayCancelled
       );
     }
@@ -313,15 +320,15 @@ export class JustifiModularCheckout {
   private removeGooglePayListeners() {
     if (this.googlePayRef) {
       this.googlePayRef.removeEventListener(
-        "googlePayStarted",
+        'justifi-google-pay-started',
         this.handleGooglePayStarted
       );
       this.googlePayRef.removeEventListener(
-        "googlePayCompleted",
+        'justifi-google-pay-completed',
         this.handleGooglePayCompleted
       );
       this.googlePayRef.removeEventListener(
-        "googlePayCancelled",
+        'justifi-google-pay-cancelled',
         this.handleGooglePayCancelled
       );
     }
@@ -330,36 +337,36 @@ export class JustifiModularCheckout {
   private setupPaypalListeners() {
     if (this.paypalRef) {
       this.paypalRef.addEventListener(
-        "paypalStarted",
+        'justifi-paypal-started',
         this.handlePaypalStarted
       );
       this.paypalRef.addEventListener(
-        "paypalCompleted",
+        'justifi-paypal-completed',
         this.handlePaypalCompleted
       );
       this.paypalRef.addEventListener(
-        "paypalCancelled",
+        'justifi-paypal-cancelled',
         this.handlePaypalCancelled
       );
-      this.paypalRef.addEventListener("paypalError", this.handlePaypalError);
+      this.paypalRef.addEventListener('justifi-paypal-error', this.handlePaypalError);
     }
   }
 
   private removePaypalListeners() {
     if (this.paypalRef) {
       this.paypalRef.removeEventListener(
-        "paypalStarted",
+        'justifi-paypal-started',
         this.handlePaypalStarted
       );
       this.paypalRef.removeEventListener(
-        "paypalCompleted",
+        'justifi-paypal-completed',
         this.handlePaypalCompleted
       );
       this.paypalRef.removeEventListener(
-        "paypalCancelled",
+        'justifi-paypal-cancelled',
         this.handlePaypalCancelled
       );
-      this.paypalRef.removeEventListener("paypalError", this.handlePaypalError);
+      this.paypalRef.removeEventListener('justifi-paypal-error', this.handlePaypalError);
     }
   }
 
@@ -381,7 +388,7 @@ export class JustifiModularCheckout {
       };
       this.submitCheckout();
     } else {
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: "Paypal payment failed",
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         severity: ComponentErrorSeverity.ERROR,
@@ -398,7 +405,7 @@ export class JustifiModularCheckout {
   private handlePaypalError = (event: CustomEvent) => {
     checkoutStore.isWalletProcessing = false;
     const { error, code } = event.detail || {};
-    this.errorEvent.emit({
+    emitPublic(this.errorEvent, this.errorEventLegacy, {
       message: error || "Paypal error occurred",
       errorCode: `PAYPAL_${code}`,
       severity: ComponentErrorSeverity.ERROR,
@@ -422,7 +429,7 @@ export class JustifiModularCheckout {
       this.submitCheckout();
     } else {
       checkoutStore.isWalletProcessing = false;
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: (error && error.message) || "Google Pay payment failed",
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         severity: ComponentErrorSeverity.ERROR,
@@ -447,7 +454,7 @@ export class JustifiModularCheckout {
     } else {
       checkoutStore.isWalletProcessing = false;
       console.error("Apple Pay completed but failed:", error);
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: error?.message || "Apple Pay payment failed",
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         severity: ComponentErrorSeverity.ERROR,
@@ -459,7 +466,7 @@ export class JustifiModularCheckout {
     checkoutStore.isWalletProcessing = false;
     const { error, code } = event.detail;
     console.error("Apple Pay error:", error);
-    this.errorEvent.emit({
+    emitPublic(this.errorEvent, this.errorEventLegacy, {
       message: error || "Apple Pay error occurred",
       // prefix with APPLE_PAY_
       errorCode: `APPLE_PAY_${code}`,
@@ -559,7 +566,7 @@ export class JustifiModularCheckout {
       );
 
       if (!resultsAreValid) {
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: 'Validation error',
           errorCode: ComponentErrorCodes.VALIDATION_ERROR,
           severity: ComponentErrorSeverity.ERROR,
@@ -583,7 +590,7 @@ export class JustifiModularCheckout {
 
     if (!checkoutStore.selectedPaymentMethod) {
       checkoutStore.isSubmitting = false;
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'No payment method selected.',
         errorCode: ComponentErrorCodes.VALIDATION_ERROR,
         severity: ComponentErrorSeverity.ERROR,
@@ -593,7 +600,7 @@ export class JustifiModularCheckout {
 
     if (!isValid) {
       checkoutStore.isSubmitting = false;
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: "Please fill in all required fields.",
         errorCode: ComponentErrorCodes.VALIDATION_ERROR,
         severity: ComponentErrorSeverity.ERROR,
@@ -615,7 +622,7 @@ export class JustifiModularCheckout {
 
       if ((tokenizeResult as any)?.error) {
         checkoutStore.isSubmitting = false;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: (tokenizeResult as any).error.message,
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           severity: ComponentErrorSeverity.ERROR,
@@ -631,7 +638,7 @@ export class JustifiModularCheckout {
 
       if (!publicToken) {
         checkoutStore.isSubmitting = false;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: 'Missing Plaid public token. Please connect your bank.',
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           severity: ComponentErrorSeverity.ERROR,
@@ -650,7 +657,7 @@ export class JustifiModularCheckout {
 
         if (response?.error) {
           checkoutStore.isSubmitting = false;
-          this.errorEvent.emit({
+          emitPublic(this.errorEvent, this.errorEventLegacy, {
             message: typeof response.error === 'string' ? response.error : response.error.message || 'Failed to tokenize bank account',
             errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
             severity: ComponentErrorSeverity.ERROR,
@@ -663,7 +670,7 @@ export class JustifiModularCheckout {
         checkoutStore.paymentToken = token;
       } catch (err) {
         checkoutStore.isSubmitting = false;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: (err as any)?.message || 'Plaid exchange error',
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           severity: ComponentErrorSeverity.ERROR,
@@ -681,7 +688,7 @@ export class JustifiModularCheckout {
 
       if (payload?.bnpl?.status !== 'success') {
         checkoutStore.isSubmitting = false;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: payload?.error?.message || 'Sezzle checkout was not completed.',
           errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
           severity: ComponentErrorSeverity.ERROR,
@@ -692,7 +699,7 @@ export class JustifiModularCheckout {
 
     if (!isSezzle && !checkoutStore.paymentToken) {
       checkoutStore.isSubmitting = false;
-      this.errorEvent.emit({
+      emitPublic(this.errorEvent, this.errorEventLegacy, {
         message: 'Payment token not found.',
         errorCode: ComponentErrorCodes.TOKENIZE_ERROR,
         severity: ComponentErrorSeverity.ERROR,
@@ -750,14 +757,14 @@ export class JustifiModularCheckout {
       payment,
       onSuccess: ({ checkout }) => {
         checkoutStore.isSubmitting = false;
-        this.submitEvent.emit({
+        emitPublic(this.submitEvent, this.submitEventLegacy, {
           checkout,
           message: "Checkout completed successfully",
         });
       },
       onError: ({ error }) => {
         checkoutStore.isSubmitting = false;
-        this.errorEvent.emit({
+        emitPublic(this.errorEvent, this.errorEventLegacy, {
           message: error,
           errorCode: ComponentErrorCodes.COMPLETE_CHECKOUT_ERROR,
           severity: ComponentErrorSeverity.ERROR,

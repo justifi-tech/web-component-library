@@ -22,6 +22,7 @@ import { RefundService } from '../../api/services/refund.service';
 import { makePostVoid } from '../../actions/void/void-actions';
 import { VoidService } from '../../api/services/void.service';
 import { RefundLoading } from './refund-loading';
+import { emitPublic } from '../../api/emit-public';
 
 @Component({
   tag: 'justifi-refund-payment',
@@ -42,8 +43,12 @@ export class JustifiRefundPayment {
   @Prop() paymentId!: string;
   @Prop() hideSubmitButton?: boolean = false;
 
-  @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
-  @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  @Event({ eventName: 'justifi-error' }) errorEvent: EventEmitter<ComponentErrorEvent>;
+  /** @deprecated Listen for `justifi-error`. Removed in the next major. */
+  @Event({ eventName: 'error-event' }) errorEventLegacy: EventEmitter<ComponentErrorEvent>;
+  @Event({ eventName: 'justifi-submit' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
+  /** @deprecated Listen for `justifi-submit`. Removed in the next major. */
+  @Event({ eventName: 'submit-event' }) submitEventLegacy: EventEmitter<ComponentSubmitEvent>;
 
   analytics: JustifiAnalytics;
 
@@ -55,7 +60,7 @@ export class JustifiRefundPayment {
   }
 
   private handleError(code: ComponentErrorCodes, errorMessage: string, severity: ComponentErrorSeverity) {
-    this.errorEvent.emit({ errorCode: code, message: errorMessage, severity });
+    emitPublic(this.errorEvent, this.errorEventLegacy, { errorCode: code, message: errorMessage, severity });
   }
 
   private checkAmount(amount: number) {
@@ -181,7 +186,7 @@ export class JustifiRefundPayment {
         },
         final: () => {
           if (voidResponse && !voidResponse.error && voidAttempted) {
-            this.submitEvent.emit({ response: voidResponse });
+            emitPublic(this.submitEvent, this.submitEventLegacy, { response: voidResponse });
             this.submitDisabled = true;
             this.refundLoading = false;
             resolve(voidResponse.data);
@@ -210,7 +215,7 @@ export class JustifiRefundPayment {
           this.handleError(code, error, severity);
         },
         final: () => {
-          this.submitEvent.emit({ response: refundResponse });
+          emitPublic(this.submitEvent, this.submitEventLegacy, { response: refundResponse });
           this.submitDisabled = true;
           this.refundLoading = false;
           resolve(refundResponse.data);

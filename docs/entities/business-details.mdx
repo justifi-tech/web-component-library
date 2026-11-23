@@ -70,9 +70,9 @@ Component to render detailed information about a business. You will need to firs
   (function () {
     const businessDetails = document.querySelector('justifi-business-details');
 
-    businessDetails.addEventListener('error-event', (event) => {
+    businessDetails.addEventListener('justifi-error', (event) => {
       // here is where you would handle the error
-      console.error('error-event', event.detail);
+      console.error('justifi-error', event.detail);
     });
   })();
 </script>
@@ -87,7 +87,12 @@ Component to render detailed information about a business. You will need to firs
 
 ### Events
 
-- `error-event`: Emits when API requests fail or validation errors occur; payload includes field-level hints.
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
+- `justifi-error`: Emits when API requests fail or validation errors occur; payload includes field-level hints.
 
 ## Authorization
 

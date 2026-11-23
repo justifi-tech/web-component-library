@@ -439,9 +439,7 @@ describe('business-owners-form-step', () => {
       // owner-submitted is contained, so it is delivered straight to the
       // <owner-form> the step renders rather than bubbling up to the host.
       const ownerForm = page.root.querySelector('owner-form');
-      ownerForm.dispatchEvent(
-        new CustomEvent('owner-submitted', { detail: submittedOwner })
-      );
+      (ownerForm as any).submitHandler(submittedOwner);
       await page.waitForChanges();
 
       expect(page.rootInstance.ownersPayload).toContainEqual(
@@ -539,7 +537,7 @@ describe('business-owners-form-step', () => {
       });
 
       const formLoadingEvents: boolean[] = [];
-      page.root.addEventListener('form-loading', (e: CustomEvent) => formLoadingEvents.push(e.detail));
+      page.rootInstance.loadingHandler = (loading: boolean) => formLoadingEvents.push(loading);
 
       const mockGet = jest.fn(({ onSuccess, final }) => {
         onSuccess({ data: { owners: [], representative: {} } });

@@ -99,7 +99,7 @@ describe('form-control-text', () => {
     expect(inputElement.value).toBe(testValue);
   });
 
-  it('Emits formControlInput event on input', async () => {
+  it('Calls inputHandler on input', async () => {
     const page = await newSpecPage({
       components: components,
       template: () =>
@@ -111,9 +111,6 @@ describe('form-control-text', () => {
         />
     });
 
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
-
     await page.waitForChanges();
 
     const inputElement = page.root.querySelector('input');
@@ -123,15 +120,10 @@ describe('form-control-text', () => {
 
     await page.waitForChanges();
 
-    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
-      detail: {
-        name: 'email',
-        value: 'other-user@example.com'
-      }
-    }));
+    expect(mockInputHandler).toHaveBeenCalledWith('email', 'other-user@example.com');
   });
 
-  it('Applies transformValue to the input before storing or emitting it', async () => {
+  it('Applies transformValue to the input before storing it', async () => {
     // Arrange
     const toUpper = (value: string) => value.toUpperCase();
     const page = await newSpecPage({
@@ -144,8 +136,6 @@ describe('form-control-text', () => {
           transformValue={toUpper}
         />
     });
-    const inputEventSpy = jest.fn();
-    page.root.addEventListener('form-control-input', inputEventSpy);
     await page.waitForChanges();
 
     // Act
@@ -154,12 +144,9 @@ describe('form-control-text', () => {
     inputElement.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     await page.waitForChanges();
 
-    // Assert — what the field shows, what the form stores, and what is emitted all agree.
+    // Assert — what the field shows and what the form stores agree.
     expect(inputElement.value).toBe('N2B 2A5');
     expect(mockInputHandler).toHaveBeenCalledWith('address_postal_code', 'N2B 2A5');
-    expect(inputEventSpy).toHaveBeenCalledWith(expect.objectContaining({
-      detail: { name: 'address_postal_code', value: 'N2B 2A5' }
-    }));
   });
 
   it('Leaves the value untouched when no transformValue is given', async () => {
@@ -180,21 +167,6 @@ describe('form-control-text', () => {
     // Assert
     expect(inputElement.value).toBe('user@example.com');
     expect(mockInputHandler).toHaveBeenCalledWith('email', 'user@example.com');
-  });
-
-  it('Emits formControlBlur event on blur', async () => {
-    const page = await newSpecPage({
-      components: components,
-      template: () => <form-control-text label='Username' name='username' defaultValue='user@example.com' inputHandler={mockInputHandler} />
-    });
-
-    const blurEventSpy = jest.fn();
-    page.root.addEventListener('form-control-blur', blurEventSpy);
-
-    const inputElement = page.root.querySelector('input');
-    inputElement.dispatchEvent(new Event('blur'));
-
-    expect(blurEventSpy).toHaveBeenCalled();
   });
 
   it('Disables input when disabled prop is provided', async () => {

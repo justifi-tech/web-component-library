@@ -1,4 +1,4 @@
-import { Component, h, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { StyledHost } from '../../../ui-components';
 
 @Component({
@@ -9,8 +9,7 @@ export class JustifiSaveNewPaymentMethod {
   @Prop() label?: string = 'Save New Payment Method';
   @Prop() hidden?: boolean;
 
-  @Event({ eventName: 'checkbox-changed', bubbles: false, composed: false })
-  checkboxChanged: EventEmitter<boolean>;
+  @Prop() changeHandler?: (checked: boolean) => void;
 
   render() {
     return (
@@ -18,7 +17,7 @@ export class JustifiSaveNewPaymentMethod {
         <save-new-payment-method
           label={this.label}
           hidden={this.hidden}
-          onCheckbox-changed={(e: CustomEvent<boolean>) => this.checkboxChanged.emit(e.detail)}
+          changeHandler={(checked) => this.changeHandler?.(checked)}
         />
       </StyledHost>
     );

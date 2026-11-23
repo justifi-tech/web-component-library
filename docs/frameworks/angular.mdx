@@ -54,6 +54,11 @@ export class AppModule {}
 
 ## Props and event handling
 
+> **Event names changed.** Every event below also fires under its old, unprefixed
+> name — `justifi-error` also fires as `error-event`, and so on — so an existing
+> integration keeps working untouched. The old names are deprecated and go away in
+> the next major release; new code should listen for the `justifi-` ones.
+
 Use Angular bindings for attributes and `(event)` syntax for emitted events.
 
 ```html

@@ -835,7 +835,7 @@ describe('justifi-modular-checkout', () => {
       const instance: any = page.rootInstance;
       instance.completeCheckout = jest.fn();
 
-      const event = new CustomEvent('applePayCompleted', {
+      const event = new CustomEvent('justifi-apple-pay-completed', {
         detail: { success: true, token: { id: 'pm_apple' }, paymentMethodId: 'pm_apple' },
       } as any);
 
@@ -859,7 +859,7 @@ describe('justifi-modular-checkout', () => {
       root.addEventListener('error-event', handler as any);
 
       const instance: any = page.rootInstance;
-      const event = new CustomEvent('applePayError', { detail: { error: 'boom', code: 'X' } } as any);
+      const event = new CustomEvent('justifi-apple-pay-error', { detail: { error: 'boom', code: 'X' } } as any);
       (instance as any).handleApplePayError(event);
 
       expect(handler).toHaveBeenCalled();
@@ -890,7 +890,7 @@ describe('justifi-modular-checkout', () => {
       const instance: any = page.rootInstance;
       instance.completeCheckout = jest.fn();
 
-      const event = new CustomEvent('googlePayCompleted', {
+      const event = new CustomEvent('justifi-google-pay-completed', {
         detail: { success: true, paymentMethodId: 'pm_google_123' },
       } as any);
 
@@ -914,7 +914,7 @@ describe('justifi-modular-checkout', () => {
       root.addEventListener('error-event', handler as any);
 
       const instance: any = page.rootInstance;
-      const event = new CustomEvent('googlePayCompleted', {
+      const event = new CustomEvent('justifi-google-pay-completed', {
         detail: { success: false, error: { code: 'ERR', message: 'Payment failed' } },
       } as any);
 
@@ -1210,7 +1210,7 @@ describe('justifi-modular-checkout', () => {
       root.addEventListener('error-event', handler as any);
 
       const instance: any = page.rootInstance;
-      const event = new CustomEvent('applePayError', { detail: { error: 'boom', code: 'X' } } as any);
+      const event = new CustomEvent('justifi-apple-pay-error', { detail: { error: 'boom', code: 'X' } } as any);
       (instance as any).handleApplePayError(event);
 
       expect(checkoutStore.isWalletProcessing).toBe(false);
@@ -1228,7 +1228,7 @@ describe('justifi-modular-checkout', () => {
         isWalletProcessingWhenCompleteCalled = checkoutStore.isWalletProcessing;
       });
 
-      const event = new CustomEvent('applePayCompleted', {
+      const event = new CustomEvent('justifi-apple-pay-completed', {
         detail: { success: true, token: { id: 'pm_apple' }, paymentMethodId: 'pm_apple' },
       } as any);
 
@@ -1266,7 +1266,7 @@ describe('justifi-modular-checkout', () => {
         isWalletProcessingWhenCompleteCalled = checkoutStore.isWalletProcessing;
       });
 
-      const event = new CustomEvent('googlePayCompleted', {
+      const event = new CustomEvent('justifi-google-pay-completed', {
         detail: { success: true, paymentMethodId: 'pm_google_123' },
       } as any);
 
@@ -2122,7 +2122,7 @@ describe('justifi-modular-checkout', () => {
         instance.completeCheckout = jest.fn();
 
         instance.handlePaypalCompleted(
-          new CustomEvent('paypalCompleted', {
+          new CustomEvent('justifi-paypal-completed', {
             detail: {
               success: true,
               paymentMethodId: 'ppo_123',
@@ -2149,7 +2149,7 @@ describe('justifi-modular-checkout', () => {
         instance.completeCheckout = jest.fn();
 
         instance.handlePaypalCompleted(
-          new CustomEvent('paypalCompleted', {
+          new CustomEvent('justifi-paypal-completed', {
             detail: {
               success: true,
               paymentMethodId: 'ppo_456',
@@ -2176,7 +2176,7 @@ describe('justifi-modular-checkout', () => {
         (page.root as HTMLElement).addEventListener('error-event', handler as any);
 
         instance.handlePaypalCompleted(
-          new CustomEvent('paypalCompleted', {
+          new CustomEvent('justifi-paypal-completed', {
             detail: { success: false, fundingSource: 'paypal' },
           } as any)
         );
@@ -2205,7 +2205,7 @@ describe('justifi-modular-checkout', () => {
         (page.root as HTMLElement).addEventListener('error-event', handler as any);
 
         (page.rootInstance as any).handlePaypalError(
-          new CustomEvent('paypalError', {
+          new CustomEvent('justifi-paypal-error', {
             detail: { error: 'boom', code: 'ORDER_ERROR' },
           } as any)
         );
@@ -2230,20 +2230,20 @@ describe('justifi-modular-checkout', () => {
 
         instance.setupPaypalListeners();
         expect(paypalEl.addEventListener.mock.calls.map((c: any) => c[0])).toEqual([
-          'paypalStarted',
-          'paypalCompleted',
-          'paypalCancelled',
-          'paypalError',
+          'justifi-paypal-started',
+          'justifi-paypal-completed',
+          'justifi-paypal-cancelled',
+          'justifi-paypal-error',
         ]);
 
         instance.removePaypalListeners();
         expect(
           paypalEl.removeEventListener.mock.calls.map((c: any) => c[0])
         ).toEqual([
-          'paypalStarted',
-          'paypalCompleted',
-          'paypalCancelled',
-          'paypalError',
+          'justifi-paypal-started',
+          'justifi-paypal-completed',
+          'justifi-paypal-cancelled',
+          'justifi-paypal-error',
         ]);
       });
     });
