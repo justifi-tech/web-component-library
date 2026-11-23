@@ -1,5 +1,74 @@
 ### Changelog
 
+## 6.16.0
+
+### Minor Changes
+
+- 71597c6: New `show-account-number-confirmation` prop on `justifi-checkout`, `justifi-tokenize-payment-method` and `justifi-bank-account-form`. Off by default. When on, the bank account form renders a required "Confirm Account Number" hosted field below the account number and fails validation with `The entered value does not match the account number` when the two differ — aimed at ACH returns caused by mistyped account numbers. The comparison happens inside the hosted field iframes, so the account number never reaches the parent page. Requires the matching iframe release.
+
+  Also fixes `bank-account-form.validate()`, which compared the two iframes' response objects instead of their `isValid` flags and so returned the routing number's result regardless of the account number — an invalid account number did not fail validation. It now returns `{ isValid }` aggregated across every rendered field.
+
+  Also fixes the same bug in `card-form.validate()`, which ANDed the four hosted fields' response objects — all truthy — and so returned the CVV's result regardless of the card number, expiration month or year. An invalid card number with a valid CVV passed validation and went on to tokenize. Both forms now resolve `{ isValid }` aggregated across every rendered field.
+
+  `bank-account-form.tokenize()` now runs the confirmation check itself, so an integrator calling the public `tokenize()` method with their own submit button gets the same protection as the built-in submit path, and `justifi-modular-checkout.submitCheckout()` stops before tokenizing when validation fails instead of creating a payment method for a mistyped account number first.
+
+- b4c2934: The hosted-field iframes of `card-form` and `bank-account-form` are now light-DOM children of their shadow host, projected into the same `::part`-themed wrapper through a named `<slot>`. Nothing changes visually and the theming API is untouched, but the iframes are now document-tree frames, so the fields reach each other directly through `window.parent.frames` instead of `BroadcastChannel`. That makes tokenization work on Safari and iOS below 15.4, and card data never transits the merchant page: the `BroadcastHostService` relay and `iframe-input.deliverBroadcast()` are removed. Also fixes the iframe URL, which joined the style parameters with a second `?` so `fontFamily` never reached the fields. Deploy the matching iframe release first: with the current iframe bundle, this SDK keeps working on every browser that has `BroadcastChannel` (the fields fall back to it) and Safari < 15.4 stays as broken as it is today, never worse.
+- 7618887: `justifi-plaid-payment-method` is now themeable like every other payment option.
+
+  The Plaid option passes a whole component as its radio label, and that component wraps its content in `StyledHost` — so Bootstrap's `:host > *` rule pinned `color: var(--bs-body-color)` on it, overriding the color the host page sets through `::part(label)`. Every other option's label is plain text that inherits normally, so on a dark theme the Plaid row rendered near-black on a dark background while the rest were legible. The component exposed no `part` attributes at all, so there was no hook to correct it.
+
+  It now exposes `label` on the clickable row, `text` on the status and retry messages, `text-danger` on error messages, and `image` on the logo. Two details were needed to make those parts actually reachable:
+
+  - The component sits behind a second shadow boundary, inside `justifi-radio-list-item`'s shadow root, and `::part()` only pierces one. The host carries `exportparts`, so the same `::part(label)` rule that already themes the other options reaches this one.
+  - Bootstrap's `.text-muted` / `.text-danger` / `.text-info` / `.text-success` utilities declare `color` as `!important`, and an `!important` declaration in the inner tree beats a page rule applied through `::part()` — including a page rule that is itself `!important`. Each part therefore sits on a child element, with the color utility left on its parent, so the page's declaration lands on an element that has no competing rule.
+
+  The Plaid mark is inlined as an SVG with `fill="currentColor"` instead of an `<img>` pointing at an asset whose fill was hardcoded to `#111`. An `<img>` cannot inherit text color; the logo now follows whatever color the label resolves to.
+
+  Verified in Chrome against the real two-level shadow topology: label, status message, error message, retry hint and logo all take their color from the page's `::part()` rules. With the parts on the utility-class elements instead, they computed to Bootstrap's own color no matter what the page declared.
+
+- 7618887: Bootstrap no longer escapes JustiFi components into the host page.
+
+  `StyledHost` renders a full Bootstrap 5.3.3 build in a `<style>` tag. Most components are `shadow: true`, so that sheet stays inside their shadow root — but `justifi-checkout` and `plaid-verification` are light DOM, so the sheet landed in the merchant's document and its 83 bare element selectors (`a`, `h1`–`h6`, `p`, `button`, `input`, `label`, `table`, `svg`, …) applied to the entire page. Because Bootstrap's rules are unlayered, they also beat the host page's own `@layer`-ed utility classes regardless of specificity, so a merchant's link colors and headings changed just by embedding a checkout. This has been true of every 6.x release since 6.0.0.
+
+  Every selector in `styled-host.css` is now scoped to `:host, .jfi-styled-host`, and `StyledHost` adds the matching `jfi-styled-host` class to its host element. Descendant selectors take the `:where()` form, which contributes zero specificity, so `p` is still (0,0,1) exactly as in an unscoped build. The four rules whose subject is the root itself take `:is()` instead — they carried `:host`'s own (0,1,0) before scoping, and `:where()` would have dropped them under every bare-element rule, which is visible for direct children of a `StyledHost` (a direct-child `<p>` would have taken Bootstrap's `margin-bottom: 1rem`). The cascade inside a component is therefore unchanged; only the set of matched elements shrinks to the component's own subtree. Verified in Chrome: across a 62-element Bootstrap sample in a shadow root, all 2,046 computed-style comparisons and all 123 `--bs-*` custom properties are identical before and after.
+
+  Three visible changes, all inside light-DOM components only:
+
+  - `justifi-checkout` and `plaid-verification` now pick up Bootstrap's theme variables, which previously resolved to nothing in the light DOM because they were declared on `:host`. Links inside them render Bootstrap blue and body text Bootstrap's grey instead of inheriting the page's defaults.
+  - For the same reason, those two now also get Bootstrap's root reset on their direct children (`margin: 0`, body font and color), which until now only shadow-DOM components received. The two rendering paths are the same again.
+  - Host pages that were relying — knowingly or not — on JustiFi's Bootstrap styling their own markup will lose it. That styling was never intended to apply.
+
+  Bootstrap dark mode keeps working from outside the component: `[data-bs-theme='dark']` is matched on the component element itself and on any ancestor of it, as well as on descendants, so a merchant who sets it on `<html>` still gets the dark palette in `justifi-checkout` and `plaid-verification`. Shadow-DOM components are unaffected either way — they declared the light palette on `:host` before this change too.
+
+  The stylesheet is a checked-in vendored Bootstrap build that this repo does not track upstream, so the prefixing is a one-time rewrite of that file rather than a build step.
+
+### Patch Changes
+
+- d050583: Fixed postal code validation rejecting valid Canadian codes. Checkout required an uppercase code with a literal space, so `m5v 2t6` and `M5V2T6` both failed — a shopper typing their own postal code the way they normally write it could not complete checkout. The business forms used a different regex that disagreed with checkout: it allowed lowercase and an optional separator, but also accepted FSA letters Canada Post never issues (D, F, I, O, Q, U, W, Z).
+
+  Both now share one definition in `utils/postal-code.ts` — a US ZIP regex and a case-insensitive CA/US regex limited to the 18 valid FSA letters. Postal inputs normalize to `ANA NAN` as you type (uppercase, single space) without moving the caret mid-string, and schemas normalize before matching, so values already stored in the old shapes still validate.
+
+  Also fixes ZIP+4 being unenterable: the field truncated at 5 characters and the key handler blocked the hyphen. `maxLength` is now 10 and the postal field uses a handler that accepts digits plus a single hyphen.
+
+- 7618887: Uncheck the card/bank radio in `justifi-tokenize-payment-method` when a sibling payment method (Plaid, Sezzle, a wallet or a saved method) is selected. Those siblings select themselves by writing the checkout store rather than emitting `radio-click`, so two options looked selected at once.
+
+  The component also re-claims the store when it finds its own option selected locally against an empty store — a cancelled Apple Pay, Google Pay or PayPal sheet clears `selectedPaymentMethod`, and without this the card radio stayed checked while submit reported "No payment method selected."
+
+- 9817dd6: Fixed hosted field validation errors showing under the wrong field. Every hosted field iframe replies to the same window, and a field accepted the first `validate` (or `tokenize`) reply from any iframe. When two validations overlapped — a double-clicked Submit, or two `validate()` calls at once — a field could take a sibling's reply: with `show-account-number-confirmation` on, the "does not match the account number" error appeared under Routing Number while Confirm Account Number showed nothing. Each field now only accepts replies from its own iframe.
+- 15a9120: Add `mask-card-number` to `justifi-card-form`, `justifi-tokenize-payment-method`, `justifi-modular-checkout` and `justifi-checkout`. When set, the card number collapses to its last four digits once the field loses focus, with an eye toggle to reveal it again. Defaults to `false`, so existing integrations are unchanged.
+
+  The masking happens in the hosted field, which must be deployed before this ships. It is a shoulder-surfing deterrent, not a PCI control.
+
+- 3f4dcfd: Fixed `justifi-modular-checkout` emitting `error-event` with an undefined `message`. The checkout actions call `onError({ error, code, severity })`, but the component read `error.message` — so a failed complete (e.g. insufficient funds) or failed checkout load reached integrators with no message, and the load path also dropped `errorCode` and `severity`.
+- fa72d90: Removed the npm registry version check that ran on every component load. It fetched `registry.npmjs.org` from the browser on every page, which produced Content-Security-Policy errors for consumers with a strict CSP and an uncaught promise rejection when the request was blocked or failed. Duplicate-version detection is unaffected — it is local and still runs, now under the clearer name `detectDuplicateVersion`.
+- 8cf1502: `validate()` on a modular checkout no longer validates the same component twice.
+
+  `queryFormRefs` matches `justifi-tokenize-payment-method` with both the billing selector and the payment-method selector, so a checkout that slots only that component ends up with the same element in both refs. `validate()` then called it once as the payment method and once as the billing form, putting two full passes over the same four hosted-field iframes in flight and running the billing form twice.
+
+  `validate()` now skips the billing ref when it is the same element as the payment-method ref. Checkouts that slot a separate billing component are unaffected, and `getValues`/`tokenize` on the shared element are untouched.
+
+  This duplicate pass was also what let hosted-field error messages render under the wrong field before replies were matched to their own iframe.
+
 ## 6.15.0
 
 ### Minor Changes
