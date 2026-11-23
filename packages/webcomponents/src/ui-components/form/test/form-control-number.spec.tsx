@@ -106,7 +106,7 @@ describe('form-control-number', () => {
     });
 
     const inputEventSpy = jest.fn();
-    page.win.addEventListener('formControlInput', inputEventSpy);
+    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.value = '25';
@@ -134,7 +134,7 @@ describe('form-control-number', () => {
         />
     });
     const blurEventSpy = jest.fn();
-    page.win.addEventListener('formControlBlur', blurEventSpy);
+    page.root.addEventListener('form-control-blur', blurEventSpy);
 
     const inputElement = page.root.querySelector('input');
     await inputElement.dispatchEvent(new CustomEvent('blur'));

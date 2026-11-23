@@ -122,7 +122,7 @@ describe('form-control-monetary', () => {
     });
 
     const inputEventSpy = jest.fn();
-    page.root.addEventListener('formControlInput', inputEventSpy);
+    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const inputElement = page.root.querySelector('input');
     inputElement.value = '150.99';
@@ -149,7 +149,7 @@ describe('form-control-monetary', () => {
     });
 
     const blurSpy = jest.fn();
-    page.win.addEventListener('formControlBlur', blurSpy);
+    page.root.addEventListener('form-control-blur', blurSpy);
 
     const input = page.root.querySelector('input');
     input.dispatchEvent(new Event('blur', { bubbles: true }));

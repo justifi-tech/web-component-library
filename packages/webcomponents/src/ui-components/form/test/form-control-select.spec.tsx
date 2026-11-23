@@ -134,7 +134,7 @@ describe('form-control-select', () => {
     });
 
     const inputEventSpy = jest.fn();
-    page.root.addEventListener('formControlInput', inputEventSpy);
+    page.root.addEventListener('form-control-input', inputEventSpy);
 
     const selectElement = page.root.querySelector('select');
     selectElement.value = '1';
@@ -157,7 +157,7 @@ describe('form-control-select', () => {
     });
 
     const blurEventSpy = jest.fn();
-    page.root.addEventListener('formControlBlur', blurEventSpy);
+    page.root.addEventListener('form-control-blur', blurEventSpy);
 
     const selectElement = page.root.querySelector('select');
     selectElement.dispatchEvent(new Event('blur'));

@@ -39,7 +39,7 @@ describe('justifi-terminal-quantity-selector', () => {
 
     await page.waitForChanges();
 
-    page.root.addEventListener('selectedQuantityChange', onSelectedQuantityChange);
+    page.root.addEventListener('selected-quantity-change', onSelectedQuantityChange);
 
     const addButton = page.root.querySelector('.plus');
     (addButton as HTMLElement).click();

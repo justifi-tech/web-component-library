@@ -25,8 +25,10 @@ export class BusinessTermsConditionsFormStep {
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
 
   // internal loading events
-  @Event() formLoading: EventEmitter<boolean>;
-  @Event({ bubbles: true }) formCompleted: EventEmitter<any>;
+  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
+  formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'form-completed', bubbles: false, composed: false })
+  formCompleted: EventEmitter<any>;
 
   private api: any;
 

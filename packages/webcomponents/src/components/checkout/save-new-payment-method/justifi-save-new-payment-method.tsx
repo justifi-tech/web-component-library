@@ -9,7 +9,8 @@ export class JustifiSaveNewPaymentMethod {
   @Prop() label?: string = 'Save New Payment Method';
   @Prop() hidden?: boolean;
 
-  @Event({ bubbles: true }) checkboxChanged: EventEmitter<boolean>;
+  @Event({ eventName: 'checkbox-changed', bubbles: false, composed: false })
+  checkboxChanged: EventEmitter<boolean>;
 
   render() {
     return (
@@ -17,7 +18,7 @@ export class JustifiSaveNewPaymentMethod {
         <save-new-payment-method
           label={this.label}
           hidden={this.hidden}
-          onCheckboxChanged={(e: CustomEvent<boolean>) => this.checkboxChanged.emit(e.detail)}
+          onCheckbox-changed={(e: CustomEvent<boolean>) => this.checkboxChanged.emit(e.detail)}
         />
       </StyledHost>
     );

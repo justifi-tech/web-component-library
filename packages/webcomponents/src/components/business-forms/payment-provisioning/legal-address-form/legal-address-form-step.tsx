@@ -35,7 +35,8 @@ export class LegalAddressFormStep {
   @Event({ eventName: 'error-event', bubbles: true }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'complete-form-step-event', bubbles: true })
   stepCompleteEvent: EventEmitter<ComponentFormStepCompleteEvent>;
-  @Event() formLoading: EventEmitter<boolean>;
+  @Event({ eventName: 'form-loading', bubbles: false, composed: false })
+  formLoading: EventEmitter<boolean>;
 
   @Method()
   async validateAndSubmit({ onSuccess }) {

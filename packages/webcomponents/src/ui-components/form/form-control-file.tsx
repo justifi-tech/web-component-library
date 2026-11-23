@@ -32,9 +32,12 @@ export class FormControlFile {
   @Prop() inputHandler?: (name: string, value: string) => void = () => { };
   @Prop() disabled?: boolean = false;
 
-  @Event() formControlInput: EventEmitter<any>;
-  @Event() formControlBlur: EventEmitter<any>;
-  @Event() fileSelected: EventEmitter<FileSelectEvent>;
+  @Event({ eventName: 'form-control-input', bubbles: false, composed: false })
+  formControlInput: EventEmitter<any>;
+  @Event({ eventName: 'form-control-blur', bubbles: false, composed: false })
+  formControlBlur: EventEmitter<any>;
+  @Event({ eventName: 'file-selected', bubbles: false, composed: false })
+  fileSelected: EventEmitter<FileSelectEvent>;
 
   componentDidLoad() {
     this.fileInput = this.el.querySelector('input');

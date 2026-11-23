@@ -8,7 +8,8 @@ export class SaveNewPaymentMethod {
   @Prop() label?: string = 'Save New Payment Method';
   @Prop() hidden?: boolean;
   @State() isChecked: boolean = false;
-  @Event({ bubbles: true }) checkboxChanged: EventEmitter<boolean>;
+  @Event({ eventName: 'checkbox-changed', bubbles: false, composed: false })
+  checkboxChanged: EventEmitter<boolean>;
 
   private handleCheckboxChange = (_name: string, value: boolean) => {
     this.isChecked = value;

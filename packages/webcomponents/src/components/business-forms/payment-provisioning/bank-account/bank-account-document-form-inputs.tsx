@@ -18,7 +18,7 @@ export class BankAccountDocumentFormInputs {
             label="Voided Check"
             documentType={EntityDocumentType.voidedCheck}
             inputHandler={this.inputHandler}
-            onFileSelected={this.storeFiles}
+            onFile-selected={this.storeFiles}
             errorText={this.errors["voided_check"]}
             multiple={true}
           />
@@ -29,7 +29,7 @@ export class BankAccountDocumentFormInputs {
             label="Bank Statement"
             documentType={EntityDocumentType.bankStatement}
             inputHandler={this.inputHandler}
-            onFileSelected={this.storeFiles}
+            onFile-selected={this.storeFiles}
             errorText={this.errors["bank_statement"]}
             multiple={true}
           />

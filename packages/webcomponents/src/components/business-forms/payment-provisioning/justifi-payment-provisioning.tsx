@@ -6,7 +6,6 @@ import {
   Event,
   EventEmitter,
   Watch,
-  Listen,
 } from '@stencil/core';
 import JustifiAnalytics from '../../../api/Analytics';
 import {
@@ -66,15 +65,15 @@ export class JustifiPaymentProvisioning {
   @Event({ eventName: 'error-event' }) errorEvent: EventEmitter<ComponentErrorEvent>;
   @Event({ eventName: 'submit-event' }) submitEvent: EventEmitter<ComponentSubmitEvent>;
 
-  @Listen('formCompleted')
-  handleFormCompleted() {
+  // Passed down as props rather than caught with @Listen: the form steps emit
+  // these with bubbles: false so they never reach the merchant's page.
+  handleFormCompleted = () => {
     this.postProvisioningData();
-  }
+  };
 
-  @Listen('formLoading')
-  handleFormLoading(event: CustomEvent) {
+  handleFormLoading = (event: CustomEvent<boolean>) => {
     this.loading = event.detail;
-  }
+  };
 
   analytics: JustifiAnalytics;
   private getBusiness: Function;
@@ -259,6 +258,7 @@ export class JustifiPaymentProvisioning {
             allowOptionalFields={this.allowOptionalFields}
             country={this.country}
             handleFormLoading={this.handleFormLoading}
+            handleFormCompleted={this.handleFormCompleted}
           />
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center" part={text}>
