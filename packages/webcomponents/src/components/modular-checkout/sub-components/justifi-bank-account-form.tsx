@@ -9,6 +9,7 @@ import { StyledHost } from "../../../ui-components";
   shadow: true,
 })
 export class JustifiBankAccountForm {
+  /** Renders a "Confirm Account Number" field in the bank account form. */
   @Prop() showAccountNumberConfirmation?: boolean = false;
 
   private bankAccountFormElement?: HTMLBankAccountFormElement;
