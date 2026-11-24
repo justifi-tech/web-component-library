@@ -45,6 +45,8 @@
     "build:webcomponents": "pnpm --filter @justifi/webcomponents build:docs",
     "build:helpers": "node scripts/build-helpers.mjs",
     "build:index": "echo \"export * from './helpers/index.js';\" > dist/index.js",
+    "test": "node scripts/preview-tables.mjs",
+    "preview:tables": "node scripts/preview-tables.mjs --open",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
