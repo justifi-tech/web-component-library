@@ -140,9 +140,7 @@ To finalize the checkout process, include a submit button that calls the `submit
 > **Field-level props live on the sub-component that owns the field**, not on the wrapper. Set `mask-card-number` on [`<justifi-card-form>`](./sub-components/card-form) and `show-account-number-confirmation` on [`<justifi-bank-account-form>`](./sub-components/bank-account-form). Each sub-component page lists its own props.
 
 <PropsMarkdownTable
-  props={getPropsFromDocs('justifi-modular-checkout', docsJson).filter(
-    (prop) => prop.name !== 'mask-card-number'
-  )}
+  props={getPropsFromDocs('justifi-modular-checkout', docsJson)}
 />
 
 ### Events

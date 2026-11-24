@@ -3,7 +3,6 @@ import JustifiAnalytics from "../../../api/Analytics";
 import { detectDuplicateVersion } from "../../../utils/detect-duplicate-version";
 import { waitForConfig } from "../../config-provider/config-state";
 import { StyledHost } from "../../../ui-components";
-import { checkoutStore } from "../../../store/checkout.store";
 
 @Component({
   tag: "justifi-card-form",
@@ -16,9 +15,7 @@ export class JustifiCardForm {
 
   /**
    * Mask the card number to its last four digits when the field loses focus,
-   * with an eye toggle to reveal it. Defaults to false. Inside
-   * `justifi-modular-checkout` the wrapper's `mask-card-number` sets this;
-   * an explicit value here wins.
+   * with an eye toggle to reveal it. Defaults to false.
    *
    * Anti-shoulder-surfing only, not a secrecy boundary.
    */
@@ -58,7 +55,7 @@ export class JustifiCardForm {
       <StyledHost>
         <card-form
           ref={(el) => (this.cardFormElement = el as HTMLCardFormElement)}
-          maskCardNumber={this.maskCardNumber ?? checkoutStore.maskCardNumber}
+          maskCardNumber={this.maskCardNumber}
         />
       </StyledHost>
     )

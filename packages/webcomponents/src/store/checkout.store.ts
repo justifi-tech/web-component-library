@@ -32,7 +32,6 @@ interface IInitialState {
   disableBankAccount: boolean;
   disableCreditCard: boolean;
   disablePaymentMethodGroup: boolean;
-  maskCardNumber: boolean;
   paymentAmount: number;
   paymentCurrency: string;
   paymentDescription: string;
@@ -90,7 +89,6 @@ const initialState: IInitialState = {
   disableBankAccount: false,
   disableCreditCard: false,
   disablePaymentMethodGroup: false,
-  maskCardNumber: false,
   paymentAmount: 0,
   paymentCurrency: 'USD',
   paymentDescription: '',
