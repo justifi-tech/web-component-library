@@ -1,5 +1,27 @@
 # @justifi/webcomponents-docs
 
+## 4.1.1
+
+### Patch Changes
+
+- 02bb5d7: Fix the props table breaking apart partway down the page.
+
+  A multi-line JSDoc comment on a `@Prop()` reaches the docs helpers verbatim
+  through `docs.json`, newlines and all. A newline ends a GFM table row, so the
+  table stopped at the first prop with a multi-line description and every prop
+  below it spilled onto the page as raw pipe-delimited text. On Tokenize Payment
+  Method and Unified Fintech Checkout™ that prop is `mask-card-number`, which put
+  `show-account-number-confirmation` and the props after it outside the table.
+
+  `escapeGfmTableCell` now collapses whitespace runs to a single space, so both
+  the props and the parts tables survive any comment shape.
+
+  `scripts/preview-tables.mjs` renders every component's tables and checks each
+  kept all its rows; it is the package's `test` script, so a broken table now
+  fails CI. Run it with `--open` to look at the rendered page.
+
+- 624dc38: Remove PayPal and Venmo from the Checkout Browser Support payment-method table. PayPal is not announced yet, and Venmo ships only as a PayPal funding source, so neither belongs in the published availability matrix. Both rows come back with the PayPal sub-component docs.
+
 ## 4.1.0
 
 ### Minor Changes
