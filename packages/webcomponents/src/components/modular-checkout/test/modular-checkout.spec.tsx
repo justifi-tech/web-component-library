@@ -67,6 +67,7 @@ describe('justifi-modular-checkout', () => {
     checkoutStore.isWalletProcessing = false;
     checkoutStore.checkoutMode = null;
     checkoutStore.maskCardNumber = false;
+    checkoutStore.showAccountNumberConfirmation = false;
   });
 
   afterAll(() => {
@@ -440,6 +441,41 @@ describe('justifi-modular-checkout', () => {
       page.root.setAttribute('mask-card-number', 'false');
       await page.waitForChanges();
       expect(checkoutStore.maskCardNumber).toBe(false);
+    });
+  });
+
+  describe('showAccountNumberConfirmation', () => {
+    it('leaves the confirmation field off by default', async () => {
+      await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: '<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>',
+      });
+
+      expect(checkoutStore.showAccountNumberConfirmation).toBe(false);
+    });
+
+    it('routes the prop into the store, which is how the slotted bank account form sees it', async () => {
+      await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: '<justifi-modular-checkout auth-token="test" checkout-id="chk_123" show-account-number-confirmation="true"></justifi-modular-checkout>',
+      });
+
+      expect(checkoutStore.showAccountNumberConfirmation).toBe(true);
+    });
+
+    it('keeps the store in step when the prop changes after load', async () => {
+      const page = await newSpecPage({
+        components: [JustifiModularCheckout],
+        html: '<justifi-modular-checkout auth-token="test" checkout-id="chk_123"></justifi-modular-checkout>',
+      });
+
+      page.root.setAttribute('show-account-number-confirmation', 'true');
+      await page.waitForChanges();
+      expect(checkoutStore.showAccountNumberConfirmation).toBe(true);
+
+      page.root.setAttribute('show-account-number-confirmation', 'false');
+      await page.waitForChanges();
+      expect(checkoutStore.showAccountNumberConfirmation).toBe(false);
     });
   });
 

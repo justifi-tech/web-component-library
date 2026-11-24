@@ -3,14 +3,20 @@ import { detectDuplicateVersion } from "../../../utils/detect-duplicate-version"
 import JustifiAnalytics from "../../../api/Analytics";
 import { waitForConfig } from "../../config-provider/config-state";
 import { StyledHost } from "../../../ui-components";
+import { checkoutStore } from "../../../store/checkout.store";
 
 @Component({
   tag: "justifi-bank-account-form",
   shadow: true,
 })
 export class JustifiBankAccountForm {
-  /** Renders a "Confirm Account Number" field in the bank account form. */
-  @Prop() showAccountNumberConfirmation?: boolean = false;
+  /**
+   * Render a required "Confirm Account Number" field below the account number,
+   * and fail validation when the two do not match. Defaults to false. Inside
+   * `justifi-modular-checkout` the wrapper's `show-account-number-confirmation`
+   * sets this; an explicit value here wins.
+   */
+  @Prop() showAccountNumberConfirmation?: boolean;
 
   private bankAccountFormElement?: HTMLBankAccountFormElement;
 
@@ -60,7 +66,10 @@ export class JustifiBankAccountForm {
       <StyledHost>
         <bank-account-form
           ref={(el) => (this.bankAccountFormElement = el as HTMLBankAccountFormElement)}
-          showAccountNumberConfirmation={this.showAccountNumberConfirmation}
+          showAccountNumberConfirmation={
+            this.showAccountNumberConfirmation ??
+            checkoutStore.showAccountNumberConfirmation
+          }
         />
       </StyledHost>
     );

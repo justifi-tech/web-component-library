@@ -44,6 +44,10 @@ router.get('/', async (req, res) => {
   // treats any GET param matching (card).?(num) as a secret in a URL.
   const maskNumber = req.query.maskNumber === 'true';
 
+  // ?confirmAccountNumber=1 renders the ACH rail with the wrapper-level
+  // show-account-number-confirmation on, to exercise the store plumbing.
+  const showAccountNumberConfirmation = req.query.confirmAccountNumber === '1';
+
   const billingFormFields = {
     name: 'Jane Doe',
     address_line1: '456 Oak Ave',
@@ -64,10 +68,11 @@ router.get('/', async (req, res) => {
       </head>
       <body class="two-column-layout">
         <div class="column-preview">
-          <justifi-modular-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}" mask-card-number="${maskNumber}">
+          <justifi-modular-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}" mask-card-number="${maskNumber}" show-account-number-confirmation="${showAccountNumberConfirmation}">
             <div style="display: flex; flex-direction: column; gap: 20px;">
               <justifi-summary></justifi-summary>
               <justifi-card-form></justifi-card-form>
+              ${showAccountNumberConfirmation ? '<justifi-bank-account-form></justifi-bank-account-form>' : ''}
               <justifi-google-pay environment="TEST"></justifi-google-pay>
               <justifi-apple-pay></justifi-apple-pay>
               <justifi-billing-form-full></justifi-billing-form-full>

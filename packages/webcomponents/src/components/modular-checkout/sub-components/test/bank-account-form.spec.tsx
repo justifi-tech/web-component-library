@@ -15,6 +15,7 @@ describe('justifi-bank-account-form', () => {
   beforeEach(() => {
     checkoutStore.checkoutLoaded = false;
     checkoutStore.achPaymentsEnabled = false;
+    checkoutStore.showAccountNumberConfirmation = false;
     AnalyticsService.prototype.record = jest.fn().mockResolvedValue(undefined);
   });
 
@@ -47,6 +48,42 @@ describe('justifi-bank-account-form', () => {
 
     expect(leaf).not.toBeNull();
     expect(leaf.showAccountNumberConfirmation).toBeFalsy();
+    expect(
+      leaf.querySelector('iframe-input[inputId="accountNumberConfirmation"]'),
+    ).toBeNull();
+  });
+
+  it('falls back to the store, which is how the wrapper prop reaches it', async () => {
+    checkoutStore.showAccountNumberConfirmation = true;
+
+    const page = await newSpecPage({
+      components,
+      html: `<justifi-bank-account-form></justifi-bank-account-form>`,
+    });
+
+    await page.waitForChanges();
+
+    const leaf = page.root.shadowRoot.querySelector('bank-account-form') as any;
+
+    expect(leaf.showAccountNumberConfirmation).toBe(true);
+    expect(
+      leaf.querySelector('iframe-input[inputId="accountNumberConfirmation"]'),
+    ).not.toBeNull();
+  });
+
+  it('lets an explicit prop win over the store', async () => {
+    checkoutStore.showAccountNumberConfirmation = true;
+
+    const page = await newSpecPage({
+      components,
+      html: `<justifi-bank-account-form show-account-number-confirmation="false"></justifi-bank-account-form>`,
+    });
+
+    await page.waitForChanges();
+
+    const leaf = page.root.shadowRoot.querySelector('bank-account-form') as any;
+
+    expect(leaf.showAccountNumberConfirmation).toBe(false);
     expect(
       leaf.querySelector('iframe-input[inputId="accountNumberConfirmation"]'),
     ).toBeNull();

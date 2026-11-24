@@ -20,9 +20,7 @@ import componentTreeJson from '../../component-tree.json';
 
 Renders a form for collecting bank account details as part of a checkout flow.
 
-This subcomponent is **designed to be used within** the `justifi-modular-checkout`. Authorization, business context and checkout state reach it through the shared Stencil Store managed by `justifi-modular-checkout`; the one prop it takes directly is `show-account-number-confirmation`, which must be set on this element because `justifi-modular-checkout` renders its children through a slot and cannot forward props to them.
-
-With `show-account-number-confirmation` on, the form renders a required **Confirm Account Number** field below the account number and fails validation with `The entered value does not match the account number` when the two differ.
+This subcomponent is **designed to be used within** the `justifi-modular-checkout`. Most of its configuration arrives as shared state through the Stencil Store, managed by the wrapper component, rather than as props on this element. The exception is `show-account-number-confirmation` below, which you may set either here or on the wrapper.
 
 > **Note:** If you are using this sub component, you also need to provide billing information. This can be done by adding the `justifi-billing-form-full` sub component for complete billing address, the `justifi-bank-account-billing-form-simple` sub component for account owner name only, or by passing the `billingInformation` object as an argument to the `submitCheckout` method called on the `justifi-modular-checkout`. See the [modular checkout docs](../introduction) for more information.
 
@@ -31,6 +29,20 @@ With `show-account-number-confirmation` on, the form renders a required **Confir
 **Authorization** and business context are also handled by `justifi-modular-checkout`, which manages authentication tokens and related configuration.
 
 Beyond `show-account-number-confirmation`, this component is not intended for standalone use — the parent checkout drives validation and tokenization.
+
+### Confirming the account number
+
+Set `show-account-number-confirmation` to render a required **Confirm Account Number** field below the account number. The form then fails validation with `The entered value does not match the account number` when the two differ, which is aimed at ACH returns caused by mistyped account numbers. It defaults to `false`, so existing integrations are unaffected.
+
+```html
+<justifi-modular-checkout auth-token="authToken" checkout-id="ch_123" show-account-number-confirmation="true">
+  <justifi-bank-account-form />
+</justifi-modular-checkout>
+```
+
+Setting it on `<justifi-bank-account-form>` directly also works and takes precedence over the wrapper.
+
+> **The comparison happens inside the hosted field iframes**, so the account number never reaches the parent page.
 
 ## Usage
 

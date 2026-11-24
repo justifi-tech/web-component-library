@@ -72,6 +72,19 @@ export class JustifiModularCheckout {
     checkoutStore.maskCardNumber = !!this.maskCardNumber;
   }
 
+  /**
+   * Render a required "Confirm Account Number" field in the
+   * `justifi-bank-account-form` rendered inside this checkout, and fail
+   * validation when it does not match the account number. Defaults to false.
+   */
+  @Prop() showAccountNumberConfirmation?: boolean = false;
+
+  @Watch('showAccountNumberConfirmation')
+  showAccountNumberConfirmationChanged() {
+    checkoutStore.showAccountNumberConfirmation =
+      !!this.showAccountNumberConfirmation;
+  }
+
   @Element() hostEl!: HTMLElement;
 
   @Event({ eventName: 'justifi-error' }) errorEvent!: EventEmitter;
@@ -99,6 +112,8 @@ export class JustifiModularCheckout {
 
     checkoutStore.checkoutId = this.checkoutId;
     checkoutStore.maskCardNumber = !!this.maskCardNumber;
+    checkoutStore.showAccountNumberConfirmation =
+      !!this.showAccountNumberConfirmation;
 
     const config = {
       authToken: this.authToken,
