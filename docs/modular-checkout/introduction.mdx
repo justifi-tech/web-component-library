@@ -137,6 +137,8 @@ To finalize the checkout process, include a submit button that calls the `submit
 
 ## Props, Events & Methods
 
+> **Some props live on the sub-components, not here.** `show-account-number-confirmation` is one of them — set it directly on `<justifi-bank-account-form>`, not on the wrapper. See the [Bank Account Form](./sub-components/bank-account-form) page.
+
 <PropsMarkdownTable
   props={getPropsFromDocs('justifi-modular-checkout', docsJson)}
 />
