@@ -2,4 +2,4 @@
 "@justifi/webcomponents-docs": patch
 ---
 
-Say on the Modular Checkout introduction that `show-account-number-confirmation` is set on `<justifi-bank-account-form>`, not on the wrapper. The page's props table is generated from the wrapper's own props, so the prop was absent with no explanation and `mask-card-number` was the only field-level option in sight.
+Point the Modular Checkout docs at the sub-component for field-level props. `mask-card-number` belongs on `<justifi-card-form>` and `show-account-number-confirmation` on `<justifi-bank-account-form>` — the wrapper is for checkout-level configuration. The introduction page now says so and no longer lists `mask-card-number` in its props table, and the Card Form page's example sets the attribute on the card form instead of the wrapper. Docs only; the wrapper prop still exists and still works.
