@@ -64,10 +64,10 @@ router.get('/', async (req, res) => {
       </head>
       <body class="two-column-layout">
         <div class="column-preview">
-          <justifi-modular-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}" mask-card-number="${maskNumber}">
+          <justifi-modular-checkout auth-token="${webComponentToken}" checkout-id="${checkout.id}">
             <div style="display: flex; flex-direction: column; gap: 20px;">
               <justifi-summary></justifi-summary>
-              <justifi-card-form></justifi-card-form>
+              <justifi-card-form mask-card-number="${maskNumber}"></justifi-card-form>
               <justifi-google-pay environment="TEST"></justifi-google-pay>
               <justifi-apple-pay></justifi-apple-pay>
               <justifi-billing-form-full></justifi-billing-form-full>

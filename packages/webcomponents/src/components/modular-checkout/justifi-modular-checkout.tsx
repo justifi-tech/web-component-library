@@ -7,7 +7,6 @@ import {
   Host,
   Method,
   Prop,
-  Watch,
 } from "@stencil/core";
 import { checkoutStore, onAnyChange, getAvailablePaymentMethodTypes, getCheckoutState, CheckoutState } from "../../store/checkout.store";
 import JustifiAnalytics from "../../api/Analytics";
@@ -58,20 +57,6 @@ export class JustifiModularCheckout {
   @Prop() authToken!: string;
   @Prop() checkoutId!: string;
   @Prop() preCompleteHook?: Hook<CheckoutState>;
-  /**
-   * Mask the card number to its last four digits when the field loses focus,
-   * with an eye toggle to reveal it. Applies to the `justifi-card-form`
-   * rendered inside this checkout. Defaults to false.
-   *
-   * Anti-shoulder-surfing only, not a secrecy boundary.
-   */
-  @Prop() maskCardNumber?: boolean = false;
-
-  @Watch('maskCardNumber')
-  maskCardNumberChanged() {
-    checkoutStore.maskCardNumber = !!this.maskCardNumber;
-  }
-
   @Element() hostEl!: HTMLElement;
 
   @Event({ eventName: 'justifi-error' }) errorEvent!: EventEmitter;
@@ -98,7 +83,6 @@ export class JustifiModularCheckout {
     });
 
     checkoutStore.checkoutId = this.checkoutId;
-    checkoutStore.maskCardNumber = !!this.maskCardNumber;
 
     const config = {
       authToken: this.authToken,
